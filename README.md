@@ -37,6 +37,8 @@ Bigfoot#9033
 
 ### Credits
 
+ <a href="https://github.com/Abyss-Services/abyss-browser">Abyss Browser</a>
+
 
 
 
