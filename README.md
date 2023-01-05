@@ -11,12 +11,8 @@ Interstellar Games is one of the best modern unblocked games sites. Check it out
 ### Deploying
 Interstellar is completely open-source so you can deploy it by forking or deploying it below.
   
-<a target="_blank" href="https://heroku.com/deploy/?template=https://github.com/imbubbo/interstellar"><img alt="Deploy to Heroku" src="https://raw.githubusercontent.com/BinBashBanana/deploy-buttons/master/buttons/remade/heroku.svg"></a>
-<a target="_blank" href="https://replit.com/github/imbubbo/interstellar"><img alt="Run on Replit" src="https://raw.githubusercontent.com/BinBashBanana/deploy-buttons/master/buttons/remade/replit.svg"></a>
-<a target="_blank" href="https://glitch.com/edit/#!/import/github/imbubbo/interstellar"><img alt="Remix on Glitch" src="https://raw.githubusercontent.com/BinBashBanana/deploy-buttons/master/buttons/remade/glitch.svg"></a>
-<a target="_blank" href="https://railway.app/new/template/AdkYoC?referralCode=PIIe5F"><img alt="Deploy on Railway" src="https://raw.githubusercontent.com/BinBashBanana/deploy-buttons/master/buttons/remade/railway.svg"></a>
-<a target="_blank" href="https://vercel.com/new/clone?repository-url=https://github.com/imbubbo/interstellar"><img alt="Deploy to Vercel" src="https://raw.githubusercontent.com/BinBashBanana/deploy-buttons/master/buttons/remade/vercel.svg"></a>
-<a target="_blank" href="https://app.netlify.com/start/deploy?repository=https://github.com/imbubbo/interstellar"><img alt="Deploy to Netlify" src="https://raw.githubusercontent.com/BinBashBanana/deploy-buttons/master/buttons/remade/netlify.svg"></a>
+<a target="_blank" href="https://replit.com/github/interstellarnetwork/interstellarnetwork.github.io"><img alt="Run on Replit" src="https://raw.githubusercontent.com/BinBashBanana/deploy-buttons/master/buttons/remade/replit.svg"></a>
+
 
 ### Project Activity
 
