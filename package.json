@@ -1,0 +1,20 @@
+{
+  "dependencies": {
+    "@tomphttp/bare-server-node": "^1.2.2",
+    "dotenv": "^16.0.3",
+    "find-in-files": "^0.5.0",
+    "node-static": "^0.7.11",
+    "serve-static": "^1.15.0"
+  },
+  "name": "Interstellar",
+  "version": "1.0.0",
+  "description": "Interstellar V4",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ."
+  },
+  "keywords": [
+    "proxy, interstellar games, interstellar network, interstellar"
+  ]
+}
