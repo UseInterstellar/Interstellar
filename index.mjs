@@ -50,5 +50,5 @@ httpServer.on('listening', () => {
 });
 
 httpServer.listen({
-	port: process.ENV.PORT,
+	port: process.env.PORT,
 });
