@@ -1,0 +1,1 @@
+f #fffffe 1 m 2 2 l 2 18 l 18 18 l 18 2 l 2 2 c f #e6e6e6 1 m 2 18 l 0 20 l 20 20 l 18 18 l 2 18 c f #b7b7b7 1 m 2 2 l 0 0 l 0 20 l 2 18 l 2 2 c f #b7b7b7 1 m 20 0 l 18 2 l 18 18 l 20 20 l 20 0 c f #8e8e8e 1 m 18 2 l 20 0 l 0 0 l 2 2 l 18 2 c
