@@ -1,0 +1,148 @@
+
+https://totaljerkface.com/get_level.hw
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+<style>
+        body {
+            overflow: hidden;
+            background-color: black;
+        }
+        /* width */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: #666666; 
+        }
+        
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #CCCCCC; 
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #CCCCCC; 
+        }
+
+        /* stupid firefox */
+        html {scrollbar-color: #CCCCCC #666666; scrollbar-width: thin; background-color: black;}
+    </style>
+</head>
+<body oncontextmenu="return false;">
+<script>
+        function get_url_parameter(sParam) {
+            var sPageURL = window.parent.location.search.substring(1),
+                sURLVariables = sPageURL.split("&"),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split("=");
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                }
+            }
+        };
+
+
+        function report_loading_issue() {
+            var el = document.createElement("img");
+            el.src = "/DEBUG2/wrong-ref.png?wl=" + window.location + "&wpl=" + window.parent.location + "&wlh=" + window.location.host + "&wplh=" + window.parent.location.host;
+            el.style.position = "absolute";
+            el.style.left = "-9999px";
+            el.style.top = "-9999px";
+            document.body.appendChild(el);
+
+            el.onerror = function() {
+                while(true) {
+                    eval("debugger");
+                }
+            }
+        }
+
+        (function() {
+            function getTitleLabel() {
+                var labels = [
+                    "JS Edition",
+                    "HTML5 Edition",
+                    "Flashless Version",
+                    "RIP Flash Edition",
+                    "Flash Is Dead!",
+                    "Farewell Flash...",
+                    "Without that plugin",
+                    "Does Jim know I put this here?"
+                ]
+                return labels[Math.floor(Math.random() * labels.length)];
+            }
+
+            window["HW_SETTINGS"] = {
+                fps: 30,
+                resolution: 1,
+                resolutionFullscreen: 2,
+                siteURL: "https://totaljerkface.com/",
+                // assetsURL: "http://hwjs.totaljerkface.com/",
+                pathPrefix: '',
+                titleLabel: getTitleLabel(),
+                titleLabelX: 645,
+                titleLabelY: 250,
+                titleLabelRotation: 0,
+                titleLabelSize: 20,
+                titleLabelColor: 0xfdfd65,
+                resolutionZoomIncreaseRatio: 0.5,
+                tesselation: "tess2",
+
+                
+            };
+
+
+            if(!(window.location != window.parent.location && window.location.host === "totaljerkface.com" && window.parent.location.host === "totaljerkface.com")) {
+                report_loading_issue();
+            } else {
+                // Set variables
+                if(!isNaN(get_url_parameter("replay_id"))) {
+                    window["HW_SETTINGS"]["replay_id"] = get_url_parameter("replay_id");
+                }
+                if(!isNaN(get_url_parameter("level_id"))) {
+                    window["HW_SETTINGS"]["level_id"] = get_url_parameter("level_id");
+                }
+
+                Object.freeze(window["HW_SETTINGS"]);
+
+                try {
+                    window.parent.console.debug("HW_SETTINGS:");
+                    window.parent.console.debug(window["HW_SETTINGS"]);
+                } catch(e) {
+
+                };
+
+
+                var d_el = document.createElement("script");
+                d_el.src = "js/dependencies.cee8cde6a4f5c6c550b4697c48ca45de.js";
+                d_el.onload = function() {
+                    var i_el = document.createElement("script");
+                    i_el.src = "js/index.aef1185ca2166a2790af1034e27f4c80.js";
+                    i_el.onload = function() {
+                        document.getElementById("loading-indicator").remove();
+                    }
+
+                    document.body.appendChild(i_el);
+                }
+                document.body.appendChild(d_el);
+            }
+        })();
+    </script>
+<div id="og-game-holder">
+<p style="color:white" id="loading-indicator">Loading...</p>
+</div>
+</body>
+</html>
