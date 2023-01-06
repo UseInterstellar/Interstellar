@@ -1,0 +1,82 @@
+<html>
+<head>
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <style>
+        body {
+            overflow: hidden;
+            background-color: black;
+        }
+        /* width */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: ¦666666; 
+        }
+        
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: ¦CCCCCC; 
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: ¦CCCCCC; 
+        }
+
+        /* stupid firefox */
+        html {scrollbar-color: ¦CCCCCC ¦666666; scrollbar-width: thin; background-color: black;}
+    </style>
+
+</head>
+<body oncontextmenu="return false;">
+    <script>
+        function report_loading_issue() {
+            var el = document.createElement("img");
+            el.src = "/DEBUG2/wrong-ref.png?wl=" + window.location + "&wpl=" + window.parent.location + "&wlh=" + window.location.host + "&wplh=" + window.parent.location.host;
+            el.style.position = "absolute";
+            el.style.left = "-9999px";
+            el.style.top = "-9999px";
+            document.body.appendChild(el);
+        }
+		const pathToMyURL = 'https://unblockedgames.education/storage/happy-wheels/get_level.hw';
+		
+
+        (function() {
+            window["HW_SETTINGS"] = {};
+            if(!(window.location != window.parent.location && window.location.host === "totaljerkface.com" && window.parent.location.host === "totaljerkface.com")) {
+            }
+
+
+            var d_el = document.createElement("script");
+			
+            d_el.src = "js/dependencies.ac8072eb8a22557c1b4828699b35bec7.js";
+            d_el.onload = function() {
+                var i_el = document.createElement("script");
+                i_el.src = "js/index.js";
+                // i_el.integrity = "sha384-GKAptyGydgK2fCaxFPGnAip+60TiYdFsB22A5ax8TB2dqT8ockqX1XI1rsr6fJIH";
+                i_el.onload = function() {
+                    document.getElementById("loading-indicator").remove();
+                }
+
+                document.body.appendChild(i_el);
+            }
+            document.body.appendChild(d_el);
+        })();
+    </script>
+
+    <div id="og-game-holder">
+        <p style="color:white" id="loading-indicator">Loading...</p>
+    </div>
+	
+		
+</body>
+</html>
