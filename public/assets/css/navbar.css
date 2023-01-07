@@ -6,7 +6,7 @@
 }
 
 html {
-  background: url('/assets/img/background/minecraft-shaders.png') no-repeat center center fixed;
+  background: url('/assets/images/background/minecraft-shaders.png') no-repeat center center fixed;
   background-size: cover;
   max-width: 100%;
   background-color: black
@@ -55,4 +55,20 @@ nav a {
   nav li {
     padding: 0.5rem 0;
   }
+}
+a:visited {
+  color: white;
+  text-decoration: none;
+
+}
+
+a:hover {
+  color: #ffffff98;
+  text-decoration: none;
+
+}
+
+a {
+  color: white;
+  text-decoration: none;
 }
