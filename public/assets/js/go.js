@@ -1,8 +1,15 @@
+function go(value) {
+  let iframe = document.querySelector(".iframe.active");
   window.navigator.serviceWorker
-    .register("./sw.js?userkey=" + userKey, {
+    .register("./sw.js", {
       scope: __uv$config.prefix,
     })
     .then(() => {
-    //Service worker is registered, do ur href thingy here.
-
-});
+      let url = value.trim();
+      if (!isUrl(url)) url = "https://www.google.com/search?q=" + url;
+      else if (!(url.startsWith("https://") || url.startsWith("http://")))
+        url = "https://" + url;
+      location.href = __uv$config.prefix + __uv$config.encodeUrl(url);
+ 
+    });
+}
