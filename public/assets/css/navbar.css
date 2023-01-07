@@ -4,7 +4,6 @@
   padding: 0;
   margin: 0;
 }
-
 html {
   background: url('/assets/images/background/minecraft-shaders.png') no-repeat center center fixed;
   background-size: cover;
@@ -13,8 +12,9 @@ html {
 }
 
 body {
-  font-family: Arial, Tahoma, Serif;
-  color: white;
+  color: #fff;
+        overflow-x: hidden;
+        font-family: "Poppins", sans-serif;
 }
 
 nav {
