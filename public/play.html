@@ -178,6 +178,7 @@
   <script src="/js/index.js"></script>
   <script src="./uv/uv.bundle.js"></script>
   <script src="./uv/uv.config.js"></script>
+  <script src="/public/assets/js/search.js"></script>
   <script src="index.js"></script>
 
        <!-- Google tag (gtag.js) -->
@@ -203,12 +204,10 @@
 <li><a onclick="widgetBot()">Widgetbot</a></li>
   </ul>
 </nav>
-  <div>
-    <center>
-    <button onclick="randomlink()" class="random-btn">Random Game Button (TESTING)</button>
-  </center>
-</div>
-<br>
+  <br>
+  <input type="text" id="mySearch" onkeyup="myFunction()" placeholder="Search.." >
+    <button onclick="randomlink()" class="random-btn">Random Game Button</button>
+    <div class="test">
  <div class="row">
   <div style="padding-left: 20px" id="buttonDiv7">
     <div class="row">
@@ -538,6 +537,8 @@
 </div>
 </div>
 </div>
+</div>
+
 
 
 
