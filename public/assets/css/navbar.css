@@ -52,3 +52,30 @@ a {
   color: white;
   text-decoration: none;
 }
+.random-btn {
+    text-align: center;
+    margin-top: 10px;
+    width: 200px;
+    height: 40px;
+    background-color: rgba(59, 56, 56, 0.356);
+    border: none;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 1em;
+    color: white;
+    transition: all 0.5s ease-in-out;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+}
+
+.random-btn:hover{
+    text-align: center;
+    background-color: rgba(59, 56, 56, 0.356);
+    color: rgba(0, 0, 0, 0.534);
+    scale: 1.1;
+
+}
