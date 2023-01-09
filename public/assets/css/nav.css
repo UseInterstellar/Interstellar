@@ -4,13 +4,6 @@
   padding: 0;
   margin: 0;
 }
-html {
-  background: url('/assets/images/background/minecraft-shaders.png') no-repeat center center fixed;
-  background-size: cover;
-  max-width: 100%;
-  background-color: black
-}
-
 body {
   color: #fff;
         overflow-x: hidden;
@@ -78,4 +71,11 @@ a {
     color: rgba(0, 0, 0, 0.534);
     scale: 1.1;
 
+}
+
+html {
+  background: url('/assets/images/background/minecraft-shaders.png') no-repeat center center fixed;
+  background-size: cover;
+  max-width: 100%;
+  background-color: #111;
 }
