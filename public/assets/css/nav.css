@@ -74,8 +74,7 @@ a {
 }
 
 html {
-  background: url('/assets/images/background/minecraft-shaders.png') no-repeat center center fixed;
   background-size: cover;
   max-width: 100%;
-  background-color: #111;
+  background-color: #222;
 }
