@@ -1,0 +1,28 @@
+html, body {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    cursor: none;
+    background:rgb(248, 237, 212);
+}
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+span {
+    color: blue;
+    bottom: 0px;
+    position: absolute;
+    right: 0px;
+    display: none;
+    font-size: 40pt;
+    font-weight: bold;
+    text-align: right;
+    vertical-align: bottom;
+    font-family: monospace;
+    display:none;
+}
