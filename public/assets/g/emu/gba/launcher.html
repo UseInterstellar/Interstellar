@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="shortcut icon" href="Binaries/gb.ico">
+        <title>GBA Emulator</title>
+        <meta charset="UTF-8">
+            <!--Required Scripts-->
+            <script src="IodineGBA/includes/TypedArrayShim.js"></script>
+            <script src="IodineGBA/core/Cartridge.js"></script>
+            <script src="IodineGBA/core/DMA.js"></script>
+            <script src="IodineGBA/core/Emulator.js"></script>
+            <script src="IodineGBA/core/Graphics.js"></script>
+            <script src="IodineGBA/core/RunLoop.js"></script>
+            <script src="IodineGBA/core/Memory.js"></script>
+            <script src="IodineGBA/core/IRQ.js"></script>
+            <script src="IodineGBA/core/JoyPad.js"></script>
+            <script src="IodineGBA/core/Serial.js"></script>
+            <script src="IodineGBA/core/Sound.js"></script>
+            <script src="IodineGBA/core/Timer.js"></script>
+            <script src="IodineGBA/core/Wait.js"></script>
+            <script src="IodineGBA/core/CPU.js"></script>
+            <script src="IodineGBA/core/Saves.js"></script>
+            <script src="IodineGBA/core/sound/FIFO.js"></script>
+            <script src="IodineGBA/core/sound/Channel1.js"></script>
+            <script src="IodineGBA/core/sound/Channel2.js"></script>
+            <script src="IodineGBA/core/sound/Channel3.js"></script>
+            <script src="IodineGBA/core/sound/Channel4.js"></script>
+            <script src="IodineGBA/core/CPU/ARM.js"></script>
+            <script src="IodineGBA/core/CPU/THUMB.js"></script>
+            <script src="IodineGBA/core/CPU/CPSR.js"></script>
+            <script src="IodineGBA/core/graphics/Renderer.js"></script>
+            <script src="IodineGBA/core/graphics/RendererProxy.js"></script>
+            <script src="IodineGBA/core/graphics/BGTEXT.js"></script>
+            <script src="IodineGBA/core/graphics/BG2FrameBuffer.js"></script>
+            <script src="IodineGBA/core/graphics/BGMatrix.js"></script>
+            <script src="IodineGBA/core/graphics/AffineBG.js"></script>
+            <script src="IodineGBA/core/graphics/ColorEffects.js"></script>
+            <script src="IodineGBA/core/graphics/Mosaic.js"></script>
+            <script src="IodineGBA/core/graphics/OBJ.js"></script>
+            <script src="IodineGBA/core/graphics/OBJWindow.js"></script>
+            <script src="IodineGBA/core/graphics/Window.js"></script>
+            <script src="IodineGBA/core/graphics/Compositor.js"></script>
+            <script src="IodineGBA/core/memory/DMA0.js"></script>
+            <script src="IodineGBA/core/memory/DMA1.js"></script>
+            <script src="IodineGBA/core/memory/DMA2.js"></script>
+            <script src="IodineGBA/core/memory/DMA3.js"></script>
+            <script src="IodineGBA/core/cartridge/SaveDeterminer.js"></script>
+            <script src="IodineGBA/core/cartridge/SRAM.js"></script>
+            <script src="IodineGBA/core/cartridge/FLASH.js"></script>
+            <script src="IodineGBA/core/cartridge/EEPROM.js"></script>
+            <script src="user_scripts/XAudioJS/swfobject.js"></script>
+            <script src="user_scripts/XAudioJS/resampler.js"></script>
+            <script src="user_scripts/XAudioJS/XAudioServer.js"></script>
+            <script src="user_scripts/IodineGBAROMLoadGlueCode.js"></script>
+            <script src="user_scripts/IodineGBAJoyPadGlueCode.js"></script>
+            <script src="user_scripts/IodineGBASavesGlueCode.js"></script>
+            <script src="user_scripts/IodineGBAGraphicsGlueCode.js"></script>
+            <script src="user_scripts/IodineGBAAudioGlueCode.js"></script>
+            <script src="user_scripts/IodineGBACoreGlueCode.js"></script>
+            <script src="user_scripts/base64.js"></script>
+            <link rel="stylesheet" href="user_css/main.css">
+    </head>
+    <body>
+        <canvas id="emulator_target" width="240px" height="160px"></canvas>
+        <span id="tempMessage"></span>
+    </body>
+</html>
