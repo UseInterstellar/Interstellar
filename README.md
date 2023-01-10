@@ -17,18 +17,6 @@ Interstellar is completely open-source so you can deploy it by forking or deploy
 ### Project Activity
 
 ![Alt](https://repobeats.axiom.co/api/embed/cb9f30f479ea962536e2507e469a04718173bf3c.svg "Repobeats analytics image")
- 
-### Contact Us
-
-### Discord
-Bubbo#3099
-
-Bigfoot#9033
-
-### Email
- **<a href="mailto:bigfoot.gaming9999@gmail.com">Bigfoot</a>**
- 
- **<a href="mailto:bubbo@interstellars.games">Bubbo</a>**
 
 
 
