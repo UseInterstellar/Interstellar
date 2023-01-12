@@ -26,6 +26,8 @@ Interstellar is completely open-source so you can deploy it by forking or deploy
 ### Credits
 
  <a href="https://github.com/Abyss-Services/abyss-browser">Abyss Browser</a>
+  <a href="https://github.com/3kh0/3kh0.github.io">Echo (3kh0)</a>
+
 
 
 
