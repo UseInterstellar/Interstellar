@@ -1211,7 +1211,7 @@ html {
         document.getElementById('urlbar').value = url || '';
         var frameId = tabNum++;
         var frame = document.createElement('IFRAME');
-        url ? frame.setAttribute('src', 'https://' + location.host + '/service/' + xor(url)) : frame.setAttribute('src', '/main.html')
+        url ? frame.setAttribute('src', 'https://' + location.host + '/service/' + xor(url)) : frame.setAttribute('src', 'main.html')
         frame.setAttribute('allow', 'fullscreen');
         document.body.appendChild(frame);
         frame.setAttribute('class', 'iframething');
