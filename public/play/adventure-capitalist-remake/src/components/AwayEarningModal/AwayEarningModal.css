@@ -1,0 +1,11 @@
+.come-back-info {
+  margin: 30px 0;
+  font-size: 24px;
+  text-align: center;
+}
+.come-back-info .away-time {
+  color: #df8a4e;
+}
+.come-back-info .earning-amount {
+  color: #1993ce;
+}
