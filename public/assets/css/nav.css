@@ -1,13 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap');
-
+@import "https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap";
 * {
   padding: 0;
   margin: 0;
 }
 body {
   color: #fff;
-        overflow-x: hidden;
-        font-family: "Poppins", sans-serif;
+  overflow-x: hidden;
+  font-family: poppins, sans-serif;
 }
 nav {
   display: flex;
@@ -15,65 +14,25 @@ nav {
   align-items: center;
   padding: 1rem 2rem;
 }
-
 nav ul {
   display: flex;
   list-style: none;
 }
-
 nav li {
   padding-left: 1rem;
 }
-
 nav a {
   text-decoration: none;
-  color: white;
+  color: #fff;
 }
-a:visited {
-  color: white;
+nav a:visited {
+  color: #fff;
   text-decoration: none;
-
 }
-
-a:hover {
+nav a:hover {
   color: #ffffff98;
   text-decoration: none;
-
 }
-
-a {
-  color: white;
-  text-decoration: none;
-}
-.random-btn {
-    text-align: center;
-    margin-top: 10px;
-    width: 200px;
-    height: 40px;
-    background-color: rgba(59, 56, 56, 0.356);
-    border: none;
-    border-radius: 12px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Source Sans Pro', sans-serif;
-    font-size: 1em;
-    color: white;
-    transition: all 0.5s ease-in-out;
-    cursor: pointer;
-    transition: all 0.5s ease-in-out;
-}
-
-.random-btn:hover{
-    text-align: center;
-    background-color: rgba(59, 56, 56, 0.356);
-    color: rgba(0, 0, 0, 0.534);
-    scale: 1.1;
-
-}
-
 html {
-  background-size: cover;
-  max-width: 100%;
-  background-color: #111;}
+background-color: #000
+}
