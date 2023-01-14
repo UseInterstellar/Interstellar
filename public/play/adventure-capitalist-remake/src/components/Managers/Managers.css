@@ -1,0 +1,45 @@
+.manager-btn {
+  font-size: 24px;
+  border: 2px solid #dedede;
+  padding: 10px 30px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.manager-btn.active {
+  background-color: #df8a4e;
+}
+.manager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: auto;
+  margin-bottom: 20px;
+  max-width: 450px;
+}
+.manager .manager-info {
+  margin-right: 15px;
+}
+.manager .manager-name {
+  font-size: 22px;
+  color: #df8a4e;
+}
+.manager .manager-desc {
+  font-size: 18px;
+  color: #666666;
+}
+.manager button {
+  padding: 10px;
+  width: 150px;
+  font-size: 22px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+.manager button:not([disabled]) {
+  background-color: #1993ce;
+  color: #ffffff;
+}
+.manager-list {
+  max-height: 65vh;
+  overflow: auto;
+}
