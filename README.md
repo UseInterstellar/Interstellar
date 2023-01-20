@@ -9,9 +9,11 @@ Interstellar Games is one of the best modern unblocked games sites. Check it out
 </p>  
 
 ### Deploying
-Interstellar is completely open-source so you can deploy it by forking or deploying it below.
+Interstellar is completely open source, so you can deploy it to these services!
+
+**Note:** All of the built in games will **NOT** work, since these services have a size limit.
   
-<a target="_blank" href="https://replit.com/github/interstellarnetwork/interstellar"><img alt="Run on Replit" src="https://raw.githubusercontent.com/BinBashBanana/deploy-buttons/master/buttons/remade/replit.svg"></a>
+<a target="_blank" href="https://replit.com/github/interstellarnetwork/interstellar-v4"><img alt="Run on Replit" src="https://raw.githubusercontent.com/BinBashBanana/deploy-buttons/master/buttons/remade/replit.svg"></a>
 
 
 ### Project Activity
