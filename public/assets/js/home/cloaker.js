@@ -6,7 +6,7 @@ try {
 }
 
 if (!inFrame && !navigator.userAgent.includes("Firefox")) {
-    const popup = window.open("about:blank", "_blank");
+    const popup = window.open("", "", "width=1000,height=600");
     if (!popup || popup.closed) {
         alert("Allow popups and redirects to hide this from showing up in your history.");
     } else {
