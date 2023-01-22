@@ -44,19 +44,13 @@ div {
 }
 
 body {
-  background-color: #111;
-  background-image: url("/media/banners/stars.png");
+  background: #111;
 }
 
 html,
 body {
   margin: 0;
   height: 100%;
-}
-
-
-.bg-black {
-  background-color: #000;
 }
 
 .w-full {
@@ -88,7 +82,7 @@ body {
 }
 
 .bg-gray-900 {
-  background-color: #1a202c;
+  background-color: #111;
 }
 
 .w-48 {
