@@ -133,6 +133,13 @@ nav ul {
 
   gtag('config', 'G-WKJQ5QHQTJ');
 </script>
+<script>
+// Get the encoded URL from the query parameter
+let encodedUrl = new URL(location.href).searchParams.get("url");
+
+// Update the iframe src
+document.querySelector("#iframeId").src = encodedUrl;	
+</script>
 </head>
 <body>
 <nav>
