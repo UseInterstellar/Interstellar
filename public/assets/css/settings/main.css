@@ -48,6 +48,13 @@ body {
   background-image: url("/media/banners/stars.png");
 }
 
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+
 .bg-black {
   background-color: #000;
 }
