@@ -133,13 +133,6 @@ nav ul {
 
   gtag('config', 'G-WKJQ5QHQTJ');
 </script>
-<script>
-// Get the encoded URL from the query parameter
-let encodedUrl = new URL(location.href).searchParams.get("url");
-
-// Update the iframe src
-document.querySelector("#iframeId").src = encodedUrl;	
-</script>
 </head>
 <body>
 <nav>
@@ -159,5 +152,12 @@ document.querySelector("#iframeId").src = encodedUrl;
 <html>
 
 <iframe src="https://example.com" id="iframeId" style="bottom: 0;" style="border:0px #ffffff none;" name="myiFrame" scrolling="yes" frameborder="0" marginheight="0px" marginwidth="0px" height="100%" width="100%" allowfullscreen ></iframe>
+<script>
+// Get the encoded URL from the query parameter
+window.onload = function() {
+  let encodedUrl = sessionStorage.getItem("encodedUrl");
+  document.querySelector("#iframeid").src = encodedUrl;
+}
+</script>
 </html>
 </html>
