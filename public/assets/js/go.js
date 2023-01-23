@@ -9,7 +9,8 @@ function go(value) {
       if (!isUrl(url)) url = "https://www.google.com/search?q=" + url;
       else if (!(url.startsWith("https://") || url.startsWith("http://")))
         url = "https://" + url;
-      location.href = __uv$config.prefix + __uv$config.encodeUrl(url);
- 
+      //pass the encoded url to the second page
+      sessionStorage.setItem("encodedUrl", __uv$config.encodeUrl(url));
+      location.href = "proxy-viewer.html";
     });
 }
