@@ -1,13 +1,17 @@
-// Hello there!
-//
-// Script by 3kh0
-//
-// If you want to add my games to your site, please reach out at my email: echo-the-coder@tuta.io, or discord: 3kh0_#1791
-
 console.warn(
     "%cNote!",
     "color: purple; font-weight: 600; background: yellow; padding: 0 5px; border-radius: 5px",
-    "If you want to add 3kh0s games to your site, please reach out at his email: echo-the-coder@tuta.io\nPlease do not just add them without asking him first! Thank you!"
+    "https://discord.gg/gointerstellar"
+  );
+  console.warn(
+    "%cNote!",
+    "color: purple; font-weight: 600; background: yellow; padding: 0 5px; border-radius: 5px",
+    "https://discord.gg/gointerstellar"
+  );
+  console.warn(
+    "%cNote!",
+    "color: purple; font-weight: 600; background: yellow; padding: 0 5px; border-radius: 5px",
+    "https://discord.gg/gointerstellar"
   );
   
   function script(text) {
