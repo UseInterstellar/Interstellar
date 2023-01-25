@@ -1,0 +1,19 @@
+{
+    "companyName": "Kiloo Games",
+    "productName": "Subway Surfers",
+    "productVersion": "1.94.0",
+    "dataUrl": "SanFrancisco.data.unityweb",
+    "wasmCodeUrl": "SanFrancisco.wasm.code.unityweb",
+    "wasmFrameworkUrl": "SanFrancisco.wasm.framework.unityweb",
+    "asmCodeUrl": "SanFrancisco.asm.code.unityweb",
+    "asmMemoryUrl": "SanFrancisco.asm.memory.unityweb",
+    "asmFrameworkUrl": "SanFrancisco.asm.framework.unityweb",
+    "TOTAL_MEMORY": 369098752,
+    "graphicsAPI": ["WebGL 2.0","WebGL 1.0"],
+    "webglContextAttributes": {"preserveDrawingBuffer": false},
+    "splashScreenStyle": "Dark",
+    "backgroundColor": "#231F20",
+    "developmentBuild": false,
+    "multithreading": false,
+    "unityVersion": "2019.4.18f1"
+    }
