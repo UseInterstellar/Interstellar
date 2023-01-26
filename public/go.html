@@ -3,19 +3,14 @@
  <title>Classes</title>
   <link rel="icon" type="image/x-icon" href="assets/images/branding/favicon/favicon.png">
 	<link rel="shortcut icon" href="assets/images/branding/favicon/favicon.png" type="image/x-icon">
-  <script src="assets/js/main.js"></script>
-  <script src="./uv/uv.bundle.js"></script>
-  <script src="./uv/uv.config.js"></script>
-  <script src="assets/js/random.js"></script>
-  <script src="index.js"></script>
+  <link rel="stylesheet" href="assets/css/nav.css">
+ <script src="assets/js/main.js"></script>
   <script src="assets/js/random.js"></script>
   <script src="assets/js/search.js"></script>
   <script src="assets/js/go.js"></script>
-  <link rel="stylesheet" href="assets/css/nav.css">
   <script src="/js/index.js"></script>
   <script src="./uv/uv.bundle.js"></script>
   <script src="./uv/uv.config.js"></script>
-  <script src="assets/js/search.js"></script>
   <script src="index.js"></script>
 <style>
 .tip {
@@ -66,7 +61,7 @@ height: 51.4px;
 .controlpanel .controls input {
 background: none;
 border: none;
-margin: 0px 10px;
+margin: 0px 20px;
 color: white;
 flex-grow: 1;
 outline: none;
@@ -128,7 +123,9 @@ margin: 0px 2px;
 <div style="" class="controlpanel">
             <div class="controls">
                 <img class="icon" src="/assets/images/branding/favicon/interstellar.ico">
-                <input disabled="disabled" value="">
+                  <form>
+                <input style="font-size: 24px" enabled="disabled" value="">
+                  </form>
                 <button class="button Fullscreen" id="fullscreen-button" style="margin-right: 5px">Fullscreen</button>
                 <button class="button Home" id="home-button" >Home</button>
             </div>
