@@ -34,5 +34,25 @@ nav a:hover {
   text-decoration: none;
 }
 html {
-background-color: #000
+  background-color: #000;
+}
+
+div.searchbar {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+div.searchbar {
+  display: block;
+  text-align: center;
+}
+form {
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  margin: 5px 0;
 }
