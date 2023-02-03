@@ -15,6 +15,7 @@ Interstellar is completely open source, so you can deploy it to these services!
   
 <a target="_blank" href="https://replit.com/github/interstellarnetwork/interstellar-v4"><img alt="Run on Replit" src="https://raw.githubusercontent.com/BinBashBanana/deploy-buttons/master/buttons/remade/replit.svg"></a>
 [![Remix on Glitch](https://binbashbanana.github.io/deploy-buttons/buttons/remade/glitch.svg)](https://glitch.com/edit/#!/import/github/interstellarnetwork/interstellar-v4)
+[![Run on Google Cloud](https://binbashbanana.github.io/deploy-buttons/buttons/remade/googlecloud.svg)](https://deploy.cloud.run/?git_repo=https://github.com/interstellarnetwork/interstellar)
 
 
 
