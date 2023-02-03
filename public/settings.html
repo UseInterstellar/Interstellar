@@ -143,11 +143,8 @@
 </div>
 
 <script>
-  var enableJS = localStorage.getItem("enableJS") === "on";
-  document.querySelector("#toggle-galaxy").value = enableJS ? "on" : "off";
   document.querySelector("#toggle-galaxy").addEventListener("change", function() {
-    enableJS = this.value === "on";
-    localStorage.setItem("enableJS", enableJS ? "on" : "off");
+    localStorage.setItem("enableJS", this.value === "on" ? "on" : "off");
   });
 </script>
 
