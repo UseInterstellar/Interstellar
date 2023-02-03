@@ -134,5 +134,22 @@
         <option value="true">Enabled</option>
       </select>
     </div>
+<div>
+  <h2>Tab Cloaking</h2>
+  <select id="toggle-galaxy" class="bg-gray-900 w-48 p-2 rounded-md text-white">
+    <option value="off">Disabled</option>
+    <option value="on">Enabled</option>
+  </select>
+</div>
+
+<script>
+  var enableJS = localStorage.getItem("enableJS") === "on";
+  document.querySelector("#toggle-galaxy").value = enableJS ? "on" : "off";
+  document.querySelector("#toggle-galaxy").addEventListener("change", function() {
+    enableJS = this.value === "on";
+    localStorage.setItem("enableJS", enableJS ? "on" : "off");
+  });
+</script>
+
   </body>
 </html>
