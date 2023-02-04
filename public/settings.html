@@ -135,18 +135,17 @@
       </select>
     </div>
 <div>
-  <h2>Toggle galaxy</h2>
-  <select id="toggle-galaxy" class="bg-gray-900 w-48 p-2 rounded-md text-white">
-    <option value="off">Disabled</option>
-    <option value="on">Enabled</option>
-  </select>
-</div>
+<h2>Toggle galaxy</h2>
+<select id="toggle-galaxy" class="bg-gray-900 w-48 p-2 rounded-md text-white">
+  <option value="off">Disabled</option>
+  <option value="on">Enabled</option>
+</select>
 
 <script>
-  document.querySelector("#toggle-galaxy").addEventListener("change", function() {
-    localStorage.setItem("enableJS", this.value === "on" ? "on" : "off");
+  document.getElementById("toggle-galaxy").addEventListener("change", function(event) {
+    let enableJS = event.target.value === "on";
+    localStorage.setItem("enableJS", event.target.value);
   });
 </script>
-
   </body>
 </html>
