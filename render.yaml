@@ -5,7 +5,6 @@ services:
     env: docker
     repo: https://github.com/interstellarnetwork/interstellar.git # optional
     region: oregon # optional (defaults to oregon)
-    plan: standard # optional (defaults to starter)
     branch: master # optional (defaults to master)
     rootDir: main
   
