@@ -1,4 +1,4 @@
-var enableJS = localStorage.getItem("enableJS") === "on";
+var enableJS = localStorage.getItem("enableJS") === "on" || true;
 if (enableJS) {
 function randRange(min, max) {
     return Math.random() * (max - min) + min;
