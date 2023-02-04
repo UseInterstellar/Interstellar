@@ -1,10 +1,7 @@
 services:
   # A Docker web service
   - type: web
-    name: webdis
+    name: interstellar
     env: docker
     repo: https://github.com/interstellarnetwork/interstellar.git # optional
-    region: oregon # optional (defaults to oregon)
-    branch: master # optional (defaults to master)
-    rootDir: main
   
