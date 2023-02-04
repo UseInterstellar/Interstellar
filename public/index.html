@@ -27,6 +27,12 @@
   gtag('js', new Date());
   gtag('config', 'G-WKJQ5QHQTJ');
 </script>
+<script>
+if (!localStorage.getItem("enableJS")) {
+  localStorage.setItem("enableJS", "on");
+}
+var enableJS = localStorage.getItem("enableJS") === "on";
+</script>
 </head>
  	<!--NAVBAR-->
     </body>
