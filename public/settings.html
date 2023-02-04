@@ -142,8 +142,17 @@
 </select>
 
 <script>
+  document.addEventListener("DOMContentLoaded", function() {
+    let storedValue = localStorage.getItem("enableJS");
+    let toggleGalaxy = document.getElementById("toggle-galaxy");
+    if (storedValue === "on") {
+      toggleGalaxy.value = "on";
+    } else {
+      toggleGalaxy.value = "off";
+    }
+  });
+
   document.getElementById("toggle-galaxy").addEventListener("change", function(event) {
-    let enableJS = event.target.value === "on";
     localStorage.setItem("enableJS", event.target.value);
   });
 </script>
