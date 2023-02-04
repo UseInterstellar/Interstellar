@@ -1,7 +1,5 @@
-services:
-  # A Docker web service
-  - type: web
+
+  services:
+    type: web
     name: interstellar
     env: docker
-    repo: https://github.com/interstellarnetwork/interstellar.git # optional
-  
