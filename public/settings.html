@@ -134,5 +134,27 @@
         <option value="true">Enabled</option>
       </select>
     </div>
+<div>
+<h2>Toggle galaxy</h2>
+<select id="toggle-galaxy" class="bg-gray-900 w-48 p-2 rounded-md text-white">
+  <option value="off">Disabled</option>
+  <option value="on">Enabled</option>
+</select>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    let storedValue = localStorage.getItem("enableJS");
+    let toggleGalaxy = document.getElementById("toggle-galaxy");
+    if (storedValue === "on") {
+      toggleGalaxy.value = "on";
+    } else {
+      toggleGalaxy.value = "off";
+    }
+  });
+
+  document.getElementById("toggle-galaxy").addEventListener("change", function(event) {
+    localStorage.setItem("enableJS", event.target.value);
+  });
+</script>
   </body>
 </html>
