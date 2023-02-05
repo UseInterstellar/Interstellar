@@ -1702,14 +1702,14 @@
       newTab = (url) => {
         // creates a new hypertab!!
         chromeTabs.addTab({
-          title: 'Google',
-          favicon: 'favicon.ico',
+          title: 'Interstellar',
+          favicon: 'assets/images/branding/favicon/interstellar.png',
         });
         console.log(url)
         document.getElementById('urlbar').value = url || '';
         var frameId = tabNum++;
         var frame = document.createElement('IFRAME');
-        url ? frame.setAttribute('src', 'https://' + location.host + '/service/' + xor(url)) : frame.setAttribute('src', 'search.html')
+        url ? frame.setAttribute('src', 'https://' + location.host + '/service/' + xor(url)) : frame.setAttribute('src', 'inner-frame.html')
         frame.setAttribute('allow', 'fullscreen');
         document.body.appendChild(frame);
         frame.setAttribute('class', 'iframething');
@@ -1847,6 +1847,11 @@
 
     <div>
     </div>
+        <script src="uv/uv.bundle.js"></script>
+    <script src="uv/uv.config.js"></script>
+    <script src="index.js"></script>
+    <script src="assets/js/go.js"></script>
 </body>
+  
 
 </html>
