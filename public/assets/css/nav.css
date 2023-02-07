@@ -13,6 +13,7 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
+  background: transparent;
 }
 nav ul {
   display: flex;
