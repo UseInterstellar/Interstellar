@@ -175,6 +175,49 @@
     scale: 1.1;
 
 }
+.card {
+  display: inline-block;
+  position: relative;
+}
+
+.card:after {    
+  display: block;a
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  top: 100%;
+  width: 0;
+  height: 3px;
+  background: white;
+  content: "";
+transition: width 0.45s ease-out, left 0.45s ease-out, transform 0.45s cubic-bezier(0.86, 0, 0.07, 1);
+}
+.card:hover:after { 
+  width: 100%; 
+  left: 0; 
+}
+
+.red {
+  display: inline-block;
+  position: relative;
+}
+
+.red:after {    
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  top: 100%;
+  width: 0;
+  height: 3px;
+  background: white;
+  content: "";
+transition: width 0.45s ease-out, left 0.45s ease-out, transform 0.45s cubic-bezier(0.86, 0, 0.07, 1);
+}
+.red:hover:after { 
+  width: 100%; 
+  left: 0; 
+}
   </style>
   <script src="/js/index.js"></script>
   <script src="./uv/uv.bundle.js"></script>
@@ -197,13 +240,13 @@
   <h2>Interstellar</h2>
   <ul>
       
-      <li><a href="/./">Home</a></li>
-    <li><a href="/play.html">Games</a></li>
-    <li><a href="/apps.html">Apps</a></li>
-    <li><a href="/math.html">Exploits</a></li>
-<li><a href="/search.html">Proxies</a></li>
-<li><a href="/widgetbot.html">Widgetbot</a></li>
-<li><a href="/settings.html">Settings</a></li>
+      <li><a class="red" href="/./">Home</a></li>
+    <li><a class="red" href="/play.html">Games</a></li>
+    <li><a class="red" href="/apps.html">Apps</a></li>
+    <li><a class="red" href="/math.html">Exploits</a></li>
+<li><a class="red" href="/search.html">Proxies</a></li>
+<li><a class="red" href="/widgetbot.html">Widgetbot</a></li>
+<li><a class="red" href="/settings.html">Settings</a></li>
   </ul>
 </nav>
   <br>
