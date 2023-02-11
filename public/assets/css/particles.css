@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 .classic {
-	background: #000;
+	background: #111;
 	color: white;
 	margin: 0;
-	--bg-c: #000;
+	--bg-c: #111;
 	overflow: hidden;
 }
 .header {
