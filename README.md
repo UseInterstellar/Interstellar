@@ -11,7 +11,7 @@ Interstellar is one of the best modern unblocked games sites. Check it out <a hr
 # Deploying
 Interstellar is completely open source, so you can deploy it to these services!
 
-**Note:** All of the built in games will **NOT** work one some of these services, since these services have a size limit.
+**Note:** All of the built in games will **NOT** work on some of these services, since these services have a size limit.
   
 ### Free Services
 
