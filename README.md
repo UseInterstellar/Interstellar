@@ -2,16 +2,16 @@
 
 # About Us
 
-Interstellar is one of the best modern unblocked games sites. Check it out <a href="https://interstellars.games">here</a>, if this link is blocked you can get more links in our <a href="https://dsc.gg/interstellarntwork">Discord Server!</a>
+Interstellar is one of the best modern unblocked game sites. Check it out <a href="https://interstellars.games">here</a>. If this link is blocked, you can get more links in our <a href="https://dsc.gg/interstellarntwork">Discord Server!</a>
 
 <a href="https://discord.gg/gointerstellar"><img height="30px" src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white"><img></a>
 <a href="https://github.com/interstellarnetwork"><img height="30px" src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white"><img></a>
 </p>  
 
 # Deploying
-Interstellar is completely open source, so you can deploy it to these services!
+Interstellar is completely open source, so you can deploy it to these services.
 
-**Note:** All of the built in games will **NOT** work on some of these services, since these services have a size limit.
+**Note:**  All of the built-in games will **NOT** work on certain services, since these services have a size limit.
   
 ### Free Services
 
@@ -42,7 +42,7 @@ Interstellar is completely open source, so you can deploy it to these services!
 
 # Credits
 
-Thank you Echo (3kh0) for allowing us to use some of his games.
+Thank you Echo (3kh0), for allowing us to use some of his games.
 
 
 
