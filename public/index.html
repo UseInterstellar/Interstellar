@@ -28,21 +28,78 @@
 </script>
 </head>
  	<!--NAVBAR-->
-    </body>
-</html>
-<nav>
-    <h2>Interstellar</h2>
-    <ul>
-      <li><a class="red" href="/./">Home</a></li>
-    <li><a class="red" href="/play.html">Games</a></li>
-    <li><a class="red" href="/apps.html">Apps</a></li>
-    <li><a class="red" href="/math.html">Exploits</a></li>
-<li><a class="red" href="/search.html">Proxies</a></li>
-<li><a class="red" href="/widgetbot.html">Widgetbot</a></li>
-<li><a class="red" href="/settings.html">Settings</a></li>
-    </ul>
-</nav>
 	<body>
+<style>
+* {box-sizing: border-box;}
+
+body { 
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #555; 
+}
+
+.header2 {
+  overflow: hidden;
+  background-color: transparent;
+  padding: 20px 10px;
+}
+
+.header2 a {
+  margin: 0;
+  float: left;
+  color: black;
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px; 
+  line-height: 25px;
+  color: white;
+  border-color: red;
+  border-radius: 4px;
+}
+
+.header2 a.logo {
+  margin: 0;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.header2 a:hover {
+  background-color: transparent;
+  color: white;
+  cursor: pointer;
+
+}
+
+.header2 a.active {
+  background-color: #333;
+  color: white;
+}
+
+.header2-right {
+  float: right;
+
+}
+
+@media screen and (max-width: 500px) {
+  .header2 a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+  
+  .header2-right {
+    float: none;
+  }
+}
+</style>
+    <div class="header2">
+  <a href="#default" class="logo">Interstellar</a>
+  <div class="header2-right">
+    <a class="active" href="#home">Games</a>
+    <a href="#contact">Apps</a>
+    <a href="#about">Options</a>
+  </div>
+</div>
         <div id="cookieNotice" class="light display-right" style="display: block;">
             <div id="closeIcon" style="display: none;">
             </div>
@@ -66,7 +123,6 @@
     <div id="particles-js">
 		<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>	
     <div class="container">
-        <br><br><br>
         <div class="mainhead">
                 <div class="title"><h1>Interstellar</h1></div>
                 <button class="discord-btn2">Join our Discord</button>
