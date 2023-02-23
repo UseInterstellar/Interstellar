@@ -40,7 +40,7 @@ Once it is done deploying, there should be a folder called **interstellar-deploy
 
 You can click [Here](https://replit.com/@imbubbo/interstellar-deployable?v=1) and fork the project on replit.
 
-### Paid Services (Some are free with card)
+## Paid Services (Some are free with card)
 
 [![Deploy to Heroku](https://binbashbanana.github.io/deploy-buttons/buttons/remade/heroku.svg)](https://heroku.com/deploy/?template=https://github.com/interstellarnetwork/interstellar)
 [![Deploy to Oracle Cloud](https://binbashbanana.github.io/deploy-buttons/buttons/remade/oraclecloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?zipUrl=https://github.com/interstellarnetwork/interstellar/archive/refs/heads/main.zip)
