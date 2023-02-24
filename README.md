@@ -36,7 +36,9 @@ git clone https://github.com/interstellarnetwork/interstellar-deployable.git
 
 Once the deployment is complete, you will see a folder called **"interstellar-deployable"**. You need to move all the files that are inside the folder out of that folder.
 
-**Alternatively**, you can click [here](https://replit.com/@imbubbo/interstellar-deployable?v=1) to fork the project on Replit.
+### Alternatively 
+
+You can click [here](https://replit.com/@imbubbo/interstellar-deployable?v=1) to fork the project on Replit.
 
 ## Paid Services (Some are free with a credit/debit card)
 
