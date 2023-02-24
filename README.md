@@ -30,7 +30,7 @@ Step 3. Name the repl, and then click **Create Repl**
 
 Step 4. On the right hand side of the screen it should say Shell, copy and paste the code down below into the Shell.
 
-`bash
+`
 git clone https://github.com/interstellarnetwork/interstellar-deployable.git
 `
 
