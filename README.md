@@ -24,23 +24,23 @@ Interstellar is completely open source, so you can deploy it to these services.
 
 Step 1. Create a **NEW** Repl.
 
-Step 2. Scroll down and click **Node.js** for the template.
+Step 2. Scroll down and select **Node.js** as the template.
 
-Step 3. Name the repl, and then click **Create Repl**
+Step 3. Name the Repl, and then click **"Create Repl"**.
 
-Step 4. On the right hand side of the screen it should say Shell, copy and paste the code down below into the Shell.
+Step 4. On the right-hand side of the screen, you should see a panel labeled "Shell". Copy and paste the following code into the Shell:
 
 `
 git clone https://github.com/interstellarnetwork/interstellar-deployable.git
 `
 
-Once it is done deploying, there should be a folder called **interstellar-deployable**, you  will have to take every folder that is inside of that folder out and put it with the rest of the files.
+Once the deployment is complete, you will see a folder called **"interstellar-deployable"**. You need to move all the files that are inside the folder out of that folder.
 
-### OR
+### Alternatively 
 
-You can click [Here](https://replit.com/@imbubbo/interstellar-deployable?v=1) and fork the project on replit.
+You can click [here](https://replit.com/@imbubbo/interstellar-deployable?v=1) to fork the project on Replit.
 
-## Paid Services (Some are free with card)
+## Paid Services (Some are free with a credit/debit card)
 
 [![Deploy to Heroku](https://binbashbanana.github.io/deploy-buttons/buttons/remade/heroku.svg)](https://heroku.com/deploy/?template=https://github.com/interstellarnetwork/interstellar)
 [![Deploy to Oracle Cloud](https://binbashbanana.github.io/deploy-buttons/buttons/remade/oraclecloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?zipUrl=https://github.com/interstellarnetwork/interstellar/archive/refs/heads/main.zip)
