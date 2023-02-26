@@ -1,102 +1,74 @@
-@import "https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap";
 * {
+  box-sizing: border-box;
   padding: 0;
   margin: 0;
+  top: 0;
+  width: default;
 }
+
 body {
-  color: #fff;
-  overflow-x: hidden;
-  font-family: poppins, sans-serif;
-}
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  background: transparent;
-}
-nav ul {
-  display: flex;
-  list-style: none;
-}
-nav li {
-  padding-left: 1rem;
-}
-nav a {
-  text-decoration: none;
-  color: #fff;
-}
-nav a:visited {
-  color: #fff;
-  text-decoration: none;
-}
-nav a:hover {
-  color: #ffffff98;
-  text-decoration: none;
-}
-html {
-  background-color: #000;
+  margin: 0;
+  background-color: #111;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-div.searchbar {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+.header2 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  min-height: 90px;
+  padding: 0 15px;
+  box-sizing: border-box;
+  background-color: #111;
+  box-shadow: 0 0 15px 2px rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  backface-visibility: visible;
+  transition: 0.35s ease;
 }
 
-div.searchbar {
-  display: block;
+.header2 a {
+  margin: 0;
+  float: left;
+  color: black;
   text-align: center;
-}
-form {
-  display: inline-block;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: left;
-  margin: 5px 0;
-}
-.card {
-  display: inline-block;
-  position: relative;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 25px;
+  color: white;
 }
 
-.card:after {    
-  display: block;a
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  top: 100%;
-  width: 0;
-  height: 3px;
-  background: white;
-  content: "";
-transition: width 0.45s ease-out, left 0.45s ease-out, transform 0.45s cubic-bezier(0.86, 0, 0.07, 1);
-}
-.card:hover:after { 
-  width: 100%; 
-  left: 0; 
+.header2 a.logo {
+  font-size: 30px;
+  font-weight: bold;
 }
 
-.red {
-  display: inline-block;
-  position: relative;
+.header2 a:hover {
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+
 }
 
-.red:after {    
-  display: block;
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  top: 100%;
-  width: 0;
-  height: 3px;
-  background: white;
-  content: "";
-transition: width 0.45s ease-out, left 0.45s ease-out, transform 0.45s cubic-bezier(0.86, 0, 0.07, 1);
+.header2 a.active {
+  background-color: #333;
+  color: white;
 }
-.red:hover:after { 
-  width: 100%; 
-  left: 0; 
+
+.header2-right {
+  float: right;
+}
+
+@media screen and (max-width: 500px) {
+  .header2 a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+
+  .header2-right {
+    float: none;
+  }
 }
