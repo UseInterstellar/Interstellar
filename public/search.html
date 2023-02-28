@@ -112,14 +112,12 @@
     align-items: center;
     height: 100%;
     position: relative;
-    top: 20%;
+    top: 50%;
     transform: translateY(-50%);
 }
-
 #searchbar {
-    border: 2px solid black;
     background-color: #333;
-    color: black;
+    color: white;
     text-align: center;
     border-radius: 5px;
     font-size: 24px;
@@ -127,9 +125,12 @@
     width: 400px;
     transition: width 0.5s ease-in-out, height 0.5s ease-in-out;
     height: 30px;
+    border: 2px solid black;
     outline: none;
 }
-    
+#searchbar::placeholder {
+    color: white;
+}
     </style>
        <div class="header2">
       <br>
@@ -156,8 +157,8 @@
       <br>
     <br>
   <br>
-<div class="container">
-    <input id="searchbar" placeholder="Search the web freely">
+<div class="container searchbar">
+    <input tag="searchbar" id="searchbar" class="searchbar" placeholder="Search the web freely">
 </div>
 
 <script>
@@ -171,6 +172,16 @@ searchbar.addEventListener("input", function() {
 searchbar.addEventListener("keyup", function() {
     if (searchbar.value === "") {
         searchbar.style.width = "400px";
+        searchbar.style.height = "30px";
+    }
+});
+
+searchbar.addEventListener("mouseover", function() {
+    searchbar.style.height = "50px";
+});
+
+searchbar.addEventListener("mouseout", function() {
+    if (searchbar.value === "") {
         searchbar.style.height = "30px";
     }
 });
