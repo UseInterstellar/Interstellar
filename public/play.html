@@ -145,6 +145,31 @@
     scale: 1.1;
 
 }
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    position: relative;
+    top: 40%;
+    transform: translateY(-60%);
+}
+#searchbar {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    border-radius: 30px;
+    font-size: 24px;
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),0 17px 50px 0 rgba(0, 0, 0, 0.19);
+    width: 400px;
+    transition: width 0.5s ease-in-out, height 0.5s ease-in-out;
+    height: 30px;
+    border: 2px solid black;
+    outline: none;
+}
+#searchbar::placeholder {
+    color: white;
+}
 </style>
 </script>
 </head>
@@ -171,9 +196,35 @@
 
 <center> 
   <div>
-  <input class="searchbar" type="text" id="searchbar" onkeyup="search_animal()" name="search" placeholder="Search..">
+  <input  tag="searchbar" class="searchbar" type="text" id="searchbar" onkeyup="search_animal()" name="search" placeholder="Search..">
 </center>
 </div>
+
+<script>
+const searchbar = document.getElementById("searchbar");
+
+searchbar.addEventListener("input", function() {
+    searchbar.style.width = "70%";
+    searchbar.style.height = "50px";
+});
+
+searchbar.addEventListener("keyup", function() {
+    if (searchbar.value === "") {
+        searchbar.style.width = "400px";
+        searchbar.style.height = "30px";
+    }
+});
+
+searchbar.addEventListener("mouseover", function() {
+    searchbar.style.height = "50px";
+});
+
+searchbar.addEventListener("mouseout", function() {
+    if (searchbar.value === "") {
+        searchbar.style.height = "30px";
+    }
+});
+</script>
   <br>
   <h2>Games shown on this website are the property of their respective owners.</h2>
   <br>
