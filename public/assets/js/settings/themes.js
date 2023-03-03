@@ -1,7 +1,7 @@
 document.getElementById("Themes").onchange = function()
 {
-  if(this.value === "Classic") {
-  localStorage.setItem('Classic', 'on');
+  if(this.value === "classic") {
+  localStorage.setItem('classic', 'on');
 	document.body.style.backgroundColor = "#111";
 	document.body.style.color = "#ffffff";
 	document.body.style.setProperty('--bg-c', "#111");
@@ -10,8 +10,8 @@ document.getElementById("Themes").onchange = function()
 	window.localStorage.setItem('Ocean', 'off');
 	window.localStorage.removeItem('Ocean');
 }
-    if(this.value === "Ocean") {
-  localStorage.setItem('Ocean', 'on');
+    if(this.value === "ocean") {
+  localStorage.setItem('ocean', 'on');
 	document.body.style.backgroundColor = "#162545";
 	document.body.style.color = "#ffffff";
 	document.body.style.setProperty('--bg-c', "#162545");
@@ -20,7 +20,7 @@ document.getElementById("Themes").onchange = function()
 	window.localStorage.setItem('lava', 'off');
 	window.localStorage.removeItem('lava');
 }
-  if(this.value === "Midnight") {
+  if(this.value === "midnight") {
   localStorage.setItem('midnight', 'on');
 	document.body.style.backgroundColor = "#000";
 	document.body.style.color = "#ffffff";
