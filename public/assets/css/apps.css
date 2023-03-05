@@ -6,6 +6,7 @@
 .card:hover {
   transform: scale(1.2);
   overflow: hidden;
+  transition: 0.2s;
 }
 
 img {
@@ -27,7 +28,9 @@ img {
   width: 158px;
   background-color: transparent;
   margin: 15px;
+  transition: 0.2s;
   overflow: hidden;
+  cursor: pointer;
 }
 html {
   margin-left: 25%;
