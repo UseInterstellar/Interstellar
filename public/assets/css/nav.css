@@ -23,7 +23,7 @@ body {
   padding: 0 15px;
   box-sizing: border-box;
   background-color: transparent;
-  backdrop-filter: blur(3px);
+  backdrop-filter: blur(20px);
   box-shadow: 0 0 15px 2px rgba(0, 0, 0, 0.5);
   z-index: 100;
   backface-visibility: visible;
