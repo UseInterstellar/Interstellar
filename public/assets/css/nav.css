@@ -40,6 +40,8 @@ body {
   font-size: 18px;
   line-height: 25px;
   color: white;
+  transition: 0.3s;
+
 }
 
 .header2 a.logo {
@@ -52,6 +54,8 @@ body {
   color: white;
   cursor: pointer;
   font-weight: bold;
+  transition: 0.3;
+
 }
 
 .header2 a.active {
@@ -61,6 +65,7 @@ body {
 
 .header2-right {
   float: right;
+  transition: 0.2s;
 }
 
 @media screen and (max-width: 500px) {
