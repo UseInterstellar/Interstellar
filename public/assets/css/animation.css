@@ -5,40 +5,6 @@
   --dark: #212121;
 }
 
-
-.transition-1 {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 101;
-  background-color: var(--dark);
-  opacity: 0;
-  pointer-events: none;
-  transition: 0.5s ease-out;
-}
-
-.transition-1.is-active {
-  pointer-events: all;
-  opacity: 1;
-}
-
-.transition-2 {
-  position: fixed;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  bottom: 0;
-  z-index: 101;
-  background-color: var(--dark);
-  transition: 0.5s ease-out;
-}
-
-.transition-2.is-active {
-  left: 0px;
-}
-
 .transition-3 {
   position: fixed;
   top: 100%;
@@ -53,4 +19,3 @@
 .transition-3.is-active {
   top: 0;
 }
-
