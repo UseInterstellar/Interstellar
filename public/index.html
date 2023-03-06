@@ -90,6 +90,15 @@
         window.open("https://discord.gg/gointerstellar", "_blank");
       });
     </script>
+    <script>
+if (localStorage.getItem('cloak')) {
+  const cloakValue = localStorage.getItem('cloak') === 'true' ? 'true' : 'false';
+  document.getElementById('tab-cloak').value = cloakValue;
+} else {
+  document.getElementById('tab-cloak').value = 'true';
+  localStorage.setItem('cloak', 'true');
+}
+    </script>
     
 
      <div>
