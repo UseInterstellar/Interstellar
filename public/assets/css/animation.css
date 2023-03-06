@@ -1,0 +1,21 @@
+:root {
+  --primary: #AF1E2D;
+  --light: #F3F3F3;
+  --grey: #8A8A8B;
+  --dark: #212121;
+}
+
+.transition-3 {
+  position: fixed;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 101;
+  background-color: var(--dark);
+  transition: 0.5s ease-out;
+}
+
+.transition-3.is-active {
+  top: 0;
+}
