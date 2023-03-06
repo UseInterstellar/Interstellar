@@ -1,4 +1,4 @@
-
+if (localStorage.getItem('cloak') === 'true') {
 let inFrame
 
 try {
@@ -84,3 +84,4 @@ document.addEventListener('keypress', function (e) {
       doc1.body.appendChild(iframe1);
     }
 });
+}
