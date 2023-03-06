@@ -1,20 +1,28 @@
 {
-  "dependencies": {
-    "@tomphttp/bare-server-node": "^1.2.2",
-    "dotenv": "^16.0.3",
-    "find-in-files": "^0.5.0",
-    "node-static": "^0.7.11",
-    "serve-static": "^1.15.0"
-  },
-  "name": "Interstellar",
+  "name": "Interstellar Proxy",
   "version": "1.0.0",
-  "description": "Interstellar V4",
-  "main": "index.js",
+  "description": "By Interstellar Network",
+  "type": "module",
+  "engines": {
+    "npm": ">=7.0.0",
+    "node": ">=16.0.0"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ."
+    "start": "index.js"
   },
   "keywords": [
-    "interstellar network"
-  ]
+    "proxy"
+  ],
+  "author": "",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "@titaniumnetwork-dev/ultraviolet": "^1.0.8-beta",
+    "@tomphttp/bare-server-node": "^1.2.5",
+    "express": "^4.18.2",
+    "ultraviolet-static": "github:titaniumnetwork-dev/Ultraviolet-Static"
+  },
+  "devDependencies": {
+    "eslint": "^8.32.0",
+    "prettier": "^2.8.3"
+  }
 }
