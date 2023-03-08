@@ -28,7 +28,6 @@
       gtag("config", "G-WKJQ5QHQTJ");
     </script>
 </head>
-<script src="assets/js/index.js"></script>
 <body>
        <div class="header2">
       <br>
@@ -80,6 +79,15 @@
 <script src="assets/js/particles.js"></script>
 <script src="assets/js/settings/settings.js"></script>
 <script src="assets/js/settings/themes.js"></script>
+<script>
+if (localStorage.getItem('cloak')) {
+  const cloakValue = localStorage.getItem('cloak') === 'true' ? 'true' : 'false';
+  document.getElementById('tab-cloak').value = cloakValue;
+}
+document.getElementById('tab-cloak').addEventListener('change', function() {
+  localStorage.setItem('cloak', this.value === 'true' ? 'true' : 'false');
+});
+</script>
 </div>
   
 </body>
