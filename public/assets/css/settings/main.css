@@ -20,7 +20,16 @@ p {
 div {
   text-align: center;
 }
-
+.tab-cloak{
+  cursor: pointer;
+  border: 2px solid white;
+  transition: 0.2s;
+  margin-top: 10px;
+}
+.tab-cloak:hover{
+ scale: 1.1;
+  transition: 0.2s;
+}
 .button {
   background-color: black;
   color: white;
@@ -68,7 +77,9 @@ body {
 .border-solid {
   border-style: solid;
 }
-
+.option{
+  cursor: pointer;
+}
 .border-2 {
   border-width: 2px;
 }
@@ -83,6 +94,7 @@ body {
 
 .bg-gray-900 {
   background-color: #111;
+  cursor:pointer;
 }
 
 .w-48 {

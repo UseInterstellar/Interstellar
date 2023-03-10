@@ -1,0 +1,7 @@
+{
+  "name": "Interstellar",
+  "description": "Node.js Interstellarinstance",
+  "repository": "https://github.com/interstellarnetwork/interstellar",
+  "logo": "https://raw.githubusercontent.com/interstellarnetwork/Interstellar/main/public/assets/images/branding/favicon/in.png",
+  "keywords": ["tomp", "ultraviolet", "interstellar"]
+}
