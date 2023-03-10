@@ -74,6 +74,10 @@
 <option value="Midnight">Midnight</option>
 <option value="Ocean">Ocean</option>
 </select>
+<select id="Transitions" class="bg-gray-900 w-48 p-2 rounded-md text-white">
+<option value="on">on</option>
+<option value="off">off</option>
+</select>
 </div>
 <div>
 <script src="assets/js/particles.js"></script>
@@ -86,6 +90,15 @@ if (localStorage.getItem('cloak')) {
 }
 document.getElementById('tab-cloak').addEventListener('change', function() {
   localStorage.setItem('cloak', this.value === 'true' ? 'true' : 'false');
+});
+</script>
+      <script>
+if (localStorage.getItem('Transitions')) {
+  const cloakValue = localStorage.getItem('Transitions') === 'true' ? 'true' : 'false';
+  document.getElementById('tab-cloak').value = cloakValue;
+}
+document.getElementById('Transitions').addEventListener('change', function() {
+  localStorage.setItem('Transitions', this.value === 'true' ? 'true' : 'false');
 });
 </script>
 </div>
