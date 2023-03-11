@@ -305,7 +305,7 @@ searchbar.addEventListener("mouseout", function() {
 </div>
 <div class="row">
   <div class="span1">
-      <div style="padding-top: 5px;border-radius: 25px 25px 25px 25px;" class="card animals" loading="lazy"><a href="play/cluster rush/index.html">
+      <div style="padding-top: 5px;border-radius: 25px 25px 25px 25px;" class="card animals" loading="lazy"><a onclick="go('https://interstellarnetwork.github.io/Interstellar-Assets/play/cluster-rush/index.html'); mouse()">
     <img style="border-radius: 25px;" src="/assets/images/icons/cluster-rush.webp" ></a>
       <p3>Cluster Rush</p3>
     </div>
@@ -1258,7 +1258,11 @@ searchbar.addEventListener("mouseout", function() {
 </div>
 </div>
 </div>
-<script>function load() { alert('This game takes a while to load, It is working though!'); }</script>
+<script>
+function load() { alert('This game takes a while to load, It is working though!'); }
+function mouse() { alert('This game only works with a mouse.'); }
+</script>
+
   <script src="./uv/uv.bundle.js"></script>
   <script src="./uv/uv.config.js"></script>
   <script src="index.js"></script>
