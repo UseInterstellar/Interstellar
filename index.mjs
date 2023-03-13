@@ -1,63 +1,54 @@
-import createBareServer from "@tomphttp/bare-server-node";
-import express from "express";
-import { createServer } from "node:http";
-import { publicPath } from "ultraviolet-static";
-import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
-import { join } from "node:path";
-import { hostname } from "node:os";
+import createBareServer from '@tomphttp/bare-server-node';
+import { createServer } from 'node:http';
+import { fileURLToPath } from 'node:url';
+import serveStatic from 'serve-static';
+import * as dotenv from 'dotenv'
+dotenv.config()
+const httpServer = createServer();
 
-const bare = createBareServer("/bare/");
-const app = express();
 
-// Load our publicPath first and prioritize it over UV.
-app.use(express.static(publicPath));
-// Load vendor files last.
-// The vendor's uv.config.js won't conflict with our uv.config.js inside the publicPath directory.
-app.use("/uv/", express.static(uvPath));
-
-// Error for everything else
-app.use((req, res) => {
-  res.status(404);
-  res.sendFile(join(publicPath, "404.html"));
+// Run the Bare server in the /bare/ namespace. This will prevent conflicts between the static files and the bare server.
+const bareServer = createBareServer('/bare/', {
+	logErrors: false,
+	localAddress: undefined,
+	maintainer: {
+		email: 'tomphttp@sys32.dev',
+		website: 'https://github.com/tomphttp/',
+	},
 });
 
-const server = createServer();
+const serve = serveStatic(
+	fileURLToPath(new URL('./public/', import.meta.url)),
+	{
+		fallthrough: false,
+	}
+);
 
-server.on("request", (req, res) => {
-  if (bare.shouldRoute(req)) {
-    bare.routeRequest(req, res);
-  } else {
-    app(req, res);
-  }
+httpServer.on('request', (req, res) => {
+	if (bareServer.shouldRoute(req)) {
+		bareServer.routeRequest(req, res);
+	} else {
+		serve(req, res, (err) => {
+			res.writeHead(err?.statusCode || 500, {
+				'Content-Type': 'text/plain',
+			});
+			res.end(err?.stack);
+		});
+	}
 });
 
-server.on("upgrade", (req, socket, head) => {
-  if (bare.shouldRoute(req)) {
-    bare.routeUpgrade(req, socket, head);
-  } else {
-    socket.end();
-  }
+httpServer.on('upgrade', (req, socket, head) => {
+	if (bareServer.shouldRoute(req)) {
+		bareServer.routeUpgrade(req, socket, head);
+	} else {
+		socket.end();
+	}
 });
 
-let port = parseInt(process.env.PORT || "");
-
-if (isNaN(port)) port = 8080;
-
-server.on("listening", () => {
-  const address = server.address();
-
-  // by default we are listening on 0.0.0.0 (every interface)
-  // we just need to list a few
-  console.log("Listening on:");
-  console.log(`\thttp://localhost:${address.port}`);
-  console.log(`\thttp://${hostname()}:${address.port}`);
-  console.log(
-    `\thttp://${
-      address.family === "IPv6" ? `[${address.address}]` : address.address
-    }:${address.port}`
-  );
+httpServer.on('listening', () => {
+	console.log('Interstellar running on port 8080');
 });
 
-server.listen({
-  port,
+httpServer.listen({
+	port: process.env.PORT,
 });
