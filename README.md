@@ -20,7 +20,7 @@ Interstellar is completely open source, so you can deploy it to these services.
 [![Deploy to Render](https://binbashbanana.github.io/deploy-buttons/buttons/remade/render.svg)](https://render.com/deploy?repo=https://github.com/interstellarnetwork/interstellar)
 [![Deploy to Cyclic](https://binbashbanana.github.io/deploy-buttons/buttons/remade/cyclic.svg)](https://app.cyclic.sh/api/app/deploy/interstellarnetwork/interstellar)
 
-### <a href="https://github.com/interstellarnetwork/Interstellar/wiki/How-to-deploy-to-Replit-(Advanced)">How to deploy to Replit - Replit Free Plan</a>
+### <a href="https://github.com/interstellarnetwork/Interstellar/wiki/How-to-deploy-to-Replit-(Semi-Advanced)">How to deploy to Replit - Replit Free Plan</a>
 
 # Paid Services (Some are free with a Credit/Debit Card)
 
