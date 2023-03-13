@@ -1,14 +1,14 @@
 {
-  "name": "Interstellar Proxy",
+  "name": "Interstellar",
   "version": "1.0.0",
-  "description": "By Interstellar Network",
+  "description": "Ultraviolet instance",
   "type": "module",
   "engines": {
     "npm": ">=7.0.0",
     "node": ">=16.0.0"
   },
   "scripts": {
-    "start": "index.js"
+    "start": "node src/index.js"
   },
   "keywords": [
     "proxy"
