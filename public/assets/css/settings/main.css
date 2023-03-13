@@ -108,3 +108,23 @@ body {
 .text-white {
   color: #fff;
 }
+
+.button3 {
+  border: 2px solid #fff;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  padding: 15px 32px;
+  margin: 4px 2px;
+  border-radius: 10px;
+}
+.button2 {
+  background-color: #000;
+  color: white;
+  border: 2px solid #fff;
+}
+.button2:hover {
+  background-color: #fff;
+  color: black;
+  border: 2px solid #000;
+}
