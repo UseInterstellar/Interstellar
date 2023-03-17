@@ -11,13 +11,17 @@ Interstellar is one of the best modern unblocked game sites. Check it out <a hre
 # Deploying
 Interstellar is completely open source, so you can deploy it to these services.
 
+Interstellar is not open-source so that you can alter it in any way, it is open source for the public to make more links.
+
+Altering/Modifying my code is against our License, and we will file a DMCA on you and get your site and repo taken down and your github account terminated.
+
 **Note:**  All of the built-in games will **NOT** work on certain services, since these services have a size limit.
   
 ### Free Services
 
 <a target="_blank" href="https://replit.com/github/interstellarnetwork/interstellar-deployable"><img alt="Run on Replit" src="https://raw.githubusercontent.com/BinBashBanana/deploy-buttons/master/buttons/remade/replit.svg"></a>
 [![Remix on Glitch](https://binbashbanana.github.io/deploy-buttons/buttons/remade/glitch.svg)](https://glitch.com/edit/#!/import/github/interstellarnetwork/interstellar-deployable)
-[![Deploy to Render](https://binbashbanana.github.io/deploy-buttons/buttons/remade/render.svg)](https://render.com/deploy?repo=https://github.com/interstellarnetwork/interstellar)
+[![Deploy to Render](https://binbashbanana.github.io/deploy-buttons/buttons/remade/render.svg)](https://render.com/deploy?repo=https://github.com/interstellarnetwork/interstellar-deployable)
 [![Deploy to Cyclic](https://binbashbanana.github.io/deploy-buttons/buttons/remade/cyclic.svg)](https://app.cyclic.sh/api/app/deploy/interstellarnetwork/interstellar)
 
 ### <a href="https://github.com/interstellarnetwork/Interstellar/wiki/How-to-deploy-to-Replit-(Semi-Advanced)">How to deploy to Replit - Replit Free Plan</a>
