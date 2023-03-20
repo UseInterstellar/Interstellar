@@ -1,10 +1,9 @@
-function inFrame() {
+let inFrame
 	try {
 		return window.self !== window.top;
 	} catch (e) {
 		return true;
 	}
-}
 
 function usingFirefox() {
 	return navigator.userAgent.indexOf("Firefox") != -1;
