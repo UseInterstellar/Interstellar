@@ -14,10 +14,11 @@ if (!popup || popup.closed) {
   const doc = popup.document
   const iframe = doc.createElement("iframe")
   const style = iframe.style
-  const img = doc.createElement("link")
-
-  img.rel = "icon"
-  img.href = "https://google.com/favicon.ico"
+  var link = doc.createElement('link');
+  
+  link.type = 'image/x-icon';
+  link.rel = 'shortcut icon';
+  link.href = 'http://www.stackoverflow.com/favicon.ico';
   doc.title = "Google"
 
   iframe.src = location.href
