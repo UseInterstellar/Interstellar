@@ -15,10 +15,15 @@ if (!inFrame && !navigator.userAgent.includes("Firefox")) {
         const iframe = doc.createElement("iframe")
         const style = iframe.style
         const link = doc.createElement("link")
+        var link = document.querySelector("link[rel~='icon']");
 
+    if (!link) {
+    link = document.createElement('link');
+    link.rel = 'icon';
+    document.head.appendChild(link);
+}
+    link.href = 'https://stackoverflow.com/favicon.ico';
         doc.title = "My Drive - Google Drive"
-        link.rel = "icon";
-        link.href = "https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png";
         iframe.src = location.href
         style.position = "fixed"
         style.top = style.bottom = style.left = style.right = 0
