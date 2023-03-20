@@ -1,36 +1,22 @@
 let inFrame
+    try {
+        return window.self !== window.top;
+    } catch (e) {
+        return true;
+    }
 
-try {
-    inFrame = window !== top
-} catch (e) {
-    inFrame = true
-}
-
-if (!inFrame && !navigator.userAgent.includes("Firefox")) {
+if (!inFrame && !navigator.userAgent.includes("Firefox")) 
     const popup = open("about:blank", "_blank")
     if (!popup || popup.closed) {
         alert("Allow popups and redirects to hide this from showing up in your history.")
-    } else {
-        const doc = popup.document
-        const iframe = doc.createElement("iframe")
-        const style = iframe.style
-        const link = doc.createElement("link")
-        var link = document.querySelector("link[rel~='icon']");
+    } else 
 
-    if (!link) {
-    link = document.createElement('link');
-    link.rel = 'icon';
-    document.head.appendChild(link);
-}
-    link.href = 'https://stackoverflow.com/favicon.ico';
-        doc.title = "My Drive - Google Drive"
-        iframe.src = location.href
-        style.position = "fixed"
-        style.top = style.bottom = style.left = style.right = 0
-        style.border = style.outline = "none"
-        style.width = style.height = "100%"
 
-        doc.body.appendChild(iframe)
-        location.replace("https://google.com")
-    }
+var redirectSite = "https://www.google.com";
+
+{
+    var tab = window.open('about:blank', '_blank');
+    tab.document.documentElement.innerHTML = '<!DOCTYPE html><html><head><title>' + 'Interstellar' + '</title><link rel="icon" type="image/png" href="' + window.location.origin + "/favicon.ico" + '"><style>body {margin:0;overflow:hidden}</style></head><body><iframe width="100%" height="100%" src="' + window.location.origin + frameUrl + '" frameborder="0"></iframe></body></html>';
+    tab.document.close();
+    window.location.replace(redirectSite);
 }
