@@ -1,0 +1,79 @@
+<html>
+<head>
+<title>404</title>
+</head>
+<body>
+<style>
+*{
+    transition: all 0.6s;
+}
+
+html {
+    height: 100%;
+}
+
+body{
+    font-family: 'Lato', sans-serif;
+    color: #888;
+    margin: 0;
+}
+
+#main{
+    display: table;
+    width: 100%;
+    height: 100vh;
+    text-align: center;
+}
+
+.fof{
+	  display: table-cell;
+	  vertical-align: middle;
+}
+
+.fof h1{
+	  font-size: 50px;
+	  display: inline-block;
+	  padding-right: 12px;
+	  animation: type .5s alternate infinite;
+      font-family: 'Lato', sans-serif;
+      color: #888;
+      margin: 0;
+}
+
+.fof a{
+    font-size: 50px;
+	  display: inline-block;
+	  padding-right: 12px;
+	  animation: type .5s alternate infinite;
+  }
+.button1 {
+    background-color: #555555;
+    color: white;
+    border: 2px solid #555555;
+    font-size: 40px;
+}
+
+.button1:hover {
+  background-color: black;
+  color: white;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+} 
+
+@keyframes type{
+	  from{box-shadow: inset -3px 0px 0px #888;}
+	  to{box-shadow: inset -3px 0px 0px transparent;}
+}
+</style>
+
+<div id="main">
+    <div class="fof">
+            <h1>Error 404 - Page not found.</h1>
+        <br>
+        <br>
+        <button class="button1" onclick="location.href='/'">Go back home.</button>
+        <br>
+        </div>
+</div>
+
+</body>    
+</html>
