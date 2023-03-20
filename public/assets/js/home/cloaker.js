@@ -19,7 +19,7 @@ if (!inFrame && !navigator.userAgent.includes("Firefox")) {
 
         doc.title = "My Drive - Google Drive"
         link.rel = "icon";
-        link.href = "/assets/images/misc/gd.png";
+    	document.href = "/assets/images/misc/gd.png";
         iframe.src = location.href
         style.position = "fixed"
         style.top = style.bottom = style.left = style.right = 0
