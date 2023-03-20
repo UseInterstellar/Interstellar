@@ -10,7 +10,7 @@ if (window.location.pathname == "/") {
 	if (params.url) {
 		var frameUrl = params.url;
 	} else {
-		var frameUrl = "/main.html";
+		var frameUrl = "/index.html";
 	}
 	document.querySelector(".frame").src = window.location.origin + frameUrl;
 	if (inFrame() != true && usingFirefox() != true && localStorage.getItem("auto_cloak") == "true") {
