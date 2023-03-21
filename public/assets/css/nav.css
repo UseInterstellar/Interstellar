@@ -4,8 +4,6 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  top: 0;
-  width: default;
 }
 
 body {
@@ -41,7 +39,6 @@ body {
   line-height: 25px;
   color: white;
   transition: 0.3s;
-
 }
 
 .header2 a.logo {
@@ -55,7 +52,6 @@ body {
   cursor: pointer;
   font-weight: bold;
   transition: 0.3;
-
 }
 
 .header2 a.active {
