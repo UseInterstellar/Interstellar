@@ -1,0 +1,970 @@
+[
+  {
+    "description": "CP violation discovery!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-cpv-1",
+    "threshold": 1,
+    "targetKey": "research-cpv",
+    "targetProperty": "level"
+  },
+  {
+    "description": "J/\u03c8 discovery!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-jpsi-1",
+    "threshold": 1,
+    "targetKey": "research-jpsi",
+    "targetProperty": "level"
+  },
+  {
+    "description": "\u03c4 lepton discovery!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-tau-1",
+    "threshold": 1,
+    "targetKey": "research-tau",
+    "targetProperty": "level"
+  },
+  {
+    "description": "Beauty quark discovery!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-beauty-1",
+    "threshold": 1,
+    "targetKey": "research-beauty",
+    "targetProperty": "level"
+  },
+  {
+    "description": "Gluons discovery!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-gluons-1",
+    "threshold": 1,
+    "targetKey": "research-gluons",
+    "targetProperty": "level"
+  },
+  {
+    "description": "W and Z boson discovery!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-weak-1",
+    "threshold": 1,
+    "targetKey": "research-weak",
+    "targetProperty": "level"
+  },
+  {
+    "description": "Top quark discovery!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-top-1",
+    "threshold": 1,
+    "targetKey": "research-top",
+    "targetProperty": "level"
+  },
+  {
+    "description": "B oscillation discovery!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-boscillations-1",
+    "threshold": 1,
+    "targetKey": "research-boscillations",
+    "targetProperty": "level"
+  },
+  {
+    "description": "Higgs boson discovery!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-higgs-1",
+    "threshold": 1,
+    "targetKey": "research-higgs",
+    "targetProperty": "level"
+  },
+  {
+    "description": "D*s\u207b discovery!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-dstars-1",
+    "threshold": 1,
+    "targetKey": "research-dstars",
+    "targetProperty": "level"
+  },
+  {
+    "description": "\u039eb'- and \u039eb*- discovery!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-xib-1",
+    "threshold": 1,
+    "targetKey": "research-xib",
+    "targetProperty": "level"
+  },
+  {
+    "description": "CP violation research level 5!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-cpv-5",
+    "targetProperty": "level",
+    "targetKey": "research-cpv",
+    "threshold": 5
+  },
+  {
+    "description": "CP violation research level 25!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-cpv-25",
+    "targetProperty": "level",
+    "targetKey": "research-cpv",
+    "threshold": 25
+  },
+  {
+    "description": "CP violation research level 50!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-cpv-50",
+    "targetProperty": "level",
+    "targetKey": "research-cpv",
+    "threshold": 50
+  },
+  {
+    "description": "CP violation research level 100!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-cpv-100",
+    "targetProperty": "level",
+    "targetKey": "research-cpv",
+    "threshold": 100
+  },
+  {
+    "description": "J/\u03c8 research level 5!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-jpsi-5",
+    "targetProperty": "level",
+    "targetKey": "research-jpsi",
+    "threshold": 5
+  },
+  {
+    "description": "J/\u03c8 research level 25!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-jpsi-25",
+    "targetProperty": "level",
+    "targetKey": "research-jpsi",
+    "threshold": 25
+  },
+  {
+    "description": "J/\u03c8 research level 50!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-jpsi-50",
+    "targetProperty": "level",
+    "targetKey": "research-jpsi",
+    "threshold": 50
+  },
+  {
+    "description": "J/\u03c8 research level 100!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-jpsi-100",
+    "targetProperty": "level",
+    "targetKey": "research-jpsi",
+    "threshold": 100
+  },
+  {
+    "description": "\u03c4 lepton research level 5!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-tau-5",
+    "targetProperty": "level",
+    "targetKey": "research-tau",
+    "threshold": 5
+  },
+  {
+    "description": "\u03c4 lepton research level 25!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-tau-25",
+    "targetProperty": "level",
+    "targetKey": "research-tau",
+    "threshold": 25
+  },
+  {
+    "description": "\u03c4 lepton research level 50!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-tau-50",
+    "targetProperty": "level",
+    "targetKey": "research-tau",
+    "threshold": 50
+  },
+  {
+    "description": "\u03c4 lepton research level 100!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-tau-100",
+    "targetProperty": "level",
+    "targetKey": "research-tau",
+    "threshold": 100
+  },
+  {
+    "description": "Beauty quark research level 5!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-beauty-5",
+    "targetProperty": "level",
+    "targetKey": "research-beauty",
+    "threshold": 5
+  },
+  {
+    "description": "Beauty quark research level 25!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-beauty-25",
+    "targetProperty": "level",
+    "targetKey": "research-beauty",
+    "threshold": 25
+  },
+  {
+    "description": "Beauty quark research level 50!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-beauty-50",
+    "targetProperty": "level",
+    "targetKey": "research-beauty",
+    "threshold": 50
+  },
+  {
+    "description": "Beauty quark research level 100!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-beauty-100",
+    "targetProperty": "level",
+    "targetKey": "research-beauty",
+    "threshold": 100
+  },
+  {
+    "description": "Gluons research level 5!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-gluons-5",
+    "targetProperty": "level",
+    "targetKey": "research-gluons",
+    "threshold": 5
+  },
+  {
+    "description": "Gluons research level 25!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-gluons-25",
+    "targetProperty": "level",
+    "targetKey": "research-gluons",
+    "threshold": 25
+  },
+  {
+    "description": "Gluons research level 50!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-gluons-50",
+    "targetProperty": "level",
+    "targetKey": "research-gluons",
+    "threshold": 50
+  },
+  {
+    "description": "Gluons research level 100!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-gluons-100",
+    "targetProperty": "level",
+    "targetKey": "research-gluons",
+    "threshold": 100
+  },
+  {
+    "description": "W and Z boson research level 5!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-weak-5",
+    "targetProperty": "level",
+    "targetKey": "research-weak",
+    "threshold": 5
+  },
+  {
+    "description": "W and Z boson research level 25!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-weak-25",
+    "targetProperty": "level",
+    "targetKey": "research-weak",
+    "threshold": 25
+  },
+  {
+    "description": "W and Z boson research level 50!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-weak-50",
+    "targetProperty": "level",
+    "targetKey": "research-weak",
+    "threshold": 50
+  },
+  {
+    "description": "W and Z boson research level 100!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-weak-100",
+    "targetProperty": "level",
+    "targetKey": "research-weak",
+    "threshold": 100
+  },
+  {
+    "description": "Top quark research level 5!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-top-5",
+    "targetProperty": "level",
+    "targetKey": "research-top",
+    "threshold": 5
+  },
+  {
+    "description": "Top quark research level 25!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-top-25",
+    "targetProperty": "level",
+    "targetKey": "research-top",
+    "threshold": 25
+  },
+  {
+    "description": "Top quark research level 50!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-top-50",
+    "targetProperty": "level",
+    "targetKey": "research-top",
+    "threshold": 50
+  },
+  {
+    "description": "Top quark research level 100!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-top-100",
+    "targetProperty": "level",
+    "targetKey": "research-top",
+    "threshold": 100
+  },
+  {
+    "description": "B oscillation research level 5!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-boscillations-5",
+    "targetProperty": "level",
+    "targetKey": "research-boscillations",
+    "threshold": 5
+  },
+  {
+    "description": "B oscillation research level 25!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-boscillations-25",
+    "targetProperty": "level",
+    "targetKey": "research-boscillations",
+    "threshold": 25
+  },
+  {
+    "description": "B oscillation research level 50!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-boscillations-50",
+    "targetProperty": "level",
+    "targetKey": "research-boscillations",
+    "threshold": 50
+  },
+  {
+    "description": "B oscillation research level 100!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-boscillations-100",
+    "targetProperty": "level",
+    "targetKey": "research-boscillations",
+    "threshold": 100
+  },
+  {
+    "description": "Higgs boson research level 5!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-higgs-5",
+    "targetProperty": "level",
+    "targetKey": "research-higgs",
+    "threshold": 5
+  },
+  {
+    "description": "Higgs boson research level 25!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-higgs-25",
+    "targetProperty": "level",
+    "targetKey": "research-higgs",
+    "threshold": 25
+  },
+  {
+    "description": "Higgs boson research level 50!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-higgs-50",
+    "targetProperty": "level",
+    "targetKey": "research-higgs",
+    "threshold": 50
+  },
+  {
+    "description": "Higgs boson research level 100!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-higgs-100",
+    "targetProperty": "level",
+    "targetKey": "research-higgs",
+    "threshold": 100
+  },
+  {
+    "description": "D*s\u207b research level 5!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-dstars-5",
+    "targetProperty": "level",
+    "targetKey": "research-dstars",
+    "threshold": 5
+  },
+  {
+    "description": "D*s\u207b research level 25!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-dstars-25",
+    "targetProperty": "level",
+    "targetKey": "research-dstars",
+    "threshold": 25
+  },
+  {
+    "description": "D*s\u207b research level 50!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-dstars-50",
+    "targetProperty": "level",
+    "targetKey": "research-dstars",
+    "threshold": 50
+  },
+  {
+    "description": "D*s\u207b research level 100!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-dstars-100",
+    "targetProperty": "level",
+    "targetKey": "research-dstars",
+    "threshold": 100
+  },
+  {
+    "description": "\u039eb'- and \u039eb*- research level 5!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-xib-5",
+    "targetProperty": "level",
+    "targetKey": "research-xib",
+    "threshold": 5
+  },
+  {
+    "description": "\u039eb'- and \u039eb*- research level 25!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-xib-25",
+    "targetProperty": "level",
+    "targetKey": "research-xib",
+    "threshold": 25
+  },
+  {
+    "description": "\u039eb'- and \u039eb*- research level 50!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-xib-50",
+    "targetProperty": "level",
+    "targetKey": "research-xib",
+    "threshold": 50
+  },
+  {
+    "description": "\u039eb'- and \u039eb*- research level 100!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-xib-100",
+    "targetProperty": "level",
+    "targetKey": "research-xib",
+    "threshold": 100
+  },
+  {
+    "description": "The first Master Students hired!",
+    "icon": "fa-user",
+    "key": "achievement-workers-masterstudents-1",
+    "threshold": 1,
+    "targetKey": "workers-masterstudents",
+    "targetProperty": "hired"
+  },
+  {
+    "description": "The first PhD Students hired!",
+    "icon": "fa-user",
+    "key": "achievement-workers-phdstudents-1",
+    "threshold": 1,
+    "targetKey": "workers-phdstudents",
+    "targetProperty": "hired"
+  },
+  {
+    "description": "The first Postdocs hired!",
+    "icon": "fa-user",
+    "key": "achievement-workers-postdocs-1",
+    "threshold": 1,
+    "targetKey": "workers-postdocs",
+    "targetProperty": "hired"
+  },
+  {
+    "description": "The first Research Fellows hired!",
+    "icon": "fa-user",
+    "key": "achievement-workers-fellows-1",
+    "threshold": 1,
+    "targetKey": "workers-fellows",
+    "targetProperty": "hired"
+  },
+  {
+    "description": "The first Permanent Staff hired!",
+    "icon": "fa-user",
+    "key": "achievement-workers-permanent-1",
+    "threshold": 1,
+    "targetKey": "workers-permanent",
+    "targetProperty": "hired"
+  },
+  {
+    "description": "The first Tenured Professors hired!",
+    "icon": "fa-user",
+    "key": "achievement-workers-profs-1",
+    "threshold": 1,
+    "targetKey": "workers-profs",
+    "targetProperty": "hired"
+  },
+  {
+    "description": "The first Nobel Laureates hired!",
+    "icon": "fa-user",
+    "key": "achievement-workers-nobel-1",
+    "threshold": 1,
+    "targetKey": "workers-nobel",
+    "targetProperty": "hired"
+  },
+  {
+    "description": "The first Summer Students hired!",
+    "icon": "fa-user",
+    "key": "achievement-workers-summies-1",
+    "threshold": 1,
+    "targetKey": "workers-summies",
+    "targetProperty": "hired"
+  },
+  {
+    "description": "5 Master Students working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-masterstudents-5",
+    "targetProperty": "hired",
+    "targetKey": "workers-masterstudents",
+    "threshold": 5
+  },
+  {
+    "description": "25 Master Students working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-masterstudents-25",
+    "targetProperty": "hired",
+    "targetKey": "workers-masterstudents",
+    "threshold": 25
+  },
+  {
+    "description": "50 Master Students working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-masterstudents-50",
+    "targetProperty": "hired",
+    "targetKey": "workers-masterstudents",
+    "threshold": 50
+  },
+  {
+    "description": "100 Master Students working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-masterstudents-100",
+    "targetProperty": "hired",
+    "targetKey": "workers-masterstudents",
+    "threshold": 100
+  },
+  {
+    "description": "5 PhD Students working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-phdstudents-5",
+    "targetProperty": "hired",
+    "targetKey": "workers-phdstudents",
+    "threshold": 5
+  },
+  {
+    "description": "25 PhD Students working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-phdstudents-25",
+    "targetProperty": "hired",
+    "targetKey": "workers-phdstudents",
+    "threshold": 25
+  },
+  {
+    "description": "50 PhD Students working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-phdstudents-50",
+    "targetProperty": "hired",
+    "targetKey": "workers-phdstudents",
+    "threshold": 50
+  },
+  {
+    "description": "100 PhD Students working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-phdstudents-100",
+    "targetProperty": "hired",
+    "targetKey": "workers-phdstudents",
+    "threshold": 100
+  },
+  {
+    "description": "5 Postdocs working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-postdocs-5",
+    "targetProperty": "hired",
+    "targetKey": "workers-postdocs",
+    "threshold": 5
+  },
+  {
+    "description": "25 Postdocs working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-postdocs-25",
+    "targetProperty": "hired",
+    "targetKey": "workers-postdocs",
+    "threshold": 25
+  },
+  {
+    "description": "50 Postdocs working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-postdocs-50",
+    "targetProperty": "hired",
+    "targetKey": "workers-postdocs",
+    "threshold": 50
+  },
+  {
+    "description": "100 Postdocs working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-postdocs-100",
+    "targetProperty": "hired",
+    "targetKey": "workers-postdocs",
+    "threshold": 100
+  },
+  {
+    "description": "5 Research Fellows working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-fellows-5",
+    "targetProperty": "hired",
+    "targetKey": "workers-fellows",
+    "threshold": 5
+  },
+  {
+    "description": "25 Research Fellows working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-fellows-25",
+    "targetProperty": "hired",
+    "targetKey": "workers-fellows",
+    "threshold": 25
+  },
+  {
+    "description": "50 Research Fellows working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-fellows-50",
+    "targetProperty": "hired",
+    "targetKey": "workers-fellows",
+    "threshold": 50
+  },
+  {
+    "description": "100 Research Fellows working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-fellows-100",
+    "targetProperty": "hired",
+    "targetKey": "workers-fellows",
+    "threshold": 100
+  },
+  {
+    "description": "5 Permanent Staff working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-permanent-5",
+    "targetProperty": "hired",
+    "targetKey": "workers-permanent",
+    "threshold": 5
+  },
+  {
+    "description": "25 Permanent Staff working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-permanent-25",
+    "targetProperty": "hired",
+    "targetKey": "workers-permanent",
+    "threshold": 25
+  },
+  {
+    "description": "50 Permanent Staff working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-permanent-50",
+    "targetProperty": "hired",
+    "targetKey": "workers-permanent",
+    "threshold": 50
+  },
+  {
+    "description": "100 Permanent Staff working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-permanent-100",
+    "targetProperty": "hired",
+    "targetKey": "workers-permanent",
+    "threshold": 100
+  },
+  {
+    "description": "5 Tenured Professors working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-profs-5",
+    "targetProperty": "hired",
+    "targetKey": "workers-profs",
+    "threshold": 5
+  },
+  {
+    "description": "25 Tenured Professors working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-profs-25",
+    "targetProperty": "hired",
+    "targetKey": "workers-profs",
+    "threshold": 25
+  },
+  {
+    "description": "50 Tenured Professors working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-profs-50",
+    "targetProperty": "hired",
+    "targetKey": "workers-profs",
+    "threshold": 50
+  },
+  {
+    "description": "100 Tenured Professors working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-profs-100",
+    "targetProperty": "hired",
+    "targetKey": "workers-profs",
+    "threshold": 100
+  },
+  {
+    "description": "5 Nobel Laureates working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-nobel-5",
+    "targetProperty": "hired",
+    "targetKey": "workers-nobel",
+    "threshold": 5
+  },
+  {
+    "description": "25 Nobel Laureates working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-nobel-25",
+    "targetProperty": "hired",
+    "targetKey": "workers-nobel",
+    "threshold": 25
+  },
+  {
+    "description": "50 Nobel Laureates working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-nobel-50",
+    "targetProperty": "hired",
+    "targetKey": "workers-nobel",
+    "threshold": 50
+  },
+  {
+    "description": "100 Nobel Laureates working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-nobel-100",
+    "targetProperty": "hired",
+    "targetKey": "workers-nobel",
+    "threshold": 100
+  },
+  {
+    "description": "5 Summer Students working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-summies-5",
+    "targetProperty": "hired",
+    "targetKey": "workers-summies",
+    "threshold": 5
+  },
+  {
+    "description": "25 Summer Students working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-summies-25",
+    "targetProperty": "hired",
+    "targetKey": "workers-summies",
+    "threshold": 25
+  },
+  {
+    "description": "50 Summer Students working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-summies-50",
+    "targetProperty": "hired",
+    "targetKey": "workers-summies",
+    "threshold": 50
+  },
+  {
+    "description": "100 Summer Students working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-summies-100",
+    "targetProperty": "hired",
+    "targetKey": "workers-summies",
+    "threshold": 100
+  },
+  {
+    "description": "Your first click!",
+    "icon": "fa-hand-o-up",
+    "key": "achievement-clicks-1",
+    "threshold": 1,
+    "targetKey": "lab",
+    "targetProperty": "clicks"
+  },
+  {
+    "description": "100 clicks!",
+    "icon": "fa-hand-o-up",
+    "key": "achievement-clicks-100",
+    "targetProperty": "clicks",
+    "targetKey": "lab",
+    "threshold": 100
+  },
+  {
+    "description": "1k clicks!",
+    "icon": "fa-hand-o-up",
+    "key": "achievement-clicks-1k",
+    "targetProperty": "clicks",
+    "targetKey": "lab",
+    "threshold": 1000
+  },
+  {
+    "description": "10k clicks!",
+    "icon": "fa-hand-o-up",
+    "key": "achievement-clicks-10k",
+    "targetProperty": "clicks",
+    "targetKey": "lab",
+    "threshold": 10000
+  },
+  {
+    "description": "100k clicks!",
+    "icon": "fa-hand-o-up",
+    "key": "achievement-clicks-100k",
+    "targetProperty": "clicks",
+    "targetKey": "lab",
+    "threshold": 100000
+  },
+  {
+    "description": "1M clicks!",
+    "icon": "fa-hand-o-up",
+    "key": "achievement-clicks-1M",
+    "targetProperty": "clicks",
+    "targetKey": "lab",
+    "threshold": 1000000
+  },
+  {
+    "description": "100 data collected!",
+    "icon": "fa-database",
+    "key": "achievement-data-collected-100",
+    "targetProperty": "dataCollected",
+    "targetKey": "lab",
+    "threshold": 100
+  },
+  {
+    "description": "10k data collected!",
+    "icon": "fa-database",
+    "key": "achievement-data-collected-10k",
+    "targetProperty": "dataCollected",
+    "targetKey": "lab",
+    "threshold": 10000
+  },
+  {
+    "description": "1M data collected!",
+    "icon": "fa-database",
+    "key": "achievement-data-collected-1M",
+    "targetProperty": "dataCollected",
+    "targetKey": "lab",
+    "threshold": 1000000
+  },
+  {
+    "description": "100M data collected!",
+    "icon": "fa-database",
+    "key": "achievement-data-collected-100M",
+    "targetProperty": "dataCollected",
+    "targetKey": "lab",
+    "threshold": 100000000
+  },
+  {
+    "description": "10G data collected!",
+    "icon": "fa-database",
+    "key": "achievement-data-collected-10G",
+    "targetProperty": "dataCollected",
+    "targetKey": "lab",
+    "threshold": 10000000000
+  },
+  {
+    "description": "JTN 100 funding gathered!",
+    "icon": "fa-money",
+    "key": "achievement-funding-collected-100",
+    "targetProperty": "moneyCollected",
+    "targetKey": "lab",
+    "threshold": 100
+  },
+  {
+    "description": "JTN 10k funding gathered!",
+    "icon": "fa-money",
+    "key": "achievement-funding-collected-10k",
+    "targetProperty": "moneyCollected",
+    "targetKey": "lab",
+    "threshold": 10000
+  },
+  {
+    "description": "JTN 1M funding gathered!",
+    "icon": "fa-money",
+    "key": "achievement-funding-collected-1M",
+    "targetProperty": "moneyCollected",
+    "targetKey": "lab",
+    "threshold": 1000000
+  },
+  {
+    "description": "JTN 100M funding gathered!",
+    "icon": "fa-money",
+    "key": "achievement-funding-collected-100M",
+    "targetProperty": "moneyCollected",
+    "targetKey": "lab",
+    "threshold": 100000000
+  },
+  {
+    "description": "JTN 10G funding gathered!",
+    "icon": "fa-money",
+    "key": "achievement-funding-collected-10G",
+    "targetProperty": "moneyCollected",
+    "targetKey": "lab",
+    "threshold": 10000000000
+  },
+  {
+    "description": "100 data processed!",
+    "icon": "fa-hdd",
+    "key": "achievement-data-processed-100",
+    "targetProperty": "dataSpent",
+    "targetKey": "lab",
+    "threshold": 100
+  },
+  {
+    "description": "10k data processed!",
+    "icon": "fa-hdd",
+    "key": "achievement-data-processed-10k",
+    "targetProperty": "dataSpent",
+    "targetKey": "lab",
+    "threshold": 10000
+  },
+  {
+    "description": "1M data processed!",
+    "icon": "fa-hdd",
+    "key": "achievement-data-processed-1M",
+    "targetProperty": "dataSpent",
+    "targetKey": "lab",
+    "threshold": 1000000
+  },
+  {
+    "description": "100M data processed!",
+    "icon": "fa-hdd",
+    "key": "achievement-data-processed-100M",
+    "targetProperty": "dataSpent",
+    "targetKey": "lab",
+    "threshold": 100000000
+  },
+  {
+    "description": "10G data processed!",
+    "icon": "fa-hdd",
+    "key": "achievement-data-processed-10G",
+    "targetProperty": "dataSpent",
+    "targetKey": "lab",
+    "threshold": 10000000000
+  },
+  {
+    "description": "JTN 100 funding spent!",
+    "icon": "fa-money",
+    "key": "achievement-funding-spent-100",
+    "targetProperty": "moneySpent",
+    "targetKey": "lab",
+    "threshold": 100
+  },
+  {
+    "description": "JTN 10k funding spent!",
+    "icon": "fa-money",
+    "key": "achievement-funding-spent-10k",
+    "targetProperty": "moneySpent",
+    "targetKey": "lab",
+    "threshold": 10000
+  },
+  {
+    "description": "JTN 1M funding spent!",
+    "icon": "fa-money",
+    "key": "achievement-funding-spent-1M",
+    "targetProperty": "moneySpent",
+    "targetKey": "lab",
+    "threshold": 1000000
+  },
+  {
+    "description": "JTN 100M funding spent!",
+    "icon": "fa-money",
+    "key": "achievement-funding-spent-100M",
+    "targetProperty": "moneySpent",
+    "targetKey": "lab",
+    "threshold": 100000000
+  },
+  {
+    "description": "JTN 10G funding spent!",
+    "icon": "fa-money",
+    "key": "achievement-funding-spent-10G",
+    "targetProperty": "moneySpent",
+    "targetKey": "lab",
+    "threshold": 10000000000
+  }
+]
