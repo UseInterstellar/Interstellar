@@ -35,6 +35,10 @@ app.get("/apps", (req, res) => {
   res.sendFile(path.join(__dirname, "src", "apps.html"));
 });
 
+app.get("/go", (req, res) => {
+  res.sendFile(path.join(__dirname, "src", "go.html"));
+});
+
 app.get("/math", (req, res) => {
   res.sendFile(path.join(__dirname, "src", "math.html"));
 });
