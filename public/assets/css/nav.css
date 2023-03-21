@@ -39,7 +39,6 @@ body {
   line-height: 25px;
   color: white;
   transition: 0.3s;
-
 }
 
 .header2 a.logo {
@@ -53,7 +52,6 @@ body {
   cursor: pointer;
   font-weight: bold;
   transition: 0.3;
-
 }
 
 .header2 a.active {
