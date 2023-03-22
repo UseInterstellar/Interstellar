@@ -1,0 +1,297 @@
+body {
+  padding-top: 40px;
+}
+
+* {
+  border-radius: 0 !important;
+}
+
+a, button {
+  transition:all 0.2s;
+  -webkit-transition:all 0.2s; }
+}
+
+h1 br {
+  display: none;
+}
+
+.pc-icon {
+  background: url('../assets/pc32sw.png') no-repeat 10px center;
+  padding-left: 50px;
+}
+
+.pc-icon:hover {
+  background-image: url('../assets/pc32.png');
+}
+
+#detector {
+  cursor: pointer;
+  margin: 0 auto;
+  position: relative;
+}
+
+#detector canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+#detector-core {
+   z-index: 0;
+}
+
+#detector-events {
+   z-index: 1;
+}
+
+#detector-info {
+  z-index: 10;
+  position: absolute;
+}
+
+.scrollable {
+  overflow: auto;
+}
+
+.research-icon {
+  float: left;
+  margin-right: 10px;
+}
+
+#achievements-container {
+  position: fixed; bottom: 0px; left: 0px;
+}
+
+#messages-container {
+  position: fixed; bottom: 0px; right: 0px;
+}
+
+#achievements-container .alert,
+#messages-container .alert {
+  margin-bottom: 10px; position: relative;
+}
+
+#achievements-container .alert-glyph,
+#messages-container .alert-glyph {
+  float:left; font-size: 20px; margin-right: 10px;
+}
+
+#achievements-container .alert-text,
+#messages-container .alert-text {
+  font-size: 14px;
+}
+
+#achievements-container .alert-text {
+  font-weight: bold;
+}
+
+#messages-container .btn {
+  float:right; font-weight: bold;
+}
+
+#mobile-orientation-container {
+  position: fixed; top: 0; bottom: 0; left: 0; right: 0;
+  background: #fff;
+  display: none;
+  padding-top: 50%;
+  z-index: 100;
+}
+
+#mobile-orientation-message {
+  text-align: center;
+  margin: auto auto;
+  color: #777;
+  font-size: 18px;
+  padding: 15px;
+}
+
+.status strong {
+  color: #666;
+}
+
+.update-value {
+  position: absolute;
+  right: 1em;
+  top: 1.42857em;
+  height: 1.42857em;
+}
+
+.update-plus {
+  color: green;
+  float: left;
+  right: 5px;
+  position: absolute;
+}
+
+.update-minus {
+  color: red;
+  float: left;
+  right: 5px;
+  position: absolute;
+}
+
+#labname {
+  border: 0px;
+  padding: 0 4px;
+  margin-top: 20px;
+  font-weight: 500;
+  line-height: 1;
+  width: 99%;
+}
+
+.panel {
+  margin-bottom: 0;
+}
+
+.media-list-no-margin {
+  margin-top: -15px;
+}
+
+.col-no-padding {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.tab-content {
+  border-left:1px solid #ddd;
+}
+
+.tab-pane.scrollable {
+  padding:15px;
+}
+
+
+.prevent-select {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}
+
+
+/** Annoying blink effect to get user's attention. */
+.blink {
+  animation: blinker 1.0s cubic-bezier(.5, 0, 1, 1) infinite alternate;
+  -webkit-animation: blinker 1.0s cubic-bezier(.5, 0, 1, 1) infinite alternate;
+}
+
+@keyframes blinker {
+  from { opacity: 1; }
+  to { opacity: 0.25; }
+}
+
+@-webkit-keyframes blinker {
+  from { opacity: 1; }
+  to {
+    opacity: 0.25;
+    background: #f00;
+    border-color: #900;
+  }
+}
+
+/** Responsive **/
+@media screen and (orientation:portrait) and (max-width: 767px) {
+  #mobile-orientation-container {
+    display: block;
+  }
+}
+
+@media screen and (orientation:landscape) and (max-width: 767px) {
+  
+}
+
+@media screen and (min-width: 768px) {
+  #detector-holder {
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+
+  .status {
+    font-size: 18px;
+  }
+
+  #labname {
+    font-size: 22px;
+  }
+
+  #detector-info {
+    top: 85px; right: 15px;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .panel-stick,
+  .panel-stick .panel-heading,
+  .panel-stick .panel-body {
+    border-right: 0;
+  }
+
+  .status {
+    font-size: 20px;
+  }
+
+  #labname {
+    font-size: 24px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .status {
+    font-size: 24px;
+  }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1199px){
+  .col-md-3s {
+    width:20%;
+  }
+
+  .col-md-5s {
+    width:40%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  h4 {
+    font-size: 16px;
+  }
+
+  .col-no-padding-xs {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .col-no-padding-xs .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .status .col-xs-4 {
+    min-width: 75px;
+  }
+
+  #detector-info {
+    top: 15px; right: 15px;
+  }
+}
+
+/* Retina support */
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+    only screen and (min-resolution: 1.5dppx),
+    only screen and (min-resolution: 144dpi)
+{
+  .pc-icon {
+    background-image: url('../assets/pc32sw@2x.png');
+    background-size: 32px 32px;
+  }
+
+  .pc-icon:hover {
+    background-image: url('../assets/pc32@2x.png');
+  }
+}

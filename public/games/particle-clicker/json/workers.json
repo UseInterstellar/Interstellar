@@ -1,0 +1,82 @@
+[
+  {
+    "key": "workers-masterstudents",
+    "name": "Master Students",
+    "description": "Cheap and enthusiastic workforce, they can save you a lot of work.",
+    "cost_increase": 1.5,
+    "state": {
+      "cost": 4e1,
+      "rate": 1e0
+    }
+  },
+  {
+    "key": "workers-phdstudents",
+    "name": "PhD Students",
+    "description": "They decided to do a PhD. Now they are working hard.",
+    "cost_increase": 1.45,
+    "state": {
+      "cost": 6e2,
+      "rate": 8e0
+    }
+  },
+  {
+    "key": "workers-postdocs",
+    "name": "Postdocs",
+    "description": "These brilliant minds are here only to serve your needs.",
+    "cost_increase": 1.4,
+    "state": {
+      "cost": 7.5e3,
+      "rate": 2.5e1
+    }
+  },
+  {
+    "key": "workers-fellows",
+    "name": "Research Fellows",
+    "description": "You pay them a lot. They work a lot.",
+    "cost_increase": 1.35,
+    "state": {
+      "cost": 8e4,
+      "rate": 1e2
+    }
+  },
+  {
+    "key": "workers-permanent",
+    "name": "Permanent Staff",
+    "description": "Somebody who gets a permanent position in physics has to be good.",
+    "cost_increase": 1.3,
+    "state": {
+      "cost": 7e5,
+      "rate": 9e3
+    }
+  },
+  {
+    "key": "workers-profs",
+    "name": "Tenured Professors",
+    "description": "They bring their own group along and are able to get a lot of work done.",
+    "cost_increase": 1.25,
+    "state": {
+      "cost": 5e6,
+      "rate": 1.2e5
+    }
+  },
+  {
+    "key": "workers-nobel",
+    "name": "Nobel Laureates",
+    "description": "They received their prize for a reason.",
+    "cost_increase": 1.2,
+    "state": {
+      "cost": 3e7,
+      "rate": 1.5e6
+    }
+  },
+  {
+    "key": "workers-summies",
+    "name": "Summer Students",
+    "description": "Their best ideas come between two parties.",
+    "cost_increase": 1.15,
+    "state": {
+      "cost": 1.25e8,
+      "rate": 2e7
+    }
+  }
+]
