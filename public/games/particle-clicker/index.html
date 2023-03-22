@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="particleClicker">
+  <head>
+    <title>Particle Clicker</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta property="og:title" content="Particle Clicker">
+    <meta property="og:type" content="game">
+    <meta property="og:description" content="An addictive incremental game that was made during the CERN Webfest 2014. It takes the player on a historic journey through modern particle physics.">
+    <meta property="og:image" content="https://avatars2.githubusercontent.com/u/8345868">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="apple-touch-icon" href="assets/mobile/icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/mobile/icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <!-- Google Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    </script>
+    <!-- End Google Analytics -->
+  </head>
+  <body>  
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand pc-icon" href="#" data-toggle="modal" data-target="#myModal"> Particle Clicker</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+          <ul class="nav navbar-nav navbar-left">
+            <li><a href="#" data-toggle="modal" data-target="#achievements-modal"><i class="fa fa-trophy"></i> Achievements</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#stats-modal"><i class="fa fa-bar-chart"></i> Statistics</a></li>
+            <li class="dropdown" ng-controller="SaveController">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-floppy-o"></i> Saved: <span ng-cloak>{{ lastSaved | date : 'H:mm' }}</span> <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#" ng-click="saveNow()"><i class="fa fa-save"></i> Save now</a></li>
+                <li class="divider"></li>
+                <li><a href="#" ng-click="restart()"><i class="fa fa-refresh"></i> Restart</a></li>
+              </ul>
+            </li>
+            <!--<li><a href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-users"></i> About</a></li>-->
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://github.com/particle-clicker/particle-clicker/" target="_blank"><i class="fa fa-github"></i> GitHub</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-share-alt"></i> Social<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="https://facebook.com/particleclicker"><i class="fa fa-facebook-square"></i> Facebook</a></li>
+                <li><a href="https://twitter.com/particleclicker"><i class="fa fa-twitter"></i> Twitter</a></li>
+                <li><a href="https://plus.google.com/share?url=http%3A%2F%2Fcern.ch%2Fparticle-clicker" target="_blank" title="Share on Google+"><i class="fa fa-google-plus-square"></i> Google+</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div id="main-content" class="container-fluid col-no-padding">
+      <div class="col-md-3 col-md-3s col-lg-2 col-no-padding visible-md-block visible-lg-block">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <i class="fa fa-cogs"></i> Research
+            </h4>
+          </div>
+          <div class="panel-body scrollable large" id="researchLarge" ng-controller="ResearchController as rc">
+            <div id="researchContent" ng-controller="ResearchController as rc">
+              <ul class="media-list" ng-cloak>
+                <li class="media" ng-repeat="r in rc.research" ng-show="rc.isVisible(r)">
+                  <img ng-show="r.state.level > 0" class="research-icon media-object" ng-src="{{ r.image }}" alt="">
+                  <img ng-hide="r.state.level > 0" class="research-icon media-object" src="assets/icons/png/unknown.png" alt="">
+                  <div class="media-body">
+                    <h4 class="media-heading">{{ r.state.level > 0 ? r.name : '?????' }} <span ng-show="r.state.level > 0" class="badge">Level {{ r.state.level }}</span></h4>
+                    <p ng-show="r.state.level > 0">{{ r.description }}</p>
+                    <p ng-show="r.state.level > 0" class="small">Research yields <strong>{{ r.state.reputation | niceNumber }}</strong> reputation.</p>
+                    <div class="btn-group">
+                      <button class="btn btn-primary" ng-disabled="!rc.isAvailable(r)" ng-click="rc.doResearch(r)"><i class="fa fa-cogs"></i> <small>{{ r.state.cost | niceNumber }} data</small></button>
+                    <button class="btn btn-info {{ r.state.interesting ? 'blink' : '' }}" ng-show="r.state.level > 0" ng-click="rc.showInfo(r)"><i class="fa {{ r.state.interesting ? 'fa-exclamation' : 'fa-info' }}"></i></button>
+                  </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="column-lab" class="col-xs-6 col-md-5 col-md-5s col-lg-6 col-no-padding-xs" ng-controller="LabController as lc">
+        <input class="hidden-xs" id="labname" value="{{ lc.lab.state.name }}" ng-model="lc.lab.state.name" ng-cloak>
+        <hr class="hidden-xs">
+        <div id="detector-holder">
+          <div id="detector" ng-controller="DetectorController as dc">
+            <canvas id="detector-core" width="400" height="400">
+              Your detector. Click on it to generate events.
+            </canvas>
+            <canvas ng-click="dc.click()" id="detector-events" width="400" height="400" class="prevent-select">
+              Your detector. Click on it to generate events.
+            </canvas>
+          </div>
+        </div>
+        <button id="detector-info" class="btn btn-info" ng-click="lc.showDetectorInfo()"><i class="fa fa-info"></i></button>
+        <div class="row status" ng-cloak>
+          <div class="col-xs-4 text-center col-no-padding-xs">
+            <strong>Data</strong><br>
+            {{ lc.lab.state.data | niceNumber }}
+            <div class="update-value" id="update-data"></div>
+          </div>
+          <div class="col-xs-4 text-center col-no-padding-xs">
+            <strong>Reputation</strong><br>
+            {{ lc.lab.state.reputation | niceNumber }}
+            <div class="update-value" id="update-reputation"></div>
+          </div>
+          <div class="col-xs-4 text-center col-no-padding-xs">
+            <strong>Funding</strong><br>
+            {{ lc.lab.state.money | currency }}
+            <div class="update-value" id="update-funding"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 col-md-3s col-lg-2 col-no-padding visible-md-block visible-lg-block">
+        <div class="panel panel-default panel-stick">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <i class="fa fa-users"></i> HR
+            </h4>
+          </div>
+          <div class="panel-body scrollable large" id="hrLarge">
+            <div id="hrContent" ng-controller="HRController as hrc">
+              <ul class="media-list" ng-cloak>
+                <li class="media" ng-repeat="w in hrc.workers" ng-show="hrc.isVisible(w)">
+                  <div class="media-body">
+                    <h4 class="media-heading">{{ w.name }} <span ng-show="w.state.hired > 0" class="badge">{{ w.state.hired | niceNumber }}</span></h4>
+                    <p ng-show="w.state.hired > 0">{{ w.description }}</p>
+                    <p ng-show="w.state.hired > 0" class="small">Produce <strong>{{ w.state.rate | niceNumber }}</strong> data per second.</p>
+                    <button class="btn btn-primary" ng-disabled="!hrc.isAvailable(w)" ng-click="hrc.hire(w)"><i class="fa fa-user"></i> <small>{{ w.state.cost | currency }}</small></button>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 col-md-3s col-lg-2 col-no-padding visible-md-block visible-lg-block">
+        <div class="panel panel-default hidden-xs hidden-sm">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <i class="fa fa-wrench"></i> Upgrades
+            </h4>
+          </div>
+          <div class="panel-body scrollable large" id="upgradesLarge">
+            <div id="upgradesContent" ng-controller="UpgradesController as uc">
+              <ul class="media-list media-list-no-margin" ng-cloak>
+                <li class="media" ng-show="false"></li>
+                <li class="media" ng-repeat="u in uc.upgrades" ng-show="uc.isVisible(u)">
+                  <div class="media-body">
+                    <h4 class="media-heading"><i class="fa {{ u.icon }} media-object"></i> {{ u.name }}</h4>
+                    <p>{{ u.description }}</p>
+                    <p class="small">{{ u.effect }}</p>
+                    <button class="btn btn-primary" ng-disabled="!uc.isAvailable(u)" ng-click="uc.upgrade(u)"><i class="fa fa-money"></i> <small>{{ u.cost | currency }}</small></button>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="column-tabs" class="col-xs-6 visible-xs-block visible-sm-block col-no-padding">
+        <ul id="TabList" class="nav nav-tabs" role="tablist">
+          <li class="active"><a href="#research" role="tab" data-toggle="tab"><i class="fa fa-cogs"></i> Research</a></li>
+          <li><a href="#hr" role="tab" data-toggle="tab"><i class="fa fa-users"></i> HR</a></li>
+          <li><a href="#upgrades" role="tab" data-toggle="tab"><i class="fa fa-wrench"></i> Upgrades</a></li>
+        </ul>
+        <div id="TabContent" class="tab-content">
+          <div class="tab-pane active scrollable" id="research">
+
+          </div>
+          <div class="tab-pane scrollable" id="hr">
+
+          </div>
+          <div class="tab-pane scrollable" id="upgrades">
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="infoBox" tabindex="-1" role="dialog" aria-labelledby="infoBoxLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="infoBoxLabel"></h4>
+          </div>
+          <div class="modal-body"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="achievements-modal" tabindex="-1" role="dialog" aria-labelledby="achievements-label" aria-hidden="true" ng-controller="AchievementsController">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="achievements-label"><i class="fa fa-trophy"></i> Achievements</h4>
+          </div>
+          <div class="modal-body">
+            <p class="text-center"><strong>Progress</strong> <span class="label label-info">{{ progress() }} / {{ achievements.length }}</span></p>
+            <ul class="list-group">
+              <li class="list-group-item" ng-repeat="a in achievements | orderBy:'state.timeAchieved' | reverse" ng-show="a.isAchieved()">
+                <i class="fa {{ a.icon }}"></i>
+                {{ a.description }}
+                <span class="badge">{{ a.state.timeAchieved | niceTime }}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="stats-modal" tabindex="-1" role="dialog" aria-labelledby="stats-label" aria-hidden="true" ng-controller="StatsController">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="stats-label"><i class="fa fa-bar-chart"></i> Statistics</h4>
+          </div>
+          <div class="modal-body">
+            <ul class="list-group">
+              <li class="list-group-item"><i class="fa fa-location-arrow"></i> : <strong>{{ lab.state.clicks | niceNumber }}</strong></li>
+              <li class="list-group-item"><i class="fa fa-database"></i> : <strong>{{ lab.state.dataSpent | niceNumber }}</strong> used / <strong>{{ lab.state.dataCollected | niceNumber }}</strong> collected</li>
+              <li class="list-group-item"><i class="fa fa-money"></i> : <strong>{{ lab.state.moneySpent | niceNumber }}</strong> spent / <strong>{{ lab.state.moneyCollected | niceNumber }}</strong> gathered</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="achievements-container" class="col-xs-6 col-sm-3"></div>
+    <div id="messages-container" class="col-xs-6 col-sm-3"></div>
+
+    <div id="mobile-orientation-container">
+      <div id="mobile-orientation-message">
+        You can only play Particle Clicker on your mobile device in landscape orientation.
+      </div>
+    </div>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="myModalLabel">Particle Clicker</h4>
+          </div>
+          <div class="modal-body">
+            <h4>About</h4>
+            <p class="small">Version: 0.9</p>
+            <p class="small bg-warning">This is a pre-release. If you encounter any bugs please report them using <a href="https://github.com/particle-clicker/particle-clicker/issues"><i class="fa fa-github"></i> GitHub issues</a>. This game runs best in landscape mode. Performance of the event display may rely heavily on your hardware.</p>
+            <p>Particle Clicker is a game that was made during the <a href="https://webfest.web.cern.ch">CERN Webfest 2014</a>. The idea is borrowed from <a href="http://orteil.dashnet.org/cookieclicker/">Cookie Clicker</a>, an amazing and addictive cookie-themed game.</p>
+            <h5>Libraries</h5>
+            <p>This game is realised using a few libraries. Those are</p>
+            <ul>
+              <li><a href="http://angularjs.org">AngularJS</a></li>
+              <li><a href="http://getbootstrap.com/">Bootstrap</a></li>
+              <li><a href="http://fortawesome.github.io/">Fontawesome</a></li>
+              <li><a href="http://jquery.com">jQuery</a></li>
+              <li><a href="http://imulus.github.io/retinajs/">retina.js</a></li>
+              <li><a href="https://github.com/ftlabs/fastclick">fastclick.js</a></li>
+            </ul>
+            <h5>Authors</h5>
+            <ul>
+              <li><a href="https://github.com/gbiro">Gabor Biro</a></li>
+              <li><a href="https://github.com/ibab">Igor Babuschkin</a></li>
+              <li><a href="https://github.com/kdungs">Kevin Dungs</a></li>
+              <li><a href="https://github.com/ntadej">Tadej Novak</a></li>
+              <li><a href="https://github.com/zhangjiannan">Jiannan Zhang</a></li>
+            </ul>
+            <p>Feel free to get in touch with us via GitHub or by shooting us an email on<br><a href="mailto:particle-clicker@googlegroups.com">particle-clicker@googlegroups.com</a>.</p>
+            <h5>Source</h5>
+            <p>The source code of this game is freely available on <a href="https://github.com/particle-clicker/particle-clicker"><i class="fa fa-github"></i> GitHub</a> under the terms of an MIT license.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.17/angular.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script src="js/external/jquery.cookie-1.4.1.min.js"></script>
+    <script src="js/external/retina.js"></script>
+    <script src="js/external/fastclick.js"></script>
+
+    <script src="js/storage.js"></script>
+    <script src="js/helpers.js"></script>
+    <script src="js/analytics.js"></script>
+    <script src="js/gameobjects.js"></script>
+    <script src="js/event.js"></script>
+    <script src="js/detector.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
