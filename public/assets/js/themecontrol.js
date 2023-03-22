@@ -14,5 +14,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
     document.body.style.color = "#ffffff";
     document.body.style.setProperty('--bg-c', "#000");
     document.getElementById("Themes").value = "Midnight";
+   } else if (localStorage.getItem('Light') === 'on') {
+    document.body.style.backgroundColor = "#fff";
+    document.body.style.color = "#000";
+    document.body.style.setProperty('--bg-c', "#fff");
+    document.getElementById("Themes").value = "Light";
   }
 });
