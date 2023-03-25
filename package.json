@@ -1,28 +1,38 @@
 {
-  "name": "Interstellar Proxy",
+  "name": "Interstellar",
   "version": "1.0.0",
-  "description": "By Interstellar Network",
+  "description": "Interstellar Proxy - https://discord.gg/gointerstellar",
   "type": "module",
-  "engines": {
-    "npm": ">=7.0.0",
-    "node": ">=16.0.0"
-  },
   "scripts": {
-    "start": "index.js"
+    "start": "node index.js"
+  },
+  "files": [
+    "public",
+    "src",
+    "ssl",
+    ".gitignore",
+    "app.json"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/interstellarnetwork/interstellar"
   },
   "keywords": [
-    "proxy"
+   "school",
+   "ultraviolet",
+   "interstellar",
+   "interstellarnetwork"
   ],
   "author": "",
   "license": "GPL-3.0-or-later",
   "dependencies": {
-    "@titaniumnetwork-dev/ultraviolet": "^1.0.8-beta",
+    "@titaniumnetwork-dev/ultraviolet": "^1.0.10",
     "@tomphttp/bare-server-node": "^1.2.5",
-    "express": "^4.18.2",
-    "ultraviolet-static": "github:titaniumnetwork-dev/Ultraviolet-Static"
+    "connect": "^3.7.0",
+    "serve-static": "^1.15.0"
   },
-  "devDependencies": {
-    "eslint": "^8.32.0",
-    "prettier": "^2.8.3"
+  "engines": {
+    "npm": ">=8.0.0",
+    "node": ">=18.0.0"
   }
 }

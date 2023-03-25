@@ -4,3 +4,5 @@
     name: interstellar
     env: docker
     plan: free
+    buildCommand: npm install
+    startCommand: npm start
