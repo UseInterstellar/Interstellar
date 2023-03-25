@@ -1,0 +1,7 @@
+{
+    "name": "Incognito",
+    "description": "Unofficial Incognito easy deployment version with TompHTTP bare server included.",
+    "repository": "https://github.com/amethystnetwork-dev/Incognito",
+    "logo": "https://github.com/amethystnetwork-dev/Incognito/blob/main/static/index.svg?raw=true",
+    "keywords": ["unoffical", "ultraviolet", "unblock", "titaniumnetwork", "bypass-filter", "amethystnetwork-dev"]
+}
