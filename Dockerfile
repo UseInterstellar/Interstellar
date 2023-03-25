@@ -6,7 +6,7 @@ COPY package*.json .
 
 RUN npm install
 
-COPY static static/
+COPY static public/
 COPY src/index.js src/
 
 EXPOSE 8080
