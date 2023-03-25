@@ -8,7 +8,7 @@
 
     /* Center the loader */
     body {
-      background: #000;
+      background: #1c1c1c;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -18,35 +18,19 @@
     }
 
     #loader {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      z-index: 1;
-      width: 120px;
-      height: 120px;
-      margin: -76px 0 0 -76px;
+      position: relative;
+      width: 150px;
+      height: 150px;
       border: 16px solid #f3f3f3;
+      border-top: 16px solid #3498db;
       border-radius: 50%;
-      border-top: 16px solid #111;
-      -webkit-animation: spin 2s linear infinite;
       animation: spin 2s linear infinite;
-    }
-
-    @-webkit-keyframes spin {
-      0% {
-        -webkit-transform: rotate(0deg);
-      }
-
-      100% {
-        -webkit-transform: rotate(360deg);
-      }
     }
 
     @keyframes spin {
       0% {
         transform: rotate(0deg);
       }
-
       100% {
         transform: rotate(360deg);
       }
@@ -55,22 +39,8 @@
     /* Add animation to "page content" */
     .animate-bottom {
       position: relative;
-      -webkit-animation-name: animatebottom;
-      -webkit-animation-duration: 1s;
       animation-name: animatebottom;
-      animation-duration: 1s
-    }
-
-    @-webkit-keyframes animatebottom {
-      from {
-        bottom: -100px;
-        opacity: 0
-      }
-
-      to {
-        bottom: 0px;
-        opacity: 1
-      }
+      animation-duration: 1s;
     }
 
     @keyframes animatebottom {
@@ -78,7 +48,6 @@
         bottom: -100px;
         opacity: 0
       }
-
       to {
         bottom: 0;
         opacity: 1
@@ -99,6 +68,8 @@
 
     p {
       font-family: Roboto;
+      font-size: 20px;
+      color: #FFF;
     }
 
     a {
@@ -109,38 +80,19 @@
       color: #FFF;
       max-width: 600px;
       text-align: center;
-      margin: 35px 0px 0px 0px;
+      margin-top: 35px;
     }
   </style>
 </head>
 
 <body>
-  <br>
-  <center>
-    <div id="loader"></div>
-  </center>
-  <br>
-  <br>
-  <div id="message">
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br><br>
-    <br><br><br>
-    <br>
+  <div id="loader"></div>
+  <div class="message">
     <p class="description">
       Please wait a moment.
-      Our servers may be under high load causing some slowness on our servers. If you have any issues join discord.gg/gointerstellar.</p>
+      Our servers may be under high load causing some slowness on our servers. If you have any issues join discord.gg/gointerstellar.
+    </p>
   </div>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
 </body>
 
 </html>
