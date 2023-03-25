@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: incognito
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    plane: free
