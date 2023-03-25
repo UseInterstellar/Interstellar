@@ -1,54 +1,197 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Interstellar</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="assets/css/particles.css">
-  <link rel="stylesheet" href="assets/css/settings/main.css">
-  <link rel="stylesheet" href="assets/css/nav.css">
-  <link rel="stylesheet" href="assets/css/searchbar.css">
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6840529569014734"></script>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ"></script>
-  <script async src="https://arc.io/widget.min.js#gcM6sndx"></script>
-</head>
-<body>
-  <header class="header2">
-    <a href="/../" class="logo">Interstellar</a>
-    <nav class="header2-right">
-      <a href="web">Proxy</a>
-      <a href="play">Games</a>
-      <a href="apps">Apps</a>
-      <a href="math">Cheats</a>
-      <a href="chat">Chatroom</a>
-      <a href="settings">Settings</a>
-    </nav>
-  </header>
+  <head>
+    <title>Interstellar</title>
+    <link rel="icon" type="image/x-icon" href="assets/images/branding/favicon/favicon.png">
+    <link rel="stylesheet" href="assets/css/particles.css">
+    <link rel="stylesheet" href="assets/css/settings/main.css">
+    <link rel="stylesheet" href="assets/css/nav.css">
+    <link rel="stylesheet" href="assets/css/searchbar.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6840529569014734"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="/assets/js/themecontrol.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
 
-  <canvas class="particles-js-canvas-el" width="1920" height="942"></canvas>
-  <div id="particles-js"></div>
+      gtag('config', 'G-WKJQ5QHQTJ');
+    </script>
+  </head>
+  <body class="classic midnight">
+    <div class="header2">
+      <br>
+      <a href="/../" class="logo">Interstellar</a>
+      <div class="header2-right">
+        <a href="web">Proxy</a>
+        <a href="play">Games</a>
+        <a href="apps">Apps</a>
+        <a href="math">Cheats</a>
+        <a href="chat">Chatroom</a>
+        <a href="settings">Settings</a>
+      </div>
+    </div>
 
-  <main class="content">
-    <h1>Do you enjoy this site?</h1>
-    <h2>Support us for free by visiting the following page:</h2>
-    <p>If you're experiencing lag, please consider supporting us so we can pay for better servers.</p>
-    <button class="button3 button2" onclick="location.href='donate.html'">Support Us</button>
-  </main>
+    <canvas class="particles-js-canvas-el" style="z-index:10; top:0; left:0; position:absolute; width: 100%; height: 100%;" width="1920" height="942"></canvas>
 
-  <div class="searchbar">
-    <form>
-      <input type="text" id="searchbar" placeholder="Search the web freely">
-    </form>
-  </div>
+    <div id="particles-js">
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <h2>Do you enjoy this site?</h2>
+      <h3>Consider visiting the following page to support the development team, for free!</h3>
+      <h3 style="color: lightblue">If you are experiencing lag, we strongly suggest you support us so we can pay for better servers.</h3>
+      <button class="button3 button2" type="reset" onclick="location.href='donate.html'">Click here!</button>
+      <br>
+      <br>
+      <div class="searchbar">
+        <form>
+          <input tag="searchbar" id="searchbar" placeholder="Search the web freely">
+        </form>
+      </div>
+    </div>
 
-  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-  <script src="assets/js/particles.js"></script>
-  <script src="assets/js/settings/settings.js"></script>
-  <script src="assets/js/main.js"></script>
-  <script src="./uv/uv.bundle.js"></script>
-  <script src="./uv/uv.config.js"></script>
-  <script src="index.js?v=2"></script>
-  <script src="assets/js/go.js?v=2"></script>
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script src="assets/js/particles.js"></script>
+<script src="assets/js/settings/settings.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="./uv/uv.bundle.js"></script>
+<script src="./uv/uv.config.js"></script>
+<script src="index.js?v=2"></script>
 
-</body>
+<script>
+  let particleColor = "rgba(255, 255, 255, 0.5)";
+  let lineColor = "rgba(255, 255, 255, 0.3)";
+  let particleSize = 1.5;
+  let particleSpeed = 0.5;
+  let particleCount = 200;
+
+  particlesJS("particles-js", {
+    particles: {
+      number: {
+        value: particleCount,
+        density: {
+          enable: true,
+          value_area: 800
+        }
+      },
+      color: {
+        value: particleColor
+      },
+      shape: {
+        type: "circle",
+        stroke: {
+          width: 0,
+          color: "#000000"
+        },
+        polygon: {
+          nb_sides: 5
+        },
+        image: {
+          src: "",
+          width: 100,
+          height: 100
+        }
+      },
+      opacity: {
+        value: 0.6,
+        random: false,
+        anim: {
+          enable: false,
+          speed: 1,
+          opacity_min: 0.1,
+          sync: false
+        }
+      },
+      size: {
+        value: particleSize,
+        random: true,
+        anim: {
+          enable: false,
+          speed: 40,
+          size_min: 0.1,
+          sync: false
+        }
+      },
+      line_linked: {
+        enable: true,
+        distance: 150,
+        color: lineColor,
+        opacity: 0.4,
+        width: 1
+      },
+      move: {
+        enable: true,
+        speed: particleSpeed,
+        direction: "none",
+        random: false,
+        straight: false,
+        out_mode: "out",
+        bounce: false,
+        attract: {
+          enable: false,
+          rotateX: 600,
+          rotateY: 1200
+        }
+      }
+    },
+    interactivity: {
+      detect_on: "canvas",
+      events: {
+        onhover: {
+          enable: true,
+          mode: "grab"
+        },
+        onclick: {
+          enable: true,
+          mode: "push"
+        },
+        resize: true
+      },
+      modes: {
+        grab: {
+          distance: 140,
+          line_linked: {
+            opacity: 1
+          }
+        },
+        bubble: {
+          distance: 400,
+          size: 40,
+          duration: 2,
+          opacity: 8,
+          speed: 3
+        },
+        repulse: {
+          distance: 200,
+          duration: 0.4
+        },
+        push: {
+          particles_nb: 4
+        },
+        remove: {
+          particles_nb: 2
+        }
+      }
+    },
+    retina_detect: true
+  });
+
+  window.onload = function () {
+    let url = window.location.href;
+    let navLinks = document.getElementsByClassName("header2-right")[0].getElementsByTagName("a");
+    for (let i = 0; i < navLinks.length; i++) {
+      if (navLinks[i].href === url) {
+        navLinks[i].classList.add("active");
+      }
+    }
+  };
+   </script>
+  </body>
 </html>
