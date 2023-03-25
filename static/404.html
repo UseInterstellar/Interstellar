@@ -1,113 +1,93 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>404 Error - Page not found</title>
-	<link rel="icon" type="image/x-icon" href="assets/images/branding/favicon/favicon.png">
-	<style>
-		* {
-			margin: 0;
-			padding: 0;
-			box-sizing: border-box;
-		}
-		html, body {
-			height: 100%;
-			font-family: 'Lato', sans-serif;
-			color: #333;
-		}
-		body {
-			background-color: #f7f7f7;
-		}
-		.container {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: center;
-			height: 100%;
-			text-align: center;
-			background-image: url("https://picsum.photos/1920/1080");
-			background-size: cover;
-			background-repeat: no-repeat;
-			background-position: center;
-			background-attachment: fixed;
-		}
-		h1 {
-			font-size: 5rem;
-			margin-bottom: 2rem;
-			text-shadow: 0 2px 2px rgba(0,0,0,0.3);
-			color: #fff;
-		}
-		p {
-			font-size: 1.5rem;
-			margin-bottom: 2rem;
-			color: #fff;
-		}
-		button {
-			background-color: #333;
-			color: #fff;
-			border: none;
-			border-radius: 0.5rem;
-			font-size: 1.5rem;
-			padding: 1rem 2rem;
-			cursor: pointer;
-			box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-			transition: all 0.3s ease-in-out;
-		}
-		button:hover {
-			background-color: #000;
-			transform: translateY(-2px);
-		}
-		button:active {
-			transform: translateY(0);
-			box-shadow: none;
-		}
-		@media screen and (max-width: 768px) {
-			h1 {
-				font-size: 3rem;
-			}
-			p {
-				font-size: 1rem;
-			}
-			button {
-				font-size: 1rem;
-				padding: 0.5rem 1rem;
-			}
-		}
-	</style>
-	<script>
-          window.onload = function() {
-    // Define the container element
-    const container = document.querySelector('.container');
-    
-    // Get the background color of the container element
-    const backgroundColor = getComputedStyle(container).backgroundColor;
-    
-    // Determine whether the background color is light or dark
-    const isLight = isColorLight(backgroundColor);
-    
-    // Set the button colors based on the background color
-    const buttonColor = isLight ? '#333' : '#f7f7f7';
-    const buttonTextColor = isLight ? '#fff' : '#333';
-    
-    // Get the buttons
-    const buttons = document.querySelectorAll('button');
-    
-    // Set the button styles
-    buttons.forEach(button => {
-        button.style.backgroundColor = buttonColor;
-        button.style.color = buttonTextColor;
-    });
-};
-
-// Function to determine whether a color is light or dark
-function isColorLight(color) {
-    // Convert the color to RGB
-    const rgb = color.match(/\d+/g).map(Number);
-    
-    // Calculate the perceived brightness of the color
-    const brightness = (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000;
-    
-    // Return true if the brightness is greater than 128 (i.e., the color is light)
-    return brightness > 128;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 Error - Page not found</title>
+    <link rel="icon" type="image/x-icon" href="assets/images/branding/favicon/favicon.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            height: 100%;
+            font-family: 'Lato', sans-serif;
+            color: #333;
+        }
+        body {
+            background-color: #f7f7f7;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            text-align: center;
+            background-image: url("https://picsum.photos/1920/1080");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        h1 {
+            font-size: 5rem;
+            margin-bottom: 2rem;
+            text-shadow: 0 2px 2px rgba(0,0,0,0.3);
+        }
+        p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1.5rem;
+            padding: 1rem 2rem;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            transition: all 0.3s ease-in-out;
+        }
+        button:hover {
+            background-color: #000;
+            transform: translateY(-2px);
+        }
+        button:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+        @media screen and (max-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
+            p {
+                font-size: 1rem;
+            }
+            button {
+                font-size: 1rem;
+                padding: 0.5rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>404</h1>
+        <p>Oops! The page you're looking for doesn't exist.</p>
+        <div class="button-group">
+            <button onclick="location.href='/';">Go back home</button>
+            <button onclick="location.href='https://forms.gle/PmYG2crJGaYCiWmN9';">Report this issue</button>
+        </div>
+    </div>
+</body>
+</html>
