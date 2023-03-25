@@ -1,0 +1,17 @@
+#searchbar {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  border-radius: 30px;
+  font-size: 24px;
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+  width: 400px;
+  transition: width 0.5s ease-in-out, height 0.5s ease-in-out;
+  height: 30px;
+  border: 2px solid black;
+  outline: none;
+}
+#searchbar::placeholder {
+  color: white;
+}

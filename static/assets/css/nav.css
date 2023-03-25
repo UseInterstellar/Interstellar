@@ -1,0 +1,77 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  margin: 0;
+  background-color: #111;
+  font-family: "Inter", sans-serif;
+}
+
+.header2 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  min-height: 90px;
+  padding: 0 15px;
+  box-sizing: border-box;
+  background-color: transparent;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 15px 2px rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  backface-visibility: visible;
+  transition: 0.35s ease;
+}
+
+.header2 a {
+  margin: 0;
+  float: left;
+  color: black;
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 25px;
+  color: white;
+  transition: 0.3s;
+}
+
+.header2 a.logo {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.header2 a:hover {
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3;
+}
+
+.header2 a.active {
+  background-color: #333;
+  color: white;
+}
+
+.header2-right {
+  float: right;
+  transition: 0.2s;
+}
+
+@media screen and (max-width: 500px) {
+  .header2 a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+
+  .header2-right {
+    float: none;
+  }
+}
