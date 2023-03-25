@@ -9,7 +9,7 @@
       "install-webretro-win": "echo \"Error: not finshed\" && exit 1"
     },
     "files": [
-      "static",
+      "public",
       "src",
       "ssl",
       ".gitignore",
