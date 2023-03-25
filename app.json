@@ -1,7 +1,7 @@
 {
-  "name": "Interstellar",
-  "description": "Node.js Interstellar instance",
-  "repository": "https://github.com/interstellarnetwork/interstellar",
-  "logo": "https://raw.githubusercontent.com/interstellarnetwork/Interstellar/main/public/assets/images/branding/favicon/in.png",
-  "keywords": ["tomp", "school", "interstellar"]
+    "name": "Interstellar",
+    "description": "Interstellar Proxy by Interstellar Network",
+    "repository": "https://github.com/interstellarnetwork/interstellar",
+    "logo": "https://github.com/imbubbo/interstellar-v4/blob/main/public/assets/images/branding/favicon/in.png?raw=true",
+    "keywords": ["interstellar", "unblock", "school", "ultraviolet"]
 }

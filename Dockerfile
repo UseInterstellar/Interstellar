@@ -1,14 +1,14 @@
-# syntax=docker/dockerfile:1
-
-FROM node:19-bullseye
-ENV NODE_ENV=production
+FROM node:18-alpine
 
 WORKDIR /app
 
-COPY ["package.json", "package-lock.json*", "./"]
+COPY package*.json .
 
 RUN npm install
 
-COPY . .
+COPY static static/
+COPY src/index.js src/
 
-CMD [ "node", "index.js" ]
+EXPOSE 8080
+
+CMD ["npm", "start"]
