@@ -40,6 +40,59 @@ app.use((req, res) => {
   res.end("Error");
 });
 
+app.use(express.json());
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
+
+app.use(express.static(path.join(__dirname, "public")));
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "src", "index.html"));
+});
+
+app.get("/search", (req, res) => {
+  res.sendFile(path.join(__dirname, "src", "search.html"));
+});
+
+app.get("/play", (req, res) => {
+  res.sendFile(path.join(__dirname, "src", "games.html"));
+});
+
+app.get("/apps", (req, res) => {
+  res.sendFile(path.join(__dirname, "src", "apps.html"));
+});
+
+app.get("/go", (req, res) => {
+  res.sendFile(path.join(__dirname, "src", "go.html"));
+});
+
+app.get("/math", (req, res) => {
+  res.sendFile(path.join(__dirname, "src", "math.html"));
+});
+
+app.get("/chat", (req, res) => {
+  res.sendFile(path.join(__dirname, "src", "chat.html"));
+});
+
+app.get("/settings", (req, res) => {
+  res.sendFile(path.join(__dirname, "src", "settings.html"));
+});
+
+app.get("/donate", (req, res) => {
+  res.sendFile(path.join(__dirname, "src", "donate.html"));
+});
+
+app.get("/404", (req, res) => {
+  res.sendFile(path.join(__dirname, "src", "404.html"));
+});
+
+app.get("*", (req, res) => {
+  res.redirect("/404");
+});
+
 server.on("request", app);
 server.on("upgrade", (req, socket, head) => {
   if(bare.shouldRoute(req, socket, head)) bare.routeUpgrade(req, socket, head); else socket.end();
