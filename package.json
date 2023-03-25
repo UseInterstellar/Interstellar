@@ -1,7 +1,7 @@
 {
-  "name": "incognito",
+  "name": "Interstellar",
   "version": "1.0.0",
-  "description": "Unofficial Incognito easy deployment version with TompHTTP bare server included.",
+  "description": "Interstellar Proxy.",
   "type": "module",
   "scripts": {
     "start": "node src/index.js",
@@ -17,15 +17,13 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/amethystnetwork-dev/Incognito"
+    "url": "git+https://github.com/interstellarnetwork/interstellar"
   },
   "keywords": [
-    "unoffical",
-    "ultraviolet",
-    "unblock",
-    "titaniumnetwork",
-    "bypass-filter",
-    "amethystnetwork-dev"
+    "school",
+    "interstellar",
+    "interstellarnetwork",
+    "math"
   ],
   "author": "",
   "license": "GPL-3.0-or-later",
