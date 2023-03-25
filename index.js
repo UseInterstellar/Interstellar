@@ -8,10 +8,12 @@ import { readFileSync, existsSync } from "node:fs";
 import { hostname } from "node:os";
 
 import serveStatic from "serve-static";
+import connect from "connect";
 
-// The following message MAY NOT be removed.
+// The following message MAY NOT be removed
 console.log("Interstellar\nThis program comes with ABSOLUTELY NO WARRANTY.\nThis is free software, and you are welcome to redistribute it\nunder the terms of the GNU General Public License as published by\nthe Free Software Foundation, either version 3 of the License, or\n(at your option) any later version.\n\nYou should have received a copy of the GNU General Public License\nalong with this program. If not, see <https://www.gnu.org/licenses/>.\n");
 
+const app = connect();
 const bare = createBareServer("/bare/");
 var server, PORT = process.env.PORT;
 const ssl = existsSync("../ssl/key.pem") && existsSync("../ssl/cert.pem");
@@ -27,7 +29,7 @@ app.use((req, res, next) => {
   if(bare.shouldRoute(req)) bare.routeRequest(req, res); else next();
 });
 
-app.use(serveStatic(fileURLToPath(new URL("../public/", import.meta.url))));
+app.use(serveStatic(fileURLToPath(new URL("../static/", import.meta.url))));
 
 app.use("/uv", serveStatic(uvPath));
 
@@ -36,59 +38,6 @@ app.use((req, res) => {
     "Content-Type": "text/plain",
   });
   res.end("Error");
-});
-
-app.use(express.json());
-app.use(
-  express.urlencoded({
-    extended: true,
-  })
-);
-
-app.use(express.static(path.join(__dirname, "public")));
-
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "src", "index.html"));
-});
-
-app.get("/search", (req, res) => {
-  res.sendFile(path.join(__dirname, "src", "search.html"));
-});
-
-app.get("/play", (req, res) => {
-  res.sendFile(path.join(__dirname, "src", "games.html"));
-});
-
-app.get("/apps", (req, res) => {
-  res.sendFile(path.join(__dirname, "src", "apps.html"));
-});
-
-app.get("/go", (req, res) => {
-  res.sendFile(path.join(__dirname, "src", "go.html"));
-});
-
-app.get("/math", (req, res) => {
-  res.sendFile(path.join(__dirname, "src", "math.html"));
-});
-
-app.get("/chat", (req, res) => {
-  res.sendFile(path.join(__dirname, "src", "chat.html"));
-});
-
-app.get("/settings", (req, res) => {
-  res.sendFile(path.join(__dirname, "src", "settings.html"));
-});
-
-app.get("/donate", (req, res) => {
-  res.sendFile(path.join(__dirname, "src", "donate.html"));
-});
-
-app.get("/404", (req, res) => {
-  res.sendFile(path.join(__dirname, "src", "404.html"));
-});
-
-app.get("*", (req, res) => {
-  res.redirect("/404");
 });
 
 server.on("request", app);
