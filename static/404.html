@@ -1,85 +1,79 @@
-<!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>404 Error - Page not found</title>
-	<link rel="icon" type="image/x-icon" href="assets/images/branding/favicon/favicon.png">
-	<style>
-		* {
-			margin: 0;
-			padding: 0;
-			box-sizing: border-box;
-		}
-		html, body {
-			height: 100%;
-			font-family: 'Lato', sans-serif;
-			color: #333;
-		}
-		body {
-			background-color: #f7f7f7;
-		}
-		.container {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: center;
-			height: 100%;
-			text-align: center;
-			background-image: url("https://picsum.photos/1920/1080");
-			background-size: cover;
-			background-repeat: no-repeat;
-			background-position: center;
-			background-attachment: fixed;
-		}
-		h1 {
-			font-size: 5rem;
-			margin-bottom: 2rem;
-			text-shadow: 0 2px 2px rgba(0,0,0,0.3);
-		}
-		p {
-			font-size: 1.5rem;
-			margin-bottom: 2rem;
-		}
-		button {
-			background-color: #333;
-			color: #fff;
-			border: none;
-			border-radius: 0.5rem;
-			font-size: 1.5rem;
-			padding: 1rem 2rem;
-			cursor: pointer;
-			box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-			transition: all 0.3s ease-in-out;
-		}
-		button:hover {
-			background-color: #000;
-			transform: translateY(-2px);
-		}
-		button:active {
-			transform: translateY(0);
-			box-shadow: none;
-		}
-		@media screen and (max-width: 768px) {
-			h1 {
-				font-size: 3rem;
-			}
-			p {
-				font-size: 1rem;
-			}
-			button {
-				font-size: 1rem;
-				padding: 0.5rem 1rem;
-			}
-		}
-	</style>
+<title>404 Error</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Lato', sans-serif;
+  background-color: #f2f2f2;
+}
+
+.header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}
+
+.container {
+  margin: auto;
+  max-width: 600px;
+  padding: 20px;
+  text-align: center;
+}
+
+.error-code {
+  font-size: 8em;
+  font-weight: bold;
+  margin: 0;
+}
+
+.error-message {
+  font-size: 2em;
+  margin: 0;
+}
+
+.button {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2em;
+  text-decoration: none;
+  margin: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #555;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    max-width: 100%;
+  }
+}
+</style>
 </head>
 <body>
-	<div class="container">
-		<h1>404</h1>
-		<p>Oops! The page you're looking for doesn't exist.</p>
-		<button onclick="location.href='/';">Go back home</button>
-		<button onclick="location.href='https://forms.gle/PmYG2crJGaYCiWmN9';">Report this issue</button>
-	</div>
+
+<div class="header">
+  <h1>404 Error</h1>
+</div>
+
+<div class="container">
+  <p class="error-code">404</p>
+  <p class="error-message">Page not found.</p>
+  <a href="/" class="button">Go back home</a>
+  <a href="https://forms.gle/PmYG2crJGaYCiWmN9" class="button">Report an issue</a>
+</div>
+
 </body>
 </html>
