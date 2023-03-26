@@ -6,7 +6,6 @@
   <link rel="stylesheet" href="assets/css/particles.css" />
   <link rel="stylesheet" href="assets/css/settings/main.css" />
   <link rel="stylesheet" href="assets/css/nav.css" />
-  <link rel="stylesheet" href="assets/css/cards.css" />
   <meta name="description" content="Interstellar's settings page" />
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6840529569014734"></script>
   <script src="assets/js/main.js"></script>
@@ -49,25 +48,27 @@
       <h2>Themes</h2>
       <br>
       <div class="theme-buttons">
-  <div class="theme-card">
-    <div class="theme-image classic"></div>
-    <div class="theme-content">
-      <h2>Classic</h2>
-      <p>The default Interstellar theme.</p>
-      <button class="theme-button" data-theme="classic">Select</button>
-    </div>
-  </div>
+        <div class="theme-card">
+          <div class="theme-image classic"></div>
+          <div class="theme-content">
+            <h2>Classic</h2>
+            <p>The default Interstellar theme.</p>
+            <button class="theme-button" data-theme="classic">Select</button>
+          </div>
+        </div>
 
-  <div class="theme-card">
-    <div class="theme-image midnight"></div>
-    <div class="theme-content">
-      <h2>Midnight</h2>
-      <p>A dark, sleek theme.</p>
-      <button class="theme-button" data-theme="midnight">Select</button>
-    </div>
-  </div>
+        <div class="theme-card">
+          <div class="theme-image midnight"></div>
+          <div class="theme-content">
+            <h2>Midnight</h2>
+            <p>A dark, sleek theme.</p>
+            <button class="theme-button" data-theme="midnight">Select</button>
+          </div>
+        </div>
 
-  <div class="theme-card">
+        <div class="theme-card">
+          <div class="theme-image ocean
+                        <div class="theme-card">
     <div class="theme-image ocean"></div>
     <div class="theme-content">
       <h2>Ocean</h2>
@@ -88,7 +89,7 @@
 </div>
 
 <script>
-
+  // Set the selected theme
   const themeButtons = document.querySelectorAll('.theme-button');
   const themes = document.getElementById('Themes');
   const body = document.body;
@@ -104,11 +105,15 @@
     });
   }
 
+  // Set the previously selected theme
   const storedTheme = localStorage.getItem('theme');
   if (storedTheme) {
     body.className = `classic midnight ocean light ${storedTheme}`;
     themes.value = storedTheme;
   }
+</script>
+
+
 </script>
 </div>
 </div>
