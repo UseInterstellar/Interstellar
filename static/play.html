@@ -352,7 +352,7 @@ searchbar.addEventListener("mouseout", function() {
 </div>
 <div class="row">
   <div class="span1">
-      <div style="padding-top: 5px;border-radius: 25px 25px 25px 25px;" class="card animals" loading="lazy"><a onclick="go('https://orteil.dashnet.org/cookieclicker/')">
+      <div style="padding-top: 5px;border-radius: 25px 25px 25px 25px;" class="card animals" loading="lazy"><a onclick="go('https://orteil.dashnet.org/cookieclicker/'); ab()">
     <img style="border-radius: 25px;" src="/assets/images/icons/cookieclicker.png" ></a>
       <p3>Cookie Clicker</p3>
     </div>
@@ -1360,6 +1360,7 @@ searchbar.addEventListener("mouseout", function() {
 <script>
 function load() { alert('This game takes a while to load, It is working though!'); }
 function mouse() { alert('This game only works with a mouse.'); }
+function ab() { alert('This game does not work in about:blank.'); }
 </script>
 
   <script src="./uv/uv.bundle.js"></script>
