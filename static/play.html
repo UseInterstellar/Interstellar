@@ -40,7 +40,7 @@
       <a href="/../" class="logo">Interstellar</a>
       <div class="header2-right">
       <a href="web">Proxy</a>
-      <a href="play">Games</a>
+      <a href="play.html">Games</a>
       <a href="apps">Apps</a>
       <a href="math">Cheats</a>
       <a href="chat">Chatroom</a>
@@ -584,7 +584,7 @@ searchbar.addEventListener("mouseout", function() {
 </div>
 <div class="row">
   <div class="span1">
-     <div style="padding-top: 5px;border-radius: 25px 25px 25px 25px;" class="card animals" loading="lazy"><a class="game" onclick="go('https://play.geforcenow.com')">
+     <div style="padding-top: 5px;border-radius: 25px 25px 25px 25px;" class="card animals" loading="lazy"><a class="game" onclick="go('https://play.geforcenow.com'); gfn()">
         <img style="border-radius: 25px;" src="/assets/images/icons/apps/geforce-now.png"></a>
       <p3>Geforce NOW</p3>
      </div>
@@ -990,9 +990,9 @@ searchbar.addEventListener("mouseout", function() {
  </div>
 <div class="row">
   <div class="span1">
-      <div style="padding-top: 5px;border-radius: 25px 25px 25px 25px;" class="card animals" loading="lazy"><a href="games/retro-bowl/index.html">
+      <div style="padding-top: 5px;border-radius: 25px 25px 25px 25px;" class="card animals" loading="lazy"><a href="play/retro-bowl/index.html">
         <img style="border-radius: 25px;" src="/assets/images/icons/retro.png"></a>
-      <p3>Retro Bowl</p3>
+      <p3>Retro Bowl (Fixed)</p3>
     </div>
   </div>
 </div>
@@ -1391,6 +1391,7 @@ searchbar.addEventListener("mouseout", function() {
 function load() { alert('This game takes a while to load, It is working though!'); }
 function mouse() { alert('This game only works with a mouse.'); }
 function ab() { alert('This game does not work in about:blank.'); }
+function gfn() { alert('Geforce NOW is currently having some issues for some users, we are aware of this issue and are working to fix it.')}
 </script>
 
   <script src="./uv/uv.bundle.js"></script>
