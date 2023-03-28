@@ -3,6 +3,10 @@ import { createServer } from 'node:http';
 import { fileURLToPath } from 'node:url';
 import serveStatic from 'serve-static';
 import * as dotenv from 'dotenv'
+import path from "node:path";
+import express from "express";
+import connect from "connect";
+
 dotenv.config()
 const httpServer = createServer();
 
@@ -23,6 +27,53 @@ const serve = serveStatic(
 		fallthrough: false,
 	}
 );
+
+
+app.use("/uv", serveStatic(uvPath));
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+app.get("/web", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "web.html"));
+});
+
+app.get("/play", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "play.html"));
+});
+
+app.get("/apps", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "apps.html"));
+});
+
+app.get("/math", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "math.html"));
+});
+
+app.get("/chat", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "chat.html"));
+});
+
+app.get("/go", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "go.html"));
+});
+
+app.get("/settings", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "settings.html"));
+});
+
+app.get("/donate", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "donate.html"));
+});
+
+app.get("/404", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "404.html"));
+});
+
+app.get("*", (req, res) => {
+  res.redirect("/404");
+});
 
 httpServer.on('request', (req, res) => {
 	if (bareServer.shouldRoute(req)) {
