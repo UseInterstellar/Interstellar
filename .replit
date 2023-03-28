@@ -1,3 +1,0 @@
-language = "nodejs"
-run = ["npm", "start"]
-onBoot = "chmod u+x src/webretro.sh"
