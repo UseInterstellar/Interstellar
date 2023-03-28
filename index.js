@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "static", "index.html"));
 });
 
-app.get("/search", (req, res) => {
+app.get("/web", (req, res) => {
   res.sendFile(path.join(__dirname, "static", "web.html"));
 });
 
