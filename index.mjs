@@ -9,7 +9,6 @@ import express from "express";
 dotenv.config()
 const httpServer = createServer();
 
-
 // Run the Bare server in the /bare/ namespace. This will prevent conflicts between the static files and the bare server.
 const bareServer = createBareServer('/bare/', {
 	logErrors: false,
