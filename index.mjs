@@ -5,7 +5,6 @@ import serveStatic from 'serve-static';
 import * as dotenv from 'dotenv'
 import path from "node:path";
 import express from "express";
-import connect from "connect";
 
 dotenv.config()
 const httpServer = createServer();
