@@ -110,25 +110,14 @@
   cursor: pointer;
   border-radius: 5px;" type="button" value="Save" onclick="saveIcon()">
 	</form>
+	<button class="bg-gray-900 w-48 p-2 rounded-md text-white tab-cloak" onclick="redirectToMainDomain()">Apply Changes</button>
 	
-	<script>
-		function saveName() {
-			const name = document.getElementById("name").value;
-			localStorage.setItem("name", name);
-			alert("Name saved!");
-		}
-		
-		function saveIcon() {
-			const icon = document.getElementById("icon").value;
-			localStorage.setItem("icon", icon);
-			alert("Icon saved!");
-		}
-	</script>
 </div>
 <div>
 <script src="assets/js/particles.js"></script>
 <script src="assets/js/settings/settings.js"></script>
 <script src="assets/js/settings/themes.js"></script>
+<script src="assets/js.settings/name.js"></script>
 <script>
 if (localStorage.getItem('cloak')) {
   const cloakValue = localStorage.getItem('cloak') === 'true' ? 'true' : 'false';
@@ -147,6 +136,13 @@ document.getElementById('Transitions').addEventListener('change', function() {
   localStorage.setItem('Transitions', this.value === 'true' ? 'true' : 'false');
 });
 </script>
+<script>
+	function redirectToMainDomain() {
+  var currentUrl = window.location.href;
+  var mainDomainUrl = currentUrl.replace(/\/[^\/]*$/, '');
+  window.location.href = mainDomainUrl;
+}
+	</script>
 </div>
   
 </body>
