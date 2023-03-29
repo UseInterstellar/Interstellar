@@ -2,18 +2,30 @@
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Roboto&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans&family=Roboto&display=swap');
 
-    /* Center the loader */
     body {
-      background: #1c1c1c;
+      background-color: #1c1c1c;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      min-height: 100vh;
-      margin: 0px;
       align-items: center;
+      min-height: 100vh;
+    }
+
+    a {
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.3s ease-in-out;
+    }
+
+    a:hover {
+      color: #3498db;
     }
 
     #loader {
@@ -24,6 +36,7 @@
       border-top: 16px solid #3498db;
       border-radius: 50%;
       animation: spin 2s linear infinite;
+      margin-bottom: 35px;
     }
 
     @keyframes spin {
@@ -35,9 +48,28 @@
       }
     }
 
-    /* Add animation to "page content" */
+    .message {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .description {
+      color: #FFF;
+      font-size: 20px;
+      line-height: 1.5;
+      max-width: 600px;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .discord-link {
+      color: #3498db;
+      font-weight: bold;
+      text-decoration: underline;
+    }
+
     .animate-bottom {
-      position: relative;
       animation-name: animatebottom;
       animation-duration: 1s;
     }
@@ -52,44 +84,14 @@
         opacity: 1
       }
     }
-
-    #myDiv {
-      display: none;
-      text-align: center;
-    }
-
-    .message {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-    }
-
-    p {
-      font-family: Roboto;
-      font-size: 20px;
-      color: #FFF;
-    }
-
-    a {
-      font-family: Roboto;
-    }
-
-    .description {
-      color: #FFF;
-      max-width: 600px;
-      text-align: center;
-      margin-top: 35px;
-    }
   </style>
 </head>
 
 <body>
   <div id="loader"></div>
-  <div class="message">
+  <div class="message animate-bottom">
     <p class="description">
-      Please wait a moment.
-      Our servers may be under high load causing some slowness on our servers. If you have any issues join discord.gg/gointerstellar.
+      Please wait a moment. Our servers may be under high load causing some slowness.<br>If you have any issues, please <a class="discord-link" href="https://discord.gg/gointerstellar" target="_blank">join our Discord server</a>.
     </p>
   </div>
 </body>
