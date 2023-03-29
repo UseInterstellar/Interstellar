@@ -79,9 +79,46 @@
 </select>-->
 </div>
 <div>
+    	<h2>Change Name</h2>
+	<form>
+		<input class="bg-gray-900 w-48 p-2 rounded-md text-white tab-cloak" type="text" id="name" name="name"><br><br>
+		<input style="  background-color: #555956;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;" type="button" value="Save" onclick="saveName()">
+	</form>
+	
+	<h2>Change Icon</h2>
+	<form>
+		<input class="bg-gray-900 w-48 p-2 rounded-md text-white tab-cloak" type="text" id="icon" name="icon"><br><br>
+		<input style="  background-color: #555956;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;" type="button" value="Save" onclick="saveIcon()">
+	</form>
+	<button class="bg-gray-900 w-48 p-2 rounded-md text-white tab-cloak" onclick="redirectToMainDomain()">Apply Changes</button>
+	
+</div>
+<div>
 <script src="assets/js/particles.js"></script>
 <script src="assets/js/settings/settings.js"></script>
 <script src="assets/js/settings/themes.js"></script>
+<script src="assets/js/settings/name.js"></script>
+<script src="assets/js/settings/changes.js"></script>
 <script>
 if (localStorage.getItem('cloak')) {
   const cloakValue = localStorage.getItem('cloak') === 'true' ? 'true' : 'false';
@@ -100,6 +137,7 @@ document.getElementById('Transitions').addEventListener('change', function() {
   localStorage.setItem('Transitions', this.value === 'true' ? 'true' : 'false');
 });
 </script>
+
 </div>
   
 </body>
