@@ -1,5 +1,9 @@
 function redirectToMainDomain() {
   var currentUrl = window.location.href;
   var mainDomainUrl = currentUrl.replace(/\/[^\/]*$/, '');
-  window.location.href = mainDomainUrl;
+  if (window != top) {
+    top.location.href = mainDomainUrl;
+  } else {
+    window.location.href = mainDomainUrl;
+  }
 }
