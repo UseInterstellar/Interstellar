@@ -117,7 +117,8 @@
 <script src="assets/js/particles.js"></script>
 <script src="assets/js/settings/settings.js"></script>
 <script src="assets/js/settings/themes.js"></script>
-<script src="assets/js.settings/name.js"></script>
+<script src="assets/js/settings/name.js"></script>
+<script src="assets/js/settings/changes.js"></script>
 <script>
 if (localStorage.getItem('cloak')) {
   const cloakValue = localStorage.getItem('cloak') === 'true' ? 'true' : 'false';
@@ -136,13 +137,7 @@ document.getElementById('Transitions').addEventListener('change', function() {
   localStorage.setItem('Transitions', this.value === 'true' ? 'true' : 'false');
 });
 </script>
-<script>
-	function redirectToMainDomain() {
-  var currentUrl = window.location.href;
-  var mainDomainUrl = currentUrl.replace(/\/[^\/]*$/, '');
-  window.location.href = mainDomainUrl;
-}
-	</script>
+
 </div>
   
 </body>
