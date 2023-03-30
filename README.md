@@ -46,6 +46,7 @@ Altering/Modifying my code is against our License, and we will file a DMCA on yo
 
 
 # Contributors 
+Thank you to everyone who has contributed to Interstellar!
 <img src="https://contrib.rocks/image?repo=interstellarnetwork/interstellarnetwork.github.io"/>
 
 # Credits
