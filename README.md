@@ -27,8 +27,6 @@ Altering/Modifying my code is against our License, and we will file a DMCA on yo
 [![Deploy to Cyclic](https://binbashbanana.github.io/deploy-buttons/buttons/remade/cyclic.svg)](https://app.cyclic.sh/api/app/deploy/interstellarnetwork/interstellar)
 <a target="_blank" href="[https://vercel.com/new/clone?repository-url=https://github.com/imbubbo/interstellar]
  
-<a target="_blank" href="https://github.com/interstellarnetwork/interstellar/wiki/How-to-deploy-to-Vercel"><img alt="Deploy to Vercel" src="https://raw.githubusercontent.com/BinBashBanana/deploy-buttons/master/buttons/remade/vercel.svg"></a>
-
 ### <a href="https://github.com/interstellarnetwork/Interstellar/wiki/How-to-deploy-to-Replit-(Semi-Advanced)">How to deploy to Replit - Replit Free Plan</a>
 
 # Paid Services (Some are free with a Credit/Debit Card)
