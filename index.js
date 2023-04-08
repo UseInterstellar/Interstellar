@@ -59,7 +59,7 @@ app.get("/404", (req, res) => {
   res.sendFile(path.join(__dirname, "static", "404.html"));
 });
 
-app.get("*", (req, res) => {
+app.get("/*", (req, res) => {
   res.redirect("/404");
 });
 
