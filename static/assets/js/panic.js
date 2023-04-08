@@ -1,9 +1,17 @@
+var eventKey = localStorage.getItem("eventKey") || "`";
+
 document.addEventListener("keydown", function(event) {
-  if (event.key === "`") {
-    if (window.self !== window.top) { 
+  if (event.key === eventKey) {
+    if (window.self !== window.top) {
       window.parent.location.href = "https://classroom.google.com/";
     } else {
-      window.location.href = "https://classroom.google.com/"; 
+      window.location.href = "https://classroom.google.com/";
     }
   }
+});
+
+var inputField = document.getElementById("eventKeyInput");
+inputField.addEventListener("input", function() {
+  eventKey = inputField.value;
+  localStorage.setItem("eventKey", eventKey);
 });
