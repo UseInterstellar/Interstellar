@@ -20,8 +20,8 @@ body {
 .card {
   transition: 0.3s;
   border-radius: 5px;
-  width: 30%;
-  height: 250px;
+  width: 450px;
+  height: 225px;
   color: white;
   background-color: rgba(34, 34, 34, 0.5);
   max-height: 100%;
