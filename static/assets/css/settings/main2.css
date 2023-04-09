@@ -129,3 +129,22 @@ img {
 .t:hover {
   scale: 1.1;
 }
+
+.tab-cloaker-form {
+  border-radius: 0.375rem;
+  color: #fff;
+  cursor: pointer;
+  border: 2px;
+  transition: 0.2s;
+  margin-top: 10px;
+  background-color: #333;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  color: white;
+  height: 50px;
+  width: 50%;
+  padding: 10px;
+  text-align: center;
+  vertical-align: middle;
+}
+
