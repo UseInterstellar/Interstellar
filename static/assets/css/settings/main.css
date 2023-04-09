@@ -20,14 +20,14 @@ p {
 div {
   text-align: center;
 }
-.tab-cloak{
+.tab-cloak {
   cursor: pointer;
   border: 2px solid white;
   transition: 0.2s;
   margin-top: 10px;
 }
-.tab-cloak:hover{
- scale: 1.1;
+.tab-cloak:hover {
+  scale: 1.1;
   transition: 0.2s;
 }
 .button {
@@ -77,7 +77,7 @@ body {
 .border-solid {
   border-style: solid;
 }
-.option{
+.option {
   cursor: pointer;
 }
 .border-2 {
@@ -94,7 +94,7 @@ body {
 
 .bg-gray-900 {
   background-color: #111;
-  cursor:pointer;
+  cursor: pointer;
 }
 
 .w-48 {
@@ -109,22 +109,42 @@ body {
   color: #fff;
 }
 
-.button3 {
-  border: 2px solid #fff;
+/*.button3 {
+/*  border: 2px solid #fff;
+/*  font-size: 16px; 
+/*  cursor: pointer; 
+/*  text-align: center; 
+/*  padding: 15px 32px; 
+/*  margin: 4px 2px; 
+/*  border-radius: 10px; 
+/*} 
+/*.button2 { 
+/*  background-color: #000; 
+/*  color: white; 
+/*  border: 2px solid #fff; 
+/*} 
+/*.button2:hover { 
+/*  background-color: #fff; 
+/*  color: black; 
+/*  border: 2px solid #000; 
+/*} */
+
+button {
+  background-color: #161616;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
   font-size: 16px;
-  cursor: pointer;
-  text-align: center;
   padding: 15px 32px;
-  margin: 4px 2px;
-  border-radius: 10px;
+  margin: 4px 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: all 0.5s ease-in-out;
 }
-.button2 {
-  background-color: #000;
-  color: white;
-  border: 2px solid #fff;
+button:hover {
+  background-color: #000000;
 }
-.button2:hover {
-  background-color: #fff;
-  color: black;
-  border: 2px solid #000;
+button:active {
+  transform: translateY(0);
+  box-shadow: none;
 }

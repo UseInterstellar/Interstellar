@@ -16,7 +16,7 @@
 	<link rel="shortcut icon" href="assets/images/branding/in.png" type="image/x-icon">
     	<link rel="stylesheet" href="assets/css/home/index.css">
     	<link rel="stylesheet" href="assets/css/home/cookie_consent.css">
-        <link rel="stylesheet" href="assets/css/nav.css">
+      <link rel="stylesheet" href="assets/css/nav.css">
 <link href="css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     	<script src="assets/js/index.js"></script>
    	<script src="assets/js/main.js"></script>
@@ -71,10 +71,38 @@
     <div id="particles-js">
 		<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>	
     <div class="container">
-        <div class="mainhead">
-                <div class="title"><h1>Interstellar</h1></div>
-                <button class="discord-btn2">Join our Discord</button>
-              </div>
+      <div class="mainhead">
+        <div class="title"><h1>Interstellar</h1></div>
+        <div class="searchbar">
+          <form>
+            <input tag="searchbar" id="searchbar" placeholder="Search the web freely" />
+          </form>
+        </div>
+        <script>
+          const searchbar = document.getElementById("searchbar");
+      
+          searchbar.addEventListener("input", function() {
+            if (searchbar.value === '') {
+              // Code to execute if input field is empty
+              searchbar.style.height = "60px";
+            } else {
+              // Code to execute if input field is not empty
+              searchbar.style.height = "60px";
+            }
+          });
+        </script>
+        <button class="discord-btn2">Join our Discord</button>
+      </div>
+      <div>
+        <script src="assets/js/particles.js"></script>
+        <script src="assets/js/settings/settings.js"></script>
+           <script src="assets/js/main.js"></script>
+          <script src="./uv/uv.bundle.js"></script>
+          <script src="./uv/uv.config.js"></script>
+          <script src="index.js"></script>
+          <script src="assets/js/go.js"></script>
+         
+        </div>
         <br><br>
         <p class="text-center">
               <iframe src="https://hub.alienhub.xyz/show?utm_medium=interstellar" scrolling="no" width="450" height="150" frameborder="0"></iframe>
