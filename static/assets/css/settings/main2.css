@@ -7,21 +7,21 @@ body {
 }
 .row {
   margin-right: auto;
-  margin-left: auto;
-  display: grid;
-  grid-template-columns: auto auto auto;
-  grid-template-rows: auto auto;
   grid-gap: 2rem;
   position: absolute;
-  top: 120px;
+  top: 105px;
   left: 2%;
   right: 2%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
 .card {
   transition: 0.3s;
   border-radius: 5px; 
-  width: 450px;
-  height: 225px;
+  width: 30%;
+  height: 250px;
   color: white;
   background-color: rgba(34, 34, 34, 0.5);
   max-height: 100%;
@@ -34,7 +34,8 @@ body {
 }
 
 .container {
-  padding: 2px 16px;
+    padding: 2px 16px;
+
 }
 
 .title {
