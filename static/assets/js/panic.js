@@ -13,5 +13,9 @@ document.addEventListener("keydown", function(event) {
 var inputField = document.getElementById("eventKeyInput");
 inputField.addEventListener("input", function() {
   eventKey = inputField.value;
-  localStorage.setItem("eventKey", eventKey);
 });
+
+function saveEventKey() {
+  localStorage.setItem("eventKey", eventKey);
+  alert("Event key saved!");
+}
