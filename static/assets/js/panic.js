@@ -1,21 +1,28 @@
 var eventKey = localStorage.getItem("eventKey") || "`";
+var panicLink = localStorage.getItem("panicLink") || "https://classroom.google.com/";
 
 document.addEventListener("keydown", function(event) {
   if (event.key === eventKey) {
     if (window.self !== window.top) {
-      window.parent.location.href = "https://classroom.google.com/";
+      window.parent.location.href = panicLink;
     } else {
-      window.location.href = "https://classroom.google.com/";
+      window.location.href = panicLink;
     }
   }
 });
 
-var inputField = document.getElementById("eventKeyInput");
-inputField.addEventListener("input", function() {
-  eventKey = inputField.value;
+var eventKeyInput = document.getElementById("eventKeyInput");
+eventKeyInput.addEventListener("input", function() {
+  eventKey = eventKeyInput.value;
+});
+
+var linkInput = document.getElementById("linkInput");
+linkInput.addEventListener("input", function() {
+  panicLink = linkInput.value;
 });
 
 function saveEventKey() {
+  eventKey = eventKeyInput.value;
   localStorage.setItem("eventKey", eventKey);
-  alert("Event key saved!");
+  localStorage.setItem("panicLink", panicLink);
 }
