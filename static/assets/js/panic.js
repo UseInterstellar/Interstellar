@@ -16,6 +16,6 @@ inputField.addEventListener("input", function() {
 });
 
 function saveEventKey() {
+  eventKey = inputField.value;
   localStorage.setItem("eventKey", eventKey);
-  alert("Event key saved!");
 }
