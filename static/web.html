@@ -61,25 +61,15 @@
 const searchbar = document.getElementById("searchbar");
 
 searchbar.addEventListener("input", function() {
+  if (searchbar.value === '') {
+    // Code to execute if input field is empty
+    searchbar.style.width = "25%";
+    searchbar.style.height = "60px";
+  } else {
+    // Code to execute if input field is not empty
     searchbar.style.width = "70%";
-    searchbar.style.height = "50px";
-});
-
-searchbar.addEventListener("keyup", function() {
-    if (searchbar.value === "") {
-        searchbar.style.width = "400px";
-        searchbar.style.height = "30px";
-    }
-});
-
-searchbar.addEventListener("mouseover", function() {
-    searchbar.style.height = "50px";
-});
-
-searchbar.addEventListener("mouseout", function() {
-    if (searchbar.value === "") {
-        searchbar.style.height = "30px";
-    }
+    searchbar.style.height = "60px";
+  }
 });
 </script>
 <div>

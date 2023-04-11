@@ -19,23 +19,22 @@ body {
 }
 .card {
   transition: 0.3s;
-  border-radius: 5px; 
+  border-radius: 5px;
   width: 30%;
   height: 250px;
   color: white;
   background-color: rgba(34, 34, 34, 0.5);
   max-height: 100%;
   border: 3px solid #222;
-  box-shadow: 2px 2px 15px 8px #333;
+  box-shadow: 2px 2px 10px 5px #333;
 }
 
 .card:hover {
-  box-shadow: 2px 2px 20px 8px #222;
+  box-shadow: 2px 2px 12px 5px #222;
 }
 
 .container {
-    padding: 2px 16px;
-
+  padding: 2px 16px;
 }
 
 .title {
@@ -53,7 +52,7 @@ p {
 }
 
 h1 {
-  top:50px;
+  top: 50px;
   text-align: center;
 }
 .tab-cloak {
@@ -77,6 +76,15 @@ h1 {
 
 img {
   border-radius: 5px 5px 0 0;
+}
+button {
+  font-family: "Inter", sans-serif;
+}
+select {
+  font-family: "Inter", sans-serif;
+}
+input {
+  font-family: "Inter", sans-serif;
 }
 .w-full {
   width: 100%;
@@ -123,7 +131,7 @@ img {
   border-color: white;
   color: white;
   height: 50px;
-  width: 200px
+  width: 200px;
 }
 
 .t:hover {
@@ -146,4 +154,3 @@ img {
   padding: 10px;
   text-align: center;
 }
-
