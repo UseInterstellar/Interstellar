@@ -13,11 +13,7 @@ console.warn(
     "color: purple; font-weight: 600; background: yellow; padding: 0 5px; border-radius: 5px",
     "https://discord.gg/gointerstellar"
   );
-  
-  function script(text) {
-    console.log("%cScript Injection", "color: cyan; font-weight: 600; background: black; padding: 0 5px; border-radius: 5px", text);
-  }
-  
+    
   // ====================================
   // SCRIPT INJECTION
   // ====================================
@@ -37,10 +33,4 @@ console.warn(
     document.head.append(gascript, inlinegascript);
     script("Injected script 1/2");
   }
-   
-  const arc = document.createElement("script");
-  arc.setAttribute("async", "");
-  arc.setAttribute("src", "https://arc.io/widget.min.js#gcM6sndx");
-  document.head.append(arc);
-  script("Injected script 2/2");
-  
+
