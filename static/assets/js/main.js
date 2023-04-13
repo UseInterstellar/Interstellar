@@ -1,23 +1,3 @@
-console.warn(
-    "%cNote!",
-    "color: purple; font-weight: 600; background: yellow; padding: 0 5px; border-radius: 5px",
-    "https://discord.gg/gointerstellar"
-  );
-  console.warn(
-    "%cNote!",
-    "color: purple; font-weight: 600; background: yellow; padding: 0 5px; border-radius: 5px",
-    "https://discord.gg/gointerstellar"
-  );
-  console.warn(
-    "%cNote!",
-    "color: purple; font-weight: 600; background: yellow; padding: 0 5px; border-radius: 5px",
-    "https://discord.gg/gointerstellar"
-  );
-    
-  // ====================================
-  // SCRIPT INJECTION
-  // ====================================
-  
   var gaenabled = window.localStorage.getItem("ga");
   if (gaenabled == "false") {
     script("Skipped GA injection because it is disabled by the user.");
