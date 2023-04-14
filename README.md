@@ -50,11 +50,6 @@ Altering/Modifying my code is against our License, and we will file a DMCA on yo
 Thank you to everyone who has contributed to Interstellar!
 <img src="https://contrib.rocks/image?repo=interstellarnetwork/interstellarnetwork.github.io"/>
 
-# Credits
-
-Thank you Echo (3kh0), for allowing us to use some of his games.
-
-
 
 
 
