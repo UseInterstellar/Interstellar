@@ -16,21 +16,25 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  margin-top: 9vh;
 }
 .card {
   transition: 0.3s;
-  border-radius: 5px;
+  border-radius: 30px;
   width: 30%;
   height: 250px;
   color: white;
   background-color: rgba(34, 34, 34, 0.5);
   max-height: 100%;
-  border: 3px solid #222;
-  box-shadow: 2px 2px 10px 5px #333;
+  border: none;
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
 
 .card:hover {
-  box-shadow: 2px 2px 12px 5px #222;
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.08),
+    0 17px 50px 0 rgba(0, 0, 0, 0.05), 0 4px 4px 0 rgba(0, 0, 0, 0.12),
+    0 7px 14px 0 rgba(0, 0, 0, 0.09);
 }
 
 .container {
@@ -77,14 +81,53 @@ h1 {
 img {
   border-radius: 5px 5px 0 0;
 }
+
 button {
   font-family: "Inter", sans-serif;
+  border: none;
+  background-color: #333;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-select {
-  font-family: "Inter", sans-serif;
+
+button:hover {
+  background-color: #444;
 }
+select,
 input {
   font-family: "Inter", sans-serif;
+  border: none;
+  background-color: #333;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.15);
+}
+
+select:hover,
+input:hover {
+  opacity: 0.8;
+}
+
+input:focus {
+  outline: none;
+  opacity: 0.6;
+}
+input[type="text"] {
+  height: 40px;
+  width: 80%;
+  margin-bottom: 10px;
+}
+
+select {
+  height: 40px;
+  width: 80%;
 }
 .w-full {
   width: 100%;
