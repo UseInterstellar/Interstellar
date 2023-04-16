@@ -9,11 +9,6 @@ Interstellar is one of the best modern unblocked game sites. Check it out <a hre
 </p>  
 
 # Deploying
-Interstellar is completely open source, so you can deploy it to these services.
-
-Interstellar is not open-source so that you can alter it in any way, it is open source for the public to make more links.
-
-Altering/Modifying my code is against our License, and we will file a DMCA on you and get your site and repo taken down and your github account terminated.
 
 **Note:**  All of the built-in games will **NOT** work on certain services, since these services have a size limit.
   
