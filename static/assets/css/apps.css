@@ -3,6 +3,7 @@
 .row {
   float: left;
   overflow: hidden;
+  font-family: "Inter", sans-serif;
 }
 
 .card:hover {
