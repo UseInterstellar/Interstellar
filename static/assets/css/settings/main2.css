@@ -9,7 +9,7 @@ body {
   margin-right: auto;
   grid-gap: 2rem;
   position: absolute;
-  top: 105px;
+  top: 5%;
   left: 2%;
   right: 2%;
   display: flex;
