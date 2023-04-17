@@ -1,6 +1,6 @@
 {
-    "name": "Interstellar",
-    "description": "Interstellar Proxy",
+    "name": "math",
+    "description": "Mathematics.",
     "repository": "https://github.com/interstellarnetwork/interstellar",
     "logo": "https://github.com/interstellarnetwork/interstellar/blob/main/static/assets/images/branding/favicon/in.png",
     "keywords": ["school", "interstellar", "ultraviolet"]
