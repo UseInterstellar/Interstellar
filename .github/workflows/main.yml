@@ -1,0 +1,16 @@
+on: push
+name: 🚀 Deploy website on push
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v3
+    
+    - name: 📂 Sync files
+      uses: monkey1270/interstellar
+      with:
+        server: 	ftpupload.net
+        username: hp_34040004
+        password: ${{ secrets.ftp_password }}
