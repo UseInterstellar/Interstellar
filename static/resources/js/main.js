@@ -24,7 +24,7 @@ if (!inFrame && !navigator.userAgent.includes("Firefox")) {
         link.rel = "icon";
         link.href = icon;
         
-        iframe.src = location.href
+        iframe.src = location.href 
         style.position = "fixed"
         style.top = style.bottom = style.left = style.right = 0
         style.border = style.outline = "none"
