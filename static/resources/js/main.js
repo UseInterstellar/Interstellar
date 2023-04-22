@@ -35,4 +35,3 @@ if (!inFrame && !navigator.userAgent.includes("Firefox")) {
         location.replace("https://google.com")
     }
 }
-
