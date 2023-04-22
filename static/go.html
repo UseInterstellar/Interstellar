@@ -1,6 +1,16 @@
 <html lang="en" style="margin: 0">
   <head>
     <title>Classes</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="assets/images/branding/favicon/favicon.png"
+    />
+    <link
+      rel="shortcut icon"
+      href="assets/images/branding/favicon/favicon.png"
+      type="image/x-icon"
+    />
     <script src="assets/js/panic.js"></script>
     <link rel="stylesheet" href="assets/css/nav.css" />
     <style>
@@ -105,7 +115,10 @@
       }
     </style>
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ"></script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ"
+    ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
 
@@ -121,24 +134,33 @@
     <img class="fullscreen-icon" src="/assets/images/icons/fullscreen.svg" />
     <div class="controlpanel">
       <div class="controls">
-        <img class="icon" src="/assets/images/branding/favicon/interstellar.ico" />
+        <img
+          class="icon"
+          src="/assets/images/branding/favicon/interstellar.ico"
+        />
         <form>
           <input style="font-size: 24px" enabled="disabled" value="" />
         </form>
-        <button class="button Fullscreen" id="fullscreen-button" style="margin-right: 5px"> Fullscreen </button>
+        <button
+          class="button Fullscreen"
+          id="fullscreen-button"
+          style="margin-right: 5px"
+        >
+          Fullscreen
+        </button>
         <button class="button Home" id="home-button">Home</button>
       </div>
       <!--button class="toggle">expand_more</button-->
     </div>
     <script>
       const homeButton = document.getElementById("home-button");
-      homeButton.addEventListener("click", function() {
-        window.location.href = "./";
+      homeButton.addEventListener("click", function () {
+        window.location.href = "/web.html";
       });
     </script>
     <script>
       const fullscreenButton = document.getElementById("fullscreen-button");
-      fullscreenButton.addEventListener("click", function() {
+      fullscreenButton.addEventListener("click", function () {
         if (!document.fullscreenElement) {
           document.documentElement.requestFullscreen();
         } else {
@@ -146,4 +168,29 @@
         }
       });
     </script>
+  </body>
+  <html>
+    <iframe
+      src="/loading.html"
+      id="iframeId"
+      style="bottom: 0"
+      style="border: 0px #ffffff none"
+      name="myiFrame"
+      scrolling="yes"
+      frameborder="0"
+      marginheight="0px"
+      marginwidth="0px"
+      height="100%"
+      width="100%"
+      allowfullscreen
+    ></iframe>
+    <script>
+      window.onload = function () {
+        let encodedUrl = sessionStorage.getItem("encodedUrl");
+        // add the prefix "/service/" to the encoded URL
+        encodedUrl = "/service/" + encodedUrl;
+        document.querySelector("#iframeid").src = encodedUrl;
+      };
+    </script>
+  </html>
 </html>
