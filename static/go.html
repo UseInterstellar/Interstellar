@@ -106,17 +106,6 @@
         justify-content: center;
       }
     </style>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-      gtag("config", "G-WKJQ5QHQTJ");
-    </script>
   </head>
   <body>
     <img class="home-icon" src="/assets/images/icons/homeicon.svg" />
@@ -150,7 +139,7 @@
     </script>
   </body>
   <html>
-    <iframe src="/loading.html" id="iframeId" style="bottom: 0" style="border: 0px #ffffff none" name="myiFrame" scrolling="yes" frameborder="0" marginheight="0px" marginwidth="0px" height="100%" width="100%" allowfullscreen></iframe>
+    <iframe src="/loading.html" id="iframeId" style="bottom: 0" style="border: 0px #ffffff none" name="Iframe" scrolling="yes" frameborder="0" marginheight="0px" marginwidth="0px" height="100%" width="100%" allowfullscreen></iframe>
     <script>
       window.onload = function() {
         let encodedUrl = sessionStorage.getItem("encodedUrl");
@@ -159,11 +148,6 @@
         document.querySelector("#iframeid").src = encodedUrl;
       };
     </script>
-    <script>
-      window.addEventListener('beforeunload', function(e) {
-        e.preventDefault();
-        e.returnValue = 'Are you sure you want to leave?';
-      });
-    </script>
+
   </html>
 </html>
