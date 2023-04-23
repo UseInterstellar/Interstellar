@@ -10,7 +10,6 @@ function visit(value) {
         else if (!(url.startsWith("https://") || url.startsWith("http://")))
           url = "https://" + url;
           window.location.href = __uv$config.prefix + __uv$config.encodeUrl(url);
-  
       });
   }
 
