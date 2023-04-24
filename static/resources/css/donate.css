@@ -4,3 +4,29 @@
     flex-direction: column;
     align-items: center;
 }
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 50%;
+  }
+  
+  .donate {
+    border: solid white;
+    font: inherit;
+    color: white;
+    transition: 0.5s;
+    background-color: #444;
+    width: 250px;
+    height: 70px;
+    border-radius: 10px;
+    text-align: center
+  }
+  
+  .donate:hover {
+    box-shadow: inset 0 100px 0 0 white;
+    color: black;
+    border: 3px solid black;
+  }
+  
