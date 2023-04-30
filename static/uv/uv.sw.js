@@ -52,7 +52,7 @@ class UVServiceWorker extends EventEmitter {
         };
     };
     async fetch({ request }) {
-        if (!request.url.startsWith(location.origin + (this.config.prefix || '/~/go/'))) {
+        if (!request.url.startsWith(location.origin + (this.config.prefix || '/service/'))) {
             return fetch(request);
         };
         try {
@@ -60,7 +60,7 @@ class UVServiceWorker extends EventEmitter {
             const ultraviolet = new Ultraviolet(this.config);
 
             if (typeof this.config.construct === 'function') {
-                this.config.construct(ultraviolet, '/~/go');
+                this.config.construct(ultraviolet, 'service');
             };
 
             const db = await ultraviolet.cookie.db();

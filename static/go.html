@@ -153,8 +153,8 @@
     <script>
       window.onload = function() {
         let encodedUrl = sessionStorage.getItem("encodedUrl");
-        // add the prefix "/~/go/" to the encoded URL
-        encodedUrl = "/~/go/" + encodedUrl;
+        // add the prefix "/service/" to the encoded URL
+        encodedUrl = "/service/" + encodedUrl;
         document.querySelector("#iframeid").src = encodedUrl;
       };
     </script>
