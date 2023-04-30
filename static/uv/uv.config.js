@@ -1,5 +1,5 @@
 self.__uv$config = {
-    prefix: '/~/go/',
+    prefix: '/service/',
     bare: '/bare/',
     encodeUrl: Ultraviolet.codec.xor.encode,
     decodeUrl: Ultraviolet.codec.xor.decode,
