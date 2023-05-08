@@ -1,5 +1,3 @@
-import cluster from "cluster";
-import os from "os";
 import express from "express";
 import http from "node:http";
 import createBareServer from "@tomphttp/bare-server-node";
@@ -7,76 +5,85 @@ import path from "node:path";
 import * as dotenv from "dotenv";
 dotenv.config();
 
-  const server = http.createServer();
-  const app = express(server);
-  const bareServer = createBareServer("/bare/");
+const __dirname = process.cwd();
+const server = http.createServer();
+const app = express(server);
+const bareServer = createBareServer("/bare/");
 
-  // Serve static files with caching
-  const staticOptions = {
-    maxAge: "1d",
-    setHeaders: (res, path) => {
-      if (path.endsWith(".html")) {
-        res.setHeader("Cache-Control", "no-cache");
-      } else {
-        res.setHeader("Cache-Control", "public, max-age=86400");
-      }
-    },
-  };
-  
-  app.use(express.static(path.join(__dirname, "static"), staticOptions));
+app.use(express.json());
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
 
-  app.use(express.json());
-  app.use(
-    express.urlencoded({
-      extended: true,
-    })
-  );
+app.use(express.static(path.join(__dirname, "static")));
 
-  // Define routes
-  const routes = [
-    { path: "/", file: "index.html" },
-    { path: "/photography", file: "photography.html" },
-    { path: "/nature", file: "play.html" },
-    { path: "/ocean", file: "ocean.html" },
-    { path: "/forest", file: "forest.html" },
-    { path: "/go", file: "go.html" },
-    { path: "/settings", file: "settings.html" },
-    { path: "/donate", file: "donate.html" },
-    { path: "/404", file: "404.html" },
-  ];
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "static", "index.html"));
+});
 
-  // Define routes using the routes array
-  routes.forEach((route) => {
-    app.get(route.path, (req, res) => {
-      res.sendFile(path.join(__dirname, "static", route.file));
-    });
-  });
+app.get("/web", (req, res) => {
+  res.sendFile(path.join(__dirname, "static", "web.html"));
+});
 
-  // Catch-all route
-  app.get("/*", (req, res) => {
-    res.redirect("/404");
-  });
+app.get("/play", (req, res) => {
+  res.sendFile(path.join(__dirname, "static", "play.html"));
+});
 
-  // Bare Server
-  server.on("request", (req, res) => {
-    if (bareServer.shouldRoute(req)) {
-      bareServer.routeRequest(req, res);
-    } else {
-      app(req, res);
-    }
-  });
+app.get("/apps", (req, res) => {
+  res.sendFile(path.join(__dirname, "static", "apps.html"));
+});
 
-  server.on("upgrade", (req, socket, head) => {
-    if (bareServer.shouldRoute(req)) {
-      bareServer.routeUpgrade(req, socket, head);
-    } else {
-      socket.end();
-    }
-  });
+app.get("/math", (req, res) => {
+  res.sendFile(path.join(__dirname, "static", "math.html"));
+});
 
-  server.listen({
-    port: process.env.PORT,
-  });
+app.get("/chat", (req, res) => {
+  res.sendFile(path.join(__dirname, "static", "chat.html"));
+});
 
-  console.log(`Worker process running with PID ${process.pid}`);
-}
+app.get("/go", (req, res) => {
+  res.sendFile(path.join(__dirname, "static", "go.html"));
+});
+
+app.get("/settings", (req, res) => {
+  res.sendFile(path.join(__dirname, "static", "settings.html"));
+});
+
+app.get("/donate", (req, res) => {
+  res.sendFile(path.join(__dirname, "static", "donate.html"));
+});
+
+app.get("/404", (req, res) => {
+  res.sendFile(path.join(__dirname, "static", "404.html"));
+});
+
+app.get("/*", (req, res) => {
+  res.redirect("/404");
+});
+
+// Bare Server
+server.on("request", (req, res) => {
+  if (bareServer.shouldRoute(req)) {
+    bareServer.routeRequest(req, res);
+  } else {
+    app(req, res);
+  }
+});
+
+server.on("upgrade", (req, socket, head) => {
+  if (bareServer.shouldRoute(req)) {
+    bareServer.routeUpgrade(req, socket, head);
+  } else {
+    socket.end();
+  }
+});
+
+server.on("listening", () => {
+  console.log(`Interstellar running at http://localhost:${process.env.PORT}`);
+});
+
+server.listen({
+  port: process.env.PORT,
+});
