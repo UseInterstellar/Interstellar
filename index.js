@@ -7,29 +7,6 @@ import path from "node:path";
 import * as dotenv from "dotenv";
 dotenv.config();
 
-const __dirname = process.cwd();
-
-// Increase max sockets to 1000
-http.globalAgent.maxSockets = 1000;
-
-if (cluster.isMaster) {
-  const numCPUs = os.cpus().length;
-  console.log(`Master process running with PID ${process.pid}`);
-
-  // Fork worker processes
-  for (let i = 0; i < numCPUs; i++) {
-    cluster.fork();
-  }
-
-  // Handle worker exit events
-  cluster.on("exit", (worker, code, signal) => {
-    console.log(
-      `Worker ${worker.process.pid} died with code ${code} and signal ${signal}`
-    );
-    console.log("Forking a new worker...");
-    cluster.fork();
-  });
-} else {
   const server = http.createServer();
   const app = express(server);
   const bareServer = createBareServer("/bare/");
@@ -45,6 +22,7 @@ if (cluster.isMaster) {
       }
     },
   };
+  
   app.use(express.static(path.join(__dirname, "static"), staticOptions));
 
   app.use(express.json());
