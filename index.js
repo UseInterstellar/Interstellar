@@ -17,48 +17,27 @@ app.use(
   })
 );
 
-app.use(express.static(path.join(__dirname, "static")));
+ // Define routes
+ const routes = [
+  { path: "/", file: "index.html" },
+  { path: "/photography", file: "photography.html" },
+  { path: "/nature", file: "play.html" },
+  { path: "/ocean", file: "ocean.html" },
+  { path: "/forest", file: "forest.html" },
+  { path: "/go", file: "go.html" },
+  { path: "/settings", file: "settings.html" },
+  { path: "/donate", file: "donate.html" },
+  { path: "/404", file: "404.html" },
+];
 
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "static", "index.html"));
+// Define routes using the routes array
+routes.forEach((route) => {
+  app.get(route.path, (req, res) => {
+    res.sendFile(path.join(__dirname, "static", route.file));
+  });
 });
 
-app.get("/web", (req, res) => {
-  res.sendFile(path.join(__dirname, "static", "web.html"));
-});
-
-app.get("/play", (req, res) => {
-  res.sendFile(path.join(__dirname, "static", "play.html"));
-});
-
-app.get("/apps", (req, res) => {
-  res.sendFile(path.join(__dirname, "static", "apps.html"));
-});
-
-app.get("/math", (req, res) => {
-  res.sendFile(path.join(__dirname, "static", "math.html"));
-});
-
-app.get("/chat", (req, res) => {
-  res.sendFile(path.join(__dirname, "static", "chat.html"));
-});
-
-app.get("/go", (req, res) => {
-  res.sendFile(path.join(__dirname, "static", "go.html"));
-});
-
-app.get("/settings", (req, res) => {
-  res.sendFile(path.join(__dirname, "static", "settings.html"));
-});
-
-app.get("/donate", (req, res) => {
-  res.sendFile(path.join(__dirname, "static", "donate.html"));
-});
-
-app.get("/404", (req, res) => {
-  res.sendFile(path.join(__dirname, "static", "404.html"));
-});
-
+// Catch-all route
 app.get("/*", (req, res) => {
   res.redirect("/404");
 });
