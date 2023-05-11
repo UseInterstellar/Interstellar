@@ -32,7 +32,7 @@ app.get("/nature", (req, res) => {
 });
 
 app.get("/forest", (req, res) => {
-  res.sendFile(path.join(__dirname, "static", "ocean.html"));
+  res.sendFile(path.join(__dirname, "static", "forest.html"));
 });
 
 app.get("/go", (req, res) => {
@@ -45,6 +45,10 @@ app.get("/settings", (req, res) => {
 
 app.get("/donate", (req, res) => {
   res.sendFile(path.join(__dirname, "static", "donate.html"));
+});
+
+app.get("/ocean", (req, res) => {
+  res.sendFile(path.join(__dirname, "static", "ocean.html"));
 });
 
 app.get("/404", (req, res) => {
