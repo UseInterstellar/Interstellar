@@ -1,6 +1,6 @@
 
   services:
   - type: web
-    name: interstellar
+    name: lukeismybestie
     env: docker
     plan: free
