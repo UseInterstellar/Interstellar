@@ -1,6 +1,6 @@
 <div align='center'>
 
-# About Us
+# Interstellar v4
 
 Interstellar is one of the best modern unblocked game sites. Check it out <a href="https://interstellars.games">here</a>. If this link is blocked, you can get more links in our <a href="https://dsc.gg/interstellarntwork">Discord Server!</a>
 
