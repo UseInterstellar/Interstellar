@@ -140,8 +140,7 @@
     </script>
   </body>
   <html>
-    <iframe src="/loading.html" id="iframeId" style="bottom: 0" style="border: 0px #ffffff none" name="Iframe" scrolling="yes" frameborder="0" marginheight="0px" marginwidth="0px" height="100%" width="100%" allowfullscreen></iframe>
-    <script>
+    <iframe src="" id="iframeId" style="bottom: 0" style="border: 0px #ffffff none" name="Iframe" scrolling="yes" frameborder="0" marginheight="0px" marginwidth="0px" height="100%" width="100%" allowfullscreen></iframe>    <script>
       window.onload = function() {
         let encodedUrl = sessionStorage.getItem("encodedUrl");
         // add the prefix "/service/" to the encoded URL
@@ -152,3 +151,34 @@
     
   </html>
 </html>
+
+
+<html lang="en">
+  <head>
+    <style>
+      body {
+        margin: 0;
+      }
+
+      iframe {
+        display: block;
+        background: #000;
+        border: none;
+        height: 100vh;
+        width: 100vw;
+      }
+    </style>
+    <title>Classes</title>
+    <link rel="icon" type="image/x-icon" href="assets/images/branding/favicon/favicon.png" />
+  </head>
+  <body>
+    <iframe src="" id="iframeId" style="bottom: 0" style="border: 0px #ffffff none" name="Iframe" scrolling="yes" frameborder="0" marginheight="0px" marginwidth="0px" height="100%" width="100%" allowfullscreen></iframe>
+    <script>
+      window.onload = function() {
+        let encodedUrl = sessionStorage.getItem("encodedUrl");
+        // add the prefix "/astronomy/" to the encoded URL
+        encodedUrl = "/astronomy/" + encodedUrl;
+        document.querySelector("#iframeid").src = encodedUrl;
+      };
+    </script>
+  </body>
