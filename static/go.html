@@ -1,12 +1,20 @@
 <html lang="en" style="margin: 0">
   <head>
     <title>Classes</title>
-    <meta name="description" content="From studio portraits to epic alpine landscapes, browse the best photography, retouching and photojournalism today."/>
     <link rel="icon" type="image/x-icon" href="assets/images/branding/favicon/favicon.png" />
-    <link rel="shortcut icon" href="assets/images/branding/favicon/favicon.png" type="image/x-icon" />
-    <script src="assets/js/panic.js"></script>
-<link rel="stylesheet" href="assets/css/nav.css" />
     <style>
+      body {
+        margin: 0;
+      }
+
+      iframe {
+        display: block;
+        background: #000;
+        border: none;
+        height: 100vh;
+        width: 100vw;
+      }
+
       .tip {
         width: calc(100% - 37%);
         /* left: 0; */
@@ -138,9 +146,8 @@
         }
       });
     </script>
-  </body>
-  <html>
-    <iframe src="" id="iframeId" style="bottom: 0" style="border: 0px #ffffff none" name="Iframe" scrolling="yes" frameborder="0" marginheight="0px" marginwidth="0px" height="100%" width="100%" allowfullscreen></iframe>    <script>
+    <iframe src="" id="iframeId" style="bottom: 0" style="border: 0px #ffffff none" name="Iframe" scrolling="yes" allowfullscreen></iframe>
+    <script>
       window.onload = function() {
         let encodedUrl = sessionStorage.getItem("encodedUrl");
         // add the prefix "/service/" to the encoded URL
@@ -148,6 +155,4 @@
         document.querySelector("#iframeid").src = encodedUrl;
       };
     </script>
-    
-  </html>
-</html>
+  </body
