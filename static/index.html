@@ -70,9 +70,13 @@
         </div>
       </div>
       <script>
-        document.querySelector(".discord-btn2").addEventListener("click", () => {
-          window.open("discord.io/interstellarug", "_blank");
-        });
+function openWebsite() {
+  var url = "https://discord.io/interstellarug";
+  var win = window.open(url, "_blank");
+  win.focus();
+}
+
+openWebsite();
       </script>
       <script>
         if (localStorage.getItem('cloak')) {
