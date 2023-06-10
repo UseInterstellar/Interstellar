@@ -23,7 +23,24 @@ Interstellar is one of the best modern unblocked game sites. Check it out <a hre
 [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/pTe4mb?referralCode=R3UkeC)
 
 
-### <a href="https://github.com/interstellarnetwork/Interstellar/wiki/How-to-deploy-to-Replit-(Semi-Advanced)">How to deploy to Replit - Replit Free Plan</a>
+## Deployment Steps for Replit
+
+To deploy Interstellar on Replit, follow these steps:
+
+1. **Choose Node.js Template:** Scroll down and select `Node.js` as the template.
+
+2. **Name Your Repl:** Name your Repl in the field provided, then click on `Create Repl`.
+
+3. **Clone the Repository:** On the right-hand side of the screen, you'll see a panel labeled `Shell`. Here, you should paste the following command:
+
+    ```shell
+    git clone https://github.com/interstellarnetwork/interstellar-deployable.git
+    ```
+
+4. **Move the Files:** After cloning the repository, a new folder called `interstellar-deployable` will appear in your Repl. You need to move all the files from inside this folder to the root of your Repl.
+
+Congratulations! You have now deployed Interstellar on Replit.
+
 
 # Paid Services (Some are free with a Credit/Debit Card)
 
