@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Classes</title>
+    <link href="assets/images/branding/favicon/favicon.png" rel="icon" type="image/x-icon" />
+    <meta name="description" content="From studio portraits to epic alpine landscapes, browse the best photography, retouching and photojournalism today."/>
+    <!-- Main Scripts-->
+     <script src="resources/js/index.js"></script>
+    <script src="./uv/uv.bundle.js"></script>
+    <script src="./uv/uv.config.js"></script>
+    <script src="resources/js/visit.js"></script>
+    <script src="resources/js/go.js"></script>
+    <!-- Extra Scripts-->
+    <script src="assets/js/panic.js"></script>
+    <script src="assets/js/search.js"></script>
+    <script src="/assets/js/themecontrol.js"></script>
+    <link href="assets/css/settings/main.css" rel="stylesheet" />
+    <link href="assets/css/nav.css" rel="stylesheet" />
+    <link href="assets/css/apps.css" rel="stylesheet" />
+    <link rel="stylesheet" href="resources/css/main.css">
+  </head>
+  <body>
+     <!-- Nav Bar Start-->
+     <div class="header2">
+      <br>
+      <a href="/../" class="logo">Interstellar</a>
+      <div class="header2-right">
+        <a href="photography">Proxy</a>
+        <a href="nature">Games</a>
+        <a href="ocean">Apps</a>
+        <a href="forest">Chatroom</a>
+        <a href="settings">Settings</a>
+      </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <!-- Nav Bar End-->
+    <br>
+    <div>
+      <input class="searchbar" id="searchbar" name="search" onkeyup="search_animal()" placeholder="Search.." tag="searchbar" type="text" />
+    </div>
+    <script>
+      const searchbar = document.getElementById("searchbar");
+      searchbar.addEventListener("input", function() {
+        if (searchbar.value === '') {
+          // Code to execute if input field is empty
+          searchbar.style.width = "25%";
+          searchbar.style.height = "60px";
+        } else {
+          // Code to execute if input field is not empty
+          searchbar.style.width = "70%";
+          searchbar.style.height = "60px";
+        }
+      });
+    </script>
+   <!-- Advertisement Start-->
+   <!-- Advertisement End-->
+   <br>
+    <div class="row">
+      <div class="span1">
+        <div class="card animals" loading="lazy">
+          <a class="game" onclick="go('https://amazon.com/')">
+            <img loading="lazy" src="/assets/images/icons/apps/amazon.png" style="border-radius: 25px;" />
+          </a>
+          <p3> Amazon </p3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span1">
+        <div class="card animals" loading="lazy">
+          <a onclick="go('https://chess.com')">
+            <img loading="lazy" src="/assets/images/icons/chess.png" style="border-radius: 25px;" />
+          </a>
+          <p3> Chess.com </p3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span1">
+        <div class="card animals" loading="lazy">
+          <a onclick="go('https://chatgptproxy.me')">
+            <img loading="lazy" src="/assets/images/icons/chatgpt.png" style="border-radius: 25px;" />
+          </a>
+          <p3>ChatGPT</p3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span1">
+        <div class="card animals" loading="lazy">
+          <a class="game" onclick="go('https://www.coolmathgames.com/')">
+            <img loading="lazy" src="/assets/images/icons/apps/coolmath.png" style="border-radius: 25px;" />
+          </a>
+          <p3> Cool Math Games </p3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span1">
+        <div class="card animals" loading="lazy">
+          <a class="game" onclick="go('https://discord.com')">
+            <img loading="lazy" src="/assets/images/icons/apps/discord.jpg" style="border-radius: 25px;" />
+          </a>
+          <p3>Discord</p3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span1">
+        <div class="card animals" loading="lazy">
+          <a class="game" onclick="visit('https://discord.com')">
+            <img loading="lazy" src="/assets/images/icons/apps/discord.jpg" style="border-radius: 25px;" />
+          </a>
+          <p3>Discord - Login</p3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span1">
+        <div class="card animals" loading="lazy">
+          <a class="game" onclick="go('https://www.espn.com/watch/')">
+            <img loading="lazy" src="/assets/images/icons/apps/espn.webp" style="border-radius: 25px;" />
+          </a>
+          <p3> ESPN </p3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span1">
+        <div class="card animals" loading="lazy">
+          <a class="game" onclick="go('https://fifarosters.com/')">
+            <img loading="lazy" src="/assets/images/icons/fifa.png" style="border-radius: 25px;" />
+          </a>
+          <p3> Fifa Rosters </p3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span1">
+        <div class="card animals" loading="lazy">
+          <a class="game" onclick="go('https://replit.com/@cooleddie001/firefox?embed=true')">
+            <img loading="lazy" src="/assets/images/icons/apps/firefox.png" style="border-radius: 25px;" />
+          </a>
+          <p3> Firefox Brower </p3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span1">
+        <div class="card animals" loading="lazy">
+          <a class="game" onclick="go('https://flixhq.to')">
+            <img loading="lazy" src="/assets/images/icons/apps/flixhq.png" style="border-radius: 25px;" />
+          </a>
+          <p3> Flix HQ </p3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span1">
+        <div class="card animals" loading="lazy">
+          <a class="game" onclick="go('https://play.geforcenow.com'); gfn()">
+            <img loading="lazy" src="/assets/images/icons/apps/geforce-now.png" style="border-radius: 25px;" />
+          </a>
+          <p3> Geforce NOW </p3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span1">
+        <div class="card animals" loading="lazy">
+          <a class="game" onclick="go('https://github.com/')">
+            <img loading="lazy" src="/assets/images/icons/apps/github.png" style="border-radius: 25px;" />
+          </a>
+          <p3> Github </p3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span1">
+        <div class="card animals" loading="lazy">
+          <a class="game" onclick="go('https://google.com')">
+            <img loading="lazy" src="/assets/images/icons/apps/google.png" style="border-radius: 25px;" />
+          </a>
+          <p3> Google </p3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span1">
+        <div class="card animals" loading="lazy">
+          <a class="game" onclick="go('https://www.hbomax.com/')">
+            <img loading="lazy" src="/assets/images/icons/apps/hbo.webp" style="border-radius: 25px;" />
+          </a>
+          <p3> HBO Max </p3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span1">
+        <div class="card animals" loading="lazy">
+          <a class="game" onclick="alert('It is currently not possible to add Instagram, The login feature will not work.')">
+            <img loading="lazy" src="/assets/images/icons/apps/instagram.png" style="border-radius: 25px;" />
+          </a>
+          <p3 style="color:red"> Instagram </p3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span1">
+        <div class="card animals" loading="lazy">
+          <a class="game" onclick="go('https://messenger.com/')">
+            <img loading="lazy" src="/assets/images/icons/apps/messenger.png" style="border-radius: 25px;" />
+          </a>
+          <p3> Messenger </p3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span1">
+        <div class="card animals" loading="lazy">
+          <a class="game" onclick="go('https://paramountplus.com')">
+            <img loading="lazy" src="/assets/images/icons/apps/paramount.png" style="border-radius: 25px;" />
+          </a>
+          <p3> Paramount Plus </p3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span1">
+        <div class="card animals" loading="lazy">
+          <a class="game" onclick="go('https://pinterest.com')">
+            <img loading="lazy" src="/assets/images/icons/apps/pinterest.png" style="border-radius: 25px;" />
+          </a>
+          <p3> Pinterest </p3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span1">
+        <div class="card animals" loading="lazy">
+          <a class="game" onclick="go('https://pixlr.com/')">
+            <img loading="lazy" src="/assets/images/icons/pix.png" style="border-radius: 25px;" />
+          </a>
+          <p3> Pixlr </p3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span1">
+        <div class="card animals" loading="lazy">
+          <a class="game" onclick="go('https://poki.com')">
+            <img loading="lazy" src="/assets/images/icons/apps/poki.png" style="border-radius: 25px;" />
+          </a>
+          <p3> Poki </p3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span1">
+        <div class="card animals" loading="lazy">
+          <a class="game" onclick="go('https://reddit.com')">
+            <img loading="lazy" src="/assets/images/icons/apps/reddit.png" style="border-radius: 25px;" />
+          </a>
+          <p3> Reddit </p3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span1">
+        <div class="card animals" loading="lazy">
+          <a class="game" onclick="go('https://nowgg.me')">
+            <img loading="lazy" src="/assets/images/icons/apps/snapchat.png" style="border-radius: 25px;" />
+          </a>
+          <p3> Snapchat </p3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span1">
+        <div class="card animals" loading="lazy">
+          <a class="game" onclick="go('https://soundcloud.com')">
+            <img loading="lazy" src="/assets/images/icons/apps/soundcloud.jpg" style="border-radius: 25px;" />
+          </a>
+          <p3> Soundcloud </p3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span1">
+        <div class="card animals" loading="lazy">
+          <a class="game" onclick="go('https://open.spotify.com')">
+            <img loading="lazy" src="/assets/images/icons/apps/spotify.png" style="border-radius: 25px;" />
+          </a>
+          <p3> Spotify </p3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span1">
+        <div class="card animals" loading="lazy">
+          <a class="game" onclick="go('https://web.telegram.org/')">
+            <img loading="lazy" src="/assets/images/icons/apps/telegram.png" style="border-radius: 25px;" />
+          </a>
+          <p3> Telegram </p3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span1">
+        <div class="card animals" loading="lazy">
+          <a class="game" onclick="go('https://tiktok.com')">
+            <img loading="lazy" src="/assets/images/icons/apps/tiktok.png" style="border-radius: 25px;" />
+          </a>
+          <p3> Tiktok </p3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span1">
+        <div class="card animals" loading="lazy">
+          <a class="game" onclick="go('https://tumblr.com/')">
+            <img loading="lazy" src="/assets/images/icons/apps/tumblr.png" style="border-radius: 25px;" />
+          </a>
+          <p3> Tumblr </p3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span1">
+        <div class="card animals" loading="lazy">
+          <a class="game" onclick="go('https://twitch.tv')">
+            <img loading="lazy" src="/assets/images/icons/apps/twitch-tv.png" style="border-radius: 25px;" />
+          </a>
+          <p3> Twitch </p3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span1">
+        <div class="card animals" loading="lazy">
+          <a class="game" onclick="go('https://twitter.com')">
+            <img loading="lazy" src="/assets/images/icons/apps/twitter.png" style="border-radius: 25px;" />
+          </a>
+          <p3> Twitter </p3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span1">
+        <div class="card animals" loading="lazy">
+          <a class="game" onclick="go('https://vscode.dev')">
+            <img loading="lazy" src="/assets/images/icons/apps/vscode.png" style="border-radius: 25px;" />
+          </a>
+          <p3> VS Code </p3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span1">
+        <div class="card animals" loading="lazy">
+          <a class="game" onclick="go('https://y8.com/')">
+            <img loading="lazy" src="/assets/images/icons/apps/y8.png" style="border-radius: 25px;" />
+          </a>
+          <p3> Y8 Games </p3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span1">
+        <div class="card animals" loading="lazy">
+          <a class="game" onclick="go('https://youtube.com')">
+            <img loading="lazy" src="/assets/images/icons/apps/yt.png" style="border-radius: 25px;" />
+          </a>
+          <p3> YouTube </p3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span1">
+        <div class="card animals" loading="lazy">
+          <a class="game" onclick="go('https://web.whatsapp.com/')">
+            <img loading="lazy" src="/assets/images/icons/apps/whatsapp.png" style="border-radius: 25px;" />
+          </a>
+          <p3> Whatsapp </p3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span1">
+        <div class="card animals" loading="lazy">
+          <a class="game" onclick="go('https://zoro.to')">
+            <img loading="lazy" src="/assets/images/icons/apps/zoroto.png" style="border-radius: 25px;" />
+          </a>
+          <p3> Zoro.to </p3>
+        </div>
+      </div>
+    </div>
+    <br>
+    <br>
+    <link href="assets/images/branding/favicon/interstellar.png" rel="shortcut icon" type="image/x-icon" />
+   <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-WKJQ5QHQTJ');
+</script>
+    <!-- Advertisement Start-->
+    <!-- Advertisement End-->
+    <script>
+      function gfn() {
+        alert('Geforce NOW is currently having some issues for some users, we are aware of this issue and are working to fix it.')
+      }
+    </script>
+  </body>
+</html>
