@@ -2,28 +2,29 @@
   <html lang="en">
   <link rel="icon" type="image/x-icon" href="assets/images/branding/favicon/favicon.png">
   <title>Classes</title>
-  <meta name="description" content="From studio portraits to epic alpine landscapes, browse the best photography, retouching and photojournalism today."/>
+  <meta name="description"
+    content="From studio portraits to epic alpine landscapes, browse the best photography, retouching and photojournalism today." />
   <link rel="stylesheet" href="/assets/css/particles.css" />
   <link rel="stylesheet" href="/assets/css/nav.css" />
-  <link rel="stylesheet" href="/assets/css/settings/main2.css"/>  
-   <script async src="/assets/js/panic.js"></script>
+  <link rel="stylesheet" href="/assets/css/settings/main2.css" />
+  <script async src="/assets/js/panic.js"></script>
   <script src="assets/js/themecontrol.js"></script>
 </head>
 
 <body>
-      <!-- Nav Bar Start-->
-      <div class="header2">
-        <br>
-        <a href="/../" class="logo">Interstellar</a>
-        <div class="header2-right">
-          <a href="photography">Proxy</a>
-          <a href="nature">Games</a>
-          <a href="ocean">Apps</a>
-          <a href="forest">Chatroom</a>
-          <a href="settings">Settings</a>
-        </div>
-      </div>
-      <!-- Nav Bar End-->
+  <!-- Nav Bar Start-->
+  <div class="header2">
+    <br>
+    <a href="/../" class="logo">Interstellar</a>
+    <div class="header2-right">
+      <a href="photography">Proxy</a>
+      <a href="nature">Games</a>
+      <a href="ocean">Apps</a>
+      <a href="forest">Chatroom</a>
+      <a href="settings">Settings</a>
+    </div>
+  </div>
+  <!-- Nav Bar End-->
 
   <body class="classic midnight">
     <div id="particles-js">
@@ -35,7 +36,8 @@
           <div class="title">
             <h4><b>About:Blank Cloaker</b></h4>
           </div>
-          <p>Clicking this button will open your tab in an about:blank tab, It will stop extensions from seeing your screen.</p>
+          <p>Clicking this button will open your tab in an about:blank tab, It will stop extensions from seeing your
+            screen.</p>
           <div>
             <button id="tabcloak" class="center-global tab-cloak tabcloak">About:Blank Button</button>
           </div>
@@ -65,7 +67,8 @@
           <form>
             <input class="tab-cloaker-form" type="text" id="icon" placeholder="Change Tab Icon" name="icon">
             <input class="tab-cloaker-form" type="text" id="name" name="name" placeholder="Change Tab Name">
-            <input class="tab-cloaker-form" type="button" value="Save" onclick="saveIcon(); saveName(); redirectToMainDomain() ">
+            <input class="tab-cloaker-form" type="button" value="Save"
+              onclick="saveIcon(); saveName(); redirectToMainDomain() ">
           </form>
         </div>
       </div>
@@ -74,9 +77,9 @@
           <div class="title">
             <h4><b>PANIC Button</b></h4>
           </div>
-<input class="tab-cloaker-form" placeholder="Panic Key" type="text" id="eventKeyInput" value="">
-<input class="tab-cloaker-form" placeholder="Panic Link" type="text" id="linkInput" value="">
-<input class="tab-cloaker-form" type="button" value="Save" onclick="saveEventKey(); redirectToMainDomain();">
+          <input class="tab-cloaker-form" placeholder="Panic Key" type="text" id="eventKeyInput" value="">
+          <input class="tab-cloaker-form" placeholder="Panic Link" type="text" id="linkInput" value="">
+          <input class="tab-cloaker-form" type="button" value="Save" onclick="saveEventKey(); redirectToMainDomain();">
         </div>
       </div>
       <div class="card">
@@ -104,20 +107,20 @@
   <script src="/assets/js/settings/name.js"></script>
   <script src="/assets/js/settings/changes.js"></script>
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
 
-  gtag('config', 'G-WKJQ5QHQTJ');
-</script>
+    gtag('config', 'G-WKJQ5QHQTJ');
+  </script>
   <script>
     if (localStorage.getItem('cloak')) {
       const cloakValue = localStorage.getItem('cloak') === 'true' ? 'true' : 'false';
       document.getElementById('tab-cloak').value = cloakValue;
     }
-    document.getElementById('tab-cloak').addEventListener('change', function() {
+    document.getElementById('tab-cloak').addEventListener('change', function () {
       localStorage.setItem('cloak', this.value === 'true' ? 'true' : 'false');
     });
   </script>
@@ -126,8 +129,9 @@
       const cloakValue = localStorage.getItem('Transitions') === 'true' ? 'true' : 'false';
       document.getElementById('tab-cloak').value = cloakValue;
     }
-    document.getElementById('Transitions').addEventListener('change', function() {
+    document.getElementById('Transitions').addEventListener('change', function () {
       localStorage.setItem('Transitions', this.value === 'true' ? 'true' : 'false');
     });
   </script>
-</html>
+
+  </html>

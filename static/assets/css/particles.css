@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
 .classic {
 	background: #111;
 	color: white;
@@ -6,13 +7,15 @@
 	--bg-c: #111;
 	overflow: hidden;
 }
+
 .header {
 	top: 0%;
 	right: 0%;
 	margin: 20px;
 	position: absolute;
-		overflow: hidden;
+	overflow: hidden;
 }
+
 .ocean {
 	margin: 0;
 	color: white;
@@ -20,18 +23,20 @@
 	--bg-c: #161923;
 
 }
+
 .center {
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-		font-family: 'Montserrat', sans-serif;
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+	font-family: 'Montserrat', sans-serif;
 }
+
 .input {
 	width: 150px;
-		transition: 1s;
+	transition: 1s;
 	text-align: center;
 	height: 30px;
 	border-radius: 10px;
@@ -39,10 +44,12 @@
 	border-width: 2px;
 	font-family: 'Montserrat', sans-serif;
 }
+
 .input ::placeholder {
 	font-family: 'Montserrat', sans-serif;
 	color: white;
 }
+
 .btn {
 	border-radius: 15px;
 	border-style: solid;
@@ -50,18 +57,21 @@
 	height: 25px;
 	cursor: pointer;
 }
+
 .material-symbols-outlined {
 	font-size: 32px;
 	margin: 10px;
 }
+
 .input:focus {
-width: 225px;
+	width: 225px;
 }
+
 .topinput {
 	width: 70%;
 	height: 30px;
 	text-align: center;
-border-style: solid;
+	border-style: solid;
 	border-width: 2px;
 	border-radius: 15px;
 	transition: 1s;
@@ -69,25 +79,28 @@ border-style: solid;
 	margin: 0;
 	position: absolute;
 }
+
 .topinput:focus {
 	width: 80%;
 }
+
 #particles-js {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: var(--bg-c);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: 50% 50%;
-		overflow: hidden;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: var(--bg-c);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: 50% 50%;
+	overflow: hidden;
 }
+
 .particles-js-canvas-el {
-   z-index: 0;
-   top: 0;
-   left: 0;
-   position: absolute;
-   width: 100%;
-   height: 100%;
-   pointer-events: none;
+	z-index: 0;
+	top: 0;
+	left: 0;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
 }
