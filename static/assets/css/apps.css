@@ -35,6 +35,7 @@ img {
   cursor: pointer;
   height: 170px;
 }
+
 .game-img {
   width: 150px;
   height: 150px;
@@ -42,6 +43,7 @@ img {
   transition: 0.2s;
   cursor: pointer;
 }
+
 html {
   margin-left: 25%;
   margin-right: 25%;
@@ -97,6 +99,7 @@ h2 {
 body {
   background-color: #111;
 }
+
 .random-btn {
   text-align: center;
   margin-top: 10px;

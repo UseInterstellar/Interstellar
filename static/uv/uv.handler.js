@@ -69,7 +69,7 @@ async function __uvHook(window, config = {}, bare = '/bare/') {
 
     try {
         __uv.bare = new URL(bare, window.location.href);
-    } catch(e) {
+    } catch (e) {
         __uv.bare = window.parent.__uv.bare;
     };
 
@@ -366,8 +366,8 @@ async function __uvHook(window, config = {}, bare = '/bare/') {
 
         event.respondWith(
             worker ?
-            call(event.target, [event.data.message, event.data.transfer], event.that) :
-            call(event.target, [event.data.message, event.data.origin, event.data.transfer], event.that)
+                call(event.target, [event.data.message, event.data.transfer], event.that) :
+                call(event.target, [event.data.message, event.data.origin, event.data.transfer], event.that)
         );
 
     });
@@ -415,7 +415,7 @@ async function __uvHook(window, config = {}, bare = '/bare/') {
 
         if (__uv.attrs.isHtml(event.data.name)) {
             event.target.call(event.that, __uv.attributePrefix + '-attr-' + event.data.name, event.data.value);
-            event.data.value = __uv.rewriteHtml(event.data.value, {...__uv.meta, document: true, injectHead:__uv.createHtmlInject(__uv.handlerScript, __uv.bundleScript, __uv.configScript, __uv.cookieStr, window.location.href) });
+            event.data.value = __uv.rewriteHtml(event.data.value, { ...__uv.meta, document: true, injectHead: __uv.createHtmlInject(__uv.handlerScript, __uv.bundleScript, __uv.configScript, __uv.cookieStr, window.location.href) });
         };
 
         if (__uv.attrs.isSrcset(event.data.name)) {
@@ -443,9 +443,9 @@ async function __uvHook(window, config = {}, bare = '/bare/') {
             client.element.setAttribute.call(that, __uv.attributePrefix + '-attr-href', val)
             target.call(that, __uv.rewriteUrl(val));
         },
-    }); 
+    });
 
-    client.element.hookProperty([HTMLScriptElement, HTMLAudioElement, HTMLVideoElement,  HTMLMediaElement, HTMLImageElement, HTMLInputElement, HTMLEmbedElement, HTMLIFrameElement, HTMLTrackElement, HTMLSourceElement], 'src', {
+    client.element.hookProperty([HTMLScriptElement, HTMLAudioElement, HTMLVideoElement, HTMLMediaElement, HTMLImageElement, HTMLInputElement, HTMLEmbedElement, HTMLIFrameElement, HTMLTrackElement, HTMLSourceElement], 'src', {
         get: (target, that) => {
             return __uv.sourceUrl(
                 target.call(that)
@@ -580,7 +580,7 @@ async function __uvHook(window, config = {}, bare = '/bare/') {
 
     client.document.on('parseFromString', event => {
         if (event.data.type !== 'text/html') return false;
-        event.data.string = __uv.rewriteHtml(event.data.string, {...__uv.meta, document: true, });
+        event.data.string = __uv.rewriteHtml(event.data.string, { ...__uv.meta, document: true, });
     });
 
     // Attribute (node.attributes)
@@ -603,7 +603,7 @@ async function __uvHook(window, config = {}, bare = '/bare/') {
 
         if (__uv.attrs.isHtml(event.data.name)) {
             client.element.setAttribute.call(event.that.ownerElement, __uv.attributePrefix + '-attr-' + event.data.name, event.data.value);
-            event.data.value = __uv.rewriteHtml(event.data.value, {...__uv.meta, document: true, injectHead:__uv.createHtmlInject(__uv.handlerScript, __uv.bundleScript, __uv.configScript, __uv.cookieStr, window.location.href) });
+            event.data.value = __uv.rewriteHtml(event.data.value, { ...__uv.meta, document: true, injectHead: __uv.createHtmlInject(__uv.handlerScript, __uv.bundleScript, __uv.configScript, __uv.cookieStr, window.location.href) });
         };
 
         if (__uv.attrs.isSrcset(event.data.name)) {
@@ -617,7 +617,7 @@ async function __uvHook(window, config = {}, bare = '/bare/') {
     client.url.on('createObjectURL', event => {
         let url = event.target.call(event.that, event.data.object);
         if (url.startsWith('blob:' + location.origin)) {
-            let newUrl = 'blob:' + (__uv.meta.url.href !== 'about:blank' ?  __uv.meta.url.origin : window.parent.__uv.meta.url.origin) + url.slice('blob:'.length + location.origin.length);
+            let newUrl = 'blob:' + (__uv.meta.url.href !== 'about:blank' ? __uv.meta.url.origin : window.parent.__uv.meta.url.origin) + url.slice('blob:'.length + location.origin.length);
             __uv.blobUrls.set(newUrl, url);
             event.respondWith(newUrl);
         } else {
@@ -697,7 +697,7 @@ async function __uvHook(window, config = {}, bare = '/bare/') {
         let url;
         try {
             url = new URL(event.data.url);
-        } catch(e) {
+        } catch (e) {
             return;
         };
 
@@ -725,7 +725,7 @@ async function __uvHook(window, config = {}, bare = '/bare/') {
 
         if (protocols.length) headers['Sec-WebSocket-Protocol'] = protocols.join(', ');
 
-        event.data.url =  (__uv.bare.protocol === 'https:' ? 'wss://' : 'ws://') + __uv.bare.host + __uv.bare.pathname + 'v1/';
+        event.data.url = (__uv.bare.protocol === 'https:' ? 'wss://' : 'ws://') + __uv.bare.host + __uv.bare.pathname + 'v1/';
         event.data.protocols = [
             'bare',
             __uv.encodeProtocol(JSON.stringify({
@@ -856,12 +856,12 @@ async function __uvHook(window, config = {}, bare = '/bare/') {
                                     )
                                 },
                                 set(val) {
-                                    client.style.setProperty.call(this, 
+                                    client.style.setProperty.call(this,
                                         (client.style.propToDashed[key] || key),
                                         __uv.rewriteCSS(val, {
                                             context: 'value',
                                             ...__uv.meta
-                                        })    
+                                        })
                                     )
                                 }
                             });
@@ -911,7 +911,7 @@ async function __uvHook(window, config = {}, bare = '/bare/') {
             client.nativeMethods.defineProperty(event, methodPrefix + 'dispatched', {
                 value: true,
                 enumerable: false,
-            }); 
+            });
 
             __uv.dispatchEvent.call(window, event);
         };
@@ -989,14 +989,14 @@ async function __uvHook(window, config = {}, bare = '/bare/') {
         return target.call(that, url);
     });
 
-    __uv.$wrap = function(name) {
+    __uv.$wrap = function (name) {
         if (name === 'location') return __uv.methods.location;
         if (name === 'eval') return __uv.methods.eval;
         return name;
     };
 
 
-    __uv.$get = function(that) {
+    __uv.$get = function (that) {
         if (that === window.location) return __uv.location;
         if (that === window.eval) return __uv.eval;
         if (that === window.parent) {
@@ -1016,11 +1016,11 @@ async function __uvHook(window, config = {}, bare = '/bare/') {
         return target.call(that, script);
     });
 
-    __uv.call = function(target, args, that) {
+    __uv.call = function (target, args, that) {
         return that ? target.apply(that, args) : target(...args);
     };
 
-    __uv.call$ = function(obj, prop, args = []) {
+    __uv.call$ = function (obj, prop, args = []) {
         return obj[prop].apply(obj, args);
     };
 
@@ -1032,7 +1032,7 @@ async function __uvHook(window, config = {}, bare = '/bare/') {
     });
 
     client.nativeMethods.defineProperty(window.Object.prototype, __uv.methods.setSource, {
-        value: function(source) {
+        value: function (source) {
             if (!client.nativeMethods.isExtensible(this)) return this;
 
             client.nativeMethods.defineProperty(this, __uv.methods.source, {

@@ -1,320 +1,320 @@
 importScripts('/uv/uv.bundle.js');
 importScripts('/uv/uv.config.js');
 
-class UVServiceWorker extends EventEmitter {   
-    constructor(config = __uv$config) {
-        super();
-        if (!config.bare) config.bare = '/bare/';
-        this.addresses = typeof config.bare === 'string' ? [ new URL(config.bare, location) ] : config.bare.map(str => new URL(str, location));
-        this.headers = {
-            csp: [
-                'cross-origin-embedder-policy',
-                'cross-origin-opener-policy',
-                'cross-origin-resource-policy',
-                'content-security-policy',
-                'content-security-policy-report-only',
-                'expect-ct',
-                'feature-policy',
-                'origin-isolation',
-                'strict-transport-security',
-                'upgrade-insecure-requests',
-                'x-content-type-options',
-                'x-download-options',
-                'x-frame-options',
-                'x-permitted-cross-domain-policies',
-                'x-powered-by',
-                'x-xss-protection',
-            ],
-            forward: [
-                'accept-encoding', 
-                'connection',
-                'content-length',
-            ],
-        };
-        this.method = {
-            empty: [
-                'GET',
-                'HEAD'
-            ]
-        };
-        this.statusCode = {
-            empty: [ 
-                204,
-                304,
-            ],
-        };  
-        this.config = config;
-        this.browser = Ultraviolet.Bowser.getParser(self.navigator.userAgent).getBrowserName();
-
-        if (this.browser === 'Firefox') {
-            this.headers.forward.push('user-agent');
-            this.headers.forward.push('content-type');
-        };
+class UVServiceWorker extends EventEmitter {
+  constructor(config = __uv$config) {
+    super();
+    if (!config.bare) config.bare = '/bare/';
+    this.addresses = typeof config.bare === 'string' ? [new URL(config.bare, location)] : config.bare.map(str => new URL(str, location));
+    this.headers = {
+      csp: [
+        'cross-origin-embedder-policy',
+        'cross-origin-opener-policy',
+        'cross-origin-resource-policy',
+        'content-security-policy',
+        'content-security-policy-report-only',
+        'expect-ct',
+        'feature-policy',
+        'origin-isolation',
+        'strict-transport-security',
+        'upgrade-insecure-requests',
+        'x-content-type-options',
+        'x-download-options',
+        'x-frame-options',
+        'x-permitted-cross-domain-policies',
+        'x-powered-by',
+        'x-xss-protection',
+      ],
+      forward: [
+        'accept-encoding',
+        'connection',
+        'content-length',
+      ],
     };
-    async fetch({ request }) {
-        if (!request.url.startsWith(location.origin + (this.config.prefix || '/service/'))) {
-            return fetch(request);
+    this.method = {
+      empty: [
+        'GET',
+        'HEAD'
+      ]
+    };
+    this.statusCode = {
+      empty: [
+        204,
+        304,
+      ],
+    };
+    this.config = config;
+    this.browser = Ultraviolet.Bowser.getParser(self.navigator.userAgent).getBrowserName();
+
+    if (this.browser === 'Firefox') {
+      this.headers.forward.push('user-agent');
+      this.headers.forward.push('content-type');
+    };
+  };
+  async fetch({ request }) {
+    if (!request.url.startsWith(location.origin + (this.config.prefix || '/service/'))) {
+      return fetch(request);
+    };
+    try {
+
+      const ultraviolet = new Ultraviolet(this.config);
+
+      if (typeof this.config.construct === 'function') {
+        this.config.construct(ultraviolet, 'service');
+      };
+
+      const db = await ultraviolet.cookie.db();
+
+      ultraviolet.meta.origin = location.origin;
+      ultraviolet.meta.base = ultraviolet.meta.url = new URL(ultraviolet.sourceUrl(request.url));
+
+      const requestCtx = new RequestContext(
+        request,
+        this,
+        ultraviolet,
+        !this.method.empty.includes(request.method.toUpperCase()) ? await request.blob() : null
+      );
+
+      if (ultraviolet.meta.url.protocol === 'blob:') {
+        requestCtx.blob = true;
+        requestCtx.base = requestCtx.url = new URL(requestCtx.url.pathname);
+      };
+
+      if (request.referrer && request.referrer.startsWith(location.origin)) {
+        const referer = new URL(ultraviolet.sourceUrl(request.referrer));
+
+        if (requestCtx.headers.origin || ultraviolet.meta.url.origin !== referer.origin && request.mode === 'cors') {
+          requestCtx.headers.origin = referer.origin;
         };
-        try {
 
-            const ultraviolet = new Ultraviolet(this.config);
+        requestCtx.headers.referer = referer.href;
+      };
 
-            if (typeof this.config.construct === 'function') {
-                this.config.construct(ultraviolet, 'service');
-            };
+      const cookies = await ultraviolet.cookie.getCookies(db) || [];
+      const cookieStr = ultraviolet.cookie.serialize(cookies, ultraviolet.meta, false);
 
-            const db = await ultraviolet.cookie.db();
+      if (this.browser === 'Firefox' && !(request.destination === 'iframe' || request.destination === 'document')) {
+        requestCtx.forward.shift();
+      };
 
-            ultraviolet.meta.origin = location.origin;
-            ultraviolet.meta.base = ultraviolet.meta.url = new URL(ultraviolet.sourceUrl(request.url));
+      if (cookieStr) requestCtx.headers.cookie = cookieStr;
+      requestCtx.headers.Host = requestCtx.url.host;
 
-            const requestCtx = new RequestContext(
-                request, 
-                this, 
-                ultraviolet, 
-                !this.method.empty.includes(request.method.toUpperCase()) ? await request.blob() : null
+
+      const reqEvent = new HookEvent(requestCtx, null, null);
+      this.emit('request', reqEvent);
+
+      if (reqEvent.intercepted) return reqEvent.returnValue;
+
+      const response = await fetch(requestCtx.send);
+
+      if (response.status === 500) {
+        return Promise.reject('');
+      };
+
+      const responseCtx = new ResponseContext(requestCtx, response, this);
+      const resEvent = new HookEvent(responseCtx, null, null);
+
+      this.emit('beforemod', resEvent);
+      if (resEvent.intercepted) return resEvent.returnValue;
+
+      for (const name of this.headers.csp) {
+        if (responseCtx.headers[name]) delete responseCtx.headers[name];
+      };
+
+      if (responseCtx.headers.location) {
+        responseCtx.headers.location = ultraviolet.rewriteUrl(responseCtx.headers.location);
+      };
+
+      if (responseCtx.headers['set-cookie']) {
+        Promise.resolve(ultraviolet.cookie.setCookies(responseCtx.headers['set-cookie'], db, ultraviolet.meta)).then(() => {
+          self.clients.matchAll().then(function (clients) {
+            clients.forEach(function (client) {
+              client.postMessage({
+                msg: 'updateCookies',
+                url: ultraviolet.meta.url.href,
+              });
+            });
+          });
+        });
+        delete responseCtx.headers['set-cookie'];
+      };
+
+      if (responseCtx.body) {
+        switch (request.destination) {
+          case 'script':
+          case 'worker':
+            responseCtx.body = `if (!self.__uv && self.importScripts) importScripts('${__uv$config.bundle}', '${__uv$config.config}', '${__uv$config.handler}');\n`;
+            responseCtx.body += ultraviolet.js.rewrite(
+              await response.text()
             );
-
-            if (ultraviolet.meta.url.protocol === 'blob:') {
-                requestCtx.blob = true;
-                requestCtx.base = requestCtx.url = new URL(requestCtx.url.pathname);
+            break;
+          case 'style':
+            responseCtx.body = ultraviolet.rewriteCSS(
+              await response.text()
+            );
+            break;
+          case 'iframe':
+          case 'document':
+            if (isHtml(ultraviolet.meta.url, (responseCtx.headers['content-type'] || ''))) {
+              responseCtx.body = ultraviolet.rewriteHtml(
+                await response.text(),
+                {
+                  document: true,
+                  injectHead: ultraviolet.createHtmlInject(
+                    this.config.handler,
+                    this.config.bundle,
+                    this.config.config,
+                    ultraviolet.cookie.serialize(cookies, ultraviolet.meta, true),
+                    request.referrer
+                  )
+                }
+              );
             };
-
-            if (request.referrer && request.referrer.startsWith(location.origin)) {
-                const referer = new URL(ultraviolet.sourceUrl(request.referrer));
-
-                if (requestCtx.headers.origin || ultraviolet.meta.url.origin !== referer.origin && request.mode === 'cors') {
-                    requestCtx.headers.origin = referer.origin;
-                };
-
-                requestCtx.headers.referer = referer.href;
-            };
-
-            const cookies = await ultraviolet.cookie.getCookies(db) || [];
-            const cookieStr = ultraviolet.cookie.serialize(cookies, ultraviolet.meta, false);
-
-            if (this.browser === 'Firefox' && !(request.destination === 'iframe' || request.destination === 'document')) {
-                requestCtx.forward.shift();
-            };
-
-            if (cookieStr) requestCtx.headers.cookie = cookieStr;
-            requestCtx.headers.Host = requestCtx.url.host;
-
-
-            const reqEvent = new HookEvent(requestCtx, null, null);
-            this.emit('request', reqEvent);
-
-            if (reqEvent.intercepted) return reqEvent.returnValue;
-
-            const response = await fetch(requestCtx.send);
-
-            if (response.status === 500) {
-                return Promise.reject('');
-            };
-
-            const responseCtx = new ResponseContext(requestCtx, response, this);
-            const resEvent = new HookEvent(responseCtx, null, null);
-
-            this.emit('beforemod', resEvent);
-            if (resEvent.intercepted) return resEvent.returnValue;
-
-            for (const name of this.headers.csp) {
-                if (responseCtx.headers[name]) delete responseCtx.headers[name];
-            }; 
-            
-            if (responseCtx.headers.location) {
-                responseCtx.headers.location = ultraviolet.rewriteUrl(responseCtx.headers.location);
-            };
-
-            if (responseCtx.headers['set-cookie']) {
-                Promise.resolve(ultraviolet.cookie.setCookies(responseCtx.headers['set-cookie'], db, ultraviolet.meta)).then(() => {
-                    self.clients.matchAll().then(function (clients){
-                        clients.forEach(function(client){
-                            client.postMessage({
-                                msg: 'updateCookies',
-                                url: ultraviolet.meta.url.href,
-                            });
-                        });
-                    });
-                });
-                delete responseCtx.headers['set-cookie'];
-            };
-
-            if (responseCtx.body) {
-                switch(request.destination) {
-                    case 'script':
-                    case 'worker':
-                        responseCtx.body = `if (!self.__uv && self.importScripts) importScripts('${__uv$config.bundle}', '${__uv$config.config}', '${__uv$config.handler}');\n`;
-                        responseCtx.body += ultraviolet.js.rewrite(
-                            await response.text()
-                        );
-                        break;
-                    case 'style':
-                        responseCtx.body = ultraviolet.rewriteCSS(
-                            await response.text()
-                        ); 
-                        break;
-                case 'iframe':
-                case 'document':
-                        if (isHtml(ultraviolet.meta.url, (responseCtx.headers['content-type'] || ''))) {
-                            responseCtx.body = ultraviolet.rewriteHtml(
-                                await response.text(), 
-                                { 
-                                    document: true ,
-                                    injectHead: ultraviolet.createHtmlInject(
-                                        this.config.handler, 
-                                        this.config.bundle, 
-                                        this.config.config,
-                                        ultraviolet.cookie.serialize(cookies, ultraviolet.meta, true), 
-                                        request.referrer
-                                    )
-                                }
-                            );      
-                        };
-                };
-            };
-
-            if (requestCtx.headers.accept === 'text/event-stream') {
-                responseCtx.headers['content-type'] = 'text/event-stream';
-            };
-
-            this.emit('response', resEvent);
-            if (resEvent.intercepted) return resEvent.returnValue;
-
-            return new Response(responseCtx.body, {
-                headers: responseCtx.headers,
-                status: responseCtx.status,
-                statusText: responseCtx.statusText,
-            });
-
-        } catch(err) {
-            return new Response(err.toString(), {
-                status: 500,
-            });
         };
-    };
-    getBarerResponse(response) {
-        const headers = {};
-        const raw = JSON.parse(response.headers.get('x-bare-headers'));
+      };
 
-        for (const key in raw) {
-            headers[key.toLowerCase()] = raw[key];
-        };
+      if (requestCtx.headers.accept === 'text/event-stream') {
+        responseCtx.headers['content-type'] = 'text/event-stream';
+      };
 
-        return {
-            headers,
-            status: +response.headers.get('x-bare-status'),
-            statusText: response.headers.get('x-bare-status-text'),
-            body: !this.statusCode.empty.includes(+response.headers.get('x-bare-status')) ? response.body : null,
-        };
+      this.emit('response', resEvent);
+      if (resEvent.intercepted) return resEvent.returnValue;
+
+      return new Response(responseCtx.body, {
+        headers: responseCtx.headers,
+        status: responseCtx.status,
+        statusText: responseCtx.statusText,
+      });
+
+    } catch (err) {
+      return new Response(err.toString(), {
+        status: 500,
+      });
     };
-    get address() {
-        return this.addresses[Math.floor(Math.random() * this.addresses.length)];
+  };
+  getBarerResponse(response) {
+    const headers = {};
+    const raw = JSON.parse(response.headers.get('x-bare-headers'));
+
+    for (const key in raw) {
+      headers[key.toLowerCase()] = raw[key];
     };
-    static Ultraviolet = Ultraviolet;
+
+    return {
+      headers,
+      status: +response.headers.get('x-bare-status'),
+      statusText: response.headers.get('x-bare-status-text'),
+      body: !this.statusCode.empty.includes(+response.headers.get('x-bare-status')) ? response.body : null,
+    };
+  };
+  get address() {
+    return this.addresses[Math.floor(Math.random() * this.addresses.length)];
+  };
+  static Ultraviolet = Ultraviolet;
 };
 
 self.UVServiceWorker = UVServiceWorker;
 
 
 class ResponseContext {
-    constructor(request, response, worker) {
-        const { headers, status, statusText, body } = !request.blob ? worker.getBarerResponse(response) : {
-            status: response.status, 
-            statusText: response.statusText,
-            headers: Object.fromEntries([...response.headers.entries()]),
-            body: response.body,
-        };
-        this.request = request;
-        this.raw = response;
-        this.ultraviolet = request.ultraviolet;
-        this.headers = headers;
-        this.status = status;
-        this.statusText = statusText;
-        this.body = body;
+  constructor(request, response, worker) {
+    const { headers, status, statusText, body } = !request.blob ? worker.getBarerResponse(response) : {
+      status: response.status,
+      statusText: response.statusText,
+      headers: Object.fromEntries([...response.headers.entries()]),
+      body: response.body,
     };
-    get url() {
-        return this.request.url;
-    }
-    get base() {
-        return this.request.base;
-    };
-    set base(val) {
-        this.request.base = val;
-    };
+    this.request = request;
+    this.raw = response;
+    this.ultraviolet = request.ultraviolet;
+    this.headers = headers;
+    this.status = status;
+    this.statusText = statusText;
+    this.body = body;
+  };
+  get url() {
+    return this.request.url;
+  }
+  get base() {
+    return this.request.base;
+  };
+  set base(val) {
+    this.request.base = val;
+  };
 };
 
 class RequestContext {
-    constructor(request, worker, ultraviolet, body = null) {
-        this.ultraviolet = ultraviolet;
-        this.request = request;
-        this.headers = Object.fromEntries([...request.headers.entries()]);
-        this.method = request.method;
-        this.forward = [...worker.headers.forward];
-        this.address = worker.address;
-        this.body = body || null;
-        this.redirect = request.redirect;
-        this.credentials = 'omit';
-        this.mode = request.mode === 'cors' ? request.mode : 'same-origin';
-        this.blob = false;
-    };
-    get send() {
-        return new Request((!this.blob ? this.address.href + 'v1/' : 'blob:' + location.origin + this.url.pathname), {
-            method: this.method,
-            headers: {
-                'x-bare-protocol': this.url.protocol,
-                'x-bare-host': this.url.hostname,
-                'x-bare-path': this.url.pathname + this.url.search,
-                'x-bare-port': this.url.port || (this.url.protocol === 'https:' ? '443' : '80'),
-                'x-bare-headers': JSON.stringify(this.headers),
-                'x-bare-forward-headers': JSON.stringify(this.forward),
-                'userKey': userKey,
-            },
-            redirect: this.redirect,
-            credentials: this.credentials,
-            mode: location.origin !== this.address.origin ? 'cors' : this.mode,
-            body: this.body
-        });
-    };
-    get url() {
-        return this.ultraviolet.meta.url;
-    };
-    set url(val) {
-        this.ultraviolet.meta.url = val;
-    };
-    get base() {
-        return this.ultraviolet.meta.base;
-    };
-    set base(val) {
-        this.ultraviolet.meta.base = val;
-    };
+  constructor(request, worker, ultraviolet, body = null) {
+    this.ultraviolet = ultraviolet;
+    this.request = request;
+    this.headers = Object.fromEntries([...request.headers.entries()]);
+    this.method = request.method;
+    this.forward = [...worker.headers.forward];
+    this.address = worker.address;
+    this.body = body || null;
+    this.redirect = request.redirect;
+    this.credentials = 'omit';
+    this.mode = request.mode === 'cors' ? request.mode : 'same-origin';
+    this.blob = false;
+  };
+  get send() {
+    return new Request((!this.blob ? this.address.href + 'v1/' : 'blob:' + location.origin + this.url.pathname), {
+      method: this.method,
+      headers: {
+        'x-bare-protocol': this.url.protocol,
+        'x-bare-host': this.url.hostname,
+        'x-bare-path': this.url.pathname + this.url.search,
+        'x-bare-port': this.url.port || (this.url.protocol === 'https:' ? '443' : '80'),
+        'x-bare-headers': JSON.stringify(this.headers),
+        'x-bare-forward-headers': JSON.stringify(this.forward),
+        'userKey': userKey,
+      },
+      redirect: this.redirect,
+      credentials: this.credentials,
+      mode: location.origin !== this.address.origin ? 'cors' : this.mode,
+      body: this.body
+    });
+  };
+  get url() {
+    return this.ultraviolet.meta.url;
+  };
+  set url(val) {
+    this.ultraviolet.meta.url = val;
+  };
+  get base() {
+    return this.ultraviolet.meta.base;
+  };
+  set base(val) {
+    this.ultraviolet.meta.base = val;
+  };
 }
 
 function isHtml(url, contentType = '') {
-    return (Ultraviolet.mime.contentType((contentType  || url.pathname)) || 'text/html').split(';')[0] === 'text/html';
+  return (Ultraviolet.mime.contentType((contentType || url.pathname)) || 'text/html').split(';')[0] === 'text/html';
 };
 
 class HookEvent {
-    #intercepted;
-    #returnValue;
-    constructor(data = {}, target = null, that = null) {
-        this.#intercepted = false;
-        this.#returnValue = null;
-        this.data = data;
-        this.target = target;
-        this.that = that;
-    };
-    get intercepted() {
-        return this.#intercepted;
-    };
-    get returnValue() {
-        return this.#returnValue;
-    };
-    respondWith(input) {
-        this.#returnValue = input;
-        this.#intercepted = true;
-    };
-};  
+  #intercepted;
+  #returnValue;
+  constructor(data = {}, target = null, that = null) {
+    this.#intercepted = false;
+    this.#returnValue = null;
+    this.data = data;
+    this.target = target;
+    this.that = that;
+  };
+  get intercepted() {
+    return this.#intercepted;
+  };
+  get returnValue() {
+    return this.#returnValue;
+  };
+  respondWith(input) {
+    this.#returnValue = input;
+    this.#intercepted = true;
+  };
+};
 
 var R = typeof Reflect === 'object' ? Reflect : null
 var ReflectApply = R && typeof R.apply === 'function'
@@ -368,10 +368,10 @@ function checkListener(listener) {
 
 Object.defineProperty(EventEmitter, 'defaultMaxListeners', {
   enumerable: true,
-  get: function() {
+  get: function () {
     return defaultMaxListeners;
   },
-  set: function(arg) {
+  set: function (arg) {
     if (typeof arg !== 'number' || arg < 0 || NumberIsNaN(arg)) {
       throw new RangeError('The value of "defaultMaxListeners" is out of range. It must be a non-negative number. Received ' + arg + '.');
     }
@@ -379,10 +379,10 @@ Object.defineProperty(EventEmitter, 'defaultMaxListeners', {
   }
 });
 
-EventEmitter.init = function() {
+EventEmitter.init = function () {
 
   if (this._events === undefined ||
-      this._events === Object.getPrototypeOf(this)._events) {
+    this._events === Object.getPrototypeOf(this)._events) {
     this._events = Object.create(null);
     this._eventsCount = 0;
   }
@@ -470,7 +470,7 @@ function _addListener(target, type, listener, prepend) {
     // adding it to the listeners, first emit "newListener".
     if (events.newListener !== undefined) {
       target.emit('newListener', type,
-                  listener.listener ? listener.listener : listener);
+        listener.listener ? listener.listener : listener);
 
       // Re-assign `events` because a newListener handler could have caused the
       // this._events to be assigned to a new object
@@ -502,9 +502,9 @@ function _addListener(target, type, listener, prepend) {
       // No error code for this since it is a Warning
       // eslint-disable-next-line no-restricted-syntax
       var w = new Error('Possible EventEmitter memory leak detected. ' +
-                          existing.length + ' ' + String(type) + ' listeners ' +
-                          'added. Use emitter.setMaxListeners() to ' +
-                          'increase limit');
+        existing.length + ' ' + String(type) + ' listeners ' +
+        'added. Use emitter.setMaxListeners() to ' +
+        'increase limit');
       w.name = 'MaxListenersExceededWarning';
       w.emitter = target;
       w.type = type;
@@ -523,9 +523,9 @@ EventEmitter.prototype.addListener = function addListener(type, listener) {
 EventEmitter.prototype.on = EventEmitter.prototype.addListener;
 
 EventEmitter.prototype.prependListener =
-    function prependListener(type, listener) {
-      return _addListener(this, type, listener, true);
-    };
+  function prependListener(type, listener) {
+    return _addListener(this, type, listener, true);
+  };
 
 function onceWrapper() {
   if (!this.fired) {
@@ -552,117 +552,117 @@ EventEmitter.prototype.once = function once(type, listener) {
 };
 
 EventEmitter.prototype.prependOnceListener =
-    function prependOnceListener(type, listener) {
-      checkListener(listener);
-      this.prependListener(type, _onceWrap(this, type, listener));
-      return this;
-    };
+  function prependOnceListener(type, listener) {
+    checkListener(listener);
+    this.prependListener(type, _onceWrap(this, type, listener));
+    return this;
+  };
 
 // Emits a 'removeListener' event if and only if the listener was removed.
 EventEmitter.prototype.removeListener =
-    function removeListener(type, listener) {
-      var list, events, position, i, originalListener;
+  function removeListener(type, listener) {
+    var list, events, position, i, originalListener;
 
-      checkListener(listener);
+    checkListener(listener);
 
-      events = this._events;
-      if (events === undefined)
-        return this;
+    events = this._events;
+    if (events === undefined)
+      return this;
 
-      list = events[type];
-      if (list === undefined)
-        return this;
+    list = events[type];
+    if (list === undefined)
+      return this;
 
-      if (list === listener || list.listener === listener) {
-        if (--this._eventsCount === 0)
-          this._events = Object.create(null);
-        else {
-          delete events[type];
-          if (events.removeListener)
-            this.emit('removeListener', type, list.listener || listener);
+    if (list === listener || list.listener === listener) {
+      if (--this._eventsCount === 0)
+        this._events = Object.create(null);
+      else {
+        delete events[type];
+        if (events.removeListener)
+          this.emit('removeListener', type, list.listener || listener);
+      }
+    } else if (typeof list !== 'function') {
+      position = -1;
+
+      for (i = list.length - 1; i >= 0; i--) {
+        if (list[i] === listener || list[i].listener === listener) {
+          originalListener = list[i].listener;
+          position = i;
+          break;
         }
-      } else if (typeof list !== 'function') {
-        position = -1;
-
-        for (i = list.length - 1; i >= 0; i--) {
-          if (list[i] === listener || list[i].listener === listener) {
-            originalListener = list[i].listener;
-            position = i;
-            break;
-          }
-        }
-
-        if (position < 0)
-          return this;
-
-        if (position === 0)
-          list.shift();
-        else {
-          spliceOne(list, position);
-        }
-
-        if (list.length === 1)
-          events[type] = list[0];
-
-        if (events.removeListener !== undefined)
-          this.emit('removeListener', type, originalListener || listener);
       }
 
-      return this;
-    };
+      if (position < 0)
+        return this;
+
+      if (position === 0)
+        list.shift();
+      else {
+        spliceOne(list, position);
+      }
+
+      if (list.length === 1)
+        events[type] = list[0];
+
+      if (events.removeListener !== undefined)
+        this.emit('removeListener', type, originalListener || listener);
+    }
+
+    return this;
+  };
 
 EventEmitter.prototype.off = EventEmitter.prototype.removeListener;
 
 EventEmitter.prototype.removeAllListeners =
-    function removeAllListeners(type) {
-      var listeners, events, i;
+  function removeAllListeners(type) {
+    var listeners, events, i;
 
-      events = this._events;
-      if (events === undefined)
-        return this;
+    events = this._events;
+    if (events === undefined)
+      return this;
 
-      // not listening for removeListener, no need to emit
-      if (events.removeListener === undefined) {
-        if (arguments.length === 0) {
-          this._events = Object.create(null);
-          this._eventsCount = 0;
-        } else if (events[type] !== undefined) {
-          if (--this._eventsCount === 0)
-            this._events = Object.create(null);
-          else
-            delete events[type];
-        }
-        return this;
-      }
-
-      // emit removeListener for all listeners on all events
+    // not listening for removeListener, no need to emit
+    if (events.removeListener === undefined) {
       if (arguments.length === 0) {
-        var keys = Object.keys(events);
-        var key;
-        for (i = 0; i < keys.length; ++i) {
-          key = keys[i];
-          if (key === 'removeListener') continue;
-          this.removeAllListeners(key);
-        }
-        this.removeAllListeners('removeListener');
         this._events = Object.create(null);
         this._eventsCount = 0;
-        return this;
+      } else if (events[type] !== undefined) {
+        if (--this._eventsCount === 0)
+          this._events = Object.create(null);
+        else
+          delete events[type];
       }
-
-      listeners = events[type];
-
-      if (typeof listeners === 'function') {
-        this.removeListener(type, listeners);
-      } else if (listeners !== undefined) {
-        // LIFO order
-        for (i = listeners.length - 1; i >= 0; i--) {
-          this.removeListener(type, listeners[i]);
-        }
-      }
-
       return this;
-    };
+    }
+
+    // emit removeListener for all listeners on all events
+    if (arguments.length === 0) {
+      var keys = Object.keys(events);
+      var key;
+      for (i = 0; i < keys.length; ++i) {
+        key = keys[i];
+        if (key === 'removeListener') continue;
+        this.removeAllListeners(key);
+      }
+      this.removeAllListeners('removeListener');
+      this._events = Object.create(null);
+      this._eventsCount = 0;
+      return this;
+    }
+
+    listeners = events[type];
+
+    if (typeof listeners === 'function') {
+      this.removeListener(type, listeners);
+    } else if (listeners !== undefined) {
+      // LIFO order
+      for (i = listeners.length - 1; i >= 0; i--) {
+        this.removeListener(type, listeners[i]);
+      }
+    }
+
+    return this;
+  };
 
 function _listeners(target, type, unwrap) {
   var events = target._events;
@@ -689,7 +689,7 @@ EventEmitter.prototype.rawListeners = function rawListeners(type) {
   return _listeners(this, type, false);
 };
 
-EventEmitter.listenerCount = function(emitter, type) {
+EventEmitter.listenerCount = function (emitter, type) {
   if (typeof emitter.listenerCount === 'function') {
     return emitter.listenerCount(type);
   } else {
