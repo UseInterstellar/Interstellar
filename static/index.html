@@ -9,12 +9,10 @@
   <meta name="description"
     content="From studio portraits to epic alpine landscapes, browse the best photography, retouching and photojournalism today." />
   <meta name="viewport" content="width=device-width, initial-scale=0.5">
-
-  <!-- Load the site scripts -->
+  <!-- Load the site scripts-->
   <script src="resources/js/main.js"></script>
   <script src="assets/js/panic.js"></script>
   <script src="assets/js/particles.js"></script>
-
   <link rel="stylesheet" href="assets/css/particles.css" />
   <link rel="shortcut icon" href="resources/images/favicon/favicon.png" type="image/x-icon">
   <link rel="stylesheet" href="resources/css/home.css" />
@@ -22,7 +20,7 @@
 </head>
 
 <body>
-  <!-- Nav Bar Start -->
+  <!-- Nav Bar Start-->
   <div class="header2">
     <br>
     <a href="/../" class="logo">Interstellar</a>
@@ -34,8 +32,7 @@
       <a href="settings">Settings</a>
     </div>
   </div>
-  <!-- Nav Bar End -->
-
+  <!-- Nav Bar End-->
   <div id="cookieNotice" class="light display-right" style="display: block;">
     <div id="closeIcon" style="display: none;"></div>
     <div class="title-wrap">
@@ -43,16 +40,16 @@
     </div>
     <div class="content-wrap">
       <div class="msg-wrap">
-        <p>We use cookies! This website uses cookies or similar technologies to enhance your browsing experience and
+        <p>We use cookies! This website uses cookies or similar technologies, to enhance your browsing experience and
           provide personalized recommendations. By continuing to use our website, you agree to our <a
-            style="color: grey;" href="cookieconsentpolicy.html">Cookie Policy</a></p>
+            style="color: grey;" href="cookieconsentpolicy.html">Cookie Policy</a>
+        </p>
         <div class="btn-wrap">
           <button class="popupbutton" onclick="acceptCookieConsent();">Accept</button>
         </div>
       </div>
     </div>
   </div>
-
   <!-- JavaScript source file -->
   <script src="resources/js/cookie_consent.js"></script>
 
@@ -60,10 +57,8 @@
     <canvas class="particles-js-canvas-el"
       style="z-index:10; top:0; left:0; position:absolute; width: 100%; height: 100%;" width="1920"
       height="942"></canvas>
-
     <div id="particles-js">
       <script rel="preload" src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-
       <div class="container">
         <div class="mainhead">
           <div class="title">
@@ -83,13 +78,11 @@
         <br>
       </div>
     </div>
-
     <script>
       document.querySelector(".discord-btn2").addEventListener("click", () => {
         window.open("https://discord.gg/gointerstellar", "_blank");
       });
     </script>
-
     <script>
       if (localStorage.getItem('cloak')) {
         const cloakValue = localStorage.getItem('cloak') === 'true' ? 'true' : 'false';
@@ -99,21 +92,19 @@
         localStorage.setItem('cloak', 'true');
       }
     </script>
-
     <div>
       <script src="assets/js/particles.js"></script>
       <script src="/assets/js/themecontrol.js"></script>
     </div>
-
     <canvas class="particles-js-canvas-el" style="width: 100%; height: 100%;" width="1920" height="942"></canvas>
     </div>
-
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() { dataLayer.push(arguments); }
       gtag('js', new Date());
+
       gtag('config', 'G-WKJQ5QHQTJ');
     </script>
   </body>

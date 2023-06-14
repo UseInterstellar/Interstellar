@@ -20,39 +20,39 @@ app.use(
 app.use(express.static(path.join(__dirname, "static")));
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "routes", "index.html"));
+  res.sendFile(path.join(__dirname, "static", "index.html"));
 });
 
 app.get("/photography", (req, res) => {
-  res.sendFile(path.join(__dirname, "routes", "search.html"));
+  res.sendFile(path.join(__dirname, "static", "search.html"));
 });
 
 app.get("/nature", (req, res) => {
-  res.sendFile(path.join(__dirname, "routes", "play.html"));
+  res.sendFile(path.join(__dirname, "static", "play.html"));
 });
 
 app.get("/forest", (req, res) => {
-  res.sendFile(path.join(__dirname, "routes", "widgetbot.html"));
+  res.sendFile(path.join(__dirname, "static", "widgetbot.html"));
 });
 
 app.get("/go", (req, res) => {
-  res.sendFile(path.join(__dirname, "routes", "go.html"));
+  res.sendFile(path.join(__dirname, "static", "go.html"));
 });
 
 app.get("/settings", (req, res) => {
-  res.sendFile(path.join(__dirname, "routes", "settings.html"));
+  res.sendFile(path.join(__dirname, "static", "settings.html"));
 });
 
 app.get("/donate", (req, res) => {
-  res.sendFile(path.join(__dirname, "routes", "donate.html"));
+  res.sendFile(path.join(__dirname, "static", "donate.html"));
 });
 
 app.get("/ocean", (req, res) => {
-  res.sendFile(path.join(__dirname, "routes", "apps.html"));
+  res.sendFile(path.join(__dirname, "static", "apps.html"));
 });
 
 app.get("/404", (req, res) => {
-  res.sendFile(path.join(__dirname, "routes", "404.html"));
+  res.sendFile(path.join(__dirname, "static", "404.html"));
 });
 
 app.get("/*", (req, res) => {
