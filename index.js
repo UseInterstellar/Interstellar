@@ -1,19 +1,14 @@
-import { createBareServer } from "@tomphttp/bare-server-node";
 import express from "express";
-import { createServer } from "node:http";
-import { join } from "node:path";
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-
-const __dirname = path.dirname(__filename);
-
+import http from "node:http";
+import createBareServer from "@tomphttp/bare-server-node";
+import path from "node:path";
 import * as dotenv from "dotenv";
 dotenv.config();
 
-const bare = createBareServer("/bare/");
-const app = express();
+const __dirname = process.cwd();
+const server = http.createServer();
+const app = express(server);
+const bareServer = createBareServer("/bare/");
 
 app.use(express.json());
 app.use(
@@ -64,42 +59,27 @@ app.get("/*", (req, res) => {
   res.redirect("/404");
 });
 
-const server = createServer();
-
+// Bare Server
 server.on("request", (req, res) => {
-  if (bare.shouldRoute(req)) {
-    bare.routeRequest(req, res);
+  if (bareServer.shouldRoute(req)) {
+    bareServer.routeRequest(req, res);
   } else {
     app(req, res);
   }
 });
 
 server.on("upgrade", (req, socket, head) => {
-  if (bare.shouldRoute(req)) {
-    bare.routeUpgrade(req, socket, head);
+  if (bareServer.shouldRoute(req)) {
+    bareServer.routeUpgrade(req, socket, head);
   } else {
     socket.end();
   }
 });
 
-let port = parseInt(process.env.PORT || "");
-
-if (isNaN(port)) port = 8080;
-
 server.on("listening", () => {
-    console.log(`Interstellar running at http://localhost:${process.env.PORT}`);
-  });
-
-process.on("SIGINT", shutdown);
-process.on("SIGTERM", shutdown);
-
-function shutdown() {
-  console.log("SIGTERM signal received: closing HTTP server");
-  server.close();
-  bare.close();
-  process.exit(0);
-}
+  console.log(`Interstellar running at http://localhost:${process.env.PORT}`);
+});
 
 server.listen({
-    port: process.env.PORT,
-  });
+  port: process.env.PORT,
+});
