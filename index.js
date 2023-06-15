@@ -1,6 +1,6 @@
-import { createBareServer } from "@tomphttp/bare-server-node";
 import express from "express";
 import http from "node:http";
+import createBareServer from "@tomphttp/bare-server-node";
 import path from "node:path";
 import * as dotenv from "dotenv";
 dotenv.config();
@@ -20,39 +20,39 @@ app.use(
 app.use(express.static(path.join(__dirname, "static")));
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "static", "index.html"));
+  res.sendFile(path.join(__dirname, "routes", "index.html"));
 });
 
 app.get("/photography", (req, res) => {
-  res.sendFile(path.join(__dirname, "static", "search.html"));
+  res.sendFile(path.join(__dirname, "routes", "search.html"));
 });
 
 app.get("/nature", (req, res) => {
-  res.sendFile(path.join(__dirname, "static", "play.html"));
+  res.sendFile(path.join(__dirname, "routes", "play.html"));
 });
 
 app.get("/forest", (req, res) => {
-  res.sendFile(path.join(__dirname, "static", "widgetbot.html"));
+  res.sendFile(path.join(__dirname, "routes", "widgetbot.html"));
 });
 
 app.get("/go", (req, res) => {
-  res.sendFile(path.join(__dirname, "static", "go.html"));
+  res.sendFile(path.join(__dirname, "routes", "go.html"));
 });
 
 app.get("/settings", (req, res) => {
-  res.sendFile(path.join(__dirname, "static", "settings.html"));
+  res.sendFile(path.join(__dirname, "routes", "settings.html"));
 });
 
 app.get("/donate", (req, res) => {
-  res.sendFile(path.join(__dirname, "static", "donate.html"));
+  res.sendFile(path.join(__dirname, "routes", "donate.html"));
 });
 
 app.get("/ocean", (req, res) => {
-  res.sendFile(path.join(__dirname, "static", "apps.html"));
+  res.sendFile(path.join(__dirname, "routes", "apps.html"));
 });
 
 app.get("/404", (req, res) => {
-  res.sendFile(path.join(__dirname, "static", "404.html"));
+  res.sendFile(path.join(__dirname, "routes", "404.html"));
 });
 
 app.get("/*", (req, res) => {
