@@ -25,4 +25,3 @@ function isUrl(val = "") {
     return true;
   return false;
 }
-
