@@ -10,7 +10,7 @@
   "scripts": {
     "start": "node index.js"
   },
-  "keywords": [  
+  "keywords": [
     "proxy"
   ],
   "author": "",
@@ -25,4 +25,3 @@
     "prettier": "^2.8.4"
   }
 }
-
