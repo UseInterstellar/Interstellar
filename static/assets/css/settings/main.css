@@ -29,8 +29,7 @@ div {
 }
 
 .tab-cloak:hover {
-  scale: 1.1;
-  transition: 0.2s;
+  transform: scale(1.1);
 }
 
 .button {
@@ -114,26 +113,6 @@ body {
   color: #fff;
 }
 
-/*.button3 {
-/*  border: 2px solid #fff;
-/*  font-size: 16px;
-/*  cursor: pointer;
-/*  text-align: center;
-/*  padding: 15px 32px;
-/*  margin: 4px 2px;
-/*  border-radius: 10px;
-/*}
-/*.button2 {
-/*  background-color: #000;
-/*  color: white;
-/*  border: 2px solid #fff;
-/*}
-/*.button2:hover {
-/*  background-color: #fff;
-/*  color: black;
-/*  border: 2px solid #000;
-/*}*/
-
 button {
   background-color: #161616;
   color: #fff;
@@ -148,9 +127,12 @@ button {
 }
 
 button:hover {
-  background-color: #000000;
+  background-color: #000;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 button:active {
+  transform: translateY(1px);
   box-shadow: none;
 }
