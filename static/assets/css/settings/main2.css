@@ -55,7 +55,7 @@ body {
 p {
   margin-top: 6px;
   font-family: "Inter", sans-serif;
-  font-weight: 5px;
+  font-weight: 500;
 }
 
 h1 {
@@ -79,7 +79,7 @@ h1 {
 }
 
 .tab-cloak:hover {
-  scale: 1.1;
+  transform: scale(1.1);
 }
 
 img {
@@ -100,6 +100,8 @@ button {
 
 button:hover {
   background-color: #444;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 select,
@@ -186,8 +188,8 @@ select {
   width: 200px;
 }
 
-.t:hover {
-  scale: 1.1;
+.themes2:hover {
+  transform: scale(1.1);
 }
 
 .tab-cloaker-form {
@@ -205,4 +207,8 @@ select {
   width: 50%;
   padding: 10px;
   text-align: center;
+}
+
+.tab-cloaker-form:hover {
+  transform: scale(1.1);
 }
