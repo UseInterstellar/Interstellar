@@ -5,7 +5,8 @@
 Interstellar is one of the best modern unblocked game sites. Check it out <a href="https://interstellars.games">here</a>. If this link is blocked, you can get more links in our <a href="https://dsc.gg/interstellarntwork">Discord Server!</a>
 
 <a href="https://discord.gg/gointerstellar"><img height="30px" src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white"><img></a>
-<a href="https://cash.app/$akabubbo"><img height="30px" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"><img></a>
+[![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://cash.app/$akabubbo)
+</a>
 </p>  
 
 # Deploying
