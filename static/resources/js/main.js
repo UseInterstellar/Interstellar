@@ -1,4 +1,5 @@
 let inFrame = false;
+let windowOpened = false;
 
 try {
   inFrame = window !== window.top;
@@ -6,7 +7,7 @@ try {
   inFrame = true;
 }
 
-if (!inFrame && !navigator.userAgent.includes("Firefox")) {
+if (!inFrame && !navigator.userAgent.includes("Firefox") && !windowOpened) {
   const name = localStorage.getItem("name") || "My Drive - Google Drive";
   const icon = localStorage.getItem("icon") || "https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png";
 
@@ -32,5 +33,7 @@ if (!inFrame && !navigator.userAgent.includes("Firefox")) {
 
     doc.head.appendChild(link);
     doc.body.appendChild(iframe);
+
+    windowOpened = true;
   }
 }
