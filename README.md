@@ -20,7 +20,6 @@ Interstellar is one of the best modern unblocked game sites. Check it out <a hre
 [![Remix on Glitch](https://binbashbanana.github.io/deploy-buttons/buttons/remade/glitch.svg)](https://glitch.com/edit/#!/import/github/interstellarnetwork/interstellar-deployable)
 [![Deploy to Render](https://binbashbanana.github.io/deploy-buttons/buttons/remade/render.svg)](https://github.com/interstellarnetwork/interstellar/wiki/How-to-deploy-to-OnRender)
 [![Deploy to Cyclic](https://binbashbanana.github.io/deploy-buttons/buttons/remade/cyclic.svg)](https://app.cyclic.sh/api/app/deploy/imbubbo/interstellar)
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/pTe4mb?referralCode=R3UkeC)
 
 
 ### <a href="https://github.com/interstellarnetwork/Interstellar/wiki/How-to-deploy-to-Replit-(Semi-Advanced)">How to deploy to Replit - Replit Free Plan</a>
