@@ -1,7 +1,7 @@
 {
-  "name": "Interstellar Proxy",
+  "name": "Some Silly Prox",
   "version": "1.0.0",
-  "description": "By Interstellar Network",
+  "description": "By Not Interstellar Network",
   "type": "module",
   "engines": {
     "npm": ">=7.0.0",
