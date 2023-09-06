@@ -1,7 +1,7 @@
 {
-  "name": "educational-site",
+  "name": "silly-site",
   "version": "4.5.0",
-  "description": "https://discord.gg/gointerstellar",
+  "description": "gg/gointerstellar",
   "type": "module",
   "engines": {
     "npm": ">=7.0.0",
