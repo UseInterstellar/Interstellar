@@ -1,11 +1,11 @@
 {
-  "name": "educational-site",
-  "version": "4.5.0",
-  "description": "https://discord.gg/gointerstellar",
+  "name": "artclass",
+  "version": "3.0.0",
+  "description": "Art Class V3",
   "type": "module",
   "engines": {
-    "npm": ">=7.0.0",
-    "node": ">=16.0.0"
+    "npm": ">=8.0.0",
+    "node": ">=18.0.0"
   },
   "scripts": {
     "start": "node index.js"
@@ -16,12 +16,12 @@
   "author": "",
   "license": "GPL-3.0-or-later",
   "dependencies": {
-    "@titaniumnetwork-dev/ultraviolet": "^1.0.10",
-    "@tomphttp/bare-server-node": "^1.2.6",
+    "@titaniumnetwork-dev/ultraviolet": "github:titaniumnetwork-dev/ultraviolet",
+    "@tomphttp/bare-server-node": "^1.2.2",
     "express": "^4.18.2"
   },
   "devDependencies": {
-    "eslint": "^8.36.0",
-    "prettier": "^2.8.4"
+    "eslint": "^8.23.1",
+    "prettier": "^2.7.1"
   }
 }
