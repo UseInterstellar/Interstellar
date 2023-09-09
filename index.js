@@ -27,7 +27,7 @@ app.get("/photography", (req, res) => {
   res.sendFile(path.join(__dirname, "static", "search.html"));
 });
 
-app.get("/nature", (req, res) => {
+app.get("/mathematics", (req, res) => {
   res.sendFile(path.join(__dirname, "static", "play.html"));
 });
 
