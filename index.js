@@ -33,7 +33,7 @@ const routes = [
 
 routes.forEach((route) => {
   app.get(route.path, (req, res) => {
-    res.sendFile(path.join(__dirname, "routes", route.file));
+    res.sendFile(path.join(__dirname, "static", route.file));
   });
 });
 
