@@ -1,0 +1,43 @@
+.title {
+    color:black;
+}
+body {
+    background-image: linear-gradient(to right, rgb(255, 171, 234) , rgb(171, 198, 255));
+}
+h2 {
+    color:black;
+}
+.fixed-nav-bar-right .navbar-link {
+    color:black
+}
+#INImg {
+    content: url("/main_inverted.png");
+}
+.searchbar {
+    background-color: transparent;
+    border-color: black;
+    border-radius: 2vw;
+    border: solid .5vw;
+    color: black
+}
+p {
+    color:black;
+}
+.column {
+    background-color: #ff00f280;
+}
+input {
+    background-color: #f700ff80;
+}
+select {
+    background-color: #ff00ea80;
+}
+.settings-card {
+    background-color: #61005c;
+}
+.key-button {
+    background-color: #f700ff80;
+}
+.key-form {
+    background-color: #ff00f280;
+}

@@ -1,5 +1,4 @@
-
-  services:
+services:
   - type: web
     name: interstellar
     env: docker

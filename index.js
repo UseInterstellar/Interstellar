@@ -8,7 +8,7 @@ dotenv.config();
 const __dirname = process.cwd();
 const server = http.createServer();
 const app = express(server);
-const bareServer = createBareServer("/bare/");
+const bareServer = createBareServer("/outerspace/");
 
 app.use(express.json());
 app.use(
@@ -19,47 +19,29 @@ app.use(
 
 app.use(express.static(path.join(__dirname, "static")));
 
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "static", "index.html"));
-});
+const routes = [
+  { path: "/", file: "index.html" },
+  { path: "/news", file: "apps.html" },
+  { path: "/algebra", file: "games.html" },
+  { path: "/settings", file: "settings.html" },
+  { path: "/tabs", file: "tabs.html" },
+  { path: "/tabinner", file: "tabinner.html" },
+  { path: "/go", file: "go.html" },
+  { path: "/loading", file: "loading.html" },
+  { path: "/404", file: "404.html" },
+];
 
-app.get("/photography", (req, res) => {
-  res.sendFile(path.join(__dirname, "static", "search.html"));
-});
-
-app.get("/mathematics", (req, res) => {
-  res.sendFile(path.join(__dirname, "static", "play.html"));
-});
-
-app.get("/forest", (req, res) => {
-  res.sendFile(path.join(__dirname, "static", "widgetbot.html"));
-});
-
-app.get("/go", (req, res) => {
-  res.sendFile(path.join(__dirname, "static", "go.html"));
-});
-
-app.get("/settings", (req, res) => {
-  res.sendFile(path.join(__dirname, "static", "settings.html"));
-});
-
-app.get("/donate", (req, res) => {
-  res.sendFile(path.join(__dirname, "static", "donate.html"));
-});
-
-app.get("/ocean", (req, res) => {
-  res.sendFile(path.join(__dirname, "static", "apps.html"));
-});
-
-app.get("/404", (req, res) => {
-  res.sendFile(path.join(__dirname, "static", "404.html"));
+routes.forEach((route) => {
+  app.get(route.path, (req, res) => {
+    res.sendFile(path.join(__dirname, "routes", route.file));
+  });
 });
 
 app.get("/*", (req, res) => {
   res.redirect("/404");
 });
 
-// Bare Server
+// Bare Server 
 server.on("request", (req, res) => {
   if (bareServer.shouldRoute(req)) {
     bareServer.routeRequest(req, res);
@@ -81,5 +63,5 @@ server.on("listening", () => {
 });
 
 server.listen({
-  port: process.env.PORT,
+  port: 8080,
 });

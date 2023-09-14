@@ -1,11 +1,9 @@
-# syntax=docker/dockerfile:1
-
-FROM node:19-bullseye
+FROM node:20.5.1-bullseye-slim
 ENV NODE_ENV=production
 
 WORKDIR /app
 
-COPY ["package.json", "package-lock.json*", "./"]
+COPY ["package.json", "./"]
 
 RUN npm install
 

@@ -1,7 +1,7 @@
 {
-  "name": "educational-site",
-  "version": "4.5.0",
-  "description": "https://discord.gg/gointerstellar",
+  "name": "mathematics",
+  "version": "5.0.0",
+  "description": "https://discord.gg/interstellar",
   "type": "module",
   "engines": {
     "npm": ">=7.0.0",
