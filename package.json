@@ -1,0 +1,27 @@
+{
+  "name": "mathematics",
+  "version": "5.0.0",
+  "description": "https://discord.gg/interstellar",
+  "type": "module",
+  "engines": {
+    "npm": ">=7.0.0",
+    "node": ">=16.0.0"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "proxy"
+  ],
+  "author": "",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "@titaniumnetwork-dev/ultraviolet": "^1.0.10",
+    "@tomphttp/bare-server-node": "^1.2.6",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.36.0",
+    "prettier": "^2.8.4"
+  }
+}
