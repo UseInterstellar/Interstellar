@@ -1,0 +1,40 @@
+.title {
+    color:white;
+}
+body {
+    background-image: linear-gradient(to right, rgb(255, 0, 0) , rgb(0, 0, 0));
+}
+h2 {
+    color:white;
+}
+.fixed-nav-bar-right .navbar-link {
+    color:white
+}
+#INImg {
+    content: url("/main.png");
+}
+.searchbar {
+    background-color: transparent;
+    border-color: white;
+    border-radius: 2vw;
+    border: solid .5vw;
+    color: white
+}
+.column {
+    background-color: #ff383880;
+}
+input {
+    background-color: #ff3b3b80;
+}
+select {
+    background-color: #ff474780;
+}
+.settings-card {
+    background-color: #ff5d5d;
+}
+.key-button {
+    background-color: #ff686880;
+}
+.key-form {
+    background-color: #ff585880;
+}

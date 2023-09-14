@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+body {
+  font-family: 'Inter', sans-serif;
+  text-decoration: none;
+  background: #1e1e1e;
+}
+
+.fixed-nav-bar {
+  position: fixed;
+  top: 0;
+  letter-spacing: 2px;
+  font-size: 22px;
+  left: 0;
+  right: 0;
+  min-height: 13vh;
+  padding: 0 25px;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.02);
+  box-shadow: 0 0 15px 2px rgba(0, 0, 0, 0.5);
+  backface-visibility: visible;
+  transition: 0.35s ease;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+}
+
+.fixed-nav-bar .logo:hover {
+  transform: translateY(-55%) scale(1.03);
+  font-weight: 800;
+}
+
+.fixed-nav-bar .logo {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%) scale(1);
+  text-transform: uppercase;
+  font-size: 30px;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  color: white;
+  font-weight: 600;
+  margin-left: 5px;
+  font-style: normal;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.fixed-nav-bar-right {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  text-transform: uppercase;
+  font-size: 18px;
+  color: white;
+  font-weight: 600;
+  right: 2%;
+}
+
+.time {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  text-transform: uppercase;
+  transform: translateY(-50%) translateX(-50%);
+  font-size: 3.3vh;
+  color: white;
+  font-weight: 600;
+  text-align: center;
+  cursor: default;
+  user-select: none;
+}
+
+.fixed-nav-bar-right .navbar-link {
+  margin-left: 10px;
+  text-transform: uppercase;
+  font-size: 2.5vh;
+  cursor: pointer;
+  color: white;
+  font-weight: 800;
+  right: 2%;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  transform: translateX(0%);
+}
+@media (orientation: portrait) {
+	.fixed-nav-bar-right .navbar-link {
+    margin-left: 10px;
+    text-transform: uppercase;
+    font-size: 2.5vw;
+    cursor: pointer;
+    color: white;
+    font-weight: 800;
+    right: 2%;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    transform: translateX(0%);
+  }
+  .fixed-nav-bar-right .navbar-link:hover {
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: 800;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-size: 3vw;
+    transform: translateX(-20%);
+  }
+  }
+
+.fixed-nav-bar-right .navbar-link:hover {
+  text-transform: uppercase;
+  cursor: pointer;
+  font-weight: 800;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-size: 3vh;
+  transform: translateX(-20%);
+}
+
+.navbar-icon {
+  margin-right: 5px;
+  transition: all 0.2s ease;
+}
+
+.weird-icon {
+  line-height: 150px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+.navbar-link {
+  margin-right: 5px;
+  font-size: 3vh;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+}
+
+.navbar-link:hover > .settings-icon {
+  animation: spin 0.5s;
+  animation-timing-function: cubic-bezier(0, 1.04, 0.91, 0.99);
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+img {
+  width: 6vh;
+  padding-top: 5px;
+}
+@media (orientation: portrait) {
+	img {
+    width: 6vw;
+  }
+  }
