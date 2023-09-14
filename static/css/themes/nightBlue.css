@@ -1,0 +1,24 @@
+.title {
+    color:white;
+}
+body {
+    background-color: rgb(0, 11, 22);
+}
+.column {
+    background-color: #00a2ff80;
+}
+input {
+    background-color: #0099ff80;
+}
+select {
+    background-color: #0099ff80;
+}
+.settings-card {
+    background-color: #004261;
+}
+.key-button {
+    background-color: #0099ff80;
+}
+.key-form {
+    background-color: #00a2ff80;
+}

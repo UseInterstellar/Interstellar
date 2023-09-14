@@ -1,0 +1,33 @@
+.title {
+    color:white;
+}
+body {
+    background-color: rgb(0, 24, 4);
+}
+h2 {
+    color:rgb(255, 255, 255);
+}
+.fixed-nav-bar-right .navbar-link {
+    color:rgb(255, 255, 255)
+}
+#INImg {
+    content: url("/main.png");
+}
+.column {
+    background-color: #00ff3780;
+}
+input {
+    background-color: #09ff0080;
+}
+select {
+    background-color: #00ff3780;
+}
+.settings-card {
+    background-color: #086100;
+}
+.key-button {
+    background-color: #09ff0080;
+}
+.key-form {
+    background-color: #00ff0080;
+}
