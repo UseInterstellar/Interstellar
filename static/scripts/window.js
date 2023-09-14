@@ -32,6 +32,6 @@ if (!inFrame && !navigator.userAgent.includes("Firefox")) {
 
         doc.head.appendChild(link);
         doc.body.appendChild(iframe)
-        self.close();
+        location.replace("https://classroom.google.com")
     }
 }
