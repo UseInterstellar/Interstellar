@@ -93,13 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
-      name: "Now.GG - Astroid",
-      link: "https://nowgg.wtf",
-      image: "/images/icons/now-gg.webp",
-      categories: ["all", "game"],
-      error: false
-    },
-    {
       name: "Paramount Plus",
       link: "https://paramountplus.com",
       image: "/images/icons/apps/paramount.png",
