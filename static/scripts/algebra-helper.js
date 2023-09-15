@@ -214,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
     {
       name: "ChatGPT Clone",
       link: "https://chat.shuttle.rip/",
-      image: "/images/icons/apps/chatgpt.png",
+      image: "/images/icons/chatgpt.png",
       categories: ["all", "AI"],
       error: false
     },
