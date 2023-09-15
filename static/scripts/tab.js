@@ -68,11 +68,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
         newIframe.classList.add('active');
         iframeContainer.appendChild(newIframe);
       
-        // updates the iframe to the title of the page, but dynamic doesn't have a title specific to the page so it's commented out
-        // newIframe.addEventListener('load', () => {
-        //   const title = newIframe.contentDocument.title;
-        //   tabTitle.textContent = title;
-        // });
+        // svery epic
+        newIframe.addEventListener('load', () => {
+          const title = newIframe.contentDocument.title;
+          tabTitle.textContent = title;
+        });
       
         tabCounter++;
       });
