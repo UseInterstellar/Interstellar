@@ -60,7 +60,7 @@ You can **NOT** deploy to Vercel, Netlify, Cloudflare Pages or any other **Stati
 > If you don't know how to do this because you are an absolute no-brainer then message us a report in our [Discord](https://discord.gg/interstellar)
 
 # Credits
-Huge thanks to following people for contributing to Interstellar V5.
+Huge thanks to following people for contributing to Interstellar.
 
 [![Contrib](https://contrib.rocks/image?repo=InterstellarNetwork/Interstellar)](https://github.com/InterstellarNetwork/Interstellar/graphs/contributors)
 
