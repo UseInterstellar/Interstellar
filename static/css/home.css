@@ -1,5 +1,7 @@
 body {
 	background-color: #1e1e1e;
+	background-size: cover;
+	background-postion: center;
     display: flex;
     justify-content: center;
     align-items: center;
