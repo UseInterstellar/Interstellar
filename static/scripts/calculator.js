@@ -309,312 +309,305 @@ document.addEventListener('DOMContentLoaded', () => {
     error: false
   },
   {
-    "name": "Candy Box",
-    "link": "https://candybox2.net",
-    "image": "/images/icons/candybox.webp",
-    "categories": ["all"],
-    "error": false
+    name: "Candy Box",
+    link: "https://candybox2.net",
+    image: "/images/icons/candybox.webp",
+    categories: ["all"],
+    error: false
   },
     {
-      "name": "Celeste PICO-8",
-      "link": "https://exok.com/minigames/celeste.html",
-      "image": "/images/icons/celeste.webp",
-      "categories": ["all"],
-      "error": false
+      name: "Celeste PICO-8",
+      link: "https://exok.com/minigames/celeste.html",
+      image: "/images/icons/celeste.webp",
+      categories: ["all"],
+      error: false
     },
     {
-      "name": "Clicker Heros",
-      "link": "https://www.clickerheroes.com/play.html",
-      "image": "/images/icons/clickerheros.webp",
-      "categories": ["all"],
-      "error": false
+      name: "Clicker Heros",
+      link: "https://www.clickerheroes.com/play.html",
+      image: "/images/icons/clickerheros.webp",
+      categories: ["all"],
+      error: false
     },
     {
-      "name": "Chess.com (Fixed)",
-      "link": "https://chess.com",
-      "image": "/images/icons/chess.webp",
-      "categories": ["all"],
-      "error": false
+      name: "Chess.com (Fixed)",
+      link: "https://chess.com",
+      image: "/images/icons/chess.webp",
+      categories: ["all"],
+      error: false
     },
     {
-      "name": "Cluster Rush",
-      "link": "https://interstellarnetwork.github.io/Interstellar-Assets/play/cluster-rush/index.html",
-      "image": "/images/icons/cluster-rush.webp",
-      "categories": ["all"],
-      "error": false
+      name: "Cluster Rush",
+      link: "https://interstellarnetwork.github.io/Interstellar-Assets/play/cluster-rush/index.html",
+      image: "/images/icons/cluster-rush.webp",
+      categories: ["all"],
+      error: false
     },
     {
-      "name": "Cookie Clicker",
-      "link": "https://orteil.dashnet.org/cookieclicker/",
-      "image": "/images/icons/cookieclicker.webp",
-      "categories": ["all"],
-      "error": false
+      name: "Cookie Clicker",
+      link: "https://orteil.dashnet.org/cookieclicker/",
+      image: "/images/icons/cookieclicker.webp",
+      categories: ["all"],
+      error: false
     },
     {
-      "name": "Crossy Road",
-      "link": "https://5dd2e1e3-015f-11ea-ad56-9cb6d0d995f7.poki-gdn.com/169dc11d-e718-4b36-9e60-d5ed5bc07a31/index.html",
-      "image": "/images/icons/cr.webp",
-      "categories": ["all"],
-      "error": false
+      name: "Crossy Road",
+      link: "https://5dd2e1e3-015f-11ea-ad56-9cb6d0d995f7.poki-gdn.com/169dc11d-e718-4b36-9e60-d5ed5bc07a31/index.html",
+      image: "/images/icons/cr.webp",
+      categories: ["all"],
+      error: false
     },
     {
-      "name": "Deepest Sword",
-      "link": "https://v6p9d9t4.ssl.hwcdn.net/html/4017918/index.html",
-      "image": "/images/icons/deepest-sword.webp",
-      "categories": ["all"],
-      "error": false
+      name: "Deepest Sword",
+      link: "https://v6p9d9t4.ssl.hwcdn.net/html/4017918/index.html",
+      image: "/images/icons/deepest-sword.webp",
+      categories: ["all"],
+      error: false
     },
     {
-      "name": "Diep.io",
-      "link": "https://diep.io/",
-      "image": "/images/icons/diep.webp",
-      "categories": ["all"],
-      "error": false
+      name: "Diep.io",
+      link: "https://diep.io/",
+      image: "/images/icons/diep.webp",
+      categories: ["all"],
+      error: false
     },
     {
-      "name": "Doge Miner 1",
-      "link": "https://dogeminer.se/",
-      "image": "/images/icons/doge-miner-1.webp",
-      "categories": ["all"],
-      "error": false
+      name: "Doge Miner 1",
+      link: "https://dogeminer.se/",
+      image: "/images/icons/doge-miner-1.webp",
+      categories: ["all"],
+      error: false
     },
     {
-      "name": "Doom 1",
-      "link": "https://browncha023.github.io/GBA/launcher.html#dm",
-      "image": "/images/icons/doom1.webp",
-      "categories": ["all"],
-      "error": false
+      name: "Doom 1",
+      link: "https://browncha023.github.io/GBA/launcher.html#dm",
+      image: "/images/icons/doom1.webp",
+      categories: ["all"],
+      error: false
     },
     {
-      "name": "Doom 2",
-      "link": "https://browncha023.github.io/GBA/launcher.html#dm2",
-      "image": "/images/icons/doom2.webp",
-      "categories": ["all"],
-      "error": false
+      name: "Doom 2",
+      link: "https://browncha023.github.io/GBA/launcher.html#dm2",
+      image: "/images/icons/doom2.webp",
+      categories: ["all"],
+      error: false
     },
     {
-      "name": "Dreader",
-      "link": "https://donitz.itch.io/dreader",
-      "image": "/images/icons/dreader.webp",
-      "categories": ["all"],
-      "error": false
+      name: "Dreader",
+      link: "https://donitz.itch.io/dreader",
+      image: "/images/icons/dreader.webp",
+      categories: ["all"],
+      error: false
     },
     {
-      "name": "Drift Boss",
-      "link": "https://watchdocumentaries.com/wp-content/uploads/games/drift-boss/",
-      "image": "/images/icons/db.webp",
-      "categories": ["all"],
-      "error": false
+      name: "Drift Boss",
+      link: "https://watchdocumentaries.com/wp-content/uploads/games/drift-boss/",
+      image: "/images/icons/db.webp",
+      categories: ["all"],
+      error: false
     },
     {
-      "name": "Drift Hunters",
-      "link": "https://webglmath.github.io/drift-hunters/",
-      "image": "/images/icons/drift-hunters.webp",
-      "categories": ["all"],
-      "error": false
+      name: "Drift Hunters",
+      link: "https://webglmath.github.io/drift-hunters/",
+      image: "/images/icons/drift-hunters.webp",
+      categories: ["all"],
+      error: false
     },
     {
-      "name": "Drive Mad",
-      "link": "https://raw.githack.com/3kh0/3kh0-assets/main/drive-mad/index.html",
-      "image": "/images/icons/dm.webp",
-      "categories": ["all"],
-      "error": false
+      name: "Drive Mad",
+      link: "https://raw.githack.com/3kh0/3kh0-assets/main/drive-mad/index.html",
+      image: "/images/icons/dm.webp",
+      categories: ["all"],
+      error: false
     },
     {
-      "name": "Eaglercraft 1.8",
-      "link": "http://raw.githack.com/3kh0/3kh0-assets/main/minecraft-18/index.html",
-      "image": "/images/icons/mc.webp",
-      "categories": ["all"],
-      "error": false
+      name: "Eaglercraft 1.8",
+      link: "http://raw.githack.com/3kh0/3kh0-assets/main/minecraft-18/index.html",
+      image: "/images/icons/mc.webp",
+      categories: ["all"],
+      error: false
     },
     {
-      "name": "Fallout 2",
-      "link": "https://jonasz-o.itch.io/fallout2remake3d",
-      "image": "/images/icons/fallout2.gif",
-      "categories": ["all"],
-      "error": false
+      name: "Fallout 2",
+      link: "https://jonasz-o.itch.io/fallout2remake3d",
+      image: "/images/icons/fallout2.gif",
+      categories: ["all"],
+      error: false
     },
     {
-      "name": "FNAF 2 (Scratch)",
-      "link": "https://scratch.mit.edu/projects/469219637/embed/",
-      "image": "/images/icons/fnaf2.webp",
-      "categories": ["all"],
-      "error": false
+      name: "FNAF 2 (Scratch)",
+      link: "https://scratch.mit.edu/projects/469219637/embed/",
+      image: "/images/icons/fnaf2.webp",
+      categories: ["all"],
+      error: false
     },
     {
-      "name": "Friday Night Funkin'",
-      "link": "https://w8.snokido.com/games/html5/friday-night-funkin/0281/index.html",
-      "image": "/images/icons/fnf.webp",
-      "categories": ["all"],
-      "error": false
+      name: "Friday Night Funkin'",
+      link: "https://w8.snokido.com/games/html5/friday-night-funkin/0281/index.html",
+      image: "/images/icons/fnf.webp",
+      categories: ["all"],
+      error: false
     },
     {
-      "name": "FNF - Lofi Mod",
-      "link": "https://fnf.kdata1.com/lofi-funkin/2/",
-      "image": "/images/icons/lofi.webp",
-      "categories": ["all"],
-      "error": false
+      name: "FNF - Lofi Mod",
+      link: "https://fnf.kdata1.com/lofi-funkin/2/",
+      image: "/images/icons/lofi.webp",
+      categories: ["all"],
+      error: false
     },
     {
-      "name": "FNF VS. Snorlax",
-      "link": "https://fnf.kdata1.com/snorlax/1/",
-      "image": "/images/icons/snorlax.webp",
-      "categories": ["all"],
-      "error": false
+      name: "FNF VS. Snorlax",
+      link: "https://fnf.kdata1.com/snorlax/1/",
+      image: "/images/icons/snorlax.webp",
+      categories: ["all"],
+      error: false
     },
       {
-        "name": "JustFall.LOL",
-        "link": "https://justfall.lol",
-        "image": "/images/icons/just-fall-lol.webp",
-        "categories": ["all"],
-        "error": false
+        name: "JustFall.LOL",
+        link: "https://justfall.lol",
+        image: "/images/icons/just-fall-lol.webp",
+        categories: ["all"],
+        error: false
       },
       {
-        "name": "Kirby Mirror (GBA)",
-        "link": "https://www.retrogames.onl/gba/kirby-mirror-gba.html",
-        "image": "/images/icons/kirby.webp",
-        "categories": ["all"],
-        "error": false
+        name: "Kirby Mirror (GBA)",
+        link: "https://www.retrogames.onl/gba/kirby-mirror-gba.html",
+        image: "/images/icons/kirby.webp",
+        categories: ["all"],
+        error: false
       },
       {
-        "name": "Krunker",
-        "link": "https://krunker.io",
-        "image": "/images/icons/krunker.webp",
-        "categories": ["all"],
-        "error": false
+        name: "Krunker",
+        link: "https://krunker.io",
+        image: "/images/icons/krunker.webp",
+        categories: ["all"],
+        error: false
       },
       {
-        "name": "G-Switch",
-        "link": "https://5dd24442-015f-11ea-ad56-9cb6d0d995f7.poki-gdn.com/4f2c69b4-3edc-4cd7-a078-efd3d1ea9fb5/index.html",
-        "image": "/images/icons/gswitch.webp",
-        "categories": ["all"],
-        "error": false
+        name: "G-Switch",
+        link: "https://5dd24442-015f-11ea-ad56-9cb6d0d995f7.poki-gdn.com/4f2c69b4-3edc-4cd7-a078-efd3d1ea9fb5/index.html",
+        image: "/images/icons/gswitch.webp",
+        categories: ["all"],
+        error: false
       },
       {
-        "name": "G-Switch 2",
-        "link": "https://5dd27095-015f-11ea-ad56-9cb6d0d995f7.poki-gdn.com/e0e70ee4-fdd4-4de8-931d-fde7d1cb408b/index.html",
-        "image": "/images/icons/gswitch2.webp",
-        "categories": ["all"],
-        "error": false
+        name: "G-Switch 2",
+        link: "https://5dd27095-015f-11ea-ad56-9cb6d0d995f7.poki-gdn.com/e0e70ee4-fdd4-4de8-931d-fde7d1cb408b/index.html",
+        image: "/images/icons/gswitch2.webp",
+        categories: ["all"],
+        error: false
       },
       {
-        "name": "G-Switch 3",
-        "link": "https://5dd2b395-015f-11ea-ad56-9cb6d0d995f7.poki-gdn.com/120fdec6-7eeb-470f-a43c-9bcdace0dacb/index.html",
-        "image": "/images/icons/gswitch3.webp",
-        "categories": ["all"],
-        "error": false
+        name: "G-Switch 3",
+        link: "https://5dd2b395-015f-11ea-ad56-9cb6d0d995f7.poki-gdn.com/120fdec6-7eeb-470f-a43c-9bcdace0dacb/index.html",
+        image: "/images/icons/gswitch3.webp",
+        categories: ["all"],
+        error: false
       },
       {
-        "name": "Golden Eye 007",
-        "link": "https://f.kbhgames.com/r/n64/game.php?file=007-golden-eye.zip",
-        "image": "/images/icons/golden-eye-007.webp",
-        "categories": ["all"],
-        "error": false
+        name: "Golden Eye 007",
+        link: "https://f.kbhgames.com/r/n64/game.php?file=007-golden-eye.zip",
+        image: "/images/icons/golden-eye-007.webp",
+        categories: ["all"],
+        error: false
       },
       {
-        "name": "GBA Games",
-        "link": "https://browncha023.github.io/GBA/",
-        "image": "/images/icons/gba.webp",
-        "categories": ["all"],
-        "error": false
+        name: "GBA Games 2",
+        link: "https://cattn.github.io/gba/",
+        image: "/images/icons/gba.webp",
+        categories: ["all"],
+        error: false
       },
       {
-        "name": "GBA Games 2",
-        "link": "https://cattn.github.io/gba/",
-        "image": "/images/icons/gba.webp",
-        "categories": ["all"],
-        "error": false
+        name: "Geforce NOW",
+        link: "https://play.geforcenow.com",
+        image: "/images/icons/apps/geforce-now.webp",
+        categories: ["all"],
+        error: false
       },
       {
-        "name": "Geforce NOW",
-        "link": "https://play.geforcenow.com",
-        "image": "/images/icons/apps/geforce-now.webp",
-        "categories": ["all"],
-        "error": false
+        name: "Haunted School 1",
+        link: "https://games.crazygames.com/en_US/haunted-school---horror-game/index.html",
+        image: "/images/icons/na.webp",
+        categories: ["all"],
+        error: false
       },
       {
-        "name": "Haunted School 1",
-        "link": "https://games.crazygames.com/en_US/haunted-school---horror-game/index.html",
-        "image": "/images/icons/na.webp",
-        "categories": ["all"],
-        "error": false
+        name: "Helixteus 3",
+        link: "https://hole-io.com/",
+        image: "/images/icons/helixteus.webp",
+        categories: ["all"],
+        error: false
       },
       {
-        "name": "Helixteus 3",
-        "link": "https://hole-io.com/",
-        "image": "/images/icons/helixteus.webp",
-        "categories": ["all"],
-        "error": false
+        name: "Hole.IO",
+        link: "https://hole-io.com/",
+        image: "/images/icons/hole.webp",
+        categories: ["all"],
+        error: false
       },
       {
-        "name": "Hole.IO",
-        "link": "https://hole-io.com/",
-        "image": "/images/icons/hole.webp",
-        "categories": ["all"],
-        "error": false
+        name: "Idle Breakout",
+        link: "https://interstellarnetwork.github.io/Interstellar-Assets/play/idle-breakout/index.html",
+        image: "/images/icons/idle.webp",
+        categories: ["all"],
+        error: false
       },
       {
-        "name": "Idle Breakout",
-        "link": "https://interstellarnetwork.github.io/Interstellar-Assets/play/idle-breakout/index.html",
-        "image": "/images/icons/idle.webp",
-        "categories": ["all"],
-        "error": false
+        name: "Isleward",
+        link: "https://play.isleward.com",
+        image: "/images/icons/isleward.webp",
+        categories: ["all"],
+        error: false
       },
       {
-        "name": "Isleward",
-        "link": "https://play.isleward.com",
-        "image": "/images/icons/isleward.webp",
-        "categories": ["all"],
-        "error": false
+        name: "Interactive Buddy",
+        link: "https://f.silvergames.com/ruffle/player.php?id=204",
+        image: "/images/icons/interactive-buddy.webp",
+        categories: ["all"],
+        error: false
       },
       {
-        "name": "Interactive Buddy",
-        "link": "https://f.silvergames.com/ruffle/player.php?id=204",
-        "image": "/images/icons/interactive-buddy.webp",
-        "categories": ["all"],
-        "error": false
+        name: "Jacksmith",
+        link: "https://www.coolmathgames.com/0-jacksmith/play",
+        image: "/images/icons/jacksmith.webp",
+        categories: ["all"],
+        error: false
       },
       {
-        "name": "Jacksmith",
-        "link": "https://www.coolmathgames.com/0-jacksmith/play",
-        "image": "/images/icons/jacksmith.webp",
-        "categories": ["all"],
-        "error": false
+        name: "Learn To Fly Idle",
+        link: "https://www.gameslol.net/data/waflash/index.php?g=635",
+        image: "/images/icons/ltf_idle.webp",
+        categories: ["all"],
+        error: false
       },
       {
-        "name": "Learn To Fly Idle",
-        "link": "https://www.gameslol.net/data/waflash/index.php?g=635",
-        "image": "/images/icons/ltf_idle.webp",
-        "categories": ["all"],
-        "error": false
+        name: "Lordz.io",
+        link: "https://lordz.io/",
+        image: "/images/icons/lordz.webp",
+        categories: ["all"],
+        error: false
       },
       {
-        "name": "Lordz.io",
-        "link": "https://lordz.io/",
-        "image": "/images/icons/lordz.webp",
-        "categories": ["all"],
-        "error": false
+        name: "Masked IO",
+        link: "https://unblocked-games.s3.amazonaws.com/games/masked-io/index.html",
+        image: "/images/icons/masked-forces.webp",
+        categories: ["all"],
+        error: false
       },
       {
-        "name": "Masked IO",
-        "link": "https://unblocked-games.s3.amazonaws.com/games/masked-io/index.html",
-        "image": "/images/icons/masked-forces.webp",
-        "categories": ["all"],
-        "error": false
+        name: "Mario Kart 64",
+        link: "https://static.arcadespot.com/retroemulator.php?system=n64&game=2017/06/mario-kart-64.zip",
+        image: "/images/icons/mario-kart-64.webp",
+        categories: ["all"],
+        error: false
       },
       {
-        "name": "Mario Kart 64",
-        "link": "https://static.arcadespot.com/retroemulator.php?system=n64&game=2017/06/mario-kart-64.zip",
-        "image": "/images/icons/mario-kart-64.webp",
-        "categories": ["all"],
-        "error": false
-      },
-      {
-        "name": "Mobs Inc",
-        "link": "https://overboy.itch.io/mobs-inc",
-        "image": "/images/icons/mobsinc.webp",
-        "categories": ["all"],
-        "error": false
+        name: "Mobs Inc",
+        link: "https://overboy.itch.io/mobs-inc",
+        image: "/images/icons/mobsinc.webp",
+        categories: ["all"],
+        error: false
       },  
       {
         name: "Monkey Mart",
@@ -1078,6 +1071,20 @@ document.addEventListener('DOMContentLoaded', () => {
       categories: ['all,', '2P'],
       error: false
     },
+       {
+      name: "Zombs Royale",
+      link: "https://zombsroyale.io",
+      image: "/images/icons/zombs-royale.webp",
+      categories: ['all,', '2P'],
+      error: false
+    },
+    {
+    name: "GBA Games",
+    link: "https://real-sgs.vercel.app/Tools/GBA-Emulator",
+    image: "/images/icons/gba.webp",
+    categories: ["all"],
+    error: false
+      },
   ];
   
   appsList.sort((a, b) => a.name.localeCompare(b.name));
