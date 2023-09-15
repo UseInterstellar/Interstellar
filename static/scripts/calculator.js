@@ -687,13 +687,6 @@ document.addEventListener('DOMContentLoaded', () => {
         error: false
       },
       {
-        name: "Now.GG - Astroid",
-        link: "https://nowgg.wtf",
-        image: "/images/icons/now-gg.webp",
-        categories: ['all'],
-        error: false
-      },
-      {
         name: "OvO",
         link: "https://8rlfg0ch3417et18dp8lvps6uo7c3b2c-a-sites-opensocial.googleusercontent.com/gadgets/ifr?url=https://427396048-642845047394716217.preview.editmysite.com/uploads/b/139890129-761103484729797659/files/ovo.xml",
         image: "/images/icons/ovo.webp",
