@@ -1071,13 +1071,6 @@ document.addEventListener('DOMContentLoaded', () => {
       categories: ['all,', '2P'],
       error: false
     },
-       {
-      name: "Zombs Royale",
-      link: "https://zombsroyale.io",
-      image: "/images/icons/zombs-royale.webp",
-      categories: ['all,', '2P'],
-      error: false
-    },
     {
     name: "GBA Games",
     link: "https://real-sgs.vercel.app/Tools/GBA-Emulator",
