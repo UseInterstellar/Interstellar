@@ -198,18 +198,19 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
-      name: "Cool Math Games",
-      link: "https://coolmathgames.com",
-      image: "/images/icons/apps/coolmath.png",
-      categories: ["all", "games"],
-      error: false
-    },
-    {
       name: "ChatGPT Clone",
       link: "https://chat.shuttle.rip/",
       image: "/images/icons/chatgpt.png",
       categories: ["all", "AI"],
-      error: false
+      error: "false"
+    },
+    {
+      name: "Discord - Login",
+      link: "https://discord.com/login",
+      image: "/images/icons/discord.jpg",
+      categories: ["all", "social"],
+      error: "false",
+      blank: "true"
     },
   ];
     
@@ -248,9 +249,15 @@ document.addEventListener('DOMContentLoaded', () => {
       setPin(pinNum);
     };
     btn.title="Pin";
-
+    
     const link = document.createElement('a');
-    link.setAttribute('onclick', `go('${app.link}')`);
+
+    if (app.blank) {
+      link.setAttribute('onclick', `blank('${app.link}')`);
+    } else {
+      link.setAttribute('onclick', `go('${app.link}')`);
+    }
+
     const image = document.createElement('img');
     image.width = 145;
     image.height = 145;

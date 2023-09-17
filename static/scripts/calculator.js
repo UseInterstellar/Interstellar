@@ -338,7 +338,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       name: "Cluster Rush",
-      link: "https://interstellarnetwork.github.io/Interstellar-Assets/play/cluster-rush/index.html",
+      link: "https://interstellarnetwork.github.io/Interstellar-Assets/Cluster-Rush/",
       image: "/images/icons/cluster-rush.webp",
       categories: ["all"],
       error: false
@@ -1108,7 +1108,12 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.title="Pin";
 
     const link = document.createElement('a');
-    link.setAttribute('onclick', `go('${app.link}')`);
+
+    if (app.blank) {
+      link.setAttribute('onclick', `blank('${app.link}')`);
+    } else {
+      link.setAttribute('onclick', `go('${app.link}')`);
+    }
 
     const image = document.createElement('img');
     image.width = 145;
