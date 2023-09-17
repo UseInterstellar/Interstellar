@@ -56,6 +56,38 @@ body {
   margin-right: 0.5rem;
   transition: background-color 0.3s ease;
 }
+#expand {
+  float: right;
+  padding: 0.5rem;
+  cursor: pointer;
+  background-color: var(--accent-color);
+  color: var(--text-color);
+  border: none;
+  border-radius: 5px;
+  margin-right: 0.5rem;
+  transition: background-color 0.3s ease;
+}
+#reload {
+  float: right;
+  padding: 0.5rem;
+  cursor: pointer;
+  background-color: var(--accent-color);
+  color: var(--text-color);
+  border: none;
+  border-radius: 5px;
+  margin-right: 0.5rem;
+  transition: background-color 0.3s ease;
+}
+
+#reload:hover {
+  background-color: var(--hover-color);
+}
+
+
+#expand:hover {
+  background-color: var(--hover-color);
+}
+
 
 #add-tab:hover {
   background-color: var(--hover-color);
