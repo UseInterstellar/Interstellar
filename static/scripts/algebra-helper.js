@@ -6,20 +6,19 @@ document.addEventListener('DOMContentLoaded', () => {
       image: "/images/icons/apps/amazon.png",
       categories: ["all", "media"],
       error: false
-
     },
     {
       name: "Chess.com",
       link: "https://chess.com",
       image: "/images/icons/chess.png",
-      categories: ["all", "games"],
+      categories: ["all", "game"],
       error: false
     },
     {
       name: "Cool Math Games",
       link: "https://coolmathgames.com",
       image: "/images/icons/apps/coolmath.png",
-      categories: ["all", "games"],
+      categories: ["all", "game"],
       error: false
     },
     {
@@ -89,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
       name: "Messenger",
       link: "https://messenger.com/",
       image: "/images/icons/apps/messenger.png",
-      categories: ["all", "social"],
+      categories: ["all", "social", "message"],
       error: false
     },
     {
@@ -117,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
       name: "Poki",
       link: "https://poki.com",
       image: "/images/icons/apps/poki.png",
-      categories: ["all","game"],
+      categories: ["all", "game"],
       error: false
     },
     {
@@ -138,21 +137,21 @@ document.addEventListener('DOMContentLoaded', () => {
       name: "Telegram",
       link: "https://web.telegram.org/",
       image: "/images/icons/apps/telegram.png",
-      categories: ["all", "soc"],
+      categories: ["all", "social"],
       error: false
     },
     {
       name: "Tiktok",
       link: "https://tiktok.com",
       image: "/images/icons/apps/tiktok.png",
-      categories: ["all", "soc", "media"],
+      categories: ["all", "social", "media"],
       error: false
     },
     {
       name: "Tumblr",
       link: "https://tumblr.com/",
       image: "/images/icons/apps/tumblr.png",
-      categories: ["all", "soc"],
+      categories: ["all", "social"],
       error: false
     },
     {
@@ -166,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
       name: "Twitter",
       link: "https://twitter.com",
       image: "/images/icons/apps/twitter.png",
-      categories: ["all", "soc", "media"],
+      categories: ["all", "social", "media"],
       error: false
     },
     {
@@ -187,14 +186,14 @@ document.addEventListener('DOMContentLoaded', () => {
       name: "YouTube",
       link: "https://youtube.com",
       image: "/images/icons/apps/yt.png",
-      categories: ["all", "soc", "stream", "media"],
+      categories: ["all", "social", "stream", "media"],
       error: false
     },
     {
       name: "Whatsapp",
       link: "https://web.whatsapp.com/",
       image: "/images/icons/apps/whatsapp.png",
-      categories: ["all", "message", "soc"],
+      categories: ["all", "message", "social"],
       error: false
     },
     {
