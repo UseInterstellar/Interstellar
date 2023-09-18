@@ -411,7 +411,7 @@ document.addEventListener('DOMContentLoaded', () => {
       link: "https://webglmath.github.io/drift-hunters/",
       image: "/images/icons/drift-hunters.webp",
       categories: ["all"],
-      error: false
+      say: "This game may take a while to load, but it is working."
     },
     {
       name: "Drive Mad",
@@ -1076,8 +1076,7 @@ document.addEventListener('DOMContentLoaded', () => {
       link: "/calendar/retro-bowl/index.html",
       image: "/images/icons/retro.webp",
       categories: ["all,", 'sports'],
-      newWindow: "true",
-      error: false
+      local: "true",
       },
   ];
   
@@ -1117,12 +1116,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const link = document.createElement('a');
 
-    if (app.newWindow) {
-      link.setAttribute('onclick', `window.location.href = '${app.link}'`);
+    if (app.local) {
+      link.onclick = function() {
+        if (typeof app.say !== 'undefined') {
+          alert(app.say);
+        }
+        window.location.href = app.link;
+        return false;
+      };
     } else if (app.blank) {
-      link.setAttribute('onclick', `blank('${app.link}')`);
+      link.onclick = function() {
+        if (typeof app.say !== 'undefined') {
+          alert(app.say);
+        }
+        blank(app.link);
+        return false;
+      };
     } else {
-      link.setAttribute('onclick', `go('${app.link}')`);
+      link.onclick = function() {
+        if (typeof app.say !== 'undefined') {
+          alert(app.say);
+        }
+        go(app.link);
+        return false;
+      };
     }
 
     const image = document.createElement('img');
