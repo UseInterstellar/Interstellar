@@ -1070,6 +1070,14 @@ document.addEventListener('DOMContentLoaded', () => {
     image: "/images/icons/gba.webp",
     categories: ["all"],
     error: false
+    },
+    {
+      name: "Retro Bowl",
+      link: "/calendar/retro-bowl/index.html",
+      image: "/images/icons/retro.webp",
+      categories: ["all,", 'sports'],
+      newWindow: "true",
+      error: false
       },
   ];
   
@@ -1109,7 +1117,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const link = document.createElement('a');
 
-    if (app.blank) {
+    if (app.newWindow) {
+      link.setAttribute('onclick', `window.location.href = '${app.link}'`);
+    } else if (app.blank) {
       link.setAttribute('onclick', `blank('${app.link}')`);
     } else {
       link.setAttribute('onclick', `go('${app.link}')`);
