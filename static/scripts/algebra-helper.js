@@ -201,15 +201,15 @@ document.addEventListener('DOMContentLoaded', () => {
       link: "https://chat.shuttle.rip/",
       image: "/images/icons/chatgpt.png",
       categories: ["all", "AI"],
-      error: "false"
+      error: false
     },
     {
       name: "Discord - Login",
       link: "https://discord.com/login",
       image: "/images/icons/discord.jpg",
       categories: ["all", "social"],
-      error: "false",
-      blank: "true"
+      blank: "true",
+      error: false
     },
   ];
     
