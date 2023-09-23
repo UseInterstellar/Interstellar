@@ -29,6 +29,13 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "Tiny Fishing",
+      link: "https://www.dob5.com/d/file/games/tiny-fishing/",
+      image: "/images/icons/tinyfishing.jpg",
+      categories: ['all'],
+      error: false
+    },
+    {
       name: "bloxd.io",
       link: "https://bloxd.io",
       image: "/images/icons/bloxd-io.jpg",
