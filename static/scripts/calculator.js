@@ -8,6 +8,90 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "Dynast.io",
+      link: "https://dynast.io",
+      image: "/images/icons/dynast-io.png",
+      categories: ['all', '2P'],
+      error: false
+    },
+    {
+      name: "Thelast Royale",
+      link: "https://thelast.io",
+      image: "/images/icons/thelast-io.png",
+      categories: ['all', '2P'],
+      error: false
+    },
+    {
+      name: "mope.io",
+      link: "https://thelast.io",
+      image: "/images/icons/mope-io.jpg",
+      categories: ['all', '2P'],
+      error: false
+    },
+    {
+      name: "Tiny Fishing",
+      link: "https://www.dob5.com/d/file/games/tiny-fishing/",
+      image: "/images/icons/tinyfishing.jpg",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Johnny Upgrade",
+      link: "https://lagged.com/api/play2/johnny-upgrade3/",
+      image: "/images/icons/johnnyupgrade.png",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "bloxd.io",
+      link: "https://bloxd.io",
+      image: "/images/icons/bloxd-io.jpg",
+      categories: ['all', '2P'],
+      error: false
+    },
+    {
+      name: "Duck Life 1",
+      link: "https://www.hoodamath.com/mobile/games/duck-life/game.html",
+      image: "/images/icons/ducklife.webp",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Duck Life 2",
+      link: "https://www.hoodamath.com/mobile/games/duck-life-2-world-champion/game.html",
+      image: "/images/icons/ducklife.webp",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Duck Life 3",
+      link: "https://www.hoodamath.com/mobile/games/duck-life-3-evolution/game.html",
+      image: "/images/icons/ducklife.webp",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Duck Life 4",
+      link: "https://www.hoodamath.com/mobile/games/duck-life-4/game.html",
+      image: "/images/icons/ducklife.webp",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Papa's Freezeria",
+      link: "https://www.coolmathgames.com/0-papas-freezeria/play",
+      image: "/images/icons/papasfreezeria.png",
+      categories: ['all', '2P'],
+      error: false
+    },
+    {
+      name: "Evades",
+      link: "https://evades.io",
+      image: "/images/icons/evadesio.webp",
+      categories: ['all,', '2P'],
+      error: false
+    },
+    {
       name: "Bullet Force Multiplayer",
       link: "https://www.crazygames.com/game/bullet-force-multiplayer",
       image: "/images/icons/BFM.png",
