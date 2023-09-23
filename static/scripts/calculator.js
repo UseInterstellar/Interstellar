@@ -15,6 +15,13 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "Thelast Royale",
+      link: "https://thelast.io",
+      image: "/images/icons/thelast-io.png",
+      categories: ['all', '2P'],
+      error: false
+    },
+    {
       name: "Bullet Force Multiplayer",
       link: "https://www.crazygames.com/game/bullet-force-multiplayer",
       image: "/images/icons/BFM.png",
