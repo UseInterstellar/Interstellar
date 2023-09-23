@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
-      name: "Discord",
+      name: "DuckDuckGo",
       link: "https://start.duckduckgo.com/",
       image: "/images/icons/apps/duckduckgo.png",
       categories: ["all"],
