@@ -43,6 +43,13 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "Evades",
+      link: "https://evades.io",
+      image: "/images/icons/evadesio.webp",
+      categories: ['all,', '2P'],
+      error: false
+    },
+    {
       name: "Bullet Force Multiplayer",
       link: "https://www.crazygames.com/game/bullet-force-multiplayer",
       image: "/images/icons/BFM.png",
