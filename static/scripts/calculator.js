@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
         {
       name: "Playstation 2 Emulator",
-      link: "https://ds.44670.org/",
+      link: "https://playjs.purei.org/",
       image: "/images/icons/PS2.webp",
       categories: ['all,', 'emu'],
       error: false
