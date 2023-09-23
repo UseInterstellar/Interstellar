@@ -36,6 +36,13 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "Papa's Freezeria",
+      link: "https://www.coolmathgames.com/0-papas-freezeria/play",
+      image: "/images/icons/papasfreezeria.png",
+      categories: ['all', '2P'],
+      error: false
+    },
+    {
       name: "Bullet Force Multiplayer",
       link: "https://www.crazygames.com/game/bullet-force-multiplayer",
       image: "/images/icons/BFM.png",
