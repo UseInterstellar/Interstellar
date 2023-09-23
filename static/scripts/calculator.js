@@ -57,6 +57,13 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "Duck Life 2",
+      link: "https://www.hoodamath.com/mobile/games/duck-life-2-world-champion/game.html",
+      image: "/images/icons/ducklife.webp",
+      categories: ['all'],
+      error: false
+    },
+    {
       name: "Papa's Freezeria",
       link: "https://www.coolmathgames.com/0-papas-freezeria/play",
       image: "/images/icons/papasfreezeria.png",
