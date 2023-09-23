@@ -36,6 +36,13 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "Johnny Upgrade",
+      link: "https://lagged.com/api/play2/johnny-upgrade3/",
+      image: "/images/icons/johnnyupgrade.png",
+      categories: ['all'],
+      error: false
+    },
+    {
       name: "bloxd.io",
       link: "https://bloxd.io",
       image: "/images/icons/bloxd-io.jpg",
