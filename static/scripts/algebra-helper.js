@@ -29,6 +29,13 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "DuckDuckGo",
+      link: "https://start.duckduckgo.com/",
+      image: "/images/icons/apps/duckduckgo.png",
+      categories: ["all"],
+      error: false
+    },
+    {
       name: "ESPN",
       link: "https://www.espn.com/watch/",
       image: "/images/icons/apps/espn.webp",
