@@ -610,8 +610,8 @@ document.addEventListener('DOMContentLoaded', () => {
         error: false
       },  
       {
-        name: "Monkey Mart",
-        link: "https://html5.gamemonetize.co/ugi7ftbv2kgodcq7vful9u9v34wein5z/",
+        name: "Monkey Mart [Fixed]",
+        link: "https://interstellarnetwork.github.io/Interstellar-Assets/monkey-mart/",
         image: "/images/icons/mm.webp",
         categories: ['all'],
         error: false
