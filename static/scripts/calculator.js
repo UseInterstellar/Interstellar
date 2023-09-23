@@ -8,6 +8,13 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "Dynast.io",
+      link: "https://dynast.io",
+      image: "/images/icons/dynast-io.png",
+      categories: ['all', '2P'],
+      error: false
+    },
+    {
       name: "Bullet Force Multiplayer",
       link: "https://www.crazygames.com/game/bullet-force-multiplayer",
       image: "/images/icons/BFM.png",
