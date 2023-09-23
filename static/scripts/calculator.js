@@ -22,6 +22,13 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "mope.io",
+      link: "https://thelast.io",
+      image: "/images/icons/mope-io.jpg",
+      categories: ['all', '2P'],
+      error: false
+    },
+    {
       name: "Bullet Force Multiplayer",
       link: "https://www.crazygames.com/game/bullet-force-multiplayer",
       image: "/images/icons/BFM.png",
