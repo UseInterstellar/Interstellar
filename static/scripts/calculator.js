@@ -29,6 +29,13 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "bloxd.io",
+      link: "https://bloxd.io",
+      image: "/images/icons/bloxd-io.jpg",
+      categories: ['all', '2P'],
+      error: false
+    },
+    {
       name: "Bullet Force Multiplayer",
       link: "https://www.crazygames.com/game/bullet-force-multiplayer",
       image: "/images/icons/BFM.png",
