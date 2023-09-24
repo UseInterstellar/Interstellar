@@ -57,13 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
-      name: "Mr. Mine",
-      link: "https://mrmine.com/game/desktop/index.html",
-      image: "/images/icons/mrmine.jpg",
-      categories: ['all'],
-      error: false
-    },
-    {
       name: "Minecraft Classic",
       link: "https://classic.minecraft.net",
       image: "/images/icons/mc.webp",
