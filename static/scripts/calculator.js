@@ -29,6 +29,13 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "Burrito Bison",
+      link: "https://f.silvergames.com/awayfl/index.html?swf=burrito-bison.swf",
+      image: "/images/icons/burritobison.webp",
+      categories: ['all'],
+      error: false
+    },
+    {
       name: "Thelast Royale",
       link: "https://thelast.io",
       image: "/images/icons/thelast-io.png",
