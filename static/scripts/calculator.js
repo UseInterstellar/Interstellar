@@ -43,6 +43,13 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "Candy Jump",
+      link: "https://candyjump.games235.com/",
+      image: "/images/icons/candyjump.jpg",
+      categories: ['all'],
+      error: false
+    },
+    {
       name: "Minecraft Classic",
       link: "https://classic.minecraft.net",
       image: "/images/icons/mc.webp",
