@@ -78,6 +78,13 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "YoHoHo.io",
+      link: "https://yohoho.io/",
+      image: "/images/icons/yohoho.webp",
+      categories: ['all', '2P'],
+      error: false
+    },
+    {
       name: "FeedVid",
       link: "https://v6p9d9t4.ssl.hwcdn.net/html/4941980-683813/index.html",
       image: "/images/icons/feedvid.png",
