@@ -99,6 +99,13 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "Merge Fruit",
+      link: "https://html5.gamedistribution.com/2dee9d404697435aa76111eb4015e1d5/",
+      image: "/images/icons/mergefruit.jpeg",
+      categories: ['all'],
+      error: false
+    },
+    {
       name: "FeedVid",
       link: "https://v6p9d9t4.ssl.hwcdn.net/html/4941980-683813/index.html",
       image: "/images/icons/feedvid.png",
