@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       name: "Rainbow Obby",
-      link: "https://a7e6d137-c3c1-46e6-a3db-04c2d33c98a8.poki-gdn.com/71e6bddd-9b0e-4621-a11a-9503086f69d5/index.html",
+      link: "https://785a4295-96c4-43e5-b237-fb07fc3ef44d.poki-gdn.com/f1d39f75-7a25-41de-86cf-ba00804737b5/index.html",
       image: "/images/icons/rainbowobby.webp",
       categories: ['all', '2P'],
       error: false
