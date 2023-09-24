@@ -22,6 +22,13 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "Scratch",
+      link: "https://scratch.mit.edu",
+      image: "/images/icons/scratch.jpg",
+      categories: ["all", "social", "game", "media", ""],
+      error: false
+    },
+    {
       name: "Chess.com",
       link: "https://chess.com",
       image: "/images/icons/chess.png",
