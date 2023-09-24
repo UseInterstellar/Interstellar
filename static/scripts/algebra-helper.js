@@ -15,6 +15,13 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "freemovieswatch.tv",
+      link: "https://freemovieswatch.tv",
+      image: "/images/icons/freemovieswatch.png",
+      categories: ["all", "media", "stream"],
+      error: false
+    },
+    {
       name: "Chess.com",
       link: "https://chess.com",
       image: "/images/icons/chess.png",
