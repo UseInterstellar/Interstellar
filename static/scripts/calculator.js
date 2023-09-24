@@ -22,6 +22,41 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "Tunnel Rush",
+      link: "https://5dd2e8e4-015f-11ea-ad56-9cb6d0d995f7.poki-gdn.com/5627efae-e960-407d-82a5-3da708eb4e68/index.html",
+      image: "/images/icons/tunnelrush.png",
+      categories: ['all', '2P'],
+      error: false
+    },
+    {
+      name: "Tunnel Rush 2",
+      link: "https://a7e6d137-c3c1-46e6-a3db-04c2d33c98a8.poki-gdn.com/71e6bddd-9b0e-4621-a11a-9503086f69d5/index.html",
+      image: "/images/icons/tunnelrush2.png",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Rainbow Obby",
+      link: "https://785a4295-96c4-43e5-b237-fb07fc3ef44d.poki-gdn.com/f1d39f75-7a25-41de-86cf-ba00804737b5/index.html",
+      image: "/images/icons/rainbowobby.webp",
+      categories: ['all', '2P'],
+      error: false
+    },
+    {
+      name: "Candy Jump",
+      link: "https://candyjump.games235.com/",
+      image: "/images/icons/candyjump.jpg",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Google Feud",
+      link: "https://googlefeud.com/",
+      image: "/images/icons/googlefeud.png",
+      categories: ['all'],
+      error: false
+    },
+    {
       name: "Minecraft Classic",
       link: "https://classic.minecraft.net",
       image: "/images/icons/mc.webp",
@@ -32,6 +67,62 @@ document.addEventListener('DOMContentLoaded', () => {
       name: "Learn to Fly 3",
       link: "https://www.silvergames.com/en/learn-to-fly-3/iframe",
       image: "/images/icons/learntofly3.png",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Neal.Fun",
+      link: "https://neal.fun",
+      image: "/images/icons/nealfun.png",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "YoHoHo.io",
+      link: "https://yohoho.io/",
+      image: "/images/icons/yohoho.webp",
+      categories: ['all', '2P'],
+      error: false
+    },
+    {
+      name: "Tetr.io",
+      link: "https://tetr.io/",
+      image: "/images/icons/tetrio.ico",
+      categories: ['all', '2P'],
+      error: false
+    },
+    {
+      name: "Time Shooter 2",
+      link: "https://html5.gamedistribution.com/62a72f2da7cb4b609579a47653546e6a/",
+      image: "/images/icons/timeshooter2.jpeg",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Merge Fruit",
+      link: "https://html5.gamedistribution.com/2dee9d404697435aa76111eb4015e1d5/",
+      image: "/images/icons/mergefruit.jpeg",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "There Is No Game",
+      link: "https://5dd2d607-015f-11ea-ad56-9cb6d0d995f7.poki-gdn.com/38959ae1-110b-49ab-86ae-df425fd7862a/index.html",
+      image: "/images/icons/thereisnogame.jpg",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Jetpack Joyride (3kh0)",
+      link: "https://raw.githack.com/3kh0/3kh0-assets/main/jetpack-joyride/index.html",
+      image: "/images/icons/jetpackjoyride.png",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Dogeminer 2",
+      link: "https://dogeminer2.com/play/",
+      image: "/images/icons/dogeminer2.ico",
       categories: ['all'],
       error: false
     },
