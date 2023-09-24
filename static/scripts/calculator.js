@@ -50,6 +50,13 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "Powerline.IO",
+      link: "https://powerline.io",
+      image: "/images/icons/powerline.jpg",
+      categories: ['all', '2P'],
+      error: false
+    },
+    {
       name: "Eaglercraft 1.5.2",
       link: "https://webclient.asspixel.net/versions/Eagler152/",
       image: "/images/icons/mc.webp",
