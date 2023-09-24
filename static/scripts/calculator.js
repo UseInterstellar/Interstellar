@@ -120,13 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
-      name: "Dogeminer 2",
-      link: "https://dogeminer2.com/play/",
-      image: "/images/icons/dogeminer2.ico",
-      categories: ['all'],
-      error: false
-    },
-    {
       name: "FeedVid",
       link: "https://v6p9d9t4.ssl.hwcdn.net/html/4941980-683813/index.html",
       image: "/images/icons/feedvid.png",
