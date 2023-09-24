@@ -71,6 +71,13 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "Neal.Fun",
+      link: "https://neal.fun",
+      image: "/images/icons/nealfun.png",
+      categories: ['all'],
+      error: false
+    },
+    {
       name: "FeedVid",
       link: "https://v6p9d9t4.ssl.hwcdn.net/html/4941980-683813/index.html",
       image: "/images/icons/feedvid.png",
