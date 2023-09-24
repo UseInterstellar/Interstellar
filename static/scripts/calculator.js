@@ -50,9 +50,44 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
-      name: "Rocket Bot Royale 2",
+      name: "Rocket Bot Royale",
       link: "https://rocketbotroyale2.winterpixel.io/",
       image: "/images/icons/rocketbotroyale.jpg",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Happy Wheels",
+      link: "https://files.crazygames.com/ruffle/happywheels.html",
+      image: "/images/icons/happywheels.jpg",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Papa's Burgeria",
+      link: "https://www.coolmathgames.com/0-papas-burgeria/play",
+      image: "/images/icons/papasburgeria.jpg",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Papa's Cheeseria",
+      link: "https://www.coolmathgames.com/0-papas-cheeseria/play",
+      image: "/images/icons/papascheeseria.webp",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Papa's Pancakeria",
+      link: "https://www.coolmathgames.com/0-papas-pancakeria/play",
+      image: "/images/icons/papaspancakeria.jpg",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Papa's Wingeria",
+      link: "https://www.coolmathgames.com/0-papas-wingeria/play",
+      image: "/images/icons/papaswingeria.png",
       categories: ['all'],
       error: false
     },
