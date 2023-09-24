@@ -8,6 +8,27 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "BuzzFeed Quizzes",
+      link: "https://buzzfeed.com/quizzes",
+      image: "/images/icons/apps/buzzfeed.png",
+      categories: ["all", "media"],
+      error: false
+    },
+    {
+      name: "freemovieswatch.tv",
+      link: "https://freemovieswatch.tv",
+      image: "/images/icons/freemovieswatch.png",
+      categories: ["all", "media", "stream"],
+      error: false
+    },
+    {
+      name: "Scratch",
+      link: "https://scratch.mit.edu",
+      image: "/images/icons/scratch.jpg",
+      categories: ["all", "social", "game", "media", ""],
+      error: false
+    },
+    {
       name: "Chess.com",
       link: "https://chess.com",
       image: "/images/icons/chess.png",
@@ -201,6 +222,13 @@ document.addEventListener('DOMContentLoaded', () => {
       link: "https://web.whatsapp.com/",
       image: "/images/icons/apps/whatsapp.png",
       categories: ["all", "message", "social"],
+      error: false
+    },
+    {
+      name: "Wattpad",
+      link: "https://wattpad.com/",
+      image: "/images/icons/apps/wattpad.webp",
+      categories: ["all", "social"],
       error: false
     },
     {
