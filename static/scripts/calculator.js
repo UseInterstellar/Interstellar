@@ -29,6 +29,13 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "Eaglercraft 1.5.2",
+      link: "https://webclient.asspixel.net/versions/Eagler152/",
+      image: "/images/icons/mc.webp",
+      categories: ['all'],
+      error: false
+    },
+    {
       name: "Burrito Bison",
       link: "https://f.silvergames.com/awayfl/index.html?swf=burrito-bison.swf",
       image: "/images/icons/burritobison.webp",
