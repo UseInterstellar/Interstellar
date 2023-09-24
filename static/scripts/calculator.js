@@ -22,6 +22,34 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "FeedVid",
+      link: "https://v6p9d9t4.ssl.hwcdn.net/html/4941980-683813/index.html",
+      image: "/images/icons/feedvid.png",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Eaglercraft 1.5.2",
+      link: "https://webclient.asspixel.net/versions/Eagler152/",
+      image: "/images/icons/mc.webp",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Burrito Bison",
+      link: "https://f.silvergames.com/awayfl/index.html?swf=burrito-bison.swf",
+      image: "/images/icons/burritobison.webp",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Gunspin",
+      link: "https://html5.gamedistribution.com/rvvASMiM/917cce8c44c44638a8cdc2a1794b65c8/index.html",
+      image: "/images/icons/gunspin.jpg",
+      categories: ['all'],
+      error: false
+    },
+    {
       name: "Thelast Royale",
       link: "https://thelast.io",
       image: "/images/icons/thelast-io.png",
