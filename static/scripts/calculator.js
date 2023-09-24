@@ -15,6 +15,20 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "Territorial.io",
+      link: "https://territorial.io",
+      image: "/images/icons/territorialio.ico",
+      categories: ['all', '2P'],
+      error: false
+    },
+    {
+      name: "Minecraft Classic",
+      link: "https://classic.minecraft.net",
+      image: "/images/icons/mc.webp",
+      categories: ['all', '2P'],
+      error: false
+    },
+    {
       name: "Learn to Fly 3",
       link: "https://www.silvergames.com/en/learn-to-fly-3/iframe",
       image: "/images/icons/learntofly3.png",
@@ -26,6 +40,34 @@ document.addEventListener('DOMContentLoaded', () => {
       link: "https://v6p9d9t4.ssl.hwcdn.net/html/4941980-683813/index.html",
       image: "/images/icons/feedvid.png",
       categories: ['all'],
+      error: false
+    },
+    {
+      name: "florr.io",
+      link: "https://florr.io",
+      image: "/images/icons/florr.jpg",
+      categories: ['all', '2P'],
+      error: false
+    },
+    {
+      name: "Rocket Bot Royale 2",
+      link: "https://rocketbotroyale2.winterpixel.io/",
+      image: "/images/icons/rocketbotroyale.jpg",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Riddle School 1",
+      link: "https://uploads.ungrounded.net/ruffle_wrapper/ruffleembed.html?v=1.0.67&browsermode=default&props=%7B%22ruffle%22%3A%22%2Fruffle_wrapper%2Flib%2Fruffle.js%3F1695474658%22%2C%22public_path%22%3A%22%2Fruffle_wrapper%2Flib%2F%22%2C%22swf%22%3A%22https%3A%2F%2Fuploads.ungrounded.net%2F314000%2F314680_Riddle_School.swf%3F1148577264%22%2C%22vars%22%3A%7B%22NewgroundsAPI_PublisherID%22%3A1%2C%22NewgroundsAPI_SandboxID%22%3A%2265103f0745c96%22%2C%22NewgroundsAPI_SessionID%22%3A%22%22%2C%22NewgroundsAPI_UserName%22%3A%22%26lt%3Bdeleted%26gt%3B%22%2C%22NewgroundsAPI_UserID%22%3A0%2C%22ng_username%22%3A%22%26lt%3Bdeleted%26gt%3B%22%7D%2C%22width%22%3A550%2C%22height%22%3A400%2C%22icon%22%3A%22https%3A%2F%2Fpicon.ngfiles.com%2F314000%2Fflash_314680_card.png%3Ff1607914286%22%2C%22warnOnUnsupportedContent%22%3Afalse%7D",
+      image: "/images/icons/riddleschool1.png",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Powerline.IO",
+      link: "https://powerline.io",
+      image: "/images/icons/powerline.jpg",
+      categories: ['all', '2P'],
       error: false
     },
     {
