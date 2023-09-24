@@ -15,6 +15,13 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "Territorial.io",
+      link: "https://territorial.io",
+      image: "/images/icons/territorialio.ico",
+      categories: ['all', '2P'],
+      error: false
+    },
+    {
       name: "Learn to Fly 3",
       link: "https://www.silvergames.com/en/learn-to-fly-3/iframe",
       image: "/images/icons/learntofly3.png",
