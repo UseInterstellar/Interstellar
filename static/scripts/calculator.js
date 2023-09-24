@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
-      name: "Rocket Bot Royale",
+      name: "Rocket Bot Royale 2",
       link: "https://rocketbotroyale2.winterpixel.io/",
       image: "/images/icons/rocketbotroyale.jpg",
       categories: ['all'],
