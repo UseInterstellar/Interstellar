@@ -22,6 +22,13 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "Tunnel Rush",
+      link: "https://5dd2e8e4-015f-11ea-ad56-9cb6d0d995f7.poki-gdn.com/5627efae-e960-407d-82a5-3da708eb4e68/index.html",
+      image: "/images/icons/tunnelrush.png",
+      categories: ['all', '2P'],
+      error: false
+    },
+    {
       name: "Minecraft Classic",
       link: "https://classic.minecraft.net",
       image: "/images/icons/mc.webp",
