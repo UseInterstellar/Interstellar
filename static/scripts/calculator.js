@@ -15,6 +15,13 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "Learn to Fly 3",
+      link: "https://www.silvergames.com/en/learn-to-fly-3/iframe",
+      image: "/images/icons/learntofly3.png",
+      categories: ['all'],
+      error: false
+    },
+    {
       name: "Thelast Royale",
       link: "https://thelast.io",
       image: "/images/icons/thelast-io.png",
