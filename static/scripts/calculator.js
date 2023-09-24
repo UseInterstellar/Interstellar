@@ -43,6 +43,13 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "florr.io",
+      link: "https://florr.io",
+      image: "/images/icons/florr.jpg",
+      categories: ['all', '2P'],
+      error: false
+    },
+    {
       name: "Eaglercraft 1.5.2",
       link: "https://webclient.asspixel.net/versions/Eagler152/",
       image: "/images/icons/mc.webp",
