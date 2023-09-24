@@ -36,6 +36,13 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "Gunspin",
+      link: "https://html5.gamedistribution.com/rvvASMiM/917cce8c44c44638a8cdc2a1794b65c8/index.html",
+      image: "/images/icons/gunspin.jpg",
+      categories: ['all'],
+      error: false
+    },
+    {
       name: "Thelast Royale",
       link: "https://thelast.io",
       image: "/images/icons/thelast-io.png",
