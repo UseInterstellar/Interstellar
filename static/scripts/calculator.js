@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
     {
       name: "Papa's Wingeria",
       link: "https://www.coolmathgames.com/0-papas-wingeria/play",
-      image: "airtag8892/Interstellar/static/images/icons/papaswingeria.png",
+      image: "/images/icons/papaswingeria.png",
       categories: ['all'],
       error: false
     },
