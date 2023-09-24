@@ -204,6 +204,13 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "Wattpad",
+      link: "https://wattpad.com/",
+      image: "/images/icons/apps/wattpad.webp",
+      categories: ["all", "social"],
+      error: false
+    },
+    {
       name: "ChatGPT Clone",
       link: "https://chat.shuttle.rip/",
       image: "/images/icons/chatgpt.png",
