@@ -8,6 +8,13 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "BuzzFeed Quizzes",
+      link: "https://buzzfeed.com/quizzes",
+      image: "/images/icons/apps/buzzfeed.png",
+      categories: ["all", "media"],
+      error: false
+    },
+    {
       name: "Chess.com",
       link: "https://chess.com",
       image: "/images/icons/chess.png",
