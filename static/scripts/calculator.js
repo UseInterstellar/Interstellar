@@ -22,6 +22,13 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "Minecraft Classic",
+      link: "https://classic.minecraft.net",
+      image: "/images/icons/mc.webp",
+      categories: ['all', '2P'],
+      error: false
+    },
+    {
       name: "Learn to Fly 3",
       link: "https://www.silvergames.com/en/learn-to-fly-3/iframe",
       image: "/images/icons/learntofly3.png",
