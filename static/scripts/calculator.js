@@ -50,6 +50,13 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "Google Feud",
+      link: "https://googlefeud.com/",
+      image: "/images/icons/googlefeud.png",
+      categories: ['all'],
+      error: false
+    },
+    {
       name: "Minecraft Classic",
       link: "https://classic.minecraft.net",
       image: "/images/icons/mc.webp",
