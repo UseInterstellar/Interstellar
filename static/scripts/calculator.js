@@ -92,6 +92,13 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "Time Shooter 2",
+      link: "https://html5.gamedistribution.com/62a72f2da7cb4b609579a47653546e6a/",
+      image: "/images/icons/timeshooter2.jpeg",
+      categories: ['all'],
+      error: false
+    },
+    {
       name: "FeedVid",
       link: "https://v6p9d9t4.ssl.hwcdn.net/html/4941980-683813/index.html",
       image: "/images/icons/feedvid.png",
