@@ -22,6 +22,13 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "Stickman Hook",
+      link: "https://interstellarnetwork.github.io/Interstellar-Assets/stickman-hook/index.html",
+      image: "/images/icons/stickmanhook.jpg",
+      categories: ['all'],
+      error: false
+    },
+    {
       name: "Tunnel Rush",
       link: "https://5dd2e8e4-015f-11ea-ad56-9cb6d0d995f7.poki-gdn.com/5627efae-e960-407d-82a5-3da708eb4e68/index.html",
       image: "/images/icons/tunnelrush.png",
@@ -114,15 +121,8 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       name: "Jetpack Joyride (3kh0)",
-      link: "https://raw.githack.com/3kh0/3kh0-assets/main/jetpack-joyride/index.html",
+      link: "https://interstellarnetwork.github.io/Interstellar-Assets/jetpack-joyride/index.html",
       image: "/images/icons/jetpackjoyride.png",
-      categories: ['all'],
-      error: false
-    },
-    {
-      name: "Dogeminer 2",
-      link: "https://dogeminer2.com/play/",
-      image: "/images/icons/dogeminer2.ico",
       categories: ['all'],
       error: false
     },
