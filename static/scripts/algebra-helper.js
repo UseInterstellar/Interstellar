@@ -8,6 +8,27 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "BuzzFeed Quizzes",
+      link: "https://buzzfeed.com/quizzes",
+      image: "/images/icons/apps/buzzfeed.png",
+      categories: ["all", "media"],
+      error: false
+    },
+    {
+      name: "freemovieswatch.tv",
+      link: "https://freemovieswatch.tv",
+      image: "/images/icons/freemovieswatch.png",
+      categories: ["all", "media", "stream"],
+      error: false
+    },
+    {
+      name: "Scratch",
+      link: "https://scratch.mit.edu",
+      image: "/images/icons/scratch.jpg",
+      categories: ["all", "social", "game", "media", ""],
+      error: false
+    },
+    {
       name: "Chess.com",
       link: "https://chess.com",
       image: "/images/icons/chess.png",
@@ -26,6 +47,13 @@ document.addEventListener('DOMContentLoaded', () => {
       link: "https://discord.com",
       image: "/images/icons/apps/discord.jpg",
       categories: ["all", "social"],
+      error: false
+    },
+    {
+      name: "DuckDuckGo",
+      link: "https://start.duckduckgo.com/",
+      image: "/images/icons/apps/duckduckgo.png",
+      categories: ["all"],
       error: false
     },
     {
@@ -197,31 +225,38 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "Wattpad",
+      link: "https://wattpad.com/",
+      image: "/images/icons/apps/wattpad.webp",
+      categories: ["all", "social"],
+      error: false
+    },
+    {
       name: "ChatGPT Clone",
       link: "https://chat.shuttle.rip/",
       image: "/images/icons/chatgpt.png",
       categories: ["all", "AI"],
-      error: "false"
+      error: false
     },
     {
       name: "Discord - Login",
       link: "https://discord.com/login",
       image: "/images/icons/discord.jpg",
       categories: ["all", "social"],
-      error: "false",
-      blank: "true"
+      blank: "true",
+      error: false
     },
   ];
     
   
   appsList.sort((a, b) => a.name.localeCompare(b.name));
-
+  
   const nonPinnedApps = document.querySelector('.container-apps');
   const pinnedApps = document.querySelector('.pinned-apps');
-  var pinList = localStorage.getItem("pinnedApps");
+  var pinList = localStorage.getItem("pinnedGames");
   try{
-  pinList=pinList.split(",").map(Number)
-  } catch {}
+    pinList=pinList.split(",").map(Number)
+    } catch {}
   var appInd = 0;
   appsList.forEach(app => {
     let pinNum = appInd
@@ -243,32 +278,58 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.style.color="white";
     btn.style.top="-200px";
     btn.style.position="relative";
-    btn.classList.add("innerContent");
     btn.onclick = function () {
       setPin(pinNum);
     };
     btn.title="Pin";
-    
+
     const link = document.createElement('a');
 
-    if (app.blank) {
-      link.setAttribute('onclick', `blank('${app.link}')`);
+    if (app.local) {
+      link.onclick = function() {
+        if (typeof app.say !== 'undefined') {
+          alert(app.say);
+        }
+        window.location.href = app.link;
+        return false;
+      };
+    } else if (app.blank) {
+      link.onclick = function() {
+        if (typeof app.say !== 'undefined') {
+          alert(app.say);
+        }
+        blank(app.link);
+        return false;
+      };
     } else {
-      link.setAttribute('onclick', `go('${app.link}')`);
+      link.onclick = function() {
+        if (typeof app.say !== 'undefined') {
+          alert(app.say);
+        }
+        go(app.link);
+        return false;
+      };
     }
 
     const image = document.createElement('img');
     image.width = 145;
     image.height = 145;
     image.src = app.image;
+
     const paragraph = document.createElement('p');
     paragraph.textContent = app.name;
+    if (app.error) {
+      paragraph.style.color = 'red';
+    }
+
     link.appendChild(image);
     link.appendChild(paragraph);
     columnDiv.appendChild(link);
-    columnDiv.appendChild(btn);
+    if(appInd != 0) {
+      columnDiv.appendChild(btn);
+    }
 
-    if(pinList!=null) {
+    if(pinList!=null && appInd != 0) {
       if(pinContains(appInd,pinList)) {
         pinnedApps.appendChild(columnDiv);
       }
@@ -281,9 +342,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     appInd++;
   });
+  appsContainer.appendChild(pinnedApps);
+  appsContainer.appendChild(nonPinnedApps);
 });
 function setPin(index) {
-  pins = localStorage.getItem("pinnedApps");
+  pins = localStorage.getItem("pinnedGames");
   if(pins == null) {
     pins = [];
   }
@@ -300,14 +363,14 @@ function setPin(index) {
 
   }
   else {
-    pins.push(index+1);
+    pins.push(index);
   }
-  localStorage.setItem("pinnedApps", pins);
+  localStorage.setItem("pinnedGames", pins);
   location.reload();
 }
 function pinContains(i,p) {
   if(p=="") {return false;}
-  for(var x = 0; x < p.length; x++) {if(p[x]-1===i) {
+  for(var x = 0; x < p.length; x++) {if(p[x]===i) {
     return true;
   }}
   return false;
@@ -345,4 +408,3 @@ function search_game() {
     }
   }
 }
-

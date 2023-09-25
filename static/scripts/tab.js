@@ -50,6 +50,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 }
             }
         });
+
         
     
         newTab.appendChild(tabTitle);
@@ -68,11 +69,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
         newIframe.classList.add('active');
         iframeContainer.appendChild(newIframe);
       
-        // svery epic
-        newIframe.addEventListener('load', () => {
-          const title = newIframe.contentDocument.title;
-          tabTitle.textContent = title;
-        });
+        // updates the iframe to the title of the page, but dynamic doesn't have a title specific to the page so it's commented out
+        // newIframe.addEventListener('load', () => {
+        //   const title = newIframe.contentDocument.title;
+        //   tabTitle.textContent = title;
+        // });
       
         tabCounter++;
       });
@@ -195,4 +196,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
     });
     
     });
+function reload() {
+    const iframeContainer = document.getElementById('iframe-container');
+    const iframes = Array.from(iframeContainer.querySelectorAll('iframe'));
+    const activeIframe = iframes.find(iframe => iframe.classList.contains('active'));
+    activeIframe.src=activeIframe.src;
+}
+function expand() {
+    const iframeContainer = document.getElementById('iframe-container');
+    const iframes = Array.from(iframeContainer.querySelectorAll('iframe'));
+    const activeIframe = iframes.find(iframe => iframe.classList.contains('active'));
+    activeIframe.requestFullscreen();
+}
+
     

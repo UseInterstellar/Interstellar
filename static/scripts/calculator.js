@@ -8,6 +8,293 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "Dynast.io",
+      link: "https://dynast.io",
+      image: "/images/icons/dynast-io.png",
+      categories: ['all', '2P'],
+      error: false
+    },
+    {
+      name: "Territorial.io",
+      link: "https://territorial.io",
+      image: "/images/icons/territorialio.ico",
+      categories: ['all', '2P'],
+      error: false
+    },
+    {
+      name: "Stickman Hook",
+      link: "https://interstellarnetwork.github.io/Interstellar-Assets/stickman-hook/index.html",
+      image: "/images/icons/stickmanhook.jpg",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Tunnel Rush",
+      link: "https://5dd2e8e4-015f-11ea-ad56-9cb6d0d995f7.poki-gdn.com/5627efae-e960-407d-82a5-3da708eb4e68/index.html",
+      image: "/images/icons/tunnelrush.png",
+      categories: ['all', '2P'],
+      error: false
+    },
+    {
+      name: "Tunnel Rush 2",
+      link: "https://a7e6d137-c3c1-46e6-a3db-04c2d33c98a8.poki-gdn.com/71e6bddd-9b0e-4621-a11a-9503086f69d5/index.html",
+      image: "/images/icons/tunnelrush2.png",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Rainbow Obby",
+      link: "https://785a4295-96c4-43e5-b237-fb07fc3ef44d.poki-gdn.com/f1d39f75-7a25-41de-86cf-ba00804737b5/index.html",
+      image: "/images/icons/rainbowobby.webp",
+      categories: ['all', '2P'],
+      error: false
+    },
+    {
+      name: "Candy Jump",
+      link: "https://candyjump.games235.com/",
+      image: "/images/icons/candyjump.jpg",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Google Feud",
+      link: "https://googlefeud.com/",
+      image: "/images/icons/googlefeud.png",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Minecraft Classic",
+      link: "https://classic.minecraft.net",
+      image: "/images/icons/mc.webp",
+      categories: ['all', '2P'],
+      error: false
+    },
+    {
+      name: "Learn to Fly 3",
+      link: "https://www.silvergames.com/en/learn-to-fly-3/iframe",
+      image: "/images/icons/learntofly3.png",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Neal.Fun",
+      link: "https://neal.fun",
+      image: "/images/icons/nealfun.png",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "YoHoHo.io",
+      link: "https://yohoho.io/",
+      image: "/images/icons/yohoho.webp",
+      categories: ['all', '2P'],
+      error: false
+    },
+    {
+      name: "Tetr.io",
+      link: "https://tetr.io/",
+      image: "/images/icons/tetrio.ico",
+      categories: ['all', '2P'],
+      error: false
+    },
+    {
+      name: "Time Shooter 2",
+      link: "https://html5.gamedistribution.com/62a72f2da7cb4b609579a47653546e6a/",
+      image: "/images/icons/timeshooter2.jpeg",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Merge Fruit",
+      link: "https://html5.gamedistribution.com/2dee9d404697435aa76111eb4015e1d5/",
+      image: "/images/icons/mergefruit.jpeg",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "There Is No Game",
+      link: "https://5dd2d607-015f-11ea-ad56-9cb6d0d995f7.poki-gdn.com/38959ae1-110b-49ab-86ae-df425fd7862a/index.html",
+      image: "/images/icons/thereisnogame.jpg",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Jetpack Joyride (3kh0)",
+      link: "https://interstellarnetwork.github.io/Interstellar-Assets/jetpack-joyride/index.html",
+      image: "/images/icons/jetpackjoyride.png",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "FeedVid",
+      link: "https://v6p9d9t4.ssl.hwcdn.net/html/4941980-683813/index.html",
+      image: "/images/icons/feedvid.png",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "florr.io",
+      link: "https://florr.io",
+      image: "/images/icons/florr.jpg",
+      categories: ['all', '2P'],
+      error: false
+    },
+    {
+      name: "Rocket Bot Royale",
+      link: "https://rocketbotroyale2.winterpixel.io/",
+      image: "/images/icons/rocketbotroyale.jpg",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Happy Wheels",
+      link: "https://files.crazygames.com/ruffle/happywheels.html",
+      image: "/images/icons/happywheels.jpg",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Papa's Burgeria",
+      link: "https://www.coolmathgames.com/0-papas-burgeria/play",
+      image: "/images/icons/papasburgeria.jpg",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Papa's Cheeseria",
+      link: "https://www.coolmathgames.com/0-papas-cheeseria/play",
+      image: "/images/icons/papascheeseria.webp",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Papa's Pancakeria",
+      link: "https://www.coolmathgames.com/0-papas-pancakeria/play",
+      image: "/images/icons/papaspancakeria.jpg",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Papa's Wingeria",
+      link: "https://www.coolmathgames.com/0-papas-wingeria/play",
+      image: "/images/icons/papaswingeria.png",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Riddle School 1",
+      link: "https://uploads.ungrounded.net/ruffle_wrapper/ruffleembed.html?v=1.0.67&browsermode=default&props=%7B%22ruffle%22%3A%22%2Fruffle_wrapper%2Flib%2Fruffle.js%3F1695474658%22%2C%22public_path%22%3A%22%2Fruffle_wrapper%2Flib%2F%22%2C%22swf%22%3A%22https%3A%2F%2Fuploads.ungrounded.net%2F314000%2F314680_Riddle_School.swf%3F1148577264%22%2C%22vars%22%3A%7B%22NewgroundsAPI_PublisherID%22%3A1%2C%22NewgroundsAPI_SandboxID%22%3A%2265103f0745c96%22%2C%22NewgroundsAPI_SessionID%22%3A%22%22%2C%22NewgroundsAPI_UserName%22%3A%22%26lt%3Bdeleted%26gt%3B%22%2C%22NewgroundsAPI_UserID%22%3A0%2C%22ng_username%22%3A%22%26lt%3Bdeleted%26gt%3B%22%7D%2C%22width%22%3A550%2C%22height%22%3A400%2C%22icon%22%3A%22https%3A%2F%2Fpicon.ngfiles.com%2F314000%2Fflash_314680_card.png%3Ff1607914286%22%2C%22warnOnUnsupportedContent%22%3Afalse%7D",
+      image: "/images/icons/riddleschool1.png",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Powerline.IO",
+      link: "https://powerline.io",
+      image: "/images/icons/powerline.jpg",
+      categories: ['all', '2P'],
+      error: false
+    },
+    {
+      name: "Eaglercraft 1.5.2",
+      link: "https://webclient.asspixel.net/versions/Eagler152/",
+      image: "/images/icons/mc.webp",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Burrito Bison",
+      link: "https://f.silvergames.com/awayfl/index.html?swf=burrito-bison.swf",
+      image: "/images/icons/burritobison.webp",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Gunspin",
+      link: "https://html5.gamedistribution.com/rvvASMiM/917cce8c44c44638a8cdc2a1794b65c8/index.html",
+      image: "/images/icons/gunspin.jpg",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Thelast Royale",
+      link: "https://thelast.io",
+      image: "/images/icons/thelast-io.png",
+      categories: ['all', '2P'],
+      error: false
+    },
+    {
+      name: "mope.io",
+      link: "https://thelast.io",
+      image: "/images/icons/mope-io.jpg",
+      categories: ['all', '2P'],
+      error: false
+    },
+    {
+      name: "Tiny Fishing",
+      link: "https://www.dob5.com/d/file/games/tiny-fishing/",
+      image: "/images/icons/tinyfishing.jpg",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Johnny Upgrade",
+      link: "https://lagged.com/api/play2/johnny-upgrade3/",
+      image: "/images/icons/johnnyupgrade.png",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "bloxd.io",
+      link: "https://bloxd.io",
+      image: "/images/icons/bloxd-io.jpg",
+      categories: ['all', '2P'],
+      error: false
+    },
+    {
+      name: "Duck Life 1",
+      link: "https://www.hoodamath.com/mobile/games/duck-life/game.html",
+      image: "/images/icons/ducklife.webp",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Duck Life 2",
+      link: "https://www.hoodamath.com/mobile/games/duck-life-2-world-champion/game.html",
+      image: "/images/icons/ducklife.webp",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Duck Life 3",
+      link: "https://www.hoodamath.com/mobile/games/duck-life-3-evolution/game.html",
+      image: "/images/icons/ducklife.webp",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Duck Life 4",
+      link: "https://www.hoodamath.com/mobile/games/duck-life-4/game.html",
+      image: "/images/icons/ducklife.webp",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Papa's Freezeria",
+      link: "https://www.coolmathgames.com/0-papas-freezeria/play",
+      image: "/images/icons/papasfreezeria.png",
+      categories: ['all', '2P'],
+      error: false
+    },
+    {
+      name: "Evades",
+      link: "https://evades.io",
+      image: "/images/icons/evadesio.webp",
+      categories: ['all,', '2P'],
+      error: false
+    },
+    {
       name: "Bullet Force Multiplayer",
       link: "https://www.crazygames.com/game/bullet-force-multiplayer",
       image: "/images/icons/BFM.png",
@@ -93,7 +380,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
         {
       name: "Playstation 2 Emulator",
-      link: "https://ds.44670.org/",
+      link: "https://playjs.purei.org/",
       image: "/images/icons/PS2.webp",
       categories: ['all,', 'emu'],
       error: false
@@ -411,7 +698,7 @@ document.addEventListener('DOMContentLoaded', () => {
       link: "https://webglmath.github.io/drift-hunters/",
       image: "/images/icons/drift-hunters.webp",
       categories: ["all"],
-      error: false
+      say: "This game may take a while to load, but it is working."
     },
     {
       name: "Drive Mad",
@@ -610,8 +897,8 @@ document.addEventListener('DOMContentLoaded', () => {
         error: false
       },  
       {
-        name: "Monkey Mart",
-        link: "https://html5.gamemonetize.co/ugi7ftbv2kgodcq7vful9u9v34wein5z/",
+        name: "Monkey Mart [Fixed]",
+        link: "https://interstellarnetwork.github.io/Interstellar-Assets/monkey-mart/",
         image: "/images/icons/mm.webp",
         categories: ['all'],
         error: false
@@ -1070,6 +1357,13 @@ document.addEventListener('DOMContentLoaded', () => {
     image: "/images/icons/gba.webp",
     categories: ["all"],
     error: false
+    },
+    {
+      name: "Retro Bowl",
+      link: "/calendar/retro-bowl/index.html",
+      image: "/images/icons/retro.webp",
+      categories: ["all,", 'sports'],
+      local: "true",
       },
   ];
   
@@ -1109,10 +1403,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const link = document.createElement('a');
 
-    if (app.blank) {
-      link.setAttribute('onclick', `blank('${app.link}')`);
+    if (app.local) {
+      link.onclick = function() {
+        if (typeof app.say !== 'undefined') {
+          alert(app.say);
+        }
+        window.location.href = app.link;
+        return false;
+      };
+    } else if (app.blank) {
+      link.onclick = function() {
+        if (typeof app.say !== 'undefined') {
+          alert(app.say);
+        }
+        blank(app.link);
+        return false;
+      };
     } else {
-      link.setAttribute('onclick', `go('${app.link}')`);
+      link.onclick = function() {
+        if (typeof app.say !== 'undefined') {
+          alert(app.say);
+        }
+        go(app.link);
+        return false;
+      };
     }
 
     const image = document.createElement('img');

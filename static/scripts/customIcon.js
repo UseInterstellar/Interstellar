@@ -80,6 +80,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
     if(themeid == "s") {
         themeEle.href = "/css/themes/sunset.css";
     }
+    if(themeid == "l4") {
+        themeEle.href = "/css/themes/legacy.css";
+    }
     document.body.appendChild(themeEle);
 });
 
