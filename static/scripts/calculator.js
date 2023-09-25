@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       name: "Jetpack Joyride (3kh0)",
-      link: "https://raw.githack.com/3kh0/3kh0-assets/main/jetpack-joyride/index.html",
+      link: "https://interstellarnetwork.github.io/Interstellar-Assets/jetpack-joyride/index.html",
       image: "/images/icons/jetpackjoyride.png",
       categories: ['all'],
       error: false
