@@ -2,8 +2,10 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <link rel="shortcut icon" id="dynamic-favicon" href="favicon.png">
-    <title id="dynamic-title">Classes</title>
+    <title>
+      Earth's Moon: Formation, Composition, Orbit & Exploration | Solar Eclipse,
+      Solar System & Astronomy
+    </title>
     <link rel="stylesheet" type="text/css" href="/css/tab.css" />
     <link rel="stylesheet" href="/css/tabinner.css" />
     <script src="/scripts/tab.js"></script>
@@ -13,10 +15,20 @@
     ></script>
   </head>
   <body>
+    <input
+      type="checkbox"
+      id="toggle-nav-checkbox"
+      class="toggle-nav-checkbox"
+    />
+    <label for="toggle-nav-checkbox" id="toggle-nav" class="toggle-nav">
+      <span class="hamburger"></span>
+    </label>
     <div class="container">
       <nav class="nav" id="right-side-nav">
         <ul id="tab-list"></ul>
         <button id="add-tab"><i class="fa-solid fa-plus"></i></button>
+        <button id="expand" onclick="expand()"><i class="fa-solid fa-expand"></i></button>
+        <button id="reload" onclick="reload()"><i class="fa-solid fa-rotate-right"></i></button>
         <div class="adress-bar-container">
           <form method="POST" class="adress-bar-search-form" id="inpbox">
             <input
