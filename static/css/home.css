@@ -26,7 +26,6 @@ body {
 		border-radius: 0px 0px 5px 5px;
 	}
   }
-
 .description {
 	position: absolute;
   top: 240px;
@@ -39,7 +38,6 @@ body {
   transition: transform 0.2s; 
   cursor: default;
 }
-
 .main {
 	letter-spacing: 2px;
 	font-family: "Inter", sans-serif;
@@ -49,8 +47,6 @@ body {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	top: 100px;
-    position: relative;
 }
 .searchbar {
     top:-15vh;
