@@ -315,6 +315,8 @@ document.addEventListener('DOMContentLoaded', () => {
     image.width = 145;
     image.height = 145;
     image.src = app.image;
+    image.loading = "lazy";
+
 
     const paragraph = document.createElement('p');
     paragraph.textContent = app.name;
