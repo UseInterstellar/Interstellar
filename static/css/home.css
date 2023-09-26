@@ -49,6 +49,8 @@ body {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	top: 100px;
+    position: relative;
 }
 .searchbar {
     top:-15vh;
