@@ -159,7 +159,8 @@ document.addEventListener('DOMContentLoaded', () => {
       link: "https://open.spotify.com",
       image: "/images/icons/apps/spotify.png",
       categories: ["all", "media"],
-      error: false
+      say: "Spotify is currently not working on the proxy.",
+      error: true
     },
     {
       name: "Telegram",
