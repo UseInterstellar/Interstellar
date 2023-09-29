@@ -37,6 +37,13 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "Donitz - itch.io",
+      link: "https://donitz.itch.io/",
+      image: "/images/icon/itchio.png",
+      categories: ['all'],
+      error: false
+    },
+    {
       name: "Territorial.io",
       link: "https://territorial.io",
       image: "/images/icons/territorialio.ico",
