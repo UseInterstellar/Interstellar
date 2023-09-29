@@ -17,15 +17,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // idk why brain test on poki doesnt work when i take out everything after "index.html?" so i left it there, usually it works without it tho
     {
       name: "Brain Test",
-      link: "https://0322484b-7a58-4454-9667-f805afffded5.poki-gdn.com/2e6b68d3-0f43-4b84-9c14-ab59f94e566c/index.html?country=US&ccpaApplies=0&url_referrer=https%3A%2F%2Fpoki.com%2F&tag=pg-v3.132.1&site_id=3&iso_lang=en&poki_url=https%3A%2F%2Fpoki.com%2Fen%2Fg%2Fbrain-test-tricky-puzzles&gdhoist=yes&nonPersonalized=n&familyFriendly=n&categories=7%2C16%2C37%2C72%2C96%2C400%2C832%2C843%2C1140%2C1150%2C1159&special_condition=landing&game_id=0322484b-7a58-4454-9667-f805afffded5&game_version_id=2e6b68d3-0f43-4b84-9c14-ab59f94e566c,
+      link: "https://0322484b-7a58-4454-9667-f805afffded5.poki-gdn.com/2e6b68d3-0f43-4b84-9c14-ab59f94e566c/index.html?country=US&ccpaApplies=0&url_referrer=https%3A%2F%2Fpoki.com%2F&tag=pg-v3.132.1&site_id=3&iso_lang=en&poki_url=https%3A%2F%2Fpoki.com%2Fen%2Fg%2Fbrain-test-tricky-puzzles&gdhoist=yes&nonPersonalized=n&familyFriendly=n&categories=7%2C16%2C37%2C72%2C96%2C400%2C832%2C843%2C1140%2C1150%2C1159&special_condition=landing&game_id=0322484b-7a58-4454-9667-f805afffded5&game_version_id=2e6b68d3-0f43-4b84-9c14-ab59f94e566c",
       image: "/images/icons/braintest.png",
       categories: ['all'],
       error: false
     },
     {
       name: "Brain Test 2",
-      link: "https://games.poki.com/458768/df221093-aae9-4c0d-b458-efb16ae8e3ab"
-      image: "/images/icons/braintest2.png",
+      link: "https://games.poki.com/458768/df221093-aae9-4c0d-b458-efb16ae8e3ab",
+      image: "/images/icons/braintest.png",
       categories: ['all'],
       error: false
     },
