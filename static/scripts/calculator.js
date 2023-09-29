@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     {
       name: "Donitz - itch.io",
       link: "https://donitz.itch.io/",
-      image: "/images/icon/itchio.png",
+      image: "/images/icon/itch.png",
       categories: ['all'],
       error: false
     },
