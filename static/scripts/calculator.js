@@ -23,6 +23,13 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "Brain Test 2",
+      link: "https://games.poki.com/458768/df221093-aae9-4c0d-b458-efb16ae8e3ab"
+      image: "/images/icons/braintest2.png",
+      categories: ['all'],
+      error: false
+    },
+    {
       name: "Territorial.io",
       link: "https://territorial.io",
       image: "/images/icons/territorialio.ico",
