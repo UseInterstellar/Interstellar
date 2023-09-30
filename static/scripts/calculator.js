@@ -891,6 +891,13 @@ document.addEventListener('DOMContentLoaded', () => {
         error: false
       },
       {
+        name: "Sandtrix",
+        link: "https://files.crazygames.com/sandtrix/16/index.html",
+        image: "/images/icons/sandtrix.jpg",
+        categories: ["all"],
+        error: false
+      },
+      {
         name: "Learn To Fly Idle",
         link: "https://www.gameslol.net/data/waflash/index.php?g=635",
         image: "/images/icons/ltf_idle.webp",
