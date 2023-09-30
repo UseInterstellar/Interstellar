@@ -9,12 +9,12 @@ Interstellar is one of the most modern and popular unblocking sites.
 
 > **If you do fork this repo, please give the original repo a star! It helps out alot and only 30% of people who fork give us a star... besides, you know you want to...**
 
-- About:Blank Cloaking
-- Fast Speeds 
-- Wide collection of Games.
-- Tab Cloaking
-- Wide collection of Apps
-- Clean UI
+- about:blank cloaking
+- Fast speeds 
+- Wide collection of games.
+- Tab cloaking
+- Wide collection of apps
+- Clean User Interface (UI)
 
 ## Deploying
 
