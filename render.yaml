@@ -1,5 +1,5 @@
 services:
   - type: web
-    name: interstellar
+    name: thekidjaraddd
     env: docker
     plan: free
