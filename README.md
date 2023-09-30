@@ -30,7 +30,7 @@ You can **NOT** deploy to Vercel, Netlify, Cloudflare Pages or any other **Stati
 <a target="_blank" href="https://cloud.oracle.com/resourcemanager/stacks/create?zipUrl=https://github.com/interstellarnetwork/interstellar/archive/refs/heads/main.zip"><img alt="Deploy to Oracle Cloud" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/oraclecloud.svg"></a>
 <a target="_blank" href="https://railway.app/new/template?template=https://github.com/interstellarnetwork/interstellar"><img alt="Deploy on Railway" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/railway.svg"></a>
 <a target="_blank" href="https://app.koyeb.com/deploy?type=git&repository=github.com/interstellarnetwork/interstellar"><img alt="Deploy to Koyeb" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/koyeb.svg"></a>
-<a target="_blank" href="https://render.com/deploy?repo=https://github.com/interstellarnetwork/interstellar"><img alt="Deploy to Render" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/render.svg"></a>
+<a target="_blank" href="https://render.com/deploy?repo=https://github.com/thekidjaradd/interstellar"><img alt="Deploy to Render" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/render.svg"></a>
 
 ## Deploy to Replit
 
