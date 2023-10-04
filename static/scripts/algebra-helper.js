@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       name: "Discord",
-      link: "https://discord.com",
+      link: "https://canary.discord.com",
       image: "/images/icons/apps/discord.jpg",
       categories: ["all", "social"],
       error: false
@@ -241,7 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       name: "Discord - Login",
-      link: "https://discord.com/login",
+      link: "https://canary.discord.com/login",
       image: "/images/icons/discord.jpg",
       categories: ["all", "social"],
       blank: "true",
