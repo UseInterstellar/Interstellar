@@ -250,7 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
     {
       name: "HD Today",
       link: "https://hdtoday.tv",
-      image: "/images/icons/apps/hd.png",
+      image: "/images/icons/hd.png",
       categories: ["all", "media", "stream"],
       error: false
     },
