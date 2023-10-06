@@ -64,11 +64,6 @@ function updateHeadSection(selectedValue) {
     }
 }
 
-// Retrieve selected option from localStorage and update the head section
-const selectedOption = localStorage.getItem('selectedOption');
-if (selectedOption) {
-    updateHeadSection(selectedOption);
-}
 // Redirect
 function handleDropdownChange(selectElement) {
     var selectedValue = selectElement.value;
