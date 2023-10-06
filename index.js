@@ -9,6 +9,7 @@ const __dirname = process.cwd();
 const server = http.createServer();
 const app = express(server);
 const bareServer = createBareServer("/outerspace/");
+const PORT = process.env.PORT
 
 app.use(express.json());
 app.use(
@@ -63,6 +64,6 @@ server.on("listening", () => {
 });
 
 server.listen({
-  port: 8080,
+  port: PORT,
 });
 
