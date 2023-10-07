@@ -1,15 +1,19 @@
 .title {
-    color:black;
+	color: black;
 }
+
 body {
-    background-color: white;
+	background-color: white;
 }
+
 h2 {
-    color:black;
+color: black;
 }
+
 .fixed-nav-bar-right .navbar-link {
-    color:black
+	color: black;
 }
+
 #INImg {
-    content: url("/main_inverted.png");
+	content: url("/main_inverted.png");
 }
