@@ -1,3 +1,4 @@
+// touch this and i find where you live
 window.addEventListener('load', () => {
   navigator.serviceWorker.register('../sw.js', {
     scope: '/astronomy/',
@@ -28,7 +29,7 @@ form.addEventListener('submit', async (event) => {
     document.getElementById('iframe-container').querySelectorAll('iframe')
   ).find((iframe) => iframe.classList.contains('active'));
 
-  activeIframe.src = "/astronomy/" + ("encodedUrl", __uv$config.encodeUrl(url));
+  activeIframe.src = form.action + '?url=' + encodeURIComponent(url);
   activeIframe.dataset.tabUrl = url;
   document.querySelector('form input').value = url;
   console.log(activeIframe.dataset.tabUrl);
