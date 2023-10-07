@@ -1,6 +1,6 @@
 window.addEventListener('load', () => {
   navigator.serviceWorker.register('../sw.js', {
-    scope: '/astronomy/',
+    scope: '/~/dynamic/',
   });
 });
 function isUrl(val = '') {
@@ -32,13 +32,13 @@ form.addEventListener('submit', async (event) => {
     window.localStorage.getItem('uvOff') == 'false'
   ) {
     activeIframe.src =
-      '/astronomy/uv/' + ('encodedUrl', __uv$config.encodeUrl(url));
+      '/~/uv/' + ('encodedUrl', __uv$config.encodeUrl(url));
     activeIframe.dataset.tabUrl = url;
     document.querySelector('form input').value = url;
     console.log(activeIframe.dataset.tabUrl);
   } else {
     activeIframe.src =
-      '/astronomy/' + ('encodedUrl', __uv$config.encodeUrl(url));
+      '/~/dynamic/' + ('encodedUrl', __uv$config.encodeUrl(url));
     activeIframe.dataset.tabUrl = url;
     document.querySelector('form input').value = url;
     console.log(activeIframe.dataset.tabUrl);

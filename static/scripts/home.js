@@ -1,4 +1,4 @@
-let inFrame
+/* let inFrame
 
 try {
     inFrame = window !== top
@@ -43,3 +43,4 @@ document.addEventListener("DOMContentLoaded", function(event) {
       document.body.appendChild(scr);
     }
   });
+  */
