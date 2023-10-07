@@ -22,8 +22,24 @@ form.addEventListener('submit', async (event) => {
   const formValue = document.querySelector('form input').value;
   const url = isUrl(formValue)
     ? prependHttps(formValue)
-    : 'https://www.google.com/search?q=' + encodeURIComponent(formValue);
+    : 'https://www.google.com/search?q=' + __uv$config.encodeUrl(formValue);
 
-  sessionStorage.setItem('encodedUrl', encodeURIComponent(url));
+  sessionStorage.setItem('encodedUrl', __uv$config.encodeUrl(url));
   location.href = '/./go';
 });
+
+function go(value) {
+  const url = isUrl(value)
+    ? prependHttps(value)
+    : 'https://www.google.com/search?q=' + __uv$config.encodeUrl(value);
+  //pass the encoded url to the second page
+  sessionStorage.setItem('encodedUrl', __uv$config.encodeUrl(url));
+  location.href = 'go';
+}
+
+function blank(value) {
+  const url = isUrl(value)
+    ? prependHttps(value)
+    : 'https://www.google.com/search?q=' + __uv$config.encodeUrl(value);
+  window.location.href = __uv$config.prefix + __uv$config.encodeUrl(url);
+}

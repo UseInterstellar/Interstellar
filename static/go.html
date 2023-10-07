@@ -98,10 +98,20 @@
         window.location.href = './';
       });
       window.onload = function () {
-        let encodedUrl = sessionStorage.getItem('encodedUrl');
-        encodedUrl = '/astronomy/route?url=' + encodedUrl;
-        console.log(encodedUrl);
-        document.querySelector('#iframeid').src = encodedUrl;
+        if (
+          window.localStorage.getItem('uvOff') == null ||
+          window.localStorage.getItem('uvOff') == 'false'
+        ) {
+          let encodedUrl = sessionStorage.getItem('encodedUrl');
+          encodedUrl = '/astronomy/uv/' + encodedUrl;
+          console.log(encodedUrl);
+          document.querySelector('#iframeid').src = encodedUrl;
+        } else {
+          let encodedUrl = sessionStorage.getItem('encodedUrl');
+          encodedUrl = '/astronomy/' + encodedUrl;
+          console.log(encodedUrl);
+          document.querySelector('#iframeid').src = encodedUrl;
+        }
       };
     </script>
     <script src="/scripts/main.js"></script>
