@@ -891,13 +891,6 @@ document.addEventListener('DOMContentLoaded', () => {
         error: false
       },
       {
-        name: "Gladihoppers",
-        link: "https://bonbang.github.io/store99/gladihoppers/index.html",
-        image: "/images/icons/gladihoppers.jpg",
-        categories: ["all"],
-        error: false
-      },
-      {
         name: "Sandtrix",
         link: "https://files.crazygames.com/sandtrix/16/index.html",
         image: "/images/icons/sandtrix.jpg",
