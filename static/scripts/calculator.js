@@ -30,6 +30,13 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "ev.io",
+      link: "https://ev.io",
+      image: "/images/icons/evio.jpg",
+      categories: ["all", "2P"],
+      error: false
+    },
+    {
       name: "Brain Test 2",
       link: "https://games.poki.com/458768/df221093-aae9-4c0d-b458-efb16ae8e3ab",
       image: "/images/icons/braintest.png",
