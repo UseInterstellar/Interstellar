@@ -106,12 +106,12 @@
           window.localStorage.getItem('uvOff') == 'false'
         ) {
           let encodedUrl = sessionStorage.getItem('encodedUrl');
-          encodedUrl = '/astronomy/uv/' + encodedUrl;
+          encodedUrl = '/~/uv/' + encodedUrl;
           console.log(encodedUrl);
           document.querySelector('#iframeid').src = encodedUrl;
         } else {
           let encodedUrl = sessionStorage.getItem('encodedUrl');
-          encodedUrl = '/astronomy/' + encodedUrl;
+          encodedUrl = '/~/dynamic/' + encodedUrl;
           console.log(encodedUrl);
           document.querySelector('#iframeid').src = encodedUrl;
         }
