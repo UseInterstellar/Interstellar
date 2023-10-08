@@ -10,9 +10,7 @@
   "scripts": {
     "start": "node index.js"
   },
-  "keywords": [
-    "proxy"
-  ],
+  "keywords": [""],
   "author": "",
   "license": "GPL-3.0-or-later",
   "dependencies": {
