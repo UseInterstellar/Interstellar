@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="From studio portraits to epic alpine landscapes, browse the best photography, retouching and photojournalism today."/>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap");
+
+    body {
+      background-color: #1c1c1c;
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    a {
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.3s ease-in-out;
+    }
+
+    a:hover {
+      color: #3498db;
+    }
+
+    #loader {
+      position: relative;
+      width: 150px;
+      height: 150px;
+      border: 16px solid #f3f3f3;
+      border-top: 16px solid #3498db;
+      border-radius: 50%;
+      animation: spin 2s linear infinite;
+      margin-bottom: 35px;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .message {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .description {
+      color: #FFF;
+      font-size: 20px;
+      line-height: 1.5;
+      max-width: 600px;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .discord-link {
+      color: #3498db;
+      font-weight: bold;
+      text-decoration: underline;
+    }
+
+    .animate-bottom {
+      animation-name: animatebottom;
+      animation-duration: 1s;
+    }
+
+    @keyframes animatebottom {
+      from {
+        bottom: -100px;
+        opacity: 0
+      }
+      to {
+        bottom: 0;
+        opacity: 1
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="loader"></div>
+  <div class="message animate-bottom">
+    <p class="description">
+      Please wait a moment. Our servers may be under high load causing some slowness.<br>If you have any issues, please <a class="discord-link" href="https://discord.gg/gointerstellar" target="_blank">join our Discord server</a>.
+    </p>
+  </div>
+  <br>
+  <script src="/scripts/customIcon.js"></script>
+</body>
+
+</html>
