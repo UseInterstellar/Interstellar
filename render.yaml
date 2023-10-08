@@ -1,0 +1,5 @@
+services:
+  - type: web
+    name: interstellar
+    env: docker
+    plan: free
