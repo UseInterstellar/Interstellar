@@ -1,0 +1,86 @@
+<html lang="en">
+  <head>
+     <link rel="shortcut icon" id="dynamic-favicon" href="favicon.png">
+    <title id="dynamic-title">Classes</title>
+    <script src="https://kit.fontawesome.com/1237c86ba0.js" crossorigin="anonymous"></script>
+    <!--- Style --->
+    <style>
+      body {
+        margin: 0;
+      }
+
+      iframe {
+        display: block;
+        background: #000;
+        border: none;
+        height: 100vh;
+        width: 100vw;
+      }
+      .navbtn {
+        float:right;
+        border-radius: 100%;
+        width:50px;
+        height:50px;
+        background-color: rgba(255,255,255, 0.2);
+        border:none;
+        position: fixed;
+        top:10px;
+        right: 10px;
+      }
+      .navbtn1 {
+        float:right;
+        border-radius: 100%;
+        width:50px;
+        height:50px;
+        background-color: rgba(255,255,255, 0.2);
+        border:none;
+        position: fixed;
+        top:70px;
+        right: 10px;
+      }
+      .navbtn2 {
+        float:right;
+        border-radius: 100%;
+        width:50px;
+        height:50px;
+        background-color: rgba(255,255,255, 0.2);
+        border:none;
+        position: fixed;
+        top:130px;
+        right: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <iframe src="" id="iframeId" style="bottom: 0" style="border: 0px #ffffff none" name="Iframe" scrolling="yes" frameborder="0" marginheight="0px" marginwidth="0px" height="100%" width="100%" allowfullscreen></iframe>
+
+    <button onclick="reload()" class="navbtn"> <i class="fa-solid fa-rotate-right"></i> </button>
+    <button id="home-page" class="navbtn1" onclick="reload()"> <i class="fa-solid fa-house"></i> </button>
+    <button id="fullscreen-button" class="navbtn2"><i class="fa-solid fa-expand"></i></button>
+
+    <script>
+      function reload() {
+        document.getElementById("iframeId").src=document.getElementById("iframeId").src;
+      }
+      const fullscreenButton = document.getElementById("fullscreen-button");
+      fullscreenButton.addEventListener("click", function () {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen();
+        } else {
+          document.exitFullscreen();
+        }
+      });
+      const homeButton = document.getElementById("home-page");
+        homeButton.addEventListener("click", function () {
+        window.location.href = "./";
+      });
+      window.onload = function() {
+        let encodedUrl = sessionStorage.getItem("encodedUrl");
+        encodedUrl = "/astronomy/" + encodedUrl;
+        console.log(encodedUrl);
+        document.querySelector("#iframeid").src = encodedUrl;
+      };
+    </script>
+    <script src="/scripts/main.js"></script>
+    <script src="/scripts/customIcon.js"></script>
+  </body>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<head>
+    <link rel="shortcut icon" id="dynamic-favicon" href="favicon.png">
+    <title id="dynamic-title">Classes</title>
+    <script src="/scripts/main.js"></script>
+   <!-- Meta Data-->
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="keywords" content="Computer Science, Technology, Photography, Nature, Tech Support, Tech Help, Local Tech Support">
+   <!-- Site Stylesheets-->
+   <link rel="stylesheet" href="/css/main.css">
+   <link rel="stylesheet" href="/css/nav.css">
+   <link rel="stylesheet" href="/css/settings.css">
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+   <!-- Main Site Scripts-->
+   <script src="https://kit.fontawesome.com/1237c86ba0.js" crossorigin="anonymous"></script>
+</head>
+<!-- Nav Bar Start-->
+<div class="fixed-nav-bar">
+<a class="logo" href="/./"><img id="INImg" src="main.png"></a>
+  <div class="fixed-nav-bar-right">
+      <a class="navbar-link" href="/./algebra"><i class="fa-solid fa-gamepad navbar-icon"></i>Games</a>      
+      <a class="navbar-link" href="/./news"><span class="material-symbols-outlined weird-icon">apps</span>Apps</a>
+      <a class="navbar-link" href="/./tabs"><i class="fa-solid fa-table navbar-icon"></i>Tabs</a>
+      <a class="navbar-link" href="/./settings"><i class="fa-solid fa-gear navbar-icon settings-icon"></i>Settings</a>
+   </div></div></div></div>
+<!-- Nav Bar End-->
+<div class="main">
+   <div class="settings-container">
+      <div class="settings-card">
+         <h3>About:Blank</h3>
+         <p>Cloak the site in an about:blank page.</p>
+         <button onclick="AB()">Open Popup</button>
+      </div>
+          <div class="settings-card">
+        <h3>Set Panic Key</h3>
+        <p>Quickly open a educational site, when the teacher comes.</p>
+        <input type="text" id="eventKeyInput" placeholder="Panic Key" class="key-form">
+        <input class="key-form" placeholder="Panic Link" type="text" id="linkInput" value>
+  <button class="key-button" value="Save" onclick="saveEventKey()">Save</button>
+          </input>
+      </div>
+       <div class="settings-card">
+        <h3>Set Background Image</h3>
+        <p>Change the site's background image.</p>
+         <input type="text" id="background-input" placeholder="Enter image URL">
+         <button class="key-button" id="save-button">Save</button>
+         <button class="key-button" id="reset-button">Reset</button>
+      </div>
+            <div class="settings-card">
+        <h3>Tab Cloaker</h3>
+        <p>Makes the site look educational.</p>
+    <select id="dropdown" onchange="handleDropdownChange(this)">
+    <option value="Classroom">Default</option>
+    <option value="Classroom">Google Classroom</option>
+    <option value="Google">Google</option>
+    <option value="Drive">Google Drive</option>
+    <option value="Clever">Clever</option>
+    <option value="Schoology">Schoology</option>
+    <option value="Gmail">Gmail</option>
+    <option value="Khan">Khan Academy</option>
+</select>
+    <input class="key-form" type="text" id="icon" placeholder="Change Tab Icon" name="icon">
+    <input class="key-form" type="text" id="name" name="name" placeholder="Change Tab Name">
+    <button class="key-button" value="Save" onclick="saveIcon(); saveName(); redirectToMainDomain()">Save</button>
+      </div>
+        <div class="settings-card">
+         <h3>Particles</h3>
+         <p>Add the particles from the previous version to the new site.</p>
+         <label class="switch">
+         <input type="checkbox" class="slider-checkbox" id="2">
+         <span class="slider-round"></span>
+         </label>
+      </div>
+      <div class="settings-card">
+         <h3>Themes!</h3>
+         <p>Choose through a selection of themes!</p>
+         <select id="dropdown" class="td" onchange="themeChange(this)">
+            <option value="d">Default</option>
+            <option value="b">Yellow & Green</option>
+            <option value="bg">Blue & Green</option>
+            <option value="cr">Dark Red</option>
+            <option value="fg">Dark Green</option>
+            <option value="l">Light Mode</option>
+            <option value="m">Milkshake</option>
+            <option value="nb">Dark Blue</option>
+            <option value="rb">Red & Black</option>
+            <option value="s">Purple & Blue</option>
+            <option value="l4">Legacy V4</option>
+        </select>
+      </div>
+   </div>
+</div>
+<script src="/scripts/settings.js"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ"></script>
+<script>
+   window.dataLayer = window.dataLayer || [];
+   function gtag(){dataLayer.push(arguments);}
+   gtag('js', new Date());
+   
+   gtag('config', 'G-WKJQ5QHQTJ');
+</script>
+<script src="/scripts/customIcon.js"></script>
+</body>
