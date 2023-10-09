@@ -23,6 +23,20 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "Gladihoppers",
+      link: "https://bonbang.github.io/store99/gladihoppers/index.html",
+      image: "/images/icons/gladihoppers.jpg",
+      categories: ["all"],
+      error: false
+    },
+    {
+      name: "ev.io",
+      link: "https://ev.io",
+      image: "/images/icons/evio.jpg",
+      categories: ["all", "2P"],
+      error: false
+    },
+    {
       name: "Brain Test 2",
       link: "https://games.poki.com/458768/df221093-aae9-4c0d-b458-efb16ae8e3ab",
       image: "/images/icons/braintest.png",
@@ -880,6 +894,13 @@ document.addEventListener('DOMContentLoaded', () => {
         name: "Interactive Buddy",
         link: "https://f.silvergames.com/ruffle/player.php?id=204",
         image: "/images/icons/interactive-buddy.webp",
+        categories: ["all"],
+        error: false
+      },
+      {
+        name: "NGU Idle",
+        link: "https://cache.armorgames.com/files/games/ngu-idle-18444/index.html?v=1559319416",
+        image: "/images/icons/nguidle.jpg",
         categories: ["all"],
         error: false
       },
