@@ -1,5 +1,5 @@
 services:
   - type: web
-    name: interstellar
+    name: educational-template
     env: docker
     plan: free
