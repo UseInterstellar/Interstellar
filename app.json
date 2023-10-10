@@ -1,7 +1,7 @@
 {
     "name": "Astronomy",
-    "description": "Interstellar, The Best Space Website.",
+    "description": "Astronomy",
     "repository": "https://github.com/interstellarnetwork/interstellar",
-    "logo": "https://github.com/interstellarnetwork/interstellar/blob/main/static/assets/images/branding/favicon/in.png",
-    "keywords": ["school", "interstellar"]
+    "logo": "https://avatars.githubusercontent.com/u/103917385",
+    "keywords": ["school", "math"]
   }
