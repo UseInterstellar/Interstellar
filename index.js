@@ -42,7 +42,6 @@ app.get("/*", (req, res) => {
   res.redirect("/404");
 });
 
-// Bare Server 
 server.on("request", (req, res) => {
   if (bareServer.shouldRoute(req)) {
     bareServer.routeRequest(req, res);
@@ -60,7 +59,7 @@ server.on("upgrade", (req, socket, head) => {
 });
 
 server.on("listening", () => {
-  console.log(`Interstellar running at http://localhost:${process.env.PORT}`);
+  console.log(`Running at http://localhost:${process.env.PORT}`);
 });
 
 server.listen({
