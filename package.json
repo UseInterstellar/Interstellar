@@ -1,7 +1,6 @@
 {
   "name": "mathematics",
-  "version": "5.0.0",
-  "description": "https://discord.gg/interstellar",
+  "version": "5.0.1",
   "type": "module",
   "engines": {
     "npm": ">=7.0.0",
@@ -10,9 +9,6 @@
   "scripts": {
     "start": "node index.js"
   },
-  "keywords": [
-    "proxy"
-  ],
   "author": "",
   "license": "GPL-3.0-or-later",
   "dependencies": {
