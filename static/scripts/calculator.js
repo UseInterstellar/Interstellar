@@ -242,14 +242,14 @@ document.addEventListener('DOMContentLoaded', () => {
     {
       name: "Papa's Scooperia",
       link: "https://files.crazygames.com/ruffle/papasscooperia.html",
-      image: "\images\icons\papasscooperia.jpg",
+      image: "/images/icons/papasscooperia.jpg",
       categories: ['all'],
       error: false
     },
     {
       name: "Papa's Sushiria",
       link: "https://files.crazygames.com/ruffle/papassushiria.html",
-      image: "\images\icons\papassushiria.webp",
+      image: "/images/icons/papassushiria.webp",
       categories: ['all'],
       error: false
     },
