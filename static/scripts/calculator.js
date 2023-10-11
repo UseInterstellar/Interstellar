@@ -241,9 +241,9 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       name: "Eaglercraft 1.5.2",
-      link: "https://webclient.asspixel.net/versions/Eagler152/",
+      link: "https://interstellar-assets.pages.dev/minecraft-15/",
       image: "/images/icons/mc.webp",
-      categories: ['all'],
+      categories: ['all', '2P'],
       error: false
     },
     {
