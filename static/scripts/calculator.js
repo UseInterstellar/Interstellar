@@ -240,6 +240,20 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "Papa's Scooperia",
+      link: "https://files.crazygames.com/ruffle/papasscooperia.html",
+      image: "\images\icons\papasscooperia.jpg",
+      categories: ['all'],
+      error: false
+    },
+    {
+      name: "Papa's Sushiria",
+      link: "https://files.crazygames.com/ruffle/papassushiria.html",
+      image: "\images\icons\papassushiria.webp",
+      categories: ['all'],
+      error: false
+    },
+    {
       name: "Eaglercraft 1.5.2",
       link: "https://interstellar-assets.pages.dev/minecraft-15/",
       image: "/images/icons/mc.webp",
