@@ -898,6 +898,13 @@ document.addEventListener('DOMContentLoaded', () => {
         error: false
       },
       {
+        name: "NGU Idle",
+        link: "https://cache.armorgames.com/files/games/ngu-idle-18444/index.html?v=1559319416",
+        image: "/images/icons/nguidle.jpg",
+        categories: ["all"],
+        error: false
+      },
+      {
         name: "Jacksmith",
         link: "https://www.coolmathgames.com/0-jacksmith/play",
         image: "/images/icons/jacksmith.webp",

@@ -27,20 +27,9 @@ form.addEventListener('submit', async (event) => {
   const activeIframe = Array.from(
     document.getElementById('iframe-container').querySelectorAll('iframe')
   ).find((iframe) => iframe.classList.contains('active'));
-  if (
-    window.localStorage.getItem('uvOff') == null ||
-    window.localStorage.getItem('uvOff') == 'false'
-  ) {
-    activeIframe.src =
-      '/astronomy/uv/' + ('encodedUrl', __uv$config.encodeUrl(url));
-    activeIframe.dataset.tabUrl = url;
-    document.querySelector('form input').value = url;
-    console.log(activeIframe.dataset.tabUrl);
-  } else {
-    activeIframe.src =
-      '/astronomy/' + ('encodedUrl', __uv$config.encodeUrl(url));
-    activeIframe.dataset.tabUrl = url;
-    document.querySelector('form input').value = url;
-    console.log(activeIframe.dataset.tabUrl);
-  }
+
+  activeIframe.src = "/astronomy/" + ("encodedUrl", __uv$config.encodeUrl(url));
+  activeIframe.dataset.tabUrl = url;
+  document.querySelector('form input').value = url;
+  console.log(activeIframe.dataset.tabUrl);
 });
