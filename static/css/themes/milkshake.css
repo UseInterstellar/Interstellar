@@ -1,0 +1,33 @@
+.title {
+    color:black;
+}
+body {
+    background-image: linear-gradient(to right, rgb(179, 0, 140) , rgb(149, 151, 0));
+}
+h2 {
+    color:black;
+}
+.fixed-nav-bar-right .navbar-link {
+    color:black
+}
+#INImg {
+    content: url("/main_inverted.png");
+}
+.column {
+    background-color: #ffbb0080;
+}
+input {
+    background-color: #ffc40080;
+}
+select {
+    background-color: #ff990080;
+}
+.settings-card {
+    background-color: #613f00;
+}
+.key-button {
+    background-color: #ff990080;
+}
+.key-form {
+    background-color: #ffbb0080;
+}

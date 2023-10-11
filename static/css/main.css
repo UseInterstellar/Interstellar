@@ -4,6 +4,11 @@ body {
 	font-family: "Inter", sans-serif;
 	text-decoration: none;
 	background-color: #1e1e1e;
+        height: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
 }
 
 /* Scrollbar */
@@ -23,7 +28,3 @@ body {
 	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 	background-color: white;
 }
-
-
-
-
