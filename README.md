@@ -1,11 +1,9 @@
 <div align="center">
-    <img src="https://cdn.discordapp.com/icons/938658733788131399/00826a67bac7b5d4df4990d3fd07bdcc.webp?size=240" />
     <h1>Interstellar V5</h1>
     <h3>Interstellar is one of the most modern and popular unblocking sites.</h3>
-</div>
-
+    
 ### [Join our Discord!](https://discord.gg/interstellar)
-##### By joining you will help the Interstellar community grow even larger ❤
+</div>
 
 > **If you do fork this repo, please give the original repo a star! It helps out alot and only 30% of people who fork give us a star... besides, you know you want to...**
 
