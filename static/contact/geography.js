@@ -3,8 +3,8 @@ self.__uv$config = {
     bare: '/outerspace/',
     encodeUrl: Ultraviolet.codec.xor.encode,
     decodeUrl: Ultraviolet.codec.xor.decode,
-    handler: '/h/algebra.js',
-    bundle: '/h/mathematics.js',
-    config: '/h/geography.js',
-    sw: '/h/english.js',
+    handler: '/contact/algebra.js',
+    bundle: '/contact/mathematics.js',
+    config: '/contact/geography.js',
+    sw: '/contact/english.js',
 };
