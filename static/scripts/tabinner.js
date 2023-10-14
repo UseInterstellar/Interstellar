@@ -1,6 +1,6 @@
 window.addEventListener('load', () => {
   navigator.serviceWorker.register('../sw.js', {
-    scope: '/astronomy/',
+    scope: '/reviews/',
   });
 });
 function isUrl(val = '') {
@@ -28,7 +28,7 @@ form.addEventListener('submit', async (event) => {
     document.getElementById('iframe-container').querySelectorAll('iframe')
   ).find((iframe) => iframe.classList.contains('active'));
 
-  activeIframe.src = "/astronomy/" + ("encodedUrl", __uv$config.encodeUrl(url));
+  activeIframe.src = "/reviews/" + ("encodedUrl", __uv$config.encodeUrl(url));
   activeIframe.dataset.tabUrl = url;
   document.querySelector('form input').value = url;
   console.log(activeIframe.dataset.tabUrl);
