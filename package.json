@@ -12,8 +12,8 @@
   "author": "",
   "license": "GPL-3.0-or-later",
   "dependencies": {
-    "ultraviolet-clone": "^1.0.10",
-    "bare-server-node": "^1.2.6",
+    "ultraviolet-education": "^1.0.10",
+    "bare-server-education": "^1.2.6",
     "express": "^4.18.2"
   },
   "devDependencies": {
