@@ -32,7 +32,7 @@ if (!inFrame && !navigator.userAgent.includes("Firefox")) {
 
         doc.head.appendChild(link);
         doc.body.appendChild(iframe)
-        location.replace("https://classroom.google.com")
+        location.replace("https://www.nasa.gov/")
     }
 }
 
