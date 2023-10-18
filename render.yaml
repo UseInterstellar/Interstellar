@@ -1,5 +1,5 @@
 services:
   - type: web
-    name: educational-template
+    name: edu
     env: docker
     plan: free
