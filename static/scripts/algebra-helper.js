@@ -15,9 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
-      name: "Free Movies Watch",
-      link: "https://freemovieswatch.tv",
-      image: "/images/icons/freemovieswatch.png",
+      name: "Movie Web",
+      link: "https://movie-web.app",
+      image: "https://movie-web.app/apple-touch-icon.png",
       categories: ["all", "media", "stream"],
       error: false
     },
