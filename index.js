@@ -2,22 +2,17 @@ import express from 'express';
 import http from 'node:http';
 import createBareServer from "@tomphttp/bare-server-node";
 import path from 'node:path';
-import * as dotenv from 'dotenv';
-dotenv.config();
+import cors from 'cors';
 
 const __dirname = process.cwd();
 const server = http.createServer();
 const app = express(server);
 const bareServer = createBareServer('/outerspace/');
-const PORT = process.env.PORT;
+const PORT = 8080;
 
 app.use(express.json());
-app.use(
-  express.urlencoded({
-    extended: true,
-  })
-);
-
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 app.use(express.static(path.join(__dirname, 'static')));
 
 const routes = [
@@ -30,6 +25,23 @@ const routes = [
   { path: '/go', file: 'go.html' },
   { path: '/loading', file: 'loading.html' },
 ];
+
+app.get('/edu/*', cors({ origin: false }), async (req, res, next) => {
+  try {
+    const reqTarget = `https://raw.githubusercontent.com/InterstellarNetwork/Interstellar-Assets/main/${req.params[0]}`;
+    const asset = await fetch(reqTarget);
+    
+    if (asset.ok) {
+      const data = await asset.arrayBuffer();
+      res.end(Buffer.from(data));
+    } else {
+      next();
+    }
+  } catch (error) {
+    console.error('Error fetching:', error);
+    next(error);
+  }
+});
 
 routes.forEach((route) => {
   app.get(route.path, (req, res) => {
@@ -54,7 +66,7 @@ server.on('upgrade', (req, socket, head) => {
 });
 
 server.on('listening', () => {
-  console.log(`Running at http://localhost:${process.env.PORT}`);
+  console.log(`Running at http://localhost:${PORT}`);
 });
 
 server.listen({
