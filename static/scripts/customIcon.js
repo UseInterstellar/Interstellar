@@ -65,8 +65,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
     if(themeid == "fg") {
         themeEle.href = "/css/themes/forestGreen.css";
     }
-    if(themeid == "l") {
-        themeEle.href = "/css/themes/light.css";
+    if(themeid == "light") {
+        themeEle.href = "/css/theme/light.css";
     }
     if(themeid == "m") {
         themeEle.href = "/css/themes/milkshake.css";
@@ -82,6 +82,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
     }
     if(themeid == "l4") {
         themeEle.href = "/css/themes/legacy.css";
+    }
+    if(themeid == "midnight") {
+        themeEle.href = "/css/theme/midnight.css";
     }
     document.body.appendChild(themeEle);
 });
