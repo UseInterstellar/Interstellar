@@ -1,0 +1,25 @@
+.title {
+    color:white;
+}
+body {
+    background-image: linear-gradient(to right, rgb(217, 26, 26) , rgb(0, 0, 0));
+}
+h2 {
+    color:black;
+}
+.fixed-nav-bar-right .navbar-link {
+    color: white;
+}
+#INImg {
+    content: url("/main.png");
+}
+input, select, .column, .key-form, button, .key-button, .searchbar {
+background-color: black;
+}
+.settings-card {
+background-color: #111;    
+}
+input:checked + .slider-round {
+    background-color: #000;
+}
+

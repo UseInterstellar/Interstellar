@@ -1,0 +1,33 @@
+.title {
+    color: white;
+}
+
+body {
+    background-image: linear-gradient(to right, rgb(75, 0, 130), indigo);
+    color: white;
+}
+
+h2 {
+    color: black;
+}
+
+.fixed-nav-bar-right .navbar-link {
+    color: white;
+}
+
+#INImg {
+    content: url("/main.png");
+}
+
+input, select, .column, .key-form, button, .key-button, .searchbar {
+    background-color: black;
+    color: white;
+}
+
+.settings-card {
+    background-color: #111;
+}
+
+input:checked + .slider-round {
+    background-color: #000;
+}
