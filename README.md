@@ -50,6 +50,6 @@ You can **NOT** deploy to Netlify, Cloudflare Pages, Github Pages or any other *
 > If you don't know how to do this because you are an absolute no-brainer then message us a report in our [Discord](https://discord.gg/interstellar).
 
 # Credits
-Huge thanks to following people for contributing to Interstellar.
+Huge thanks to following people for contributing to Interstellar!
 
 [![Contrib](https://contrib.rocks/image?repo=InterstellarNetwork/Interstellar)](https://github.com/InterstellarNetwork/Interstellar/graphs/contributors)
