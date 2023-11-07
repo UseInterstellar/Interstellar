@@ -314,7 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (typeof app.say !== 'undefined') {
           alert(app.say);
         }
-        go(app.link);
+        images(app.link);
         return false;
       };
     }
