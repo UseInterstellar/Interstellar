@@ -1,5 +1,3 @@
-// Searching 
-
 const form = document.querySelector("form");
 const input = document.querySelector("input");
 
@@ -15,12 +13,12 @@ form.addEventListener("submit", async (event) => {
       else if (!(url.startsWith("https://") || url.startsWith("http://")))
         url = "http://" + url;
       sessionStorage.setItem("encodedUrl", __uv$config.encodeUrl(url));
-      location.href = "go";
+      location.href = "image-galleries";
     });
 });
 
 
-function go(value) {
+function images(value) {
     let iframe = document.querySelector(".iframe.active");
     window.navigator.serviceWorker
       .register("./sw.js", {
@@ -31,9 +29,8 @@ function go(value) {
         if (!isUrl(url)) url = "https://www.google.com/search?q=" + url;
         else if (!(url.startsWith("https://") || url.startsWith("http://")))
           url = "https://" + url;
-        //pass the encoded url to the second page
         sessionStorage.setItem("encodedUrl", __uv$config.encodeUrl(url));
-        location.href = "go";
+        location.href = "/image-galleries";
       });
   }
   
