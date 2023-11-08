@@ -256,7 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       name: "Roblox (Now.GG)",
-      link: "https://now.gg/apps/roblox-corporation/5349/roblox.html",
+      link: "https://now.gg/play/roblox-corporation/5349/roblox",
       image: "/images/icons/roblox.png",
       categories: ['all', 'emu']
     },
