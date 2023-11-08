@@ -254,6 +254,18 @@ document.addEventListener('DOMContentLoaded', () => {
       categories: ["all", "media", "stream"],
       error: false
     },
+    {
+      name: "Roblox (Now.GG)",
+      link: "https://now.gg/apps/roblox-corporation/5349/roblox.html",
+      image: "/images/icons/roblox.png",
+      categories: ['all', 'emu']
+    },
+    {
+      name: "Now.GG",
+      link: "https://now.gg",
+      image: "/images/icons/now-gg.png",
+      categories: ['all', 'emu']
+    },
   ];
     
   
