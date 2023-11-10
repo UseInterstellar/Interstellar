@@ -43,3 +43,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
       document.body.appendChild(scr);
     }
   });
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(function(OneSignal) {
+    OneSignal.init({
+      appId: "cbbc1ba4-4647-42bf-944c-a0b82af002cb",
+    });
+  });
+</script>
