@@ -133,4 +133,17 @@ button {
 }
 .linez {
 	color: white
+@keyframes beamOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}	
 }
+
+{display:flex;justify-content:center;align-items:center;height:100vh;margin:0}
+    .beaming-out-alert{display:inline-block;padding:15px;background-color:#5bc0de;color:#fff;font-size:16px;border-radius:5px;animation:beamOut 1.5s ease-out}@keyframes beamOut{0%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.5)}}
