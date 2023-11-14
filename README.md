@@ -42,6 +42,14 @@ You can **NOT** deploy to Netlify, Cloudflare Pages, Github Pages or any other *
 6. Once it's done cloning paste the code below. (Ctrl + Shift + V)
 - ``cd interstellar && npm i && npm run start``
 
+## Deploy to Vercel
+1. Create a Vercel Account (https://vercel.com/signup). Sign up using your github account.
+2. Click --> <a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FInterstellarNetwork%2FInterstellar"><img src="https://vercel.com/button" alt="Deploy with Vercel"/></a>
+3. Name your repository whatever you'd like, then scroll down and wait for the project to finish cloning. This will probably take a few minutes.
+4. Once it finishes cloning, it will take you to a screen for your website. Click on the picture of the nasa website.
+5. Make sure to allow pop-ups and redirects so that about:blank cloaking works.
+6. Voilà! Your done!
+
 ## If you need any help with deploying, join our Discord!
 - https://discord.gg/interstellar
 
