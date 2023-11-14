@@ -30,6 +30,7 @@ You can **NOT** deploy to Netlify, Cloudflare Pages, Github Pages or any other *
 <a target="_blank" href="https://app.koyeb.com/deploy?type=git&repository=github.com/interstellarnetwork/interstellar"><img alt="Deploy to Koyeb" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/koyeb.svg"></a>
 <a target="_blank" href="https://render.com/deploy?repo=https://github.com/InterstellarNetwork/IN-Render"><img alt="Deploy to Render" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/render.svg"></a>
 <a target="_blank" href="https://app.cyclic.sh/api/app/deploy/interstellarnetwork/Interstellar"><img alt="Deploy to Cyclic" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/cyclic.svg"></a>
+<a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fvercel.com%2Fnew%2Fclone%3Frepository-url%3Dhttps%253A%252F%252Fgithub.com%252FInterstellarNetwork%252FInterstellar"><img src="https://vercel.com/button" alt="Deploy to Vercel"/></a>
 
 ## Deploy to Replit
 1. Create a Replit Account (https://replit.com)
