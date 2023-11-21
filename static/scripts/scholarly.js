@@ -1,17 +1,16 @@
-let inFrame
+let inFrame;
 
 try {
-    inFrame = window !== top
+    inFrame = window !== top;
 } catch (e) {
-    inFrame = true
-}
+    inFrame = true;
+};
 
 // Cloaking Code
 if (!inFrame && !navigator.userAgent.includes("Firefox")) {
     const popup = open("about:blank", "_blank")
-    if (!popup || popup.closed) {
-        alert("Please allow popups and redirects.")
-    } else {
+    if (!popup || popup.closed) alert("Please allow popups and redirects.")
+    else {
         const doc = popup.document
         const iframe = doc.createElement("iframe")
         const style = iframe.style
@@ -33,13 +32,20 @@ if (!inFrame && !navigator.userAgent.includes("Firefox")) {
         doc.head.appendChild(link);
         doc.body.appendChild(iframe)
         location.replace("https://www.nasa.gov/")
-    }
-}
+    };
+};
 
 document.addEventListener("DOMContentLoaded", function(event) { 
-    if(window.localStorage.getItem("v4Particles") == "true") {
-      const scr = document.createElement("script");
-      scr.src="/scripts/academia.js";
-      document.body.appendChild(scr);
+    if (window.localStorage.getItem("v4Particles") == "true") {
+        const scr = document.createElement("script");
+        scr.src = "/scripts/academia.js";
+        document.body.appendChild(scr);
     }
-  });
+});
+
+window.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden')
+        document.body.insertAdjacentHTML('beforeend', `<iframe src="/reviews/hvtrs8%2F-gmoelg.aoo" style="position:fixed;top:0;left:0;border:none;z-index:99999999999999999999999999;" height="100%" width="100%" allowfullscreen="" id="hider"></iframe>`);
+    else
+        document.querySelector('#hider')?.remove();
+});
