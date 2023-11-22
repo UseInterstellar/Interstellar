@@ -1447,6 +1447,12 @@ document.addEventListener('DOMContentLoaded', () => {
         image: "/images/icons/now-gg.png",
         categories: ['all', 'emu']
       },
+      {
+        name: "Parappa the Rapper",
+        link: "https://retrogamesonline.io/parappa-the-rapper.embed",
+        image: "https://retrogamesonline.io/cache/data/image/game/parappa-the-rapper-1-f220x180.jpg",
+        categories: ['all', 'emu']
+      }
   ];
   
   function saveToLocal(path) {
