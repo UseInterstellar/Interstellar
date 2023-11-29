@@ -20,10 +20,10 @@
 <div class="fixed-nav-bar">
   <a class="icon" href="/./"><img id="INImg" src="main.png"></a>
     <div class="fixed-nav-bar-right">
-        <a class="navbar-link" href="/./events"><i class="fa-solid fa-gamepad navbar-icon"></i>Games</a>      
-        <a class="navbar-link" href="/./news"><span class="material-symbols-outlined weird-icon">apps</span>Apps</a>
-        <a class="navbar-link" href="/./local-news"><i class="fa-solid fa-table navbar-icon"></i>Tabs</a>
-        <a class="navbar-link" href="/./diagnostic"><i class="fa-solid fa-gear navbar-icon settings-icon"></i>Settings</a>
+        <div class="hover-container games-h"><a class="navbar-link" href="/./events"><i class="fa-solid fa-gamepad navbar-icon"></i></a> <span class="tool1">Games</span> </div>   
+        <div class="hover-container apps-h"><a class="navbar-link" href="/./news"><span class="material-symbols-outlined weird-icon">apps</span></a><span class="tool2" style="transform: translateY(-5px);">Apps</span></div>
+        <div class="hover-container tabs-h"><a class="navbar-link" href="/./local-news"><i class="fa-solid fa-table navbar-icon"></i></a> <span class="tool3">Tabs</span></div>
+        <div class="hover-container settings-h"><a class="navbar-link" href="/./diagnostic"><i class="fa-solid fa-gear navbar-icon settings-icon"></i></a> <span class="tool4">Settings</span></div>
      </div></div></div></div>
   <!-- Nav Bar End-->
 <div id="particles-js">
@@ -31,7 +31,8 @@
   <div class="main">
     <h2 class="title">Interstellar</h2>
     <form method="POST">
-      <input class="searchbar" tag="searchbar" id="searchbar" placeholder="Search"/>
+      <!-- <div class="search-box"><input class="searchbar" tag="searchbar" id="searchbar" placeholder="Search the Web..."/><a class="" href="/./diagnostic"><div class="side-container"><a class="settings" href="/./diagnostic"><i class=" navbar-icon fa-solid fa-gear settings-icon"></i></a></div></a></div> -->
+      <input class="searchbar" tag="searchbar" id="searchbar" placeholder="Search the Web..."/>
     </form>
     </div>
   </div>

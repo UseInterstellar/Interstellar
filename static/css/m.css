@@ -39,8 +39,8 @@ body {
 	min-height: 13vh;
 	padding: 0 25px;
 	box-sizing: border-box;
-	background-color: rgba(255, 255, 255, 0.02);
-	box-shadow: 0 0 15px 2px rgba(0, 0, 0, 0.5);
+	/* background-color: rgba(255, 255, 255, 0.02); */
+	/* box-shadow: 0 0 15px 2px rgba(0, 0, 0, 0.5); */
 	backface-visibility: visible;
 	transition: 0.35s ease;
 	z-index: 100;
@@ -77,6 +77,7 @@ body {
 	color: white;
 	font-weight: 600;
 	right: 2%;
+	display: flex;
   }
   
   .time {
@@ -92,21 +93,26 @@ body {
 	cursor: default;
 	user-select: none;
   }
+
+  .hover-container {
+	text-align: center;
+	padding: 1vh;
+	padding-right: 1.5vh;
+	padding-left: 1.5vh;
+	margin-right: 0;
+	
+	justify-content: center;
+	transition: all .3s ease;
+  }
   
-  .fixed-nav-bar-right .navbar-link {
-	margin-left: 10px;
-	text-transform: uppercase;
-	font-size: 2.5vh;
+	.fixed-nav-bar-right .navbar-link {
 	cursor: pointer;
 	color: white;
-	font-weight: 800;
+	transition: all .3s ease;
+	margin: 0;
 	right: 2%;
-	font-family: 'Inter', sans-serif;
-	font-style: normal;
-	text-decoration: none;
-	transition: all 0.2s ease;
-	transform: translateX(0%);
   }
+
   @media (orientation: portrait) {
 	  .fixed-nav-bar-right .navbar-link {
 	  margin-left: 10px;
@@ -119,46 +125,86 @@ body {
 	  font-family: 'Inter', sans-serif;
 	  font-style: normal;
 	  text-decoration: none;
-	  transition: all 0.2s ease;
+	  transition: all 0.3s ease;
 	  transform: translateX(0%);
 	}
 	.fixed-nav-bar-right .navbar-link:hover {
-	  text-transform: uppercase;
 	  cursor: pointer;
-	  font-weight: 800;
-	  font-family: 'Inter', sans-serif;
-	  font-style: normal;
-	  font-size: 3vw;
-	  transform: translateX(-20%);
+	  transform: translateX(10%);
 	}
 	}
   
   .fixed-nav-bar-right .navbar-link:hover {
-	text-transform: uppercase;
+	margin: 0;
+	transition: all .3s ease;
+	
+  }
+
+  .hover-container:hover {
+	justify-content: none;
+	transition: all .3s ease;
+	text-align: none;
 	cursor: pointer;
-	font-weight: 800;
-	font-family: 'Inter', sans-serif;
-	font-style: normal;
-	font-size: 3vh;
-	transform: translateX(-20%);
+	transform: translateX(-7px) translateY(7px);
   }
   
   .navbar-icon {
 	margin-right: 5px;
-	transition: all 0.2s ease;
+	transition: all .3s ease;
   }
-  
+
+  .tool1 {
+	position: relative;
+	z-index: 999;
+	transform: translateZ(5) translateY(20px);
+	display: none;
+	transition: all 1s;
+  }
+  .tool2 {
+	position: relative;
+	z-index: 999;
+	transform: translateZ(5) translateY(20px);
+	display: none;
+	transition: all 1s;
+  }
+  .tool3 {
+	position: relative;
+	z-index: 999;
+	transform: translateZ(5) translateY(20px);
+	display: none;
+	transition: all 1s;
+  }
+  .tool4 {
+	position: relative;
+	z-index: 999;
+	transform: translateZ(5) translateY(20px);
+	display: none;
+	transition: all 1s;
+  }
+/*
+  .games-h:hover .tool1 {
+	display: initial;
+	transition: all 1s;
+  }
+  .apps-h:hover .tool2 {
+	display: initial;
+	transition: all 1s;
+  }
+  .tabs-h:hover .tool3 {
+	display: initial;
+	transition: all 1s;
+  }
+  .settings-h:hover .tool4 {
+	display: initial;
+	transition: all 1s;
+  }
+*/
   .weird-icon {
 	line-height: 150px;
 	display: inline-block;
 	vertical-align: middle;
 	margin-right: 5px;
 	margin-bottom: 5px;
-  }
-  
-  .navbar-link {
-	margin-right: 5px;
-	font-size: 3vh;
   }
   
   .material-symbols-outlined {
@@ -234,6 +280,7 @@ body {
 	  
 	  .input-container {
 		  position: relative;
+		  
 		  margin-top: 150px;
 		  display: flex;
 		  flex-wrap: wrap;
@@ -242,25 +289,36 @@ body {
 		  }
 		  
 		  input {
-			padding: 20px;
+			padding-right: 20px;
+			padding-left: 20px;
+			padding-top: 0;
+			padding-bottom: 0;
+			height: 6vh;
 			width: 550px;
-			border-radius: 5px;
+			border-radius: 25px;
 			background: #353535;
 			text-align: center;
-			font-size: 24px;
+			font-size: 12px;
 			border: none;
 			outline: none;
 			color: white;
+			transition: all .3s;
+		  }
+
+		  input:focus {
+			width: 625px;
+			transition: all .3s;
 		  }
 	  
 		  select {
 			  padding: 20px;
-			  border-radius: 5px;
+			  border-radius: 25px;
 			  background: #353535;
 			  color: white;
 			  font-size: 20px;
 			  border: 0px;
 			  outline: none;
+			  height: 5vh;
 		  cursor: pointer;
 			}
 	  .container-apps {
