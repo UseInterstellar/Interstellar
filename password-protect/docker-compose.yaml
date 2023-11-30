@@ -1,0 +1,22 @@
+version: '3'
+services:
+  mathematics:
+    restart: unless-stopped
+    build: ../
+    expose:
+      - "8080"
+  caddy:
+    image: caddy:latest
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./config:/config
+      - ./data:/data
+
+    

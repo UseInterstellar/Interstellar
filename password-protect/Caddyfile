@@ -1,0 +1,11 @@
+:80 {
+    reverse_proxy mathematics:8080
+# set your username here. Hashed password was made in step 2, and replace the existing hash with the new one.
+    basicauth /go {
+	interstellar $2a$14$Ud/ovLwv84eLUzk1uH9iLeyRVnPc6pRUGerZobe8j0uHJ.5pwqDL.
+	}
+	basicauth / {
+        interstellar $2a$14$Ud/ovLwv84eLUzk1uH9iLeyRVnPc6pRUGerZobe8j0uHJ.5pwqDL.
+        }
+
+}

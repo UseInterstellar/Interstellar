@@ -45,7 +45,7 @@ You can **NOT** deploy to Netlify, Cloudflare Pages, Github Pages or any other *
 ## Quick Deploy to GitHub Codespaces
 1. Create a GitHub account if you haven't already
 2. Scroll up, click "Code" (green button), and then "Create Codespace on main"
-3. In the terminal on the buttom, and paste `npm i && npm run start`
+3. In the terminal on the bottom, paste `npm i && npm run start`
 4. You'll see a popup on the corner about an application. Click "Make public"
 5. Go to the ports tab on the top (where the terminal is), and then click the website that appears on the list.
 
