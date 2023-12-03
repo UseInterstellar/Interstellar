@@ -1,4 +1,4 @@
-# Passsword Protection
+# Password Protection
 
 This folder has a docker-compose.yml file that can be used to deploy Interstellar with a password on any system with Docker installed.
 Quick Start:
