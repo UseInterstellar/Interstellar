@@ -1,69 +1,76 @@
 <!DOCTYPE html>
+
 <head>
     <link rel="shortcut icon" id="dynamic-favicon" href="favicon.png">
     <title id="dynamic-title">Classes</title>
     <script src="/./scripts/wisdom.js?v=1"></script>
-    <link rel="stylesheet" type="text/css" href="/./css/tab.css"/>
-    <link rel="stylesheet" href="/./css/tabinner.css"/>
+    <link rel="stylesheet" type="text/css" href="/./css/tab.css" />
+    <link rel="stylesheet" href="/./css/tabinner.css" />
     <script src="/./scripts/book.js"></script>
     <script src="https://kit.fontawesome.com/1237c86ba0.js" crossorigin="anonymous"></script>
-  </head>
-  <body>
-    <input type="checkbox" id="toggle-nav-checkbox" class="toggle-nav-checkbox"/>
+</head>
+
+<body>
+    <input type="checkbox" id="toggle-nav-checkbox" class="toggle-nav-checkbox" />
     <label for="toggle-nav-checkbox" id="toggle-nav" class="toggle-nav">
     </label>
     <div class="container">
-      <nav class="nav" id="right-side-nav">
-        <ul id="tab-list"></ul>
-        <button id="add-tab"><i class="fa-solid fa-plus"></i></button>
-        <button id="expand" onclick="expand()"><i class="fa-solid fa-expand"></i></button>
-        <button id="reload" onclick="reload()"><i class="fa-solid fa-rotate-right"></i></button>
-        <div class="adress-bar-container">
-          <form method="POST" class="adress-bar-search-form" id="inpbox">
-            <input class="adress-bar-input" tag="searchbar" id="searchbar" placeholder="Search"/>
-          </form>
-        </div>
-      </nav>
-      <div class="iframe-container" id="iframe-container"></div>
+        <nav class="nav" id="right-side-nav">
+            <ul id="tab-list"></ul>
+            <button id="add-tab"><i class="fa-solid fa-plus"></i></button>
+            <button id="expand" onclick="expand()"><i class="fa-solid fa-expand"></i></button>
+            <button id="reload" onclick="reload()"><i class="fa-solid fa-rotate-right"></i></button>
+            <button onclick="goBack()">Back</button>
+            <button onclick="goForward()">Forward</button>
+            <div class="adress-bar-container">
+                <form method="POST" class="adress-bar-search-form" id="inpbox">
+                    <input class="adress-bar-input" tag="searchbar" id="searchbar" placeholder="Search" />
+                </form>
+            </div>
+        </nav>
+        <div class="iframe-container" id="iframe-container"></div>
     </div>
     <script>
-window.addEventListener('load', () => {
-  navigator.serviceWorker.register('../sw.js', {
-    scope: '/reviews/',
-  });
-});
-function isUrl(val = '') {
-  const urlPattern = /^(http(s)?:\/\/)?([\w-]+\.)+[\w]{2,}(\/.*)?$/;
-  return urlPattern.test(val);
-}
-function prependHttps(url) {
-  if (!url.startsWith('http://') && !url.startsWith('https://')) {
-    return 'https://' + url;
-  }
-  return url;
-}
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('../sw.js', {
+                scope: '/reviews/',
+            });
+        });
 
-const form = document.querySelector('form');
-const input = document.querySelector('input');
+        function isUrl(val = '') {
+            const urlPattern = /^(http(s)?:\/\/)?([\w-]+\.)+[\w]{2,}(\/.*)?$/;
+            return urlPattern.test(val);
+        }
 
-form.addEventListener('submit', async (event) => {
-  event.preventDefault();
-  const formValue = document.querySelector('form input').value;
-  const url = isUrl(formValue)
-    ? prependHttps(formValue)
-    : 'https://www.google.com/search?q=' + formValue;
+        function prependHttps(url) {
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                return 'https://' + url;
+            }
+            return url;
+        }
 
-  const activeIframe = Array.from(
-    document.getElementById('iframe-container').querySelectorAll('iframe')
-  ).find((iframe) => iframe.classList.contains('active'));
+        const form = document.querySelector('form');
+        const input = document.querySelector('input');
 
-  activeIframe.src = "/reviews/" + ("encodedUrl", __uv$config.encodeUrl(url));
-  activeIframe.dataset.tabUrl = url;
-  document.querySelector('form input').value = url;
-  console.log(activeIframe.dataset.tabUrl);
-});
+        form.addEventListener('submit', async(event) => {
+            event.preventDefault();
+            const formValue = document.querySelector('form input').value;
+            const url = isUrl(formValue) ?
+                prependHttps(formValue) :
+                'https://www.google.com/search?q=' + formValue;
+
+            const activeIframe = Array.from(
+                document.getElementById('iframe-container').querySelectorAll('iframe')
+            ).find((iframe) => iframe.classList.contains('active'));
+
+            activeIframe.src = "/reviews/" + ("encodedUrl", __uv$config.encodeUrl(url));
+            activeIframe.dataset.tabUrl = url;
+            document.querySelector('form input').value = url;
+            console.log(activeIframe.dataset.tabUrl);
+        });
     </script>
     <script src="/./contact/mathematics.js"></script>
     <script src="/./contact/geography.js"></script>
-  </body>
+</body>
+
 </html>
