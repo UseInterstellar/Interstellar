@@ -4,7 +4,7 @@ importScripts('/contact/geography.js');
 class UVServiceWorker extends EventEmitter {   
     constructor(config = __uv$config) {
         super();
-        if (!config.bare) config.bare = '/space/';
+        if (!config.bare) config.bare = '/outerspace/';
         this.addresses = typeof config.bare === 'string' ? [ new URL(config.bare, location) ] : config.bare.map(str => new URL(str, location));
         this.headers = {
             csp: [
