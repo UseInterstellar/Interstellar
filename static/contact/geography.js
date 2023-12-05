@@ -6,5 +6,5 @@ self.__uv$config = {
     handler: '/contact/algebra.js',
     bundle: '/contact/mathematics.js',
     config: '/contact/geography.js',
-    sw: '/contact/english.js',
+    sw: '/contact/english2.js',
 };
