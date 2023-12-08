@@ -17,12 +17,11 @@ body {
 @media (orientation: portrait) {
     #INImg {
         content: url("/legacyV4.png");
-        width: 22vw;
+        
     }
 }
 #INImg {
     content: url("/legacyV4.png");
-    width: 22vh;
 }
 .fixed-nav-bar {
     background-color: rgba(0,0,0,0);
