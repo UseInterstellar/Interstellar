@@ -1,19 +1,10 @@
 body {
-	background-color: #1e1e1e;
+	/* background: url("/wallpaper.jpg"); */
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.title {
-	position: relative;
-	top: -10vh;
-	font-size: 9vh;
-	color: white;
-	font-family: "Inter", sans-serif;
-	text-align: center;
-	text-transform: uppercase;
-	border-radius: 0px 0px 5px 5px;
-}
+
 @media (orientation: portrait) {
 	.title {
 		position: relative;
@@ -42,42 +33,15 @@ body {
 	letter-spacing: 2px;
 	font-family: "Inter", sans-serif;
 	width: 100%;
-	height: 100%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	top: 0%;
+	position: absolute;
+	z-index: 99;
 }
-.search {
-    top:-15vh;
-    padding: 18px;
-    width: 600px;
-	position: relative;
-    border-radius: 5px;
-    background: #353535;
-    text-align: left;
-    font-size: 20px;
-    border: none;
-    outline: none;
-    color: white;
-	transition: 0.2s;
-}
-@media (orientation: portrait) {
-	.search {
-		top:-15vw;
-		padding: 18px;
-		width: 600px;
-		position: relative;
-		border-radius: 5px;
-		background: #353535;
-		text-align: left;
-		font-size: 20px;
-		border: none;
-		outline: none;
-		color: white;
-		transition: 0.2s;
-	}
-  }
+
 #particles-js {
 	position: absolute;
 	width: 100%;
@@ -130,4 +94,59 @@ button {
     width: 19%;
     padding: 10px;
     text-align: center;
+}
+
+.shortcut-container {
+	height: 6vw;
+	position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+}
+
+.shortcut {
+	width: 5vw;
+	height: 5vw;
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-top: 1vh;
+	transition: all .3s;
+}
+
+.shortcut:hover {
+	cursor: pointer;
+	margin-right: 20px;
+	margin-left: 20px;
+	transition: all .3s;
+}
+
+#geforce {
+	background: url("../images/icons/gfn.png");
+	background-size: cover;
+}
+
+#roblox {
+	background: url("../images/icons/roblox.png");
+	background-size: cover;
+}
+
+#discord {
+	background: url("../images/icons/discord.jpg");
+	background-size: cover;
+}
+
+#eagler {
+	background: url("../images/icons/mc.webp");
+	background-size: cover;
+}
+
+#youtube {
+	background: url("../images/icons/youtube.png");
+	background-size: cover;
+}
+
+#tiktok {
+	background: url("../images/icons/tiktok.png");
+	background-size: cover;
 }
