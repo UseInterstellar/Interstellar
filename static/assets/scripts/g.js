@@ -1448,6 +1448,18 @@ document.addEventListener('DOMContentLoaded', () => {
         categories: ['all', 'emu']
       },
       {
+        name: "Roblox (Now.GG Alternative)",
+        link: "https://nowgg.nl/play/roblox-corporation/5349/roblox",
+        image: "/assets/media/icons/roblox.png",
+        categories: ['all', 'emu']
+      },
+      {
+        name: "Now.GG (Alternative)",
+        link: "https://nowgg.nl",
+        image: "/assets/media/icons/now-gg.png",
+        categories: ['all', 'emu']
+      },
+      {
         name: "Parappa the Rapper",
         link: "https://retrogamesonline.io/parappa-the-rapper.embed",
         image: "https://retrogamesonline.io/cache/data/image/game/parappa-the-rapper-1-f220x180.jpg",
