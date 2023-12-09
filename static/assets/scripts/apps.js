@@ -266,6 +266,18 @@ document.addEventListener('DOMContentLoaded', () => {
       image: "/assets/media/icons/now-gg.png",
       categories: ['all', 'emu']
     },
+    {
+      name: "Roblox (Now.GG Alternative)",
+      link: "https://nowgg.nl/play/roblox-corporation/5349/roblox",
+      image: "/assets/media/icons/roblox.png",
+      categories: ['all', 'emu']
+    },
+    {
+      name: "Now.GG (Alternative)",
+      link: "https://nowgg.nl",
+      image: "/assets/media/icons/now-gg.png",
+      categories: ['all', 'emu']
+    },
   ];
     
   
