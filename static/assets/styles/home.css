@@ -1,0 +1,152 @@
+body {
+	/* background: url("/wallpaper.jpg"); */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (orientation: portrait) {
+	.title {
+		position: relative;
+		top: -10vw;
+		font-size: 10vw;
+		color: white;
+		font-family: "Inter", sans-serif;
+		text-align: center;
+		text-transform: uppercase;
+		border-radius: 0px 0px 5px 5px;
+	}
+  }
+.description {
+	position: absolute;
+    top: 240px;
+	font-size: 35px;
+	color: snow;
+    font-weight: bold;
+	font-family: "Inter", sans-serif;
+	text-align: center;
+	border-radius: 0px 0px 5px 5px;
+    transition: transform 0.2s; 
+    cursor: default;
+}
+.main {
+	letter-spacing: 2px;
+	font-family: "Inter", sans-serif;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	top: 0%;
+	position: absolute;
+	z-index: 99;
+}
+
+#particles-js {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top:0vw;
+	background-color: var(--bg-c);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: 50% 50%;
+	overflow: hidden;
+}
+.particles-js-canvas-el {
+	z-index: 0;
+	top: 0;
+	left: 0;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+}
+.key-button {
+    cursor: pointer;
+    border: 2px;
+    transition: 0.2s;
+    margin-top: 10px;
+	font-size: 1.3vw;
+    background-color: #333;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    color: white;
+    height: 50px;
+    width: 19%;
+    padding: 10px;
+    text-align: center;
+	display:inline-block;
+	position: relative;
+	top:-13.75vh;
+}
+
+button {
+    cursor: pointer;
+    border: 2px;
+    transition: 0.2s;
+    margin-top: 10px;
+    background-color: #333;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    color: white;
+    height: 50px;
+    width: 19%;
+    padding: 10px;
+    text-align: center;
+}
+
+.shortcut-container {
+	height: 6vw;
+	position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+}
+
+.shortcut {
+	width: 5vw;
+	height: 5vw;
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-top: 1vh;
+	transition: all .3s;
+}
+
+.shortcut:hover {
+	cursor: pointer;
+	margin-right: 20px;
+	margin-left: 20px;
+	transition: all .3s;
+}
+
+#geforce {
+	background: url("../assets/media/icons/gfn.png");
+	background-size: cover;
+}
+
+#roblox {
+	background: url("../assets/media/icons/roblox.png");
+	background-size: cover;
+}
+
+#discord {
+	background: url("../assets/media/icons/discord.jpg");
+	background-size: cover;
+}
+
+#eagler {
+	background: url("../assets/media/icons/mc.webp");
+	background-size: cover;
+}
+
+#youtube {
+	background: url("../assets/media/icons/youtube.png");
+	background-size: cover;
+}
+
+#tiktok {
+	background: url("../assets/media/icons/tiktok.png");
+	background-size: cover;
+}

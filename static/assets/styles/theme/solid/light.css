@@ -1,0 +1,16 @@
+:root {
+    --page: #eee;
+    --background: #aaa;
+    --title: black;
+}
+
+h2, .fixed-nav-bar-right .navbar-link {
+    color: #eee;
+}
+
+input, select, .column, .key-form, button, .key-button, .searchbar, .slider-round:before, ::-webkit-scrollbar-thumb {
+background-color: #222;
+}
+.settings-card {
+background-color: #111; 
+}

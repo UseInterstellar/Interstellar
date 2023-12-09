@@ -1,0 +1,21 @@
+:root {
+    --page: #1e1e1e;
+    --background: rgba(255, 255, 255, 0.02);
+    --background-filter: blur(10px) brightness(80%);
+    --background-secondary: #4545459e;
+    --background-dark: #121212;
+    
+
+
+    --title: #fff;
+    --block: #2a2a2a;
+    --block-buttons: #333;
+    --input: #444;
+    --column: #353535;
+
+    --text-primary: #fff;
+    --text-secondary: #b0b0b0;
+    --text-placeholder: #aaa;
+
+    --transparent: rgb(0,0,0,0);
+}

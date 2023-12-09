@@ -1,0 +1,40 @@
+body {
+    background-color: #111
+}
+.title {
+    color:white;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+#searchBar {
+    background-color: rgba(59, 56, 56, 0.356);
+    font-family: 'Source Sans Pro', sans-serif;
+    border-radius: 12px;
+}
+#searchBar::placeholder {
+    color: white;
+}
+
+@media (orientation: portrait) {
+    #INImg {
+        content: url("/legacyV4.png");
+        
+    }
+}
+#INImg {
+    content: url("/legacyV4.png");
+}
+.fixed-nav-bar {
+    background-color: rgba(0,0,0,0);
+}
+.fixed-nav-bar-right .navbar-link {
+    text-transform: none;
+    font-weight: normal;
+    margin-right: 0;
+    letter-spacing:normal;
+}
+.column {
+    background-color: rgba(34, 34, 34, 0.5);
+}
+.settings-card {
+    background-color: rgba(34, 34, 34, 0.5);
+}
