@@ -5,134 +5,137 @@ document.addEventListener("DOMContentLoaded", function(event) {
   const name = document.getElementById('dynamic-title');
   var selectedValue = localStorage.getItem("selectedOption");
   if (selectedValue === 'Google') {
-      icon.setAttribute('href', '/assets/media/favicon/google.png');
+      icon.setAttribute('href', '/images/favicon/google.png');
       name.textContent = 'Google';
       localStorage.setItem("name", "Google");
-      localStorage.setItem("icon", "/assets/media/favicon/google.png");
+      localStorage.setItem("icon", "/images/favicon/google.png");
   } 
   else if (selectedValue === 'Drive') {
-      icon.setAttribute('href', '/assets/media/favicon/drive.png');
+      icon.setAttribute('href', '/images/favicon/drive.png');
       name.textContent = 'My Drive - Google Drive';
       localStorage.setItem("name", "My Drive - Google Drive");
-      localStorage.setItem("icon", "/assets/media/favicon/drive.png");
+      localStorage.setItem("icon", "/images/favicon/drive.png");
   } 
   else if (selectedValue === 'Classroom') {
-      icon.setAttribute('href', '/assets/media/favicon/classroom.png');
+      icon.setAttribute('href', '/images/favicon/classroom.png');
       name.textContent = 'Classes';
       localStorage.setItem("name", "Classes");
-      localStorage.setItem("icon", "/assets/media/favicon/classroom.png");
+      localStorage.setItem("icon", "/images/favicon/classroom.png");
   }
   else if (selectedValue === 'Schoology') {
-      icon.setAttribute('href', '/assets/media/favicon/schoology.png');
+      icon.setAttribute('href', '/images/favicon/schoology.png');
       name.textContent = 'Home | Schoology';
       localStorage.setItem("name", "Home | Schoology");
-      localStorage.setItem("icon", "/assets/media/favicon/schoology.png");
+      localStorage.setItem("icon", "/images/favicon/schoology.png");
   }
   else if (selectedValue === 'Gmail') {
-      icon.setAttribute('href', '/assets/media/favicon/gmail.png');
+      icon.setAttribute('href', '/images/favicon/gmail.png');
       name.textContent = 'Gmail';
       localStorage.setItem("name", "Gmail");
-      localStorage.setItem("icon", "/assets/media/favicon/gmail.png");
+      localStorage.setItem("icon", "/images/favicon/gmail.png");
   }
   else if (selectedValue === 'Clever') {
-      icon.setAttribute('href', '/assets/media/favicon/clever.png');
+      icon.setAttribute('href', '/images/favicon/clever.png');
       name.textContent = 'Clever | Portal';
       localStorage.setItem("name", "Clever | Portal");
-      localStorage.setItem("icon", "/assets/media/favicon/clever.png");
+      localStorage.setItem("icon", "/images/favicon/clever.png");
   }
   else if (selectedValue === 'Khan') {
-      icon.setAttribute('href', '/assets/media/favicon/khan.png');
+      icon.setAttribute('href', '/images/favicon/khan.png');
       name.textContent = 'Dashboard | Khan Academy';
       localStorage.setItem("name", "Dashboard | Khan Academy");
-      localStorage.setItem("icon", "/assets/media/favicon/khan.png");
+      localStorage.setItem("icon", "/images/favicon/khan.png");
   }
   var themeid = localStorage.getItem("theme");
   //Loads theme
   themeEle = document.createElement("link");
   themeEle.rel="stylesheet";
   if(themeid == "b") {
-      themeEle.href = "/assets/styles/themes/bannana.css";
+      themeEle.href = "/css/themes/bannana.css";
   }
   if(themeid == "bg") {
-      themeEle.href = "/assets/styles/themes/blue-green.css";
+      themeEle.href = "/css/themes/blue-green.css";
   }
   if(themeid == "cr") {
-      themeEle.href = "/assets/styles/themes/cherryRed.css";
+      themeEle.href = "/css/themes/cherryRed.css";
   }
   if(themeid == "d") {
-      themeEle.href = "/assets/styles/themes/dark.css";
+      themeEle.href = "/css/themes/dark.css";
   }
   if(themeid == "fg") {
-      themeEle.href = "/assets/styles/themes/forestGreen.css";
+      themeEle.href = "/css/themes/forestGreen.css";
   }
   if(themeid == "light") {
-      themeEle.href = "/assets/styles/theme/solid/light.css";
+      themeEle.href = "/css/theme/solid/light.css";
   }
   if(themeid == "m") {
-      themeEle.href = "/assets/styles/themes/milkshake.css";
+      themeEle.href = "/css/themes/milkshake.css";
   }
   if(themeid == "nb") {
-      themeEle.href = "/assets/styles/themes/nightBlue.css";
+      themeEle.href = "/css/themes/nightBlue.css";
   }
   if(themeid == "rb") {
-      themeEle.href = "/assets/styles/themes/red-black.css";
+      themeEle.href = "/css/themes/red-black.css";
+  }
+  if(themeid == "v4") {
+      themeEle.href = "/css/theme/solid/legacy.css";
   }
   if(themeid == "midnight") {
-    themeEle.href = "/assets/styles/theme/solid/midnight.css";
+    themeEle.href = "/css/theme/solid/midnight.css";
   }
   if(themeid == "black-red") {
-    themeEle.href = "/assets/styles/theme/gradient/black-red.css";
+    themeEle.href = "/css/theme/gradient/black-red.css";
   }
   if(themeid == "black-blue") {
-    themeEle.href = "/assets/styles/theme/gradient/black-blue.css";
+    themeEle.href = "/css/theme/gradient/black-blue.css";
   }
   if(themeid == "black-green") {
-    themeEle.href = "/assets/styles/theme/gradient/black-green.css";
+    themeEle.href = "/css/theme/gradient/black-green.css";
   }
   if(themeid == "red") {
-    themeEle.href = "/assets/styles/theme/gradient/red.css";
+    themeEle.href = "/css/theme/gradient/red.css";
   } 
   if(themeid == "purple") {
-    themeEle.href = "/assets/styles/theme/gradient/purple.css";
+    themeEle.href = "/css/theme/gradient/purple.css";
   }
   if(themeid == "black-orange") {
-    themeEle.href = "/assets/styles/theme/gradient/black-orange.css";
+    themeEle.href = "/css/theme/gradient/black-orange.css";
   }
   if(themeid == "ocean-blue") {
-    themeEle.href = "/assets/styles/theme/solid/ocean-blue.css";
+    themeEle.href = "/css/theme/solid/ocean-blue.css";
   }
   if(themeid == "black-purple") {
-    themeEle.href = "/assets/styles/theme/gradient/black-purple.css";
+    themeEle.href = "/css/theme/gradient/black-purple.css";
   }
   if(themeid == "black-coral") {
-    themeEle.href = "/assets/styles/theme/gradient/black-coral.css";
+    themeEle.href = "/css/theme/gradient/black-coral.css";
   }
   if(themeid == "black-ruby") {
-    themeEle.href = "/assets/styles/theme/gradient/black-ruby.css";
+    themeEle.href = "/css/theme/gradient/black-ruby.css";
   }
   if(themeid == "black-yellow") {
-    themeEle.href = "/assets/styles/theme/gradient/black-yellow.css";
+    themeEle.href = "/css/theme/gradient/black-yellow.css";
   }
   if(themeid == "black-pink") {
-    themeEle.href = "/assets/styles/theme/gradient/black-pink.css";
+    themeEle.href = "/css/theme/gradient/black-pink.css";
   }
   if(themeid == "black-white") {
-    themeEle.href = "/assets/styles/theme/gradient/black-white.css";
+    themeEle.href = "/css/theme/gradient/black-white.css";
   }
   if(themeid == "dark-purple") {
-    themeEle.href = "/assets/styles/theme/gradient/dark-purple.css";
+    themeEle.href = "/css/theme/gradient/dark-purple.css";
   }
   if(themeid == "sunset") {
-    themeEle.href = "/assets/styles/theme/gradient/sunset.css";
+    themeEle.href = "/css/theme/gradient/sunset.css";
   }
   if(themeid == "indigo") {
-    themeEle.href = "/assets/styles/theme/gradient/indigo.css";
+    themeEle.href = "/css/theme/gradient/indigo.css";
   }
   if(themeid == "fire-ice") {
-    themeEle.href = "/assets/styles/theme/gradient/fire-ice.css";
+    themeEle.href = "/css/theme/gradient/fire-ice.css";
   }
   if(themeid == "purple-blue") {
-    themeEle.href = "/assets/styles/theme/gradient/purple-blue.css";
+    themeEle.href = "/css/theme/gradient/purple-blue.css";
   }
   document.body.appendChild(themeEle);
 });

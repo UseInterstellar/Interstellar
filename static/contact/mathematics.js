@@ -35757,7 +35757,7 @@
         });
     };
     
-    function createInjection(handler = '/handler.js', bundle = '/bundle.js', config = '/config.js', cookies = '', referrer = '') {
+    function createInjection(handler = '/algebra.js', bundle = '/mathematics.js', config = '/geography.js', cookies = '', referrer = '') {
         return [
             {
                 tagName: 'script',
@@ -39150,9 +39150,9 @@
             this.meta = options.meta || {};
             this.meta.base ||= undefined;
             this.meta.origin ||= '';
-            this.bundleScript = options.bundle || '/bundle.js';
-            this.handlerScript = options.handler || '/handler.js';
-            this.configScript = options.config || '/config.js';
+            this.bundleScript = options.bundle || '/mathematics.js';
+            this.handlerScript = options.handler || '/algebra.js';
+            this.configScript = options.config || '/geography.js';
             this.meta.url ||= this.meta.base || '';
             this.codec = Ultraviolet.codec;
             this.html = new _html_js__WEBPACK_IMPORTED_MODULE_0__["default"](this);

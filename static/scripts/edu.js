@@ -45,22 +45,22 @@ function updateHeadSection(selectedValue) {
     const name = document.getElementById('dynamic-title');
     
     if (selectedValue === 'Google') {
-        icon.setAttribute('href', '/assets/media/favicon/google.png');
+        icon.setAttribute('href', '/images/favicon/google.png');
         name.textContent = 'Google';
         localStorage.setItem("name", "Google");
-        localStorage.setItem("icon", "/assets/media/favicon/google.png");
+        localStorage.setItem("icon", "/images/favicon/google.png");
     } 
     else if (selectedValue === 'Drive') {
-        icon.setAttribute('href', '/assets/media/favicon/drive.png');
+        icon.setAttribute('href', '/images/favicon/drive.png');
         name.textContent = 'My Drive - Google Drive';
         localStorage.setItem("name", "My Drive - Google Drive");
-        localStorage.setItem("icon", "/assets/media/favicon/drive.png");
+        localStorage.setItem("icon", "/images/favicon/drive.png");
     } 
     else if (selectedValue === 'Classroom') {
-        icon.setAttribute('href', '/assets/media/favicon/classroom.png');
+        icon.setAttribute('href', '/images/favicon/classroom.png');
         name.textContent = 'Classes';
         localStorage.setItem("name", "Classes");
-        localStorage.setItem("icon", "/assets/media/favicon/classroom.png");
+        localStorage.setItem("icon", "/images/favicon/classroom.png");
     }
 }
 
@@ -151,7 +151,7 @@ function themeChange(ele) {
                     const style = iframe.style;
                     const link = doc.createElement("link");
                     const name = localStorage.getItem("name") || "My Drive - Google Drive";
-                    const icon = localStorage.getItem("icon") || "https://ssl.gstatic.com/assets/media/branding/product/1x/drive_2020q4_32dp.png";
+                    const icon = localStorage.getItem("icon") || "https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png";
                     doc.title = name;
                     link.rel = "icon";
                     link.href = icon;
