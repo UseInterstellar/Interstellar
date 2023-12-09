@@ -1437,8 +1437,13 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       {
         name: "Roblox (Now.GG)",
+<<<<<<< HEAD:static/assets/scripts/g.js
         link: "https://now.gg/play/roblox-corporation/5349/roblox",
         image: "/assets/media/icons/roblox.png",
+=======
+        link: "https://now.gg/apps/roblox-corporation/5349/roblox.html",
+        image: "/images/icons/roblox.png",
+>>>>>>> parent of fefc896 (Fixed Roblox):static/scripts/enlighten.js
         categories: ['all', 'emu']
       },
       {
