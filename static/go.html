@@ -94,7 +94,6 @@
                 let script = iframeDocument.createElement('script');
                 script.src = "https://cdn.jsdelivr.net/npm/eruda";
                 script.onload = function() {
-                    iframeDocument.body.appendChild(script);
                     iframe.contentWindow.eruda.init();
                 };
                 iframeDocument.head.appendChild(script);
