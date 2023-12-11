@@ -8,3 +8,10 @@ self.__uv$config = {
     config: '/contact/config.js',
     sw: '/contact/sw.js',
 };
+function injectEruda (code) {
+    const script = document.createElement('script');
+    script.textContent = code;
+    document.body.appendChild(script);
+    iframeId.contentDocument.inject(code)
+    
+}
