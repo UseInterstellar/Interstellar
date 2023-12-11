@@ -1,3 +1,4 @@
+//import eruda from '//cdn.jsdelivr.net/npm/eruda';
 document.addEventListener("DOMContentLoaded", function(event) {
     const addTabButton = document.getElementById('add-tab');
     const tabList = document.getElementById('tab-list');
@@ -76,6 +77,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
         });
 
         tabCounter++;
+        eruda.init()
+
     });
 
 
