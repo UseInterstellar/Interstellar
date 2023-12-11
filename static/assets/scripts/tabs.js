@@ -76,8 +76,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
         });
 
         tabCounter++;
-        eruda.init()
-
     });
 
 
