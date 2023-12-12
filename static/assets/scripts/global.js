@@ -18,8 +18,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
   } 
   else if (selectedValue === 'Classroom') {
       icon.setAttribute('href', '/assets/media/favicon/classroom.png');
-      name.textContent = 'Classes';
-      localStorage.setItem("name", "Classes");
+      name.textContent = 'Home';
+      localStorage.setItem("name", "Home");
       localStorage.setItem("icon", "/assets/media/favicon/classroom.png");
   }
   else if (selectedValue === 'Schoology') {
@@ -45,7 +45,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
       name.textContent = 'Dashboard | Khan Academy';
       localStorage.setItem("name", "Dashboard | Khan Academy");
       localStorage.setItem("icon", "/assets/media/favicon/khan.png");
+    }
+    else if (selectedValue === 'Campus') {
+        icon.setAttribute('href', '/assets/media/favicon/campus.png');
+        name.textContent = 'Infinite Campus';
+        localStorage.setItem("name", "Infinite Campus");
+        localStorage.setItem("icon", "/assets/media/favicon/campus.png");
   }
+  else if (selectedValue === 'IXL') {
+    icon.setAttribute('href', '/assets/media/favicon/ixl.png');
+    name.textContent = 'IXL | Dashboard';
+    localStorage.setItem("name", "IXL | Dashboard");
+    localStorage.setItem("icon", "/assets/media/favicon/ixl.png");
+  }
+  
   var themeid = localStorage.getItem("theme");
   //Loads theme
   themeEle = document.createElement("link");

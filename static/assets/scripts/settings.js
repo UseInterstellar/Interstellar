@@ -58,8 +58,8 @@ function updateHeadSection(selectedValue) {
     } 
     else if (selectedValue === 'Classroom') {
         icon.setAttribute('href', '/assets/media/favicon/classroom.png');
-        name.textContent = 'Classes';
-        localStorage.setItem("name", "Classes");
+        name.textContent = 'Home';
+        localStorage.setItem("name", "Home");
         localStorage.setItem("icon", "/assets/media/favicon/classroom.png");
     }
 }

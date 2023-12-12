@@ -67,7 +67,6 @@ body {
 }
 
 .lower-footer {
-    background-color: var(--background-dark);
     height: 8vh;
     margin: 0;
     padding-top: 1vh;
