@@ -3,6 +3,7 @@ import http from 'node:http';
 import { createBareServer } from "@tomphttp/bare-server-node";
 import path from 'node:path';
 import cors from 'cors';
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const __dirname = process.cwd();
 const server = http.createServer();
