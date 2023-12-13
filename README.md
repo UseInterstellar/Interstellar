@@ -16,6 +16,7 @@
     <li>Wide collection of Apps</li>
     <li>Built-In Tab System</li>
     <li>Clean UI</li>
+    <li>Inspect Element</li>
 </ul>
 
 <h2 align="center">Deployment</h2>
