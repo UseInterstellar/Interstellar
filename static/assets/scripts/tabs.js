@@ -244,6 +244,6 @@ function erudaToggle() {
             proccyWindow.eruda.init();
             proccyWindow.eruda.show();
         }
-        proccyDocument.head.appendChild(script);
+        proccyWindow.document.head.appendChild(script) || proccyDocument.head.appendChild(script);
     }
 };
