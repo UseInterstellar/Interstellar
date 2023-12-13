@@ -8,6 +8,14 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "Amazon Luna",
+      link: "https://luna.amazon.com/",
+      image: "/assets/media/icons/amazon-luna.png",
+      categories: ['all'],
+      blank: "true",
+      error: false
+    },
+    {
       name: "Dynast.io",
       link: "https://dynast.io",
       image: "/assets/media/icons/dynast-io.png",

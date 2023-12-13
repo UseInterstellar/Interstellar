@@ -278,6 +278,14 @@ document.addEventListener('DOMContentLoaded', () => {
       image: "/assets/media/icons/now-gg.png",
       categories: ['all', 'emu']
     },
+    {
+      name: "Amazon Luna",
+      link: "https://luna.amazon.com/",
+      image: "/assets/media/icons/amazon-luna.png",
+      categories: ["all", "game", "cloud"],
+      blank: "true",
+      error: false
+    },
   ];
     
   
