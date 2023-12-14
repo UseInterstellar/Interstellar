@@ -29,8 +29,8 @@ if (!inFrame && !navigator.userAgent.includes("Firefox")) {
         style.width = style.height = "100%"
 
         doc.head.appendChild(link);
-        doc.body.appendChild(iframe)
-        location.replace("https://www.nasa.gov/")
+        doc.body.appendChild(iframe);
+        location.replace(localStorage.getItem('panicLink') || 'https://www.nasa.gov/');
     };
 };
 
