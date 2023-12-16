@@ -33,18 +33,9 @@ You can **NOT** deploy to Netlify, Cloudflare Pages, Github Pages or any other *
 <a target="_blank" href="https://app.cyclic.sh/api/app/deploy/interstellarnetwork/Interstellar"><img alt="Deploy to Cyclic" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/cyclic.svg"></a>
 
 ## Deploy to Replit
-### **Replit will no longer be free starting January 1, 2024**
-1. Create a Replit Account (https://replit.com)
-2. Click **+ Create Repl**
-3. Click **Template** and Change the language to **Node.js**
-4. Then click **Create Repl**
-5. Click **Shell**
-- Paste the code below. (Ctrl + Shift + V)
-- `git clone https://github.com/interstellarnetwork/interstellar`
-6. Once it's done cloning paste the code below. (Ctrl + Shift + V)
-- ``cd interstellar && npm i && npm run start``
+As of 01/01/2024, Replit is no longer free. Try GitHub Codespaces instead.  
 
-## Quick Deploy to GitHub Codespaces
+## Deploy to GitHub Codespaces
 1. Create a GitHub account if you haven't already
 2. Scroll up, click "Code" (green button), and then "Create Codespace on main"
 3. In the terminal on the bottom, paste `npm i && npm run start`
