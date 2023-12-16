@@ -33,7 +33,7 @@ You can **NOT** deploy to Netlify, Cloudflare Pages, Github Pages or any other *
 <a target="_blank" href="https://app.cyclic.sh/api/app/deploy/interstellarnetwork/Interstellar"><img alt="Deploy to Cyclic" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/cyclic.svg"></a>
 
 ## Deploy to Replit
-As of 01/01/2024, Replit is no longer free. Try GitHub Codespaces instead.  
+As of 01/01/2024, Replit is [no longer free](https://blog.replit.com/hosting-changes). Try GitHub Codespaces instead.  
 
 ## Deploy to GitHub Codespaces
 1. Create a GitHub account if you haven't already
