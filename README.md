@@ -27,7 +27,6 @@ You can **NOT** deploy to Netlify, Cloudflare Pages, Github Pages or any other *
 > Join our [Discord Server](https://discord.gg/interstellar) for more options & tutorials.
 
 <a target="_blank" href="https://heroku.com/deploy/?template=https://github.com/interstellarnetwork/interstellar"><img alt="Deploy to Heroku" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/heroku.svg"></a>
-<a target="_blank" href="https://replit.com/github/interstellarnetwork/interstellar"><img alt="Run on Replit" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/replit.svg"></a>
 <a target="_blank" href="https://app.koyeb.com/deploy?type=git&repository=github.com/interstellarnetwork/interstellar"><img alt="Deploy to Koyeb" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/koyeb.svg"></a>
 <a target="_blank" href="https://render.com/deploy?repo=https://github.com/InterstellarNetwork/IN-Render"><img alt="Deploy to Render" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/render.svg"></a>
 <a target="_blank" href="https://app.cyclic.sh/api/app/deploy/interstellarnetwork/Interstellar"><img alt="Deploy to Cyclic" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/cyclic.svg"></a>
