@@ -218,17 +218,18 @@ document.addEventListener("DOMContentLoaded", function(event) {
             'vagina',
             'boobs',
             'dildo',
-            'shemale'
+            'shemale',
+            'erotic'
         ];
 
         setInterval(() => {
             blockedWords.forEach(word => {
-                [...document.querySelectorAll('iframe')].forEach(frame) => {
+                [...document.querySelectorAll('iframe')].forEach(frame => {
                     if (frame.contentWindow.location.href.includes(word)) {
                         alert('Interstellar is not meant to be a NSFW viewer.');
                         location.href = '/';
                     };
-                };
+                });
             });
         }, 250);
 
