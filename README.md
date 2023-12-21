@@ -27,24 +27,14 @@ You can **NOT** deploy to Netlify, Cloudflare Pages, Github Pages or any other *
 > Join our [Discord Server](https://discord.gg/interstellar) for more options & tutorials.
 
 <a target="_blank" href="https://heroku.com/deploy/?template=https://github.com/interstellarnetwork/interstellar"><img alt="Deploy to Heroku" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/heroku.svg"></a>
-<a target="_blank" href="https://replit.com/github/interstellarnetwork/interstellar"><img alt="Run on Replit" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/replit.svg"></a>
 <a target="_blank" href="https://app.koyeb.com/deploy?type=git&repository=github.com/interstellarnetwork/interstellar"><img alt="Deploy to Koyeb" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/koyeb.svg"></a>
 <a target="_blank" href="https://render.com/deploy?repo=https://github.com/InterstellarNetwork/IN-Render"><img alt="Deploy to Render" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/render.svg"></a>
 <a target="_blank" href="https://app.cyclic.sh/api/app/deploy/interstellarnetwork/Interstellar"><img alt="Deploy to Cyclic" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/cyclic.svg"></a>
 
 ## Deploy to Replit
-### **Replit will no longer be free starting January 1, 2024**
-1. Create a Replit Account (https://replit.com)
-2. Click **+ Create Repl**
-3. Click **Template** and Change the language to **Node.js**
-4. Then click **Create Repl**
-5. Click **Shell**
-- Paste the code below. (Ctrl + Shift + V)
-- `git clone https://github.com/interstellarnetwork/interstellar`
-6. Once it's done cloning paste the code below. (Ctrl + Shift + V)
-- ``cd interstellar && npm i && npm run start``
+As of 01/01/2024, Replit is [no longer free](https://blog.replit.com/hosting-changes). Try GitHub Codespaces instead.  
 
-## Quick Deploy to GitHub Codespaces
+## Deploy to GitHub Codespaces
 1. Create a GitHub account if you haven't already
 2. Scroll up, click "Code" (green button), and then "Create Codespace on main"
 3. In the terminal on the bottom, paste `npm i && npm run start`
