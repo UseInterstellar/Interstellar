@@ -3,5 +3,6 @@
     "description": "?",
     "repository": "https://github.com/interstellarnetwork/interstellar",
     "logo": "https://avatars.githubusercontent.com/u/103917385",
-    "keywords": ["school", "math"]
-  }
+    "keywords": ["school", "math"],
+    "image": "heroku/nodejs"
+}
