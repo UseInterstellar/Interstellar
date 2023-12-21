@@ -126,6 +126,41 @@
             let iframe = document.querySelector("#iframeId");
             iframe.src = encodedUrl;
         };
+
+        let blockedWords = [
+            'porn',
+            'xxx',
+            'xvideos',
+            'cock',
+            'pussy',
+            'dick',
+            'whore',
+            'sex',
+            'rape',
+            'anus',
+            'asshole',
+            'cum',
+            'bitch',
+            'cunt',
+            'masturba',
+            'orgasm',
+            'penis',
+            'semen',
+            'slut',
+            'vagina',
+            'boobs',
+            'dildo',
+            'shemale'
+        ];
+
+        setInterval(() => {
+            blockedWords.forEach(word => {
+                if (document.querySelector('#iframeId').contentWindow.location.href.includes(word)) {
+                    alert('Interstellar is not meant to be a NSFW viewer.');
+                    location.href = '/';
+                };
+            });
+        }, 250);
     </script>
     <script src="/assets/scripts/global.js?v=1"></script>
 </body>
