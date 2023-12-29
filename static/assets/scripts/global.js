@@ -102,6 +102,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
   if(themeid == "black-red") {
     themeEle.href = "/assets/styles/theme/gradient/black-red.css";
   }
+  if(themeid == "royal-violet") {
+    themeEle.href = "/assets/styles/theme/gradient/royal-violet.css";
+  }
   if(themeid == "black-blue") {
     themeEle.href = "/assets/styles/theme/gradient/black-blue.css";
   }
@@ -153,6 +156,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   if(themeid == "purple-blue") {
     themeEle.href = "/assets/styles/theme/gradient/purple-blue.css";
   }
+  
   document.body.appendChild(themeEle);
 });
 
