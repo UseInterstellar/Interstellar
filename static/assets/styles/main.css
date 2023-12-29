@@ -50,7 +50,13 @@ body {
     box-shadow: 0 0 15px 2px rgba(0, 0, 0, 0.2);
     background: var(--background-secondary);
     backdrop-filter: var(--background-filter);
+    transition: width 0.3s ease; /* Add transition for width */
 }
+
+.main-search:hover {
+    width: 70vw; /* Set the expanded width on hover */
+}
+
 
 .fixed-nav-bar-container {
     min-width: 5vw;
