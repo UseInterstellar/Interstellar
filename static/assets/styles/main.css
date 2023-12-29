@@ -362,7 +362,7 @@ input:hover {
 
 select {
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 10px; /* Rounded corners */
     background: var(--column);
     color: var(--text-primary);
     font-size: 20px;
@@ -375,8 +375,8 @@ select {
 }
 
 /* Smooth dropdown effect */
-select:hover {
-    max-height: 200px; /* Adjust max-height on hover */
+select:focus {
+    max-height: 200px; /* Adjust max-height on focus (click) */
 }
 
 /* Smooth sliding animation for options */
