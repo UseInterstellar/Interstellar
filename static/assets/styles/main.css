@@ -85,6 +85,7 @@ body {
     text-align: center;
     font-size: 15px;
     font-family: "Poppins", sans-serif;
+    transition: transform 0.3s ease-out;
 }
 
 .lower-footer > h1 > a {
@@ -93,7 +94,14 @@ body {
     margin-right: 1vw;
     margin-left: 1vw;
     font-family: "Poppins", sans-serif;
+    transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
 }
+
+.lower-footer > h1 > a:hover {
+    transform: scale(1.1); /* Expanding effect */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Subtle glow effect */
+}
+
 
 .featured {
     background-color: var(--background);
