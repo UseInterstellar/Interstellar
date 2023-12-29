@@ -353,6 +353,11 @@ input {
     border: none;
     outline: none;
     color: var(--text-primary);
+    transition: width 0.3s ease; /* Adding transition for input width */
+}
+
+input:hover {
+    width: 600px; /* Adjust width on hover */
 }
 
 select {
@@ -364,7 +369,30 @@ select {
     border: 0px;
     outline: none;
     cursor: pointer;
+    transition: max-height 0.3s ease; /* Adding transition for select max-height */
+    max-height: 60px; /* Set initial max-height */
+    overflow: hidden; /* Hide overflow */
 }
+
+/* Smooth dropdown effect */
+select:hover {
+    max-height: 200px; /* Adjust max-height on hover */
+}
+
+/* Smooth sliding animation for options */
+select option {
+    transition: all 0.3s ease; /* Adding transition for options */
+}
+
+/* Optional: To style the dropdown arrow */
+select::-ms-expand {
+    display: none;
+}
+
+select::-webkit-scrollbar {
+    display: none;
+}
+
 
 .container-apps {
     margin-top: 20px;
