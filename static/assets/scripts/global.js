@@ -153,6 +153,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
   if(themeid == "purple-blue") {
     themeEle.href = "/assets/styles/theme/gradient/purple-blue.css";
   }
+  if (themeid == "catppuccinMocha") {
+    themeEle.href = "/assets/styles/theme/catppuccin/mocha.css";
+  }
   document.body.appendChild(themeEle);
 });
 
