@@ -1,0 +1,35 @@
+:root {
+    --page: #1e1e2e /*base*/;
+    --background: #1e1e2e;
+    --background-secondary: #181825 /*mantle*/;
+    --background-dark: #11111b /*crust*/;
+
+
+
+    --title: #89b4fa /*blue*/;
+    --block: #313244 /*surface0*/;
+    --block-buttons: #45475a /*surface1*/;
+    --input: #313244 /*surface0*/;
+    --column: #11111b /*crust*/;
+
+    --text-primary: #cdd6f4 /*text*/;
+    --text-secondary: #bac2de /*subtext1*/;
+    --text-placeholder: #a6adc8 /*subtext0*/;
+
+}
+input, select, .column, .key-form, button, .key-button, .searchbar {
+    background-color:  #313244 /*surface0*/;
+    color: #bac2de /*subtext1*/;
+}
+.settings-card {
+    background-color: #181825 /*mantle*/;
+}
+input:checked + .slider-round {
+    background-color: #000;
+}
+.fixed-nav-bar-right .navbar-link {
+    color: #cba6f7 /*mauve*/;
+}
+.fixed-nav-bar-right:hover .navbar-link:hover {
+    color: #89b4fa /*blue*/;
+}
