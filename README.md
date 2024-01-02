@@ -44,11 +44,9 @@ As of 01/01/2024, Replit is [no longer free](https://blog.replit.com/hosting-cha
 
 
 ## If you need any help with deploying, join our Discord!
-- https://discord.gg/interstellar
+If you have any problems please open an issue, so we can fix it ASAP!<br>
 
-> **Note**
-> If you have any problems please open an issue, so we can fix it ASAP!<br>
-> If you don't know how to do this because you are an absolute no-brainer then message us a report in our [Discord](https://discord.gg/interstellar).
+If you don't know how to do this because you are an absolute no-brainer then message us a report in our [Discord](https://discord.gg/interstellar).
 
 # Credits
 Huge thanks to following people for contributing to Interstellar!
