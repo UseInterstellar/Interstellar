@@ -153,6 +153,18 @@ document.addEventListener("DOMContentLoaded", function(event) {
   if(themeid == "purple-blue") {
     themeEle.href = "/assets/styles/theme/gradient/purple-blue.css";
   }
+  if (themeid == "catppuccinMocha") {
+    themeEle.href = "/assets/styles/theme/catppuccin/mocha.css";
+  }
+  if (themeid == "catppuccinMacchiato") {
+    themeEle.href = "/assets/styles/theme/catppuccin/macchiato.css";
+  }
+  if (themeid == "catppuccinFrappe") {
+    themeEle.href = "/assets/styles/theme/catppuccin/frappe.css";
+  }
+  if (themeid == "catppuccinLatte") {
+    themeEle.href = "/assets/styles/theme/catppuccin/latte.css";
+  }
   document.body.appendChild(themeEle);
 });
 
