@@ -38,6 +38,20 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "Snow Rider 3D",
+      link: "https://html5.gamedistribution.com/rvvASMiM/3b79a8537ebc414fb4f9672a9b8c68c8/index.html?gd_zone_config=eyJwYXJlbnRVUkwiOiJodHRwczovL3Nub3dyaWRlcjNkLmNvbS8iLCJwYXJlbnREb21haW4iOiJzbm93cmlkZXIzZC5jb20iLCJ0b3BEb21haW4iOiJzbm93cmlkZXIzZC5jb20iLCJoYXNJbXByZXNzaW9uIjpmYWxzZSwibG9hZGVyRW5hYmxlZCI6dHJ1ZSwiaG9zdCI6Imh0bWw1LmdhbWVkaXN0cmlidXRpb24uY29tIiwidmVyc2lvbiI6IjEuNS4xNiJ9",
+      image: "/assets/media/icons/snowrider3d.jpg",
+      categories: ["all"],
+      error: false
+    },
+    {
+      name: "3 Slices",
+      link: "https://images-opensocial.googleusercontent.com/gadgets/ifr?url=https://rb.y2.ee/3slices/3slices.xml?v=1",
+      image: "/assets/media/icons/3slices.jpg",
+      categories: ["all"],
+      error: false
+    },
+    {
       name: "ev.io",
       link: "https://ev.io",
       image: "/assets/media/icons/evio.jpg",
