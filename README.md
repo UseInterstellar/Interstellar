@@ -29,8 +29,10 @@ One of the most popular web proxies, used by over 5.5+ million people in 2023.
 <a target="_blank" href="https://app.cyclic.sh/api/app/deploy/interstellarnetwork/Interstellar"><img alt="Deploy to Cyclic" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/cyclic.svg"></a>
 
 ## Deployment Alternatives:
+For more deployment options join our [Discord Server](https://discord.gg/interstellar) for tons of different ways to deploy Interstellar.
 
-As of 01/01/2024, Replit is [no longer free](https://blog.replit.com/hosting-changes). Try GitHub Codespaces instead.  
+#### What happened to Replit Deployment? 
+As of January 1st 2024, Replit is [no longer free](https://blog.replit.com/hosting-changes). Try GitHub Codespaces instead.  
 
 ### GitHub Codespaces:
 1. Create a GitHub account if you haven't already.
