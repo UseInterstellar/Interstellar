@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const appsList = [
-    {
+  const appsList = [{
       name: "Amazon",
       link: "https://amazon.com/",
       image: "/assets/media/icons/apps/amazon.png",
@@ -287,16 +286,16 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
   ];
-    
-  
+
+
   appsList.sort((a, b) => a.name.localeCompare(b.name));
-  
+
   const nonPinnedApps = document.querySelector('.container-apps');
   const pinnedApps = document.querySelector('.pinned-apps');
   var pinList = localStorage.getItem("pinnedGames");
-  try{
-    pinList=pinList.split(",").map(Number)
-    } catch {}
+  try {
+    pinList = pinList.split(",").map(Number)
+  } catch {}
   var appInd = 0;
   appsList.forEach(app => {
     let pinNum = appInd
@@ -312,16 +311,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const btn = document.createElement('button');
     btn.appendChild(pinIcon);
     btn.style.float = "right";
-    btn.style.backgroundColor="rgb(45,45,45)";
-    btn.style.borderRadius="50%";
-    btn.style.borderColor="transparent";
-    btn.style.color="white";
-    btn.style.top="-200px";
-    btn.style.position="relative";
-    btn.onclick = function () {
+    btn.style.backgroundColor = "rgb(45,45,45)";
+    btn.style.borderRadius = "50%";
+    btn.style.borderColor = "transparent";
+    btn.style.color = "white";
+    btn.style.top = "-200px";
+    btn.style.position = "relative";
+    btn.onclick = function() {
       setPin(pinNum);
     };
-    btn.title="Pin";
+    btn.title = "Pin";
 
     const link = document.createElement('a');
 
@@ -367,19 +366,17 @@ document.addEventListener('DOMContentLoaded', () => {
     link.appendChild(image);
     link.appendChild(paragraph);
     columnDiv.appendChild(link);
-    if(appInd != 0) {
+    if (appInd != 0) {
       columnDiv.appendChild(btn);
     }
 
-    if(pinList!=null && appInd != 0) {
-      if(pinContains(appInd,pinList)) {
+    if (pinList != null && appInd != 0) {
+      if (pinContains(appInd, pinList)) {
         pinnedApps.appendChild(columnDiv);
-      }
-      else {
+      } else {
         nonPinnedApps.appendChild(columnDiv);
       }
-    }
-    else {
+    } else {
       nonPinnedApps.appendChild(columnDiv);
     }
     appInd++;
@@ -387,34 +384,38 @@ document.addEventListener('DOMContentLoaded', () => {
   appsContainer.appendChild(pinnedApps);
   appsContainer.appendChild(nonPinnedApps);
 });
+
 function setPin(index) {
   pins = localStorage.getItem("pinnedGames");
-  if(pins == null) {
+  if (pins == null) {
     pins = [];
   }
-  if(pins == "") {
+  if (pins == "") {
     pins = [];
-  }
-  else {
+  } else {
     pins = pins.split(",").map(Number);
   }
-  if(pinContains(index,pins)) {
+  if (pinContains(index, pins)) {
     let remove = pins.indexOf(index);
 
     pins.splice(remove, 1);
 
-  }
-  else {
+  } else {
     pins.push(index);
   }
   localStorage.setItem("pinnedGames", pins);
   location.reload();
 }
-function pinContains(i,p) {
-  if(p=="") {return false;}
-  for(var x = 0; x < p.length; x++) {if(p[x]===i) {
-    return true;
-  }}
+
+function pinContains(i, p) {
+  if (p == "") {
+    return false;
+  }
+  for (var x = 0; x < p.length; x++) {
+    if (p[x] === i) {
+      return true;
+    }
+  }
   return false;
 }
 

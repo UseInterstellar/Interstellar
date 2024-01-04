@@ -1,5 +1,5 @@
 body {
-    background-color: #111
+    background-color: #111 
 }
 .title {
     color:white;
@@ -13,12 +13,10 @@ body {
 #searchBar::placeholder {
     color: white;
 }
-
 @media (orientation: portrait) {
     #INImg {
         content: url("/legacyV4.png");
-        
-    }
+   }
 }
 #INImg {
     content: url("/legacyV4.png");

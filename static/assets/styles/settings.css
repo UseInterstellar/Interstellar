@@ -6,7 +6,6 @@ body {
     padding: 0;
     letter-spacing: 0px;
 }
-
 .settings-container {
     display: flex;
     flex-wrap: wrap;
@@ -14,7 +13,6 @@ body {
     gap: 20px;
     padding: 10% 20px 20px 20px;
 }
-
 .settings-title {
     display: block;
     font-size: 70px;
@@ -23,7 +21,6 @@ body {
     margin-inline-start: 0px;
     margin-inline-end: 0px;
     font-weight: bold;
-   
 }
 .settings-card {
     background-color: var(--block);
@@ -33,34 +30,28 @@ body {
     width: 400px;
     transition: all 0.3s ease;
 }
-
 .settings-card:hover {
     transform: translatey(-5px);
     box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
 }
-
 .settings-card h3 {
     margin-top: 0;
     color: var(--text-primary);
 }
-
 .settings-card p {
     color: var(--text-secondary);
 }
-
 .switch {
     position: relative;
     display: inline-block;
     width: 60px;
     height: 34px;
 }
-
 .switch input {
     opacity: 0;
     width: 0;
     height: 0;
 }
-
 .slider-round {
     position: absolute;
     cursor: pointer;
@@ -72,7 +63,6 @@ body {
     transition: .4s;
     border-radius: 34px;
 }
-
 .slider-round:before {
     position: absolute;
     content: "";
@@ -84,15 +74,12 @@ body {
     transition: .4s;
     border-radius: 50%;
 }
-
 input:checked + .slider-round {
     background-color: #4CAF50;
 }
-
 input:checked + .slider-round:before {
     transform: translateX(26px);
 }
-
 input {
     padding: 15px;
     width: 93%;
@@ -104,7 +91,6 @@ input {
     outline: none;
     color: var(--text-primary);
 }
-
 .key-form {
     padding: 15px;
     width: 93%;
@@ -117,7 +103,6 @@ input {
     color: var(--text-primary);
     margin-top: 10px;
 }
-
 .key-button {
     cursor: pointer;
     border: 2px;
@@ -132,7 +117,6 @@ input {
     padding: 10px;
     text-align: center;
 }
-
 button {
     cursor: pointer;
     border: 2px;
@@ -147,13 +131,12 @@ button {
     padding: 10px;
     text-align: center;
 }
-
 select {
-		padding: 20px;
-		border-radius: 5px;
-		background: var(--block-buttons);
-		color: var(--text-primary);
-		font-size: 20px;
-		border: 0px;
-		outline: none;
+    padding: 20px;
+    border-radius: 5px;
+    background: var(--block-buttons);
+    color: var(--text-primary);
+    font-size: 20px;
+    border: 0px;
+    outline: none;
 }

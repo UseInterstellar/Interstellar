@@ -14,12 +14,11 @@ h2 {
     content: url("/main.png");
 }
 input, select, .column, .key-form, button, .key-button, .searchbar {
-background-color: black;
+    background-color: black;
 }
 .settings-card {
-background-color: #111;    
+    background-color: #111;
 }
 input:checked + .slider-round {
     background-color: #000;
 }
-

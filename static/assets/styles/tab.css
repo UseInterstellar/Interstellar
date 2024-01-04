@@ -5,7 +5,6 @@
   --text-color: #f0f0f0;
   --hover-color: #555;
 }
-
 body {
   margin: 0;
   font-family: 'Roboto', Arial, sans-serif;
@@ -14,21 +13,17 @@ body {
   color: var(--text-color);
   overflow: hidden;
 }
-
 .iframe-container iframe {
   display: none;
 }
-
 .iframe-container iframe.active {
   display: block;
 }
-
 .container {
   display: grid;
   grid-template-rows: auto 1fr;
   height: 100vh;
 }
-
 .nav {
   background-color: var(--secondary-color);
   padding: 1rem;
@@ -44,7 +39,6 @@ body {
   display: flex;
   align-items: center;
 }
-
 #add-tab {
   padding: 0.5rem;
   cursor: pointer;
@@ -55,7 +49,6 @@ body {
   margin-right: 0.5rem;
   transition: background-color 0.3s ease;
 }
-
 #nav-button {
   float: left;
   padding: 0.5rem;
@@ -67,17 +60,14 @@ body {
   margin-right: 0.5rem;
   transition: background-color 0.3s ease;
 }
-
 #nav-button:hover {
   background-color: var(--hover-color);
 }
-
 ul {
   list-style-type: none;
   padding: 0;
   display: flex;
 }
-
 li {
   padding: 0.4rem;
   background-color: var(--accent-color);
@@ -89,11 +79,9 @@ li {
   align-items: center;
   justify-content: center;
 }
-
 li:hover {
   background-color: var(--hover-color);
 }
-
 iframe {
   position: absolute;
   width: 100%;
@@ -102,19 +90,15 @@ iframe {
   left: 0;
   top: 13%;
 }
-
 .toggle-nav-checkbox {
   display: none;
 }
-
 .toggle-nav-checkbox:checked~.container {
   grid-template-columns: 0 1fr;
 }
-
 .toggle-nav-checkbox {
   display: none;
 }
-
 .toggle-nav {
   position: fixed;
   bottom: 10px;
@@ -124,10 +108,7 @@ iframe {
   cursor: pointer;
   z-index: 1000;
 }
-
-.hamburger,
-.hamburger::before,
-.hamburger::after {
+.hamburger, .hamburger::before, .hamburger::after {
   content: '';
   display: block;
   width: 100%;
@@ -135,27 +116,21 @@ iframe {
   background-color: #333;
   transition: all 0.3s;
 }
-
 .hamburger::before {
   transform: translateY(-8px);
 }
-
 .hamburger::after {
   transform: translateY(4px);
 }
-
 .toggle-nav.open .hamburger {
   transform: rotate(45deg);
 }
-
 .toggle-nav.open .hamburger::before {
   opacity: 0;
 }
-
 .toggle-nav.open .hamburger::after {
   transform: translateY(-4px) rotate(-90deg);
 }
-
 .close-tab {
   border: none;
   background: none;
@@ -165,11 +140,9 @@ iframe {
   transition: color 0.3s ease;
   width: 30px;
 }
-
 .close-tab:hover {
   color: var(--text-color);
 }
-
 .address-bar-container {
   display: flex;
   align-items: center;
@@ -184,7 +157,6 @@ iframe {
   position: fixed;
   left: 5px;
 }
-
 .address-bar-input {
   opacity: 1;
   background-color: transparent;
@@ -198,7 +170,6 @@ iframe {
   width: 400px;
   transition: opacity 0.5s, width 0.5s;
 }
-
 .address-bar-search-form {
   display: flex;
   align-items: center;

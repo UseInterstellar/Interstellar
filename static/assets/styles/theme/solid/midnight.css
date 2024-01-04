@@ -8,16 +8,16 @@ h2 {
     color:white;
 }
 .fixed-nav-bar-right .navbar-link {
-    color:white
+    color:white 
 }
 #INImg {
     content: url("/main.png");
 }
 input, select, .column, .key-form, button, .key-button, .searchbar {
-background-color: #222;
+    background-color: #222;
 }
 .settings-card {
-background-color: #111;    
+    background-color: #111;
 }
 input:checked + .slider-round {
     background-color: #000;
