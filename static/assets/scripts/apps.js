@@ -418,7 +418,7 @@ function pinContains(i,p) {
   return false;
 }
 
-function showImages() {
+function show_category() {
   var selectedCategories = Array.from(document.querySelectorAll("#category option:checked")).map(option => option.value);
   var games = document.getElementsByClassName("column");
 
@@ -434,7 +434,7 @@ function showImages() {
   }
 }
 
-function search_game() {
+function search_bar() {
   var input = document.getElementById("searchbarbottom");
   var filter = input.value.toLowerCase();
   var games = document.getElementsByClassName("column");

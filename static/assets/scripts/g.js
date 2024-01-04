@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       name: "Stickman Hook",
-      link: "/edu/stickman-hook/index.html",
+      link: "/y/stickman-hook/index.html",
       image: "/assets/media/icons/stickmanhook.jpg",
       categories: ['all', 'local'],
       local: "true"
@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       name: "Jetpack Joyride",
-      link: "/edu/jetpack-joyride/index.html",
+      link: "/y/jetpack-joyride/index.html",
       image: "/assets/media/icons/jetpackjoyride.png",
       categories: ['all', 'local'],
       local: "true"
@@ -703,7 +703,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       name: "Cluster Rush",
-      link: "/edu/Cluster-Rush/index.html",
+      link: "/y/Cluster-Rush/index.html",
       image: "/assets/media/icons/cluster-rush.webp",
       categories: ["all", 'local'],
       local: "true"
@@ -990,7 +990,7 @@ document.addEventListener('DOMContentLoaded', () => {
       },  
       {
         name: "Monkey Mart",
-        link: "/edu/monkey-mart/index.html",
+        link: "/y/monkey-mart/index.html",
         image: "/assets/media/icons/mm.webp",
         categories: ['all', 'local'],
         local: "true"
@@ -1452,7 +1452,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       name: "Retro Bowl",
-      link: "/edu/retro/index.html",
+      link: "/y/retro/index.html",
       image: "/assets/media/icons/retro.webp",
       categories: ["all,", 'sports', 'local'],
       local: "true",
@@ -1535,7 +1535,7 @@ document.addEventListener('DOMContentLoaded', () => {
           alert(app.say);
         }
         saveToLocal(app.link);
-        window.location.href = '/edu.html';
+        window.location.href = '/w';
         return false;
       };
     } else if (app.blank) {
@@ -1623,7 +1623,7 @@ function pinContains(i,p) {
   return false;
 }
 
-function showImages() {
+function show_category() {
   var selectedCategories = Array.from(document.querySelectorAll("#category option:checked")).map(option => option.value);
   var games = document.getElementsByClassName("column");
 
@@ -1639,7 +1639,7 @@ function showImages() {
   }
 }
 
-function search_game() {
+function search_bar() {
   var input = document.getElementById("searchbarbottom");
   var filter = input.value.toLowerCase();
   var games = document.getElementsByClassName("column");
