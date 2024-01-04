@@ -1,7 +1,7 @@
 <div align="center">
     <h1>Interstellar Proxy</h1>
     </div>
-One of the most popular web proxies, used by over 5.5+ million people in 2023.
+One of the most popular web proxies, used by over 5.7 million people in 2023.
 
 ### Consider joining our[ Discord Community](https://discord.gg/interstellar)    
 > If you find this project useful, consider giving it a star in the original repository.
