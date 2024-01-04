@@ -1,11 +1,10 @@
 <div align="center">
-    <h1>Interstellar V5</h1>
-    <h3>Interstellar is one of the most modern and popular unblocking sites.</h3>
-    
-### [Join our Discord!](https://discord.gg/interstellar)
-</div>
+    <h1>Interstellar Proxy</h1>
+    </div>
+One of the most popular web proxies, used by over 5.5+ million people in 2023.
 
-> **If you do fork this repo, please give the original repo a star! It helps out alot and only 30% of people who fork give us a star... besides, you know you want to...**
+### Consider joining our[ Discord Community](https://discord.gg/interstellar)    
+> If you find this project useful, consider giving it a star in the original repository.
 
 <h2 align="center">Features</h2>
 <ul>
@@ -21,34 +20,33 @@
 
 <h2 align="center">Deployment</h2>
 
-You can **NOT** deploy to Netlify, Cloudflare Pages, Github Pages or any other **static** Web Host.
-
-> **Note**
-> Join our [Discord Server](https://discord.gg/interstellar) for more options & tutorials.
+### Easy Deployment
+**Note:** You **cannot** deploy to static web hosts, including Netlify, Cloudflare Pages, and GitHub Pages.
 
 <a target="_blank" href="https://heroku.com/deploy/?template=https://github.com/interstellarnetwork/interstellar"><img alt="Deploy to Heroku" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/heroku.svg"></a>
 <a target="_blank" href="https://app.koyeb.com/deploy?type=git&repository=github.com/interstellarnetwork/interstellar"><img alt="Deploy to Koyeb" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/koyeb.svg"></a>
 <a target="_blank" href="https://render.com/deploy?repo=https://github.com/InterstellarNetwork/IN-Render"><img alt="Deploy to Render" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/render.svg"></a>
 <a target="_blank" href="https://app.cyclic.sh/api/app/deploy/interstellarnetwork/Interstellar"><img alt="Deploy to Cyclic" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/cyclic.svg"></a>
 
-## Deploy to Replit
+## Deployment Alternatives:
+
 As of 01/01/2024, Replit is [no longer free](https://blog.replit.com/hosting-changes). Try GitHub Codespaces instead.  
 
-## Deploy to GitHub Codespaces
-1. Create a GitHub account if you haven't already
-2. Scroll up, click "Code" (green button), and then "Create Codespace on main"
-3. In the terminal on the bottom, paste `npm i && npm run start`
-4. You'll see a popup on the corner about an application. Click "Make public"
-5. Go to the ports tab on the top (next to the terminal tab), and then click the website that appears on the list.
+### GitHub Codespaces:
+1. Create a GitHub account if you haven't already.
+2. Click "Code" (green button) and then "Create Codespace on main."
+3. In the terminal at the bottom, paste `npm i && npm run start`.
+4. Respond to the application popup by clicking "Make public."
+5. Access the deployed website from the ports tab.
 6. For subsequent uses in the same codespace, just run `npm run start`
 
+## Need Help with Deployment?
+If you're having trouble, reach out to us on [Discord](https://discord.gg/interstellar) for personalized support.
 
-## If you need any help with deploying, join our Discord!
-If you have any problems please open an issue, so we can fix it ASAP!<br>
-
-If you don't know how to do this because you are an absolute no-brainer then message us a report in our [Discord](https://discord.gg/interstellar).
+### Report Issues:
+If you encounter problems, open an issue on GitHub, and we'll address it promptly.
 
 # Credits
-Huge thanks to following people for contributing to Interstellar!
+A huge thank you to all of the people who have contributed to Interstellar.
 
-[![Contrib](https://contrib.rocks/image?repo=InterstellarNetwork/Interstellar)](https://github.com/InterstellarNetwork/Interstellar/graphs/contributors)
+[![Contributors](https://contrib.rocks/image?repo=InterstellarNetwork/Interstellar)](https://github.com/InterstellarNetwork/Interstellar/graphs/contributors)
