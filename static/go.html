@@ -100,7 +100,7 @@
         });
         window.onload = function() {
             let encodedUrl = sessionStorage.getItem("encodedUrl");
-            encodedUrl = "/reviews/" + encodedUrl;
+            encodedUrl = "/a/" + encodedUrl;
             console.log(encodedUrl);
             document.querySelector("#iframeid").src = encodedUrl;
             let iframe = document.querySelector("#iframeId");

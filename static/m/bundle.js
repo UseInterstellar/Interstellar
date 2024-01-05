@@ -39140,7 +39140,7 @@
     
     class Ultraviolet {
         constructor(options = {}) {
-            this.prefix = options.prefix || '/reviews/';
+            this.prefix = options.prefix || '/a/';
             this.urlRegex = /^(#|about:|data:|mailto:)/
             this.rewriteUrl = options.rewriteUrl || this.rewriteUrl;
             this.sourceUrl = options.sourceUrl || this.sourceUrl;
