@@ -1,12 +1,9 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" id="dynamic-favicon" href="favicon.png">
     <title id="dynamic-title">Home</title>
     <script src="https://kit.fontawesome.com/1237c86ba0.js" crossorigin="anonymous"></script>
-
     <!--- Style --->
     <style>
         body {
@@ -29,44 +26,24 @@
             background-color: rgba(255, 255, 255, 0.2);
             border: none;
             position: fixed;
-            top: 10px;
             right: 10px;
         }
-        
+
         .navbtn1 {
-            float: right;
-            border-radius: 100%;
-            width: 50px;
-            height: 50px;
-            background-color: rgba(255, 255, 255, 0.2);
-            border: none;
-            position: fixed;
-            top: 70px;
-            right: 10px;
+            top: 10px;
         }
         
         .navbtn2 {
-            float: right;
-            border-radius: 100%;
-            width: 50px;
-            height: 50px;
-            background-color: rgba(255, 255, 255, 0.2);
-            border: none;
-            position: fixed;
-            top: 130px;
-            right: 10px;
+            top: 70px;
         }
+        
         .navbtn3 {
-            float: right;
-            border-radius: 100%;
-            width: 50px;
-            height: 50px;
-            background-color: rgba(255, 255, 255, 0.2);
-            border: none;
-            position: fixed;
-            top: 190px;
-            right: 10px;
+            top: 130px;
         }
+        .navbtn4 {
+            top: 190px;
+        }
+        
     </style>
 </head>
 
@@ -76,10 +53,10 @@
     </script>
     <iframe src="" id="iframeId" style="bottom: 0" style="border: 0px #ffffff none" name="Iframe" scrolling="yes" frameborder="0" marginheight="0px" marginwidth="0px" height="100%" width="100%" allowfullscreen></iframe>
 
-    <button onclick="reload()" class="navbtn"> <i class="fa-solid fa-rotate-right"></i> </button>
-    <button id="home-page" class="navbtn1" onclick="reload()"> <i class="fa-solid fa-house"></i> </button>
-    <button id="fullscreen-button" class="navbtn2"><i class="fa-solid fa-expand"></i></button>
-    <button id="eruda-button" class="navbtn3" onclick="erudaToggle()"><i class="fa-solid fa-code"></i></button>
+    <button onclick="reload()" class="navbtn navbtn1"> <i class="fa-solid fa-rotate-right"></i> </button>
+    <button id="home-page" class="navbtn navbtn2" onclick="reload()"> <i class="fa-solid fa-house"></i> </button>
+    <button id="fullscreen-button" class="navbtn navbtn3"><i class="fa-solid fa-expand"></i></button>
+    <button id="eruda-button" class="navbtn navbtn4" onclick="erudaToggle()"><i class="fa-solid fa-code"></i></button>
     </button>
     <script>
 
