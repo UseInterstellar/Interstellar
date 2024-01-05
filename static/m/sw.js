@@ -1,10 +1,10 @@
-importScripts('/contact/bundle.js');
-importScripts('/contact/config.js');
+importScripts('/m/bundle.js');
+importScripts('/m/config.js');
 
 class UVServiceWorker extends EventEmitter {   
     constructor(config = __uv$config) {
         super();
-        if (!config.bare) config.bare = '/outerspace/';
+        if (!config.bare) config.bare = '/v/';
         this.addresses = typeof config.bare === 'string' ? [ new URL(config.bare, location) ] : config.bare.map(str => new URL(str, location));
         this.headers = {
             csp: [
@@ -52,7 +52,7 @@ class UVServiceWorker extends EventEmitter {
         };
     };
     async fetch({ request }) {
-        if (!request.url.startsWith(location.origin + (this.config.prefix || '/reviews/'))) {
+        if (!request.url.startsWith(location.origin + (this.config.prefix || '/a/'))) {
             return fetch(request);
         };
         try {

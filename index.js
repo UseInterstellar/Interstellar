@@ -7,7 +7,7 @@ import cors from 'cors';
 const __dirname = process.cwd();
 const server = http.createServer();
 const app = express(server);
-const bareServer = createBareServer('/outerspace/');
+const bareServer = createBareServer('/v/');
 const PORT = 8080;
 
 app.use(express.json());
