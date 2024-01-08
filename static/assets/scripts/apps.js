@@ -289,6 +289,60 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
     
   
+
+  document.getElementById('add').onclick = function() {
+    var appName = prompt("Enter the name of the app:");
+    var appLink = prompt("Enter the link of the app:");
+    var appImgSrc = prompt("Enter the image URL of the app:");
+    var app = {
+      name: appName,
+      link: appLink,
+      img: appImgSrc
+    };
+    var games = JSON.parse(localStorage.getItem("in-custom-a")) || []
+    games.push(app)
+    localStorage.setItem("in-custom-a", JSON.stringify(games));
+    window.location.reload();
+  }
+  
+  document.getElementById('clear').onclick = function() {
+    localStorage.removeItem('in-custom-a');
+  window.location.reload();
+  }
+  
+  function customgame(url, icon, name) {
+   const ga = document.createElement('div') 
+   document.querySelector('.container-apps').appendChild(ga)
+   ga.className = 'column'
+   const a_ = document.createElement('a');
+   ga.setAttribute('data-category', 'all')
+   ga.appendChild(a_)
+   const IMG = document.createElement('img')
+   IMG.width = 145
+   IMG.height = 145
+   IMG.loading = 'lazy'
+   IMG.src = icon
+   const P_ = document.createElement('p')
+   a_.appendChild(IMG)
+   P_.textContent = name
+   a_.appendChild(P_);
+  
+   (function() {
+    ga.onclick = function() {
+      images(url);
+    };
+  })();
+  }
+
+  document.body.onload = function() {
+    var appContainer = document.querySelector('.container-apps');
+  var apps = JSON.parse(localStorage.getItem("in-custom-a")) || [];
+  for (var i = 0; i < apps.length; i++) {
+    var app = apps[i];
+      customgame(app.link, app.img, app.name)
+  }
+}
+
   appsList.sort((a, b) => a.name.localeCompare(b.name));
   
   const nonPinnedApps = document.querySelector('.container-apps');
