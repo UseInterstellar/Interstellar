@@ -1,10 +1,9 @@
 ---
 name: Feature Request
 about: Suggest an idea for this project
-title: "[Feature]"
+title: '[Feature]'
 labels: Feature Request
 assignees: xbubbo
-
 ---
 
 **Is your feature request related to a problem? Please describe.**

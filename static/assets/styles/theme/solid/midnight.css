@@ -1,24 +1,30 @@
 .title {
-    color:white;
+  color: white;
 }
 body {
-    background-color: black;
+  background-color: black;
 }
 h2 {
-    color:white;
+  color: white;
 }
 .fixed-nav-bar-right .navbar-link {
-    color:white
+  color: white;
 }
 #INImg {
-    content: url("/main.png");
+  content: url('/main.png');
 }
-input, select, .column, .key-form, button, .key-button, .searchbar {
-background-color: #222;
+input,
+select,
+.column,
+.key-form,
+button,
+.key-button,
+.searchbar {
+  background-color: #222;
 }
 .settings-card {
-background-color: #111;    
+  background-color: #111;
 }
 input:checked + .slider-round {
-    background-color: #000;
+  background-color: #000;
 }
