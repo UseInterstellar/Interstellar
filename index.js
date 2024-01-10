@@ -20,7 +20,7 @@ const routes = [
   { path: '/~', file: 'apps.html' },
   { path: '/-', file: 'games.html' },
   { path: '/!', file: 'settings.html' },
-  { path: '/%', file: 'tabs.html' },
+  { path: '/0', file: 'tabs.html' },
   { path: '/&', file: 'go.html' },
   { path: '/w', file: 'edu.html' },
 ];
@@ -28,6 +28,23 @@ const routes = [
 app.get('/y/*', cors({ origin: false }), async (req, res, next) => {
   try {
     const reqTarget = `https://raw.githubusercontent.com/ypxa/y/main/${req.params[0]}`;
+    const asset = await fetch(reqTarget);
+    
+    if (asset.ok) {
+      const data = await asset.arrayBuffer();
+      res.end(Buffer.from(data));
+    } else {
+      next();
+    }
+  } catch (error) {
+    console.error('Error fetching:', error);
+    next(error);
+  }
+});
+
+app.get('/y/*', cors({ origin: false }), async (req, res, next) => {
+  try {
+    const reqTarget = `https://raw.githubusercontent.com/retrobowl-unblocked/retrobowl-unblocked.github.io/main/${req.params[0]}`;
     const asset = await fetch(reqTarget);
     
     if (asset.ok) {
