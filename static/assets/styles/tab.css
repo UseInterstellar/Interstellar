@@ -107,7 +107,7 @@ iframe {
   display: none;
 }
 
-.toggle-nav-checkbox:checked~.container {
+.toggle-nav-checkbox:checked ~ .container {
   grid-template-columns: 0 1fr;
 }
 
@@ -196,7 +196,9 @@ iframe {
   position: absolute;
   overflow: hidden;
   width: 400px;
-  transition: opacity 0.5s, width 0.5s;
+  transition:
+    opacity 0.5s,
+    width 0.5s;
 }
 
 .address-bar-search-form {

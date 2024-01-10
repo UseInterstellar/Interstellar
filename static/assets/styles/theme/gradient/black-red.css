@@ -1,25 +1,30 @@
 .title {
-    color:white;
+  color: white;
 }
 body {
-    background-image: linear-gradient(to right, rgb(217, 26, 26) , rgb(0, 0, 0));
+  background-image: linear-gradient(to right, rgb(217, 26, 26), rgb(0, 0, 0));
 }
 h2 {
-    color:black;
+  color: black;
 }
 .fixed-nav-bar-right .navbar-link {
-    color: white;
+  color: white;
 }
 #INImg {
-    content: url("/main.png");
+  content: url('/main.png');
 }
-input, select, .column, .key-form, button, .key-button, .searchbar {
-background-color: black;
+input,
+select,
+.column,
+.key-form,
+button,
+.key-button,
+.searchbar {
+  background-color: black;
 }
 .settings-card {
-background-color: #111;    
+  background-color: #111;
 }
 input:checked + .slider-round {
-    background-color: #000;
+  background-color: #000;
 }
-

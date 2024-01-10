@@ -1,19 +1,19 @@
-import express from 'express';
-import http from 'node:http';
-import { createBareServer } from "@tomphttp/bare-server-node";
-import path from 'node:path';
-import cors from 'cors';
+import express from 'express'
+import http from 'node:http'
+import { createBareServer } from '@tomphttp/bare-server-node'
+import path from 'node:path'
+import cors from 'cors'
 
-const __dirname = process.cwd();
-const server = http.createServer();
-const app = express(server);
-const bareServer = createBareServer('/v/');
-const PORT = 8080;
+const __dirname = process.cwd()
+const server = http.createServer()
+const app = express(server)
+const bareServer = createBareServer('/v/')
+const PORT = 8080
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cors());
-app.use(express.static(path.join(__dirname, 'static')));
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(cors())
+app.use(express.static(path.join(__dirname, 'static')))
 
 const routes = [
   { path: '/', file: 'index.html' },
@@ -23,51 +23,51 @@ const routes = [
   { path: '/0', file: 'tabs.html' },
   { path: '/&', file: 'go.html' },
   { path: '/w', file: 'edu.html' },
-];
+]
 
 app.get('/y/*', cors({ origin: false }), async (req, res, next) => {
   try {
-    const reqTarget = `https://raw.githubusercontent.com/ypxa/y/main/${req.params[0]}`;
-    const asset = await fetch(reqTarget);
-    
+    const reqTarget = `https://raw.githubusercontent.com/ypxa/y/main/${req.params[0]}`
+    const asset = await fetch(reqTarget)
+
     if (asset.ok) {
-      const data = await asset.arrayBuffer();
-      res.end(Buffer.from(data));
+      const data = await asset.arrayBuffer()
+      res.end(Buffer.from(data))
     } else {
-      next();
+      next()
     }
   } catch (error) {
-    console.error('Error fetching:', error);
-    next(error);
+    console.error('Error fetching:', error)
+    next(error)
   }
-});
+})
 
 routes.forEach((route) => {
   app.get(route.path, (req, res) => {
-    res.sendFile(path.join(__dirname, 'static', route.file));
-  });
-});
+    res.sendFile(path.join(__dirname, 'static', route.file))
+  })
+})
 
 server.on('request', (req, res) => {
   if (bareServer.shouldRoute(req)) {
-    bareServer.routeRequest(req, res);
+    bareServer.routeRequest(req, res)
   } else {
-    app(req, res);
+    app(req, res)
   }
-});
+})
 
 server.on('upgrade', (req, socket, head) => {
   if (bareServer.shouldRoute(req)) {
-    bareServer.routeUpgrade(req, socket, head);
+    bareServer.routeUpgrade(req, socket, head)
   } else {
-    socket.end();
+    socket.end()
   }
-});
+})
 
 server.on('listening', () => {
-  console.log(`Running at http://localhost:${PORT}`);
-});
+  console.log(`Running at http://localhost:${PORT}`)
+})
 
 server.listen({
   port: PORT,
-});
+})

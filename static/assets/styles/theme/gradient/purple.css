@@ -1,33 +1,39 @@
 .title {
-    color: white;
+  color: white;
 }
 
 body {
-    background-image: linear-gradient(to right, rgb(128, 0, 128) , rgb(75, 0, 130));
-    color: white;
+  background-image: linear-gradient(to right, rgb(128, 0, 128), rgb(75, 0, 130));
+  color: white;
 }
 
 h2 {
-    color: black;
+  color: black;
 }
 
 .fixed-nav-bar-right .navbar-link {
-    color: white;
+  color: white;
 }
 
 #INImg {
-    content: url("/main.png");
+  content: url('/main.png');
 }
 
-input, select, .column, .key-form, button, .key-button, .searchbar {
-    background-color: black;
-    color: white;
+input,
+select,
+.column,
+.key-form,
+button,
+.key-button,
+.searchbar {
+  background-color: black;
+  color: white;
 }
 
 .settings-card {
-    background-color: #111;    
+  background-color: #111;
 }
 
 input:checked + .slider-round {
-    background-color: #000;
+  background-color: #000;
 }
