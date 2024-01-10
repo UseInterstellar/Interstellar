@@ -898,8 +898,8 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false,
     },
     {
-      name: 'Helixteus 3',
-      link: 'https://hole-io.com/',
+      name: 'HexArena',
+      link: 'https://hexarena.io/',
       image: '/assets/media/icons/helixteus.webp',
       categories: ['all'],
       error: false,
