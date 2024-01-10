@@ -42,23 +42,6 @@ app.get('/y/*', cors({ origin: false }), async (req, res, next) => {
   }
 });
 
-app.get('/y/*', cors({ origin: false }), async (req, res, next) => {
-  try {
-    const reqTarget = `https://raw.githubusercontent.com/retrobowl-unblocked/retrobowl-unblocked.github.io/main/${req.params[0]}`;
-    const asset = await fetch(reqTarget);
-    
-    if (asset.ok) {
-      const data = await asset.arrayBuffer();
-      res.end(Buffer.from(data));
-    } else {
-      next();
-    }
-  } catch (error) {
-    console.error('Error fetching:', error);
-    next(error);
-  }
-});
-
 routes.forEach((route) => {
   app.get(route.path, (req, res) => {
     res.sendFile(path.join(__dirname, 'static', route.file));
