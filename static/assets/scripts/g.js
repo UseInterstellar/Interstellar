@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const appsList = [
     {
-      name: '! Request A Game [UPDATED]',
+      name: '! Request A Game',
       link: 'https://forms.gle/94fJ9yAXQCgaXTrz6',
       image: '/assets/media/icons/request.webp',
       categories: ['all'],
