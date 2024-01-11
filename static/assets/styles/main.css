@@ -290,10 +290,10 @@ img {
   transition: all 0.2s ease;
   cursor: pointer;
   background: var(--column);
-  border-radius: 10px;
+  border-radius: 5px;
   padding-left: 10px;
   padding-right: 10px;
-  padding-top: 10px;
+  padding-top: 5px;
   margin: 0;
 }
 
@@ -361,7 +361,6 @@ select {
 }
 
 .container-apps {
-  margin-top: 20px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
