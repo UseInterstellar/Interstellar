@@ -1487,6 +1487,60 @@ document.addEventListener('DOMContentLoaded', () => {
       image: 'https://retrogamesonline.io/cache/data/image/game/parappa-the-rapper-1-f220x180.jpg',
       categories: ['all', 'emu'],
     },
+    {
+      name: 'Half-Life',
+      link: 'https://x8bitrain.github.io/webXash/',
+      image: '/assets/media/icons/half-life.png',
+      categories: ['all'],
+    },
+    {
+      name: 'Kiomet',
+      link: 'https://kiomet.com',
+      image: '/assets/media/icons/kiomet.webp',
+      categories: ['all'],
+    },
+    {
+      name: 'Tribals.io',
+      link: 'https://tribals.io/',
+      image: '/assets/media/icons/tribalsio.jpg',
+      categories: ['all'],
+    },
+    {
+      name: 'Counter Strike 1.6',
+      link: 'https://play-cs.com/en/servers',
+      image: '/assets/media/icons/cs16.png',
+      categories: ['all'],
+    },
+    {
+      name: 'Narrow One',
+      link: 'https://narrow.one',
+      image: '/assets/media/icons/narrowone.png',
+      categories: ['all'],
+    },
+    {
+      name: 'Kirka',
+      link: 'https://kirka.io',
+      image: '/assets/media/icons/kirka.jpg',
+      categories: ['all'],
+    },
+    {
+      name: 'Cryzen',
+      link: 'https://cryzen.io',
+      image: '/assets/media/icons/cryzen.png',
+      categories: ['all'],
+    },
+    {
+      name: 'Hordes',
+      link: 'https://hordes.io',
+      image: '/assets/media/icons/hordes.jpg',
+      categories: ['all'],
+    },
+    {
+      name: 'Venge',
+      link: 'https://venge.io',
+      image: '/assets/media/icons/venge.png',
+      categories: ['all'],
+    },
   ]
 
   function saveToLocal(path) {
