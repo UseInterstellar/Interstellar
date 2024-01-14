@@ -4,7 +4,7 @@ import http from 'node:http'
 import { createBareServer } from '@tomphttp/bare-server-node'
 import path from 'node:path'
 import cors from 'cors'
-import { config } from './config.js'
+import config from './config.js'
 const __dirname = process.cwd()
 const server = http.createServer()
 const app = express(server)
@@ -14,11 +14,9 @@ if (config.passwordProtect) {
   console.log("Password protection is enabled. Username is 'interstellar'.")
   console.log("Password is: " + config.password)
   app.use(basicAuth({
-    users: { "interstellar" : config.password },
+    users: { "interstellar" : password },
     challenge: true
   }))
-} else {
-  console.log("Password protection is disabled.")
 }
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))

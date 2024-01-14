@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "node index.js",
-    "format": "npx prettier . --write",
+    "format": "npx prettier . --write"
   },
   "author": "",
   "license": "GPL-3.0-or-later",
