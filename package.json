@@ -9,7 +9,6 @@
   "scripts": {
     "start": "node index.js",
     "format": "npx prettier . --write",
-    "password-start": "node password.js"
   },
   "author": "",
   "license": "GPL-3.0-or-later",
