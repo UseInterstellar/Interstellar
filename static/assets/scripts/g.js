@@ -292,35 +292,35 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Fireboy And Watergirl 2 In The Light Temple',
       link: 'https://www.coolmathgames.com/sites/default/files/public_games/40210/',
       image: '/assets/media/icons/fireboyandwatergirllighttemple.jpg',
-      categories: ['all', '2P']
+      categories: ['all', '2P'],
       error: false,
     },
     {
       name: 'Fireboy And Watergirl 4 In The Crystal Temple',
       link: 'https://www.coolmathgames.com/sites/default/files/public_games/40212/',
       image: '/assets/media/icons/fireboyandwatergirlcrystaltemple.jpg',
-      categories: ['all', '2P']
+      categories: ['all', '2P'],
       error: false,
     },
     {
       name: 'Fireboy And Watergirl 5: Elements',
       link: 'https://www.coolmathgames.com/sites/default/files/public_games/40218',
       image: '/assets/media/icons/fireboyandwatergirlelements.jpg',
-      categories: ['all', '2P']
+      categories: ['all', '2P'],
       error: false,
     },
     {
       name: 'Fireboy And Watergirl 6: Fairy Tales',
       link: 'https://html5.gamedistribution.com/rvvASMiM/be3cff113c4e4f069b7614851825ffe9/index.html',
       image: '/assets/media/icons/fireboyandwatergirlfairytales.webp',
-      categories: ['all', '2P']
+      categories: ['all', '2P'],
       error: false,
     },
     {
       name: 'Fireboy And Watergirl In The Forest Temple',
       link: 'https://www.coolmathgames.com/sites/default/files/public_games/40034/',
       image: '/assets/media/icons/fireboyandwatergirlfairytales.webp',
-      categories: ['all', '2P']
+      categories: ['all', '2P'],
       error: false,
     },
     {
