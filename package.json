@@ -8,15 +8,16 @@
   },
   "scripts": {
     "start": "node index.js",
-    "format": "npx prettier . --write"
+    "format": "npx prettier . --write",
+    "password-start": "node password.js"
   },
   "author": "",
   "license": "GPL-3.0-or-later",
   "dependencies": {
-    "@titaniumnetwork-dev/ultraviolet": "^1.0.10",
     "@tomphttp/bare-server-node": "^2.0.1",
     "cors": "^2.8.5",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "express-basic-auth": "^1.2.1"
   },
   "devDependencies": {
     "prettier": "3.2.1"
