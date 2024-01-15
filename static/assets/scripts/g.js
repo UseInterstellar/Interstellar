@@ -1494,7 +1494,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       name: 'Roblox (Now.GG)',
-      link: 'https://now.gg/play/roblox-corporation/5349/roblox',
+      link: 'https://now.gg/iframe/snippet?app_pkg=com.roblox.client&partner=gamenora',
       image: '/assets/media/icons/roblox.png',
       categories: ['all', 'emu'],
     },
