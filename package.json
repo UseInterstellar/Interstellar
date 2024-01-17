@@ -3,8 +3,8 @@
   "version": "5.1.0",
   "type": "module",
   "engines": {
-    "npm": "10.3.0",
-    "node": ">=18.0.0"
+    "node": "17.6.0",
+    "npm": "8.5.1"
   },
   "scripts": {
     "start": "node index.js",
