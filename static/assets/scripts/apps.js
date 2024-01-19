@@ -245,14 +245,12 @@ document.addEventListener('DOMContentLoaded', () => {
       image: '/assets/media/icons/discord.jpg',
       categories: ['all', 'social'],
       blank: 'true',
-      error: false,
     },
     {
       name: 'HD Today',
       link: 'https://hdtoday.tv',
       image: '/assets/media/icons/hd.png',
       categories: ['all', 'media', 'stream'],
-      error: false,
     },
     {
       name: 'Roblox (Now.GG)',
@@ -269,13 +267,13 @@ document.addEventListener('DOMContentLoaded', () => {
     {
       name: 'Roblox (Now.GG Alternative)',
       link: 'https://nowgg.nl/play/roblox-corporation/5349/roblox',
-      image: '/assets/media/icons/roblox.png',
+      image: '/assets/media/icons/astroid.png',
       categories: ['all', 'emu'],
     },
     {
       name: 'Now.GG (Alternative)',
       link: 'https://nowgg.nl',
-      image: '/assets/media/icons/now-gg.png',
+      image: '/assets/media/icons/astroid.png',
       categories: ['all', 'emu'],
     },
     {
