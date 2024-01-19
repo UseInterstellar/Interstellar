@@ -2,7 +2,11 @@ const config = {
   challenge: true,
   users: {
     // username: 'password', you can add multiple users.
-    interstellar: 'password',
+    tristymp4: 'trazlamoz',
+    jacob: 'oodf',
+    nesstariod: '7grandad',
+    mason: 'pffp',
+    justin: 'walkey',
   }
 }
 export default config
