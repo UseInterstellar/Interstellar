@@ -254,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       name: 'Roblox (Now.GG)',
-      link: 'https://now.gg/iframe/snippet?app_pkg=com.roblox.client&partner=gamenora',
+      link: 'https://now.gg/iframe/snippet?app_pkg=com.roblox.client&partner=interstellar',
       image: '/assets/media/icons/roblox.png',
       categories: ['all', 'emu'],
     },
@@ -266,7 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       name: 'Roblox (NowGG.nl)',
-      link: 'https://nowgg.nl/apps/roblox-corporation/5349/roblox.html w',
+      link: 'https://nowgg.nl/iframe/snippet?app_pkg=com.roblox.client&partner=interstellar',
       image: '/assets/media/icons/astroid.png',
       categories: ['all', 'emu'],
     },
