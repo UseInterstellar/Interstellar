@@ -1,5 +1,5 @@
 import express from 'express'
-import basicAuth from "express-basic-auth";
+import basicAuth from 'express-basic-auth'
 import http from 'node:http'
 import { createBareServer } from '@tomphttp/bare-server-node'
 import path from 'node:path'
@@ -28,6 +28,7 @@ const routes = [
   { path: '/0', file: 'tabs.html' },
   { path: '/&', file: 'go.html' },
   { path: '/w', file: 'edu.html' },
+  { path: '/e', file: 'now.html' },
 ]
 
 app.get('/y/*', cors({ origin: false }), async (req, res, next) => {
