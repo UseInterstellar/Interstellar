@@ -1,5 +1,5 @@
 import express from 'express'
-import basicAuth from "express-basic-auth";
+import basicAuth from 'express-basic-auth'
 import http from 'node:http'
 import { createBareServer } from '@tomphttp/bare-server-node'
 import path from 'node:path'
@@ -12,11 +12,13 @@ const bareServer = createBareServer('/v/')
 const PORT = 8080
 if (config.passwordProtect) {
   console.log("Password protection is enabled. Username is 'interstellar'.")
-  console.log("Password is: " + config.password)
-  app.use(basicAuth({
-    users: { "interstellar" : password },
-    challenge: true
-  }))
+  console.log('Password is: ' + config.password)
+  app.use(
+    basicAuth({
+      users: { interstellar: password },
+      challenge: true,
+    })
+  )
 }
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -32,7 +34,6 @@ const routes = [
   { path: '/&', file: 'go.html' },
   { path: '/w', file: 'edu.html' },
   { path: '/e', file: 'now.html' },
-
 ]
 
 app.get('/y/*', cors({ origin: false }), async (req, res, next) => {
