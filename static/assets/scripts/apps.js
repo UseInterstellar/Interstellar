@@ -265,13 +265,13 @@ document.addEventListener('DOMContentLoaded', () => {
       categories: ['all', 'emu'],
     },
     {
-      name: 'Roblox (Now.GG Alternative)',
-      link: 'https://nowgg.nl/play/roblox-corporation/5349/roblox',
+      name: 'Roblox (NowGG.nl)',
+      link: 'https://nowgg.nl/apps/roblox-corporation/5349/roblox.html w',
       image: '/assets/media/icons/astroid.png',
       categories: ['all', 'emu'],
     },
     {
-      name: 'Now.GG (Alternative)',
+      name: 'Now.GG (NowGG.nl)',
       link: 'https://nowgg.nl',
       image: '/assets/media/icons/astroid.png',
       categories: ['all', 'emu'],
