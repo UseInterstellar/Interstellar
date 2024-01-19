@@ -1,5 +1,5 @@
 const config = {
   passwordProtect: false,
-  password: "password"
+  password: 'password',
 }
-export default config;
+export default config
