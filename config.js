@@ -5,4 +5,4 @@ const config = {
     interstellar: 'password',
   }
 }
-export default config;
+export default config

@@ -1496,25 +1496,39 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Roblox (Now.GG)',
       link: 'https://now.gg/iframe/snippet?app_pkg=com.roblox.client&partner=interstellar',
       image: '/assets/media/icons/roblox.png',
-      categories: ['all', 'emu'],
+      categories: ['all', 'emu', 'android'],
+      now: true,
     },
     {
       name: 'Now.GG',
       link: 'https://now.gg',
       image: '/assets/media/icons/now-gg.png',
-      categories: ['all', 'emu'],
+      categories: ['all', 'emu', 'android'],
     },
     {
       name: 'Roblox (NowGG.nl)',
       link: 'https://nowgg.nl/iframe/snippet?app_pkg=com.roblox.client&partner=interstellar',
       image: '/assets/media/icons/astroid.png',
-      categories: ['all', 'emu'],
+      categories: ['all', 'emu', 'android'],
+      now: true,
+    },
+    {
+      name: 'Roblox (NowGG.me)',
+      link: 'https://nowgg.me/apps/roblox-corporation/5349/roblox.html',
+      image: '/assets/media/icons/shuttle.png',
+      categories: ['all', 'emu', 'android'],
     },
     {
       name: 'Now.GG (NowGG.nl)',
       link: 'https://nowgg.nl',
       image: '/assets/media/icons/astroid.png',
-      categories: ['all', 'emu'],
+      categories: ['all', 'emu', 'android'],
+    },
+    {
+      name: 'Now.GG (NowGG.me)',
+      link: 'https://nowgg.me',
+      image: '/assets/media/icons/shuttle.png',
+      categories: ['all', 'emu', 'android'],
     },
     {
       name: 'Parappa the Rapper',
@@ -1623,8 +1637,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (typeof app.say !== 'undefined') {
           alert(app.say)
         }
-        saveToLocal(app.link)
-        window.location.href = '/w'
+        window.location.href = app.link
         return false
       }
     } else if (app.blank) {
@@ -1633,6 +1646,14 @@ document.addEventListener('DOMContentLoaded', () => {
           alert(app.say)
         }
         blank(app.link)
+        return false
+      }
+    } else if (app.now) {
+      link.onclick = function () {
+        if (typeof app.say !== 'undefined') {
+          alert(app.say)
+        }
+        now(app.link)
         return false
       }
     } else {
