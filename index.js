@@ -10,15 +10,10 @@ const server = http.createServer()
 const app = express(server)
 const bareServer = createBareServer('/v/')
 const PORT = 8080
-if (config.passwordProtect) {
-  console.log("Password protection is enabled. Username is 'interstellar'.")
-  console.log('Password is: ' + config.password)
-  app.use(
-    basicAuth({
-      users: { interstellar: password },
-      challenge: true,
-    })
-  )
+if (config.challenge) {
+  console.log("Password protection is enabled. Usernames are: " + Object.keys(config.users))
+  console.log("Passwords are: " + Object.values(config.users))
+  app.use(basicAuth(config))
 }
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
