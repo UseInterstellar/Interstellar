@@ -15,6 +15,13 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false,
     },
     {
+      name: 'Android',
+      link: 'https://now.gg/iframe/snippet?app_pkg=com.uncube.launcher3&partner=interstellar',
+      image: '/assets/media/icons/android.jpg',
+      categories: ['all', 'emu', 'android'],
+      now: true,
+    },
+    {
       name: 'Movie Web',
       link: 'https://movie-web.app',
       image: 'https://movie-web.app/apple-touch-icon.png',
