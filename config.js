@@ -7,6 +7,7 @@ const config = {
     nesstariod: '7grandad',
     mason: 'pffp',
     justin: 'walkey',
+    public: 'guest'
   }
 }
 export default config
