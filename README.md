@@ -17,6 +17,9 @@ One of the most popular web proxies, used by over 5.7 million people in 2023.
     <li>Built-In Tab System</li>
     <li>Clean UI</li>
     <li>Inspect Element</li>
+    <li>Now.GG Suppot</li>
+    <li>Built in Password Protection</li>
+    <li>Geforce Now Support</li>
 </ul>
 
 <h2 align="center">Deployment</h2>
@@ -44,6 +47,7 @@ As of January 1st 2024, Replit is [no longer free](https://blog.replit.com/hosti
 2. Click "Code" (green button) and then "Create Codespace on main."
 3. In the terminal at the bottom, paste `npm i && npm run start`.
 4. Respond to the application popup by clicking "Make public."
+   > Make sure you actually click the "Make public." button, or the proxy won't function properly.
 5. Access the deployed website from the ports tab.
 6. For subsequent uses in the same codespace, just run `npm run start`
 

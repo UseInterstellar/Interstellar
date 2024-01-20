@@ -245,38 +245,50 @@ document.addEventListener('DOMContentLoaded', () => {
       image: '/assets/media/icons/discord.jpg',
       categories: ['all', 'social'],
       blank: 'true',
-      error: false,
     },
     {
       name: 'HD Today',
       link: 'https://hdtoday.tv',
       image: '/assets/media/icons/hd.png',
       categories: ['all', 'media', 'stream'],
-      error: false,
     },
     {
       name: 'Roblox (Now.GG)',
-      link: 'https://now.gg/play/roblox-corporation/5349/roblox',
+      link: 'https://now.gg/iframe/snippet?app_pkg=com.roblox.client&partner=interstellar',
       image: '/assets/media/icons/roblox.png',
-      categories: ['all', 'emu'],
+      categories: ['all', 'emu', 'android'],
+      now: true,
     },
     {
       name: 'Now.GG',
       link: 'https://now.gg',
       image: '/assets/media/icons/now-gg.png',
-      categories: ['all', 'emu'],
+      categories: ['all', 'emu', 'android'],
     },
     {
-      name: 'Roblox (Now.GG Alternative)',
-      link: 'https://nowgg.nl/play/roblox-corporation/5349/roblox',
-      image: '/assets/media/icons/roblox.png',
-      categories: ['all', 'emu'],
+      name: 'Roblox (NowGG.nl)',
+      link: 'https://nowgg.nl/iframe/snippet?app_pkg=com.roblox.client&partner=interstellar',
+      image: '/assets/media/icons/astroid.png',
+      categories: ['all', 'emu', 'android'],
+      now: true,
     },
     {
-      name: 'Now.GG (Alternative)',
+      name: 'Roblox (NowGG.me)',
+      link: 'https://nowgg.me/apps/roblox-corporation/5349/roblox.html',
+      image: '/assets/media/icons/shuttle.png',
+      categories: ['all', 'emu', 'android'],
+    },
+    {
+      name: 'Now.GG (NowGG.nl)',
       link: 'https://nowgg.nl',
-      image: '/assets/media/icons/now-gg.png',
-      categories: ['all', 'emu'],
+      image: '/assets/media/icons/astroid.png',
+      categories: ['all', 'emu', 'android'],
+    },
+    {
+      name: 'Now.GG (NowGG.me)',
+      link: 'https://nowgg.me',
+      image: '/assets/media/icons/shuttle.png',
+      categories: ['all', 'emu', 'android'],
     },
     {
       name: 'Amazon Luna',
@@ -338,6 +350,14 @@ document.addEventListener('DOMContentLoaded', () => {
           alert(app.say)
         }
         blank(app.link)
+        return false
+      }
+    } else if (app.now) {
+      link.onclick = function () {
+        if (typeof app.say !== 'undefined') {
+          alert(app.say)
+        }
+        now(app.link)
         return false
       }
     } else {

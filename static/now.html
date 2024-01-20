@@ -1,0 +1,132 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="referrer" content="no-referrer" />
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <link rel="shortcut icon" id="dynamic-favicon" href="favicon.png" />
+    <title id="dynamic-title">Home</title>
+    <script src="https://kit.fontawesome.com/1237c86ba0.js" crossorigin="anonymous"></script>
+    <script src="/assets/scripts/now.js"></script>
+    <style>
+      body {
+        margin: 0;
+      }
+
+      iframe {
+        display: block;
+        background: #000;
+        border: none;
+        height: 100vh;
+        width: 100vw;
+      }
+
+      .navbtn {
+        float: right;
+        border-radius: 100%;
+        width: 50px;
+        height: 50px;
+        background-color: rgba(255, 255, 255, 0.2);
+        border: none;
+        position: fixed;
+        right: 10px;
+      }
+
+      .navbtn1 {
+        top: 10px;
+      }
+
+      .navbtn2 {
+        top: 70px;
+      }
+
+      .navbtn3 {
+        top: 130px;
+      }
+      .navbtn4 {
+        top: 190px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <script>
+      window.addEventListener('resize', navigator.keyboard.lock(['Escape']))
+    </script>
+    <iframe
+      src=""
+      id="iframeId"
+      style="bottom: 0"
+      style="border: 0px #ffffff none"
+      name="Iframe"
+      scrolling="yes"
+      frameborder="0"
+      marginheight="0px"
+      marginwidth="0px"
+      height="100%"
+      width="100%"
+      allowfullscreen></iframe>
+
+    <button onclick="reload()" class="navbtn navbtn1">
+      <i class="fa-solid fa-rotate-right"></i>
+    </button>
+    <button id="home-page" class="navbtn navbtn2" onclick="reload()">
+      <i class="fa-solid fa-house"></i>
+    </button>
+    <button id="fullscreen-button" class="navbtn navbtn3">
+      <i class="fa-solid fa-expand"></i>
+    </button>
+    <button id="eruda-button" class="navbtn navbtn4" onclick="erudaToggle()">
+      <i class="fa-solid fa-code"></i>
+    </button>
+    <script>
+      function reload() {
+        document.getElementById('iframeId').src = document.getElementById('iframeId').src
+      }
+      // Very epic html editing :)
+      function erudaToggle() {
+        const proccy = document.getElementById('iframeId')
+        if (!proccy) return
+
+        const proccyWindow = proccy.contentWindow
+        const proccyDocument = proccy.contentDocument
+
+        if (!proccyWindow || !proccyDocument) return
+
+        if (proccyWindow.eruda?._isInit) {
+          proccyWindow.eruda.destroy()
+        } else {
+          let script = proccyDocument.createElement('script')
+          script.src = 'https://cdn.jsdelivr.net/npm/eruda'
+          script.onload = function () {
+            if (!proccyWindow) return
+            proccyWindow.eruda.init()
+            proccyWindow.eruda.show()
+          }
+          proccyDocument.head.appendChild(script)
+        }
+      }
+      const fullscreenButton = document.getElementById('fullscreen-button')
+      fullscreenButton.addEventListener('click', function () {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen()
+        } else {
+          document.exitFullscreen()
+        }
+      })
+      const homeButton = document.getElementById('home-page')
+      homeButton.addEventListener('click', function () {
+        window.location.href = './'
+      })
+      window.onload = function () {
+        let encodedUrl = sessionStorage.getItem('encodedUrl')
+        encodedUrl = '/a/' + encodedUrl
+        console.log(encodedUrl)
+        document.querySelector('#iframeid').src = encodedUrl
+        let iframe = document.querySelector('#iframeId')
+        iframe.src = encodedUrl
+      }
+    </script>
+    <script src="/assets/scripts/global.js?v=1"></script>
+  </body>
+</html>
