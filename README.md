@@ -3,8 +3,6 @@
     </div>
 One of the most popular web proxies, used by over 5.7 million people in 2023.
 
-### Consider joining our[ Discord Community](https://discord.gg/interstellar)
-
 > If you find this project useful, consider giving it a star in the original repository.
 
 <h2 align="center">Features</h2>
@@ -68,5 +66,3 @@ If you encounter problems, open an issue on GitHub, and we'll address it promptl
 # Credits
 
 A huge thank you to all of the people who have contributed to Interstellar.
-
-[![Contributors](https://contrib.rocks/image?repo=InterstellarNetwork/Interstellar)](https://github.com/InterstellarNetwork/Interstellar/graphs/contributors)
