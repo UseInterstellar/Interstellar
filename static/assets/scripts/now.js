@@ -58,9 +58,9 @@ function CheckAndAdjust() {
     attempts++
     if (adjustElements()) {
       clearInterval(intervalId)
-    } else if (attempts >= 10) {
+    } else if (attempts >= 30) {
       console.log(
-        '%cNow.GG Script ran 10 times without finding elements. Stopping script.',
+        '%cNow.GG Script ran 30 times without finding elements. Stopping script.',
         'font-size: 15px; color: red;'
       )
       clearInterval(intervalId)
