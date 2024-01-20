@@ -50,6 +50,12 @@ As of January 1st 2024, Replit is [no longer free](https://blog.replit.com/hosti
    > Make sure you actually click the "Make public." button, or the proxy won't function properly.
 5. Access the deployed website from the ports tab.
 6. For subsequent uses in the same codespace, just run `npm run start`
+### Solution for if there is no popup.
+1. Edit the ``index.js`` file and edit the **Port** to a different number, don't use 8080.
+2. Click Terminal, and paste `npm i && npm run start`.
+3. Go to the ports tab, Click Foward A Port, And type the port number.
+4. Right click Visibility and set Port Visibility to Public.
+
 
 ## Need Help with Deployment?
 
