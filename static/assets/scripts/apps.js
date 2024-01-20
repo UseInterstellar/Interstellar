@@ -22,6 +22,20 @@ document.addEventListener('DOMContentLoaded', () => {
       now: true,
     },
     {
+      name: 'Character AI',
+      link: 'https://now.gg/iframe/snippet?app_pkg=ai.character.app&partner=interstellar',
+      image: '/assets/media/icons/characterai.jpg',
+      categories: ['all', 'emu', 'android'],
+      now: true,
+    },
+    {
+      name: 'Aptoide',
+      link: 'https://now.gg/iframe/snippet?app_pkg=com.aptoide.partners.nowgg.store&partner=interstellar',
+      image: '/assets/media/icons/aptoide.jpg',
+      categories: ['all', 'emu', 'android'],
+      now: true,
+    },
+    {
       name: 'Movie Web',
       link: 'https://movie-web.app',
       image: 'https://movie-web.app/apple-touch-icon.png',
