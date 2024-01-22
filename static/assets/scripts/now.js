@@ -25,8 +25,7 @@ function adjustElements() {
     var fullscreen = innerDoc.getElementById('ng-fs') || innerDoc.querySelector('.sc-kOcGyv.dkAhwC')
 
     if (roblox && controlBar) {
-      roblox.style.top = null
-      roblox.style.marginTop = '110%'
+      roblox.style.top = '415px'
       controlBar.style.top = '91%'
       console.log('%cSuccessfully adjusted Now.GG.', 'font-size: 15px; color: green;')
 
@@ -81,7 +80,7 @@ function adjust() {
       var customClassElement = innerDoc.querySelector('.sc-rUGft.hLgqJJ')
 
       if (roblox) {
-        checkAndAdjustStyles(roblox, 'marginTop', ['110%'])
+        checkAndAdjustStyles(roblox, 'top', ['415px'])
       }
 
       if (controlBar) {
@@ -128,7 +127,7 @@ function fullscreenClickHandler(event) {
 
   console.log('%cFullscreen button clicked.', 'font-size: 15px; color: orange;')
 
-  console.log('%cAdjusting height to 110%...', 'font-size: 15px; color: orange;')
+  console.log('%cAdjusting height to 415px...', 'font-size: 15px; color: orange;')
 
   var iframe = top.document.getElementById('iframeId')
   if (iframe) {
@@ -137,9 +136,8 @@ function fullscreenClickHandler(event) {
 
     setTimeout(function () {
       if (roblox) {
-        roblox.style.top = null
-        roblox.style.marginTop = '110%'
-        console.log('%cHeight adjusted to 110%.', 'font-size: 15px; color: green;')
+        roblox.style.top = '415px'
+        console.log('%cHeight adjusted to 415px.', 'font-size: 15px; color: green;')
         heightAdjusted = true
       }
     }, 3000)
