@@ -165,4 +165,16 @@ function AB() {
       location.replace('https://classroom.google.com')
     }
   }
+} 
+function toggleAB() {
+  ab = localStorage.getItem('ab')
+  if (ab == null) {
+    localStorage.setItem('ab', 'false')  
+  }
+  else if (ab == 'true') { 
+    localStorage.setItem('ab', 'false')
+  }
+  else {
+    localStorage.setItem('ab', 'true')
+  }
 }

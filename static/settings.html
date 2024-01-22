@@ -31,8 +31,11 @@
       <div class="settings-container">
         <div class="settings-card">
           <h3>About:Blank</h3>
-          <p>Cloak the site in an about:blank page.</p>
-          <button onclick="AB()">Open Popup</button>
+          <p>Cloak the site in an about:blank page and toggle about:blank on startup (enabled by default)</p>
+          <button onclick="AB()" class="key-button">Open Popup</button>
+          <button class="key-button" onclick="toggleAB()">Toggle automatic about:blank</button>
+
+          
         </div>
         <div class="settings-card">
           <h3>Set Panic Key</h3>
