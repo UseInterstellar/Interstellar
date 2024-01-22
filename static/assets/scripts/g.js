@@ -45,6 +45,13 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false,
     },
     {
+      name: 'Spank The Monkey',
+      link: 'https://cdn.githubraw.com/selenite-cc/selenite/main/spankthemonkey/index.html',
+      image: '/assets/media/icons/spankthemonkey.svg',
+      categories: ['all'],
+      error: false,
+    },
+    {
       name: '3 Slices',
       link: 'https://images-opensocial.googleusercontent.com/gadgets/ifr?url=https://rb.y2.ee/3slices/3slices.xml?v=1',
       image: '/assets/media/icons/3slices.jpg',
