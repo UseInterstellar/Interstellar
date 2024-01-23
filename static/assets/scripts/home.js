@@ -5,9 +5,9 @@ try {
 } catch (e) {
   inFrame = true
 }
-
+var ab = localStorage.getItem('ab')
 if (!inFrame && !navigator.userAgent.includes('Firefox')) {
-  if (localStorage.getItem('ab') == 'true') {
+  if (ab == 'true' || ab == undefined) {
     const popup = open('about:blank', '_blank')
     if (!popup || popup.closed) {
       alert('Please allow popups and redirects.');
