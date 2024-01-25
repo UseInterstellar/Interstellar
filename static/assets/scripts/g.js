@@ -1794,7 +1794,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (typeof app.say !== 'undefined') {
           alert(app.say)
         }
-        images(app.link)
+        go(app.link)
         return false
       }
     }

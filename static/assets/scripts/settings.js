@@ -41,8 +41,8 @@ function saveIcon() {
 
 // Function to update favicon and title based on selected option
 function updateHeadSection(selectedValue) {
-  const icon = document.getElementById('dynamic-favicon')
-  const name = document.getElementById('dynamic-title')
+  const icon = document.getElementById('tab-favicon')
+  const name = document.getElementById('tab-title')
 
   if (selectedValue === 'Google') {
     icon.setAttribute('href', '/assets/media/favicon/google.png')
@@ -150,8 +150,7 @@ function AB() {
       const style = iframe.style
       const link = doc.createElement('link')
       const name = localStorage.getItem('name') || 'My Drive - Google Drive'
-      const icon =
-        localStorage.getItem('icon') || 'https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png'
+      const icon = localStorage.getItem('icon') || 'https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png'
       doc.title = name
       link.rel = 'icon'
       link.href = icon
@@ -165,16 +164,15 @@ function AB() {
       location.replace('https://classroom.google.com')
     }
   }
-} 
+}
+
 function toggleAB() {
   ab = localStorage.getItem('ab')
   if (ab == null) {
-    localStorage.setItem('ab', 'false')  
-  }
-  else if (ab == 'true') { 
     localStorage.setItem('ab', 'false')
-  }
-  else {
+  } else if (ab == 'true') {
+    localStorage.setItem('ab', 'false')
+  } else {
     localStorage.setItem('ab', 'true')
   }
 }

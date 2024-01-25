@@ -11,7 +11,7 @@ h2 {
   color: white;
 }
 #INImg {
-  content: url('/main.png');
+  content: url('//assets/media/favicon/main.png');
 }
 input,
 select,
