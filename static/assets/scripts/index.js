@@ -1,63 +1,45 @@
-const form = document.querySelector('form')
-const input = document.querySelector('input')
+const form = document.getElementById('fs')
+const input = document.getElementById('is')
 
-form.addEventListener('submit', async (event) => {
-  event.preventDefault()
-  window.navigator.serviceWorker
-    .register('./sw.js', {
-      scope: __uv$config.prefix,
-    })
-    .then(() => {
-      let url = input.value.trim()
-      if (!isUrl(url)) url = 'https://www.google.com/search?q=' + url
-      else if (!(url.startsWith('https://') || url.startsWith('http://'))) url = 'http://' + url
-      sessionStorage.setItem('encodedUrl', __uv$config.encodeUrl(url))
-      location.href = '/&'
-    })
-})
+if (form && input) {
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault()
+    processUrl(input.value, '/&')
+  })
+}
 
-function images(value) {
-  let iframe = document.querySelector('.iframe.active')
-  window.navigator.serviceWorker
-    .register('./sw.js', {
-      scope: __uv$config.prefix,
-    })
-    .then(() => {
-      let url = value.trim()
-      if (!isUrl(url)) url = 'https://www.google.com/search?q=' + url
-      else if (!(url.startsWith('https://') || url.startsWith('http://'))) url = 'https://' + url
-      sessionStorage.setItem('encodedUrl', __uv$config.encodeUrl(url))
-      location.href = '/&'
-    })
+function registerServiceWorker() {
+  return window.navigator.serviceWorker.register('./sw.js', {
+    scope: __uv$config.prefix,
+  })
+}
+
+function processUrl(value, path) {
+  registerServiceWorker().then(() => {
+    let url = value.trim()
+    if (!isUrl(url)) url = 'https://www.google.com/search?q=' + url
+    else if (!(url.startsWith('https://') || url.startsWith('http://'))) url = 'https://' + url
+
+    sessionStorage.setItem('encodedUrl', __uv$config.encodeUrl(url))
+
+    if (path) {
+      location.href = path
+    } else {
+      window.location.href = __uv$config.prefix + __uv$config.encodeUrl(url)
+    }
+  })
+}
+
+function go(value) {
+  processUrl(value, '/&')
 }
 
 function now(value) {
-  let iframe = document.querySelector('.iframe.active')
-  window.navigator.serviceWorker
-    .register('./sw.js', {
-      scope: __uv$config.prefix,
-    })
-    .then(() => {
-      let url = value.trim()
-      if (!isUrl(url)) url = 'https://www.google.com/search?q=' + url
-      else if (!(url.startsWith('https://') || url.startsWith('http://'))) url = 'https://' + url
-      sessionStorage.setItem('encodedUrl', __uv$config.encodeUrl(url))
-      location.href = '/e'
-    })
+  processUrl(value, '/e')
 }
 
 function blank(value) {
-  let iframe = document.querySelector('.iframe.active')
-  window.navigator.serviceWorker
-    .register('./sw.js', {
-      scope: __uv$config.prefix,
-    })
-    .then(() => {
-      let url = value.trim()
-      if (!isUrl(url)) url = 'https://www.google.com/search?q=' + url
-      else if (!(url.startsWith('https://') || url.startsWith('http://'))) url = 'https://' + url
-      window.location.href = __uv$config.prefix + __uv$config.encodeUrl(url)
-    })
+  processUrl(value)
 }
 
 function isUrl(val = '') {

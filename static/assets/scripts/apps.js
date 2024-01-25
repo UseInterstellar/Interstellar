@@ -325,6 +325,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const nonPinnedApps = document.querySelector('.container-apps')
   const pinnedApps = document.querySelector('.pinned-apps')
+
   var pinList = localStorage.getItem('pinnedGames')
   try {
     pinList = pinList.split(',').map(Number)
@@ -386,7 +387,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (typeof app.say !== 'undefined') {
           alert(app.say)
         }
-        images(app.link)
+        go(app.link)
         return false
       }
     }
@@ -421,6 +422,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     appInd++
   })
+  console.log('appsContainer:', appsContainer)
+  console.log('pinnedApps:', pinnedApps)
+  console.log('nonPinnedApps:', nonPinnedApps)
+
   appsContainer.appendChild(pinnedApps)
   appsContainer.appendChild(nonPinnedApps)
 })

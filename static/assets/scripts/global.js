@@ -1,8 +1,8 @@
 //Loads custom icons
 
 document.addEventListener('DOMContentLoaded', function (event) {
-  const icon = document.getElementById('dynamic-favicon')
-  const name = document.getElementById('dynamic-title')
+  const icon = document.getElementById('tab-favicon')
+  const name = document.getElementById('tab-title')
   var selectedValue = localStorage.getItem('selectedOption')
   if (selectedValue === 'Google') {
     icon.setAttribute('href', '/assets/media/favicon/google.png')
@@ -192,28 +192,28 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 })
 
-// Panic 
+// Panic
 
-document.addEventListener('DOMContentLoaded', function() {
-  var eventKey = localStorage.getItem('eventKey') || '`';
-  var panicLink = localStorage.getItem('panicLink') || 'https://classroom.google.com/';
+document.addEventListener('DOMContentLoaded', function () {
+  var eventKey = localStorage.getItem('eventKey') || '`'
+  var panicLink = localStorage.getItem('panicLink') || 'https://classroom.google.com/'
 
-  document.getElementById('eventKeyInput').value = eventKey;
-  document.getElementById('linkInput').value = panicLink;
+  document.getElementById('eventKeyInput').value = eventKey
+  document.getElementById('linkInput').value = panicLink
 
-  const selectedOption = localStorage.getItem('selectedOption');
+  const selectedOption = localStorage.getItem('selectedOption')
   if (selectedOption) {
-    updateHeadSection(selectedOption);
+    updateHeadSection(selectedOption)
   }
-});
+})
 
 function saveEventKey() {
-  var eventKey = document.getElementById('eventKeyInput').value;
-  var panicLink = document.getElementById('linkInput').value;
+  var eventKey = document.getElementById('eventKeyInput').value
+  var panicLink = document.getElementById('linkInput').value
 
-  localStorage.setItem('eventKey', eventKey);
-  localStorage.setItem('panicLink', panicLink);
+  localStorage.setItem('eventKey', eventKey)
+  localStorage.setItem('panicLink', panicLink)
 
-  document.getElementById('eventKeyInput').value = '';
-  document.getElementById('linkInput').value = '';
+  document.getElementById('eventKeyInput').value = ''
+  document.getElementById('linkInput').value = ''
 }
