@@ -57,6 +57,12 @@ document.addEventListener('DOMContentLoaded', () => {
       categories: ['all'],
     },
     {
+      name: 'Jelly Mario',
+      link: 'https://jellymar.io',
+      image: '/assets/media/icons/jellymario.jpg',
+      categories: ['all'],
+    },
+    {
       name: 'ev.io',
       link: 'https://ev.io',
       image: '/assets/media/icons/evio.jpg',
