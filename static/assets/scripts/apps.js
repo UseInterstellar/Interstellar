@@ -319,6 +319,12 @@ document.addEventListener('DOMContentLoaded', () => {
       blank: 'true',
       error: false,
     },
+     {
+      name: 'Aniwatch',
+      link: "https://aniwatchtv.to",
+      image: 'https://lh3.googleusercontent.com/r-9v_g5828JQFpbmFvhFWnYZIR_cNxDQbt43uyXLrKmeDAyuNSqAgsba4SHK7OAHaU0=h100',
+      categories: ['all', 'media']
+    }
   ]
 
   appsList.sort((a, b) => a.name.localeCompare(b.name))
