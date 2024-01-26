@@ -63,6 +63,12 @@ document.addEventListener('DOMContentLoaded', () => {
       categories: ['all'],
     },
     {
+      name: 'Tyran.io',
+      link: 'https://tyran.io',
+      image: '/assets/media/icons/tyranio.png',
+      categories: ['all', '2P'],
+    },
+    {
       name: 'ev.io',
       link: 'https://ev.io',
       image: '/assets/media/icons/evio.jpg',
