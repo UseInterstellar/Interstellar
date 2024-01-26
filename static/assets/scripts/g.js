@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       name: '3 Slices',
-      link: 'https://images-opensocial.googleusercontent.com/gadgets/ifr?url=https://rb.y2.ee/3slices/3slices.xml?v=1',
+      link: 'https://images-opensocial.googleusercontent.com/gadgets/ifr?url=https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/1ee20621-61bc-4ec8-a8ec-5e839c2e6edc%2F3-slices.xml',
       image: '/assets/media/icons/3slices.jpg',
       categories: ['all'],
     },
@@ -1518,6 +1518,12 @@ document.addEventListener('DOMContentLoaded', () => {
       image: '/assets/media/icons/mc.webp',
       categories: ['all', '2P', 'emu'],
       local: 'true',
+    },
+    {
+      name: 'Getaway Տhοоtоսt',
+      link: 'https://www.twoplayergames.org/embed/getaway-shootout',
+      image: '/assets/media/icons/getaway.webp',
+      categories: ['all', '2P'],
     },
   ]
 
