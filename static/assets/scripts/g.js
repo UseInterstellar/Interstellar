@@ -51,6 +51,12 @@ document.addEventListener('DOMContentLoaded', () => {
       categories: ['all'],
     },
     {
+      name: 'Parkour Block 3D',
+      link: 'https://html5.gamedistribution.com/1461d40bb77f48e6be72489959a1ac04/',
+      image: '/assets/media/icons/parkourblock3d.webp',
+      categories: ['all'],
+    },
+    {
       name: 'ev.io',
       link: 'https://ev.io',
       image: '/assets/media/icons/evio.jpg',
