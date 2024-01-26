@@ -69,6 +69,12 @@ document.addEventListener('DOMContentLoaded', () => {
       categories: ['all', '2P'],
     },
     {
+      name: 'Deeeep.io',
+      link: 'https://beta.deeeep.io',
+      image: '/assets/media/icons/deeeepio.jpg',
+      categories: ['all', '2P'],
+    },
+    {
       name: 'ev.io',
       link: 'https://ev.io',
       image: '/assets/media/icons/evio.jpg',
