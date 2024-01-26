@@ -1282,6 +1282,13 @@ document.addEventListener('DOMContentLoaded', () => {
       now: true,
     },
     {
+      name: 'Madden NFL 24',
+      link: 'https://now.gg/iframe/snippet?app_pkg=com.ea.gp.maddennfl21mobile&partner=interstellar',
+      image: '/assets/media/icons/maddennfl24.jpeg',
+      categories: ['all', 'emu', 'android'],
+      now: true,
+    },
+    {
       name: 'Android',
       link: 'https://now.gg/iframe/snippet?app_pkg=com.uncube.launcher3&partner=interstellar',
       image: '/assets/media/icons/android.jpg',
