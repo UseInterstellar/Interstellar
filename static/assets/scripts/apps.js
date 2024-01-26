@@ -15,6 +15,27 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false,
     },
     {
+      name: 'Android',
+      link: 'https://now.gg/iframe/snippet?app_pkg=com.uncube.launcher3&partner=interstellar',
+      image: '/assets/media/icons/android.jpg',
+      categories: ['all', 'emu', 'android'],
+      now: true,
+    },
+    {
+      name: 'Character AI',
+      link: 'https://now.gg/iframe/snippet?app_pkg=ai.character.app&partner=interstellar',
+      image: '/assets/media/icons/characterai.jpg',
+      categories: ['all', 'emu', 'android'],
+      now: true,
+    },
+    {
+      name: 'Aptoide',
+      link: 'https://now.gg/iframe/snippet?app_pkg=com.aptoide.partners.nowgg.store&partner=interstellar',
+      image: '/assets/media/icons/aptoide.jpg',
+      categories: ['all', 'emu', 'android'],
+      now: true,
+    },
+    {
       name: 'Movie Web',
       link: 'https://movie-web.app',
       image: 'https://movie-web.app/apple-touch-icon.png',
@@ -304,6 +325,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const nonPinnedApps = document.querySelector('.container-apps')
   const pinnedApps = document.querySelector('.pinned-apps')
+
   var pinList = localStorage.getItem('pinnedGames')
   try {
     pinList = pinList.split(',').map(Number)
@@ -365,7 +387,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (typeof app.say !== 'undefined') {
           alert(app.say)
         }
-        images(app.link)
+        go(app.link)
         return false
       }
     }
@@ -400,6 +422,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     appInd++
   })
+  console.log('appsContainer:', appsContainer)
+  console.log('pinnedApps:', pinnedApps)
+  console.log('nonPinnedApps:', nonPinnedApps)
+
   appsContainer.appendChild(pinnedApps)
   appsContainer.appendChild(nonPinnedApps)
 })

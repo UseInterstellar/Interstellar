@@ -11,8 +11,8 @@ const app = express(server)
 const bareServer = createBareServer('/v/')
 const PORT = 8080
 if (config.challenge) {
-  console.log("Password protection is enabled. Usernames are: " + Object.keys(config.users))
-  console.log("Passwords are: " + Object.values(config.users))
+  console.log('Password protection is enabled. Usernames are: ' + Object.keys(config.users))
+  console.log('Passwords are: ' + Object.values(config.users))
   app.use(basicAuth(config))
 }
 app.use(express.json())
@@ -31,22 +31,32 @@ const routes = [
   { path: '/e', file: 'now.html' },
 ]
 
-app.get('/y/*', cors({ origin: false }), async (req, res, next) => {
+const fetchData = async (req, res, next, baseUrl) => {
   try {
-    const reqTarget = `https://raw.githubusercontent.com/ypxa/y/main/${req.params[0]}`
-    const asset = await fetch(reqTarget)
+    const reqTarget = `${baseUrl}/${req.params[0]}`;
+    const asset = await fetch(reqTarget);
 
     if (asset.ok) {
-      const data = await asset.arrayBuffer()
-      res.end(Buffer.from(data))
+      const data = await asset.arrayBuffer();
+      res.end(Buffer.from(data));
     } else {
-      next()
+      next();
     }
   } catch (error) {
-    console.error('Error fetching:', error)
-    next(error)
+    console.error('Error fetching:', error);
+    next(error);
   }
-})
+};
+
+app.get('/y/*', cors({ origin: false }), (req, res, next) => {
+  const baseUrl = 'https://raw.githubusercontent.com/ypxa/y/main';
+  fetchData(req, res, next, baseUrl);
+});
+
+app.get('/f/*', cors({ origin: false }), (req, res, next) => {
+  const baseUrl = 'https://raw.githubusercontent.com/4x-a/x/fixy';
+  fetchData(req, res, next, baseUrl);
+});
 
 routes.forEach((route) => {
   app.get(route.path, (req, res) => {

@@ -6,9 +6,9 @@
     <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" id="dynamic-favicon" href="favicon.png" />
-    <title id="dynamic-title">Home</title>
-    <script src="/assets/scripts/global.js?v=1"></script>
+    <link rel="shortcut icon" id="tab-favicon" href="favicon.png" />
+    <title id="tab-title">Home</title>
+    <script src="/assets/scripts/global.js?v=2"></script>
     <link rel="stylesheet" href="/assets/styles/main.css" />
     <link rel="stylesheet" href="/assets/styles/settings.css" />
     <link rel="stylesheet" href="/assets/styles/theme/solid/default.css?v=1" />
@@ -19,7 +19,7 @@
   </head>
   <body>
     <div class="fixed-nav-bar">
-      <a class="icon" href="/./"><img alt="nav" id="INImg" src="main.png" /></a>
+      <a class="icon" href="/./"><img alt="nav" id="INImg" src="/assets/media/favicon/main.png" /></a>
       <div class="fixed-nav-bar-right">
         <a class="navbar-link" href="/./-"><i class="fa-solid fa-gamepad navbar-icon"></i>Games</a>
         <a class="navbar-link" href="/./~"><span class="material-symbols-outlined weird-icon">apps</span>Apps</a>
@@ -31,8 +31,9 @@
       <div class="settings-container">
         <div class="settings-card">
           <h3>About:Blank</h3>
-          <p>Cloak the site in an about:blank page.</p>
-          <button onclick="AB()">Open Popup</button>
+          <p>Cloak the site in an about:blank page and toggle about:blank on startup (enabled by default)</p>
+          <button onclick="AB()" class="key-button">Open Popup</button>
+          <button class="key-button" onclick="toggleAB()">Toggle automatic about:blank</button>
         </div>
         <div class="settings-card">
           <h3>Set Panic Key</h3>
@@ -115,7 +116,7 @@
         </div>
       </div>
     </div>
-    <script src="/assets/scripts/settings.js"></script>
+    <script src="/assets/scripts/settings.js?v=1"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ"></script>
     <script>
       window.dataLayer = window.dataLayer || []

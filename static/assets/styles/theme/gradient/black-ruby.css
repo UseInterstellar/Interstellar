@@ -16,7 +16,7 @@ h2 {
 }
 
 #INImg {
-  content: url('/main.png');
+  content: url('//assets/media/favicon/main.png');
 }
 
 input,
