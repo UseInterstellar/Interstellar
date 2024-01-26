@@ -1723,6 +1723,12 @@ document.addEventListener('DOMContentLoaded', () => {
       categories: ['all', '2P', 'emu'],
       local: 'true',
     },
+    {
+      name: 'Aniwatch',
+      link: "https://aniwatchtv.to",
+      image: 'https://lh3.googleusercontent.com/r-9v_g5828JQFpbmFvhFWnYZIR_cNxDQbt43uyXLrKmeDAyuNSqAgsba4SHK7OAHaU0=h100',
+      categories: ['all']
+    }
   ]
 
   function saveToLocal(path) {
