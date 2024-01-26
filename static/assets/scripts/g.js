@@ -45,6 +45,12 @@ document.addEventListener('DOMContentLoaded', () => {
       categories: ['all'],
     },
     {
+      name: 'Buckshot Roulette',
+      link: 'https://buckshotroulette.online/game/v11/',
+      image: '/assets/media/icons/buckshotroulette.jpg',
+      categories: ['all'],
+    },
+    {
       name: 'ev.io',
       link: 'https://ev.io',
       image: '/assets/media/icons/evio.jpg',
