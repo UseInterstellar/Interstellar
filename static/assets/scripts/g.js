@@ -69,6 +69,12 @@ document.addEventListener('DOMContentLoaded', () => {
       categories: ['all', '2P'],
     },
     {
+      name: 'Arras.io',
+      link: 'https://arras.io/',
+      image: '/assets/media/icons/arrasio.jpg',
+      categories: ['all', '2P'],
+    },
+    {
       name: 'Deeeep.io',
       link: 'https://beta.deeeep.io',
       image: '/assets/media/icons/deeeepio.jpg',
