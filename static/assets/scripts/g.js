@@ -75,6 +75,12 @@ document.addEventListener('DOMContentLoaded', () => {
       categories: ['all', '2P'],
     },
     {
+      name: 'Addicting Games',
+      link: 'https://www.addictinggames.com/',
+      image: '/assets/media/icons/addictinggames.jpg',
+      categories: ['all'],
+    },
+    {
       name: 'Deeeep.io',
       link: 'https://beta.deeeep.io',
       image: '/assets/media/icons/deeeepio.jpg',
