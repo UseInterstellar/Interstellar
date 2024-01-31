@@ -1574,6 +1574,15 @@ document.addEventListener('DOMContentLoaded', () => {
       image: '/assets/media/icons/getaway.webp',
       categories: ['all', '2P'],
     },
+    {
+      name: 'Eaglercraft 1.5.2 [Singleplayer]',
+      link: 'https://interstellar-assets.pages.dev/minecraft-15/',
+      image: '/assets/media/icons/mc.webp',
+      categories: ['all', '2P', 'emu'],
+      blank: 'true',
+    },
+
+    
   ]
 
   function saveToLocal(path) {
