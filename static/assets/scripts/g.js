@@ -1428,7 +1428,7 @@ document.addEventListener('DOMContentLoaded', () => {
       now: true,
     },
     {
-      name: 'Roblox (NowGG.me)',
+      name: 'Roblox (NowGG.me) [Working]',
       link: 'https://nowgg.me/apps/roblox-corporation/5349/roblox.html',
       image: '/assets/media/icons/shuttle.png',
       categories: ['all', 'emu', 'android'],
@@ -1440,7 +1440,7 @@ document.addEventListener('DOMContentLoaded', () => {
       categories: ['all', 'emu', 'android'],
     },
     {
-      name: 'Now.GG (NowGG.me)',
+      name: 'Now.GG (NowGG.me) [Working]',
       link: 'https://nowgg.me',
       image: '/assets/media/icons/shuttle.png',
       categories: ['all', 'emu', 'android'],
@@ -1507,14 +1507,14 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       name: 'Minecraft 1.5.2 (Eaglercraft)',
-      link: '/f/minecraft-15/index.html',
+      link: '/f/ec-15/index.html',
       image: '/assets/media/icons/mc.webp',
       categories: ['all', '2P', 'emu'],
       local: 'true',
     },
     {
       name: 'Minecraft 1.8 (Eaglercraft)',
-      link: '/f/minecraft-18/index.html',
+      link: '/f/ec-18/index.html',
       image: '/assets/media/icons/mc.webp',
       categories: ['all', '2P', 'emu'],
       local: 'true',
