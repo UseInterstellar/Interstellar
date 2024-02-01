@@ -75,6 +75,12 @@ document.addEventListener('DOMContentLoaded', () => {
       categories: ['all', '2P'],
     },
     {
+      name: 'mk48.io',
+      link: 'https://mk48.io/',
+      image: '/assets/media/icons/mk48io.jpg',
+      categories: ['all', '2P'],
+    },
+    {
       name: 'Addicting Games',
       link: 'https://www.addictinggames.com/',
       image: '/assets/media/icons/addictinggames.jpg',
