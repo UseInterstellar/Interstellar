@@ -51,6 +51,12 @@ document.addEventListener('DOMContentLoaded', () => {
       categories: ['all'],
     },
     {
+      name: 'Starblast',
+      link: 'https://starblast.io',
+      image: '/assets/media/icons/starblastio.png',
+      categories: ['all', '2P'],
+    },
+    {
       name: 'CSGO Parkour',
       link: 'https://yandex.com/games/app/203069?flags={%22adv_sticky_banner_disabled%22:true}',
       image: '/assets/media/icons/csgoparkour.webp',
