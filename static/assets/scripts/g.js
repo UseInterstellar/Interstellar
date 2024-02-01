@@ -51,6 +51,18 @@ document.addEventListener('DOMContentLoaded', () => {
       categories: ['all'],
     },
     {
+      name: 'Starblast',
+      link: 'https://starblast.io',
+      image: '/assets/media/icons/starblastio.png',
+      categories: ['all', '2P'],
+    },
+    {
+      name: 'CSGO Parkour',
+      link: 'https://yandex.com/games/app/203069?flags={%22adv_sticky_banner_disabled%22:true}',
+      image: '/assets/media/icons/csgoparkour.webp',
+      categories: ['all'],
+    },
+    {
       name: 'Parkour Block 3D',
       link: 'https://html5.gamedistribution.com/1461d40bb77f48e6be72489959a1ac04/',
       image: '/assets/media/icons/parkourblock3d.webp',
@@ -72,6 +84,18 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Arras.io',
       link: 'https://arras.io/',
       image: '/assets/media/icons/arrasio.jpg',
+      categories: ['all', '2P'],
+    },
+    {
+      name: 'mk48.io',
+      link: 'https://mk48.io/',
+      image: '/assets/media/icons/mk48io.jpg',
+      categories: ['all', '2P'],
+    },
+    {
+      name: 'Bandit.RIP',
+      link: 'https://bandit.rip/',
+      image: '/assets/media/icons/banditrip.webp',
       categories: ['all', '2P'],
     },
     {
