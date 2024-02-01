@@ -81,6 +81,12 @@ document.addEventListener('DOMContentLoaded', () => {
       categories: ['all', '2P'],
     },
     {
+      name: 'Bandit.RIP',
+      link: 'https://bandit.rip/',
+      image: '/assets/media/icons/banditrip.webp',
+      categories: ['all', '2P'],
+    },
+    {
       name: 'Addicting Games',
       link: 'https://www.addictinggames.com/',
       image: '/assets/media/icons/addictinggames.jpg',
