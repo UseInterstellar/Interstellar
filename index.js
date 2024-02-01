@@ -81,9 +81,9 @@ server.on('upgrade', (req, socket, head) => {
 })
 
 server.on('listening', () => {
-  console.log(`Running at http://localhost:${PORT}`)
+  console.log(`Running at http://localhost:${9090}`)
 })
 
 server.listen({
-  port: PORT,
+  port: 9090,
 })
