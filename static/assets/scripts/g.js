@@ -51,6 +51,12 @@ document.addEventListener('DOMContentLoaded', () => {
       categories: ['all'],
     },
     {
+      name: 'CSGO Parkour',
+      link: 'https://yandex.com/games/app/203069?flags={%22adv_sticky_banner_disabled%22:true}',
+      image: '/assets/media/icons/csgoparkour.webp',
+      categories: ['all'],
+    },
+    {
       name: 'Parkour Block 3D',
       link: 'https://html5.gamedistribution.com/1461d40bb77f48e6be72489959a1ac04/',
       image: '/assets/media/icons/parkourblock3d.webp',
