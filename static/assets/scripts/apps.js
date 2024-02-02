@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
     {
       name: 'Movie Web',
       link: 'https://movie-web.app',
-      image: 'https://movie-web.app/apple-touch-icon.png',
+      image: '/assets/media/icons/movie-web.webp',
       categories: ['all', 'media', 'stream'],
     },
     {
