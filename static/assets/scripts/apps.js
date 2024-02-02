@@ -310,38 +310,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const link = document.createElement('a')
 
-    if (app.local) {
-      link.onclick = function () {
-        if (typeof app.say !== 'undefined') {
-          alert(app.say)
-        }
+    function saveToLocal(path) {
+      sessionStorage.setItem('GoUrl', path)
+    }
+
+    function handleClick(app) {
+      if (typeof app.say !== 'undefined') {
+        alert(app.say)
+      }
+
+      if (app.local) {
+        saveToLocal(app.link)
+        window.location.href = '&'
+      } else if (app.local2) {
+        saveToLocal(app.link)
         window.location.href = app.link
-        return false
-      }
-    } else if (app.blank) {
-      link.onclick = function () {
-        if (typeof app.say !== 'undefined') {
-          alert(app.say)
-        }
+      } else if (app.blank) {
         blank(app.link)
-        return false
-      }
-    } else if (app.now) {
-      link.onclick = function () {
-        if (typeof app.say !== 'undefined') {
-          alert(app.say)
-        }
+      } else if (app.now) {
         now(app.link)
-        return false
-      }
-    } else {
-      link.onclick = function () {
-        if (typeof app.say !== 'undefined') {
-          alert(app.say)
-        }
+      } else {
         go(app.link)
-        return false
       }
+
+      return false
+    }
+
+    link.onclick = function () {
+      handleClick(app)
     }
 
     const image = document.createElement('img')

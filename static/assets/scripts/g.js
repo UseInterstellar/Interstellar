@@ -1582,14 +1582,14 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Minecraft 1.5.2 (Eaglercraft)',
       link: '/f/ec-15/index.html',
       image: '/assets/media/icons/mc.webp',
-      categories: ['all', '2P', 'emu'],
+      categories: ['all', '2P', 'emu', 'local'],
       local: 'true',
     },
     {
       name: 'Minecraft 1.8 (Eaglercraft)',
       link: '/f/ec-18/index.html',
       image: '/assets/media/icons/mc.webp',
-      categories: ['all', '2P', 'emu'],
+      categories: ['all', '2P', 'emu', 'local'],
       local: 'true',
     },
     {
@@ -1605,13 +1605,7 @@ document.addEventListener('DOMContentLoaded', () => {
       categories: ['all', '2P', 'emu'],
       blank: 'true',
     },
-
-    
   ]
-
-  function saveToLocal(path) {
-    localStorage.setItem('savedPaths', path)
-  }
 
   appsList.sort((a, b) => a.name.localeCompare(b.name))
 
@@ -1649,6 +1643,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const link = document.createElement('a')
 
+    function saveToLocal(path) {
+      sessionStorage.setItem('GoUrl', path)
+    }
+
     function handleClick(app) {
       if (typeof app.say !== 'undefined') {
         alert(app.say)
@@ -1656,10 +1654,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (app.local) {
         saveToLocal(app.link)
-        window.location.href = app.link
-      } else if (app.localW) {
+        window.location.href = '&'
+      } else if (app.local2) {
         saveToLocal(app.link)
-        window.location.href = '/w'
+        window.location.href = app.link
       } else if (app.blank) {
         blank(app.link)
       } else if (app.now) {

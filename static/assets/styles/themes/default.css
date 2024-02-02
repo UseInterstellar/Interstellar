@@ -1,11 +1,9 @@
 :root {
-  --page: url("full2.png");
+  --page: url('full2.png');
   --background: rgba(255, 255, 255, 0.02);
   --background-filter: blur(10px) brightness(80%);
   --background-secondary: #4545459e;
   --background-dark: #121212;
-  
-
 
   --title: #fff;
   --block: #2a2a2a;
@@ -17,5 +15,5 @@
   --text-secondary: #b0b0b0;
   --text-placeholder: #aaa;
 
-  --transparent: rgb(0,0,0,0);
+  --transparent: rgb(0, 0, 0, 0);
 }
