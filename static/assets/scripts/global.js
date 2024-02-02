@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
     localStorage.setItem('name', 'Edpuzzle')
     localStorage.setItem('icon', '/assets/media/favicon/edpuzzle.png')
   }
-  
+
   var themeid = localStorage.getItem('theme')
   //Loads theme
   themeEle = document.createElement('link')
@@ -117,8 +117,6 @@ document.addEventListener('DOMContentLoaded', function () {
     document.body.style.backgroundImage = "url('" + savedBackgroundImage + "')"
   }
 })
-
-// Panic
 
 document.addEventListener('DOMContentLoaded', function () {
   var eventKey = localStorage.getItem('eventKey') || '`'
