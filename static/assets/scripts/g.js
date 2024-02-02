@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
     {
       name: 'Donitz - itch.io',
       link: 'https://donitz.itch.io/',
-      image: '/assets/media/icon/itch.webp',
+      image: '/assets/media/icons/itch.webp',
       categories: ['all'],
     },
     {
@@ -1521,7 +1521,7 @@ document.addEventListener('DOMContentLoaded', () => {
     {
       name: 'Parappa the Rapper',
       link: 'https://retrogamesonline.io/parappa-the-rapper.embed',
-      image: 'https://retrogamesonline.io/cache/data/image/game/parappa-the-rapper-1-f220x180.webp',
+      image: '/assets/media/icons/ptr.webp',
       categories: ['all', 'emu'],
     },
     {
