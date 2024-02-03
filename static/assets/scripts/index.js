@@ -20,7 +20,7 @@ function processUrl(value, path) {
     if (!isUrl(url)) url = 'https://www.google.com/search?q=' + url
     else if (!(url.startsWith('https://') || url.startsWith('http://'))) url = 'https://' + url
 
-    sessionStorage.setItem('encodedUrl', __uv$config.encodeUrl(url))
+    sessionStorage.setItem('GoUrl', __uv$config.encodeUrl(url))
 
     if (path) {
       location.href = path

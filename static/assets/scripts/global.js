@@ -54,6 +54,16 @@ document.addEventListener('DOMContentLoaded', function (event) {
     name.textContent = 'Dashboard'
     localStorage.setItem('name', 'Dashboard')
     localStorage.setItem('icon', '/assets/media/favicon/canvas.png')
+  } else if (selectedValue === 'LinkIt') {
+    icon.setAttribute('href', '/assets/media/favicon/linkit.ico')
+    name.textContent = 'Test Taker'
+    localStorage.setItem('name', 'Test Taker')
+    localStorage.setItem('icon', '/assets/media/favicon/linkit.ico')
+  } else if (selectedValue === 'Edpuzzle') {
+    icon.setAttribute('href', '/assets/media/favicon/edpuzzle.png')
+    name.textContent = 'Edpuzzle'
+    localStorage.setItem('name', 'Edpuzzle')
+    localStorage.setItem('icon', '/assets/media/favicon/edpuzzle.png')
   }
 
   var themeid = localStorage.getItem('theme')
@@ -107,8 +117,6 @@ document.addEventListener('DOMContentLoaded', function () {
     document.body.style.backgroundImage = "url('" + savedBackgroundImage + "')"
   }
 })
-
-// Panic
 
 document.addEventListener('DOMContentLoaded', function () {
   var eventKey = localStorage.getItem('eventKey') || '`'

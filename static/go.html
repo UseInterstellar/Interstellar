@@ -1,6 +1,5 @@
 <html lang="en">
   <head>
-    <script async src="https://arc.io/widget.min.js#E9vFnUFC"></script>
     <meta charset="UTF-8" />
     <meta name="referrer" content="no-referrer" />
     <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
@@ -119,14 +118,26 @@
         window.location.href = './'
       })
       window.onload = function () {
-        let encodedUrl = sessionStorage.getItem('encodedUrl')
-        encodedUrl = '/a/' + encodedUrl
-        console.log(encodedUrl)
-        document.querySelector('#iframeid').src = encodedUrl
+        let GoUrl = sessionStorage.getItem('GoUrl')
+        if (!GoUrl.startsWith('/y/') && !GoUrl.startsWith('/f/')) {
+          GoUrl = '/a/' + GoUrl
+        }
+        console.log(GoUrl)
+        document.querySelector('#iframeid').src = GoUrl
         let iframe = document.querySelector('#iframeId')
-        iframe.src = encodedUrl
+        iframe.src = GoUrl
       }
     </script>
-    <script src="/assets/scripts/global.js?v=3"></script>
+    <script src="/assets/scripts/global.js?v=5"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || []
+
+      function gtag() {
+        dataLayer.push(arguments)
+      }
+      gtag('js', new Date())
+      gtag('config', 'G-WKJQ5QHQTJ')
+    </script>
   </body>
 </html>
