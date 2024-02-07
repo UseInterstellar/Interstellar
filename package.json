@@ -19,6 +19,6 @@
     "express-basic-auth": "^1.2.1"
   },
   "devDependencies": {
-    "prettier": "3.2.4"
+    "prettier": "3.2.5"
   }
 }
