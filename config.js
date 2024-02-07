@@ -3,6 +3,7 @@ const config = {
   users: {
     // username: 'password', you can add multiple users.
     interstellar: 'password',
+    
   },
 }
 export default config
