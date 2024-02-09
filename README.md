@@ -54,10 +54,9 @@ As of January 1st 2024, Replit is [no longer free](https://blog.replit.com/hosti
 
 ### Solution for if there is no popup.
 
-1. Edit the `index.js` file and edit the **Port** to a different number, don't use 8080.
-2. Click Terminal, and paste `npm i && npm run start`.
-3. Go to the ports tab, Click Foward A Port, And type the port number.
-4. Right click Visibility and set Port Visibility to Public.
+1. Run `npm i`, and before `npm run start`, prepend `PORT=8080`, replacing 8080 with another port. For example, `PORT=6969 npm run start`.
+2. Go to the ports tab, Click Forward A Port, And type the port number.
+3. Right click Visibility and set Port Visibility to Public.
 
 ## Need Help with Deployment?
 
