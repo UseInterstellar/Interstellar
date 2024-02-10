@@ -34,6 +34,14 @@ One of the most popular web proxies, used by over 5.7 million people in 2023.
 
 ## Deployment Alternatives:
 
+
+
+### Self Deployment
+Download the zip in the releases page. 
+or clone the repo `git clone https://github.com/InterstellarNetwork/Interstellar.git`
+Only usuable on linux yet. cd into the folder  or unzip the zip.
+then run this command `chmod -x sh/run.sh`, then do `sudo sh sh/run.sh` this will run a shell script to install node *if not installed already* then run Interstellar -pxyfi was here
+
 For more deployment options join our [Discord Server](https://discord.gg/interstellar) for tons of different ways to deploy Interstellar.
 
 > Note: This includes methods of deploying to Render/OnRender.
