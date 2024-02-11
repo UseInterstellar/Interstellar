@@ -1,0 +1,100 @@
+body {
+  margin: 0;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+iframe {
+  display: block;
+  border: none;
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  top: 10vh;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.nav-bar {
+  top: 0%;
+  left: 0;
+  right: 0;
+  min-height: 10vh;
+  padding: 0 25px;
+  background: var(--main);
+  box-sizing: border-box;
+  transition: 0.35s ease;
+  width: fill;
+  z-index: 100;
+  position: fixed;
+}
+
+.nav-button {
+  border-radius: 10px;
+  color: var(--text-primary);
+  width: 50px;
+  height: 50px;
+  border: none;
+  right: 10px;
+  top: auto;
+  box-sizing: border-box;
+  background: var(--accent-color);
+  margin-right: 10px;
+  transition: 0.3s ease;
+}
+
+.nav-button:hover {
+  background: lighten(var(--accent-color), 10%);
+  transform: scale(1.2);
+}
+
+.nav-btn-left {
+  float: left;
+}
+
+.nav-btn-right {
+  float: right;
+}
+
+.nav-container {
+  min-width: 5vw;
+  min-height: 10vh;
+  display: inline;
+}
+
+.nav-left {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0.5%;
+}
+
+.nav-right {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 2%;
+}
+
+.nav-right .nav-btn:hover {
+  text-transform: uppercase;
+  cursor: pointer;
+  font-weight: 800;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-size: 3vw;
+  transform: translateX(-20%);
+}
+
+.nav-right .nav-btn:hover {
+  text-transform: uppercase;
+  cursor: pointer;
+  font-weight: 800;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-size: 3vh;
+  transform: translateX(-20%);
+}

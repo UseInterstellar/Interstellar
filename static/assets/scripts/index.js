@@ -34,10 +34,6 @@ function go(value) {
   processUrl(value, '/&')
 }
 
-function now(value) {
-  processUrl(value, '/e')
-}
-
 function blank(value) {
   processUrl(value)
 }
