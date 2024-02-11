@@ -26,7 +26,7 @@ const routes = [
   { path: '/-', file: 'games.html' },
   { path: '/!', file: 'settings.html' },
   { path: '/0', file: 'tabs.html' },
-  { path: '/&', file: 'go.html' },
+  { path: '/1', file: 'go.html' },
 ]
 
 const fetchData = async (req, res, next, baseUrl) => {
