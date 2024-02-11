@@ -1345,147 +1345,126 @@ document.addEventListener('DOMContentLoaded', () => {
       link: 'https://now.gg/iframe/snippet?app_pkg=com.roblox.client&partner=interstellar',
       image: '/assets/media/icons/roblox.webp',
       categories: ['all', 'emu', 'android'],
-      now: true,
     },
     {
       name: 'Madden NFL 24',
       link: 'https://now.gg/iframe/snippet?app_pkg=com.ea.gp.maddennfl21mobile&partner=interstellar',
       image: '/assets/media/icons/maddennfl24.webp',
       categories: ['all', 'emu', 'android'],
-      now: true,
     },
     {
       name: 'Android',
       link: 'https://now.gg/iframe/snippet?app_pkg=com.uncube.launcher3&partner=interstellar',
       image: '/assets/media/icons/android.webp',
       categories: ['all', 'emu', 'android'],
-      now: true,
     },
     {
       name: 'Genshin Impact',
       link: 'https://now.gg/iframe/snippet?app_pkg=com.miHoYo.GenshinImpact&partner=interstellar',
       image: '/assets/media/icons/genshinimpact.webp',
       categories: ['all', 'emu', 'android'],
-      now: true,
     },
     {
       name: 'Fortnite (Android)',
       link: 'https://now.gg/iframe/snippet?app_pkg=com.epicgames.fortnite&partner=interstellar',
       image: '/assets/media/icons/fortnite.webp',
       categories: ['all', 'emu', 'android'],
-      now: true,
     },
     {
       name: 'EA SPORTS FC™ MOBILE 24 SOCCER',
       link: 'https://now.gg/iframe/snippet?app_pkg=com.ea.gp.fifamobile&partner=interstellar',
       image: '/assets/media/icons/easports-fcmobile24.webp',
       categories: ['all', 'emu', 'android'],
-      now: true,
     },
     {
       name: 'EA SPORTS™ UFC® Mobile 2',
       link: 'https://now.gg/iframe/snippet?app_pkg=com.ea.gp.easportsufc2&partner=interstellar',
       image: '/assets/media/icons/easports-ufc.webp',
       categories: ['all', 'emu', 'android'],
-      now: true,
     },
     {
       name: 'Melon Playground',
       link: 'https://now.gg/iframe/snippet?app_pkg=com.studio27.MelonPlayground&partner=interstellar',
       image: '/assets/media/icons/melonplayground.webp',
       categories: ['all', 'emu', 'android'],
-      now: true,
     },
     {
       name: 'Solar Smash',
       link: 'https://now.gg/iframe/snippet?app_pkg=com.paradyme.solarsmash&partner=interstellar',
       image: '/assets/media/icons/solarsmash.webp',
       categories: ['all', 'emu', 'android'],
-      now: true,
     },
     {
       name: 'Bloons TD Battles 2',
       link: 'https://now.gg/iframe/snippet?app_pkg=com.ninjakiwi.bloonstdbattles2&partner=interstellar',
       image: '/assets/media/icons/bloonstd2.webp',
       categories: ['all', 'emu', 'android'],
-      now: true,
     },
     {
       name: 'Bloons TD Battles',
       link: 'https://now.gg/iframe/snippet?app_pkg=com.ninjakiwi.bloonstdbattles&partner=interstellar',
       image: '/assets/media/icons/bloonstd.webp',
       categories: ['all', 'emu', 'android'],
-      now: true,
     },
     {
       name: 'Cookie Run Kingdom',
       link: 'https://now.gg/iframe/snippet?app_pkg=com.devsisters.ck&partner=interstellar',
       image: '/assets/media/icons/cookierunkingdom.webp',
       categories: ['all', 'emu', 'android'],
-      now: true,
     },
     {
       name: 'Character AI',
       link: 'https://now.gg/iframe/snippet?app_pkg=ai.character.app&partner=interstellar',
       image: '/assets/media/icons/characterai.webp',
       categories: ['all', 'emu', 'android'],
-      now: true,
     },
     {
       name: 'Aptoide',
       link: 'https://now.gg/iframe/snippet?app_pkg=com.aptoide.partners.nowgg.store&partner=interstellar',
       image: '/assets/media/icons/aptoide.webp',
       categories: ['all', 'emu', 'android'],
-      now: true,
     },
     {
       name: 'Akinator',
       link: 'https://now.gg/iframe/snippet?app_pkg=com.digidust.elokence.akinator.freemium&partner=interstellar',
       image: '/assets/media/icons/akinator.webp',
       categories: ['all', 'emu', 'android'],
-      now: true,
     },
     {
       name: 'WorldBox',
       link: 'https://now.gg/iframe/snippet?app_pkg=com.mkarpenko.worldbox&partner=interstellar',
       image: '/assets/media/icons/worldbox.webp',
       categories: ['all', 'emu', 'android'],
-      now: true,
     },
     {
       name: 'Toca Life World',
       link: 'https://now.gg/iframe/snippet?app_pkg=com.tocaboca.tocalifeworld&partner=interstellar',
       image: '/assets/media/icons/tocalifeworld.webp',
       categories: ['all', 'emu', 'android'],
-      now: true,
     },
     {
       name: 'Toca Hair Salon 4',
       link: 'https://now.gg/iframe/snippet?app_pkg=com.tocaboca.tocahairsalon4&partner=interstellar',
       image: '/assets/media/icons/tocabocahairsalon4.webp',
       categories: ['all', 'emu', 'android'],
-      now: true,
     },
     {
       name: 'Toca Kitchen 2',
       link: 'https://now.gg/iframe/snippet?app_pkg=com.tocaboca.tocakitchen2&partner=interstellar',
       image: '/assets/media/icons/tocakitchen2.webp',
       categories: ['all', 'emu', 'android'],
-      now: true,
     },
     {
       name: 'Free Fire',
       link: 'https://now.gg/iframe/snippet?app_pkg=com.dts.freefireth&partner=interstellar',
       image: '/assets/media/icons/freefire.webp',
       categories: ['all', 'emu', 'android'],
-      now: true,
     },
     {
       name: 'Stumble Guys (Android)',
       link: 'https://now.gg/iframe/snippet?app_pkg=com.kitkagames.fallbuddies&partner=interstellar',
       image: '/assets/media/icons/stumbleguys.webp',
       categories: ['all', 'emu', 'android'],
-      now: true,
     },
     {
       name: 'Now.GG',
@@ -1498,7 +1477,6 @@ document.addEventListener('DOMContentLoaded', () => {
       link: 'https://nowgg.nl/iframe/snippet?app_pkg=com.roblox.client&partner=interstellar',
       image: '/assets/media/icons/astroid.webp',
       categories: ['all', 'emu', 'android'],
-      now: true,
     },
     {
       name: 'Roblox (NowGG.me) [Working]',
@@ -1660,8 +1638,6 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = app.link
       } else if (app.blank) {
         blank(app.link)
-      } else if (app.now) {
-        now(app.link)
       } else {
         go(app.link)
       }

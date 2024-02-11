@@ -2,8 +2,6 @@ document.addEventListener('DOMContentLoaded', function (event) {
   const addTabButton = document.getElementById('add-tab')
   const tabList = document.getElementById('tab-list')
   const iframeContainer = document.getElementById('iframe-container')
-  const rightSideNav = document.getElementById('right-side-nav')
-  const toggleNavButton = document.getElementById('toggle-nav')
 
   let tabCounter = 1
   let navOpen = true
@@ -131,16 +129,6 @@ document.addEventListener('DOMContentLoaded', function (event) {
     }
   }
 
-  toggleNavButton.addEventListener('click', () => {
-    navOpen = !navOpen
-    toggleNavButton.classList.toggle('open')
-    if (navOpen) {
-      rightSideNav.style.transform = 'translateX(0)'
-    } else {
-      rightSideNav.style.transform = 'translateX(-100%)'
-    }
-  })
-
   let dragTab = null
 
   tabList.addEventListener('dragstart', (event) => {
@@ -166,17 +154,6 @@ document.addEventListener('DOMContentLoaded', function (event) {
   })
 
   const container = document.querySelector('.container')
-
-  toggleNavButton.addEventListener('click', () => {
-    navOpen = !navOpen
-    toggleNavButton.classList.toggle('open')
-    container.classList.toggle('nav-closed')
-    if (navOpen) {
-      rightSideNav.style.transform = 'translateX(0)'
-    } else {
-      rightSideNav.style.transform = 'translateX(-100%)'
-    }
-  })
 
   toggleNavButton.addEventListener('click', () => {
     navOpen = !navOpen
@@ -217,21 +194,21 @@ function erudaToggle() {
   const iframes = Array.from(iframeContainer.querySelectorAll('iframe'))
   const activeIframe = iframes.find((iframe) => iframe.classList.contains('active'))
 
-  const proccyWindow = activeIframe.contentWindow
-  const proccyDocument = activeIframe.contentDocument
+  const erudaWindow = activeIframe.contentWindow
+  const erudaDocument = activeIframe.contentDocument
 
-  if (!proccyWindow || !proccyDocument) return
+  if (!erudaWindow || !erudaDocument) return
 
-  if (proccyWindow.eruda?._isInit) {
-    proccyWindow.eruda.destroy()
+  if (erudaWindow.eruda?._isInit) {
+    erudaWindow.eruda.destroy()
   } else {
-    let script = proccyDocument.createElement('script')
+    let script = erudaDocument.createElement('script')
     script.src = 'https://cdn.jsdelivr.net/npm/eruda'
     script.onload = function () {
-      if (!proccyWindow) return
-      proccyWindow.eruda.init()
-      proccyWindow.eruda.show()
+      if (!erudaWindow) return
+      erudaWindow.eruda.init()
+      erudaWindow.eruda.show()
     }
-    proccyWindow.document?.head?.appendChild(script) || proccyDocument.head.appendChild(script)
+    erudaWindow.document?.head?.appendChild(script) || erudaDocument.head.appendChild(script)
   }
 }

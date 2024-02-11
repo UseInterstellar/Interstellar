@@ -55,7 +55,7 @@
     </script>
     <iframe
       src=""
-      id="iframeId"
+      id="ifra"
       style="bottom: 0"
       style="border: 0px #ffffff none"
       name="Iframe"
@@ -81,11 +81,11 @@
     </button>
     <script>
       function reload() {
-        document.getElementById('iframeId').src = document.getElementById('iframeId').src
+        document.getElementById('ifra').src = document.getElementById('ifra').src
       }
       // Very epic html editing :)
       function erudaToggle() {
-        const proccy = document.getElementById('iframeId')
+        const proccy = document.getElementById('ifra')
         if (!proccy) return
 
         const proccyWindow = proccy.contentWindow
@@ -122,8 +122,8 @@
         let GoUrl = sessionStorage.getItem('GoUrl')
         GoUrl = '/a/' + GoUrl
         console.log(GoUrl)
-        document.querySelector('#iframeid').src = GoUrl
-        let iframe = document.querySelector('#iframeId')
+        document.querySelector('#ifra').src = GoUrl
+        let iframe = document.querySelector('#ifra')
         iframe.src = GoUrl
       }
     </script>
