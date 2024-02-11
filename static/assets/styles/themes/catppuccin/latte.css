@@ -13,6 +13,8 @@
   --text-primary: var(--ctp-latte-text) /*text*/;
   --text-secondary: var(--ctp-latte-subtext1) /*subtext1*/;
   --text-placeholder: var(--ctp-latte-subtext0) /*subtext0*/;
+  --main: var(--ctp-latte-base) /* base */;
+  --accent-color: var(--ctp-latte-mantle) /* mantle */;
 }
 
 input,

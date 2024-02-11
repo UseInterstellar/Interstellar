@@ -69,6 +69,6 @@ window.onload = function () {
   }
 }
 document.addEventListener('fullscreenchange', function () {
-  const isFullscreen = Boolean(document.fullscreenElement);
-  document.body.classList.toggle('fullscreen', isFullscreen);
-});
+  const isFullscreen = Boolean(document.fullscreenElement)
+  document.body.classList.toggle('fullscreen', isFullscreen)
+})
