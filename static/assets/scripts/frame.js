@@ -68,3 +68,7 @@ window.onload = function () {
     iframe.src = GoUrl
   }
 }
+document.addEventListener('fullscreenchange', function () {
+  const isFullscreen = Boolean(document.fullscreenElement);
+  document.body.classList.toggle('fullscreen', isFullscreen);
+});
