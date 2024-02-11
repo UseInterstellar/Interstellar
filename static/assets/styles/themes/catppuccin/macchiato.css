@@ -14,6 +14,8 @@
   --text-primary: var(--ctp-macchiato-text) /*text*/;
   --text-secondary: var(--ctp-macchiato-subtext1) /*subtext1*/;
   --text-placeholder: var(--ctp-macchiato-subtext0) /*subtext0*/;
+  --main: var(--ctp-macchiato-base) /* base */;
+  --accent-color: var(--ctp-macchiato-mantle) /* mantle */;
 }
 
 input,
