@@ -14,6 +14,8 @@
   --text-primary: var(--ctp-mocha-text) /*text*/;
   --text-secondary: var(--ctp-mocha-subtext1) /*subtext1*/;
   --text-placeholder: var(--ctp-mocha-subtext0) /*subtext0*/;
+  --main: var(--ctp-mocha-base) /* base */;
+  --accent-color: var(--ctp-mocha-mantle) /* mantle */;
 }
 
 input,

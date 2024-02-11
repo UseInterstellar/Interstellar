@@ -69,14 +69,14 @@ iframe {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  left: 0.5%;
+  left: 1%;
 }
 
 .nav-right {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  right: 2%;
+  right: 1%;
 }
 
 .nav-right .nav-btn:hover {
