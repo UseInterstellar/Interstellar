@@ -13,7 +13,9 @@ Only current versions of the site are being updated, if you are using an older v
 
 ## Reporting a Vulnerability
 
-Please join our [Discord server](https://discord.gg/), and open a ticket and let us know what the vulnerability is.
+You can privately report a vulnerability [here](https://github.com/InterstellarNetwork/Interstellar/security/advisories/new).
+
+Alternatively, you can join our [Discord server](https://discord.gg/), and open a ticket and let us know what the vulnerability is.
 
 ### Upgrading to the Latest Version
 
