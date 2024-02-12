@@ -10,10 +10,10 @@ iframe {
   height: 100vh;
   width: 100vw;
   position: absolute;
-  top: 8%;
   bottom: 0;
   left: 0;
   right: 0;
+  top: 2em;
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -22,7 +22,7 @@ iframe {
   top: 0%;
   left: 0;
   right: 0;
-  min-height: 8%;
+  height: 2em;
   padding: 0 25px;
   background: var(--main);
   box-sizing: border-box;
@@ -35,20 +35,21 @@ iframe {
 .nav-button {
   border-radius: 10px;
   color: var(--text-primary);
-  width: 50px;
-  height: 50px;
+  background: none;
+  height: 2em;
   border: none;
   right: 10px;
   top: auto;
   box-sizing: border-box;
-  background: var(--accent-color);
   margin-right: 10px;
-  transition: 0.3s ease;
+  transition: 0.2s ease;
+  margin-top: 0 auto;
+  margin-bottom: 0 auto;
 }
 
 .nav-button:hover {
-  background: lighten(var(--accent-color), 10%);
   transform: scale(1.2);
+  cursor: pointer;
 }
 
 .nav-btn-left {
@@ -67,7 +68,7 @@ iframe {
 
 .nav-left {
   position: absolute;
-  top: 50%;
+  top: 75%;
   transform: translateY(-50%);
   left: 1%;
 }
@@ -109,4 +110,23 @@ iframe {
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+.navsearch {
+  height: 2em;
+  border: none;
+  background: none;
+  color: #fff;
+}
+
+.navsearch:focus {
+  box-shadow: none;
+  border: none;
+  outline: none;
+}
+
+.navpost {
+  padding: none;
+  float: right;
+  margin-top: 0em;
 }
