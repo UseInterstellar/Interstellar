@@ -1,7 +1,6 @@
 
 
-name: Publish image to Docker
-Hub
+name: Publish image to DockerHub
 on:
 [workflow_dispatch]
 jobs:
