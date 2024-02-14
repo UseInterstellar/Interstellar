@@ -13,7 +13,7 @@ iframe {
   bottom: 0;
   left: 0;
   right: 0;
-  top: 2em;
+  top: 3em;
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -22,7 +22,7 @@ iframe {
   top: 0%;
   left: 0;
   right: 0;
-  height: 2em;
+  height: 3em;
   padding: 0 25px;
   background: var(--main);
   box-sizing: border-box;
@@ -48,7 +48,7 @@ iframe {
 }
 
 .nav-button:hover {
-  transform: scale(1.2);
+  transform: scale(1.3);
   cursor: pointer;
 }
 
@@ -115,18 +115,26 @@ iframe {
 .navsearch {
   height: 2em;
   border: none;
-  background: none;
+  background: var(--background-secondary);
   color: #fff;
+  width: 1200px;
+  height: 30px;
+  border-radius: 5px;
 }
 
 .navsearch:focus {
   box-shadow: none;
   border: none;
   outline: none;
+  color: #fff
 }
 
 .navpost {
   padding: none;
   float: right;
   margin-top: 0em;
+  width: 1200px;
+  color: #fff;
+  height: 30px;
+  border-radius: 5px;
 }
