@@ -1,5 +1,3 @@
-
-
 name: Publish image to DockerHub
 on:
   [workflow_dispatch]
