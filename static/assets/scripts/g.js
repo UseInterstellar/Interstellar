@@ -1627,24 +1627,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function handleClick(app) {
       if (typeof app.say !== 'undefined') {
-        alert(app.say);
+        alert(app.say)
       }
-    
+
       if (app.local) {
-        saveToLocal(app.link);
-        window.location.href = '1';
+        saveToLocal(app.link)
+        window.location.href = '1'
       } else if (app.local2) {
-        saveToLocal(app.link);
-        window.location.href = app.link;
+        saveToLocal(app.link)
+        window.location.href = app.link
       } else if (app.blank) {
-        blank(app.link);
+        blank(app.link)
       } else {
         if (!app.local) {
-          go(app.link);
+          go(app.link)
         }
       }
-    
-      return false;
+
+      return false
     }
 
     link.onclick = function () {
