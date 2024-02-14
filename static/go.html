@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="assets/styles/frame.css?v=3" />
     <link rel="stylesheet" href="/assets/styles/themes/default.css?v=2" />
     <script src="/assets/scripts/global.js?v=6"></script>
+    <script src="/assets/scripts/index.js"></script>
   </head>
   <body>
     <script>
@@ -29,6 +30,9 @@
           <button onclick="reload()" class="nav-button">
             <i class="fa-solid fa-rotate-right"></i>
           </button>
+          <form id="fs" class="navpost" method="POST">
+            <input id="is" class="navsearch" placeholder="Search or enter a new URL" type="text" />
+          </form>
         </div>
         <div class="nav-right">
           <button id="fullscreen-button" class="nav-button nav-btn-right">
