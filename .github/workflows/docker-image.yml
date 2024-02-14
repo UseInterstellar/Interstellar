@@ -2,7 +2,7 @@
 
 name: Publish image to DockerHub
 on:
-[workflow_dispatch]
+  [workflow_dispatch]
 jobs:
 publish_image:
 runs-on: ubuntu-latest
