@@ -32,6 +32,12 @@ document.addEventListener('DOMContentLoaded', () => {
       categories: ['all'],
     },
     {
+      name: 'Lostgamer',
+      link: 'https://lostgamer.io',
+      image: '/assets/media/icons/lostgamerio.jpg',
+      categories: ['all', '2P'],
+    },
+    {
       name: 'Stomped.io',
       link: 'https://stomped.io',
       image: '/assets/media/icons/stompedio.jfif',
