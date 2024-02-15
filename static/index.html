@@ -10,8 +10,9 @@
     <title id="tab-title">Home</title>
     <link rel="stylesheet" href="/assets/styles/main.css?v=1" />
     <link rel="stylesheet" href="/assets/styles/themes/default.css?v=2" />
+    <script src="jquery-3.7.1.min.js"></script>
   </head>
-  <body class="center">
+  <body class="center" onload="splashtext()">
     <div class="fixed-nav-bar">
       <div class="fixed-nav-bar-container">
         <a class="icon" href="/./"><img alt="nav" id="INImg" src="/assets/media/favicon/main.png" /></a>
@@ -27,36 +28,16 @@
       <script rel="preload" src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
       <div class="main">
         <h1 class="title">Interstellar</h1>
+        <p id="splash">Unknown</p>
         <div class="search-container">
           <form id="fs" method="POST">
             <input id="is" class="main-search" placeholder="Search with Google or enter address" type="text" />
           </form>
         </div>
-      </div>
-      <!----
-      <div class="footer">
-          <div class="featured-text">
-        <div class="featured-text-box"><h1>Featured</h1></div>
-      </div>
-      <div class="featured">
-        <div class="shortcut-container">
-            <input onclick="blank('https://play.geforcenow.com');" class="shortcut" id="geforce" type="button"/>
-            <input onclick="blank('https://now.gg/play/roblox-corporation/5349/roblox');" class="shortcut" id="roblox" type="button"/>
-            <input onclick="blank('https://canary.discord.com');" class="shortcut" id="discord" type="button"/>
-            <input onclick="blank('https://interstellar-assets.pages.dev/minecraft-15/');" class="shortcut" id="eagler" type="button"/>
-            <input onclick="blank('https://youtube.com/');" class="shortcut" id="youtube" type="button"/>
-            <input onclick="blank('https://tiktok.com');" class="shortcut" id="tiktok" type="button"/>
+        <div class="sug">
+          <div class="sugelement" onclick="blank('https://google.com/')">Google</div></a><div class="sugelement" onclick="blank('https://youtube.com/')">Youtube</div></a> <div class="sugelement" onclick="blank('https://play.geforcenow.com')">GeForce</div></a> <div onclick="blank('https://now.gg/play/roblox-corporation/5349/roblox')" class="sugelement">Roblox</div>
         </div>
       </div>
-        <div class="lower-footer">
-          <h1>
-            <a href="https://github.com/interstellarnetwork/interstellar">GitHub</a>&#12539;<a
-              href="https://discord.gg/interstellar"
-              >Discord</a
-            >&#12539;<a href="https://status.gointerstellar.app/">Status</a>
-          </h1>
-        </div>
-      </div> --->
     </div>
     <script src="assets/scripts/index.js?v=5"></script>
     <script src="./m/bundle.js"></script>
@@ -74,5 +55,21 @@
     </script>
     <script src="/assets/scripts/global.js?v=6"></script>
     <script src="/assets/scripts/settings.js?v=1"></script>
+    <script>
+      document.onkeydown = function(evt) {
+        evt = evt || window.event;
+        if (evt.keyCode == 27) {
+          document.getElementById("is").blur(); 
+        }
+      };
+
+      let splashtext = [
+        "Over 5 Million Users in 2023!",
+        "Fastest growing proxy server!",
+        "Made by Bubbo!",
+      ]
+
+      document.getElementById("splash").innerText = splashtext[Math.floor(Math.random()*splashtext.length)];
+    </script>
   </body>
 </html>
