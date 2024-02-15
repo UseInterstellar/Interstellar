@@ -26,6 +26,12 @@ document.addEventListener('DOMContentLoaded', () => {
       categories: ['all'],
     },
     {
+      name: 'Earn to Die 2012 Part 2',
+      link: 'https://games-online.io/game/EarnToDie/index.html',
+      image: '/assets/media/icons/earntodie2012part2.jfif',
+      categories: ['all'],
+    },
+    {
       name: 'Stomped.io',
       link: 'https://stomped.io',
       image: '/assets/media/icons/stompedio.jfif',
