@@ -17,6 +17,12 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Dynast.io',
       link: 'https://dynast.io',
       image: '/assets/media/icons/dynast-io.webp',
+      categories: ['all'],
+    },
+    {
+      name: 'Age of War',
+      link: 'https://age-of-war.game-files.crazygames.com/ruffle/ageofwar.html',
+      image: '/assets/media/icons/ageofwar.jpg',
       categories: ['all', '2P'],
     },
     // idk why brain test on poki doesnt work when i take out everything after "index.html?" so i left it there, usually it works without it tho
