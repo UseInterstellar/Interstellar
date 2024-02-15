@@ -20,6 +20,18 @@ document.addEventListener('DOMContentLoaded', () => {
       categories: ['all'],
     },
     {
+      name: 'Stickman Archero Fight',
+      link: 'https://html5.gamedistribution.com/rvvASMiM/3f4c166817ad4fd4b5b05d9adba22fcd/index.html',
+      image: '/assets/media/icons/stickman-archero-fight.webp',
+      categories: ['all'],
+    },
+    {
+      name: 'Stomped.io',
+      link: 'https://stomped.io',
+      image: '/assets/media/icons/stompedio.jfif',
+      categories: ['all'],
+    },
+    {
       name: 'Age of War',
       link: 'https://age-of-war.game-files.crazygames.com/ruffle/ageofwar.html',
       image: '/assets/media/icons/ageofwar.jpg',
