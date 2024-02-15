@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Big Tower Tiny Square',
       link: 'https://www.coolmathgames.com/0-big-tower-tiny-square/play',
       image: '/assets/media/icons/bigtowertinysquare.jpg',
-      categories: ['all', '2P'],
+      categories: ['all'],
     },
     {
       name: 'skribbl',
