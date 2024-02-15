@@ -50,6 +50,18 @@ document.addEventListener('DOMContentLoaded', () => {
       categories: ['all', '2P'],
     },
     {
+      name: 'skribbl',
+      link: 'https://skribbl.io/',
+      image: '/assets/media/icons/skribblio.jfif',
+      categories: ['all', '2P'],
+    },
+    {
+      name: 'Wings!',
+      link: 'https://wings.io/',
+      image: '/assets/media/icons/wingsio.jfif',
+      categories: ['all', '2P'],
+    },
+    {
       name: 'Stomped.io',
       link: 'https://stomped.io',
       image: '/assets/media/icons/stompedio.jfif',
