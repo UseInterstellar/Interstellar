@@ -17,6 +17,78 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Dynast.io',
       link: 'https://dynast.io',
       image: '/assets/media/icons/dynast-io.webp',
+      categories: ['all'],
+    },
+    {
+      name: 'Stickman Archero Fight',
+      link: 'https://html5.gamedistribution.com/rvvASMiM/3f4c166817ad4fd4b5b05d9adba22fcd/index.html',
+      image: '/assets/media/icons/stickman-archero-fight.webp',
+      categories: ['all'],
+    },
+    {
+      name: 'Earn to Die 2012 Part 2',
+      link: 'https://games-online.io/game/EarnToDie/index.html',
+      image: '/assets/media/icons/earntodie2012part2.jfif',
+      categories: ['all'],
+    },
+    {
+      name: 'Lostgamer',
+      link: 'https://lostgamer.io',
+      image: '/assets/media/icons/lostgamerio.jpg',
+      categories: ['all', '2P'],
+    },
+    {
+      name: 'Thisissand',
+      link: 'https://thisissand.com/',
+      image: '/assets/media/icons/thisissand.webp',
+      categories: ['all'],
+    },
+    {
+      name: 'digdig.io',
+      link: 'https://digdig.io/',
+      image: '/assets/media/icons/digdigio.jfif',
+      categories: ['all', '2P'],
+    },
+    {
+      name: 'Big Tower Tiny Square',
+      link: 'https://www.coolmathgames.com/0-big-tower-tiny-square/play',
+      image: '/assets/media/icons/bigtowertinysquare.jpg',
+      categories: ['all'],
+    },
+    {
+      name: 'The Impossible Quiz',
+      link: 'https://the-impossible-quiz.game-files.crazygames.com/ruffle/theimpossiblequiz.html',
+      image: '/assets/media/icons/theimpossiblequiz.webp',
+      categories: ['all'],
+    },
+    {
+      name: 'Helix Jump',
+      link: 'https://helix-jump.game-files.crazygames.com/helix-jump/1/index.html',
+      image: '/assets/media/icons/helixjump.jfif',
+      categories: ['all'],
+    },
+    {
+      name: 'skribbl',
+      link: 'https://skribbl.io/',
+      image: '/assets/media/icons/skribblio.jfif',
+      categories: ['all', '2P'],
+    },
+    {
+      name: 'Wings!',
+      link: 'https://wings.io/',
+      image: '/assets/media/icons/wingsio.jfif',
+      categories: ['all', '2P'],
+    },
+    {
+      name: 'Stomped.io',
+      link: 'https://stomped.io',
+      image: '/assets/media/icons/stompedio.jfif',
+      categories: ['all'],
+    },
+    {
+      name: 'Age of War',
+      link: 'https://age-of-war.game-files.crazygames.com/ruffle/ageofwar.html',
+      image: '/assets/media/icons/ageofwar.jpg',
       categories: ['all', '2P'],
     },
     // idk why brain test on poki doesnt work when i take out everything after "index.html?" so i left it there, usually it works without it tho
@@ -1627,24 +1699,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function handleClick(app) {
       if (typeof app.say !== 'undefined') {
-        alert(app.say);
+        alert(app.say)
       }
-    
+
       if (app.local) {
-        saveToLocal(app.link);
-        window.location.href = '1';
+        saveToLocal(app.link)
+        window.location.href = '1'
       } else if (app.local2) {
-        saveToLocal(app.link);
-        window.location.href = app.link;
+        saveToLocal(app.link)
+        window.location.href = app.link
       } else if (app.blank) {
-        blank(app.link);
+        blank(app.link)
       } else {
         if (!app.local) {
-          go(app.link);
+          go(app.link)
         }
       }
-    
-      return false;
+
+      return false
     }
 
     link.onclick = function () {

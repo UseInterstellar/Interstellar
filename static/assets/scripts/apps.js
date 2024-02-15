@@ -268,6 +268,12 @@ document.addEventListener('DOMContentLoaded', () => {
       categories: ['all', 'game', 'cloud'],
       blank: 'true',
     },
+    {
+      name: 'Google Gemini ',
+      link: 'https://gemini.google.com',
+      image: '/assets/media/icons/gemini.png',
+      categories: ['all', 'ai'],
+    },
   ]
 
   appsList.sort((a, b) => a.name.localeCompare(b.name))
