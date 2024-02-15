@@ -56,6 +56,12 @@ document.addEventListener('DOMContentLoaded', () => {
       categories: ['all'],
     },
     {
+      name: 'The Impossible Quiz',
+      link: 'https://the-impossible-quiz.game-files.crazygames.com/ruffle/theimpossiblequiz.html',
+      image: '/assets/media/icons/theimpossiblequiz.webp',
+      categories: ['all'],
+    },
+    {
       name: 'skribbl',
       link: 'https://skribbl.io/',
       image: '/assets/media/icons/skribblio.jfif',
