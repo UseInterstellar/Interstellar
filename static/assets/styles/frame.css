@@ -71,6 +71,7 @@ iframe {
   top: 75%;
   transform: translateY(-50%);
   left: 1%;
+  width: 80%;
 }
 
 .nav-right {
@@ -78,6 +79,7 @@ iframe {
   top: 50%;
   transform: translateY(-50%);
   right: 1%;
+  width: 20%;
 }
 
 .nav-right .nav-btn:hover {
@@ -115,25 +117,27 @@ iframe {
 .navsearch {
   height: 2em;
   border: none;
-  background: var(--background-secondary);
+  background: none;
   color: #fff;
-  width: 1200px;
+  width: 60vw;
   height: 30px;
   border-radius: 5px;
+  transition: .3s;
 }
 
 .navsearch:focus {
+  background: var(--background-secondary);
   box-shadow: none;
   border: none;
   outline: none;
   color: #fff;
+  transition: .3s;
 }
 
 .navpost {
   padding: none;
   float: right;
   margin-top: 0em;
-  width: 1200px;
   color: #fff;
   height: 30px;
   border-radius: 5px;
