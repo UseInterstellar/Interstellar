@@ -38,6 +38,12 @@ document.addEventListener('DOMContentLoaded', () => {
       categories: ['all', '2P'],
     },
     {
+      name: 'Thisissand',
+      link: 'https://thisissand.com/',
+      image: '/assets/media/icons/thisissand.webp',
+      categories: ['all'],
+    },
+    {
       name: 'Stomped.io',
       link: 'https://stomped.io',
       image: '/assets/media/icons/stompedio.jfif',
