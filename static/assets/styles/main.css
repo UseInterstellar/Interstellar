@@ -353,14 +353,14 @@ input {
   border: none;
   outline: none;
   color: var(--text-primary);
-  transition: .4s;
+  transition: 0.4s;
 }
 
 input:focus {
- width: 100vw;
- height: 100vh;
- margin-top: -75vh;
- transition: .4s;
+  width: 100vw;
+  height: 100vh;
+  margin-top: -75vh;
+  transition: 0.4s;
 }
 
 select {
@@ -541,7 +541,6 @@ select {
   margin-top: 1em;
   align-items: center;
   justify-content: center;
-
 }
 
 .sugelement {

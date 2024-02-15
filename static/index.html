@@ -56,20 +56,16 @@
     <script src="/assets/scripts/global.js?v=6"></script>
     <script src="/assets/scripts/settings.js?v=1"></script>
     <script>
-      document.onkeydown = function(evt) {
-        evt = evt || window.event;
+      document.onkeydown = function (evt) {
+        evt = evt || window.event
         if (evt.keyCode == 27) {
-          document.getElementById("is").blur(); 
+          document.getElementById('is').blur()
         }
-      };
+      }
 
-      let splashtext = [
-        "Over 5 Million Users in 2023!",
-        "Fastest growing proxy server!",
-        "Made by Bubbo!",
-      ]
+      let splashtext = ['Over 5 Million Users in 2023!', 'Fastest growing proxy server!', 'Made by Bubbo!']
 
-      document.getElementById("splash").innerText = splashtext[Math.floor(Math.random()*splashtext.length)];
+      document.getElementById('splash').innerText = splashtext[Math.floor(Math.random() * splashtext.length)]
     </script>
   </body>
 </html>

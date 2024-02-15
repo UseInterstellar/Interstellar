@@ -122,7 +122,7 @@ iframe {
   width: 60vw;
   height: 30px;
   border-radius: 5px;
-  transition: .3s;
+  transition: 0.3s;
 }
 
 .navsearch:focus {
@@ -131,7 +131,7 @@ iframe {
   border: none;
   outline: none;
   color: #fff;
-  transition: .3s;
+  transition: 0.3s;
 }
 
 .navpost {
