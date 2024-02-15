@@ -44,6 +44,12 @@ document.addEventListener('DOMContentLoaded', () => {
       categories: ['all'],
     },
     {
+      name: 'digdig.io',
+      link: 'https://digdig.io/',
+      image: '/assets/media/icons/digdigio.jfif',
+      categories: ['all', '2P'],
+    },
+    {
       name: 'Stomped.io',
       link: 'https://stomped.io',
       image: '/assets/media/icons/stompedio.jfif',
