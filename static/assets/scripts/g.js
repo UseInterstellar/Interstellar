@@ -62,6 +62,12 @@ document.addEventListener('DOMContentLoaded', () => {
       categories: ['all'],
     },
     {
+      name: 'Helix Jump',
+      link: 'https://helix-jump.game-files.crazygames.com/helix-jump/1/index.html',
+      image: '/assets/media/icons/helixjump.jfif',
+      categories: ['all'],
+    },
+    {
       name: 'skribbl',
       link: 'https://skribbl.io/',
       image: '/assets/media/icons/skribblio.jfif',
