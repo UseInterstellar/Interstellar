@@ -353,15 +353,15 @@ input {
   border: none;
   outline: none;
   color: var(--text-primary);
-  transition: .4s;
+  transition: 0.4s;
 }
 
-input:focus {
- width: 100vw;
- height: 100vh;
- margin-top: -75vh;
- transition: .4s;
-}
+/* input:focus {
+  width: 100vw;
+  height: 100vh;
+  margin-top: -75vh;
+  transition: 0.4s;
+} */
 
 select {
   padding: 20px;
@@ -518,13 +518,13 @@ select {
   background-size: cover;
 }
 
-#splash {
+ #splash {
   color: var(--text-dark);
   margin-bottom: 1em;
   margin-top: -2em;
   padding: 0;
   font-family: 'Poppins', sans-serif;
-}
+} 
 
 #suggestions {
   display: none;
@@ -541,7 +541,6 @@ select {
   margin-top: 1em;
   align-items: center;
   justify-content: center;
-
 }
 
 .sugelement {
