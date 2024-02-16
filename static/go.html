@@ -29,8 +29,8 @@
       function iframeLoad() {
         const iframe = document.getElementById('ifra')
         if (document.readyState === 'complete') {
-        const website = iframe.contentWindow?.location.href.replace(window.location.origin, '').replace('/a/', '')
-        document.getElementById('is').value = decodeXor(website)
+          const website = iframe.contentWindow?.location.href.replace(window.location.origin, '').replace('/a/', '')
+          document.getElementById('is').value = decodeXor(website)
         }
       }
     </script>

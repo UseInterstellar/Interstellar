@@ -518,13 +518,13 @@ select {
   background-size: cover;
 }
 
- #splash {
+#splash {
   color: var(--text-dark);
   margin-bottom: 1em;
   margin-top: -2em;
   padding: 0;
   font-family: 'Poppins', sans-serif;
-} 
+}
 
 #suggestions {
   display: none;
