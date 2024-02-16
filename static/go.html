@@ -6,13 +6,33 @@
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <link rel="shortcut icon" id="tab-favicon" href="favicon.png" />
     <title id="tab-title">Home</title>
-    <link rel="stylesheet" href="assets/styles/frame.css?v=4" />
-    <link rel="stylesheet" href="/assets/styles/themes/default.css?v=3" />
-    <script src="/assets/scripts/global.js?v=6"></script>
+    <link rel="stylesheet" href="assets/styles/frame.css?v=3" />
+    <link rel="stylesheet" href="/assets/styles/themes/default.css?v=2" />
+    <script src="/assets/scripts/global.js?v=7"></script>
   </head>
   <body>
     <script>
       window.addEventListener('resize', navigator.keyboard.lock(['Escape']))
+    </script>
+    <script>
+      function decodeXor(input) {
+        if (!input) return input
+        let [str, ...search] = input.split('?')
+
+        return (
+          decodeURIComponent(str)
+            .split('')
+            .map((char, ind) => (ind % 2 ? String.fromCharCode(char.charCodeAt(NaN) ^ 2) : char))
+            .join('') + (search.length ? '?' + search.join('?') : '')
+        )
+      }
+      function iframeLoad() {
+        const iframe = document.getElementById('ifra')
+        if (document.readyState === 'complete') {
+        const website = iframe.contentWindow?.location.href.replace(window.location.origin, '').replace('/a/', '')
+        document.getElementById('is').value = decodeXor(website)
+        }
+      }
     </script>
     <div class="nav-bar">
       <div class="nav-container">
@@ -46,6 +66,7 @@
     <iframe
       src=""
       id="ifra"
+      onload="iframeLoad()"
       style="border: 0px #ffffff none"
       name="Iframe"
       scrolling="yes"

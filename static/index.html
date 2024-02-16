@@ -5,10 +5,9 @@
     <meta name="referrer" content="no-referrer" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="/assets/scripts/home.js"></script>
     <link rel="shortcut icon" id="tab-favicon" href="favicon.png" />
     <title id="tab-title">Home</title>
-    <link rel="stylesheet" href="/assets/styles/main.css?v=2" />
+    <link rel="stylesheet" href="/assets/styles/main.css?v=1" />
     <link rel="stylesheet" href="/assets/styles/themes/default.css?v=3" />
     <script src="jquery-3.7.1.min.js"></script>
   </head>
@@ -39,6 +38,7 @@
         </div> --->
       </div>
     </div>
+    <script src="/assets/scripts/home.js?v=2"></script>
     <script src="assets/scripts/index.js?v=5"></script>
     <script src="./m/bundle.js"></script>
     <script src="./m/config.js"></script>
@@ -55,21 +55,5 @@
     </script>
     <script src="/assets/scripts/global.js?v=6"></script>
     <script src="/assets/scripts/settings.js?v=1"></script>
-    <script>
-      document.onkeydown = function(evt) {
-        evt = evt || window.event;
-        if (evt.keyCode == 27) {
-          document.getElementById("is").blur(); 
-        }
-      };
-
-      let splashtext = [
-        "Over 5 Million Users in 2023!",
-        "Fastest growing proxy server!",
-        "Made by Bubbo!",
-      ]
-
-      document.getElementById("splash").innerText = splashtext[Math.floor(Math.random()*splashtext.length)];
-    </script>
   </body>
 </html>
