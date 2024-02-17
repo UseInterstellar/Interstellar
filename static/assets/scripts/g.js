@@ -1178,6 +1178,12 @@ document.addEventListener('DOMContentLoaded', () => {
       categories: ['all'],
     },
     {
+      name: 'Deal or No Deal',
+      link: 'https://f.kbhgames.com/RS/game.php?r=//f.kbhgames.com/2018/swf/dondeal2.swf&w=640&h=480&warnsupport=true',
+      image: '/assets/media/icons/deal-or-no-deal.jfif',
+      categories: ['all'],
+    },
+    {
       name: 'Deadshot',
       link: 'https://deadshot.io',
       image: '/assets/media/icons/deadshot.png',
