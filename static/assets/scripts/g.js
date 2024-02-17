@@ -1178,6 +1178,12 @@ document.addEventListener('DOMContentLoaded', () => {
       categories: ['all'],
     },
     {
+      name: 'Rainbow Tower',
+      link: 'https://www.mathplayground.com/mobile_rainbow_tower/index.html',
+      image: '/assets/media/icons/rainbowtower.jfif',
+      categories: ['all'],
+    },
+    {
       name: 'Madalin Stunt Cars Multiplayer',
       link: 'https://games.crazygames.com/en_US/madalin-cars-multiplayer/index.html',
       image: '/assets/media/icons/madalinmultiplayer.webp',
