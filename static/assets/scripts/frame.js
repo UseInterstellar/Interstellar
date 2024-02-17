@@ -1,5 +1,30 @@
 const iframe = document.getElementById('ifra')
 
+window.addEventListener('resize', navigator.keyboard.lock(['Escape']))
+
+function decodeXor(input) {
+  if (!input) return input
+  let [str, ...search] = input.split('?')
+
+  return (
+    decodeURIComponent(str)
+      .split('')
+      .map((char, ind) => (ind % 2 ? String.fromCharCode(char.charCodeAt(NaN) ^ 2) : char))
+      .join('') + (search.length ? '?' + search.join('?') : '')
+  )
+}
+
+function iframeLoad() {
+  if (document.readyState === 'complete') {
+    const website = iframe.contentWindow?.location.href.replace(window.location.origin, '');
+    if (website.includes('/y/') || website.includes('/f/')) {
+      document.getElementById('is').value = window.location.origin + website;
+    } else {
+      const website = iframe.contentWindow?.location.href.replace(window.location.origin, '').replace('/a/', '')
+      document.getElementById('is').value = decodeXor(website)    }
+  }
+}
+
 function reload() {
   if (iframe) {
     iframe.src = iframe.src
