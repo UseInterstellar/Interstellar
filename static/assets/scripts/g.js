@@ -1178,6 +1178,24 @@ document.addEventListener('DOMContentLoaded', () => {
       categories: ['all'],
     },
     {
+      name: 'Madalin Stunt Cars Multiplayer',
+      link: 'https://games.crazygames.com/en_US/madalin-cars-multiplayer/index.html',
+      image: '/assets/media/icons/madalinmultiplayer.webp',
+      categories: ['all', '2P'],
+    },
+    {
+      name: 'Madalin Stunt Cars 2',
+      link: 'https://games.crazygames.com/en_US/madalin-stunt-cars-2/index.html',
+      image: '/assets/media/icons/madalinstuntcars2.jfif',
+      categories: ['all'],
+    },
+    {
+      name: 'Madalin Stunt Cars 3',
+      link: 'https://games.crazygames.com/en_US/madalin-stunt-cars-3/index.html',
+      image: '/assets/media/icons/madalinstuntcars3.jfif',
+      categories: ['all'],
+    },
+    {
       name: 'PM: Light Platinum',
       link: 'https://browncha023.github.io/GBA/launcher.html#pokemonlp',
       image: '/assets/media/icons/lp.webp',
