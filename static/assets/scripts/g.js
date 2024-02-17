@@ -1184,6 +1184,12 @@ document.addEventListener('DOMContentLoaded', () => {
       categories: ['all'],
     },
     {
+      name: 'Doodle Jump',
+      link: 'https://doodlejump.pro/',
+      image: '/assets/media/icons/doodlejump.jfif',
+      categories: ['all'],
+    },
+    {
       name: 'Madalin Stunt Cars Multiplayer',
       link: 'https://games.crazygames.com/en_US/madalin-cars-multiplayer/index.html',
       image: '/assets/media/icons/madalinmultiplayer.webp',
