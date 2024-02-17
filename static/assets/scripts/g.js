@@ -1172,6 +1172,12 @@ document.addEventListener('DOMContentLoaded', () => {
       categories: ['all'],
     },
     {
+      name: 'Deadshot',
+      link: 'https://deadshot.io',
+      image: '/assets/media/icons/deadshot.png',
+      categories: ['all'],
+    },
+    {
       name: 'PM: Light Platinum',
       link: 'https://browncha023.github.io/GBA/launcher.html#pokemonlp',
       image: '/assets/media/icons/lp.webp',
