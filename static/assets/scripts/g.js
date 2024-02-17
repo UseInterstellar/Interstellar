@@ -1172,6 +1172,12 @@ document.addEventListener('DOMContentLoaded', () => {
       categories: ['all'],
     },
     {
+      name: 'Google Baseball',
+      link: 'https://www.google.com/logos/2019/july4th19/r6/july4th19.html',
+      image: '/assets/media/icons/googlebaseball.jfif',
+      categories: ['all'],
+    },
+    {
       name: 'Deadshot',
       link: 'https://deadshot.io',
       image: '/assets/media/icons/deadshot.png',
