@@ -11,29 +11,6 @@
     <script src="/assets/scripts/global.js?v=7"></script>
   </head>
   <body>
-    <script>
-      window.addEventListener('resize', navigator.keyboard.lock(['Escape']))
-    </script>
-    <script>
-      function decodeXor(input) {
-        if (!input) return input
-        let [str, ...search] = input.split('?')
-
-        return (
-          decodeURIComponent(str)
-            .split('')
-            .map((char, ind) => (ind % 2 ? String.fromCharCode(char.charCodeAt(NaN) ^ 2) : char))
-            .join('') + (search.length ? '?' + search.join('?') : '')
-        )
-      }
-      function iframeLoad() {
-        const iframe = document.getElementById('ifra')
-        if (document.readyState === 'complete') {
-          const website = iframe.contentWindow?.location.href.replace(window.location.origin, '').replace('/a/', '')
-          document.getElementById('is').value = decodeXor(website)
-        }
-      }
-    </script>
     <div class="nav-bar">
       <div class="nav-container">
         <div class="nav-left">
@@ -79,7 +56,7 @@
     <script src="assets/scripts/index.js?v=5"></script>
     <script src="./m/bundle.js"></script>
     <script src="./m/config.js"></script>
-    <script src="assets/scripts/frame.js?v=3"></script>
+    <script src="assets/scripts/frame.js?v=6"></script>
     <script src="https://kit.fontawesome.com/1237c86ba0.js" crossorigin="anonymous"></script>
     <script src="/assets/scripts/now.js?v=2"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ"></script>
