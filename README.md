@@ -20,7 +20,7 @@
     <li>Inspect Element</li>
     <li>Now.GG Support</li>
     <li>Built-in Password Protection</li>
-    <li>Geforce Now Support</li>
+    <li>GeForce Now Support</li>
 </ul>
 
 <h2 align="center">Deployment</h2>
