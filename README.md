@@ -1,29 +1,28 @@
 <div align="center">
-    <h1>Interstellar Proxy</h1>
+    <img src="https://github.com/InterstellarNetwork/Interstellar/assets/89202835/77c63680-544b-42e9-88d6-d288e7681e82">
+    <p>Serving over 7 million users since 2023.<p>
 </div>
 
-<p>Interstellar is a popular web proxy, serving over 7 million users since 2023.</p>
+## What is Interstellar? 🤔
 
-### Join Our [Discord Community](https://discord.gg/interstellar)
+<p>Interstellar is a web proxy with a clean and sleek ui and easy to use menus. Our goal is to provide the best user experience to everyone.</p>
 
-**If you find this project useful, consider giving it a star in the original repository.**
+**If you fork this project, consider giving it a star in the original repository!**
 
-<h2 align="center">Features</h2>
-<ul>
-    <li>About:Blank Cloaking</li>
-    <li>Fast Speeds</li>
-    <li>Wide Collection of Games</li>
-    <li>Tab Cloaking</li>
-    <li>Wide Collection of Apps</li>
-    <li>Built-In Tab System</li>
-    <li>Clean UI</li>
-    <li>Inspect Element</li>
-    <li>Now.GG Support</li>
-    <li>Built-in Password Protection</li>
-    <li>GeForce Now Support</li>
-</ul>
+**Join Our [Discord Community](https://discord.gg/interstellar)**
 
-<h2 align="center">Deployment</h2>
+## Features 💻
+<div align="center">
+
+|  Wide Collection of Games  | Tab Cloaking | Wide collection of Apps |
+   |:------------------:|:------------------------------:|:------------------------------:|
+| About:Blank Cloaking | Fast Speeds | Built in Tab system |
+| Clean UI | Inspect Element | Now.gg support |
+| Password Protection | Themes | GeForce NOW support |
+
+</div>
+
+## Deployment 🔽
 
 ### Easy Deployment
 
@@ -33,7 +32,7 @@
 <a target="_blank" href="https://app.koyeb.com/deploy?type=git&repository=github.com/interstellarnetwork/interstellar"><img alt="Deploy to Koyeb" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/koyeb.svg"></a>
 <a target="_blank" href="https://app.cyclic.sh/api/app/deploy/interstellarnetwork/Interstellar"><img alt="Deploy to Cyclic" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/cyclic.svg"></a>
 
-<h2 align="center">Deployment Alternatives</h2>
+### Deployment Alternatives
 
 For more deployment options, join our [Discord Server](https://discord.gg/interstellar) for various ways to deploy Interstellar.
 This includes methods of deploying to Render/OnRender.
@@ -58,11 +57,11 @@ As of January 1st, 2024, Replit is [no longer free](https://blog.replit.com/host
 2. Go to the ports tab, Click Forward A Port, And type the port number.
 3. Right-click Visibility and set Port Visibility to Public.
 
-<h2 align="center">Need Help with Deployment?</h2>
+### Need Help with Deployment?
 
-If you're having trouble, reach out to us on [Discord](https://discord.gg/interstellar) for personalized support.
+If you're having trouble, don't hesitate reach out to us on [Discord](https://discord.gg/interstellar) for personalized support.
 
-### Report Issues
+## Report Issues
 
 If you encounter problems, open an issue on GitHub, and we'll address it promptly.
 
