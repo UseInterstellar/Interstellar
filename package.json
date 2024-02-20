@@ -16,7 +16,10 @@
     "@tomphttp/bare-server-node": "^2.0.1",
     "cors": "^2.8.5",
     "express": "^4.18.2",
-    "express-basic-auth": "^1.2.1"
+    "express-basic-auth": "^1.2.1",
+    "npm": "^10.4.0",
+    "run": "^1.5.0",
+    "start": "^5.1.0"
   },
   "devDependencies": {
     "prettier": "3.2.4"

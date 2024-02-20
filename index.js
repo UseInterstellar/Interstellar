@@ -5,6 +5,7 @@ import { createBareServer } from '@tomphttp/bare-server-node'
 import path from 'node:path'
 import cors from 'cors'
 import config from './config.js'
+import { start } from 'node:repl'
 const __dirname = process.cwd()
 const server = http.createServer()
 const app = express(server)
@@ -41,7 +42,7 @@ const fetchData = async (req, res, next, baseUrl) => {
       res.end(Buffer.from(data))
     } else {
       next()
-    }
+    } 
   } catch (error) {
     console.error('Error fetching:', error)
     next(error)
