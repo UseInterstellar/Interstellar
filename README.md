@@ -12,13 +12,14 @@
 **Join Our [Discord Community](https://discord.gg/interstellar)**
 
 ## Features 💻
+
 <div align="center">
 
-|  Wide Collection of Games  | Tab Cloaking | Wide collection of Apps |
-   |:------------------:|:------------------------------:|:------------------------------:|
-| About:Blank Cloaking | Fast Speeds | Built in Tab system |
-| Clean UI | Inspect Element | Now.gg support |
-| Password Protection | Themes | GeForce NOW support |
+| Wide Collection of Games |  Tab Cloaking   | Wide collection of Apps |
+| :----------------------: | :-------------: | :---------------------: |
+|   About:Blank Cloaking   |   Fast Speeds   |   Built in Tab system   |
+|         Clean UI         | Inspect Element |     Now.gg support      |
+|   Password Protection    |     Themes      |   GeForce NOW support   |
 
 </div>
 

@@ -1,13 +1,13 @@
 // Key
 var eventKey = localStorage.getItem('eventKey') || '`'
-var panicLink = localStorage.getItem('panicLink') || 'https://classroom.google.com/'
+var pLink = localStorage.getItem('pLink') || 'https://classroom.google.com/'
 
 document.addEventListener('keydown', function (event) {
   if (event.key === eventKey) {
     if (window.self !== window.top) {
-      window.parent.location.href = panicLink
+      window.parent.location.href = pLink
     } else {
-      window.location.href = panicLink
+      window.location.href = pLink
     }
   }
 })
@@ -19,13 +19,13 @@ eventKeyInput.addEventListener('input', function () {
 
 var linkInput = document.getElementById('linkInput')
 linkInput.addEventListener('input', function () {
-  panicLink = linkInput.value
+  pLink = linkInput.value
 })
 
 function saveEventKey() {
   eventKey = eventKeyInput.value
   localStorage.setItem('eventKey', eventKey)
-  localStorage.setItem('panicLink', panicLink)
+  localStorage.setItem('pLink', pLink)
 }
 
 // Tab Cloaker
