@@ -5,9 +5,9 @@ var pLink = localStorage.getItem('pLink') || 'https://classroom.google.com/'
 document.addEventListener('keydown', function (event) {
   if (event.key === eventKey) {
     if (window.self !== window.top) {
-      window.parent.location.href = pLink
+      window.parent.location.href = encodeURIComponent(pLink)
     } else {
-      window.location.href = pLink
+      window.location.href = encodeURIComponent(pLink)
     }
   }
 })
