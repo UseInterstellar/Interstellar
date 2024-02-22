@@ -43,7 +43,7 @@ function popout() {
 
     const link = newWindow.document.createElement('link')
     link.rel = 'icon'
-    link.href = icon
+    link.href = encodeURI(icon)
     newWindow.document.head.appendChild(link)
 
     const newIframe = newWindow.document.createElement('iframe')
