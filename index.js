@@ -60,11 +60,9 @@ const fetchData = async (req, res, next, baseUrl) => {
     const asset = await fetch(reqTarget)
 
     if (asset.ok) {
-      const data = await asset.arrayBuffer();
-      const encodedData = encodeURIComponent(Buffer.from(data).toString());
-      res.end(encodedData);
-    }
-    else {
+      const data = await asset.arrayBuffer()
+      res.end(Buffer.from(data))
+    } else {
       next()
     }
   } catch (error) {
