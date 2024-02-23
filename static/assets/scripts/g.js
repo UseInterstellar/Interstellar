@@ -1,9 +1,33 @@
+
+
+function pickRandomLink(links) {
+  if (links.length === 0) {
+      return "No links provided.";
+  }
+
+
+  const randomIndex = Math.floor(Math.random() * links.length);
+  return links[randomIndex];
+}
+const linkList = [
+  "https://dynast.io",
+  "https://www.silvergames.com/en/learn-to-fly-3/iframe",
+  'https://florr.io',
+  'https://candyjump.games235.com/'
+];
+const randomLink = pickRandomLink(linkList);
+
+
+
+
+
 document.addEventListener('DOMContentLoaded', () => {
+  
   const appsList = [
     {
-      name: '! Request A Game',
-      link: 'https://forms.gle/94fJ9yAXQCgaXTrz6',
-      image: '/assets/media/icons/request.webp',
+      name: '!Random Game',
+      link: randomLink,
+      image: '/assets/media/icons/rand.png',
       categories: ['all'],
       
     },
