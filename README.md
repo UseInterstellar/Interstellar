@@ -5,11 +5,11 @@
 
 ## Interstellar
 
-<p>Interstellar is a web proxy with a clean and sleek ui and easy to use menus. Our goal is to provide the best user experience to everyone.</p>
+<p>Interstellar is a web proxy with a Clean and Sleek UI and easy to use menus. Our goal is to provide the best user experience to everyone.</p>
 
 If you fork this project, consider giving it a star in the original repository!
 
-**Join Our [Discord Community](https://discord.gg/interstellar)**
+**Join Our [Discord Community](https://discord.gg/interstellar) for support, more links, and an active community!**
 
 ## Features 
 
