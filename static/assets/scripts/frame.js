@@ -1,7 +1,7 @@
 const iframe = document.getElementById('ifra')
 
 window.addEventListener('resize', navigator.keyboard.lock(['Escape']))
-
+// Decode URL
 function decodeXor(input) {
   if (!input) return input
   let [str, ...search] = input.split('?')
@@ -13,7 +13,6 @@ function decodeXor(input) {
       .join('') + (search.length ? '?' + search.join('?') : '')
   )
 }
-
 function iframeLoad() {
   if (document.readyState === 'complete') {
     const website = iframe.contentWindow?.location.href.replace(window.location.origin, '')
@@ -25,13 +24,13 @@ function iframeLoad() {
     }
   }
 }
-
+// Reload
 function reload() {
   if (iframe) {
     iframe.src = iframe.src
   }
 }
-
+// Popout
 function popout() {
   const newWindow = window.open('about:blank', '_blank')
 
@@ -58,7 +57,7 @@ function popout() {
     newWindow.document.body.appendChild(newIframe)
   }
 }
-
+// Eruda
 function erudaToggle() {
   if (!iframe) return
 
@@ -80,7 +79,7 @@ function erudaToggle() {
     erudaDocument.head.appendChild(script)
   }
 }
-
+// Fullscreen
 const fullscreenButton = document.getElementById('fullscreen-button')
 fullscreenButton.addEventListener('click', function () {
   if (!document.fullscreenElement) {
@@ -89,12 +88,12 @@ fullscreenButton.addEventListener('click', function () {
     document.exitFullscreen()
   }
 })
-
+// Home
 const homeButton = document.getElementById('home-page')
 homeButton.addEventListener('click', function () {
   window.location.href = './'
 })
-
+// Back
 function goBack() {
   if (iframe) {
     iframe.contentWindow.history.back()
@@ -102,7 +101,7 @@ function goBack() {
     console.error('No iframe found')
   }
 }
-
+// Forward
 function goForward() {
   if (iframe) {
     iframe.contentWindow.history.forward()
@@ -110,7 +109,7 @@ function goForward() {
     console.error('No iframe found')
   }
 }
-
+// Iframe
 window.onload = function () {
   let GoUrl = sessionStorage.getItem('GoUrl')
   if (!GoUrl.startsWith('/y/') && !GoUrl.startsWith('/f/')) {
@@ -121,7 +120,84 @@ window.onload = function () {
     iframe.src = GoUrl
   }
 }
+// Remove Nav
 document.addEventListener('fullscreenchange', function () {
   const isFullscreen = Boolean(document.fullscreenElement)
   document.body.classList.toggle('fullscreen', isFullscreen)
 })
+// Now
+var adjustmentCompleted = false
+var attempts = 0
+
+function adjustElements() {
+  if (adjustmentCompleted) {
+    return true
+  }
+
+  var iframe = top.document.getElementById('ifra')
+
+  if (iframe) {
+    var innerDoc = iframe.contentWindow.document
+
+    var roblox = innerDoc.getElementById('js-game-video')
+    var controlBar = innerDoc.getElementById('ng-control-bar')
+
+    if (roblox && controlBar) {
+      roblox.style.top = '415px'
+      controlBar.style.top = '91%'
+
+      return true
+    } else {
+      return false
+    }
+  } else {
+    return false
+  }
+}
+
+function CheckAndAdjust() {
+  var intervalId = setInterval(function () {
+    attempts++
+    if (adjustElements()) {
+      clearInterval(intervalId)
+    } else if (attempts >= 30) {
+      clearInterval(intervalId)
+    }
+  }, 5000)
+}
+
+function adjust() {
+  setInterval(function () {
+    var iframe = top.document.getElementById('ifra')
+
+    if (iframe) {
+      var innerDoc = iframe.contentWindow.document
+
+      var roblox = innerDoc.getElementById('js-game-video')
+      var controlBar = innerDoc.getElementById('ng-control-bar')
+      var customClassElement = innerDoc.querySelector('.sc-rUGft.hLgqJJ')
+
+      if (roblox) {
+        checkAndAdjustStyles(roblox, 'top', ['415px'])
+      }
+
+      if (controlBar) {
+        checkAndAdjustStyles(controlBar, 'top', ['91%'])
+      }
+
+      if (customClassElement) {
+        customClassElement.remove()
+      }
+    }
+  }, 3000)
+}
+
+function checkAndAdjustStyles(element, property, targetValues) {
+  if (element) {
+    var currentStyle = window.getComputedStyle(element)[property]
+
+    if (!targetValues.includes(currentStyle)) {
+      element.style[property] = targetValues[0]
+    }
+  }
+}
