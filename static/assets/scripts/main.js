@@ -1,5 +1,49 @@
-//Loads custom icons
-
+// Ads
+document.addEventListener('DOMContentLoaded', function () {
+  if (localStorage.getItem('ad') === 'true') {
+    var advDiv = document.getElementById('adv')
+    if (advDiv) {
+      var script = document.createElement('script')
+      script.type = 'text/javascript'
+      script.src = '//oysterscoldtiny.com/1c/c3/8a/1cc38a6899fdf8ba4dfe779bcc54627b.js'
+      advDiv.appendChild(script)
+      console.log('Script inserted inside the adv div.')
+    }
+  }
+  if (localStorage.getItem('ad') === 'false') {
+    var advDiv = document.getElementById('adv')
+    if (advDiv) {
+      advDiv.remove()
+      console.log('The adv div has been removed.')
+    }
+  }
+  var banner = localStorage.getItem('banner') === 'true'
+  if (!banner) {
+    var bannerDiv = document.getElementById('banner')
+    if (bannerDiv) {
+      bannerDiv.remove()
+      console.log('The banner div has been removed.')
+    }
+  }
+})
+// Themes
+var themeid = localStorage.getItem('theme')
+themeEle = document.createElement('link')
+themeEle.rel = 'stylesheet'
+if (themeid == 'catppuccinMocha') {
+  themeEle.href = '/assets/styles/themes/catppuccin/mocha.css?v=1'
+}
+if (themeid == 'catppuccinMacchiato') {
+  themeEle.href = '/assets/styles/themes/catppuccin/macchiato.css?v=1'
+}
+if (themeid == 'catppuccinFrappe') {
+  themeEle.href = '/assets/styles/themes/catppuccin/frappe.css?v=1'
+}
+if (themeid == 'catppuccinLatte') {
+  themeEle.href = '/assets/styles/themes/catppuccin/latte.css?v=1'
+}
+document.body.appendChild(themeEle)
+// Tab Cloaker
 document.addEventListener('DOMContentLoaded', function (event) {
   const icon = document.getElementById('tab-favicon')
   const name = document.getElementById('tab-title')
@@ -65,79 +109,22 @@ document.addEventListener('DOMContentLoaded', function (event) {
     localStorage.setItem('name', 'Edpuzzle')
     localStorage.setItem('icon', '/assets/media/favicon/edpuzzle.png')
   }
-
-  var themeid = localStorage.getItem('theme')
-  //Loads theme
-  themeEle = document.createElement('link')
-  themeEle.rel = 'stylesheet'
-  if (themeid == 'catppuccinMocha') {
-    themeEle.href = '/assets/styles/themes/catppuccin/mocha.css?v=1'
-  }
-  if (themeid == 'catppuccinMacchiato') {
-    themeEle.href = '/assets/styles/themes/catppuccin/macchiato.css?v=1'
-  }
-  if (themeid == 'catppuccinFrappe') {
-    themeEle.href = '/assets/styles/themes/catppuccin/frappe.css?v=1'
-  }
-  if (themeid == 'catppuccinLatte') {
-    themeEle.href = '/assets/styles/themes/catppuccin/latte.css?v=1'
-  }
-  document.body.appendChild(themeEle)
 })
-
-document.addEventListener('DOMContentLoaded', function () {
-  var saveButton = document.getElementById('save-button')
-  saveButton.addEventListener('click', function () {
-    var backgroundInput = document.getElementById('background-input')
-    var imageURL = backgroundInput.value
-
-    if (imageURL !== '') {
-      localStorage.setItem('backgroundImage', imageURL)
-      document.body.style.backgroundImage = "url('" + imageURL + "')"
-      backgroundInput.value = ''
-    } else {
-    }
-  })
-
-  var resetButton = document.getElementById('reset-button')
-  resetButton.addEventListener('click', function () {
-    localStorage.removeItem('backgroundImage')
-    document.body.style.backgroundImage = "url('default-background.jpg')"
-  })
-
-  var savedBackgroundImage = localStorage.getItem('backgroundImage')
-  if (savedBackgroundImage) {
-    document.body.style.backgroundImage = "url('" + savedBackgroundImage + "')"
-  }
-})
-
-document.addEventListener('DOMContentLoaded', function () {
-  var savedBackgroundImage = localStorage.getItem('backgroundImage')
-  if (savedBackgroundImage) {
-    document.body.style.backgroundImage = "url('" + savedBackgroundImage + "')"
-  }
-})
-
+// Key
 document.addEventListener('DOMContentLoaded', function () {
   var eventKey = localStorage.getItem('eventKey') || '`'
   var pLink = localStorage.getItem('pLink') || 'https://classroom.google.com/'
 
-  document.getElementById('eventKeyInput').value = eventKey
-  document.getElementById('linkInput').value = pLink
-
-  const selectedOption = localStorage.getItem('selectedOption')
-  if (selectedOption) {
-    updateHeadSection(selectedOption)
+  document.addEventListener('keydown', function (event) {
+    if (event.key === eventKey) {
+      window.location.href = pLink
+    }
+  })
+})
+// Background Image
+document.addEventListener('DOMContentLoaded', function () {
+  var savedBackgroundImage = localStorage.getItem('backgroundImage')
+  if (savedBackgroundImage) {
+    document.body.style.backgroundImage = "url('" + savedBackgroundImage + "')"
   }
 })
-
-function saveEventKey() {
-  var eventKey = document.getElementById('eventKeyInput').value
-  var pLink = document.getElementById('linkInput').value
-
-  localStorage.setItem('eventKey', eventKey)
-  localStorage.setItem('pLink', pLink)
-
-  document.getElementById('eventKeyInput').value = ''
-  document.getElementById('linkInput').value = ''
-}
