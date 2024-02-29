@@ -1,6 +1,6 @@
 {
   "name": "in",
-  "version": "5.1.3",
+  "version": "5.1.4",
   "type": "module",
   "engines": {
     "npm": ">=7.0.0",
