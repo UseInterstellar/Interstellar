@@ -75,6 +75,11 @@ document.onkeydown = function (evt) {
 
 let splashtext = [
   'Wilson is a fatass',
+  'Wilson needs to stop bulking',
+  'Why is Wilson so fat?',
+  'Wilson is fat',
+  'Fatass Wilson',
+  'Wilson can't stop bulking',
 ]
 
 //document.getElementById('splash').innerText = splashtext[Math.floor(Math.random() * splashtext.length)]
