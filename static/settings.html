@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" id="tab-favicon" href="favicon.png" />
     <title id="tab-title">Home</title>
-    <script src="/assets/scripts/global.js?v=8"></script>
     <link rel="stylesheet" href="/assets/styles/main.css?v=2" />
     <link rel="stylesheet" href="/assets/styles/settings.css" />
     <link rel="stylesheet" href="/assets/styles/themes/default.css?v=3" />
@@ -26,6 +25,13 @@
     </div>
     <div class="main">
       <div class="settings-container">
+        <div id="banner">
+          <script
+            async="async"
+            data-cfasync="false"
+            src="//oysterscoldtiny.com/a7a31643b96603003dcbbc2f71254e93/invoke.js"></script>
+          <div id="container-a7a31643b96603003dcbbc2f71254e93"></div>
+        </div>
         <div class="settings-card">
           <h3>About:Blank</h3>
           <p>Cloak the site in an about:blank page and toggle about:blank on startup (enabled by default)</p>
@@ -69,7 +75,21 @@
           </select>
           <input class="key-form" type="text" id="icon" placeholder="Change Tab Icon" name="icon" />
           <input class="key-form" type="text" id="name" name="name" placeholder="Change Tab Name" />
-          <button class="key-button" value="Save" onclick="saveIcon(); saveName(); redirectToMainDomain()">Save</button>
+          <button class="key-button" value="Save" onclick="CustomIcon(); CustomName(); redirectToMainDomain();">
+            Save
+          </button>
+        </div>
+        <div class="settings-card">
+          <h3>Advertisement</h3>
+          <p>
+            Advertisements are cruical in order to keep the site running. Please consider turning on Banner Ads instead
+            of no ads, to continue supporting us while minimizing the amount of ads shown.
+          </p>
+          <select id="adType" onchange="adChange(this)">
+            <option value="default">Default</option>
+            <option value="banner">Banner Ads (Minimal Ads)</option>
+            <option value="off">Off</option>
+          </select>
         </div>
         <div class="settings-card">
           <h3>Particles</h3>
@@ -94,7 +114,8 @@
         </div>
       </div>
     </div>
-    <script src="/assets/scripts/settings.js?v=3"></script>
+    <script src="/assets/scripts/main.min.js?v=2"></script>
+    <script src="/assets/scripts/settings.min.js?v=1"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ"></script>
     <script>
       window.dataLayer = window.dataLayer || []
@@ -105,5 +126,6 @@
 
       gtag('config', 'G-WKJQ5QHQTJ')
     </script>
+    <div id="adv"></div>
   </body>
 </html>

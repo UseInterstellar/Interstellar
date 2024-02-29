@@ -44,13 +44,13 @@ if (config.routes !== false) {
 }
 if (config.local !== false) {
   app.get('/y/*', (req, res, next) => {
-    const baseUrl = 'https://raw.githubusercontent.com/ypxa/y/main';
-    fetchData(req, res, next, baseUrl);
+    const baseUrl = 'https://raw.githubusercontent.com/ypxa/y/main'
+    fetchData(req, res, next, baseUrl)
   })
 
   app.get('/f/*', (req, res, next) => {
-    const baseUrl = 'https://raw.githubusercontent.com/4x-a/x/fixy';
-    fetchData(req, res, next, baseUrl);
+    const baseUrl = 'https://raw.githubusercontent.com/4x-a/x/fixy'
+    fetchData(req, res, next, baseUrl)
   })
 }
 
