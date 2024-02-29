@@ -3,5 +3,4 @@ node_modules
 package-lock.json
 package.json
 /static/m/
-/static/assets/scripts/main.min.js
-/static/assets/scripts/settings.min.js
+**/*.min.*
