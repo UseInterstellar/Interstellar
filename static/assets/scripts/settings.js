@@ -3,13 +3,8 @@ document.addEventListener('DOMContentLoaded', function () {
   function adChange(selectedValue) {
     if (selectedValue === 'default') {
       localStorage.setItem('ad', 'true')
-      localStorage.setItem('banner', 'true')
-    } else if (selectedValue === 'banner') {
-      localStorage.setItem('ad', 'false')
-      localStorage.setItem('banner', 'true')
     } else if (selectedValue === 'off') {
       localStorage.setItem('ad', 'false')
-      localStorage.setItem('banner', 'false')
     }
   }
 
@@ -22,18 +17,11 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 
     var storedAd = localStorage.getItem('ad')
-    var storedBanner = localStorage.getItem('banner')
-
-    var storedAd = localStorage.getItem('ad')
-    var storedBanner = localStorage.getItem('banner')
-
-    if (storedAd === 'true' && storedBanner === 'true') {
+    if (storedAd === 'true') {
       adTypeElement.value = 'default'
-    } else if (storedAd === 'true' && storedBanner === 'false') {
+    } else if (storedAd === 'true') {
       adTypeElement.value = 'banner'
-    } else if (storedAd === 'false' && storedBanner === 'true') {
-      adTypeElement.value = 'banner'
-    } else if (storedAd === 'false' && storedBanner === 'false') {
+    } else if (storedAd === 'false') {
       adTypeElement.value = 'off'
     } else {
       adTypeElement.value = 'default'
