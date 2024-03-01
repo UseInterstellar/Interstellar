@@ -4,9 +4,9 @@ document.addEventListener('DOMContentLoaded', function () {
     localStorage.setItem('ad', 'true');
   }
 
-  if (localStorage.getItem('banner') === null) {
+  /* if (localStorage.getItem('banner') === null) {
     localStorage.setItem('banner', 'true');
-  }
+  } */
 
   if (localStorage.getItem('ad') === 'true') {
     var advDiv = document.getElementById('adv');
@@ -27,14 +27,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  var banner = localStorage.getItem('banner') === 'true';
+  /* var banner = localStorage.getItem('banner') === 'true';
   if (!banner) {
     var bannerDiv = document.getElementById('banner');
     if (bannerDiv) {
       bannerDiv.remove();
       console.log('The banner div has been removed.');
     }
-  }
+  } */
 });
 
 // Themes
