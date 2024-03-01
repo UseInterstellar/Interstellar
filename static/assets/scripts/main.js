@@ -4,10 +4,6 @@ document.addEventListener('DOMContentLoaded', function () {
     localStorage.setItem('ad', 'true')
   }
 
-  /* if (localStorage.getItem('banner') === null) {
-    localStorage.setItem('banner', 'true');
-  } */
-
   if (localStorage.getItem('ad') === 'true') {
     var advDiv = document.getElementById('adv')
     if (advDiv) {
@@ -26,15 +22,6 @@ document.addEventListener('DOMContentLoaded', function () {
       console.log('The adv div has been removed.')
     }
   }
-
-  /* var banner = localStorage.getItem('banner') === 'true';
-  if (!banner) {
-    var bannerDiv = document.getElementById('banner');
-    if (bannerDiv) {
-      bannerDiv.remove();
-      console.log('The banner div has been removed.');
-    }
-  } */
 })
 
 // Themes
