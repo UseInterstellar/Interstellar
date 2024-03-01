@@ -78,45 +78,45 @@ document.addEventListener('DOMContentLoaded', function (event) {
 
   window.addEventListener('message', function (event) {
     if (event.origin !== window.location.origin) {
-      console.warn('Received message from unexpected origin:', event.origin);
-      return;
+      console.warn('Received message from unexpected origin:', event.origin)
+      return
     }
-  
-    console.log('Received message:', event.data);
-  
+
+    console.log('Received message:', event.data)
+
     if (event.data && event.data.url) {
-      const iframes = Array.from(iframeContainer.querySelectorAll('iframe'));
-      } else {
-      console.log('No URL data in the message.');
+      const iframes = Array.from(iframeContainer.querySelectorAll('iframe'))
+    } else {
+      console.log('No URL data in the message.')
     }
-  
 
-  const activeIframe = iframes.find((iframe) => iframe.classList.contains('active'));
+    const activeIframe = iframes.find((iframe) => iframe.classList.contains('active'))
 
-  if (activeIframe) {
-    console.log('Visible iframe:', activeIframe);
-  
-    const tabToUpdate = tabList.querySelector(`[data-tab-id='${activeIframe.dataset.tabId}']`);
-  
-    if (tabToUpdate) {
-      console.log('Tab to update:', tabToUpdate);
-  
-      const tabTitle = tabToUpdate.querySelector('.tab-title');
-  
-      if (tabTitle) {
-        console.log('Tab title:', tabTitle);
-        tabTitle.textContent = event.data.url;
-        console.log('Hostname:', event.data.url);
+    if (activeIframe) {
+      console.log('Visible iframe:', activeIframe)
+
+      const tabToUpdate = tabList.querySelector(`[data-tab-id='${activeIframe.dataset.tabId}']`)
+
+      if (tabToUpdate) {
+        console.log('Tab to update:', tabToUpdate)
+
+        const tabTitle = tabToUpdate.querySelector('.tab-title')
+
+        if (tabTitle) {
+          console.log('Tab title:', tabTitle)
+          tabTitle.textContent = event.data.url
+          console.log('Hostname:', event.data.url)
+        } else {
+          console.log('No tab title element found.')
+        }
       } else {
-        console.log('No tab title element found.');
+        console.log('No tab to update found.')
       }
     } else {
-      console.log('No tab to update found.');
+      console.log('No visible iframe found.')
     }
-  } else {
-    console.log('No visible iframe found.');
-  }})
-  
+  })
+
   function switchTab(event) {
     const tabId = event.target.closest('li').dataset.tabId
 
