@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function (event) {
   const iframeContainer = document.getElementById('iframe-container')
 
   let tabCounter = 1
-  let navOpen = true
 
   addTabButton.addEventListener('click', () => {
     const newTab = document.createElement('li')

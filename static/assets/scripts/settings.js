@@ -19,8 +19,6 @@ document.addEventListener('DOMContentLoaded', function () {
     var storedAd = localStorage.getItem('ad')
     if (storedAd === 'true') {
       adTypeElement.value = 'default'
-    } else if (storedAd === 'true') {
-      adTypeElement.value = 'banner'
     } else if (storedAd === 'false') {
       adTypeElement.value = 'off'
     } else {
