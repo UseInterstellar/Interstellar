@@ -17,7 +17,7 @@ function iframeLoad() {
   if (document.readyState === 'complete') {
     const website = iframe.contentWindow?.location.href.replace(window.location.origin, '')
     if (website.includes('/y/') || website.includes('/f/')) {
-      document.getElementById('is').value = window.location.origin + website
+      document.getElementById('is').value = ''
     } else {
       const website = iframe.contentWindow?.location.href.replace(window.location.origin, '').replace('/a/', '')
       document.getElementById('is').value = decodeXor(website)
