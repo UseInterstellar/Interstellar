@@ -13,7 +13,7 @@ Thank you for your interest in contributing to this repository! To ensure a smoo
    - Visit the modified file (Ex. `/static/assets/scripts/index.js`), copy the code, and utilize a code minifier. Next, paste the minified code into the corresponding .min. file (Ex. `/static/assets/scripts/index.min.js`).
    - When minifying, you can choose your preferred minifier or use one of the following:
      - [FreeFormatter CSS Minifier](https://www.freeformatter.com/css-minifier.html)
-     - [Toptal JavaScript Minifier](https://www.toptal.com/developers/javascript-minifier)
+     - [JavaScript Minifier](https://minify-js.com/)
 
 3. **Version Bumping:**
 
