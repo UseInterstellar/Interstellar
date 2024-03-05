@@ -79,7 +79,7 @@ let splashtext = [
   'Why is Wilson so fat?',
   'Wilson is fat',
   'Fatass Wilson',
-  'Wilson can't stop bulking',
+  'Wilson can\'t stop bulking',
 ]
 
 //document.getElementById('splash').innerText = splashtext[Math.floor(Math.random() * splashtext.length)]
