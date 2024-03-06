@@ -10,7 +10,7 @@
     "start": "node index.js",
     "format": "npx prettier . --write"
   },
-  "author": "",
+  "author": "InterstellarNetwork",
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "@tomphttp/bare-server-node": "^2.0.2",
