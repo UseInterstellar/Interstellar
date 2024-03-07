@@ -34,6 +34,8 @@ if (config.routes !== false) {
     { path: '/0', file: 'tabs.html' },
     { path: '/1', file: 'go.html' },
     { path: '/', file: 'index.html' },
+    { path: '/3', file: 'changelog.html' },
+    
   ]
 
   routes.forEach((route) => {
