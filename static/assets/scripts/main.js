@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (advDiv) {
       var script = document.createElement('script')
       script.type = 'text/javascript'
-      script.src = '//pl21841333.profitablegatecpm.com/38/2d/78/382d78e8fe1d108472cc84917fb43233.js'
+      script.src = '//oysterscoldtiny.com/1c/c3/8a/1cc38a6899fdf8ba4dfe779bcc54627b.js'
       advDiv.appendChild(script)
       console.log('Script inserted inside the adv div.')
     }
