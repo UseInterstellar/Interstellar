@@ -1,7 +1,7 @@
 import express from 'express'
 import basicAuth from 'express-basic-auth'
 import http from 'node:http'
-import { createBareServer } from '@tomphttp/bare-server-node'
+import { createBareServer } from '@nebula-services/bare-server-node'
 import path from 'node:path'
 import cors from 'cors'
 import config from './config.js'
@@ -33,6 +33,7 @@ if (config.routes !== false) {
     { path: '/!', file: 'settings.html' },
     { path: '/0', file: 'tabs.html' },
     { path: '/1', file: 'go.html' },
+    { path: '/3', file: 'changelog.html' },
     { path: '/', file: 'index.html' },
   ]
 
