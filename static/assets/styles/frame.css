@@ -7,7 +7,7 @@ body {
 iframe {
   display: block;
   border: none;
-  height: 100vh;
+  height: calc(100% - 3em);
   width: 100vw;
   position: absolute;
   bottom: 0;
