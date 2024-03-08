@@ -31,9 +31,9 @@ if (config.routes !== false) {
     { path: '/~', file: 'apps.html' },
     { path: '/-', file: 'games.html' },
     { path: '/!', file: 'settings.html' },
+    { path: '/;', file: 'changelog.html' },
     { path: '/0', file: 'tabs.html' },
     { path: '/1', file: 'go.html' },
-    { path: '/3', file: 'changelog.html' },
     { path: '/', file: 'index.html' },
   ]
 

@@ -561,3 +561,13 @@ select {
 .sugelement:hover {
   cursor: pointer;
 }
+
+.hyperlink {
+  color: white;
+  text-decoration: none; 
+  font-size: 150%;
+}
+
+.hyperlink:hover {
+  color: grey;
+}
