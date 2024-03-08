@@ -19,6 +19,36 @@
     "categories": ["all"]
   },
   {
+    "name": "Twisted Cooking Mama",
+    "link": "https://twisted-cooking-mama.game-files.crazygames.com/ruffle/twisted-cooking-mama/1/twistedcookingmama.html?v=1.273",
+    "image": "/assets/media/icons/twistedcookingmama.jpg",
+    "categories": ["all"]
+  },
+  {
+    "name": "Marbles Garden",
+    "link": "https://www.coolmathgames.com/0-marbles-garden/play",
+    "image": "/assets/media/icons/marblesgarden.jpg",
+    "categories": ["all"]
+  },
+  {
+    "name": "Fancy Pants Adventure",
+    "link": "https://games.crazygames.com/en_US/fancy-pants-adventure-world/index.html?v=1.273",
+    "image": "/assets/media/icons/fancypantsadventures.jpg",
+    "categories": ["all"]
+  },
+  {
+    "name": "Fancy Pants Adventure 2",
+    "link": "https://games.crazygames.com/en_US/fancy-pants-adventure-world/index.html?v=1.273",
+    "image": "/assets/media/icons/fancypantsadventures2.jpg",
+    "categories": ["all"]
+  },
+  {
+    "name": "Rooftop Snipers 2",
+    "link": "https://h5cdn.github.io/s6/rooftop-snipers-2/",
+    "image": "/assets/media/icons/rooftopsnipers2.jpg",
+    "categories": ["all"]
+  },
+  {
     "name": "Stickman Archero Fight",
     "link": "https://html5.gamedistribution.com/rvvASMiM/3f4c166817ad4fd4b5b05d9adba22fcd/index.html",
     "image": "/assets/media/icons/stickman-archero-fight.webp",
