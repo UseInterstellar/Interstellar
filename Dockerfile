@@ -1,12 +1,11 @@
-FROM node:iron-bookworm-slim
-ENV NODE_ENV=production
+FROM node:20-alpine
 
-WORKDIR /app
+RUN apk add --no-cache git
 
-COPY ["package.json", "./"]
+RUN git clone https://github.com/crypticclippedu/Science-Math.git
+
+WORKDIR /Science-Math
 
 RUN npm install
 
-COPY . .
-
-CMD [ "node", "index.js" ]
+CMD npm start

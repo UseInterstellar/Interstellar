@@ -1,5 +1,5 @@
 services:
   - type: web
-    name: edu
+    name: ScienceMath
     env: docker
     plan: free
