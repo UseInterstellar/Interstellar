@@ -1,13 +1,13 @@
 <div align="center">
     <img src="https://github.com/InterstellarNetwork/Interstellar/assets/89202835/77c63680-544b-42e9-88d6-d288e7681e82">
     <p>Serving over 7 million users since 2023.<p>
+    <p>Interstellar is a web proxy with a Clean and Sleek UI and easy to use menus. Our goal is to provide the best user experience to everyone.</p>
 </div>
 
-## Interstellar
+![inpreview](https://github.com/InterstellarNetwork/Interstellar/assets/89202835/2669efed-5186-4932-83c4-725acae60bd2)
 
-<p>Interstellar is a web proxy with a Clean and Sleek UI and easy to use menus. Our goal is to provide the best user experience to everyone.</p>
-
-If you fork this project, consider giving it a star in the original repository!
+> [!IMPORTANT]
+> If you fork this project, consider giving it a star in the original repository!
 
 **Join Our [Discord Community](https://discord.gg/interstellar) for support, more links, and an active community!**
 
@@ -25,9 +25,8 @@ If you fork this project, consider giving it a star in the original repository!
 
 ## Deployment
 
-### Easy Deployment
-
-**Note:** You **cannot** deploy to static web hosts, including Netlify, Cloudflare Pages, and GitHub Pages.
+> [!IMPORTANT]
+> You **cannot** deploy to static web hosts, including Netlify, Cloudflare Pages, and GitHub Pages.
 
 <a target="_blank" href="https://heroku.com/deploy/?template=https://github.com/interstellarnetwork/interstellar"><img alt="Deploy to Heroku" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/heroku.svg"></a>
 <a target="_blank" href="https://app.koyeb.com/deploy?type=git&repository=github.com/interstellarnetwork/interstellar"><img alt="Deploy to Koyeb" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/koyeb.svg"></a>
@@ -59,9 +58,8 @@ As of January 1st, 2024, Replit is [no longer free](https://blog.replit.com/host
 3. Go to the ports tab, Click Forward A Port, And type the port number.
 4. Right-click Visibility and set Port Visibility to Public.
 
-### Need Help with Deployment?
-
-If you're having trouble, don't hesitate reach out to us on [Discord](https://discord.gg/interstellar) for personalized support.
+> [!TIP]
+> If you're having trouble, don't hesitate reach out to us on [Discord](https://discord.gg/interstellar) for personalized support.
 
 ## Report Issues
 
