@@ -26,6 +26,37 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 })
+// Proccy
+document.addEventListener('DOMContentLoaded', function () {
+  function pChange(selectedValue) {
+    if (selectedValue === 'uv') {
+      localStorage.setItem('uv', 'true')
+      localStorage.removeItem('dy')
+    } else if (selectedValue === 'dy') {
+      localStorage.setItem('uv', 'false')
+      localStorage.setItem('dy', 'true')
+    }
+  }
+
+  var pChangeElement = document.getElementById('pChange')
+
+  if (pChangeElement) {
+    pChangeElement.addEventListener('change', function () {
+      var selectedOption = this.value
+      pChange(selectedOption)
+    })
+
+    var storedP = localStorage.getItem('uv')
+    if (storedP === 'true') {
+      pChangeElement.value = 'uv'
+    } else if (localStorage.getItem('dy') === 'true') {
+      pChangeElement.value = 'dy'
+    } else {
+      pChangeElement.value = 'uv'
+    }
+  }
+})
+
 // Key
 var eventKey = localStorage.getItem('eventKey') || '`'
 var pLink = localStorage.getItem('pLink') || 'https://classroom.google.com/'

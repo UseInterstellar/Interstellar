@@ -8,10 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" id="tab-favicon" href="favicon.png" />
     <title id="tab-title">Home</title>
-    <script src="/assets/scripts/main.min.js?v=6"></script>
+    <script src="/assets/scripts/main.js?v=6"></script>
     <link rel="stylesheet" type="text/css" href="/./assets/styles/tab.css" />
     <link rel="stylesheet" href="/./assets/styles/tabinner.css" />
-    <script src="/./assets/scripts/tabs.min.js?v=2"></script>
+    <script src="/./assets/scripts/tabs.js?v=2"></script>
     <script src="https://kit.fontawesome.com/1237c86ba0.js" crossorigin="anonymous"></script>
     <script>
       window.addEventListener('resize', navigator.keyboard.lock(['Escape']))
@@ -50,7 +50,7 @@
     </div>
     <script>
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('../sw.js', {
+        navigator.serviceWorker.register('../sw.js?v=1', {
           scope: '/a/',
         })
       })
@@ -78,8 +78,14 @@
         const activeIframe = Array.from(document.getElementById('iframe-container').querySelectorAll('iframe')).find(
           (iframe) => iframe.classList.contains('active')
         )
+        var dy = localStorage.getItem('dy')
 
-        activeIframe.src = '/a/' + ('GoUrl', __uv$config.encodeUrl(url))
+        if (dy === 'true') {
+          activeIframe.src = '/a/q/' + ('GoUrl', __uv$config.encodeUrl(url))
+        } else {
+          activeIframe.src = '/a/' + ('GoUrl', __uv$config.encodeUrl(url))
+        }
+
         activeIframe.dataset.tabUrl = url
         document.querySelector('form input').value = url
         console.log(activeIframe.dataset.tabUrl)
