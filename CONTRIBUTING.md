@@ -10,7 +10,7 @@ Thank you for your interest in contributing to this repository! To ensure a smoo
 
 2. **Minifying Code:**
 
-   - Visit the modified file (Ex. `/static/assets/scripts/index.js`), copy the code, and utilize a code minifier. Next, paste the minified code into the corresponding .min. file (Ex. `/static/assets/scripts/index.min.js`).
+   - Visit the modified file (Ex. `/static/assets/scripts/index.js`), copy the code, and utilize a code minifier. Next, paste the minified code into the corresponding .min. file (Ex. `/static/assets/scripts/index.js`).
    - When minifying, you can choose your preferred minifier or use one of the following:
      - [FreeFormatter CSS Minifier](https://www.freeformatter.com/css-minifier.html)
      - [JavaScript Minifier](https://minify-js.com/)

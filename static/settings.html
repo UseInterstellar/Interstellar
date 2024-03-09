@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" id="tab-favicon" href="favicon.png" />
     <title id="tab-title">Home</title>
-    <link rel="stylesheet" href="/assets/styles/main.css?v=2" />
+    <link rel="stylesheet" href="/assets/styles/main.css?v=3" />
     <link rel="stylesheet" href="/assets/styles/settings.css" />
     <link rel="stylesheet" href="/assets/styles/themes/default.css?v=3" />
     <script src="https://kit.fontawesome.com/1237c86ba0.js" crossorigin="anonymous"></script>
@@ -73,6 +73,17 @@
           </button>
         </div>
         <div class="settings-card">
+          <h3>Choose your <b>Pr</b>oxy</h3>
+          <p>
+            Ultra<bn>vio</bn>let is the main <bn>pro</bn>xy, but Dynamic has support for more sites and also works on
+            iOS! (Dynamic is still in beta, so it has some bugs.)
+          </p>
+          <select id="pChange">
+            <option value="uv">Ultraviolet (Default)</option>
+            <option value="dy">Dynamic</option>
+          </select>
+        </div>
+        <div class="settings-card">
           <h3>Advertisement</h3>
           <p>
             Advertisements are cruical in order to keep the site running. Please donate or host your own links to go
@@ -106,8 +117,8 @@
         </div>
       </div>
     </div>
-    <script src="/assets/scripts/main.min.js?v=6"></script>
-    <script src="/assets/scripts/settings.min.js?v=3"></script>
+    <script src="/assets/scripts/main.js?v=6"></script>
+    <script src="/assets/scripts/settings.js?v=5"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ"></script>
     <script>
       window.dataLayer = window.dataLayer || []

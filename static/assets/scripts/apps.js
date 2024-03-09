@@ -57,8 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = app.link
           } else if (app.blank) {
             blank(app.link)
-          } else if (app.now) {
-            now(app.link)
           } else {
             go(app.link)
           }
