@@ -24,11 +24,11 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 })
 // UA Detection
-var isiPhone = /iPhone/i.test(navigator.userAgent);
-var isiPad = /iPad/i.test(navigator.userAgent);
+var isiPhone = /iPhone/i.test(navigator.userAgent)
+var isiPad = /iPad/i.test(navigator.userAgent)
 
 if (isiPhone || isiPad) {
-  localStorage.setItem('dy', 'auto');
+  localStorage.setItem('dy', 'auto')
 }
 
 // Themes
