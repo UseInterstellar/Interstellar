@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 })
-// Proccy
+// Dyn
 document.addEventListener('DOMContentLoaded', function () {
   function pChange(selectedValue) {
     if (selectedValue === 'uv') {
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var storedP = localStorage.getItem('uv')
     if (storedP === 'true') {
       pChangeElement.value = 'uv'
-    } else if (localStorage.getItem('dy') === 'true') {
+    } else if (localStorage.getItem('dy') === 'true' || 'auto') {
       pChangeElement.value = 'dy'
     } else {
       pChangeElement.value = 'uv'
