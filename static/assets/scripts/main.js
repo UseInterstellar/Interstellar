@@ -23,6 +23,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 })
+// UA Detection
+var isiPhone = /iPhone/i.test(navigator.userAgent);
+var isiPad = /iPad/i.test(navigator.userAgent);
+
+if (isiPhone || isiPad) {
+  localStorage.setItem('dy', 'auto');
+}
 
 // Themes
 var themeid = localStorage.getItem('theme')

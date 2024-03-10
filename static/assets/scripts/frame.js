@@ -120,7 +120,7 @@ window.onload = function () {
   let dyValue = localStorage.getItem('dy')
 
   if (!GoUrl.startsWith('/y/') && !GoUrl.startsWith('/f/')) {
-    if (dyValue === 'true') {
+    if (dyValue === 'true' || 'auto') {
       GoUrl = '/a/q/' + GoUrl
     } else {
       GoUrl = '/a/' + GoUrl
