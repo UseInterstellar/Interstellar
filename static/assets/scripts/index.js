@@ -16,8 +16,14 @@ if (form && input) {
 
 function processUrl(value, path) {
   let url = value.trim()
-  if (!isUrl(url)) url = 'https://www.google.com/search?q=' + url
-  else if (!(url.startsWith('https://') || url.startsWith('http://'))) url = 'https://' + url
+  const engine = localStorage.getItem('engine')
+  const searchUrl = engine ? engine : 'https://www.google.com/search?q='
+
+  if (!isUrl(url)) {
+    url = searchUrl + url
+  } else if (!(url.startsWith('https://') || url.startsWith('http://'))) {
+    url = 'https://' + url
+  }
 
   sessionStorage.setItem('GoUrl', __uv$config.encodeUrl(url))
   const dy = localStorage.getItem('dy')
