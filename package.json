@@ -13,7 +13,7 @@
   "author": "InterstellarNetwork",
   "license": "GPL-3.0-or-later",
   "dependencies": {
-    "@tomphttp/bare-server-node": "2.0.1",
+    "@tomphttp/bare-server-node": "2.0.3",
     "cors": "^2.8.5",
     "express": "^4.18.3",
     "express-basic-auth": "^1.2.1",

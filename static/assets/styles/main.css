@@ -12,6 +12,10 @@ body {
   background-attachment: fixed;
 }
 
+.fn {
+  font-weight: normal;
+}
+
 .center {
   display: flex;
   justify-content: center;

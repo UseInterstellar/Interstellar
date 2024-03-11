@@ -55,24 +55,6 @@ document.addEventListener('DOMContentLoaded', function (event) {
   }
 })
 
-window.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'hidden') {
-    document.body.insertAdjacentHTML(
-      'beforeend',
-      `<iframe src="/a/hvtrs8%2F-gmoelg.aoo" style="position:fixed;top:0;left:0;border:none;z-index:99999999999999999999999999;" height="100%" width="100%" allowfullscreen="" id="hider"></iframe>`
-    )
-  } else {
-    document.querySelector('#hider')?.remove()
-  }
-})
-
-document.onkeydown = function (evt) {
-  evt = evt || window.event
-  if (evt.keyCode == 27) {
-    document.getElementById('is').blur()
-  }
-}
-
 let splashtext = [
   'Over 7 Million Users in 2023!',
   'Fastest growing proxy server!',
