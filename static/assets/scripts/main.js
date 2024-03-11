@@ -24,11 +24,15 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 })
 // UA Detection
-var isiPhone = /iPhone/i.test(navigator.userAgent)
-var isiPad = /iPad/i.test(navigator.userAgent)
+const isiPhone = /iPhone/i.test(navigator.userAgent)
+const isiPad = /iPad/i.test(navigator.userAgent)
 
 if (isiPhone || isiPad) {
-  localStorage.setItem('dy', 'auto')
+  if (typeof localStorage !== 'undefined') {
+    localStorage.setItem('dy', 'auto')
+  } else {
+    console.error('localStorage is not available.')
+  }
 }
 
 // Themes
