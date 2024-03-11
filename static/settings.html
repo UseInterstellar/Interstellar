@@ -8,19 +8,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" id="tab-favicon" href="favicon.png" />
     <title id="tab-title">Home</title>
-    <link rel="stylesheet" href="/assets/styles/main.css?v=2" />
+    <link rel="stylesheet" href="/assets/styles/main.css?v=4" />
     <link rel="stylesheet" href="/assets/styles/settings.css" />
-    <link rel="stylesheet" href="/assets/styles/themes/default.css?v=3" />
+    <link rel="stylesheet" href="/assets/styles/themes/default.css?v=5" />
     <script src="https://kit.fontawesome.com/1237c86ba0.js" crossorigin="anonymous"></script>
   </head>
   <body>
     <div class="fixed-nav-bar">
-      <a class="icon" href="/./"><img alt="nav" id="INImg" src="/assets/media/favicon/main.png" /></a>
+      <div class="fixed-nav-bar-container">
+        <a class="icon" href="/./"><img alt="nav" id="INImg" src="/assets/media/favicon/main.png" /></a>
+      </div>
       <div class="fixed-nav-bar-right">
-        <a class="navbar-link" href="/./-"><i class="fa-solid fa-gamepad navbar-icon"></i>Games</a>
-        <a class="navbar-link" href="/./~"><i class="fa-solid fa-phone navbar-icon"></i>Apps</a>
-        <a class="navbar-link" href="/./0"><i class="fa-solid fa-laptop navbar-icon"></i>Tabs</a>
-        <a class="navbar-link" href="/./!"><i class="fa-solid fa-gear navbar-icon settings-icon"></i>Settings</a>
+        <a class="navbar-link" href="/./-"><i class="fa-solid fa-gamepad navbar-icon"></i><xn>Ga</xn>mes</a>
+        <a class="navbar-link" href="/./~"><i class="fa-solid fa-phone navbar-icon"></i><xn>Ap</xn>ps</a>
+        <a class="navbar-link" href="/./0"><i class="fa-solid fa-laptop navbar-icon"></i><xn>Ta</xn>bs</a>
+        <a class="navbar-link" href="/./!"
+          ><i class="fa-solid fa-gear navbar-icon settings-icon"></i><xn>Set</xn>tings</a
+        >
       </div>
     </div>
     <div class="main">
@@ -42,15 +46,8 @@
           <button class="key-button" value="Save" onclick="saveEventKey()">Save</button>
         </div>
         <div class="settings-card">
-          <h3>Set Background Image</h3>
-          <p>Change the site's background image.</p>
-          <input type="text" id="background-input" placeholder="Enter image URL" />
-          <button class="key-button" id="save-button">Save</button>
-          <button class="key-button" id="reset-button">Reset</button>
-        </div>
-        <div class="settings-card">
           <h3>Tab Cloaker</h3>
-          <p>Makes the site look educational.</p>
+          <p>Change the title and icon of the page.</p>
           <select id="dropdown" onchange="handleDropdownChange(this)">
             <option value="Classroom">Default</option>
             <option value="Clever">Clever</option>
@@ -73,10 +70,43 @@
           </button>
         </div>
         <div class="settings-card">
+          <h3>Search Engine</h3>
+          <p>Change the search engine while searching.</p>
+          <select title="engine" id="engine" onchange="EngineChange(this)">
+            <option value="Google">Google (Default)</option>
+            <option value="Bing">Bing</option>
+            <option value="DuckDuckGo">DuckDuckGo</option>
+            <option value="Qwant">Qwant</option>
+            <option value="Startpage">Startpage</option>
+            <option value="SearchEncrypt">SearchEncrypt</option>
+            <option value="Ecosia">Ecosia</option>
+          </select>
+          <input class="key-form" type="text" id="engine-form" placeholder="Change Search Engine" name="engine" />
+          <button class="key-button" value="Save" onclick="SaveEngine();">Save</button>
+        </div>
+        <div class="settings-card">
+          <h3>Choose your <b>Pr</b>oxy</h3>
+          <p>
+            Ultra<xn>vio</xn>let is the main <xn>pro</xn>xy, but Dynamic is faster and supports more sites! (Dynamic is
+            still in beta, so it has some bugs.)
+          </p>
+          <select id="pChange">
+            <option value="uv">Ultraviolet (Default)</option>
+            <option value="dy">Dynamic</option>
+          </select>
+        </div>
+        <div class="settings-card">
+          <h3>Set Background Image</h3>
+          <p>Change the site's background image.</p>
+          <input type="text" id="background-input" placeholder="Enter image URL" />
+          <button class="key-button" id="save-button">Save</button>
+          <button class="key-button" id="reset-button">Reset</button>
+        </div>
+        <div class="settings-card">
           <h3>Advertisement</h3>
           <p>
-            Advertisements are cruical in order to keep the site running. Please donate or host your own links to go
-            ad-free.
+            Advertisements are cruical in order to keep the site running. Please consider donating or hosting your own
+            links to go ad-free. If not you can still disable them anyway down below.
           </p>
           <select id="adType" onchange="adChange(this)">
             <option value="default">Default</option>
@@ -106,8 +136,8 @@
         </div>
       </div>
     </div>
-    <script src="/assets/scripts/main.min.js?v=3"></script>
-    <script src="/assets/scripts/settings.min.js?v=3"></script>
+    <script src="/assets/scripts/main.js?v=9"></script>
+    <script src="/assets/scripts/settings.js?v=9"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ"></script>
     <script>
       window.dataLayer = window.dataLayer || []
