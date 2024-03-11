@@ -120,19 +120,18 @@ window.onload = function () {
   let dyValue = localStorage.getItem('dy')
 
   if (!GoUrl.startsWith('/y/') && !GoUrl.startsWith('/f/')) {
-    if (dyValue === 'true' || 'auto') {
+    if (dyValue === 'true' || dyValue === 'auto') {
       GoUrl = '/a/q/' + GoUrl
     } else {
       GoUrl = '/a/' + GoUrl
     }
   }
-
   console.log(GoUrl)
-
   if (iframe) {
     iframe.src = GoUrl
   }
 }
+
 // Remove Nav
 document.addEventListener('fullscreenchange', function () {
   const isFullscreen = Boolean(document.fullscreenElement)
