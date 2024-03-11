@@ -1,4 +1,4 @@
-importScripts('/dy/config.js')
+importScripts('/dy/config.js?v=2')
 importScripts('/dy/worker.js')
 importScripts('/m/bundle.js')
 importScripts('/m/config.js')
