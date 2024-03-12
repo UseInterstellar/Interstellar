@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function pChange(selectedValue) {
     if (selectedValue === 'uv') {
       localStorage.setItem('uv', 'true')
-      localStorage.removeItem('dy')
+      localStorage.setItem('dy', 'false')
     } else if (selectedValue === 'dy') {
       localStorage.setItem('uv', 'false')
       localStorage.setItem('dy', 'true')
