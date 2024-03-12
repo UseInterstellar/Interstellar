@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var storedP = localStorage.getItem('uv')
     if (storedP === 'true') {
       pChangeElement.value = 'uv'
-    } else if (localStorage.getItem('dy') === 'true' || 'auto') {
+    } else if (localStorage.getItem('dy') === 'true' || localStorage.getItem('dy') === 'auto') {
       pChangeElement.value = 'dy'
     } else {
       pChangeElement.value = 'uv'

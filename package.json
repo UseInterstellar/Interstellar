@@ -8,7 +8,8 @@
   },
   "scripts": {
     "start": "node index.js",
-    "format": "npx prettier . --write"
+    "format": "npx prettier . --write",
+    "eslint": "npx eslint --fix ."
   },
   "author": "InterstellarNetwork",
   "license": "GPL-3.0-or-later",
@@ -20,6 +21,7 @@
     "jquery": "^3.7.1"
   },
   "devDependencies": {
-    "prettier": "3.2.5"
+    "prettier": "3.2.5",
+    "eslint": "^8.57.0"
   }
 }
