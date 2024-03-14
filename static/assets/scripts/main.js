@@ -23,18 +23,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 })
-// UA Detection
-const isiPhone = /iPhone/i.test(navigator.userAgent)
-const isiPad = /iPad/i.test(navigator.userAgent)
-
-if (isiPhone || isiPad) {
-  if (typeof localStorage !== 'undefined') {
-    localStorage.setItem('dy', 'auto')
-  } else {
-    console.error('localStorage is not available.')
-  }
-}
-
 // Themes
 var themeid = localStorage.getItem('theme')
 themeEle = document.createElement('link')

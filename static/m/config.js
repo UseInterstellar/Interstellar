@@ -6,5 +6,5 @@ self.__uv$config = {
     handler: '/m/handler.js',
     bundle: '/m/bundle.js',
     config: '/m/config.js',
-    sw: '/m/sw.js?v=1',
+    sw: '/m/sw.js?v=2',
 };
