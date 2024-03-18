@@ -13,6 +13,12 @@
     "blank": "true"
   },
   {
+    "name": "Newgrounds",
+    "link": "https://newgrounds.com/",
+    "image": "/assets/media/icons/newgrounds.png",
+    "categories": ["all"],
+  },
+  {
     "name": "Dynast.io",
     "link": "https://dynast.io",
     "image": "/assets/media/icons/dynast-io.webp",
