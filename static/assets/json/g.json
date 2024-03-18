@@ -13,6 +13,18 @@
     "blank": "true"
   },
   {
+    "name": "Newgrounds",
+    "link": "https://newgrounds.com/",
+    "image": "/assets/media/icons/newgrounds.png",
+    "categories": ["all"]
+  },
+  {
+    "name": "Stabfish.io",
+    "link": "https://stabfish.io/",
+    "image": "/assets/media/icons/stabfish.jpg",
+    "categories": ["all", "2P"]
+  },
+  {
     "name": "Dynast.io",
     "link": "https://dynast.io",
     "image": "/assets/media/icons/dynast-io.webp",
