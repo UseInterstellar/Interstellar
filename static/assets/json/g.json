@@ -16,7 +16,13 @@
     "name": "Newgrounds",
     "link": "https://newgrounds.com/",
     "image": "/assets/media/icons/newgrounds.png",
-    "categories": ["all"],
+    "categories": ["all"]
+  },
+  {
+    "name": "Stabfish.io",
+    "link": "https://stabfish.io/",
+    "image": "/assets/media/icons/stabfish.jpg",
+    "categories": ["all", "2P"]
   },
   {
     "name": "Dynast.io",
