@@ -8,7 +8,7 @@ import config from './config.js'
 const __dirname = process.cwd()
 const server = http.createServer()
 const app = express(server)
-const bareServer = createBareServer('/v/')
+const bareServer = createBareServer('/o/')
 const PORT = process.env.PORT || 8080
 if (config.challenge) {
   console.log('Password protection is enabled. Usernames are: ' + Object.keys(config.users))
