@@ -12,7 +12,7 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
-  padding: 10% 20px 20px 20px;
+  padding: 20% 20px 20px 20px;
 }
 
 .settings-title {
@@ -155,4 +155,44 @@ select {
   font-size: 20px;
   border: 0px;
   outline: none;
+}
+
+
+
+@media screen and (max-width: 768px) {
+  .settings-container {
+    padding: 25% 20px 20px 20px; 
+  }
+  .settings-card {
+    width: 100%; 
+    max-width: 400px;
+  }
+
+  .settings-title {
+    font-size: 40px;
+  }
+
+  input,
+  .key-form {
+    width: 90%; 
+  }
+
+  button,
+  .key-button {
+    width: 100%; 
+    max-width: 200px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .settings-container {
+    padding-top: 35%; 
+  }
+}
+
+
+@media screen and (min-width: 1000px) {
+  .settings-container {
+    padding-top: 10%; 
+  }
 }
