@@ -1320,6 +1320,12 @@
     "categories": ["all"]
   },
   {
+    "name": "Riddle School 3",
+    "link": "https://riddle-school-3.game-files.crazygames.com/ruffle/riddleschool3.html",
+    "image": "/assets/media/icons/rs3.webp",
+    "categories": ["all"]
+  },
+  {
     "name": "Rocket Pult",
     "link": "https://v6p9d9t4.ssl.hwcdn.net/html/565140/index.html",
     "image": "/assets/media/icons/rocketpult.webp",
