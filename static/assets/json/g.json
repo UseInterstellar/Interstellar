@@ -567,6 +567,12 @@
     "categories": ["all"]
   },
   {
+    "name": "Riddle School 4",
+    "link": "https://riddle-school-4.game-files.crazygames.com/ruffle/riddleschool4.html",
+    "image": "/assets/media/icons/rs4.jpg",
+    "categories": ["all"]
+  },
+  {
     "name": "GBA Emulator",
     "link": "https://ds.44670.org/gba/",
     "image": "/assets/media/icons/gba.webp",
