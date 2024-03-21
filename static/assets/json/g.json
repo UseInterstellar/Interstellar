@@ -1436,6 +1436,12 @@
     "say": "Taming.io is currently broken on the proxy and will crash Interstellar when attempted to load."
   },
   {
+    "name": "Temple of Boom",
+    "link": "https://temple-of-boom.github.io/file/",
+    "image": "/assets/media/icons/templeofboom.jpg",
+    "categories": ["all", "2P"]
+  },
+  {
     "name": "Tanuki Sunset",
     "link": "https://watchdocumentaries.com/wp-content/uploads/games/tanuki-sunset",
     "image": "/assets/media/icons/tanuki.webp",
