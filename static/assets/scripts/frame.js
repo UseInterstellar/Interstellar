@@ -22,12 +22,12 @@ function iframeLoad() {
       const website = iframe.contentWindow?.location.href.replace(window.location.origin, '').replace('/a/', '')
       document.getElementById('is').value = decodeXor(website)
       localStorage.setItem('decoded', decodeXor(website));
-      window.parent.postMessage({ decodedSet: true }, '*');
+      window.parent.postMessage({ decodedSet: true }, window.location.origin);
     } else if (website.includes('/a/q/')) {
       const website = iframe.contentWindow?.location.href.replace(window.location.origin, '').replace('/a/q/', '')
       document.getElementById('is').value = decodeXor(website)
       localStorage.setItem('decoded', decodeXor(website));
-      window.parent.postMessage({ decodedSet: true }, '*');
+      window.parent.postMessage({ decodedSet: true }, window.location.origin);
     }
   }
 }
@@ -147,6 +147,11 @@ const decoded = localStorage.getItem('decoded');
 let decodedSet = false;
 
 window.addEventListener('message', function(event) {
+  if (event.origin !== window.location.origin) {
+    console.warn('Received message from unexpected origin:', event.origin);
+    return;
+  }
+
   if (event.data && event.data.decodedSet === true) {
     decodedSet = true;
     console.log('Starting process.');
