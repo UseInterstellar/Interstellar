@@ -1,5 +1,4 @@
 const iframe = document.getElementById('ifra')
-
 window.addEventListener('resize', navigator.keyboard.lock(['Escape']))
 // Decode URL
 function decodeXor(input) {
@@ -22,9 +21,11 @@ function iframeLoad() {
     } else if (website.includes('/a/')) {
       const website = iframe.contentWindow?.location.href.replace(window.location.origin, '').replace('/a/', '')
       document.getElementById('is').value = decodeXor(website)
+      localStorage.setItem('decoded', decodeXor(website));
     } else if (website.includes('/a/q/')) {
       const website = iframe.contentWindow?.location.href.replace(window.location.origin, '').replace('/a/q/', '')
       document.getElementById('is').value = decodeXor(website)
+      localStorage.setItem('decoded', decodeXor(website));
     }
   }
 }
@@ -138,78 +139,45 @@ document.addEventListener('fullscreenchange', function () {
   document.body.classList.toggle('fullscreen', isFullscreen)
 })
 // Now
-var adjustmentCompleted = false
-var attempts = 0
+const key = ['nowgg', 'now.gg'];
+const decoded = localStorage.getItem('decoded');
 
-function adjustElements() {
-  if (adjustmentCompleted) {
-    return true
-  }
-
-  var iframe = top.document.getElementById('ifra')
-
-  if (iframe) {
-    var innerDoc = iframe.contentWindow.document
-
-    var roblox = innerDoc.getElementById('js-game-video')
-    var controlBar = innerDoc.getElementById('ng-control-bar')
-
-    if (roblox && controlBar) {
-      roblox.style.top = '415px'
-      controlBar.style.top = '91%'
-
-      return true
-    } else {
-      return false
+if (decoded) {
+    let found = false;
+    for (const keyword of key) {
+        if (decoded.includes(keyword)) {
+            console.log(`${keyword} found`);
+            found = true;
+            break;
+        }
     }
-  } else {
-    return false
-  }
-}
-
-function CheckAndAdjust() {
-  var intervalId = setInterval(function () {
-    attempts++
-    if (adjustElements()) {
-      clearInterval(intervalId)
-    } else if (attempts >= 30) {
-      clearInterval(intervalId)
+    if (found) {
+        let count = 0;
+        let notfound = 0;
+        const limit = 10;
+        const max = 35;
+        const reloadInterval = setInterval(() => {
+            if (count < limit && iframe) {
+                const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+                const element = iframeDocument.querySelector('.sc-hGPBjI.gGkQpt');
+                if (element) {
+                    console.log("Unsafe proxy or VPN detected. Reloading...");
+                    iframe.contentWindow.location.reload();
+                    count++;
+                    notfound = 0; 
+                } else {
+                    console.log("Class not found inside the iframe.");
+                    notfound++;
+                    if (notfound >= max) {
+                        console.log(`Class not found for ${max} consecutive checks. Stopping.`);
+                        clearInterval(reloadInterval);
+                    }
+                }
+            } else {
+                clearInterval(reloadInterval);
+            }
+        }, 500);
     }
-  }, 5000)
-}
-
-function adjust() {
-  setInterval(function () {
-    var iframe = top.document.getElementById('ifra')
-
-    if (iframe) {
-      var innerDoc = iframe.contentWindow.document
-
-      var roblox = innerDoc.getElementById('js-game-video')
-      var controlBar = innerDoc.getElementById('ng-control-bar')
-      var customClassElement = innerDoc.querySelector('.sc-rUGft.hLgqJJ')
-
-      if (roblox) {
-        checkAndAdjustStyles(roblox, 'top', ['415px'])
-      }
-
-      if (controlBar) {
-        checkAndAdjustStyles(controlBar, 'top', ['91%'])
-      }
-
-      if (customClassElement) {
-        customClassElement.remove()
-      }
-    }
-  }, 3000)
-}
-
-function checkAndAdjustStyles(element, property, targetValues) {
-  if (element) {
-    var currentStyle = window.getComputedStyle(element)[property]
-
-    if (!targetValues.includes(currentStyle)) {
-      element.style[property] = targetValues[0]
-    }
-  }
+} else {
+    console.log('Decoded not found in localStorage.');
 }
