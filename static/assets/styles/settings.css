@@ -196,3 +196,7 @@ select {
     padding-top: 10%; 
   }
 }
+
+#last-updated {
+  margin-top: -3%;
+}
