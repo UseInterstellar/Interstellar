@@ -66,6 +66,22 @@ function popout() {
     newWindow.document.body.appendChild(newIframe)
   }
 }
+// Skip Ad
+function skipAd() {
+  if (!iframe) return
+  while (iframe.contentDocument.getElementsByClassName('video-ads')[0].innerHTML !== '') {
+    var banner = false
+    for (var i = 0; i < iframe.contentDocument.getElementsByClassName('ytp-ad-overlay-close-button').length; i++) {
+      iframe.contentDocument.getElementsByClassName('ytp-ad-overlay-close-button')[i].click()
+      banner = true
+    }
+    if (banner === false) {
+      iframe.contentDocument.getElementsByClassName('html5-main-video')[0].currentTime =
+        iframe.contentDocument.getElementsByClassName('html5-main-video')[0].duration
+      iframe.contentDocument.getElementsByClassName('ytp-ad-skip-button')[0].click()
+    }
+  }
+}
 // Eruda
 function erudaToggle() {
   if (!iframe) return
