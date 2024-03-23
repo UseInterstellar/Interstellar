@@ -179,16 +179,18 @@ function now() {
           const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
           const element = iframeDocument.querySelector('.sc-hGPBjI.gGkQpt');
           if (element) {
-            console.log("Unsafe proxy or VPN detected. Reloading...");
-            iframe.contentWindow.location.reload();
+            document.querySelector('.overlay').style.display = 'block';
+            document.getElementById('ifra').style.display = 'none';
+            iframeDocument.location.reload();
             count += 1;
             notfound = 0; 
           } else {
             console.log("Class not found inside the iframe.");
             notfound += 1;
             if (notfound >= max) {
-              console.log(`Class not found for ${max} consecutive checks. Stopping.`);
               clearInterval(reloadInterval);
+              document.getElementById('ifra').style.display = 'block';
+              document.querySelector('.overlay').style.display = 'none';
             }
           }
         } else {
