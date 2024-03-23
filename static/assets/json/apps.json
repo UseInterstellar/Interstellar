@@ -35,17 +35,13 @@
     "name": "Character AI",
     "link": "https://now.gg/iframe/snippet?app_pkg=ai.character.app&partner=interstellar",
     "image": "/assets/media/icons/characterai.webp",
-    "categories": ["all", "emu", "android"],
-    "say": "Now.gg is currently not working.",
-    "error": true
+    "categories": ["all", "emu", "android"]
   },
   {
     "name": "Aptoide",
     "link": "https://now.gg/iframe/snippet?app_pkg=com.aptoide.partners.nowgg.store&partner=interstellar",
     "image": "/assets/media/icons/aptoide.webp",
-    "categories": ["all", "emu", "android"],
-    "say": "Now.gg is currently not working.",
-    "error": true
+    "categories": ["all", "emu", "android"]
   },
   {
     "name": "Movie Web",
@@ -258,25 +254,13 @@
     "name": "Now.GG",
     "link": "https://now.gg",
     "image": "/assets/media/icons/now-gg.webp",
-    "categories": ["all", "emu", "android"],
-    "say": "Now.gg is currently not working.",
-    "error": true
-  },
-  {
-    "name": "Now.GG (NowGG.nl)",
-    "link": "https://nowgg.nl",
-    "image": "/assets/media/icons/astroid.webp",
-    "categories": ["all", "emu", "android"],
-    "say": "Now.gg is currently not working.",
-    "error": true
+    "categories": ["all", "emu", "android"]
   },
   {
     "name": "Now.GG (NowGG.me) [Working]",
     "link": "https://nowgg.me",
     "image": "/assets/media/icons/shuttle.webp",
-    "categories": ["all", "emu", "android"],
-    "say": "Now.gg is currently not working.",
-    "error": true
+    "categories": ["all", "emu", "android"]
   },
   {
     "name": "Amazon Luna",
