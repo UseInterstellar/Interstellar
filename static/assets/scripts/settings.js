@@ -87,6 +87,21 @@ function saveEventKey() {
   localStorage.setItem('pLink', pLink)
 }
 // Tab Cloaker
+var dropdown = document.getElementById('dropdown');
+var options = dropdown.getElementsByTagName('option');
+  
+var sortedOptions = Array.from(options).sort(function(a, b) {
+  return a.textContent.localeCompare(b.textContent);
+});
+
+while (dropdown.firstChild) {
+  dropdown.removeChild(dropdown.firstChild);
+}
+
+sortedOptions.forEach(function(option) {
+  dropdown.appendChild(option);
+});
+
 function saveIcon() {
   const iconElement = document.getElementById('icon')
   const iconValue = iconElement.value
