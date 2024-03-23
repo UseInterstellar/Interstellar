@@ -105,6 +105,51 @@ document.addEventListener('DOMContentLoaded', function (event) {
     name.textContent = 'Edpuzzle'
     localStorage.setItem('name', 'Edpuzzle')
     localStorage.setItem('icon', '/assets/media/favicon/edpuzzle.png')
+  } else if (selectedValue === 'i-Ready Math') {
+    icon.setAttribute('href', '/assets/media/favicon/i-ready.ico')
+    name.textContent = 'Math To Do, i-Ready'
+    localStorage.setItem('name', 'Math To Do, i-Ready')
+    localStorage.setItem('icon', '/assets/media/favicon/i-ready.ico')
+  } else if (selectedValue === 'i-Ready Reading') {
+    icon.setAttribute('href', '/assets/media/favicon/i-ready.ico')
+    name.textContent = 'Reading To Do, i-Ready'
+    localStorage.setItem('name', 'Reading To Do, i-Ready')
+    localStorage.setItem('icon', '/assets/media/favicon/i-ready.ico')
+  } else if (selectedValue === 'ClassLink Login') {
+    icon.setAttribute('href', '/assets/media/favicon/classlink-login.png')
+    name.textContent = 'Login'
+    localStorage.setItem('name', 'Login')
+    localStorage.setItem('icon', '/assets/media/favicon/classlink-login.png')
+  } else if (selectedValue === 'Google Meet') {
+    icon.setAttribute('href', '/assets/media/favicon/google-meet.png')
+    name.textContent = 'Google Meet'
+    localStorage.setItem('name', 'Google Meet')
+    localStorage.setItem('icon', '/assets/media/favicon/google-meet.png')
+  } else if (selectedValue === 'Google Docs') {
+    icon.setAttribute('href', '/assets/media/favicon/google-docs.ico')
+    name.textContent = 'Google Docs'
+    localStorage.setItem('name', 'Google Docs')
+    localStorage.setItem('icon', '/assets/media/favicon/google-docs.ico')
+  } else if (selectedValue === 'Google Slides') {
+    icon.setAttribute('href', '/assets/media/favicon/google-slides.ico')
+    name.textContent = 'Google Slides'
+    localStorage.setItem('name', 'Google Slides')
+    localStorage.setItem('icon', '/assets/media/favicon/google-slides.ico')
+  } else if (selectedValue === 'Wikipedia') {
+    icon.setAttribute('href', '/assets/media/favicon/wikipedia.png')
+    name.textContent = 'Wikipedia'
+    localStorage.setItem('name', 'Wikipedia')
+    localStorage.setItem('icon', '/assets/media/favicon/wikipedia.png')
+  } else if (selectedValue === 'Britannica') {
+    icon.setAttribute('href', '/assets/media/favicon/britannica.png')
+    name.textContent = 'Encyclopedia Britannica | Britannica'
+    localStorage.setItem('name', 'Encyclopedia Britannica | Britannica')
+    localStorage.setItem('icon', '/assets/media/favicon/britannica.png')
+  } else if (selectedValue === 'Ducksters') {
+    icon.setAttribute('href', '/assets/media/favicon/ducksters.png')
+    name.textContent = 'Ducksters'
+    localStorage.setItem('name', 'Ducksters')
+    localStorage.setItem('icon', '/assets/media/favicon/ducksters.png')
   }
 })
 // Key
