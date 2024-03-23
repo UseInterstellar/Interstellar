@@ -22,8 +22,7 @@
     "link": "https://now.gg/iframe/snippet?app_pkg=com.uncube.launcher3&partner=interstellar",
     "image": "/assets/media/icons/android.webp",
     "categories": ["all", "emu", "android"],
-    "say": "Now.gg is currently not working.",
-    "error": true
+    "say": "We have implemented a now.gg fix, which can take 1-2 minutes to finish. This will make your screen flash rapidly until it stops showing the error. If you have a seizure disorder, do not continue."
   },
   {
     "name": "Temu",
@@ -35,13 +34,15 @@
     "name": "Character AI",
     "link": "https://now.gg/iframe/snippet?app_pkg=ai.character.app&partner=interstellar",
     "image": "/assets/media/icons/characterai.webp",
-    "categories": ["all", "emu", "android"]
+    "categories": ["all", "emu", "android"],
+    "say": "We have implemented a now.gg fix, which can take 1-2 minutes to finish. This will make your screen flash rapidly until it stops showing the error. If you have a seizure disorder, do not continue."
   },
   {
     "name": "Aptoide",
     "link": "https://now.gg/iframe/snippet?app_pkg=com.aptoide.partners.nowgg.store&partner=interstellar",
     "image": "/assets/media/icons/aptoide.webp",
-    "categories": ["all", "emu", "android"]
+    "categories": ["all", "emu", "android"],
+    "say": "We have implemented a now.gg fix, which can take 1-2 minutes to finish. This will make your screen flash rapidly until it stops showing the error. If you have a seizure disorder, do not continue."
   },
   {
     "name": "Movie Web",
@@ -254,13 +255,15 @@
     "name": "Now.GG",
     "link": "https://now.gg",
     "image": "/assets/media/icons/now-gg.webp",
-    "categories": ["all", "emu", "android"]
+    "categories": ["all", "emu", "android"],
+    "say": "We have implemented a now.gg fix, which can take 1-2 minutes to finish. This will make your screen flash rapidly until it stops showing the error. If you have a seizure disorder, do not continue."
   },
   {
     "name": "Now.GG (NowGG.me) [Working]",
     "link": "https://nowgg.me",
     "image": "/assets/media/icons/shuttle.webp",
-    "categories": ["all", "emu", "android"]
+    "categories": ["all", "emu", "android"],
+    "say": "We have implemented a now.gg fix, which can take 1-2 minutes to finish. This will make your screen flash rapidly until it stops showing the error. If you have a seizure disorder, do not continue."
   },
   {
     "name": "Amazon Luna",

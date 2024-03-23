@@ -1535,145 +1535,169 @@
     "name": "Roblox (Now.GG)",
     "link": "https://now.gg/iframe/snippet?app_pkg=com.roblox.client&partner=interstellar",
     "image": "/assets/media/icons/roblox.webp",
-    "categories": ["all", "emu", "android"]
+    "categories": ["all", "emu", "android"],
+    "say": "We have implemented a now.gg fix, which can take 1-2 minutes to finish. This will make your screen flash rapidly until it stops showing the error. If you have a seizure disorder, do not continue."
   },
   {
     "name": "Madden NFL 24",
     "link": "https://now.gg/iframe/snippet?app_pkg=com.ea.gp.maddennfl21mobile&partner=interstellar",
     "image": "/assets/media/icons/maddennfl24.webp",
-    "categories": ["all", "emu", "android"]
+    "categories": ["all", "emu", "android"],
+    "say": "We have implemented a now.gg fix, which can take 1-2 minutes to finish. This will make your screen flash rapidly until it stops showing the error. If you have a seizure disorder, do not continue."
   },
   {
     "name": "Android",
     "link": "https://now.gg/iframe/snippet?app_pkg=com.uncube.launcher3&partner=interstellar",
     "image": "/assets/media/icons/android.webp",
-    "categories": ["all", "emu", "android"]
+    "categories": ["all", "emu", "android"],
+    "say": "We have implemented a now.gg fix, which can take 1-2 minutes to finish. This will make your screen flash rapidly until it stops showing the error. If you have a seizure disorder, do not continue."
   },
   {
     "name": "Genshin Impact",
     "link": "https://now.gg/iframe/snippet?app_pkg=com.miHoYo.GenshinImpact&partner=interstellar",
     "image": "/assets/media/icons/genshinimpact.webp",
-    "categories": ["all", "emu", "android"]
+    "categories": ["all", "emu", "android"],
+    "say": "We have implemented a now.gg fix, which can take 1-2 minutes to finish. This will make your screen flash rapidly until it stops showing the error. If you have a seizure disorder, do not continue."
   },
   {
     "name": "Fortnite (Android)",
     "link": "https://now.gg/iframe/snippet?app_pkg=com.epicgames.fortnite&partner=interstellar",
     "image": "/assets/media/icons/fortnite.webp",
-    "categories": ["all", "emu", "android"]
+    "categories": ["all", "emu", "android"],
+    "say": "We have implemented a now.gg fix, which can take 1-2 minutes to finish. This will make your screen flash rapidly until it stops showing the error. If you have a seizure disorder, do not continue."
   },
   {
     "name": "EA SPORTS FC™ MOBILE 24 SOCCER",
     "link": "https://now.gg/iframe/snippet?app_pkg=com.ea.gp.fifamobile&partner=interstellar",
     "image": "/assets/media/icons/easports-fcmobile24.webp",
-    "categories": ["all", "emu", "android"]
+    "categories": ["all", "emu", "android"],
+    "say": "We have implemented a now.gg fix, which can take 1-2 minutes to finish. This will make your screen flash rapidly until it stops showing the error. If you have a seizure disorder, do not continue."
   },
   {
     "name": "EA SPORTS™ UFC® Mobile 2",
     "link": "https://now.gg/iframe/snippet?app_pkg=com.ea.gp.easportsufc2&partner=interstellar",
     "image": "/assets/media/icons/easports-ufc.webp",
-    "categories": ["all", "emu", "android"]
+    "categories": ["all", "emu", "android"],
+    "say": "We have implemented a now.gg fix, which can take 1-2 minutes to finish. This will make your screen flash rapidly until it stops showing the error. If you have a seizure disorder, do not continue."
   },
   {
     "name": "Melon Playground",
     "link": "https://now.gg/iframe/snippet?app_pkg=com.studio27.MelonPlayground&partner=interstellar",
     "image": "/assets/media/icons/melonplayground.webp",
-    "categories": ["all", "emu", "android"]
+    "categories": ["all", "emu", "android"],
+    "say": "We have implemented a now.gg fix, which can take 1-2 minutes to finish. This will make your screen flash rapidly until it stops showing the error. If you have a seizure disorder, do not continue."
   },
   {
     "name": "Solar Smash",
     "link": "https://now.gg/iframe/snippet?app_pkg=com.paradyme.solarsmash&partner=interstellar",
     "image": "/assets/media/icons/solarsmash.webp",
-    "categories": ["all", "emu", "android"]
+    "categories": ["all", "emu", "android"],
+    "say": "We have implemented a now.gg fix, which can take 1-2 minutes to finish. This will make your screen flash rapidly until it stops showing the error. If you have a seizure disorder, do not continue."
   },
   {
     "name": "Bloons TD Battles 2",
     "link": "https://now.gg/iframe/snippet?app_pkg=com.ninjakiwi.bloonstdbattles2&partner=interstellar",
     "image": "/assets/media/icons/bloonstd2.webp",
-    "categories": ["all", "emu", "android"]
+    "categories": ["all", "emu", "android"],
+    "say": "We have implemented a now.gg fix, which can take 1-2 minutes to finish. This will make your screen flash rapidly until it stops showing the error. If you have a seizure disorder, do not continue."
   },
   {
     "name": "Bloons TD Battles",
     "link": "https://now.gg/iframe/snippet?app_pkg=com.ninjakiwi.bloonstdbattles&partner=interstellar",
     "image": "/assets/media/icons/bloonstd.webp",
-    "categories": ["all", "emu", "android"]
+    "categories": ["all", "emu", "android"],
+    "say": "We have implemented a now.gg fix, which can take 1-2 minutes to finish. This will make your screen flash rapidly until it stops showing the error. If you have a seizure disorder, do not continue."
   },
   {
     "name": "Cookie Run Kingdom",
     "link": "https://now.gg/iframe/snippet?app_pkg=com.devsisters.ck&partner=interstellar",
     "image": "/assets/media/icons/cookierunkingdom.webp",
-    "categories": ["all", "emu", "android"]
+    "categories": ["all", "emu", "android"],
+    "say": "We have implemented a now.gg fix, which can take 1-2 minutes to finish. This will make your screen flash rapidly until it stops showing the error. If you have a seizure disorder, do not continue."
   },
   {
     "name": "Character AI",
     "link": "https://now.gg/iframe/snippet?app_pkg=ai.character.app&partner=interstellar",
     "image": "/assets/media/icons/characterai.webp",
-    "categories": ["all", "emu", "android"]
+    "categories": ["all", "emu", "android"],
+    "say": "We have implemented a now.gg fix, which can take 1-2 minutes to finish. This will make your screen flash rapidly until it stops showing the error. If you have a seizure disorder, do not continue."
   },
   {
     "name": "Aptoide",
     "link": "https://now.gg/iframe/snippet?app_pkg=com.aptoide.partners.nowgg.store&partner=interstellar",
     "image": "/assets/media/icons/aptoide.webp",
-    "categories": ["all", "emu", "android"]
+    "categories": ["all", "emu", "android"],
+    "say": "We have implemented a now.gg fix, which can take 1-2 minutes to finish. This will make your screen flash rapidly until it stops showing the error. If you have a seizure disorder, do not continue."
   },
   {
     "name": "Akinator",
     "link": "https://now.gg/iframe/snippet?app_pkg=com.digidust.elokence.akinator.freemium&partner=interstellar",
     "image": "/assets/media/icons/akinator.webp",
-    "categories": ["all", "emu", "android"]
+    "categories": ["all", "emu", "android"],
+    "say": "We have implemented a now.gg fix, which can take 1-2 minutes to finish. This will make your screen flash rapidly until it stops showing the error. If you have a seizure disorder, do not continue."
   },
   {
     "name": "WorldBox",
     "link": "https://now.gg/iframe/snippet?app_pkg=com.mkarpenko.worldbox&partner=interstellar",
     "image": "/assets/media/icons/worldbox.webp",
-    "categories": ["all", "emu", "android"]
+    "categories": ["all", "emu", "android"],
+    "say": "We have implemented a now.gg fix, which can take 1-2 minutes to finish. This will make your screen flash rapidly until it stops showing the error. If you have a seizure disorder, do not continue."
   },
   {
     "name": "Toca Life World",
     "link": "https://now.gg/iframe/snippet?app_pkg=com.tocaboca.tocalifeworld&partner=interstellar",
     "image": "/assets/media/icons/tocalifeworld.webp",
-    "categories": ["all", "emu", "android"]
+    "categories": ["all", "emu", "android"],
+    "say": "We have implemented a now.gg fix, which can take 1-2 minutes to finish. This will make your screen flash rapidly until it stops showing the error. If you have a seizure disorder, do not continue."
   },
   {
     "name": "Toca Hair Salon 4",
     "link": "https://now.gg/iframe/snippet?app_pkg=com.tocaboca.tocahairsalon4&partner=interstellar",
     "image": "/assets/media/icons/tocabocahairsalon4.webp",
-    "categories": ["all", "emu", "android"]
+    "categories": ["all", "emu", "android"],
+    "say": "We have implemented a now.gg fix, which can take 1-2 minutes to finish. This will make your screen flash rapidly until it stops showing the error. If you have a seizure disorder, do not continue."
   },
   {
     "name": "Toca Kitchen 2",
     "link": "https://now.gg/iframe/snippet?app_pkg=com.tocaboca.tocakitchen2&partner=interstellar",
     "image": "/assets/media/icons/tocakitchen2.webp",
-    "categories": ["all", "emu", "android"]
+    "categories": ["all", "emu", "android"],
+    "say": "We have implemented a now.gg fix, which can take 1-2 minutes to finish. This will make your screen flash rapidly until it stops showing the error. If you have a seizure disorder, do not continue."
   },
   {
     "name": "Free Fire",
     "link": "https://now.gg/iframe/snippet?app_pkg=com.dts.freefireth&partner=interstellar",
     "image": "/assets/media/icons/freefire.webp",
-    "categories": ["all", "emu", "android"]
+    "categories": ["all", "emu", "android"],
+    "say": "We have implemented a now.gg fix, which can take 1-2 minutes to finish. This will make your screen flash rapidly until it stops showing the error. If you have a seizure disorder, do not continue."
   },
   {
     "name": "Stumble Guys (Android)",
     "link": "https://now.gg/iframe/snippet?app_pkg=com.kitkagames.fallbuddies&partner=interstellar",
     "image": "/assets/media/icons/stumbleguys.webp",
-    "categories": ["all", "emu", "android"]
+    "categories": ["all", "emu", "android"],
+    "say": "We have implemented a now.gg fix, which can take 1-2 minutes to finish. This will make your screen flash rapidly until it stops showing the error. If you have a seizure disorder, do not continue."
   },
   {
     "name": "Now.GG",
     "link": "https://now.gg",
     "image": "/assets/media/icons/now-gg.webp",
-    "categories": ["all", "emu", "android"]
+    "categories": ["all", "emu", "android"],
+    "say": "We have implemented a now.gg fix, which can take 1-2 minutes to finish. This will make your screen flash rapidly until it stops showing the error. If you have a seizure disorder, do not continue."
   },
   {
     "name": "Roblox (NowGG.me) [Working]",
     "link": "https://nowgg.me/apps/roblox-corporation/5349/roblox.html",
     "image": "/assets/media/icons/shuttle.webp",
-    "categories": ["all", "emu", "android"]
+    "categories": ["all", "emu", "android"],
+    "say": "We have implemented a now.gg fix, which can take 1-2 minutes to finish. This will make your screen flash rapidly until it stops showing the error. If you have a seizure disorder, do not continue."
   },
   {
     "name": "Now.GG (NowGG.me) [Working]",
     "link": "https://nowgg.me",
     "image": "/assets/media/icons/shuttle.webp",
-    "categories": ["all", "emu", "android"]
+    "categories": ["all", "emu", "android"],
+    "say": "We have implemented a now.gg fix, which can take 1-2 minutes to finish. This will make your screen flash rapidly until it stops showing the error. If you have a seizure disorder, do not continue."
   },
   {
     "name": "Parappa the Rapper",
