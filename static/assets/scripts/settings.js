@@ -2,9 +2,9 @@
 document.addEventListener('DOMContentLoaded', function () {
   function adChange(selectedValue) {
     if (selectedValue === 'default') {
-      localStorage.setItem('ad', 'true')
+      localStorage.setItem('ad', 'on')
     } else if (selectedValue === 'off') {
-      localStorage.setItem('ad', 'false')
+      localStorage.setItem('ad', 'off')
     }
   }
 
@@ -17,9 +17,9 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 
     var storedAd = localStorage.getItem('ad')
-    if (storedAd === 'true') {
+    if (storedAd === 'on') {
       adTypeElement.value = 'default'
-    } else if (storedAd === 'false') {
+    } else if (storedAd === 'off') {
       adTypeElement.value = 'off'
     } else {
       adTypeElement.value = 'default'
