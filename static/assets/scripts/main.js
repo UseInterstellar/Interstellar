@@ -1,10 +1,10 @@
 // Ads
 document.addEventListener('DOMContentLoaded', function () {
   if (localStorage.getItem('ad') === null) {
-    localStorage.setItem('ad', 'true')
+    localStorage.setItem('ad', 'on')
   }
 
-  if (localStorage.getItem('ad') === 'true') {
+  if (localStorage.getItem('ad') === 'on') {
     var advDiv = document.getElementById('adv')
     if (advDiv) {
       var script = document.createElement('script')
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  if (localStorage.getItem('ad') === 'false') {
+  if (localStorage.getItem('ad') === 'off') {
     var advDiv = document.getElementById('adv')
     if (advDiv) {
       advDiv.remove()
