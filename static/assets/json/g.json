@@ -254,7 +254,7 @@
   },
   {
     "name": "Stickman Hook",
-    "link": "/y/stickman-hook/index.html",
+    "link": "/e/stickman-hook/index.html",
     "image": "/assets/media/icons/stickmanhook.webp",
     "categories": ["all", "local"],
     "local": "true"
@@ -345,7 +345,7 @@
   },
   {
     "name": "Jetpack Joyride",
-    "link": "/y/jetpack-joyride/index.html",
+    "link": "/e/jetpack-joyride/index.html",
     "image": "/assets/media/icons/jetpackjoyride.webp",
     "categories": ["all", "local"],
     "local": "true"
@@ -646,9 +646,10 @@
   },
   {
     "name": "Web Retro",
-    "link": "https://binbashbanana.github.io/webretro/",
+    "link": "/e/index.html",
     "image": "/assets/media/icons/webretro.webp",
-    "categories": ["all,", "emu"]
+    "categories": ["all,", "emu"],
+    "local": "true"
   },
   {
     "name": "Slope",
@@ -826,7 +827,7 @@
   },
   {
     "name": "Cluster Rush",
-    "link": "/y/Cluster-Rush/index.html",
+    "link": "/e/Cluster-Rush/index.html",
     "image": "/assets/media/icons/cluster-rush.webp",
     "categories": ["all", "local"],
     "local": "true"
@@ -1067,7 +1068,7 @@
   },
   {
     "name": "Monkey Mart",
-    "link": "/y/monkey-mart/index.html",
+    "link": "/e/monkey-mart/index.html",
     "image": "/assets/media/icons/mm.webp",
     "categories": ["all", "local"],
     "local": "true"
@@ -1212,7 +1213,7 @@
   },
   {
     "name": "Pizza Tower",
-    "link": "https://gamaverse.com/c/f/g/pizza-tower-1678640389/index.html",
+    "link": "https://gamaverse.com/c/e/g/pizza-tower-1678640389/index.html",
     "image": "/assets/media/icons/pizza-tower.webp",
     "categories": ["all"]
   },
@@ -1526,7 +1527,7 @@
   },
   {
     "name": "Retro Bowl",
-    "link": "/y/retro/index.html",
+    "link": "/e/retro/index.html",
     "image": "/assets/media/icons/retro.webp",
     "categories": ["all,", "sports", "local"],
     "local": "true"
@@ -1737,14 +1738,14 @@
   },
   {
     "name": "Minecraft 1.5.2 (Eaglercraft)",
-    "link": "/f/ec-15/index.html",
+    "link": "/e/ec-15/index.html",
     "image": "/assets/media/icons/mc.webp",
     "categories": ["all", "2P", "emu", "local"],
     "local": "true"
   },
   {
     "name": "Minecraft 1.8 (Eaglercraft)",
-    "link": "/f/ec-18/index.html",
+    "link": "/e/ec-18/index.html",
     "image": "/assets/media/icons/mc.webp",
     "categories": ["all", "2P", "emu", "local"],
     "local": "true"
