@@ -16,9 +16,7 @@ function iframeLoad() {
   if (document.readyState === 'complete') {
     const website = iframe.contentWindow?.location.href.replace(window.location.origin, '')
 
-    if (website.includes('/y/') || website.includes('/f/')) {
-      document.getElementById('is').value = '.'
-    } else if (website.includes('/a/')) {
+    if (website.includes('/a/')) {
       const website = iframe.contentWindow?.location.href.replace(window.location.origin, '').replace('/a/', '')
       document.getElementById('is').value = decodeXor(website)
       localStorage.setItem('decoded', decodeXor(website));
@@ -123,7 +121,7 @@ window.onload = function () {
   let GoUrl = sessionStorage.getItem('GoUrl')
   let dyValue = localStorage.getItem('dy')
 
-  if (!GoUrl.startsWith('/y/') && !GoUrl.startsWith('/f/')) {
+  if (!GoUrl.startsWith('/e/')) {
     if (dyValue === 'true' || dyValue === 'auto') {
       GoUrl = '/a/q/' + GoUrl
     } else {
