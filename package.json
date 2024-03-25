@@ -16,7 +16,7 @@
   "dependencies": {
     "@tomphttp/bare-server-node": "2.0.3",
     "cors": "^2.8.5",
-    "express": "^4.18.3",
+    "express": "^4.19.2",
     "express-basic-auth": "^1.2.1",
     "jquery": "^3.7.1"
   },
