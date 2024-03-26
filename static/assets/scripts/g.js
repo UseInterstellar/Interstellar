@@ -14,6 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
       var appInd = 0
       appsList.forEach((app) => {
+        const isLocal = app.categories.includes("local");
+            
+        if (isLocal) {
+            app.local = true;
+        }
+        
         let pinNum = appInd
 
         const columnDiv = document.createElement('div')
@@ -39,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.title = 'Pin'
 
         const link = document.createElement('a')
-
+      
         function saveToLocal(path) {
           sessionStorage.setItem('GoUrl', path)
         }
