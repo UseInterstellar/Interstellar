@@ -150,6 +150,11 @@ document.addEventListener('DOMContentLoaded', function (event) {
     name.textContent = 'Ducksters'
     localStorage.setItem('name', 'Ducksters')
     localStorage.setItem('icon', '/assets/media/favicon/ducksters.png')
+  } else if (selectedValue === 'Minga') {
+    icon.setAttribute('href', '/assets/media/favicon/minga.png')
+    name.textContent = 'Minga – Creating Amazing Schools'
+    localStorage.setItem('name', 'Minga – Creating Amazing Schools')
+    localStorage.setItem('icon', '/assets/media/favicon/minga.png')
   }
 })
 // Key
