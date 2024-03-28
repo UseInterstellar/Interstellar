@@ -43,41 +43,41 @@ if (config.routes !== false) {
   })
 }
 
-if (config.local !== false) {  
+if (config.local !== false) {
   app.get('/e/*', (req, res, next) => {
     const baseUrls = [
       'https://raw.githubusercontent.com/v-5x/x/fixy',
       'https://raw.githubusercontent.com/ypxa/y/main',
       'https://raw.githubusercontent.com/ypxa/w/master',
-    ];
-    fetchData(req, res, next, baseUrls);
-  });
+    ]
+    fetchData(req, res, next, baseUrls)
+  })
 }
 
 const fetchData = async (req, res, next, baseUrls) => {
   try {
-    const reqTarget = baseUrls.map(baseUrl => `${baseUrl}/${req.params[0]}`);
-    let data;
-    let asset;
+    const reqTarget = baseUrls.map((baseUrl) => `${baseUrl}/${req.params[0]}`)
+    let data
+    let asset
 
     for (const target of reqTarget) {
-      asset = await fetch(target);
+      asset = await fetch(target)
       if (asset.ok) {
-        data = await asset.arrayBuffer();
-        break; 
+        data = await asset.arrayBuffer()
+        break
       }
     }
 
     if (data) {
-      res.end(Buffer.from(data));
+      res.end(Buffer.from(data))
     } else {
-      next();
+      next()
     }
   } catch (error) {
-    console.error('Error fetching:', error);
-    next(error);
+    console.error('Error fetching:', error)
+    next(error)
   }
-};
+}
 
 server.on('request', (req, res) => {
   if (bareServer.shouldRoute(req)) {

@@ -20,15 +20,14 @@ function iframeLoad() {
     if (website.includes('/a/')) {
       const website = iframe.contentWindow?.location.href.replace(window.location.origin, '').replace('/a/', '')
       document.getElementById('is').value = decodeXor(website)
-      localStorage.setItem('decoded', decodeXor(website));
+      localStorage.setItem('decoded', decodeXor(website))
     } else if (website.includes('/a/q/')) {
       const website = iframe.contentWindow?.location.href.replace(window.location.origin, '').replace('/a/q/', '')
       document.getElementById('is').value = decodeXor(website)
-      localStorage.setItem('decoded', decodeXor(website));
+      localStorage.setItem('decoded', decodeXor(website))
     }
   }
 }
-
 
 // Reload
 function reload() {
@@ -139,61 +138,61 @@ document.addEventListener('fullscreenchange', function () {
   document.body.classList.toggle('fullscreen', isFullscreen)
 })
 // Now
-let decodedSet = false;
-const decoded = localStorage.getItem('decoded');
-const key = ['nowgg', 'now.gg'];
+let decodedSet = false
+const decoded = localStorage.getItem('decoded')
+const key = ['nowgg', 'now.gg']
 
 if (localStorage.getItem('decoded') !== null) {
-  decodedSet = true; 
-  console.log('Starting process.');
-  now(); 
+  decodedSet = true
+  console.log('Starting process.')
+  now()
 } else {
-  decodedSet = false;
-  console.log('Decoded not found.');
+  decodedSet = false
+  console.log('Decoded not found.')
 }
 
 function now() {
-  console.log('Executing now() function.');
+  console.log('Executing now() function.')
   if (decoded) {
-    let found = false;
+    let found = false
     for (const keyword of key) {
       if (decoded.includes(keyword)) {
-        console.log(`${keyword} found`);
-        found = true;
-        break;
+        console.log(`${keyword} found`)
+        found = true
+        break
       }
     }
     if (found) {
-      let count = 0;
-      let notfound = 0;
-      const limit = 10;
-      const max = 45;
+      let count = 0
+      let notfound = 0
+      const limit = 10
+      const max = 45
       const reloadInterval = setInterval(() => {
         if (count < limit && iframe) {
-          const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-          const element = iframeDocument.querySelector('.sc-hGPBjI.gGkQpt');
+          const iframeDocument = iframe.contentDocument || iframe.contentWindow.document
+          const element = iframeDocument.querySelector('.sc-hGPBjI.gGkQpt')
           if (element) {
-            console.log("Class found inside the iframe.");
-            document.querySelector('.overlay').style.display = 'block';
-            document.getElementById('ifra').style.display = 'none';
-            iframeDocument.location.reload();
-            count += 1;
-            notfound = 0; 
+            console.log('Class found inside the iframe.')
+            document.querySelector('.overlay').style.display = 'block'
+            document.getElementById('ifra').style.display = 'none'
+            iframeDocument.location.reload()
+            count += 1
+            notfound = 0
           } else {
-            console.log("Class not found inside the iframe.");
-            notfound += 1;
+            console.log('Class not found inside the iframe.')
+            notfound += 1
             if (notfound >= max) {
-              clearInterval(reloadInterval);
-              document.getElementById('ifra').style.display = 'block';
-              document.querySelector('.overlay').style.display = 'none';
+              clearInterval(reloadInterval)
+              document.getElementById('ifra').style.display = 'block'
+              document.querySelector('.overlay').style.display = 'none'
             }
           }
         } else {
-          clearInterval(reloadInterval);
+          clearInterval(reloadInterval)
         }
-      }, 500);
+      }, 500)
     }
   } else {
-    console.log('Decoded not found in localStorage.');
+    console.log('Decoded not found in localStorage.')
   }
 }

@@ -5,3 +5,5 @@ package.json
 /static/m/
 /static/dy/
 **/*.min.*
+prettierrc
+eslintrc.cjs
