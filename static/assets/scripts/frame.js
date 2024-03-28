@@ -12,6 +12,7 @@ function decodeXor(input) {
       .join('') + (search.length ? '?' + search.join('?') : '')
   )
 }
+
 function iframeLoad() {
   if (document.readyState === 'complete') {
     const website = iframe.contentWindow?.location.href.replace(window.location.origin, '')
@@ -20,12 +21,10 @@ function iframeLoad() {
       const website = iframe.contentWindow?.location.href.replace(window.location.origin, '').replace('/a/', '')
       document.getElementById('is').value = decodeXor(website)
       localStorage.setItem('decoded', decodeXor(website));
-      window.parent.postMessage({ decodedSet: true }, window.location.origin);
     } else if (website.includes('/a/q/')) {
       const website = iframe.contentWindow?.location.href.replace(window.location.origin, '').replace('/a/q/', '')
       document.getElementById('is').value = decodeXor(website)
       localStorage.setItem('decoded', decodeXor(website));
-      window.parent.postMessage({ decodedSet: true }, window.location.origin);
     }
   }
 }
@@ -140,24 +139,21 @@ document.addEventListener('fullscreenchange', function () {
   document.body.classList.toggle('fullscreen', isFullscreen)
 })
 // Now
-const key = ['nowgg', 'now.gg'];
-const decoded = localStorage.getItem('decoded');
 let decodedSet = false;
+const decoded = localStorage.getItem('decoded');
+const key = ['nowgg', 'now.gg'];
 
-window.addEventListener('message', function(event) {
-  if (event.origin !== window.location.origin) {
-    console.warn('Received message from unexpected origin:', event.origin);
-    return;
-  }
-
-  if (event.data && event.data.decodedSet === true) {
-    decodedSet = true;
-    console.log('Starting process.');
-    now(); 
-  }
-});
+if (localStorage.getItem('decoded') !== null) {
+  decodedSet = true; 
+  console.log('Starting process.');
+  now(); 
+} else {
+  decodedSet = false;
+  console.log('Decoded not found.');
+}
 
 function now() {
+  console.log('Executing now() function.');
   if (decoded) {
     let found = false;
     for (const keyword of key) {
@@ -171,12 +167,13 @@ function now() {
       let count = 0;
       let notfound = 0;
       const limit = 10;
-      const max = 35;
+      const max = 45;
       const reloadInterval = setInterval(() => {
         if (count < limit && iframe) {
           const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
           const element = iframeDocument.querySelector('.sc-hGPBjI.gGkQpt');
           if (element) {
+            console.log("Class found inside the iframe.");
             document.querySelector('.overlay').style.display = 'block';
             document.getElementById('ifra').style.display = 'none';
             iframeDocument.location.reload();
@@ -199,8 +196,4 @@ function now() {
   } else {
     console.log('Decoded not found in localStorage.');
   }
-}
-
-if (decodedSet) {
-  now();
 }
