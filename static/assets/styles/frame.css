@@ -7,7 +7,7 @@ body {
   margin: 0;
   overflow-x: hidden;
   overflow-y: hidden;
-  background: var(--main)
+  background: var(--main);
 }
 
 iframe {
@@ -158,19 +158,18 @@ iframe {
 }
 
 h1 {
-text-align: center;
-color: white;
-font-size: 50px;
-white-space: nowrap;
+  text-align: center;
+  color: white;
+  font-size: 50px;
+  white-space: nowrap;
 }
 
 p {
-text-align: center;
-color: white;
-font-size: 25px;
+  text-align: center;
+  color: white;
+  font-size: 25px;
 }
 
 a {
-color: #6495ED
+  color: #6495ed;
 }
-
