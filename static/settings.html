@@ -8,8 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" id="tab-favicon" href="favicon.png" />
     <title id="tab-title">Home</title>
-    <link rel="stylesheet" href="/assets/styles/main.css?v=4" />
-    <link rel="stylesheet" href="/assets/styles/settings.css" />
+    <link rel="stylesheet" href="/assets/styles/main.css?v=5" />
+    <link rel="stylesheet" href="/assets/styles/settings.css?v=4" />
     <link rel="stylesheet" href="/assets/styles/themes/default.css?v=5" />
     <script src="https://kit.fontawesome.com/1237c86ba0.js" crossorigin="anonymous"></script>
   </head>
@@ -19,11 +19,11 @@
         <a class="icon" href="/./"><img alt="nav" id="INImg" src="/assets/media/favicon/main.png" /></a>
       </div>
       <div class="fixed-nav-bar-right">
-        <a class="navbar-link" href="/./-"><i class="fa-solid fa-gamepad navbar-icon"></i><xn>Ga</xn>mes</a>
-        <a class="navbar-link" href="/./~"><i class="fa-solid fa-phone navbar-icon"></i><xn>Ap</xn>ps</a>
-        <a class="navbar-link" href="/./0"><i class="fa-solid fa-laptop navbar-icon"></i><xn>Ta</xn>bs</a>
+        <a class="navbar-link" href="/./-"><i class="fa-solid fa-gamepad navbar-icon"></i><xn>Ga</xn><xn>mes</xn></a>
+        <a class="navbar-link" href="/./~"><i class="fa-solid fa-phone navbar-icon"></i><xn>Ap</xn><xn>ps</xn></a>
+        <a class="navbar-link" href="/./0"><i class="fa-solid fa-laptop navbar-icon"></i><xn>Ta</xn><xn>bs</xn></a>
         <a class="navbar-link" href="/./!"
-          ><i class="fa-solid fa-gear navbar-icon settings-icon"></i><xn>Set</xn>tings</a
+          ><i class="fa-solid fa-gear navbar-icon settings-icon"></i><xn>Set</xn><xn>tings</xn></a
         >
       </div>
     </div>
@@ -38,7 +38,7 @@
         <div class="settings-card">
           <h3>Set Panic Key</h3>
           <p>
-            Quickly open a educational site, when the teacher comes. The panic link is also used to redirect you when
+            Quickly open an educational site when the teacher comes. The panic link is also used to redirect you when
             about:blank windows are opened.
           </p>
           <input type="text" id="eventKeyInput" placeholder="Panic Key" class="key-form" />
@@ -54,14 +54,43 @@
             <option value="Canvas">Canvas</option>
             <option value="Edpuzzle">Edpuzzle</option>
             <option value="Google">Google</option>
+            <option value="Google Meet">Google Meet</option>
             <option value="Classroom">Google Classroom</option>
             <option value="Drive">Google Drive</option>
+            <option value="Google Docs">Google Docs</option>
+            <option value="Google Slides">Google Slides</option>
             <option value="Gmail">Gmail</option>
             <option value="Khan">Khan Academy</option>
             <option value="Campus">Infinite Campus</option>
             <option value="IXL">IXL</option>
             <option value="LinkIt">LinkIt!</option>
             <option value="Schoology">Schoology</option>
+            <option value="i-Ready Math">i-Ready Math</option>
+            <option value="i-Ready Reading">i-Ready Reading</option>
+            <option value="ClassLink Login">ClassLink Login</option>
+            <option value="Wikipedia">Wikipedia</option>
+            <option value="Britannica">Britannica</option>
+            <option value="Ducksters">Ducksters</option>
+            <option value="Minga">Minga</option>
+            <option value="i-Ready Learning Games">i-Ready Learning Games</option>
+            <option value="NoRedInk Home">NoRedInk Home</option>
+            <option value="Newsela Binder">Newsela Binder</option>
+            <option value="Newsela Assignments">Newsela Assignments</option>
+            <option value="Newsela Home">Newsela Home</option>
+            <option value="PowerSchool Sign In">PowerSchool Sign In</option>
+            <option value="PowerSchool Grades and Attendance">PowerSchool Grades and Attendance</option>
+            <option value="PowerSchool Teacher Comments">PowerSchool Teacher Comments</option>
+            <option value="PowerSchool Standards Grades">PowerSchool Standards Grades</option>
+            <option value="PowerSchool Attendance">PowerSchool Attendance</option>
+            <option value="Nearpod">Nearpod</option>
+            <option value="StudentVUE">StudentVUE</option>
+            <option value="Quizlet Home">Quizlet Home</option>
+            <option value="Google Forms Locked Mode">Google Forms - Locked Mode</option>
+            <option value="DeltaMath">DeltaMath</option>
+            <option value="Kami">Kami</option>
+            <option value="GoGuardian Admin Restricted">GoGuardian Admin Block</option>
+            <option value="GoGuardian Teacher Block">GoGuardian Teacher Block</option>
+            <option value="World History Encyclopedia">World History Encyclopedia</option>
           </select>
           <input class="key-form" type="text" id="icon" placeholder="Change Tab Icon" name="icon" />
           <input class="key-form" type="text" id="name" name="name" placeholder="Change Tab Name" />
@@ -71,7 +100,7 @@
         </div>
         <div class="settings-card">
           <h3>Search Engine</h3>
-          <p>Change the search engine while searching.</p>
+          <p>Change the search engine when searching.</p>
           <select title="engine" id="engine" onchange="EngineChange(this)">
             <option value="Google">Google (Default)</option>
             <option value="Bing">Bing</option>
@@ -105,8 +134,8 @@
         <div class="settings-card">
           <h3>Advertisement</h3>
           <p>
-            Advertisements are cruical in order to keep the site running. Please consider donating or hosting your own
-            links to go ad-free. If not you can still disable them anyway down below.
+            Advertisements are crucial in order to keep the site running. Please consider donating or hosting your own
+            links to go ad-free. If not, you can still disable them below.
           </p>
           <select id="adType" onchange="adChange(this)">
             <option value="default">Default</option>
@@ -115,7 +144,7 @@
         </div>
         <div class="settings-card">
           <h3>Particles</h3>
-          <p>Add the particles from the previous version to the new site.</p>
+          <p>Add the particles that are from the previous version to the new site.</p>
           <label class="switch">
             <input type="checkbox" class="slider-checkbox" id="2" />
             <span class="slider-round"></span>
@@ -123,7 +152,7 @@
         </div>
         <div class="settings-card">
           <h3>Themes!</h3>
-          <p>Choose through a selection of themes!</p>
+          <p>Pick from a variety of themes!</p>
           <select placeholder="Solid Color Themes" id="dropdown" class="td" onchange="themeChange(this)">
             <option disabled selected>Solid Color Themes</option>
             <option value="d">Default</option>
@@ -134,10 +163,19 @@
             <option value="catppuccinLatte">Latte</option>
           </select>
         </div>
+        <div class="settings-card">
+          <h3>Site Info</h3>
+          <p>Version: 5.1.5</p>
+          <p id="last-updated">Last Updated: March 28th, 2024</p>
+          <p>
+            Questions? Need more links? Join our community at
+            <a style="color: white" href="https://discord.gg/interstellar">discord.gg/interstellar</a>!
+          </p>
+        </div>
       </div>
     </div>
-    <script src="/assets/scripts/main.js?v=9"></script>
-    <script src="/assets/scripts/settings.js?v=9"></script>
+    <script src="/assets/scripts/main.js?v=18"></script>
+    <script src="/assets/scripts/settings.js?v=14"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ"></script>
     <script>
       window.dataLayer = window.dataLayer || []

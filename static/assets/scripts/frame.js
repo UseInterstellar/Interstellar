@@ -1,5 +1,4 @@
 const iframe = document.getElementById('ifra')
-
 window.addEventListener('resize', navigator.keyboard.lock(['Escape']))
 // Decode URL
 function decodeXor(input) {
@@ -13,18 +12,19 @@ function decodeXor(input) {
       .join('') + (search.length ? '?' + search.join('?') : '')
   )
 }
+
 function iframeLoad() {
   if (document.readyState === 'complete') {
     const website = iframe.contentWindow?.location.href.replace(window.location.origin, '')
 
-    if (website.includes('/y/') || website.includes('/f/')) {
-      document.getElementById('is').value = '.'
-    } else if (website.includes('/a/')) {
+    if (website.includes('/a/')) {
       const website = iframe.contentWindow?.location.href.replace(window.location.origin, '').replace('/a/', '')
       document.getElementById('is').value = decodeXor(website)
+      localStorage.setItem('decoded', decodeXor(website))
     } else if (website.includes('/a/q/')) {
       const website = iframe.contentWindow?.location.href.replace(window.location.origin, '').replace('/a/q/', '')
       document.getElementById('is').value = decodeXor(website)
+      localStorage.setItem('decoded', decodeXor(website))
     }
   }
 }
@@ -119,7 +119,7 @@ window.onload = function () {
   let GoUrl = sessionStorage.getItem('GoUrl')
   let dyValue = localStorage.getItem('dy')
 
-  if (!GoUrl.startsWith('/y/') && !GoUrl.startsWith('/f/')) {
+  if (!GoUrl.startsWith('/e/')) {
     if (dyValue === 'true' || dyValue === 'auto') {
       GoUrl = '/a/q/' + GoUrl
     } else {
@@ -138,78 +138,61 @@ document.addEventListener('fullscreenchange', function () {
   document.body.classList.toggle('fullscreen', isFullscreen)
 })
 // Now
-var adjustmentCompleted = false
-var attempts = 0
+let decodedSet = false
+const decoded = localStorage.getItem('decoded')
+const key = ['nowgg', 'now.gg']
 
-function adjustElements() {
-  if (adjustmentCompleted) {
-    return true
-  }
+if (localStorage.getItem('decoded') !== null) {
+  decodedSet = true
+  console.log('Starting process.')
+  now()
+} else {
+  decodedSet = false
+  console.log('Decoded not found.')
+}
 
-  var iframe = top.document.getElementById('ifra')
-
-  if (iframe) {
-    var innerDoc = iframe.contentWindow.document
-
-    var roblox = innerDoc.getElementById('js-game-video')
-    var controlBar = innerDoc.getElementById('ng-control-bar')
-
-    if (roblox && controlBar) {
-      roblox.style.top = '415px'
-      controlBar.style.top = '91%'
-
-      return true
-    } else {
-      return false
+function now() {
+  console.log('Executing now() function.')
+  if (decoded) {
+    let found = false
+    for (const keyword of key) {
+      if (decoded.includes(keyword)) {
+        console.log(`${keyword} found`)
+        found = true
+        break
+      }
+    }
+    if (found) {
+      let count = 0
+      let notfound = 0
+      const limit = 10
+      const max = 45
+      const reloadInterval = setInterval(() => {
+        if (count < limit && iframe) {
+          const iframeDocument = iframe.contentDocument || iframe.contentWindow.document
+          const element = iframeDocument.querySelector('.sc-hGPBjI.gGkQpt')
+          if (element) {
+            console.log('Class found inside the iframe.')
+            document.querySelector('.overlay').style.display = 'block'
+            document.getElementById('ifra').style.display = 'none'
+            iframeDocument.location.reload()
+            count += 1
+            notfound = 0
+          } else {
+            console.log('Class not found inside the iframe.')
+            notfound += 1
+            if (notfound >= max) {
+              clearInterval(reloadInterval)
+              document.getElementById('ifra').style.display = 'block'
+              document.querySelector('.overlay').style.display = 'none'
+            }
+          }
+        } else {
+          clearInterval(reloadInterval)
+        }
+      }, 500)
     }
   } else {
-    return false
-  }
-}
-
-function CheckAndAdjust() {
-  var intervalId = setInterval(function () {
-    attempts++
-    if (adjustElements()) {
-      clearInterval(intervalId)
-    } else if (attempts >= 30) {
-      clearInterval(intervalId)
-    }
-  }, 5000)
-}
-
-function adjust() {
-  setInterval(function () {
-    var iframe = top.document.getElementById('ifra')
-
-    if (iframe) {
-      var innerDoc = iframe.contentWindow.document
-
-      var roblox = innerDoc.getElementById('js-game-video')
-      var controlBar = innerDoc.getElementById('ng-control-bar')
-      var customClassElement = innerDoc.querySelector('.sc-rUGft.hLgqJJ')
-
-      if (roblox) {
-        checkAndAdjustStyles(roblox, 'top', ['415px'])
-      }
-
-      if (controlBar) {
-        checkAndAdjustStyles(controlBar, 'top', ['91%'])
-      }
-
-      if (customClassElement) {
-        customClassElement.remove()
-      }
-    }
-  }, 3000)
-}
-
-function checkAndAdjustStyles(element, property, targetValues) {
-  if (element) {
-    var currentStyle = window.getComputedStyle(element)[property]
-
-    if (!targetValues.includes(currentStyle)) {
-      element.style[property] = targetValues[0]
-    }
+    console.log('Decoded not found in localStorage.')
   }
 }

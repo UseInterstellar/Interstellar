@@ -1,7 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
 body {
+  font-family: 'Inter', sans-serif;
+  text-decoration: none;
   margin: 0;
   overflow-x: hidden;
   overflow-y: hidden;
+  background: var(--main);
 }
 
 iframe {
@@ -141,4 +147,29 @@ iframe {
   color: #fff;
   height: 30px;
   border-radius: 5px;
+}
+
+.overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+
+h1 {
+  text-align: center;
+  color: white;
+  font-size: 50px;
+  white-space: nowrap;
+}
+
+p {
+  text-align: center;
+  color: white;
+  font-size: 25px;
+}
+
+a {
+  color: #6495ed;
 }

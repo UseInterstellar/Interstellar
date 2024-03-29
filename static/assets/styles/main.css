@@ -565,3 +565,15 @@ select {
 .sugelement:hover {
   cursor: pointer;
 }
+
+@media (max-width: 768px) {
+  .fixed-nav-bar-right .navbar-link xn {
+    display: none;
+  }
+  .fixed-nav-bar-right .fa-solid {
+    display: inline;
+  }
+  .fixed-nav-bar-right .navbar-link {
+    font-size: 4.5vw;
+  }
+}

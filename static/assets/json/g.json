@@ -13,6 +13,18 @@
     "blank": "true"
   },
   {
+    "name": "Newgrounds",
+    "link": "https://newgrounds.com/",
+    "image": "/assets/media/icons/newgrounds.png",
+    "categories": ["all"]
+  },
+  {
+    "name": "Stabfish.io",
+    "link": "https://stabfish.io/",
+    "image": "/assets/media/icons/stabfish.jpg",
+    "categories": ["all", "2P"]
+  },
+  {
     "name": "Dynast.io",
     "link": "https://dynast.io",
     "image": "/assets/media/icons/dynast-io.webp",
@@ -242,10 +254,15 @@
   },
   {
     "name": "Stickman Hook",
-    "link": "/y/stickman-hook/index.html",
+    "link": "/e/stickman-hook/index.html",
     "image": "/assets/media/icons/stickmanhook.webp",
-    "categories": ["all", "local"],
-    "local": "true"
+    "categories": ["all", "local"]
+  },
+  {
+    "name": "Tube Jumpers",
+    "link": "https://unblocked76.github.io/tube-jumpers/",
+    "image": "/assets/media/icons/tubejumpers.webp",
+    "categories": ["all", "2P"]
   },
   {
     "name": "Tunnel Rush",
@@ -327,10 +344,9 @@
   },
   {
     "name": "Jetpack Joyride",
-    "link": "/y/jetpack-joyride/index.html",
+    "link": "/e/jetpack-joyride/index.html",
     "image": "/assets/media/icons/jetpackjoyride.webp",
-    "categories": ["all", "local"],
-    "local": "true"
+    "categories": ["all", "local"]
   },
   {
     "name": "FeedVid",
@@ -555,6 +571,18 @@
     "categories": ["all"]
   },
   {
+    "name": "Riddle School 4",
+    "link": "https://riddle-school-4.game-files.crazygames.com/ruffle/riddleschool4.html",
+    "image": "/assets/media/icons/rs4.jpg",
+    "categories": ["all"]
+  },
+  {
+    "name": "Riddle School 5",
+    "link": "https://riddle-school-5.game-files.crazygames.com/ruffle/riddleschool5.html",
+    "image": "/assets/media/icons/rs5.avif",
+    "categories": ["all"]
+  },
+  {
     "name": "GBA Emulator",
     "link": "https://ds.44670.org/gba/",
     "image": "/assets/media/icons/gba.webp",
@@ -616,9 +644,9 @@
   },
   {
     "name": "Web Retro",
-    "link": "https://binbashbanana.github.io/webretro/",
+    "link": "/e/index.html",
     "image": "/assets/media/icons/webretro.webp",
-    "categories": ["all,", "emu"]
+    "categories": ["all,", "emu", "local"]
   },
   {
     "name": "Slope",
@@ -640,9 +668,9 @@
   },
   {
     "name": "1",
-    "link": "https://hgentry.github.io/1/",
+    "link": "/e/1/index.html",
     "image": "/assets/media/icons/1.webp",
-    "categories": ["all"]
+    "categories": ["all", "local"]
   },
   {
     "name": "1v1.LOL",
@@ -796,10 +824,9 @@
   },
   {
     "name": "Cluster Rush",
-    "link": "/y/Cluster-Rush/index.html",
+    "link": "/e/Cluster-Rush/index.html",
     "image": "/assets/media/icons/cluster-rush.webp",
-    "categories": ["all", "local"],
-    "local": "true"
+    "categories": ["all", "local"]
   },
   {
     "name": "Cookie Clicker",
@@ -826,10 +853,10 @@
     "categories": ["all"]
   },
   {
-    "name": "Doge Miner 1",
-    "link": "https://dogeminer.se/",
+    "name": "Doge Miner",
+    "link": "/e/DogeMiner/index.html",
     "image": "/assets/media/icons/doge-miner-1.webp",
-    "categories": ["all"]
+    "categories": ["all", "local"]
   },
   {
     "name": "Doom 1",
@@ -859,8 +886,7 @@
     "name": "Drift Hunters",
     "link": "https://webglmath.github.io/drift-hunters/",
     "image": "/assets/media/icons/drift-hunters.webp",
-    "categories": ["all"],
-    "say": "This game may take a while to load, but it is working."
+    "categories": ["all"]
   },
   {
     "name": "Drive Mad",
@@ -1038,10 +1064,9 @@
   },
   {
     "name": "Monkey Mart",
-    "link": "/y/monkey-mart/index.html",
+    "link": "/e/monkey-mart/index.html",
     "image": "/assets/media/icons/mm.webp",
-    "categories": ["all", "local"],
-    "local": "true"
+    "categories": ["all", "local"]
   },
   {
     "name": "MooMoo.io",
@@ -1183,7 +1208,7 @@
   },
   {
     "name": "Pizza Tower",
-    "link": "https://gamaverse.com/c/f/g/pizza-tower-1678640389/index.html",
+    "link": "https://gamaverse.com/c/e/g/pizza-tower-1678640389/index.html",
     "image": "/assets/media/icons/pizza-tower.webp",
     "categories": ["all"]
   },
@@ -1308,6 +1333,12 @@
     "categories": ["all"]
   },
   {
+    "name": "Riddle School 3",
+    "link": "https://riddle-school-3.game-files.crazygames.com/ruffle/riddleschool3.html",
+    "image": "/assets/media/icons/rs3.webp",
+    "categories": ["all"]
+  },
+  {
     "name": "Rocket Pult",
     "link": "https://v6p9d9t4.ssl.hwcdn.net/html/565140/index.html",
     "image": "/assets/media/icons/rocketpult.webp",
@@ -1419,7 +1450,15 @@
     "name": "Taming.io",
     "link": "https://taming.io/",
     "image": "/assets/media/icons/tamingio.webp",
-    "categories": ["all"]
+    "categories": ["all"],
+    "error": "true",
+    "say": "Taming.io is currently broken on the proxy and will crash Interstellar when attempted to load."
+  },
+  {
+    "name": "Temple of Boom",
+    "link": "https://temple-of-boom.github.io/file/",
+    "image": "/assets/media/icons/templeofboom.jpg",
+    "categories": ["all", "2P"]
   },
   {
     "name": "Tanuki Sunset",
@@ -1443,18 +1482,6 @@
     "name": "Twitch Tetris",
     "link": "https://www.rossipotti.de/ausgabe28/tetris/controls.html",
     "image": "/assets/media/icons/na.webp",
-    "categories": ["all"]
-  },
-  {
-    "name": "Vex 5",
-    "link": "https://raw.githack.com/3kh0/3kh0-assets/main/vex5/index.html",
-    "image": "/assets/media/icons/vex5.webp",
-    "categories": ["all"]
-  },
-  {
-    "name": "Vex 7",
-    "link": "https://interstellarnetwork.github.io/interstellar-assets/play/vex7/index.html",
-    "image": "/assets/media/icons/vex7.webp",
     "categories": ["all"]
   },
   {
@@ -1483,10 +1510,9 @@
   },
   {
     "name": "Retro Bowl",
-    "link": "/y/retro/index.html",
+    "link": "/e/retro/index.html",
     "image": "/assets/media/icons/retro.webp",
-    "categories": ["all,", "sports", "local"],
-    "local": "true"
+    "categories": ["all,", "sports", "local"]
   },
   {
     "name": "Roblox (Now.GG)",
@@ -1621,21 +1647,9 @@
     "categories": ["all", "emu", "android"]
   },
   {
-    "name": "Roblox (NowGG.nl)",
-    "link": "https://nowgg.nl/iframe/snippet?app_pkg=com.roblox.client&partner=interstellar",
-    "image": "/assets/media/icons/astroid.webp",
-    "categories": ["all", "emu", "android"]
-  },
-  {
     "name": "Roblox (NowGG.me) [Working]",
     "link": "https://nowgg.me/apps/roblox-corporation/5349/roblox.html",
     "image": "/assets/media/icons/shuttle.webp",
-    "categories": ["all", "emu", "android"]
-  },
-  {
-    "name": "Now.GG (NowGG.nl)",
-    "link": "https://nowgg.nl",
-    "image": "/assets/media/icons/astroid.webp",
     "categories": ["all", "emu", "android"]
   },
   {
@@ -1706,17 +1720,15 @@
   },
   {
     "name": "Minecraft 1.5.2 (Eaglercraft)",
-    "link": "/f/ec-15/index.html",
+    "link": "/e/ec-15/index.html",
     "image": "/assets/media/icons/mc.webp",
-    "categories": ["all", "2P", "emu", "local"],
-    "local": "true"
+    "categories": ["all", "2P", "emu", "local"]
   },
   {
     "name": "Minecraft 1.8 (Eaglercraft)",
-    "link": "/f/ec-18/index.html",
+    "link": "/e/ec-18/index.html",
     "image": "/assets/media/icons/mc.webp",
-    "categories": ["all", "2P", "emu", "local"],
-    "local": "true"
+    "categories": ["all", "2P", "emu", "local"]
   },
   {
     "name": "Getaway S.",
@@ -1730,5 +1742,47 @@
     "image": "/assets/media/icons/mc.webp",
     "categories": ["all", "2P", "emu"],
     "blank": "true"
+  },
+  {
+  "name": "2048",
+  "link": "/e/2048/index.html",
+  "image": "/assets/media/icons/2048.png",
+  "categories": ["all", "local"]    
+  },
+  {
+    "name": "2048 Multitasking",
+    "link": "/e/2048-multitask/index.html",
+    "image": "/assets/media/icons/2048.png",
+    "categories": ["all", "local"]    
+  },
+  {
+    "name": "Vex 7",
+    "link": "/e/vex7/index.html",
+    "image": "/assets/media/icons/vex7.webp",
+    "categories": ["all", "local"]    
+  },
+  {
+    "name": "Vex 6",
+    "link": "/e/vex6/index.html",
+    "image": "/assets/media/icons/vex6.jpeg",
+    "categories": ["all", "local"]    
+  },
+  {
+    "name": "Vex 5",
+    "link": "/e/vex5/index.html",
+    "image": "/assets/media/icons/vex5.webp",
+    "categories": ["all", "local"]    
+  },
+  {
+    "name": "Vex 3",
+    "link": "/e/vex3/index.html",
+    "image": "/assets/media/icons/vex3.png",
+    "categories": ["all", "local"]    
+  },
+  {
+    "name": "Vex 4",
+    "link": "/e/vex4/index.html",
+    "image": "/assets/media/icons/vex4.png",
+    "categories": ["all", "local"]    
   }
 ]

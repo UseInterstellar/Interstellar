@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" id="tab-favicon" href="favicon.png" />
     <title id="tab-title">Home</title>
-    <script src="/assets/scripts/main.js?v=9"></script>
     <link rel="stylesheet" type="text/css" href="/./assets/styles/tab.css" />
     <link rel="stylesheet" href="/./assets/styles/tabinner.css" />
     <script src="/./assets/scripts/tabs.js?v=2"></script>
@@ -50,7 +49,7 @@
     </div>
     <script>
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('../sw.js?v=1', {
+        navigator.serviceWorker.register('../sw.js?v=4', {
           scope: '/a/',
         })
       })
@@ -91,7 +90,8 @@
         console.log(activeIframe.dataset.tabUrl)
       })
     </script>
-    <script src="./m/bundle.js"></script>
-    <script src="./m/config.js"></script>
+    <script src="./m/bundle.js?v=4"></script>
+    <script src="./m/config.js?v=3"></script>
+    <script src="/assets/scripts/main.js?v=18"></script>
   </body>
 </html>

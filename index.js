@@ -8,7 +8,7 @@ import config from './config.js'
 const __dirname = process.cwd()
 const server = http.createServer()
 const app = express(server)
-const bareServer = createBareServer('/v/')
+const bareServer = createBareServer('/o/')
 const PORT = process.env.PORT || 8080
 if (config.challenge) {
   console.log('Password protection is enabled. Usernames are: ' + Object.keys(config.users))
@@ -42,25 +42,33 @@ if (config.routes !== false) {
     })
   })
 }
-if (config.local !== false) {
-  app.get('/y/*', (req, res, next) => {
-    const baseUrl = 'https://raw.githubusercontent.com/ypxa/y/main'
-    fetchData(req, res, next, baseUrl)
-  })
 
-  app.get('/f/*', (req, res, next) => {
-    const baseUrl = 'https://raw.githubusercontent.com/4x-a/x/fixy'
-    fetchData(req, res, next, baseUrl)
+if (config.local !== false) {
+  app.get('/e/*', (req, res, next) => {
+    const baseUrls = [
+      'https://raw.githubusercontent.com/v-5x/x/fixy',
+      'https://raw.githubusercontent.com/ypxa/y/main',
+      'https://raw.githubusercontent.com/ypxa/w/master',
+    ]
+    fetchData(req, res, next, baseUrls)
   })
 }
 
-const fetchData = async (req, res, next, baseUrl) => {
+const fetchData = async (req, res, next, baseUrls) => {
   try {
-    const reqTarget = `${baseUrl}/${req.params[0]}`
-    const asset = await fetch(reqTarget)
+    const reqTarget = baseUrls.map((baseUrl) => `${baseUrl}/${req.params[0]}`)
+    let data
+    let asset
 
-    if (asset.ok) {
-      const data = await asset.arrayBuffer()
+    for (const target of reqTarget) {
+      asset = await fetch(target)
+      if (asset.ok) {
+        data = await asset.arrayBuffer()
+        break
+      }
+    }
+
+    if (data) {
       res.end(Buffer.from(data))
     } else {
       next()
@@ -70,6 +78,7 @@ const fetchData = async (req, res, next, baseUrl) => {
     next(error)
   }
 }
+
 server.on('request', (req, res) => {
   if (bareServer.shouldRoute(req)) {
     bareServer.routeRequest(req, res)
