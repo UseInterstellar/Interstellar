@@ -1,5 +1,11 @@
 [
   {
+    "name": "! Create Custom App",
+    "image": "/assets/media/icons/custom.webp",
+    "categories": ["all"],
+    "custom": "true"
+  },
+  {
     "name": "! Request A Game",
     "link": "https://forms.gle/94fJ9yAXQCgaXTrz6",
     "image": "/assets/media/icons/request.webp",
@@ -1744,45 +1750,45 @@
     "blank": "true"
   },
   {
-  "name": "2048",
-  "link": "/e/2048/index.html",
-  "image": "/assets/media/icons/2048.png",
-  "categories": ["all", "local"]    
+    "name": "2048",
+    "link": "/e/2048/index.html",
+    "image": "/assets/media/icons/2048.png",
+    "categories": ["all", "local"]
   },
   {
     "name": "2048 Multitasking",
     "link": "/e/2048-multitask/index.html",
     "image": "/assets/media/icons/2048.png",
-    "categories": ["all", "local"]    
+    "categories": ["all", "local"]
   },
   {
     "name": "Vex 7",
     "link": "/e/vex7/index.html",
     "image": "/assets/media/icons/vex7.webp",
-    "categories": ["all", "local"]    
+    "categories": ["all", "local"]
   },
   {
     "name": "Vex 6",
     "link": "/e/vex6/index.html",
     "image": "/assets/media/icons/vex6.jpeg",
-    "categories": ["all", "local"]    
+    "categories": ["all", "local"]
   },
   {
     "name": "Vex 5",
     "link": "/e/vex5/index.html",
     "image": "/assets/media/icons/vex5.webp",
-    "categories": ["all", "local"]    
+    "categories": ["all", "local"]
   },
   {
     "name": "Vex 3",
     "link": "/e/vex3/index.html",
     "image": "/assets/media/icons/vex3.png",
-    "categories": ["all", "local"]    
+    "categories": ["all", "local"]
   },
   {
     "name": "Vex 4",
     "link": "/e/vex4/index.html",
     "image": "/assets/media/icons/vex4.png",
-    "categories": ["all", "local"]    
+    "categories": ["all", "local"]
   }
 ]
