@@ -155,6 +155,101 @@ document.addEventListener('DOMContentLoaded', function (event) {
     name.textContent = 'Minga – Creating Amazing Schools'
     localStorage.setItem('name', 'Minga – Creating Amazing Schools')
     localStorage.setItem('icon', '/assets/media/favicon/minga.png')
+  } else if (selectedValue === 'i-Ready Learning Games') {
+    icon.setAttribute('href', '/assets/media/favicon/i-ready.ico')
+    name.textContent = 'Learning Games, i-Ready'
+    localStorage.setItem('name', 'Learning Games, i-Ready')
+    localStorage.setItem('icon', '/assets/media/favicon/i-ready.ico')
+  } else if (selectedValue === 'NoRedInk Home') {
+    icon.setAttribute('href', '/assets/media/favicon/noredink.webp')
+    name.textContent = 'Student Home | NoRedInk'
+    localStorage.setItem('name', 'Student Home | NoRedInk')
+    localStorage.setItem('icon', '/assets/media/favicon/noredink.webp')
+  } else if (selectedValue === 'Newsela Binder') {
+    icon.setAttribute('href', '/assets/media/favicon/newsela.png')
+    name.textContent = 'Newsela | Binder'
+    localStorage.setItem('name', 'Newsela | Binder')
+    localStorage.setItem('icon', '/assets/media/favicon/newsela.png')
+  } else if (selectedValue === 'Newsela Assignments') {
+    icon.setAttribute('href', '/assets/media/favicon/newsela.png')
+    name.textContent = 'Newsela | Assignments'
+    localStorage.setItem('name', 'Newsela | Assignments')
+    localStorage.setItem('icon', '/assets/media/favicon/newsela.png')
+  } else if (selectedValue === 'Newsela Home') {
+    icon.setAttribute('href', '/assets/media/favicon/newsela.png')
+    name.textContent = 'Newsela | Instructional Content Platform'
+    localStorage.setItem('name', 'Newsela | Instructional Content Platform')
+    localStorage.setItem('icon', '/assets/media/favicon/newsela.png')
+  } else if (selectedValue === 'PowerSchool Sign In') {
+    icon.setAttribute('href', '/assets/media/favicon/powerschool.png')
+    name.textContent = 'Student and Parent Sign In'
+    localStorage.setItem('name', 'Student and Parent Sign In')
+    localStorage.setItem('icon', '/assets/media/favicon/powerschool.png')
+  } else if (selectedValue === 'PowerSchool Grades and Attendance') {
+    icon.setAttribute('href', '/assets/media/favicon/powerschool.png')
+    name.textContent = 'Grades and Attendance'
+    localStorage.setItem('name', 'Grades and Attendance')
+    localStorage.setItem('icon', '/assets/media/favicon/powerschool.png')
+  } else if (selectedValue === 'PowerSchool Teacher Comments') {
+    icon.setAttribute('href', '/assets/media/favicon/powerschool.png')
+    name.textContent = 'Teacher Comments'
+    localStorage.setItem('name', 'Teacher Comments')
+    localStorage.setItem('icon', '/assets/media/favicon/powerschool.png')
+  } else if (selectedValue === 'PowerSchool Standards Grades') {
+    icon.setAttribute('href', '/assets/media/favicon/powerschool.png')
+    name.textContent = 'Standards Grades'
+    localStorage.setItem('name', 'Standards Grades')
+    localStorage.setItem('icon', '/assets/media/favicon/powerschool.png')
+  } else if (selectedValue === 'PowerSchool Attendance') {
+    icon.setAttribute('href', '/assets/media/favicon/powerschool.png')
+    name.textContent = 'Attendance'
+    localStorage.setItem('name', 'Attendance')
+    localStorage.setItem('icon', '/assets/media/favicon/powerschool.png')
+  } else if (selectedValue === 'Nearpod') {
+    icon.setAttribute('href', '/assets/media/favicon/nearpod.png')
+    name.textContent = 'Nearpod'
+    localStorage.setItem('name', 'Nearpod')
+    localStorage.setItem('icon', '/assets/media/favicon/nearpod.png')
+  } else if (selectedValue === 'StudentVUE') {
+    icon.setAttribute('href', '/assets/media/favicon/studentvue.ico')
+    name.textContent = 'StudentVUE'
+    localStorage.setItem('name', 'StudentVUE')
+    localStorage.setItem('icon', '/assets/media/favicon/studentvue.ico')
+  } else if (selectedValue === 'Quizlet Home') {
+    icon.setAttribute('href', '/assets/media/favicon/quizlet.webp')
+    name.textContent = 'Flashcards, learning tools and textbook solutions | Quizlet'
+    localStorage.setItem('name', 'Flashcards, learning tools and textbook solutions | Quizlet')
+    localStorage.setItem('icon', '/assets/media/favicon/quizlet.webp')
+  } else if (selectedValue === 'Google Forms Locked Mode') {
+    icon.setAttribute('href', '/assets/media/favicon/googleforms.png')
+    name.textContent = 'Start your quiz'
+    localStorage.setItem('name', 'Start your quiz')
+    localStorage.setItem('icon', '/assets/media/favicon/googleforms.png')
+  } else if (selectedValue === 'DeltaMath') {
+    icon.setAttribute('href', '/assets/media/favicon/deltamath.png')
+    name.textContent = 'DeltaMath'
+    localStorage.setItem('name', 'DeltaMath')
+    localStorage.setItem('icon', '/assets/media/favicon/deltamath.png')
+  } else if (selectedValue === 'Kami') {
+    icon.setAttribute('href', '/assets/media/favicon/kami.png')
+    name.textContent = 'Kami'
+    localStorage.setItem('name', 'Kami')
+    localStorage.setItem('icon', '/assets/media/favicon/kami.png')
+  } else if (selectedValue === 'GoGuardian Admin Restricted') {
+    icon.setAttribute('href', '/assets/media/favicon/goguardian-lock.png')
+    name.textContent = 'Restricted'
+    localStorage.setItem('name', 'Restricted')
+    localStorage.setItem('icon', '/assets/media/favicon/goguardian-lock.png')
+  } else if (selectedValue === 'GoGuardian Teacher Block') {
+    icon.setAttribute('href', '/assets/media/favicon/goguardian.png')
+    name.textContent = 'Uh oh!'
+    localStorage.setItem('name', 'Uh oh!')
+    localStorage.setItem('icon', '/assets/media/favicon/goguardian.png')
+  } else if (selectedValue === 'World History Encyclopedia') {
+    icon.setAttribute('href', '/assets/media/favicon/worldhistoryencyclopedia.png')
+    name.textContent = 'World History Encyclopedia'
+    localStorage.setItem('name', 'World History Encyclopedia')
+    localStorage.setItem('icon', '/assets/media/favicon/worldhistoryencyclopedia.png')
   }
 })
 // Key
