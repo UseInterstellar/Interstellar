@@ -269,6 +269,12 @@
     "categories": ["all", "emu", "android"]
   },
   {
+    "name": "Vercel",
+    "link": "https://vercel.com",
+    "image": "/assets/media/icons/vercel.webp",
+    "categories": ["all", "tool"],
+  },
+  {
     "name": "Amazon Luna",
     "link": "https://luna.amazon.com/",
     "image": "/assets/media/icons/amazon-luna.webp",
