@@ -143,6 +143,15 @@
           </select>
         </div>
         <div class="settings-card">
+          <h3>Analytics</h3>
+          <p>
+Analytics are not crucial to the site but it just helps us know how many people are using the site, and what kind of user we should be trying to cater towards.          </p>
+          <select id="aType" onchange="aChange(this)">
+            <option value="default">Default</option>
+            <option value="off">Off</option>
+          </select>
+        </div>
+        <div class="settings-card">
           <h3>Particles</h3>
           <p>Add the particles that are from the previous version to the new site.</p>
           <label class="switch">
@@ -174,18 +183,8 @@
         </div>
       </div>
     </div>
-    <script src="/assets/scripts/main.js?v=18"></script>
+    <script src="/assets/scripts/main.js?v=20"></script>
     <script src="/assets/scripts/settings.js?v=14"></script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ"></script>
-    <script>
-      window.dataLayer = window.dataLayer || []
-      function gtag() {
-        dataLayer.push(arguments)
-      }
-      gtag('js', new Date())
-
-      gtag('config', 'G-WKJQ5QHQTJ')
-    </script>
     <div id="adv"></div>
   </body>
 </html>

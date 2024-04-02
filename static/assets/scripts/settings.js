@@ -1,31 +1,26 @@
-// Ads
+// Ads & Analytics
 document.addEventListener('DOMContentLoaded', function () {
-  function adChange(selectedValue) {
-    if (selectedValue === 'default') {
-      localStorage.setItem('ad', 'on')
-    } else if (selectedValue === 'off') {
-      localStorage.setItem('ad', 'off')
-    }
-  }
+  function handleChange(elementId, storageKey) {
+    var element = document.getElementById(elementId);
+    if (!element) return;
 
-  var adTypeElement = document.getElementById('adType')
+    element.addEventListener('change', function () {
+      var selectedValue = this.value;
+      localStorage.setItem(storageKey, selectedValue);
+    });
 
-  if (adTypeElement) {
-    adTypeElement.addEventListener('change', function () {
-      var selectedOption = this.value
-      adChange(selectedOption)
-    })
-
-    var storedAd = localStorage.getItem('ad')
-    if (storedAd === 'on') {
-      adTypeElement.value = 'default'
-    } else if (storedAd === 'off') {
-      adTypeElement.value = 'off'
+    var storedValue = localStorage.getItem(storageKey);
+    if (storedValue === 'on' || storedValue === 'off') {
+      element.value = storedValue;
     } else {
-      adTypeElement.value = 'default'
+      element.value = 'default';
     }
   }
-})
+
+  handleChange('adType', 'ad');
+  handleChange('aType', 'an');
+});
+
 // Dyn
 document.addEventListener('DOMContentLoaded', function () {
   function pChange(selectedValue) {
