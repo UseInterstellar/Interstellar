@@ -223,6 +223,14 @@
     "name": "YouTube",
     "link": "https://youtube.com",
     "image": "/assets/media/icons/yt.webp",
+    "categories": ["all", "social", "stream", "media"],
+    "error": true, 
+    "say": "YouTube is currently not working."    
+  },
+  {
+    "name": "Invidous (YouTube)",
+    "link": "https://vid.puffyan.us/",
+    "image": "/assets/media/icons/iv.png",
     "categories": ["all", "social", "stream", "media"]
   },
   {
