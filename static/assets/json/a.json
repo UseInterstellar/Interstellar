@@ -280,7 +280,7 @@
     "name": "Vercel",
     "link": "https://vercel.com",
     "image": "/assets/media/icons/vercel.png",
-    "categories": ["all", "tool"],
+    "categories": ["all", "tool"]
   },
   {
     "name": "Amazon Luna",
