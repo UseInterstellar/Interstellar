@@ -21,13 +21,13 @@
   {
     "name": "Newgrounds",
     "link": "https://newgrounds.com/",
-    "image": "/assets/media/icons/newgrounds.png",
+    "image": "/assets/media/icons/newgrounds.webp",
     "categories": ["all"]
   },
   {
     "name": "Stabfish.io",
     "link": "https://stabfish.io/",
-    "image": "/assets/media/icons/stabfish.jpg",
+    "image": "/assets/media/icons/stabfish.webp",
     "categories": ["all", "2P"]
   },
   {
@@ -39,31 +39,31 @@
   {
     "name": "Twisted Cooking Mama",
     "link": "https://twisted-cooking-mama.game-files.crazygames.com/ruffle/twisted-cooking-mama/1/twistedcookingmama.html?v=1.273",
-    "image": "/assets/media/icons/twistedcookingmama.jpg",
+    "image": "/assets/media/icons/twistedcookingmama.webp",
     "categories": ["all"]
   },
   {
     "name": "Marbles Garden",
     "link": "https://www.coolmathgames.com/0-marbles-garden/play",
-    "image": "/assets/media/icons/marblesgarden.jpg",
+    "image": "/assets/media/icons/marblesgarden.webp",
     "categories": ["all"]
   },
   {
     "name": "Fancy Pants Adventure",
     "link": "https://games.crazygames.com/en_US/fancy-pants-adventure-world/index.html?v=1.273",
-    "image": "/assets/media/icons/fancypantsadventures.jpg",
+    "image": "/assets/media/icons/fancypantsadventures.webp",
     "categories": ["all"]
   },
   {
     "name": "Fancy Pants Adventure 2",
     "link": "https://games.crazygames.com/en_US/fancy-pants-adventure-world/index.html?v=1.273",
-    "image": "/assets/media/icons/fancypantsadventures2.jpg",
+    "image": "/assets/media/icons/fancypantsadventures2.webp",
     "categories": ["all"]
   },
   {
     "name": "Rooftop Snipers 2",
     "link": "https://h5cdn.github.io/s6/rooftop-snipers-2/",
-    "image": "/assets/media/icons/rooftopsnipers2.jpg",
+    "image": "/assets/media/icons/rooftopsnipers2.webp",
     "categories": ["all"]
   },
   {
@@ -75,13 +75,13 @@
   {
     "name": "Earn to Die 2012 Part 2",
     "link": "https://games-online.io/game/EarnToDie/index.html",
-    "image": "/assets/media/icons/earntodie2012part2.jfif",
+    "image": "/assets/media/icons/earntodie2012part2.webp",
     "categories": ["all"]
   },
   {
     "name": "Lostgamer",
     "link": "https://lostgamer.io",
-    "image": "/assets/media/icons/lostgamerio.jpg",
+    "image": "/assets/media/icons/lostgamerio.webp",
     "categories": ["all", "2P"]
   },
   {
@@ -93,13 +93,13 @@
   {
     "name": "digdig.io",
     "link": "https://digdig.io/",
-    "image": "/assets/media/icons/digdigio.jfif",
+    "image": "/assets/media/icons/digdigio.webp",
     "categories": ["all", "2P"]
   },
   {
     "name": "Big Tower Tiny Square",
     "link": "https://www.coolmathgames.com/0-big-tower-tiny-square/play",
-    "image": "/assets/media/icons/bigtowertinysquare.jpg",
+    "image": "/assets/media/icons/bigtowertinysquare.webp",
     "categories": ["all"]
   },
   {
@@ -111,31 +111,31 @@
   {
     "name": "Helix Jump",
     "link": "https://helix-jump.game-files.crazygames.com/helix-jump/1/index.html",
-    "image": "/assets/media/icons/helixjump.jfif",
+    "image": "/assets/media/icons/helixjump.webp",
     "categories": ["all"]
   },
   {
     "name": "skribbl",
     "link": "https://skribbl.io/",
-    "image": "/assets/media/icons/skribblio.jfif",
+    "image": "/assets/media/icons/skribblio.webp",
     "categories": ["all", "2P"]
   },
   {
     "name": "Wings!",
     "link": "https://wings.io/",
-    "image": "/assets/media/icons/wingsio.jfif",
+    "image": "/assets/media/icons/wingsio.webp",
     "categories": ["all", "2P"]
   },
   {
     "name": "Stomped.io",
     "link": "https://stomped.io",
-    "image": "/assets/media/icons/stompedio.jfif",
+    "image": "/assets/media/icons/stompedio.webp",
     "categories": ["all"]
   },
   {
     "name": "Age of War",
     "link": "https://age-of-war.game-files.crazygames.com/ruffle/ageofwar.html",
-    "image": "/assets/media/icons/ageofwar.jpg",
+    "image": "/assets/media/icons/ageofwar.webp",
     "categories": ["all", "2P"]
   },
   {
@@ -579,13 +579,13 @@
   {
     "name": "Riddle School 4",
     "link": "https://riddle-school-4.game-files.crazygames.com/ruffle/riddleschool4.html",
-    "image": "/assets/media/icons/rs4.jpg",
+    "image": "/assets/media/icons/rs4.webp",
     "categories": ["all"]
   },
   {
     "name": "Riddle School 5",
     "link": "https://riddle-school-5.game-files.crazygames.com/ruffle/riddleschool5.html",
-    "image": "/assets/media/icons/rs5.avif",
+    "image": "/assets/media/icons/rs5.webp",
     "categories": ["all"]
   },
   {
@@ -993,7 +993,7 @@
   {
     "name": "HexArena",
     "link": "https://hexarena.io/",
-    "image": "/assets/media/icons/helixteus.webp",
+    "image": "/assets/media/icons/hexarena.webp",
     "categories": ["all"]
   },
   {
@@ -1233,31 +1233,31 @@
   {
     "name": "Google Baseball",
     "link": "https://www.google.com/logos/2019/july4th19/r6/july4th19.html",
-    "image": "/assets/media/icons/googlebaseball.jfif",
+    "image": "/assets/media/icons/googlebaseball.webp",
     "categories": ["all"]
   },
   {
     "name": "Deal or No Deal",
     "link": "https://f.kbhgames.com/RS/game.php?r=//f.kbhgames.com/2018/swf/dondeal2.swf&w=640&h=480&warnsupport=true",
-    "image": "/assets/media/icons/deal-or-no-deal.jfif",
+    "image": "/assets/media/icons/deal-or-no-deal.webp",
     "categories": ["all"]
   },
   {
     "name": "Deadshot",
     "link": "https://deadshot.io",
-    "image": "/assets/media/icons/deadshot.png",
+    "image": "/assets/media/icons/deadshot.webp",
     "categories": ["all"]
   },
   {
     "name": "Rainbow Tower",
     "link": "https://www.mathplayground.com/mobile_rainbow_tower/index.html",
-    "image": "/assets/media/icons/rainbowtower.jfif",
+    "image": "/assets/media/icons/rainbowtower.webp",
     "categories": ["all"]
   },
   {
     "name": "Doodle Jump",
     "link": "https://doodlejump.pro/",
-    "image": "/assets/media/icons/doodlejump.jfif",
+    "image": "/assets/media/icons/doodlejump.webp",
     "categories": ["all"]
   },
   {
@@ -1269,13 +1269,13 @@
   {
     "name": "Madalin Stunt Cars 2",
     "link": "https://games.crazygames.com/en_US/madalin-stunt-cars-2/index.html",
-    "image": "/assets/media/icons/madalinstuntcars2.jfif",
+    "image": "/assets/media/icons/madalinstuntcars2.webp",
     "categories": ["all"]
   },
   {
     "name": "Madalin Stunt Cars 3",
     "link": "https://games.crazygames.com/en_US/madalin-stunt-cars-3/index.html",
-    "image": "/assets/media/icons/madalinstuntcars3.jfif",
+    "image": "/assets/media/icons/madalinstuntcars3.webp",
     "categories": ["all"]
   },
   {
@@ -1463,7 +1463,7 @@
   {
     "name": "Temple of Boom",
     "link": "https://temple-of-boom.github.io/file/",
-    "image": "/assets/media/icons/templeofboom.jpg",
+    "image": "/assets/media/icons/templeofboom.webp",
     "categories": ["all", "2P"]
   },
   {
@@ -1752,13 +1752,13 @@
   {
     "name": "2048",
     "link": "/e/2048/index.html",
-    "image": "/assets/media/icons/2048.png",
+    "image": "/assets/media/icons/2048.webp",
     "categories": ["all", "local"]
   },
   {
     "name": "2048 Multitasking",
     "link": "/e/2048-multitask/index.html",
-    "image": "/assets/media/icons/2048.png",
+    "image": "/assets/media/icons/2048.webp",
     "categories": ["all", "local"]
   },
   {
@@ -1770,7 +1770,7 @@
   {
     "name": "Vex 6",
     "link": "/e/vex6/index.html",
-    "image": "/assets/media/icons/vex6.jpeg",
+    "image": "/assets/media/icons/vex6.webp",
     "categories": ["all", "local"]
   },
   {
@@ -1782,13 +1782,13 @@
   {
     "name": "Vex 3",
     "link": "/e/vex3/index.html",
-    "image": "/assets/media/icons/vex3.png",
+    "image": "/assets/media/icons/vex3.webp",
     "categories": ["all", "local"]
   },
   {
     "name": "Vex 4",
     "link": "/e/vex4/index.html",
-    "image": "/assets/media/icons/vex4.png",
+    "image": "/assets/media/icons/vex4.webp",
     "categories": ["all", "local"]
   }
 ]
