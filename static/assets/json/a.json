@@ -198,7 +198,7 @@
   {
     "name": "Twitch",
     "link": "https://twitch.tv",
-    "image": "/assets/media/icons/twitch-tv.webp",
+    "image": "/assets/media/icons/twitch.webp",
     "categories": ["all", "stream", "media"]
   },
   {
@@ -222,7 +222,7 @@
   {
     "name": "YouTube",
     "link": "https://youtube.com",
-    "image": "/assets/media/icons/yt.webp",
+    "image": "/assets/media/icons/youtube.webp",
     "categories": ["all", "social", "stream", "media"],
     "error": true, 
     "say": "YouTube is currently not working."    
