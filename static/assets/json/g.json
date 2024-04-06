@@ -1195,12 +1195,6 @@
     "categories": ["all"]
   },
   {
-    "name": "Paper Mario 64",
-    "link": "https://f.kbhgames.com/r/n64/game.php?file=Paper%20Mario%20(USA).zip",
-    "image": "/assets/media/icons/paper-mario-64.webp",
-    "categories": ["all"]
-  },
-  {
     "name": "Paper.io",
     "link": "https://paper-io.com/",
     "image": "/assets/media/icons/paperio.webp",
@@ -1381,7 +1375,7 @@
     "categories": ["all"]
   },
   {
-    "name": "Slither Io",
+    "name": "Slither.io",
     "link": "https://slither.io/",
     "image": "/assets/media/icons/slither.webp",
     "categories": ["all"]
