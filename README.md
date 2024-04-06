@@ -1,6 +1,6 @@
 <div align="center">
     <img src="https://github.com/InterstellarNetwork/Interstellar/assets/89202835/77c63680-544b-42e9-88d6-d288e7681e82">
-    <p>Serving over 8 million users since 2023.<p>
+    <p>Serving over 8a million users since 2023.<p>
     <p>Interstellar is a web proxy with a Clean and Sleek UI and easy to use menus. Our goal is to provide the best user experience to everyone.</p>
 </div>
 
@@ -27,6 +27,16 @@
 
 > [!IMPORTANT]
 > You **cannot** deploy to static web hosts, including Netlify, Cloudflare Pages, and GitHub Pages.
+### Server Deployment
+
+You must run these commands on your server:  
+`git clone https://github.com/InterstellarNetwork/interstellar`  
+`cd interstellar`  
+`npm install`  
+`npm start`  
+### Updating
+`cd interstellar`  
+``git pull --force --allow-unrelated-histories``
 
 <a target="_blank" href="https://heroku.com/deploy/?template=https://github.com/interstellarnetwork/interstellar"><img alt="Deploy to Heroku" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/heroku.svg"></a>
 <a target="_blank" href="https://app.koyeb.com/deploy?type=git&repository=github.com/interstellarnetwork/interstellar"><img alt="Deploy to Koyeb" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/koyeb.svg"></a>
