@@ -1,6 +1,6 @@
 [
   {
-    "name": "! Create Custom App",
+    "name": "Create Custom App!",
     "image": "/assets/media/icons/custom.webp",
     "categories": ["all"],
     "custom": "true"
@@ -30,7 +30,7 @@
     "categories": ["all", "emu", "android"], 
   },
   {
-    "name": "Temu",
+    "name": "Temu (Child Labor)",
     "link": "https://temu.com",
     "image": "/assets/media/icons/temu.webp",
     "categories": ["all"]
