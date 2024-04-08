@@ -1,6 +1,6 @@
 [
   {
-    "name": "! Create a Custom Game",
+    "name": "! Add a Game",
     "image": "/assets/media/icons/custom.webp",
     "categories": ["all"],
     "custom": "true"
