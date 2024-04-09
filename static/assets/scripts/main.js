@@ -113,25 +113,25 @@ document.addEventListener('DOMContentLoaded', function (event) {
     localStorage.setItem('name', 'Dashboard')
     localStorage.setItem('icon', '/assets/media/favicon/canvas.png')
   } else if (selectedValue === 'LinkIt') {
-    icon.setAttribute('href', '/assets/media/favicon/linkit.ico')
+    icon.setAttribute('href', '/assets/media/favicon/linkit.png')
     name.textContent = 'Test Taker'
     localStorage.setItem('name', 'Test Taker')
-    localStorage.setItem('icon', '/assets/media/favicon/linkit.ico')
+    localStorage.setItem('icon', '/assets/media/favicon/linkit.png')
   } else if (selectedValue === 'Edpuzzle') {
     icon.setAttribute('href', '/assets/media/favicon/edpuzzle.png')
     name.textContent = 'Edpuzzle'
     localStorage.setItem('name', 'Edpuzzle')
     localStorage.setItem('icon', '/assets/media/favicon/edpuzzle.png')
   } else if (selectedValue === 'i-Ready Math') {
-    icon.setAttribute('href', '/assets/media/favicon/i-ready.ico')
+    icon.setAttribute('href', '/assets/media/favicon/i-ready.png')
     name.textContent = 'Math To Do, i-Ready'
     localStorage.setItem('name', 'Math To Do, i-Ready')
-    localStorage.setItem('icon', '/assets/media/favicon/i-ready.ico')
+    localStorage.setItem('icon', '/assets/media/favicon/i-ready.png')
   } else if (selectedValue === 'i-Ready Reading') {
-    icon.setAttribute('href', '/assets/media/favicon/i-ready.ico')
+    icon.setAttribute('href', '/assets/media/favicon/i-ready.png')
     name.textContent = 'Reading To Do, i-Ready'
     localStorage.setItem('name', 'Reading To Do, i-Ready')
-    localStorage.setItem('icon', '/assets/media/favicon/i-ready.ico')
+    localStorage.setItem('icon', '/assets/media/favicon/i-ready.png')
   } else if (selectedValue === 'ClassLink Login') {
     icon.setAttribute('href', '/assets/media/favicon/classlink-login.png')
     name.textContent = 'Login'
@@ -143,15 +143,15 @@ document.addEventListener('DOMContentLoaded', function (event) {
     localStorage.setItem('name', 'Google Meet')
     localStorage.setItem('icon', '/assets/media/favicon/google-meet.png')
   } else if (selectedValue === 'Google Docs') {
-    icon.setAttribute('href', '/assets/media/favicon/google-docs.ico')
+    icon.setAttribute('href', '/assets/media/favicon/google-docs.png')
     name.textContent = 'Google Docs'
     localStorage.setItem('name', 'Google Docs')
-    localStorage.setItem('icon', '/assets/media/favicon/google-docs.ico')
+    localStorage.setItem('icon', '/assets/media/favicon/google-docs.png')
   } else if (selectedValue === 'Google Slides') {
-    icon.setAttribute('href', '/assets/media/favicon/google-slides.ico')
+    icon.setAttribute('href', '/assets/media/favicon/google-slides.png')
     name.textContent = 'Google Slides'
     localStorage.setItem('name', 'Google Slides')
-    localStorage.setItem('icon', '/assets/media/favicon/google-slides.ico')
+    localStorage.setItem('icon', '/assets/media/favicon/google-slides.png')
   } else if (selectedValue === 'Wikipedia') {
     icon.setAttribute('href', '/assets/media/favicon/wikipedia.png')
     name.textContent = 'Wikipedia'
@@ -173,15 +173,15 @@ document.addEventListener('DOMContentLoaded', function (event) {
     localStorage.setItem('name', 'Minga – Creating Amazing Schools')
     localStorage.setItem('icon', '/assets/media/favicon/minga.png')
   } else if (selectedValue === 'i-Ready Learning Games') {
-    icon.setAttribute('href', '/assets/media/favicon/i-ready.ico')
+    icon.setAttribute('href', '/assets/media/favicon/i-ready.png')
     name.textContent = 'Learning Games, i-Ready'
     localStorage.setItem('name', 'Learning Games, i-Ready')
-    localStorage.setItem('icon', '/assets/media/favicon/i-ready.ico')
+    localStorage.setItem('icon', '/assets/media/favicon/i-ready.png')
   } else if (selectedValue === 'NoRedInk Home') {
-    icon.setAttribute('href', '/assets/media/favicon/noredink.webp')
+    icon.setAttribute('href', '/assets/media/favicon/noredink.png')
     name.textContent = 'Student Home | NoRedInk'
     localStorage.setItem('name', 'Student Home | NoRedInk')
-    localStorage.setItem('icon', '/assets/media/favicon/noredink.webp')
+    localStorage.setItem('icon', '/assets/media/favicon/noredink.png')
   } else if (selectedValue === 'Newsela Binder') {
     icon.setAttribute('href', '/assets/media/favicon/newsela.png')
     name.textContent = 'Newsela | Binder'
@@ -228,15 +228,15 @@ document.addEventListener('DOMContentLoaded', function (event) {
     localStorage.setItem('name', 'Nearpod')
     localStorage.setItem('icon', '/assets/media/favicon/nearpod.png')
   } else if (selectedValue === 'StudentVUE') {
-    icon.setAttribute('href', '/assets/media/favicon/studentvue.ico')
+    icon.setAttribute('href', '/assets/media/favicon/studentvue.png')
     name.textContent = 'StudentVUE'
     localStorage.setItem('name', 'StudentVUE')
-    localStorage.setItem('icon', '/assets/media/favicon/studentvue.ico')
+    localStorage.setItem('icon', '/assets/media/favicon/studentvue.png')
   } else if (selectedValue === 'Quizlet Home') {
-    icon.setAttribute('href', '/assets/media/favicon/quizlet.webp')
+    icon.setAttribute('href', '/assets/media/favicon/quizlet.png')
     name.textContent = 'Flashcards, learning tools and textbook solutions | Quizlet'
     localStorage.setItem('name', 'Flashcards, learning tools and textbook solutions | Quizlet')
-    localStorage.setItem('icon', '/assets/media/favicon/quizlet.webp')
+    localStorage.setItem('icon', '/assets/media/favicon/quizlet.png')
   } else if (selectedValue === 'Google Forms Locked Mode') {
     icon.setAttribute('href', '/assets/media/favicon/googleforms.png')
     name.textContent = 'Start your quiz'
