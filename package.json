@@ -15,13 +15,14 @@
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "@tomphttp/bare-server-node": "2.0.3",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "express-basic-auth": "^1.2.1",
     "jquery": "^3.7.1"
   },
   "devDependencies": {
-    "prettier": "3.2.5",
-    "eslint": "^8.57.0"
+    "eslint": "^8.57.0",
+    "prettier": "3.2.5"
   }
 }
