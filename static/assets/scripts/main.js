@@ -1,44 +1,55 @@
+if (new URL(Object.assign(document.createElement('a'), { href: '/' }).href).password) {
+  // eslint-disable-next-line
+  window.location.href = window.location.href
+}
+try {
+  if (!localStorage['masqr'] && new URL(document.all.rcheck.href).password) {
+    window.location.reload()
+    localStorage['masqr'] = 1
+  }
+  // eslint-disable-next-line
+} catch {}
 document.addEventListener('DOMContentLoaded', function () {
   // Ads
   if (localStorage.getItem('ad') === null || localStorage.getItem('ad') === 'on') {
-    localStorage.setItem('ad', 'default');
+    localStorage.setItem('ad', 'default')
   }
-  
-  var advDiv = document.getElementById('adv');
+
+  var advDiv = document.getElementById('adv')
   if (advDiv && localStorage.getItem('ad') === 'default') {
-    var script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.src = '//oysterscoldtiny.com/1c/c3/8a/1cc38a6899fdf8ba4dfe779bcc54627b.js';
-    advDiv.appendChild(script);
-    console.log('Script inserted inside the adv div.');
+    var script = document.createElement('script')
+    script.type = 'text/javascript'
+    script.src = '//oysterscoldtiny.com/1c/c3/8a/1cc38a6899fdf8ba4dfe779bcc54627b.js'
+    advDiv.appendChild(script)
+    console.log('Script inserted inside the adv div.')
   } else if (advDiv && localStorage.getItem('ad') === 'off') {
-    advDiv.remove();
-    console.log('The adv div has been removed.');
+    advDiv.remove()
+    console.log('The adv div has been removed.')
   }
 
   // Analytics
   if (localStorage.getItem('an') === null || localStorage.getItem('an') === 'on') {
-    localStorage.setItem('an', 'default');
+    localStorage.setItem('an', 'default')
   }
 
   if (localStorage.getItem('an') === 'default') {
-    var analyticsScript = document.createElement('script');
-    analyticsScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ';
-    analyticsScript.async = true;
-    document.head.appendChild(analyticsScript);
+    var analyticsScript = document.createElement('script')
+    analyticsScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ'
+    analyticsScript.async = true
+    document.head.appendChild(analyticsScript)
 
-    window.dataLayer = window.dataLayer || [];
+    window.dataLayer = window.dataLayer || []
     function gtag() {
-      dataLayer.push(arguments);
+      dataLayer.push(arguments)
     }
-    gtag('js', new Date());
-    gtag('config', 'G-WKJQ5QHQTJ');
+    gtag('js', new Date())
+    gtag('config', 'G-WKJQ5QHQTJ')
 
-    console.log('Google Analytics script inserted.');
+    console.log('Google Analytics script inserted.')
   } else if (localStorage.getItem('an') === 'off') {
-    console.log('Google Analytics is disabled');
+    console.log('Google Analytics is disabled')
   }
-});
+})
 
 // Themes
 var themeid = localStorage.getItem('theme')
