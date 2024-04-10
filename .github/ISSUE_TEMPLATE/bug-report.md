@@ -32,6 +32,5 @@ If applicable, add screenshots to help explain your problem.
 **Additional context**
 Add any other context about the problem here.
 
-
 > [!IMPORTANT]
->  Do not post your personal information here this includes but is not limited to email addresses, names, and age.
+> Do not post your personal information here this includes but is not limited to email addresses, names, and age.

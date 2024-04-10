@@ -1,9 +1,9 @@
 const iframe = document.getElementById('ifra')
 
-if (navigator.userAgent.includes("Chrome")) {
-  window.addEventListener('resize', function() {
-      navigator.keyboard.lock(['Escape']);
-  });
+if (navigator.userAgent.includes('Chrome')) {
+  window.addEventListener('resize', function () {
+    navigator.keyboard.lock(['Escape'])
+  })
 }
 
 // Iframe

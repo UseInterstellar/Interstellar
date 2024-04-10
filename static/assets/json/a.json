@@ -222,8 +222,8 @@
     "link": "https://youtube.com",
     "image": "/assets/media/icons/youtube.webp",
     "categories": ["all", "social", "stream", "media"],
-    "error": true, 
-    "say": "YouTube is currently not working."    
+    "error": true,
+    "say": "YouTube is currently not working."
   },
   {
     "name": "Invidous (YouTube)",

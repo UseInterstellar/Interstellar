@@ -1,19 +1,19 @@
 document.addEventListener('DOMContentLoaded', function () {
   // Ads
   if (localStorage.getItem('ad') === null || localStorage.getItem('ad') === 'default') {
-    localStorage.setItem('ad', 'on');
+    localStorage.setItem('ad', 'on')
   }
-  
-  var advDiv = document.getElementById('adv');
+
+  var advDiv = document.getElementById('adv')
   if (advDiv && localStorage.getItem('ad') === 'default') {
-    var script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.src = '//oysterscoldtiny.com/1c/c3/8a/1cc38a6899fdf8ba4dfe779bcc54627b.js';
-    advDiv.appendChild(script);
-    console.log('Script inserted inside the adv div.');
+    var script = document.createElement('script')
+    script.type = 'text/javascript'
+    script.src = '//oysterscoldtiny.com/1c/c3/8a/1cc38a6899fdf8ba4dfe779bcc54627b.js'
+    advDiv.appendChild(script)
+    console.log('Script inserted inside the adv div.')
   } else if (advDiv && localStorage.getItem('ad') === 'off') {
-    advDiv.remove();
-    console.log('The adv div has been removed.');
+    advDiv.remove()
+    console.log('The adv div has been removed.')
   }
 })
 
