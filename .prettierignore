@@ -6,4 +6,3 @@ package.json
 /static/dy/
 **/*.min.*
 prettierrc
-eslintrc.cjs

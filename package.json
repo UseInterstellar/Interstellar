@@ -1,5 +1,5 @@
 {
-  "name": "in",
+  "name": "interstellar",
   "version": "5.1.5",
   "type": "module",
   "engines": {
@@ -8,8 +8,7 @@
   },
   "scripts": {
     "start": "node index.js",
-    "format": "npx prettier . --write",
-    "eslint": "npx eslint --fix ."
+    "format": "npx prettier . --write"
   },
   "author": "InterstellarNetwork",
   "license": "GPL-3.0-or-later",
@@ -21,7 +20,6 @@
     "jquery": "^3.7.1"
   },
   "devDependencies": {
-    "prettier": "3.2.5",
-    "eslint": "^9.0.0"
+    "prettier": "3.2.5"
   }
 }
