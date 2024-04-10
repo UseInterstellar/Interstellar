@@ -11,7 +11,7 @@ function handleClick(app) {
 
   if (app.local) {
     saveToLocal(app.link)
-    window.location.href = '1'
+    window.location.href = 'p'
   } else if (app.local2) {
     saveToLocal(app.link)
     window.location.href = app.link

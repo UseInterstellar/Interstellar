@@ -28,11 +28,11 @@ app.use(express.static(path.join(__dirname, 'static')))
 
 if (config.routes !== false) {
   const routes = [
-    { path: '/~', file: 'apps.html' },
-    { path: '/-', file: 'games.html' },
-    { path: '/!', file: 'settings.html' },
-    { path: '/0', file: 'tabs.html' },
-    { path: '/1', file: 'go.html' },
+    { path: '/ap', file: 'apps.html' },
+    { path: '/g', file: 'games.html' },
+    { path: '/s', file: 'settings.html' },
+    { path: '/t', file: 'tabs.html' },
+    { path: '/p', file: 'go.html' },
     { path: '/', file: 'index.html' },
   ]
 
