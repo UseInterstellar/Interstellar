@@ -661,7 +661,7 @@
     "categories": ["all"]
   },
   {
-    "name": "Fortnite (PC)",
+    "name": "Fortnite (Geforce NOW)",
     "link": "https://play.geforcenow.com/mall/#/deeplink?game-id=46bfab06-d864-465d-9e56-2d9e45cdee0a",
     "image": "/assets/media/icons/fortnite.webp",
     "categories": ["all"]
@@ -1539,7 +1539,7 @@
     "categories": ["all", "emu", "android"]
   },
   {
-    "name": "Fortnite (Android)",
+    "name": "Fortnite (Now.GG)",
     "link": "https://now.gg/iframe/snippet?app_pkg=com.epicgames.fortnite&partner=interstellar",
     "image": "/assets/media/icons/fortnite.webp",
     "categories": ["all", "emu", "android"]

@@ -27,9 +27,7 @@
     "name": "Android",
     "link": "https://now.gg/iframe/snippet?app_pkg=com.uncube.launcher3&partner=interstellar",
     "image": "/assets/media/icons/android.webp",
-    "categories": ["all", "emu", "android"],
-    "say": "Now.gg is currently not working.",
-    "error": true
+    "categories": ["all", "emu", "android"]
   },
   {
     "name": "Temu",

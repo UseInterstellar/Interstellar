@@ -144,6 +144,8 @@ document.addEventListener('fullscreenchange', function () {
   const isFullscreen = Boolean(document.fullscreenElement)
   document.body.classList.toggle('fullscreen', isFullscreen)
 })
+
+/*
 // Now
 let decodedSet = false
 const decoded = localStorage.getItem('decoded')
@@ -202,4 +204,4 @@ function now() {
   } else {
     console.log('Decoded not found in localStorage.')
   }
-}
+} */

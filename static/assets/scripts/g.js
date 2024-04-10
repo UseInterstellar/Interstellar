@@ -162,12 +162,15 @@ document.addEventListener('DOMContentLoaded', () => {
       pinList = pinList ? pinList.split(',').map(Number) : []
       appInd = 0
       appsList.forEach((app) => {
-        const isLocal = app.categories.includes('local')
-
-        if (isLocal) {
-          app.local = true
+        if (app.categories && app.categories.includes('local')) {
+            app.local = true;
+        } else if (app.link && app.link.includes("now.gg")) {
+            if (app.error === null || app.error === undefined) {
+                app.error = true; 
+                app.say = "Now.gg is currently not working";
+            }
         }
-
+        
         let pinNum = appInd
 
         const columnDiv = document.createElement('div')
