@@ -261,6 +261,16 @@ document.addEventListener('DOMContentLoaded', function (event) {
     name.textContent = 'World History Encyclopedia'
     localStorage.setItem('name', 'World History Encyclopedia')
     localStorage.setItem('icon', '/assets/media/favicon/worldhistoryencyclopedia.png')
+  } else if (selectedValue === 'Big Ideas Math Assignment Player') {
+    icon.setAttribute('href', '/assets/media/favicon/bim.ico')
+    name.textContent = 'Assignment Player'
+    localStorage.setItem('name', 'Assignment Player')
+    localStorage.setItem('icon', '/assets/media/favicon/bim.ico')
+  } else if (selectedValue === 'Big Ideas Math') {
+    icon.setAttribute('href', '/assets/media/favicon/bim.ico')
+    name.textContent = 'Big Ideas Math'
+    localStorage.setItem('name', 'Big Ideas Math')
+    localStorage.setItem('icon', '/assets/media/favicon/bim.ico')
   }
 })
 // Key
