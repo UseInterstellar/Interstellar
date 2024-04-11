@@ -17,6 +17,23 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 })
 
+// Nav
+var nav = document.querySelector('.fixed-nav-bar')
+
+if (nav) {
+  var html = `
+    <div class="fixed-nav-bar-container">
+      <a class="icon" href="/./"><img alt="nav" id="INImg" src="/assets/media/favicon/main.png"/></a>
+    </div>
+    <div class="fixed-nav-bar-right">
+      <a class="navbar-link" href="/./g"><i class="fa-solid fa-gamepad navbar-icon"></i><xn>Ga</xn><xn>mes</xn></a>
+      <a class="navbar-link" href="/./ap"><i class="fa-solid fa-phone navbar-icon"></i><xn>Ap</xn><xn>ps</xn></a>
+      <a class="navbar-link" href="/./t"><i class="fa-solid fa-laptop navbar-icon"></i><xn>Ta</xn><xn>bs</xn></a>
+      <a class="navbar-link" href="/./s"><i class="fa-solid fa-gear navbar-icon settings-icon"></i><xn>Set</xn><xn>tings</xn></a>
+    </div>`
+  nav.innerHTML = html
+}
+
 // Themes
 var themeid = localStorage.getItem('theme')
 themeEle = document.createElement('link')
