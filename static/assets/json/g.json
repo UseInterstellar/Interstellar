@@ -25,6 +25,12 @@
     "categories": ["all"]
   },
   {
+    "name": "Pranx",
+    "link": "https://pranx.com/",
+    "image": "/assets/media/icons/pranx.jpg",
+    "categories": ["all"]
+  },
+  {
     "name": "Stabfish.io",
     "link": "https://stabfish.io/",
     "image": "/assets/media/icons/stabfish.webp",
