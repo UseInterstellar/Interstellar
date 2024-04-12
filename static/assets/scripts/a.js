@@ -21,6 +21,8 @@ function handleClick(app) {
     now(app.link)
   } else if (app.custom) {
     Custom(app)
+  } else if (app.dy) {
+    dy(app.link)
   } else {
     go(app.link)
   }

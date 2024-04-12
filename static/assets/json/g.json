@@ -1784,5 +1784,11 @@
     "link": "/e/vex4/index.html",
     "image": "/assets/media/icons/vex4.webp",
     "categories": ["all", "local"]
+  },
+  {
+    "name": "The Impossible Quiz: Book 2",
+    "link": "https://f.silvergames.com/ruffle/player.php?id=3742",
+    "image": "/assets/media/icons/book2.webp",
+    "categories": ["all", "emu"]
   }
 ]
