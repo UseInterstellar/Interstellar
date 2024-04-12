@@ -31,6 +31,13 @@
     "categories": ["all"]
   },
   {
+    "name": "Steam",
+    "link": "https://steampowered.com/",
+    "image": "/assets/media/icons/steam.ico",
+    "categories": ["all"],
+    "say": "Steam can't actually be added because it's an app, not a website. This only lets you browse the Steam website, you can't actually play any games unless you use Geforce Now."
+  },
+  {
     "name": "Stabfish.io",
     "link": "https://stabfish.io/",
     "image": "/assets/media/icons/stabfish.webp",
