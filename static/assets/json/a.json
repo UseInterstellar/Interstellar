@@ -175,10 +175,8 @@
   },
   {
     "name": "Spotify",
-    "link": "https://open.spotify.com",
     "image": "/assets/media/icons/spotify.webp",
     "categories": ["all", "media"],
-    "say": "Spotify is currently not working on the proxy.",
     "error": true
   },
   {
@@ -304,8 +302,7 @@
     "image": "/assets/media/icons/gmail.webp",
     "categories": ["all", "mail"],
     "blank": "true",
-    "partial": "true",
-    "say": "This app is currently experiencing some issues do not expect it fully work."
+    "partial": "true"
   },
   {
     "name": "Outlook",
@@ -313,7 +310,18 @@
     "image": "/assets/media/icons/outlook.webp",
     "categories": ["all", "mail"],
     "dy": "true",
-    "partial": "true",
-    "say": "This app is currently experiencing some issues do not expect it fully work."
+    "partial": "true"
+  },
+  {
+    "name": "Snapchat",
+    "image": "/assets/media/icons/snap.webp",
+    "categories": ["all", "social", "message", "media"],
+    "error": "true"
+  },
+  {
+    "name": "Instagram",
+    "image": "/assets/media/icons/insta.webp",
+    "categories": ["all", "social", "message", "media"],
+    "error": "true"
   }
 ]

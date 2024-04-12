@@ -220,8 +220,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (app.error) {
           paragraph.style.color = 'red'
+          if (!app.say) {
+            app.say = 'This app is currently not working.'
+          }
         } else if (app.partial) {
           paragraph.style.color = 'yellow'
+          if (!app.say) {
+            app.say = 'This app is currently experiencing some issues, it may not work for you.'
+          }
         }
 
         link.appendChild(image)
