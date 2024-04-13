@@ -329,12 +329,20 @@
     "name": "Neal.Fun",
     "link": "https://neal.fun",
     "image": "/assets/media/icons/nealfun.webp",
-    "categories": ["all"]
+    "categories": ["all"],
+    "error": "true",
+    "say": "Neal.fun does not work on Interstellar because of Cloudflare protection."
   },
   {
     "name": "YoHoHo.io",
     "link": "https://yohoho.io/",
     "image": "/assets/media/icons/yohoho.webp",
+    "categories": ["all", "2P"]
+  },
+  {
+    "name": "AntWar.io",
+    "link": "https://antwar.io/",
+    "image": "/assets/media/icons/antwario.jpg",
     "categories": ["all", "2P"]
   },
   {
