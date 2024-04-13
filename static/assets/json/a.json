@@ -325,6 +325,12 @@
     "categories": ["all"],
   },
   {
+    "name": "Newgrounds",
+    "link": "https://www.newgrounds.com",
+    "image": "/assets/media/icons/ng.png",
+    "categories": ["all", "social", "game", "media"],
+  },
+  {
     "name": "Instagram",
     "image": "/assets/media/icons/insta.webp",
     "categories": ["all", "social", "message", "media"],
