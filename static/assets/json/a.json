@@ -329,13 +329,13 @@
     "name": "W3Schools",
     "link": "https://www.w3schools.com",
     "image": "/assets/media/icons/W3Schools.png",
-    "categories": ["all"],
+    "categories": ["all"]
   },
   {
     "name": "Newgrounds",
     "link": "https://www.newgrounds.com",
     "image": "/assets/media/icons/ng.png",
-    "categories": ["all", "social", "game", "media"],
+    "categories": ["all", "social", "game", "media"]
   },
   {
     "name": "Instagram",
