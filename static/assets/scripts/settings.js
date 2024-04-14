@@ -25,6 +25,12 @@ document.addEventListener('DOMContentLoaded', function () {
       adTypeElement.value = 'default'
     }
   }
+  const iconElement = document.getElementById('icon')
+  const nameElement = document.getElementById('name')
+  const customIcon = localStorage.getItem('CustomIcon')
+  const customName = localStorage.getItem('CustomName')
+  iconElement.value = customIcon
+  nameElement.value = customName
 })
 
 // Dyn
@@ -56,6 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
       pChangeElement.value = 'uv'
     }
   }
+  const name = document.getElementById()
 })
 
 // Key
