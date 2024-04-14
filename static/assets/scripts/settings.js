@@ -130,6 +130,12 @@ function CustomName() {
   console.log('saveName function called with name value:', nameValue)
   localStorage.setItem('CustomName', nameValue)
 }
+function  Reset() {
+  localStorage.removeItem('CustomName')
+  localStorage.removeItem('CustomIcon')
+  document.getElementById('icon').value = ''
+  document.getElementById('name').value = ''
+}
 
 function redirectToMainDomain() {
   var currentUrl = window.location.href
