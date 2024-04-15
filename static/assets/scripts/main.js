@@ -55,232 +55,104 @@ document.body.appendChild(themeEle)
 document.addEventListener('DOMContentLoaded', function (event) {
   const icon = document.getElementById('tab-favicon')
   const name = document.getElementById('tab-title')
-  var selectedValue = localStorage.getItem('selectedOption')
-  if (selectedValue === 'Google') {
-    icon.setAttribute('href', '/assets/media/favicon/google.png')
-    name.textContent = 'Google'
-    localStorage.setItem('name', 'Google')
-    localStorage.setItem('icon', '/assets/media/favicon/google.png')
-  } else if (selectedValue === 'Drive') {
-    icon.setAttribute('href', '/assets/media/favicon/drive.png')
-    name.textContent = 'My Drive - Google Drive'
-    localStorage.setItem('name', 'My Drive - Google Drive')
-    localStorage.setItem('icon', '/assets/media/favicon/drive.png')
-  } else if (selectedValue === 'Classroom') {
-    icon.setAttribute('href', '/assets/media/favicon/classroom.png')
-    name.textContent = 'Home'
-    localStorage.setItem('name', 'Home')
-    localStorage.setItem('icon', '/assets/media/favicon/classroom.png')
-  } else if (selectedValue === 'Schoology') {
-    icon.setAttribute('href', '/assets/media/favicon/schoology.png')
-    name.textContent = 'Home | Schoology'
-    localStorage.setItem('name', 'Home | Schoology')
-    localStorage.setItem('icon', '/assets/media/favicon/schoology.png')
-  } else if (selectedValue === 'Gmail') {
-    icon.setAttribute('href', '/assets/media/favicon/gmail.png')
-    name.textContent = 'Gmail'
-    localStorage.setItem('name', 'Gmail')
-    localStorage.setItem('icon', '/assets/media/favicon/gmail.png')
-  } else if (selectedValue === 'Clever') {
-    icon.setAttribute('href', '/assets/media/favicon/clever.png')
-    name.textContent = 'Clever | Portal'
-    localStorage.setItem('name', 'Clever | Portal')
-    localStorage.setItem('icon', '/assets/media/favicon/clever.png')
-  } else if (selectedValue === 'Khan') {
-    icon.setAttribute('href', '/assets/media/favicon/khan.png')
-    name.textContent = 'Dashboard | Khan Academy'
-    localStorage.setItem('name', 'Dashboard | Khan Academy')
-    localStorage.setItem('icon', '/assets/media/favicon/khan.png')
-  } else if (selectedValue === 'Campus') {
-    icon.setAttribute('href', '/assets/media/favicon/campus.png')
-    name.textContent = 'Infinite Campus'
-    localStorage.setItem('name', 'Infinite Campus')
-    localStorage.setItem('icon', '/assets/media/favicon/campus.png')
-  } else if (selectedValue === 'IXL') {
-    icon.setAttribute('href', '/assets/media/favicon/ixl.png')
-    name.textContent = 'IXL | Dashboard'
-    localStorage.setItem('name', 'IXL | Dashboard')
-    localStorage.setItem('icon', '/assets/media/favicon/ixl.png')
-  } else if (selectedValue === 'Canvas') {
-    icon.setAttribute('href', '/assets/media/favicon/canvas.png')
-    name.textContent = 'Dashboard'
-    localStorage.setItem('name', 'Dashboard')
-    localStorage.setItem('icon', '/assets/media/favicon/canvas.png')
-  } else if (selectedValue === 'LinkIt') {
-    icon.setAttribute('href', '/assets/media/favicon/linkit.ico')
-    name.textContent = 'Test Taker'
-    localStorage.setItem('name', 'Test Taker')
-    localStorage.setItem('icon', '/assets/media/favicon/linkit.ico')
-  } else if (selectedValue === 'Edpuzzle') {
-    icon.setAttribute('href', '/assets/media/favicon/edpuzzle.png')
-    name.textContent = 'Edpuzzle'
-    localStorage.setItem('name', 'Edpuzzle')
-    localStorage.setItem('icon', '/assets/media/favicon/edpuzzle.png')
-  } else if (selectedValue === 'i-Ready Math') {
-    icon.setAttribute('href', '/assets/media/favicon/i-ready.ico')
-    name.textContent = 'Math To Do, i-Ready'
-    localStorage.setItem('name', 'Math To Do, i-Ready')
-    localStorage.setItem('icon', '/assets/media/favicon/i-ready.ico')
-  } else if (selectedValue === 'i-Ready Reading') {
-    icon.setAttribute('href', '/assets/media/favicon/i-ready.ico')
-    name.textContent = 'Reading To Do, i-Ready'
-    localStorage.setItem('name', 'Reading To Do, i-Ready')
-    localStorage.setItem('icon', '/assets/media/favicon/i-ready.ico')
-  } else if (selectedValue === 'ClassLink Login') {
-    icon.setAttribute('href', '/assets/media/favicon/classlink-login.png')
-    name.textContent = 'Login'
-    localStorage.setItem('name', 'Login')
-    localStorage.setItem('icon', '/assets/media/favicon/classlink-login.png')
-  } else if (selectedValue === 'Google Meet') {
-    icon.setAttribute('href', '/assets/media/favicon/google-meet.png')
-    name.textContent = 'Google Meet'
-    localStorage.setItem('name', 'Google Meet')
-    localStorage.setItem('icon', '/assets/media/favicon/google-meet.png')
-  } else if (selectedValue === 'Google Docs') {
-    icon.setAttribute('href', '/assets/media/favicon/google-docs.ico')
-    name.textContent = 'Google Docs'
-    localStorage.setItem('name', 'Google Docs')
-    localStorage.setItem('icon', '/assets/media/favicon/google-docs.ico')
-  } else if (selectedValue === 'Google Slides') {
-    icon.setAttribute('href', '/assets/media/favicon/google-slides.ico')
-    name.textContent = 'Google Slides'
-    localStorage.setItem('name', 'Google Slides')
-    localStorage.setItem('icon', '/assets/media/favicon/google-slides.ico')
-  } else if (selectedValue === 'Wikipedia') {
-    icon.setAttribute('href', '/assets/media/favicon/wikipedia.png')
-    name.textContent = 'Wikipedia'
-    localStorage.setItem('name', 'Wikipedia')
-    localStorage.setItem('icon', '/assets/media/favicon/wikipedia.png')
-  } else if (selectedValue === 'Britannica') {
-    icon.setAttribute('href', '/assets/media/favicon/britannica.png')
-    name.textContent = 'Encyclopedia Britannica | Britannica'
-    localStorage.setItem('name', 'Encyclopedia Britannica | Britannica')
-    localStorage.setItem('icon', '/assets/media/favicon/britannica.png')
-  } else if (selectedValue === 'Ducksters') {
-    icon.setAttribute('href', '/assets/media/favicon/ducksters.png')
-    name.textContent = 'Ducksters'
-    localStorage.setItem('name', 'Ducksters')
-    localStorage.setItem('icon', '/assets/media/favicon/ducksters.png')
-  } else if (selectedValue === 'Minga') {
-    icon.setAttribute('href', '/assets/media/favicon/minga.png')
-    name.textContent = 'Minga – Creating Amazing Schools'
-    localStorage.setItem('name', 'Minga – Creating Amazing Schools')
-    localStorage.setItem('icon', '/assets/media/favicon/minga.png')
-  } else if (selectedValue === 'i-Ready Learning Games') {
-    icon.setAttribute('href', '/assets/media/favicon/i-ready.ico')
-    name.textContent = 'Learning Games, i-Ready'
-    localStorage.setItem('name', 'Learning Games, i-Ready')
-    localStorage.setItem('icon', '/assets/media/favicon/i-ready.ico')
-  } else if (selectedValue === 'NoRedInk Home') {
-    icon.setAttribute('href', '/assets/media/favicon/noredink.webp')
-    name.textContent = 'Student Home | NoRedInk'
-    localStorage.setItem('name', 'Student Home | NoRedInk')
-    localStorage.setItem('icon', '/assets/media/favicon/noredink.webp')
-  } else if (selectedValue === 'Newsela Binder') {
-    icon.setAttribute('href', '/assets/media/favicon/newsela.png')
-    name.textContent = 'Newsela | Binder'
-    localStorage.setItem('name', 'Newsela | Binder')
-    localStorage.setItem('icon', '/assets/media/favicon/newsela.png')
-  } else if (selectedValue === 'Newsela Assignments') {
-    icon.setAttribute('href', '/assets/media/favicon/newsela.png')
-    name.textContent = 'Newsela | Assignments'
-    localStorage.setItem('name', 'Newsela | Assignments')
-    localStorage.setItem('icon', '/assets/media/favicon/newsela.png')
-  } else if (selectedValue === 'Newsela Home') {
-    icon.setAttribute('href', '/assets/media/favicon/newsela.png')
-    name.textContent = 'Newsela | Instructional Content Platform'
-    localStorage.setItem('name', 'Newsela | Instructional Content Platform')
-    localStorage.setItem('icon', '/assets/media/favicon/newsela.png')
-  } else if (selectedValue === 'PowerSchool Sign In') {
-    icon.setAttribute('href', '/assets/media/favicon/powerschool.png')
-    name.textContent = 'Student and Parent Sign In'
-    localStorage.setItem('name', 'Student and Parent Sign In')
-    localStorage.setItem('icon', '/assets/media/favicon/powerschool.png')
-  } else if (selectedValue === 'PowerSchool Grades and Attendance') {
-    icon.setAttribute('href', '/assets/media/favicon/powerschool.png')
-    name.textContent = 'Grades and Attendance'
-    localStorage.setItem('name', 'Grades and Attendance')
-    localStorage.setItem('icon', '/assets/media/favicon/powerschool.png')
-  } else if (selectedValue === 'PowerSchool Teacher Comments') {
-    icon.setAttribute('href', '/assets/media/favicon/powerschool.png')
-    name.textContent = 'Teacher Comments'
-    localStorage.setItem('name', 'Teacher Comments')
-    localStorage.setItem('icon', '/assets/media/favicon/powerschool.png')
-  } else if (selectedValue === 'PowerSchool Standards Grades') {
-    icon.setAttribute('href', '/assets/media/favicon/powerschool.png')
-    name.textContent = 'Standards Grades'
-    localStorage.setItem('name', 'Standards Grades')
-    localStorage.setItem('icon', '/assets/media/favicon/powerschool.png')
-  } else if (selectedValue === 'PowerSchool Attendance') {
-    icon.setAttribute('href', '/assets/media/favicon/powerschool.png')
-    name.textContent = 'Attendance'
-    localStorage.setItem('name', 'Attendance')
-    localStorage.setItem('icon', '/assets/media/favicon/powerschool.png')
-  } else if (selectedValue === 'Nearpod') {
-    icon.setAttribute('href', '/assets/media/favicon/nearpod.png')
-    name.textContent = 'Nearpod'
-    localStorage.setItem('name', 'Nearpod')
-    localStorage.setItem('icon', '/assets/media/favicon/nearpod.png')
-  } else if (selectedValue === 'StudentVUE') {
-    icon.setAttribute('href', '/assets/media/favicon/studentvue.ico')
-    name.textContent = 'StudentVUE'
-    localStorage.setItem('name', 'StudentVUE')
-    localStorage.setItem('icon', '/assets/media/favicon/studentvue.ico')
-  } else if (selectedValue === 'Quizlet Home') {
-    icon.setAttribute('href', '/assets/media/favicon/quizlet.webp')
-    name.textContent = 'Flashcards, learning tools and textbook solutions | Quizlet'
-    localStorage.setItem('name', 'Flashcards, learning tools and textbook solutions | Quizlet')
-    localStorage.setItem('icon', '/assets/media/favicon/quizlet.webp')
-  } else if (selectedValue === 'Google Forms Locked Mode') {
-    icon.setAttribute('href', '/assets/media/favicon/googleforms.png')
-    name.textContent = 'Start your quiz'
-    localStorage.setItem('name', 'Start your quiz')
-    localStorage.setItem('icon', '/assets/media/favicon/googleforms.png')
-  } else if (selectedValue === 'DeltaMath') {
-    icon.setAttribute('href', '/assets/media/favicon/deltamath.png')
-    name.textContent = 'DeltaMath'
-    localStorage.setItem('name', 'DeltaMath')
-    localStorage.setItem('icon', '/assets/media/favicon/deltamath.png')
-  } else if (selectedValue === 'Kami') {
-    icon.setAttribute('href', '/assets/media/favicon/kami.png')
-    name.textContent = 'Kami'
-    localStorage.setItem('name', 'Kami')
-    localStorage.setItem('icon', '/assets/media/favicon/kami.png')
-  } else if (selectedValue === 'GoGuardian Admin Restricted') {
-    icon.setAttribute('href', '/assets/media/favicon/goguardian-lock.png')
-    name.textContent = 'Restricted'
-    localStorage.setItem('name', 'Restricted')
-    localStorage.setItem('icon', '/assets/media/favicon/goguardian-lock.png')
-  } else if (selectedValue === 'GoGuardian Teacher Block') {
-    icon.setAttribute('href', '/assets/media/favicon/goguardian.png')
-    name.textContent = 'Uh oh!'
-    localStorage.setItem('name', 'Uh oh!')
-    localStorage.setItem('icon', '/assets/media/favicon/goguardian.png')
-  } else if (selectedValue === 'World History Encyclopedia') {
-    icon.setAttribute('href', '/assets/media/favicon/worldhistoryencyclopedia.png')
-    name.textContent = 'World History Encyclopedia'
-    localStorage.setItem('name', 'World History Encyclopedia')
-    localStorage.setItem('icon', '/assets/media/favicon/worldhistoryencyclopedia.png')
-  } else if (selectedValue === 'Big Ideas Math Assignment Player') {
-    icon.setAttribute('href', '/assets/media/favicon/bim.ico')
-    name.textContent = 'Assignment Player'
-    localStorage.setItem('name', 'Assignment Player')
-    localStorage.setItem('icon', '/assets/media/favicon/bim.ico')
-  } else if (selectedValue === 'Big Ideas Math') {
-    icon.setAttribute('href', '/assets/media/favicon/bim.ico')
-    name.textContent = 'Big Ideas Math'
-    localStorage.setItem('name', 'Big Ideas Math')
-    localStorage.setItem('icon', '/assets/media/favicon/bim.ico')
+  const selectedValue = localStorage.getItem('selectedOption')
+
+  function setCloak(nameValue, iconUrl) {
+    // Check for custom values in local storage
+    const customName = localStorage.getItem('CustomName')
+    const customIcon = localStorage.getItem('CustomIcon')
+
+    // If custom values exist, use them. Otherwise, use the provided values.
+    if (customName) {
+      nameValue = customName
+    }
+    if (customIcon) {
+      iconUrl = customIcon
+    }
+
+    if (iconUrl) {
+      icon.setAttribute('href', iconUrl)
+      localStorage.setItem('icon', iconUrl)
+    }
+    if (nameValue) {
+      name.textContent = nameValue
+      localStorage.setItem('name', nameValue)
+    }
+  }
+
+  const options = {
+    Google: { name: 'Google', icon: '/assets/media/favicon/google.png' },
+    Drive: { name: 'My Drive - Google Drive', icon: '/assets/media/favicon/drive.png' },
+    Classroom: { name: 'Home', icon: '/assets/media/favicon/classroom.png' },
+    Schoology: { name: 'Home | Schoology', icon: '/assets/media/favicon/schoology.png' },
+    Gmail: { name: 'Gmail', icon: '/assets/media/favicon/gmail.png' },
+    Clever: { name: 'Clever | Portal', icon: '/assets/media/favicon/clever.png' },
+    Khan: { name: 'Dashboard | Khan Academy', icon: '/assets/media/favicon/khan.png' },
+    Campus: { name: 'Infinite Campus', icon: '/assets/media/favicon/campus.png' },
+    IXL: { name: 'IXL | Dashboard', icon: '/assets/media/favicon/ixl.png' },
+    Canvas: { name: 'Dashboard', icon: '/assets/media/favicon/canvas.png' },
+    LinkIt: { name: 'Test Taker', icon: '/assets/media/favicon/linkit.ico' },
+    Edpuzzle: { name: 'Edpuzzle', icon: '/assets/media/favicon/edpuzzle.png' },
+    'i-Ready Math': { name: 'Math To Do, i-Ready', icon: '/assets/media/favicon/i-ready.ico' },
+    'i-Ready Reading': { name: 'Reading To Do, i-Ready', icon: '/assets/media/favicon/i-ready.ico' },
+    'ClassLink Login': { name: 'Login', icon: '/assets/media/favicon/classlink-login.png' },
+    'Google Meet': { name: 'Google Meet', icon: '/assets/media/favicon/google-meet.png' },
+    'Google Docs': { name: 'Google Docs', icon: '/assets/media/favicon/google-docs.ico' },
+    'Google Slides': { name: 'Google Slides', icon: '/assets/media/favicon/google-slides.ico' },
+    Wikipedia: { name: 'Wikipedia', icon: '/assets/media/favicon/wikipedia.png' },
+    Britannica: { name: 'Encyclopedia Britannica | Britannica', icon: '/assets/media/favicon/britannica.png' },
+    Ducksters: { name: 'Ducksters', icon: '/assets/media/favicon/ducksters.png' },
+    Minga: { name: 'Minga – Creating Amazing Schools', icon: '/assets/media/favicon/minga.png' },
+    'i-Ready Learning Games': { name: 'Learning Games, i-Ready', icon: '/assets/media/favicon/i-ready.ico' },
+    'NoRedInk Home': { name: 'Student Home | NoRedInk', icon: '/assets/media/favicon/noredink.webp' },
+    'Newsela Binder': { name: 'Newsela | Binder', icon: '/assets/media/favicon/newsela.png' },
+    'Newsela Assignments': { name: 'Newsela | Assignments', icon: '/assets/media/favicon/newsela.png' },
+    'Newsela Home': { name: 'Newsela | Instructional Content Platform', icon: '/assets/media/favicon/newsela.png' },
+    'PowerSchool Sign In': { name: 'Student and Parent Sign In', icon: '/assets/media/favicon/powerschool.png' },
+    'PowerSchool Grades and Attendance': {
+      name: 'Grades and Attendance',
+      icon: '/assets/media/favicon/powerschool.png',
+    },
+    'PowerSchool Teacher Comments': { name: 'Teacher Comments', icon: '/assets/media/favicon/powerschool.png' },
+    'PowerSchool Standards Grades': { name: 'Standards Grades', icon: '/assets/media/favicon/powerschool.png' },
+    'PowerSchool Attendance': { name: 'Attendance', icon: '/assets/media/favicon/powerschool.png' },
+    Nearpod: { name: 'Nearpod', icon: '/assets/media/favicon/nearpod.png' },
+    StudentVUE: { name: 'StudentVUE', icon: '/assets/media/favicon/studentvue.ico' },
+    'Quizlet Home': {
+      name: 'Flashcards, learning tools and textbook solutions | Quizlet',
+      icon: '/assets/media/favicon/quizlet.webp',
+    },
+    'Google Forms Locked Mode': { name: 'Start your quiz', icon: '/assets/media/favicon/googleforms.png' },
+    DeltaMath: { name: 'DeltaMath', icon: '/assets/media/favicon/deltamath.png' },
+    Kami: { name: 'Kami', icon: '/assets/media/favicon/kami.png' },
+    'GoGuardian Admin Restricted': { name: 'Restricted', icon: '/assets/media/favicon/goguardian-lock.png' },
+    'GoGuardian Teacher Block': { name: 'Uh oh!', icon: '/assets/media/favicon/goguardian.png' },
+    'World History Encyclopedia': {
+      name: 'World History Encyclopedia',
+      icon: '/assets/media/favicon/worldhistoryencyclopedia.png',
+    },
+    'Big Ideas Math Assignment Player': { name: 'Assignment Player', icon: '/assets/media/favicon/bim.ico' },
+    'Big Ideas Math': { name: 'Big Ideas Math', icon: '/assets/media/favicon/bim.ico' },
+  }
+
+  if (options[selectedValue]) {
+    setCloak(options[selectedValue].name, options[selectedValue].icon)
   }
 })
 // Key
 document.addEventListener('DOMContentLoaded', function () {
-  var eventKey = localStorage.getItem('eventKey') || '`'
-  var pLink = localStorage.getItem('pLink') || 'https://classroom.google.com/'
+  const eventKey = JSON.parse(localStorage.getItem('eventKey')) || ['Ctrl', 'E']
+  const pLink = localStorage.getItem('pLink') || 'https://classroom.google.com/'
+  let pressedKeys = []
 
   document.addEventListener('keydown', function (event) {
-    if (event.key === eventKey) {
+    pressedKeys.push(event.key)
+    if (pressedKeys.length > eventKey.length) {
+      pressedKeys.shift()
+    }
+    if (eventKey.every((key, index) => key === pressedKeys[index])) {
       window.location.href = pLink
+      pressedKeys = []
     }
   })
 })

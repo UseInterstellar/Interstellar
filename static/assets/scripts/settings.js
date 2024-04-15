@@ -25,6 +25,16 @@ document.addEventListener('DOMContentLoaded', function () {
       adTypeElement.value = 'default'
     }
   }
+  //makes the custom icon and name persistent
+  const iconElement = document.getElementById('icon')
+  const nameElement = document.getElementById('name')
+  const customIcon = localStorage.getItem('CustomIcon')
+  const customName = localStorage.getItem('CustomName')
+  iconElement.value = customIcon
+  nameElement.value = customName
+
+  localStorage.setItem('ab', true)
+  document.getElementById('ab-settings-switch').checked = true
 })
 
 // Dyn
@@ -59,11 +69,12 @@ document.addEventListener('DOMContentLoaded', function () {
 })
 
 // Key
-var eventKey = localStorage.getItem('eventKey') || '`'
-var pLink = localStorage.getItem('pLink') || 'https://classroom.google.com/'
+let eventKey = localStorage.getItem('eventKey') || '`'
+let eventKeyRaw = localStorage.getItem('eventKeyRaw') || '`'
+let pLink = localStorage.getItem('pLink') || 'https://classroom.google.com/'
 
 document.addEventListener('DOMContentLoaded', function () {
-  document.getElementById('eventKeyInput').value = eventKey
+  document.getElementById('eventKeyInput').value = eventKeyRaw
   document.getElementById('linkInput').value = pLink
 
   const selectedOption = localStorage.getItem('selectedOption')
@@ -72,9 +83,9 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 })
 
-var eventKeyInput = document.getElementById('eventKeyInput')
+const eventKeyInput = document.getElementById('eventKeyInput')
 eventKeyInput.addEventListener('input', function () {
-  eventKey = eventKeyInput.value
+  eventKey = eventKeyInput.value.split(',')
 })
 
 var linkInput = document.getElementById('linkInput')
@@ -83,9 +94,12 @@ linkInput.addEventListener('input', function () {
 })
 
 function saveEventKey() {
-  eventKey = eventKeyInput.value
-  localStorage.setItem('eventKey', eventKey)
+  eventKey = eventKeyInput.value.split(',')
+  eventKeyRaw = eventKeyInput.value
+  localStorage.setItem('eventKey', JSON.stringify(eventKey))
   localStorage.setItem('pLink', pLink)
+  localStorage.setItem('eventKeyRaw', eventKeyRaw)
+  window.location = window.location
 }
 // Tab Cloaker
 var dropdown = document.getElementById('dropdown')
@@ -129,6 +143,12 @@ function CustomName() {
   const nameValue = nameElement.value
   console.log('saveName function called with name value:', nameValue)
   localStorage.setItem('CustomName', nameValue)
+}
+function ResetCustomCloak() {
+  localStorage.removeItem('CustomName')
+  localStorage.removeItem('CustomIcon')
+  document.getElementById('icon').value = ''
+  document.getElementById('name').value = ''
 }
 
 function redirectToMainDomain() {
