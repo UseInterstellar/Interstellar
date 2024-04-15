@@ -132,15 +132,21 @@ document.addEventListener('DOMContentLoaded', function (event) {
 })
 // Key
 document.addEventListener('DOMContentLoaded', function () {
-  var eventKey = localStorage.getItem('eventKey') || '`'
-  var pLink = localStorage.getItem('pLink') || 'https://classroom.google.com/'
+  const eventKey = JSON.parse(localStorage.getItem('eventKey')) || ['Ctrl', 'E']
+  const pLink = localStorage.getItem('pLink') || 'https://classroom.google.com/'
+  let pressedKeys = []
 
   document.addEventListener('keydown', function (event) {
-    if (event.key === eventKey) {
-      window.location.href = pLink
+    pressedKeys.push(event.key)
+    if (pressedKeys.length > eventKey.length) {
+      pressedKeys.shift()
     }
-  })
-})
+    if (eventKey.every((key, index) => key === pressedKeys[index])) {
+      window.location.href = pLink
+      pressedKeys = []
+    }
+  });
+});
 // Background Image
 document.addEventListener('DOMContentLoaded', function () {
   var savedBackgroundImage = localStorage.getItem('backgroundImage')
@@ -148,3 +154,5 @@ document.addEventListener('DOMContentLoaded', function () {
     document.body.style.backgroundImage = "url('" + savedBackgroundImage + "')"
   }
 })
+
+

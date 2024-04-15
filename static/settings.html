@@ -35,9 +35,9 @@
           <h3>Set Panic Key</h3>
           <p>
             Quickly open an educational site when the teacher comes. The panic link is also used to redirect you when
-            about:blank windows are opened.
+            about:blank windows are opened. For multiple key strokes separate them with a comma. (e.g. "a, b, c")
           </p>
-          <input type="text" id="eventKeyInput" placeholder="Panic Key" class="key-form" />
+          <input type="text" id="eventKeyInput" placeholder="Panic Keys (comma separated)" class="key-form" />
           <input class="key-form" placeholder="Panic Link" type="text" id="linkInput" value />
           <button class="key-button" value="Save" onclick="saveEventKey()">Save</button>
         </div>
@@ -95,7 +95,7 @@
           <button class="key-button" value="Save" onclick="CustomIcon(); CustomName(); redirectToMainDomain();">
             Save
           </button>
-          <button class="key-button" value="Reset" onclick="Reset(); redirectToMainDomain();">
+          <button class="key-button" value="Reset" onclick="ResetCustomCloak(); redirectToMainDomain();">
             Reset Cloak
           </button>
         </div>

@@ -66,15 +66,15 @@ document.addEventListener('DOMContentLoaded', function () {
       pChangeElement.value = 'uv'
     }
   }
-  const name = document.getElementById()
 })
 
 // Key
-var eventKey = localStorage.getItem('eventKey') || '`'
-var pLink = localStorage.getItem('pLink') || 'https://classroom.google.com/'
+let eventKey = localStorage.getItem('eventKey') || '`'
+let eventKeyRaw = localStorage.getItem('eventKeyRaw') || '`'
+let pLink = localStorage.getItem('pLink') || 'https://classroom.google.com/'
 
 document.addEventListener('DOMContentLoaded', function () {
-  document.getElementById('eventKeyInput').value = eventKey
+  document.getElementById('eventKeyInput').value = eventKeyRaw
   document.getElementById('linkInput').value = pLink
 
   const selectedOption = localStorage.getItem('selectedOption')
@@ -83,10 +83,10 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 })
 
-var eventKeyInput = document.getElementById('eventKeyInput')
+const eventKeyInput = document.getElementById('eventKeyInput')
 eventKeyInput.addEventListener('input', function () {
-  eventKey = eventKeyInput.value
-})
+  eventKey = eventKeyInput.value.split(',');
+});
 
 var linkInput = document.getElementById('linkInput')
 linkInput.addEventListener('input', function () {
@@ -94,9 +94,12 @@ linkInput.addEventListener('input', function () {
 })
 
 function saveEventKey() {
-  eventKey = eventKeyInput.value
-  localStorage.setItem('eventKey', eventKey)
+  eventKey = eventKeyInput.value.split(',')
+  eventKeyRaw = eventKeyInput.value
+  localStorage.setItem('eventKey', JSON.stringify(eventKey))
   localStorage.setItem('pLink', pLink)
+  localStorage.setItem('eventKeyRaw', eventKeyRaw)
+  window.location = window.location
 }
 // Tab Cloaker
 var dropdown = document.getElementById('dropdown')
@@ -141,7 +144,7 @@ function CustomName() {
   console.log('saveName function called with name value:', nameValue)
   localStorage.setItem('CustomName', nameValue)
 }
-function  Reset() {
+function  ResetCustomCloak() {
   localStorage.removeItem('CustomName')
   localStorage.removeItem('CustomIcon')
   document.getElementById('icon').value = ''
