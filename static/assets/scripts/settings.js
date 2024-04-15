@@ -85,8 +85,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 const eventKeyInput = document.getElementById('eventKeyInput')
 eventKeyInput.addEventListener('input', function () {
-  eventKey = eventKeyInput.value.split(',');
-});
+  eventKey = eventKeyInput.value.split(',')
+})
 
 var linkInput = document.getElementById('linkInput')
 linkInput.addEventListener('input', function () {
@@ -144,7 +144,7 @@ function CustomName() {
   console.log('saveName function called with name value:', nameValue)
   localStorage.setItem('CustomName', nameValue)
 }
-function  ResetCustomCloak() {
+function ResetCustomCloak() {
   localStorage.removeItem('CustomName')
   localStorage.removeItem('CustomIcon')
   document.getElementById('icon').value = ''

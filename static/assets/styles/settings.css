@@ -203,9 +203,7 @@ select {
   align-items: center;
   gap: 5vw;
 }
-#ab-settings-container
-{
+#ab-settings-container {
   margin-top: 13px;
   margin-left: 20px;
-
 }
