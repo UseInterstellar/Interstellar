@@ -25,12 +25,16 @@ document.addEventListener('DOMContentLoaded', function () {
       adTypeElement.value = 'default'
     }
   }
+  //makes the custom icon and name persistent
   const iconElement = document.getElementById('icon')
   const nameElement = document.getElementById('name')
   const customIcon = localStorage.getItem('CustomIcon')
   const customName = localStorage.getItem('CustomName')
   iconElement.value = customIcon
   nameElement.value = customName
+
+  localStorage.setItem('ab', true)
+  document.getElementById('ab-settings-switch').checked = true
 })
 
 // Dyn

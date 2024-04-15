@@ -198,3 +198,14 @@ select {
 #last-updated {
   margin-top: -3%;
 }
+#ab-settings {
+  display: flex;
+  align-items: center;
+  gap: 5vw;
+}
+#ab-settings-container
+{
+  margin-top: 13px;
+  margin-left: 20px;
+
+}
