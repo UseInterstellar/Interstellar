@@ -5,11 +5,13 @@ import { createBareServer } from '@tomphttp/bare-server-node'
 import path from 'node:path'
 import cors from 'cors'
 import config from './config.js'
+
 const __dirname = process.cwd()
 const server = http.createServer()
 const app = express(server)
 const bareServer = createBareServer('/o/')
 const PORT = process.env.PORT || 8080
+
 if (config.challenge) {
   console.log('Password protection is enabled. Usernames are: ' + Object.keys(config.users))
   console.log('Passwords are: ' + Object.values(config.users))
@@ -21,6 +23,7 @@ if (config.challenge) {
     })
   )
 }
+
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
@@ -72,7 +75,6 @@ const fetchData = async (req, res, next, baseUrls) => {
     if (data) {
       res.end(Buffer.from(data))
     } else {
-      console.error(`Error fetching ${req.url}:`, error)
       res.status(404).send()
     }
   } catch (error) {
@@ -80,6 +82,15 @@ const fetchData = async (req, res, next, baseUrls) => {
     res.status(500).send()
   }
 }
+
+app.get('*', (res) => {
+  res.status(404).send()
+})
+
+app.use((err, res) => {
+  console.error(err.stack)
+  res.status(500).send()
+})
 
 server.on('request', (req, res) => {
   if (bareServer.shouldRoute(req)) {
