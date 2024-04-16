@@ -83,14 +83,14 @@ const fetchData = async (req, res, next, baseUrls) => {
   }
 }
 
-app.get('*', (res) => {
-  res.status(404).send()
-})
+app.get('*', (req, res) => {
+  res.status(404).send();
+});
 
-app.use((err, res) => {
-  console.error(err.stack)
-  res.status(500).send()
-})
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send();
+});
 
 server.on('request', (req, res) => {
   if (bareServer.shouldRoute(req)) {
