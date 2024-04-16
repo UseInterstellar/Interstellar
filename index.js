@@ -72,11 +72,12 @@ const fetchData = async (req, res, next, baseUrls) => {
     if (data) {
       res.end(Buffer.from(data))
     } else {
-      next()
+      console.error(`Error fetching ${req.url}:`, error)
+      res.status(404).send()
     }
   } catch (error) {
-    console.error('Error fetching:', error)
-    next(error)
+    console.error(`Error fetching ${req.url}:`, error)
+    res.status(500).send()
   }
 }
 
