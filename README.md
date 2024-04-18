@@ -13,15 +13,17 @@
 
 ## Features
 
-<div align="center">
-
-| Wide Collection of Games |  Tab Cloaking   | Wide collection of Apps |
-| :----------------------: | :-------------: | :---------------------: |
-|   About:Blank Cloaking   |   Fast Speeds   |   Built in Tab system   |
-|         Clean UI         | Inspect Element |     Now.gg support      |
-|   Password Protection    | Various Themes  |   GeForce NOW support   |
-
-</div>
+- About:Blank Cloaking 
+- Tab Cloaking 
+- Wide collection of apps & games 
+- Clean, Easy to use UI 
+- Inspect Element 
+- Various Themes 
+- Password Protection (Optional) 
+- Built in Tab System 
+- Now.gg Support 
+- Fast Speeds 
+- Geforce NOW Support 
 
 ## Deployment
 
