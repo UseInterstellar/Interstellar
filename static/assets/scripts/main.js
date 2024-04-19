@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
   if (advDiv && localStorage.getItem('ad') === 'default') {
     var script = document.createElement('script')
     script.type = 'text/javascript'
-    script.src = '//varyingwolfsmile.com/38/2d/78/382d78e8fe1d108472cc84917fb43233.js'
+    script.src = '//raggedstriking.com/4a/60/13/4a60134b5ce9b51b61acf6084265ecfd.js'
     advDiv.appendChild(script)
     console.log('Script inserted inside the adv div.')
   } else if (advDiv && localStorage.getItem('ad') === 'off') {
