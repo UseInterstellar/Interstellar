@@ -1817,5 +1817,20 @@
     "link": "https://f.silvergames.com/ruffle/player.php?id=3742",
     "image": "/assets/media/icons/book2.webp",
     "categories": ["all", "emu"]
-  }
+  },
+{
+  "name": "Bonk.io",
+  "link": "https://bonk.io",
+  "image": "/assets/media/icons/bonk.webp",
+  "categories": ["all", "games"]
+  
+}
+,
+{
+  "name": "EvoWorld IO",
+  "link": "https://evoworld.io",
+  "image": "/assets/media/icons/evoworld.webp",
+  "categories": ["all", "games"]
+}
+
 ]
