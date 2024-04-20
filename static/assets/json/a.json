@@ -20,7 +20,7 @@
   {
     "name": "Steam",
     "link": "https://steampowered.com/",
-    "image": "/assets/media/icons/steam.ico",
+    "image": "/assets/media/icons/steam.webp",
     "categories": ["all"],
     "say": "Steam can't actually be added because it's an app, not a website. This only lets you browse the Steam website, you can't actually play any games unless you use Geforce Now."
   },
@@ -328,13 +328,13 @@
   {
     "name": "W3Schools",
     "link": "https://www.w3schools.com",
-    "image": "/assets/media/icons/W3Schools.png",
+    "image": "/assets/media/icons/W3Schools.webp",
     "categories": ["all"]
   },
   {
     "name": "Newgrounds",
     "link": "https://www.newgrounds.com",
-    "image": "/assets/media/icons/ng.png",
+    "image": "/assets/media/icons/newgrounds.webp",
     "categories": ["all", "social", "game", "media"]
   },
   {
@@ -345,7 +345,7 @@
   },
   {
     "name": "Proton Mail",
-    "image": "/assets/media/icons/proton.jpg",
+    "image": "/assets/media/icons/proton.webp",
     "categories": ["all"],
     "error": "true"
   }
