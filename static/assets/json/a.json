@@ -298,7 +298,7 @@
     "blank": "true"
   },
   {
-    "name": "Google Gemini ",
+    "name": "Google Gemini",
     "link": "https://gemini.google.com",
     "image": "/assets/media/icons/gemini.webp",
     "categories": ["all", "ai"]
@@ -341,6 +341,12 @@
     "name": "Instagram",
     "image": "/assets/media/icons/insta.webp",
     "categories": ["all", "social", "message", "media"],
+    "error": "true"
+  },
+  {
+    "name": "Proton Mail",
+    "image": "/assets/media/icons/proton.jpg",
+    "categories": ["all"],
     "error": "true"
   }
 ]

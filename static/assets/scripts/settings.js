@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
       adTypeElement.value = 'default'
     }
   }
-  //makes the custom icon and name persistent
+  // Makes the custom icon and name persistent
   const iconElement = document.getElementById('icon')
   const nameElement = document.getElementById('name')
   const customIcon = localStorage.getItem('CustomIcon')

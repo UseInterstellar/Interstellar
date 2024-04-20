@@ -1817,5 +1817,41 @@
     "link": "https://f.silvergames.com/ruffle/player.php?id=3742",
     "image": "/assets/media/icons/book2.webp",
     "categories": ["all", "emu"]
+  },
+  {
+    "name": "Wrassling",
+    "link": "https://games.poki.com/458768/wrassling",
+    "image": "/assets/media/icons/wrassling.png",
+    "categories": ["all"]
+  },
+  {
+    "name": "Happy Wheels",
+    "link": "https://games-online.io/game/HappyWheels/",
+    "image": "/assets/media/icons/hw.png",
+    "categories": ["all"]
+  },
+  {
+    "name": "Google Snake Modded",
+    "link": "https://googlesnakemods.com/v/current/",
+    "image": "/assets/media/icons/snake.webp",
+    "categories": ["all"]
+  },
+  {
+    "name": "Idle Startup Tycoon",
+    "link": "https://www.mortgagecalculator.org/money-games/idle-startup-tycoon/",
+    "image": "/assets/media/icons/idle.png",
+    "categories": ["all"]
+  },
+  {
+    "name": "Two Player Games",
+    "link": "https://www.twoplayergames.org/",
+    "image": "/assets/media/icons/tpg.png",
+    "categories": ["all"]
+  },
+  {
+    "name": "Goomy Clicker 2",
+    "link": "https://idle-js-games.github.io/goomyClicker2/",
+    "image": "/assets/media/icons/gc2.png",
+    "categories": ["all"]
   }
 ]

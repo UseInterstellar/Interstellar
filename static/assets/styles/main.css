@@ -23,7 +23,7 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 12px;
+  width: 6px; 
   background-color: black;
 }
 
@@ -49,7 +49,7 @@ body {
 
 ::placeholder {
   color: var(--text-placeholder);
-  opacity: 1; /* Firefox */
+  opacity: 1; 
 }
 
 .main-search {
@@ -67,78 +67,6 @@ body {
   min-width: 5vw;
   min-height: 10vh;
   display: inline;
-}
-
-.footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  z-index: 101;
-}
-
-.lower-footer {
-  height: 8vh;
-  margin: 0;
-  padding-top: 1vh;
-  text-decoration: none;
-  box-shadow: 0 0 15px 2px rgba(0, 0, 0, 0.5);
-}
-
-.lower-footer > h1 {
-  color: var(--text-primary);
-  text-align: center;
-  font-size: 15px;
-  font-family: 'Poppins', sans-serif;
-}
-
-.lower-footer > h1 > a {
-  text-decoration: none;
-  color: var(--text-primary);
-  margin-right: 1vw;
-  margin-left: 1vw;
-  font-family: 'Poppins', sans-serif;
-}
-
-.featured {
-  background-color: var(--background);
-  box-shadow: 0 0 15px 2px rgba(0, 0, 0, 0.5);
-  -webkit-backdrop-filter: var(--background-filter);
-  backdrop-filter: var(--background-filter);
-  width: 100%;
-  border-top-right-radius: 15px;
-  border-top-left-radius: 15px;
-  min-height: 15vh;
-  margin-top: 0;
-  margin-bottom: 0;
-  margin-right: auto;
-  margin-left: auto;
-  color: var(--text-primary);
-}
-
-.featured-text {
-  width: 100vw;
-}
-
-.featured-text-box {
-  background: var(--background);
-  -webkit-backdrop-filter: var(--background-filter);
-  backdrop-filter: var(--background-filter);
-  width: 9vw;
-  height: 4vh;
-  border-radius: 25px;
-  margin-right: auto;
-  margin-left: auto;
-  margin-bottom: 2vh;
-  box-shadow: 0 0 15px 2px rgba(0, 0, 0, 0.5);
-}
-
-.featured-text-box > h1 {
-  padding-top: 0.5vh;
-  font-size: 18px;
-  text-align: center;
-  color: var(--text-primary);
-  filter: brightness(80%);
 }
 
 .fixed-nav-bar {
@@ -251,13 +179,6 @@ body {
   transition: all 0.2s ease;
 }
 
-.weird-icon {
-  line-height: 150px;
-  display: inline-block;
-  vertical-align: middle;
-  margin-right: 5px;
-  margin-bottom: 5px;
-}
 
 .navbar-link {
   margin-right: 5px;
@@ -360,13 +281,6 @@ input {
   transition: 0.4s;
 }
 
-/* input:focus {
-  width: 100vw;
-  height: 100vh;
-  margin-top: -75vh;
-  transition: 0.4s;
-} */
-
 select {
   padding: 20px;
   border-radius: 5px;
@@ -467,61 +381,6 @@ select {
   pointer-events: none;
 }
 
-.shortcut-container {
-  height: 6vw;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-}
-
-.shortcut {
-  width: 5vw;
-  height: 5vw;
-  margin-left: 10px;
-  margin-right: 10px;
-  margin-top: 1vh;
-  transition: all 0.3s;
-}
-
-.shortcut:hover {
-  cursor: pointer;
-  margin-right: 20px;
-  margin-left: 20px;
-  transition: all 0.3s;
-}
-
-#geforce {
-  background: url('../media/icons/gfn.png');
-  background-size: cover;
-}
-
-#roblox {
-  background: url('../media/icons/roblox.png');
-  background-size: cover;
-}
-
-#discord {
-  background: url('../media/icons/discord.jpg');
-  background-size: cover;
-}
-
-#eagler {
-  background: url('../media/icons/mc.webp');
-  background-size: cover;
-}
-
-#youtube {
-  background: url('../media/icons/youtube.png');
-  background-size: cover;
-}
-
-#tiktok {
-  background: url('../media/icons/tiktok.png');
-  background-size: cover;
-}
-
 #splash {
   color: var(--text-dark);
   margin-bottom: 1em;
@@ -530,40 +389,43 @@ select {
   font-family: 'Poppins', sans-serif;
 }
 
-#suggestions {
-  display: none;
-}
-
 .focus {
   background: #fff;
 }
 
-.sug {
-  height: 3em;
-  width: 30vw;
-  display: flex;
-  margin-top: 1em;
-  align-items: center;
+.c-container {
+  position: fixed;
+  top: 15%;
+  left: 5%;
+  width: 90%;
+  height: 80vh;
+  border-radius: 15px;
+  color: white;
+}
+
+.c-container h3 {
+  position: fixed;
+  top: 10%;
+  font-size: 45px;
+}
+
+.c-container p {
+  position: fixed;
+  top: 22%;
+  font-size: 15px;
+  color: gray;
+}
+
+.card {
+  padding: 10px;
+  background-color: var(--block);
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex; 
   justify-content: center;
-}
-
-.sugelement {
-  width: auto;
-  height: 25px;
-  margin: 10px;
-  padding-right: 5px;
-  padding-left: 5px;
-  border-radius: 5px;
-  color: #fff;
-  font-family: 'Poppins', sans-serif;
-  box-shadow: 0 0 15px 2px rgba(0, 0, 0, 0.2);
-  background: var(--background-secondary);
-  -webkit-backdrop-filter: var(--background-filter);
-  backdrop-filter: var(--background-filter);
-}
-
-.sugelement:hover {
-  cursor: pointer;
+  align-items: center;
 }
 
 @media (max-width: 768px) {
