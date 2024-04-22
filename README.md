@@ -23,7 +23,8 @@
 - Built in Tab System 
 - Now.gg Support 
 - Fast Speeds 
-- Geforce NOW Support 
+- Geforce NOW Support
+- Custom Search Engine Support
 
 ## Deployment
 
