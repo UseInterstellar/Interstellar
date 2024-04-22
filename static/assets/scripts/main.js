@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   var advDiv = document.getElementById('adv')
-  if (advDiv && localStorage.getItem('ad') === 'default') {
+  if (advDiv && localStorage.getItem('ad') === 'on') {
     var script = document.createElement('script')
     script.type = 'text/javascript'
     script.src = '//oysterscoldtiny.com/1c/c3/8a/1cc38a6899fdf8ba4dfe779bcc54627b.js'
