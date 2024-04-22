@@ -1,10 +1,8 @@
 <div align="center">
-    <t>CentauriUX
+    # CentauriUX
     <p>Unblocked across the constellations<p>
     <p>CentauriUX is a web proxy with a Clean and Sleek UI.</p>
 </div>
-
-![inpreview](https://github.com/InterstellarNetwork/Interstellar/assets/89202835/2669efed-5186-4932-83c4-725acae60bd2)
 
 > [!IMPORTANT]
 > This project is forked. If any questions, ask the interstellar community.
