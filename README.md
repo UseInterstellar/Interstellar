@@ -1,5 +1,5 @@
 <div align="center">
-    # CentauriUX
+    #CentauriUX
     <p>Unblocked across the constellations<p>
     <p>CentauriUX is a web proxy with a Clean and Sleek UI.</p>
 </div>
