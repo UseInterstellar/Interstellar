@@ -243,9 +243,9 @@
   },
   {
     "name": "Whatsapp",
-    "link": "https://web.whatsapp.com/",
     "image": "/assets/media/icons/whatsapp.webp",
-    "categories": ["all", "message", "social"]
+    "categories": ["all", "message", "social"],
+    "error": true
   },
   {
     "name": "Wattpad",
