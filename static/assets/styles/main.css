@@ -207,8 +207,8 @@ body {
   }
 }
 img {
-  width: 8vh;
-  padding-top: 0.5px;
+  width: 30vh;
+  padding-top: 2px;
 }
 @media (orientation: portrait) {
   img {
