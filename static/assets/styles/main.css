@@ -252,8 +252,8 @@ img {
 }
 
 .logoscreen img {
-   width: 30vh;
-  padding-top: 5px;
+    width: 100vh;
+    padding-top: 150px;
 }
 
 .column:hover {
@@ -387,11 +387,11 @@ select {
 }
 
 #splash {
-  color: #fff;
-  margin-bottom: 1em;
-  margin-top: -2em;
-  padding: 0;
-  font-family: 'Poppins', sans-serif;
+    color: #fff;
+    margin-bottom: 2em;
+    margin-top: 0em;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
 }
 
 .focus {
