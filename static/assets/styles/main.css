@@ -405,7 +405,7 @@ select {
 
 .c-container h3 {
   position: fixed;
-  top: 10%;
+  top: 100%;
   font-size: 45px;
 }
 
