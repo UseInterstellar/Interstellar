@@ -1,54 +1,54 @@
-let inFrame
+let inFrame;
 
 try {
-  inFrame = window !== top
+  inFrame = window !== top;
 } catch (e) {
-  inFrame = true
+  inFrame = true;
 }
 
-if (!inFrame && !navigator.userAgent.includes('Firefox')) {
-  const popup = open('about:blank', '_blank')
+if (!inFrame && !navigator.userAgent.includes("Firefox")) {
+  const popup = open("about:blank", "_blank");
   if (!popup || popup.closed) {
-    alert('Please allow popups and redirects.')
+    alert("Please allow popups and redirects.");
   } else {
-    const doc = popup.document
-    const iframe = doc.createElement('iframe')
-    const style = iframe.style
-    const link = doc.createElement('link')
+    const doc = popup.document;
+    const iframe = doc.createElement("iframe");
+    const style = iframe.style;
+    const link = doc.createElement("link");
 
-    const name = localStorage.getItem('name') || 'My Drive - Google Drive'
-    const icon = localStorage.getItem('icon') || 'https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png'
+    const name = localStorage.getItem("name") || "My Drive - Google Drive";
+    const icon = localStorage.getItem("icon") || "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png";
 
-    doc.title = name
-    link.rel = 'icon'
-    link.href = icon
+    doc.title = name;
+    link.rel = "icon";
+    link.href = icon;
 
-    iframe.src = location.href
-    style.position = 'fixed'
-    style.top = style.bottom = style.left = style.right = 0
-    style.border = style.outline = 'none'
-    style.width = style.height = '100%'
+    iframe.src = location.href;
+    style.position = "fixed";
+    style.top = style.bottom = style.left = style.right = 0;
+    style.border = style.outline = "none";
+    style.width = style.height = "100%";
 
-    doc.head.appendChild(link)
-    doc.body.appendChild(iframe)
+    doc.head.appendChild(link);
+    doc.body.appendChild(iframe);
 
-    const pLink = localStorage.getItem(encodeURI('pLink')) || 'https://www.nasa.gov/'
-    location.replace(pLink)
+    const pLink = localStorage.getItem(encodeURI("pLink")) || "https://www.nasa.gov/";
+    location.replace(pLink);
 
-    const script = doc.createElement('script')
+    const script = doc.createElement("script");
     script.textContent = `
       window.onbeforeunload = function (event) {
         const confirmationMessage = 'Leave Site?';
         (event || window.event).returnValue = confirmationMessage;
         return confirmationMessage;
       };
-    `
-    doc.head.appendChild(script)
+    `;
+    doc.head.appendChild(script);
   }
 }
 
-document.addEventListener('DOMContentLoaded', function (event) {
-  if (window.localStorage.getItem('v4Particles') === 'true') {
+document.addEventListener("DOMContentLoaded", function (event) {
+  if (window.localStorage.getItem("v4Particles") === "true") {
     var particlesConfig = {
       particles: {
         number: {
@@ -59,19 +59,19 @@ document.addEventListener('DOMContentLoaded', function (event) {
           },
         },
         color: {
-          value: '#ffffff',
+          value: "#ffffff",
         },
         shape: {
-          type: 'circle',
+          type: "circle",
           stroke: {
             width: 0,
-            color: '#000000',
+            color: "#000000",
           },
           polygon: {
             nb_sides: 5,
           },
           image: {
-            src: 'img/github.svg',
+            src: "img/github.svg",
             width: 100,
             height: 100,
           },
@@ -99,17 +99,17 @@ document.addEventListener('DOMContentLoaded', function (event) {
         line_linked: {
           enable: false,
           distance: 150,
-          color: '#ffffff',
+          color: "#ffffff",
           opacity: 0.4,
           width: 1,
         },
         move: {
           enable: true,
           speed: 2,
-          direction: 'bottom',
+          direction: "bottom",
           random: true,
           straight: false,
-          out_mode: 'out',
+          out_mode: "out",
           bounce: false,
           attract: {
             enable: false,
@@ -119,15 +119,15 @@ document.addEventListener('DOMContentLoaded', function (event) {
         },
       },
       interactivity: {
-        detect_on: 'canvas',
+        detect_on: "canvas",
         events: {
           onhover: {
             enable: true,
-            mode: 'repulse',
+            mode: "repulse",
           },
           onclick: {
             enable: false,
-            mode: 'push',
+            mode: "push",
           },
           resize: true,
         },
@@ -158,22 +158,22 @@ document.addEventListener('DOMContentLoaded', function (event) {
         },
       },
       retina_detect: true,
-    }
-    particlesJS('particles-js', particlesConfig)
+    };
+    particlesJS("particles-js", particlesConfig);
   }
-})
+});
 
 let splashtext = [
-  'Over 8 Million Users since 2023',
-  'Fastest growing proxy server',
-  'Made by xBubbo',
-  'Check out discord.gg/interstellar :)',
-  'Thanks for using the site',
-  'Follow us on Tiktok (@useinterstellar)',
-  'Subscribe to us on YouTube (@unblocking)',
-  'Subscribe to my Youtube (@xbubbo)',
-  'Check out the settings page',
-  'Check out our Patreon (https://www.patreon.com/gointerstellar)',
-]
+  "Over 8 Million Users since 2023",
+  "Fastest growing proxy server",
+  "Made by xBubbo",
+  "Check out discord.gg/interstellar :)",
+  "Thanks for using the site",
+  "Follow us on Tiktok (@useinterstellar)",
+  "Subscribe to us on YouTube (@unblocking)",
+  "Subscribe to my Youtube (@xbubbo)",
+  "Check out the settings page",
+  "Check out our Patreon (https://www.patreon.com/gointerstellar)",
+];
 
-document.getElementById('splash').innerText = splashtext[Math.floor(Math.random() * splashtext.length)]
+document.getElementById("splash").innerText = splashtext[Math.floor(Math.random() * splashtext.length)];

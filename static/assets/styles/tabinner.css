@@ -54,9 +54,7 @@ body {
   position: absolute;
   overflow: hidden;
   width: 0;
-  transition:
-    opacity 0.5s,
-    width 0.5s;
+  transition: opacity 0.5s, width 0.5s;
 }
 
 .search-container:hover .search-input,

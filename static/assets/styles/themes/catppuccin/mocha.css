@@ -1,4 +1,4 @@
-@import url('https://unpkg.com/@catppuccin/palette/css/catppuccin.css');
+@import url("https://unpkg.com/@catppuccin/palette/css/catppuccin.css");
 :root {
   --page: var(--ctp-mocha-base) /*base*/;
   --background: #1e1e2e;
