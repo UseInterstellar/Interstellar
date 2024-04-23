@@ -429,7 +429,7 @@ select {
 }
 
 .gradient-text {
-  font-size: 48px; /* Adjust size as needed */
+  font-size: 76px; /* Adjust size as needed */
   background: linear-gradient(45deg, #ff4939, #d864fc);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
