@@ -1,5 +1,5 @@
 :root {
-  --page: url('/./assets/media/background/full2.png');
+  --page: url("/./assets/media/background/full2.png");
   --background: rgba(255, 255, 255, 0.02);
   --background-filter: blur(10px) brightness(80%);
   --background-secondary: #4545459e;

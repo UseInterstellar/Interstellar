@@ -1,7 +1,7 @@
 ---
 name: Game Request
 about: Suggest a game you would like to be added to the site.
-title: '[Game]'
+title: "[Game]"
 labels: Game Request
 assignees: xbubbo
 ---

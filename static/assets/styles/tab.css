@@ -8,7 +8,7 @@
 
 body {
   margin: 0;
-  font-family: 'Roboto', Arial, sans-serif;
+  font-family: "Roboto", Arial, sans-serif;
   position: relative;
   background-color: var(--primary-color);
   color: var(--text-color);
@@ -128,7 +128,7 @@ iframe {
 .hamburger,
 .hamburger::before,
 .hamburger::after {
-  content: '';
+  content: "";
   display: block;
   width: 100%;
   height: 4px;

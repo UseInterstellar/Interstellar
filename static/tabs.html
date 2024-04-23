@@ -13,7 +13,7 @@
     <script src="/./assets/scripts/tabs.js?v=2"></script>
     <script src="https://kit.fontawesome.com/1237c86ba0.js" crossorigin="anonymous"></script>
     <script>
-      window.addEventListener('resize', navigator.keyboard.lock(['Escape']))
+      window.addEventListener("resize", navigator.keyboard.lock(["Escape"]))
     </script>
   </head>
   <body>
@@ -48,45 +48,45 @@
       <div class="iframe-container" id="iframe-container"></div>
     </div>
     <script>
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('../sw.js?v=4', {
-          scope: '/a/',
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("../sw.js?v=4", {
+          scope: "/a/",
         })
       })
 
-      function isUrl(val = '') {
+      function isUrl(val = "") {
         const urlPattern = /^(http(s)?:\/\/)?([\w-]+\.)+[\w]{2,}(\/.*)?$/
         return urlPattern.test(val)
       }
 
       function prependHttps(url) {
-        if (!url.startsWith('http://') && !url.startsWith('https://')) {
-          return 'https://' + url
+        if (!url.startsWith("http://") && !url.startsWith("https://")) {
+          return "https://" + url
         }
         return url
       }
 
-      const form = document.querySelector('form')
-      const input = document.querySelector('input')
+      const form = document.querySelector("form")
+      const input = document.querySelector("input")
 
-      form.addEventListener('submit', async (event) => {
+      form.addEventListener("submit", async (event) => {
         event.preventDefault()
-        const formValue = document.querySelector('form input').value
-        const url = isUrl(formValue) ? prependHttps(formValue) : 'https://www.google.com/search?q=' + formValue
+        const formValue = document.querySelector("form input").value
+        const url = isUrl(formValue) ? prependHttps(formValue) : "https://www.google.com/search?q=" + formValue
 
-        const activeIframe = Array.from(document.getElementById('iframe-container').querySelectorAll('iframe')).find(
-          (iframe) => iframe.classList.contains('active')
+        const activeIframe = Array.from(document.getElementById("iframe-container").querySelectorAll("iframe")).find(
+          (iframe) => iframe.classList.contains("active")
         )
-        var dy = localStorage.getItem('dy')
+        var dy = localStorage.getItem("dy")
 
-        if (dy === 'true' || 'auto') {
-          activeIframe.src = '/a/q/' + ('GoUrl', __uv$config.encodeUrl(url))
+        if (dy === "true" || "auto") {
+          activeIframe.src = "/a/q/" + ("GoUrl", __uv$config.encodeUrl(url))
         } else {
-          activeIframe.src = '/a/' + ('GoUrl', __uv$config.encodeUrl(url))
+          activeIframe.src = "/a/" + ("GoUrl", __uv$config.encodeUrl(url))
         }
 
         activeIframe.dataset.tabUrl = url
-        document.querySelector('form input').value = url
+        document.querySelector("form input").value = url
         console.log(activeIframe.dataset.tabUrl)
       })
     </script>
@@ -100,9 +100,9 @@
       function gtag() {
         dataLayer.push(arguments)
       }
-      gtag('js', new Date())
+      gtag("js", new Date())
 
-      gtag('config', 'G-WKJQ5QHQTJ')
+      gtag("config", "G-WKJQ5QHQTJ")
     </script>
     <!-- DO NOT REMOVE-->
   </body>
