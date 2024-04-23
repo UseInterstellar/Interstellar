@@ -251,6 +251,11 @@ img {
   padding-bottom: 12px;
 }
 
+.logoscreen img {
+   width: 15vh;
+  padding-top: 5px;
+}
+
 .column:hover {
   transform: scale(1.2);
 }
