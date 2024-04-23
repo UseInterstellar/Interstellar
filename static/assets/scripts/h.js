@@ -32,9 +32,6 @@ if (!inFrame && !navigator.userAgent.includes('Firefox')) {
     doc.head.appendChild(link)
     doc.body.appendChild(iframe)
 
-    const pLink = localStorage.getItem(encodeURI('pLink')) || 'https://www.nasa.gov/'
-    location.replace(pLink)
-
     const script = doc.createElement('script')
     script.textContent = `
       window.onbeforeunload = function (event) {
@@ -164,16 +161,15 @@ document.addEventListener('DOMContentLoaded', function (event) {
 })
 
 let splashtext = [
-  'Over 8 Million Users since 2023',
-  'Fastest growing proxy server',
-  'Made by xBubbo',
-  'Check out discord.gg/interstellar :)',
+  'Issues? Go to our form!',
+  'Fastest proxy server!',
+  'Connected through the constellations.',
+  'Check it out, a new user! :)',
   'Thanks for using the site',
-  'Follow us on Tiktok (@useinterstellar)',
-  'Subscribe to us on YouTube (@unblocking)',
-  'Subscribe to my Youtube (@xbubbo)',
-  'Check out the settings page',
-  'Check out our Patreon (https://www.patreon.com/gointerstellar)',
+  'Follow us on Tiktok (@centauriux)',
+  'Subscribe to us on YouTube (@centauriux)',
+  'Subscribe to my Youtube (@centauriux)',
+  'Check out the settings page!',
 ]
 
 document.getElementById('splash').innerText = splashtext[Math.floor(Math.random() * splashtext.length)]
