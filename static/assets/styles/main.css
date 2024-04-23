@@ -382,7 +382,7 @@ select {
 }
 
 #splash {
-  color: var(--text-dark);
+  color: #fff;
   margin-bottom: 1em;
   margin-top: -2em;
   padding: 0;
@@ -426,13 +426,6 @@ select {
   display: flex; 
   justify-content: center;
   align-items: center;
-}
-
-.gradient-text {
-  font-size: 60px; /* Adjust size as needed */
-  background: linear-gradient(45deg, #ff4939, #d864fc);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
 @media (max-width: 768px) {
