@@ -309,7 +309,7 @@ select {
 }
 
 .title {
-  font-size: 100vh;
+  font-size: 100px;
   color: var(--title);
   font-family: 'Inter', sans-serif;
   text-align: center;
@@ -323,8 +323,8 @@ select {
 @media (orientation: portrait) {
   .title {
     position: relative;
-    top: -10vw;
-    font-size: 100vw;
+    top: 10vw;
+    font-size: 100px;
     color: white;
     font-family: 'Inter', sans-serif;
     text-align: center;
