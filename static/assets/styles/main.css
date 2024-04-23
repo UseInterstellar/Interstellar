@@ -309,7 +309,7 @@ select {
 }
 
 .title {
-  font-size: 60px;
+  font-size: 100vh;
   color: var(--title);
   font-family: 'Inter', sans-serif;
   text-align: center;
@@ -324,7 +324,7 @@ select {
   .title {
     position: relative;
     top: -10vw;
-    font-size: 10vw;
+    font-size: 100vw;
     color: white;
     font-family: 'Inter', sans-serif;
     text-align: center;
