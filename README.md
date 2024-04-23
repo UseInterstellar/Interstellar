@@ -1,7 +1,5 @@
 <div align="center">
-
-## CentauriUX
-
+<a href="https://ibb.co/nzpg8w5"><img src="https://i.ibb.co/dGZWJfz/idk-removebg-preview.png" alt="idk-removebg-preview" border="0"></a>
 <p>Unblocked across the constellations<p>
 <p>CentauriUX is a web proxy with a Clean and Sleek UI.</p>
 </div>
