@@ -309,7 +309,7 @@ select {
 }
 
 .title {
-  font-size: 10vh;
+  font-size: 60px;
   color: var(--title);
   font-family: 'Inter', sans-serif;
   text-align: center;
