@@ -13,17 +13,17 @@
 
 ## Features
 
-- About:Blank Cloaking 
-- Tab Cloaking 
-- Wide collection of apps & games 
-- Clean, Easy to use UI 
-- Inspect Element 
-- Various Themes 
-- Password Protection (Optional) 
-- Built-in Tab System 
-- Now.gg Support 
-- Fast Speeds 
-- Geforce NOW Support 
+- About:Blank Cloaking
+- Tab Cloaking
+- Wide collection of apps & games
+- Clean, Easy to use UI
+- Inspect Element
+- Various Themes
+- Password Protection (Optional)
+- Built-in Tab System
+- Now.gg Support
+- Fast Speeds
+- Geforce NOW Support
 
 ## Deployment
 
@@ -62,8 +62,8 @@ As of January 1st, 2024, Replit is [no longer free](https://blog.replit.com/host
 2. Click "Code" (green button) and then "Create Codespace on main."
 3. In the terminal at the bottom, paste `pnpm i && pnpm start`.
 4. Respond to the application popup by clicking "Make public."
-> [!IMPORTANT]
-> Make sure you click the "Make public." button, or the proxy won't function properly.
+   > [!IMPORTANT]
+   > Make sure you click the "Make public." button, or the proxy won't function properly.
 5. Access the deployed website from the ports tab.
 6. For subsequent uses in the same codespace, just run `pnpm start`
 
@@ -74,14 +74,16 @@ As of January 1st, 2024, Replit is [no longer free](https://blog.replit.com/host
 3. Go to the ports tab, Click Forward A Port, And type the port number.
 4. Right-click Visibility and set Port Visibility to Public.
 
-> [!NOTE] 
-> We are committed to making Interstellar easy and personalized however, as of now we need your support in making it ad-free. Consider keeping ads so Interstellar can run freely or contribute by being a supporter. 
+> [!NOTE]
+> We are committed to making Interstellar easy and personalized however, as of now we need your support in making it ad-free. Consider keeping ads so Interstellar can run freely or contribute by being a supporter.
 
 ## Report Issues
 
 If you encounter problems, open an issue on GitHub, and we'll address it promptly.
+
 > [!TIP]
 > If you're having trouble, don't hesitate to reach out to us on [Discord](https://discord.gg/interstellar) for personalized support.
+
 # Credits
 
 A huge thanks goes out to all of the people who have contributed to Interstellar.

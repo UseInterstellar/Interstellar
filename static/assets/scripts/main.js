@@ -1,24 +1,24 @@
 document.addEventListener("DOMContentLoaded", function () {
   // Ads
   if (localStorage.getItem("ad") === null || localStorage.getItem("ad") === "default") {
-    localStorage.setItem("ad", "on");
+    localStorage.setItem("ad", "on")
   }
 
-  var advDiv = document.getElementById("adv");
+  var advDiv = document.getElementById("adv")
   if (advDiv && localStorage.getItem("ad") === "on") {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src = "//oysterscoldtiny.com/1c/c3/8a/1cc38a6899fdf8ba4dfe779bcc54627b.js";
-    advDiv.appendChild(script);
-    console.log("Script inserted inside the adv div.");
+    var script = document.createElement("script")
+    script.type = "text/javascript"
+    script.src = "//oysterscoldtiny.com/1c/c3/8a/1cc38a6899fdf8ba4dfe779bcc54627b.js"
+    advDiv.appendChild(script)
+    console.log("Script inserted inside the adv div.")
   } else if (advDiv && localStorage.getItem("ad") === "off") {
-    advDiv.remove();
-    console.log("The adv div has been removed.");
+    advDiv.remove()
+    console.log("The adv div has been removed.")
   }
-});
+})
 
 // Nav
-var nav = document.querySelector(".fixed-nav-bar");
+var nav = document.querySelector(".fixed-nav-bar")
 
 if (nav) {
   var html = `
@@ -30,53 +30,53 @@ if (nav) {
       <a class="navbar-link" href="/./ap"><i class="fa-solid fa-phone navbar-icon"></i><xn>Ap</xn><xn>ps</xn></a>
       <a class="navbar-link" href="/./t"><i class="fa-solid fa-laptop navbar-icon"></i><xn>Ta</xn><xn>bs</xn></a>
       <a class="navbar-link" href="/./s"><i class="fa-solid fa-gear navbar-icon settings-icon"></i><xn>Set</xn><xn>tings</xn></a>
-    </div>`;
-  nav.innerHTML = html;
+    </div>`
+  nav.innerHTML = html
 }
 
 // Themes
-var themeid = localStorage.getItem("theme");
-themeEle = document.createElement("link");
-themeEle.rel = "stylesheet";
+var themeid = localStorage.getItem("theme")
+themeEle = document.createElement("link")
+themeEle.rel = "stylesheet"
 if (themeid == "catppuccinMocha") {
-  themeEle.href = "/assets/styles/themes/catppuccin/mocha.css?v=1";
+  themeEle.href = "/assets/styles/themes/catppuccin/mocha.css?v=1"
 }
 if (themeid == "catppuccinMacchiato") {
-  themeEle.href = "/assets/styles/themes/catppuccin/macchiato.css?v=1";
+  themeEle.href = "/assets/styles/themes/catppuccin/macchiato.css?v=1"
 }
 if (themeid == "catppuccinFrappe") {
-  themeEle.href = "/assets/styles/themes/catppuccin/frappe.css?v=1";
+  themeEle.href = "/assets/styles/themes/catppuccin/frappe.css?v=1"
 }
 if (themeid == "catppuccinLatte") {
-  themeEle.href = "/assets/styles/themes/catppuccin/latte.css?v=1";
+  themeEle.href = "/assets/styles/themes/catppuccin/latte.css?v=1"
 }
-document.body.appendChild(themeEle);
+document.body.appendChild(themeEle)
 // Tab Cloaker
 document.addEventListener("DOMContentLoaded", function (event) {
-  const icon = document.getElementById("tab-favicon");
-  const name = document.getElementById("tab-title");
-  const selectedValue = localStorage.getItem("selectedOption");
+  const icon = document.getElementById("tab-favicon")
+  const name = document.getElementById("tab-title")
+  const selectedValue = localStorage.getItem("selectedOption")
 
   function setCloak(nameValue, iconUrl) {
     // Check for custom values in local storage
-    const customName = localStorage.getItem("CustomName");
-    const customIcon = localStorage.getItem("CustomIcon");
+    const customName = localStorage.getItem("CustomName")
+    const customIcon = localStorage.getItem("CustomIcon")
 
     // If custom values exist, use them. Otherwise, use the provided values.
     if (customName) {
-      nameValue = customName;
+      nameValue = customName
     }
     if (customIcon) {
-      iconUrl = customIcon;
+      iconUrl = customIcon
     }
 
     if (iconUrl) {
-      icon.setAttribute("href", iconUrl);
-      localStorage.setItem("icon", iconUrl);
+      icon.setAttribute("href", iconUrl)
+      localStorage.setItem("icon", iconUrl)
     }
     if (nameValue) {
-      name.textContent = nameValue;
-      localStorage.setItem("name", nameValue);
+      name.textContent = nameValue
+      localStorage.setItem("name", nameValue)
     }
   }
 
@@ -133,33 +133,33 @@ document.addEventListener("DOMContentLoaded", function (event) {
     },
     "Big Ideas Math Assignment Player": { name: "Assignment Player", icon: "/assets/media/favicon/bim.ico" },
     "Big Ideas Math": { name: "Big Ideas Math", icon: "/assets/media/favicon/bim.ico" },
-  };
+  }
 
   if (options[selectedValue]) {
-    setCloak(options[selectedValue].name, options[selectedValue].icon);
+    setCloak(options[selectedValue].name, options[selectedValue].icon)
   }
-});
+})
 // Key
 document.addEventListener("DOMContentLoaded", function () {
-  const eventKey = JSON.parse(localStorage.getItem("eventKey")) || ["Ctrl", "E"];
-  const pLink = localStorage.getItem("pLink") || "https://classroom.google.com/";
-  let pressedKeys = [];
+  const eventKey = JSON.parse(localStorage.getItem("eventKey")) || ["Ctrl", "E"]
+  const pLink = localStorage.getItem("pLink") || "https://classroom.google.com/"
+  let pressedKeys = []
 
   document.addEventListener("keydown", function (event) {
-    pressedKeys.push(event.key);
+    pressedKeys.push(event.key)
     if (pressedKeys.length > eventKey.length) {
-      pressedKeys.shift();
+      pressedKeys.shift()
     }
     if (eventKey.every((key, index) => key === pressedKeys[index])) {
-      window.location.href = pLink;
-      pressedKeys = [];
+      window.location.href = pLink
+      pressedKeys = []
     }
-  });
-});
+  })
+})
 // Background Image
 document.addEventListener("DOMContentLoaded", function () {
-  var savedBackgroundImage = localStorage.getItem("backgroundImage");
+  var savedBackgroundImage = localStorage.getItem("backgroundImage")
   if (savedBackgroundImage) {
-    document.body.style.backgroundImage = "url('" + savedBackgroundImage + "')";
+    document.body.style.backgroundImage = "url('" + savedBackgroundImage + "')"
   }
-});
+})
