@@ -168,7 +168,7 @@ let splashtext = [
   'Thanks for using the site',
   'Follow us on Tiktok (@centauriux)',
   'Subscribe to us on YouTube (@centauriux)',
-  'Features/Games? Submit them in our [form](https://jp545dzz357.typeform.com/to/KM3I02q1)!',
+  'Features/Games? Submit them in our <a href="https://jp545dzz357.typeform.com/to/KM3I02q1">form!</a>',
   'Check out the settings page!',
 ]
 
