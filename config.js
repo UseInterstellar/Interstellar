@@ -1,30 +1,10 @@
-// config.js
-
-// List of valid product keys
-const validProductKeys = [
-  'KEY1',
-  'KEY2',
-  'KEY3'
-];
-
-// Function to check if a product key is valid
-function isValidProductKey(key) {
-  return validProductKeys.includes(key);
+const config = {
+  challenge: false, // Set to true if you want to enable password protection.
+  users: {
+    // You can add multiple users by doing username: 'password'.
+    interstellar: "password",
+  },
+  routes: true, // Change this to false if you just want to host a bare server.
+  local: true, // Change this to false to disable local assets.
 }
-
-module.exports = {
-  isValidProductKey
-};
-
-// Example usage
-const config = require('./config.js');
-
-const productKey = 'KEY1'; // Product key provided by the user
-
-if (config.isValidProductKey(productKey)) {
-  // Product key is valid, allow access
-  console.log('Access granted!');
-} else {
-  // Product key is invalid, deny access
-  console.log('Access denied!');
-}
+export default config
