@@ -15,6 +15,7 @@
   "dependencies": {
     "@tomphttp/bare-server-node": "2.0.3",
     "@vercel/analytics": "^1.2.2",
+    "@vercel/speed-insights": "^1.0.10",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "express-basic-auth": "^1.2.1",
