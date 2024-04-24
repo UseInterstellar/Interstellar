@@ -1,10 +1,17 @@
-const config = {
-  challenge: true, // Set to true if you want to enable password protection.
-  users: {
-    // You can add multiple users by doing username: 'password'.
-    interstellar: '',
-  },
-  routes: true, // Change this to false if you just want to host a bare server.
-  local: true, // Change this to false to disable local assets.
+// config.js
+
+// List of valid product keys
+const validProductKeys = [
+  'KEY1',
+  'KEY2',
+  'KEY3'
+];
+
+// Function to check if a product key is valid
+function isValidProductKey(key) {
+  return validProductKeys.includes(key);
 }
-export default config
+
+module.exports = {
+  isValidProductKey
+};
