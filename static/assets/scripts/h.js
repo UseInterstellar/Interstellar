@@ -161,14 +161,14 @@ document.addEventListener('DOMContentLoaded', function (event) {
 })
 
 let splashtext = [
-  'Issues? Go to our form!',
+  'Issues/Bugs? Submit them here! (bit.ly/4deaK7A)',
   'Fastest proxy server!',
   'Connected through the constellations.',
   'Check it out, a new user! :)',
   'Thanks for using the site',
   'Follow us on Tiktok (@centauriux)',
   'Subscribe to us on YouTube (@centauriux)',
-  'Features/Games? Submit them in our <a href="https://jp545dzz357.typeform.com/to/KM3I02q1">form!</a>',
+  'Features/Games? Submit them in our form! (bit.ly/3wi70RU)',
   'Check out the settings page!',
 ]
 
