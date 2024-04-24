@@ -19,19 +19,23 @@ Thank you for your interest in contributing to this repository! To ensure a smoo
      npm run format
      ```
 
-4. **Test Your Changes:**
+4. **Minifying JSON**
+
+   - Before finalizing your changes visit https://codebeautify.org/jsonminifier and compress your json and put it in the `.min.json` file. (Ex. If you are editing `a.json` you would put the minified code in `a.min.json`
+
+5. **Test Your Changes:**
 
    - Conduct thorough testing to ensure modifications don't introduce issues or break existing functionalities.
 
-5. **Descriptive Pull Requests:**
+6. **Descriptive Pull Requests:**
 
    - Provide clear, concise descriptions for your pull requests. Include details on the problem addressed and how your changes resolve it.
 
-6. **Responsive Design:**
+7. **Responsive Design:**
 
    - Confirm that changes adhere to responsive design principles, ensuring a seamless user experience across various devices.
 
-7. **Collaboration:**
+8. **Collaboration:**
    - Be open to feedback and responsive to comments during the review process.
 
 We appreciate your efforts in contributing to this project!

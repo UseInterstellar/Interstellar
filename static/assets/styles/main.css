@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   text-decoration: none;
   background: var(--page);
   height: 100%;
@@ -23,7 +23,7 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 6px; 
+  width: 6px;
   background-color: black;
 }
 
@@ -49,13 +49,13 @@ body {
 
 ::placeholder {
   color: var(--text-placeholder);
-  opacity: 1; 
+  opacity: 1;
 }
 
 .main-search {
   width: 50vw;
   height: 5vh;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 16px;
   box-shadow: 0 0 15px 2px rgba(0, 0, 0, 0.2);
   background: var(--background-secondary);
@@ -100,7 +100,7 @@ body {
   float: left;
   text-transform: uppercase;
   font-size: 30px;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   cursor: pointer;
   color: var(--text-primary);
   font-weight: 600;
@@ -132,7 +132,7 @@ body {
   color: var(--text-primary);
   font-weight: 800;
   right: 2%;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-style: normal;
   text-decoration: none;
   transition: all 0.2s ease;
@@ -147,7 +147,7 @@ body {
     color: var(--text-primary);
     font-weight: 800;
     right: 2%;
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
     font-style: normal;
     text-decoration: none;
     transition: all 0.2s ease;
@@ -157,7 +157,7 @@ body {
     text-transform: uppercase;
     cursor: pointer;
     font-weight: 800;
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
     font-style: normal;
     font-size: 3vw;
     transform: translateX(-20%);
@@ -168,7 +168,7 @@ body {
   text-transform: uppercase;
   cursor: pointer;
   font-weight: 800;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-style: normal;
   font-size: 3vh;
   transform: translateX(-20%);
@@ -179,7 +179,6 @@ body {
   transition: all 0.2s ease;
 }
 
-
 .navbar-link {
   margin-right: 5px;
   font-size: 3vh;
@@ -187,10 +186,10 @@ body {
 
 .material-symbols-outlined {
   font-variation-settings:
-    'FILL' 0,
-    'wght' 400,
-    'GRAD' 0,
-    'opsz' 48;
+    "FILL" 0,
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 48;
 }
 
 .navbar-link:hover > .settings-icon {
@@ -311,7 +310,7 @@ select {
 .title {
   font-size: 10vh;
   color: var(--title);
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   text-align: center;
   text-transform: uppercase;
   border-radius: 0px 0px 5px 5px;
@@ -326,7 +325,7 @@ select {
     top: -10vw;
     font-size: 10vw;
     color: white;
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
     text-align: center;
     text-transform: uppercase;
     border-radius: 0px 0px 5px 5px;
@@ -339,7 +338,7 @@ select {
   font-size: 35px;
   color: snow;
   font-weight: bold;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   text-align: center;
   border-radius: 0px 0px 5px 5px;
   transition: transform 0.2s;
@@ -348,7 +347,7 @@ select {
 
 .main {
   letter-spacing: 0px;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -386,7 +385,7 @@ select {
   margin-bottom: 1em;
   margin-top: -2em;
   padding: 0;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .focus {
@@ -423,7 +422,7 @@ select {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   height: 100%;
-  display: flex; 
+  display: flex;
   justify-content: center;
   align-items: center;
 }
