@@ -568,12 +568,6 @@
     "categories": ["all,", "emu,", "2P,", "sports,", "flash"]
   },
   {
-    "name": "Cubes 2048",
-    "link": "https://centauriux.vercel.app/a/q/hvtrs8%2F-pna%7B224%3A.ao-",
-    "image": "/assets/media/icons/C2048.webp",
-    "categories": ["all,", "2P"]
-  },
-  {
     "name": "DOOM",
     "link": "https://archive.org/details/doom-play",
     "image": "/assets/media/icons/DOOM.webp",
