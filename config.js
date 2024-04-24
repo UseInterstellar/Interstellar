@@ -15,3 +15,16 @@ function isValidProductKey(key) {
 module.exports = {
   isValidProductKey
 };
+
+// Example usage
+const config = require('./config.js');
+
+const productKey = 'KEY1'; // Product key provided by the user
+
+if (config.isValidProductKey(productKey)) {
+  // Product key is valid, allow access
+  console.log('Access granted!');
+} else {
+  // Product key is invalid, deny access
+  console.log('Access denied!');
+}
