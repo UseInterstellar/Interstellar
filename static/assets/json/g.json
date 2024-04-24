@@ -19,6 +19,12 @@
     "blank": "true"
   },
   {
+    "name": "Gartic Phone",
+    "link": "https://garticphone.com",
+    "image": "/assets/media/icons/garticphone",
+    "categories": ["all"]
+  },
+  {
     "name": "Newgrounds",
     "link": "https://newgrounds.com/",
     "image": "/assets/media/icons/newgrounds.webp",
