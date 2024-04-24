@@ -153,19 +153,19 @@
   {
     "name": "MLB",
     "link": "https://mlb.com",
-    "image": "/assets/media/icons/addmelater",
+    "image": "/assets/media/icons/mlb.png",
     "categories": ["all"]
   },
   {
     "name": "NFL",
     "link": "https://nfl.com",
-    "image": "/assets/media/icons/addmelater",
+    "image": "/assets/media/icons/nfl.png",
     "categories": ["all"]
   },
   {
     "name": "NBA",
     "link": "https://nba.com",
-    "image": "assets/media/icons/addmelater",
+    "image": "assets/media/icons/nba.png",
     "categories": ["all"]
   },
   {
@@ -195,7 +195,7 @@
   {
     "name": "Premier League",
     "link": "https://premierleague.com",
-    "image": "/assets/media/icons/addmelater",
+    "image": "/assets/media/icons/pl.jpg",
     "categories": ["all"]
   },
   {
@@ -225,7 +225,7 @@
   {
     "name": "Trello",
     "link": "https://trello.com",
-    "image": "/assets/media/icons/addmelater",
+    "image": "/assets/media/icons/trello.png",
     "categories": ["all"]
   },
   {
