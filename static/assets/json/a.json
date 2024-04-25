@@ -223,9 +223,39 @@
     "categories": ["all", "social", "media"]
   },
   {
+    "name": "Free Media Heck Yeah",
+    "link": "https://fmhy.pages.dev",
+    "image": "/assets/media/icons/addmelater",
+    "categories": ["all"]
+  },
+  {
+    "name": "Canva",
+    "link": "https://canva.com",
+    "image": "/assets/media/icons/addmelater",
+    "categories": ["all"]
+  },
+  {
+    "name": "Wikipedia",
+    "link": "https://en.wikipedia.org",
+    "image": "/assets/media/icons/addmelater",
+    "categories": ["all"]
+  },
+  {
+    "name": "GOAL",
+    "link": "https://goal.com",
+    "image": "/assets/media/icons/addmelater",
+    "categories": ["all"]
+  },
+  {
     "name": "Trello",
     "link": "https://trello.com",
     "image": "/assets/media/icons/trello.png",
+    "categories": ["all"]
+  },
+  {
+    "name": "Gidd.io Games",
+    "link": "https://gidd.io",
+    "image": "/assets/media/icons/addmelater",
     "categories": ["all"]
   },
   {
