@@ -44,6 +44,12 @@
     "say": "Steam can't actually be added because it's an app, not a website. This only lets you browse the Steam website, you can't actually play any games unless you use Geforce Now."
   },
   {
+    "name": "Swordbattle.io",
+    "link": "https://swordbattle.io/",
+    "image": "/assets/media/icons/swordbattle.webp",
+    "categories": ["all", "2d"]
+  },
+  {
     "name": "Stabfish.io",
     "link": "https://stabfish.io/",
     "image": "/assets/media/icons/stabfish.webp",
