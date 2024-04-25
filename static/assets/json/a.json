@@ -225,25 +225,25 @@
   {
     "name": "Free Media Heck Yeah",
     "link": "https://fmhy.pages.dev",
-    "image": "/assets/media/icons/addmelater",
+    "image": "/assets/media/icons/fmhy.png",
     "categories": ["all"]
   },
   {
     "name": "Canva",
     "link": "https://canva.com",
-    "image": "/assets/media/icons/addmelater",
+    "image": "/assets/media/icons/canva.png",
     "categories": ["all"]
   },
   {
     "name": "Wikipedia",
     "link": "https://en.wikipedia.org",
-    "image": "/assets/media/icons/addmelater",
+    "image": "/assets/media/icons/wiki.png",
     "categories": ["all"]
   },
   {
     "name": "GOAL",
     "link": "https://goal.com",
-    "image": "/assets/media/icons/addmelater",
+    "image": "/assets/media/icons/goal.png",
     "categories": ["all"]
   },
   {
@@ -255,7 +255,7 @@
   {
     "name": "Gidd.io Games",
     "link": "https://gidd.io",
-    "image": "/assets/media/icons/addmelater",
+    "image": "/assets/media/icons/gidd.jpg",
     "categories": ["all"]
   },
   {
