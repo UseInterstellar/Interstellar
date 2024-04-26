@@ -153,19 +153,19 @@
   {
     "name": "MLB",
     "link": "https://mlb.com",
-    "image": "/assets/media/icons/mlb.png",
+    "image": "/assets/media/icons/mlb.webp",
     "categories": ["all"]
   },
   {
     "name": "NFL",
     "link": "https://nfl.com",
-    "image": "/assets/media/icons/nfl.png",
+    "image": "/assets/media/icons/nfl.webp",
     "categories": ["all"]
   },
   {
     "name": "NBA",
     "link": "https://nba.com",
-    "image": "assets/media/icons/nba.png",
+    "image": "assets/media/icons/nba.webp",
     "categories": ["all"]
   },
   {
@@ -195,7 +195,7 @@
   {
     "name": "Premier League",
     "link": "https://premierleague.com",
-    "image": "/assets/media/icons/pl.jpg",
+    "image": "/assets/media/icons/pl.webp",
     "categories": ["all"]
   },
   {
@@ -225,37 +225,37 @@
   {
     "name": "Free Media Heck Yeah",
     "link": "https://fmhy.pages.dev",
-    "image": "/assets/media/icons/fmhy.png",
+    "image": "/assets/media/icons/fmhy.webp",
     "categories": ["all"]
   },
   {
     "name": "Canva",
     "link": "https://canva.com",
-    "image": "/assets/media/icons/canva.png",
+    "image": "/assets/media/icons/canva.webp",
     "categories": ["all"]
   },
   {
     "name": "Wikipedia",
     "link": "https://en.wikipedia.org",
-    "image": "/assets/media/icons/wiki.png",
+    "image": "/assets/media/icons/wiki.webp",
     "categories": ["all"]
   },
   {
     "name": "GOAL",
     "link": "https://goal.com",
-    "image": "/assets/media/icons/goal.png",
+    "image": "/assets/media/icons/goal.webp",
     "categories": ["all"]
   },
   {
     "name": "Trello",
     "link": "https://trello.com",
-    "image": "/assets/media/icons/trello.png",
+    "image": "/assets/media/icons/trello.webp",
     "categories": ["all"]
   },
   {
     "name": "Gidd.io Games",
     "link": "https://gidd.io",
-    "image": "/assets/media/icons/gidd.jpg",
+    "image": "/assets/media/icons/gidd.webp",
     "categories": ["all"]
   },
   {
