@@ -18,6 +18,12 @@
   --text-secondary: #b0b0b0;
   --text-placeholder: #aaa;
   --text-dark: #555;
+  --text-color: #f0f0f0;
+
+  --primary-color: #1a1a1a;
+  --secondary-color: #2c2c2c;
+  --accent-color: #444;
+  --hover-color: #555;
 
   --transparent: rgb(0, 0, 0, 0);
 }

@@ -428,7 +428,7 @@ select {
 }
 
 @media (max-width: 768px) {
-  .fixed-nav-bar-right .navbar-link xn {
+  .fixed-nav-bar-right .navbar-link an {
     display: none;
   }
   .fixed-nav-bar-right .fa-solid {

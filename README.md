@@ -62,8 +62,8 @@ As of January 1st, 2024, Replit is [no longer free](https://blog.replit.com/host
 2. Click "Code" (green button) and then "Create Codespace on main."
 3. In the terminal at the bottom, paste `pnpm i && pnpm start`.
 4. Respond to the application popup by clicking "Make public."
-> [!IMPORTANT]
-> Make sure you click the "Make public." button, or the proxy won't function properly.
+   > [!IMPORTANT]
+   > Make sure you click the "Make public." button, or the proxy won't function properly.
 5. Access the deployed website from the ports tab.
 6. For subsequent uses in the same codespace, just run `pnpm start`
 
