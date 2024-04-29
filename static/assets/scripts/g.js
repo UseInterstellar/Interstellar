@@ -225,7 +225,8 @@ document.addEventListener("DOMContentLoaded", () => {
         } else if (app.partial) {
           paragraph.style.color = "yellow"
           if (!app.say) {
-            app.say = "This app is currently experiencing some issues, it may not work for you."
+            app.say =
+              "This app is currently experiencing some issues, it may not work for you. (Dynamic doesn't work in about:blank)"
           }
         }
 
