@@ -199,3 +199,131 @@ p {
 a {
   color: #6495ed;
 }
+
+.iframe-container iframe {
+  display: none;
+}
+
+.iframe-container iframe.active {
+  display: block;
+}
+
+#add-tab {
+  padding: 0.5rem;
+  cursor: pointer;
+  background-color: var(--accent-color);
+  color: var(--text-color);
+  border: none;
+  border-radius: 5px;
+  margin-right: 0.5rem;
+  transition: background-color 0.3s ease;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+}
+
+li {
+  padding: 0.4rem;
+  background-color: var(--accent-color);
+  margin-right: 0.5rem;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+li:hover {
+  background-color: var(--hover-color);
+}
+
+iframe {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: none;
+  left: 0;
+  top: 13%;
+}
+
+/* Credits to https://codepen.io/designcouch/pen/ExvwPY for the hamburger animations */
+#nav-icon1 {
+  width: 20px;
+  position: fixed;
+  bottom: 5%;
+  left: 10px;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: 0.5s ease-in-out;
+  -moz-transition: 0.5s ease-in-out;
+  -o-transition: 0.5s ease-in-out;
+  transition: 0.5s ease-in-out;
+  cursor: pointer;
+  z-index: 9999;
+}
+
+#nav-icon1 span {
+  display: block;
+  position: absolute;
+  height: 5px;
+  width: 100%;
+  background: var(--main);
+  border-radius: 9px;
+  opacity: 1;
+  left: 0;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: 0.25s ease-in-out;
+  -moz-transition: 0.25s ease-in-out;
+  -o-transition: 0.25s ease-in-out;
+  transition: 0.25s ease-in-out;
+  cursor: pointer;
+  box-shadow: 0 0 0 1px white;
+}
+
+#nav-icon1 span:nth-child(1) {
+  top: 0px;
+}
+
+#nav-icon1 span:nth-child(2) {
+  top: 8px;
+}
+
+#nav-icon1 span:nth-child(3) {
+  top: 16px;
+}
+
+#nav-icon1.open span:nth-child(1) {
+  top: 8px;
+  -webkit-transform: rotate(135deg);
+  -moz-transform: rotate(135deg);
+  -o-transform: rotate(135deg);
+  transform: rotate(135deg);
+}
+
+#nav-icon1.open span:nth-child(2) {
+  opacity: 0;
+  left: -30px;
+}
+
+#nav-icon1.open span:nth-child(3) {
+  top: 8px;
+  -webkit-transform: rotate(-135deg);
+  -moz-transform: rotate(-135deg);
+  -o-transform: rotate(-135deg);
+  transform: rotate(-135deg);
+}
+
+#right-side-nav.hidden {
+  display: none;
+}
+
+/* Credits to https://codepen.io/designcouch/pen/ExvwPY for the hamburger animations */

@@ -354,9 +354,9 @@ function SaveEngine() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  var selectedEngineName = localStorage.getItem("enginename");
-  var dropdown = document.getElementById("engine"); 
+  var selectedEngineName = localStorage.getItem("enginename")
+  var dropdown = document.getElementById("engine")
   if (selectedEngineName) {
-      dropdown.value = selectedEngineName;
+    dropdown.value = selectedEngineName
   }
-});
+})

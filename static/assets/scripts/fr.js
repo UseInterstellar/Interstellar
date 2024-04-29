@@ -221,3 +221,15 @@ document.addEventListener("fullscreenchange", function () {
   const isFullscreen = Boolean(document.fullscreenElement)
   document.body.classList.toggle("fullscreen", isFullscreen)
 })
+
+document.addEventListener("DOMContentLoaded", function () {
+  var navIcon = document.getElementById("nav-icon1")
+  var navBar = document.getElementById("right-side-nav")
+  var iframe = document.querySelector("iframe")
+
+  navIcon.addEventListener("click", function () {
+    var isOpen = navBar.classList.toggle("hidden")
+    this.classList.toggle("open")
+    iframe.style.top = isOpen ? "5%" : "13%"
+  })
+})
