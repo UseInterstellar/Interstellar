@@ -551,9 +551,10 @@
   },
   {
     "name": "Duck Life 4",
-    "link": "https://www.hoodamath.com/mobile/games/duck-life-4/game.html",
-    "image": "/assets/media/icons/ducklife.webp",
-    "categories": ["all"]
+    "link": "/e/ducklife4/index.html",
+    "image": "/assets/media/icons/dl4.png",
+    "categories": ["all", "local"],
+    "load": true
   },
   {
     "name": "Papa's Freezeria",
