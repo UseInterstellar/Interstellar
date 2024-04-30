@@ -36,14 +36,19 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     newTab.classList.add("active")
 
-    newIframe.src = "/"
     newIframe.dataset.tabId = tabCounter
     newIframe.classList.add("active")
 
     newIframe.setAttribute("onload", "Load()")
 
+    const GoURL = sessionStorage.getItem("GoURL")
+
     if (tabCounter === 1) {
       newIframe.setAttribute("onload", "OnLoad()")
+    } else if (tabCounter !== 1) {
+      newIframe.src = "/"
+    } else if (GoURL !== null) {
+      newIframe.src = GoURL
     }
 
     iframeContainer.appendChild(newIframe)
