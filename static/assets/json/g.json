@@ -553,7 +553,7 @@
   {
     "name": "Duck Life 4",
     "link": "/e/ducklife4/index.html",
-    "image": "/assets/media/icons/dl4.png",
+    "image": "/assets/media/icons/dl4.webp",
     "categories": ["all", "local"],
     "load": true
   },
