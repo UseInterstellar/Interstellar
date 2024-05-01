@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
   addTabButton.addEventListener("click", () => {
     createNewTab()
-    Load();
+    Load()
   })
 
   function createNewTab() {

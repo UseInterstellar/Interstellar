@@ -227,12 +227,12 @@ document.addEventListener("DOMContentLoaded", () => {
           paragraph.style.color = "yellow"
           if (!app.say) {
             app.say = "This app may experience excessive loading times."
-          } else if (app.partial) {
-            paragraph.style.color = "yellow"
-            if (!app.say) {
-              app.say =
-                "This app is currently experiencing some issues, it may not work for you. (Dynamic doesn't work in about:blank)"
-            }
+          }
+        } else if (app.partial) {
+          paragraph.style.color = "yellow"
+          if (!app.say) {
+            app.say =
+              "This app is currently experiencing some issues, it may not work for you. (Dynamic doesn't work in about:blank)"
           }
         }
 
