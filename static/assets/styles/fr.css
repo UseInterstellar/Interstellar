@@ -251,7 +251,7 @@ iframe {
 }
 
 /* Credits to https://codepen.io/designcouch/pen/ExvwPY for the hamburger animations */
-#nav-icon1 {
+#nav-icon {
   width: 20px;
   position: fixed;
   bottom: 5%;
@@ -268,7 +268,7 @@ iframe {
   z-index: 9999;
 }
 
-#nav-icon1 span {
+#nav-icon span {
   display: block;
   position: absolute;
   height: 5px;
@@ -289,19 +289,19 @@ iframe {
   box-shadow: 0 0 0 1px white;
 }
 
-#nav-icon1 span:nth-child(1) {
+#nav-icon span:nth-child(1) {
   top: 0px;
 }
 
-#nav-icon1 span:nth-child(2) {
+#nav-icon span:nth-child(2) {
   top: 8px;
 }
 
-#nav-icon1 span:nth-child(3) {
+#nav-icon span:nth-child(3) {
   top: 16px;
 }
 
-#nav-icon1.open span:nth-child(1) {
+#nav-icon.open span:nth-child(1) {
   top: 8px;
   -webkit-transform: rotate(135deg);
   -moz-transform: rotate(135deg);
@@ -309,12 +309,12 @@ iframe {
   transform: rotate(135deg);
 }
 
-#nav-icon1.open span:nth-child(2) {
+#nav-icon.open span:nth-child(2) {
   opacity: 0;
   left: -30px;
 }
 
-#nav-icon1.open span:nth-child(3) {
+#nav-icon.open span:nth-child(3) {
   top: 8px;
   -webkit-transform: rotate(-135deg);
   -moz-transform: rotate(-135deg);

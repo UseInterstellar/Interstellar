@@ -295,14 +295,21 @@ document.addEventListener("fullscreenchange", function () {
 })
 
 document.addEventListener("DOMContentLoaded", function () {
-  var navIcon = document.getElementById("nav-icon1")
+  var navIcon = document.getElementById("nav-icon")
   var navBar = document.getElementById("right-side-nav")
-  var iframe = document.querySelector("iframe")
+  const activeIframe = document.querySelector("#iframe-container iframe.active")
 
+  console.log(navIcon)
   navIcon.addEventListener("click", function () {
+    console.log("Nav icon clicked")
+
     var isOpen = navBar.classList.toggle("hidden")
     this.classList.toggle("open")
-    iframe.style.top = isOpen ? "5%" : "13%"
+    if (isOpen) {
+      activeIframe.style.top = "5%"
+    } else {
+      activeIframe.style.top = "13%"
+    }
   })
 })
 
