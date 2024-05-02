@@ -46,9 +46,9 @@ if (!inFrame && !navigator.userAgent.includes("Firefox")) {
     doc.head.appendChild(script)
   }
 }
-
+// Particles
 document.addEventListener("DOMContentLoaded", function (event) {
-  if (window.localStorage.getItem("v4Particles") === "true") {
+  if (window.localStorage.getItem("Particles") === "true") {
     var particlesConfig = {
       particles: {
         number: {
@@ -162,8 +162,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
     particlesJS("particles-js", particlesConfig)
   }
 })
-
-let splashtext = [
+// Splash
+let SplashT = [
   "Over 8 Million Users since 2023",
   "Fastest growing proxy server",
   "Made by xBubbo",
@@ -176,4 +176,14 @@ let splashtext = [
   "Check out our Patreon (https://www.patreon.com/gointerstellar)",
 ]
 
-document.getElementById("splash").innerText = splashtext[Math.floor(Math.random() * splashtext.length)]
+let SplashI = Math.floor(Math.random() * SplashT.length)
+const SplashE = document.getElementById("splash")
+
+function US() {
+  SplashI = (SplashI + 1) % SplashT.length
+  SplashE.innerText = SplashT[SplashI]
+}
+
+SplashE.innerText = SplashT[SplashI]
+
+SplashE.addEventListener("click", US)
