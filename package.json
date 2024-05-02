@@ -13,11 +13,14 @@
   "author": "InterstellarNetwork",
   "license": "GPL-3.0-or-later",
   "dependencies": {
-    "@tomphttp/bare-server-node": "2.0.3",
+    "@mercuryworkshop/bare-mux": "^1.0.9",
+    "@mercuryworkshop/libcurl-transport": "^1.3.1",
+    "@titaniumnetwork-dev/ultraviolet": "^3.1.0",
+    "@tomphttp/bare-server-node": "^2.0.3",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "express-basic-auth": "^1.2.1",
-    "jquery": "^3.7.1"
+    "wisp-server-node": "^1.1.0"
   },
   "devDependencies": {
     "prettier": "3.2.5"

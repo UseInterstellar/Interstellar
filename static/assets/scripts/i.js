@@ -1,9 +1,13 @@
+  window.addEventListener("load", () => {
+   	navigator.serviceWorker.ready.then(() => {
+				BareMux.SetTransport("CurlMod.LibcurlClient", {
+					wisp: `${location.protocol.replace("http", "ws")}//${location.host}/u/`,
+				});
+			});
+    navigator.serviceWorker.register("../sw.js?v=4")
+  })
 if (document.getElementById("add-tab")) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("../sw.js?v=4", {
-      scope: "/a/",
-    })
-
     const form = document.getElementById("fs")
     const input = document.getElementById("is")
 
@@ -44,12 +48,6 @@ if (document.getElementById("add-tab")) {
     }
   })
 } else {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("../sw.js?v=4", {
-      scope: "/a/",
-    })
-  })
-
   const form = document.getElementById("fs")
   const input = document.getElementById("is")
 
