@@ -4,7 +4,7 @@ window.addEventListener("load", () => {
       wisp: `${location.protocol.replace("http", "ws")}//${location.host}/u/`,
     })
   })
-  navigator.serviceWorker.register("../sw.js?v=6")
+  navigator.serviceWorker.register("../sw.js?v=8")
 })
 if (document.getElementById("add-tab")) {
   window.addEventListener("load", () => {
