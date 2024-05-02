@@ -1,4 +1,4 @@
-importScripts("/libcurl/index.js=0")
+importScripts("/libcurl/index.js?v=0")
 importScripts("/dy/config.js?v=10")
 importScripts("/dy/worker.js?v=10")
 importScripts("/m/bundle.js?v=10")
