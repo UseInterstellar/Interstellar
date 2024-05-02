@@ -6,7 +6,7 @@ import cors from "cors"
 import express from "express"
 import basicAuth from "express-basic-auth"
 import wisp from "wisp-server-node"
-import { libcurlPath } from "@mercuryworkshop/libcurl-transport";
+import { libcurlPath } from "@mercuryworkshop/libcurl-transport"
 import config from "./config.js"
 
 const __dirname = process.cwd()
@@ -60,6 +60,19 @@ if (config.local !== false) {
     fetchData(req, res, next, baseUrls)
   })
 }
+app.get("/assets/scripts/a.js", async (req, res, next) => {
+  const baseUrls = ["https://raw.githubusercontent.com/UseInterstellar/Interstellar-Assets/main/Scripts/ads.js"]
+  try {
+    const asset = await fetch(baseUrls[0])
+    if (asset.ok) {
+      const data = await asset.arrayBuffer()
+      res.end(Buffer.from(data))
+    }
+  } catch (error) {
+    console.error(`Error fetching ${req.url}:`, error)
+    res.status(500).send()
+  }
+})
 
 const fetchData = async (req, res, next, baseUrls) => {
   try {
@@ -108,8 +121,7 @@ server.on("upgrade", (req, socket, head) => {
     bareServer.routeUpgrade(req, socket, head)
   } else if (req.url?.endsWith("/u/")) {
     wisp.routeRequest(req, socket, head)
-  }
-  else {
+  } else {
     socket.end()
   }
 })

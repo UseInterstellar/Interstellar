@@ -1,11 +1,11 @@
-  window.addEventListener("load", () => {
-   	navigator.serviceWorker.ready.then(() => {
-				BareMux.SetTransport("CurlMod.LibcurlClient", {
-					wisp: `${location.protocol.replace("http", "ws")}//${location.host}/u/`,
-				});
-			});
-    navigator.serviceWorker.register("../sw.js?v=4")
+window.addEventListener("load", () => {
+  navigator.serviceWorker.ready.then(() => {
+    BareMux.SetTransport("CurlMod.LibcurlClient", {
+      wisp: `${location.protocol.replace("http", "ws")}//${location.host}/u/`,
+    })
   })
+  navigator.serviceWorker.register("../sw.js?v=6")
+})
 if (document.getElementById("add-tab")) {
   window.addEventListener("load", () => {
     const form = document.getElementById("fs")

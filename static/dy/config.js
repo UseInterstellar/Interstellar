@@ -18,7 +18,7 @@ self.__dynamic$config = {
       handler: "handler.js?v=4",
       client: "client.js?v=4",
       worker: "worker.js?v=4",
-      config: "config.js?v=4",
+      config: "config.js?v=8",
       inject: "",
     },
   },
