@@ -1,3 +1,4 @@
+// @ts-check
 import http from "node:http"
 import path from "node:path"
 import { createBareServer } from "@tomphttp/bare-server-node"
@@ -5,11 +6,12 @@ import cors from "cors"
 import express from "express"
 import basicAuth from "express-basic-auth"
 import wisp from "wisp-server-node"
+import { libcurlPath } from "@mercuryworkshop/libcurl-transport";
 import config from "./config.js"
 
 const __dirname = process.cwd()
 const server = http.createServer()
-const app = express(server)
+const app = express()
 const bareServer = createBareServer("/o/")
 const PORT = process.env.PORT || 8080
 
@@ -29,6 +31,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 app.use(express.static(path.join(__dirname, "static")))
+app.use("/libcurl/", express.static(libcurlPath))
 
 if (config.routes !== false) {
   const routes = [
@@ -103,7 +106,7 @@ server.on("request", (req, res) => {
 server.on("upgrade", (req, socket, head) => {
   if (bareServer.shouldRoute(req)) {
     bareServer.routeUpgrade(req, socket, head)
-  } else if (req.url.endsWith("/u/")) {
+  } else if (req.url?.endsWith("/u/")) {
     wisp.routeRequest(req, socket, head)
   }
   else {
