@@ -60,19 +60,6 @@ if (config.local !== false) {
     fetchData(req, res, next, baseUrls)
   })
 }
-app.get("/assets/scripts/a.js", async (req, res, next) => {
-  const baseUrls = ["https://raw.githubusercontent.com/UseInterstellar/Interstellar-Assets/main/Scripts/ads.js"]
-  try {
-    const asset = await fetch(baseUrls[0])
-    if (asset.ok) {
-      const data = await asset.arrayBuffer()
-      res.end(Buffer.from(data))
-    }
-  } catch (error) {
-    console.error(`Error fetching ${req.url}:`, error)
-    res.status(500).send()
-  }
-})
 
 const fetchData = async (req, res, next, baseUrls) => {
   try {
