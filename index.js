@@ -33,33 +33,29 @@ app.use(cors())
 app.use(express.static(path.join(__dirname, "static")))
 app.use("/libcurl/", express.static(libcurlPath))
 
-if (config.routes !== false) {
-  const routes = [
-    { path: "/as", file: "apps.html" },
-    { path: "/gm", file: "games.html" },
-    { path: "/st", file: "settings.html" },
-    { path: "/ta", file: "tabs.html" },
-    { path: "/", file: "index.html" },
-    { path: "/tos", file: "tos.html" },
+const routes = [
+  { path: "/as", file: "apps.html" },
+  { path: "/gm", file: "games.html" },
+  { path: "/st", file: "settings.html" },
+  { path: "/ta", file: "tabs.html" },
+  { path: "/", file: "index.html" },
+  { path: "/tos", file: "tos.html" },
+]
+
+routes.forEach((route) => {
+  app.get(route.path, (req, res) => {
+    res.sendFile(path.join(__dirname, "static", route.file))
+  })
+})
+
+app.get("/e/*", (req, res, next) => {
+  const baseUrls = [
+    "https://raw.githubusercontent.com/v-5x/x/fixy",
+    "https://raw.githubusercontent.com/ypxa/y/main",
+    "https://raw.githubusercontent.com/ypxa/w/master",
   ]
-
-  routes.forEach((route) => {
-    app.get(route.path, (req, res) => {
-      res.sendFile(path.join(__dirname, "static", route.file))
-    })
-  })
-}
-
-if (config.local !== false) {
-  app.get("/e/*", (req, res, next) => {
-    const baseUrls = [
-      "https://raw.githubusercontent.com/v-5x/x/fixy",
-      "https://raw.githubusercontent.com/ypxa/y/main",
-      "https://raw.githubusercontent.com/ypxa/w/master",
-    ]
-    fetchData(req, res, next, baseUrls)
-  })
-}
+  fetchData(req, res, next, baseUrls)
+})
 
 const fetchData = async (req, res, next, baseUrls) => {
   try {
@@ -85,10 +81,6 @@ const fetchData = async (req, res, next, baseUrls) => {
     res.status(500).send()
   }
 }
-
-app.get("*", (req, res) => {
-  res.status(404).send()
-})
 
 app.use((err, req, res, next) => {
   console.error(err.stack)
