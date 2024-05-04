@@ -39,8 +39,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
     newIframe.dataset.tabId = tabCounter
     newIframe.classList.add("active")
 
-    newIframe.setAttribute("onload", "Load();")
-
     const GoURL = sessionStorage.getItem("GoUrl")
 
     if (tabCounter === 1) {
@@ -56,15 +54,51 @@ document.addEventListener("DOMContentLoaded", function (event) {
     }
 
     iframeContainer.appendChild(newIframe)
+    // Decode URL
+    function decodeXor(input) {
+      if (!input) return input
+      let [str, ...search] = input.split("?")
+
+      return (
+        decodeURIComponent(str)
+          .split("")
+          .map((char, ind) => (ind % 2 ? String.fromCharCode(char.charCodeAt(NaN) ^ 2) : char))
+          .join("") + (search.length ? "?" + search.join("?") : "")
+      )
+    }
+
+    function Load() {
+      const activeIframe = document.querySelector("#iframe-container iframe.active")
+      if (activeIframe && activeIframe.contentWindow.document.readyState === "complete") {
+        const website = activeIframe.contentWindow.document.location.href
+        if (website.includes("/a/")) {
+          const websitePath = website.replace(window.location.origin, "").replace("/a/", "")
+          const decodedValue = decodeXor(websitePath)
+          document.getElementById("is").value = decodedValue
+        } else if (website.includes("/a/q/")) {
+          const websitePath = website.replace(window.location.origin, "").replace("/a/q/", "")
+          const decodedValue = decodeXor(websitePath)
+          document.getElementById("is").value = decodedValue
+        } else {
+          const websitePath = website.replace(window.location.origin, "")
+          document.getElementById("is").value = websitePath
+        }
+      }
+    }
 
     newIframe.addEventListener("load", () => {
+      console.log("Iframe loaded")
       const title = newIframe.contentDocument.title
       if (title.length <= 1) {
+        console.log("Title is too short, setting tabTitle to 'New Tab'")
         tabTitle.textContent = "New Tab"
       } else {
+        console.log("Title is:", title)
         tabTitle.textContent = title
       }
-      Load()
+      if (newIframe.contentDocument.documentElement.outerHTML.trim().length > 0) {
+        Load()
+      }
     })
 
     tabCounter++
@@ -321,40 +355,4 @@ if (navigator.userAgent.includes("Chrome")) {
   window.addEventListener("resize", function () {
     navigator.keyboard.lock(["Escape"])
   })
-}
-
-// Decode URL
-function decodeXor(input) {
-  if (!input) return input
-  let [str, ...search] = input.split("?")
-
-  return (
-    decodeURIComponent(str)
-      .split("")
-      .map((char, ind) => (ind % 2 ? String.fromCharCode(char.charCodeAt(NaN) ^ 2) : char))
-      .join("") + (search.length ? "?" + search.join("?") : "")
-  )
-}
-
-function Load() {
-  const activeIframe = document.querySelector("#iframe-container iframe.active")
-  if (activeIframe && document.readyState === "complete") {
-    const website = activeIframe.contentWindow.document.location.href
-
-    if (website.includes("/a/")) {
-      const websitePath = website.replace(window.location.origin, "").replace("/a/", "")
-      const decodedValue = decodeXor(websitePath)
-      document.getElementById("is").value = decodedValue
-      localStorage.setItem("decoded", decodedValue)
-    } else if (website.includes("/a/q/")) {
-      const websitePath = website.replace(window.location.origin, "").replace("/a/q/", "")
-      const decodedValue = decodeXor(websitePath)
-      document.getElementById("is").value = decodedValue
-      localStorage.setItem("decoded", decodedValue)
-    } else {
-      const websitePath = website.replace(window.location.origin, "")
-      document.getElementById("is").value = websitePath
-      localStorage.setItem("decoded", websitePath)
-    }
-  }
 }
