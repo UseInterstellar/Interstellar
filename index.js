@@ -8,7 +8,7 @@ import config from "./config.js"
 const __dirname = process.cwd()
 const server = http.createServer()
 const app = express()
-const bareServer = createBareServer("/o/")
+const bareServer = createBareServer("/ov/")
 const PORT = process.env.PORT || 8080
 if (config.challenge) {
   console.log(`Password protection is enabled. Usernames are: ${Object.keys(config.users)}`)
@@ -18,7 +18,7 @@ if (config.challenge) {
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, "static")))
-app.use("/o/", cors({ origin: true }))
+app.use("ov", cors({ origin: true }))
 const routes = [
   { path: "/as", file: "apps.html" },
   { path: "/gm", file: "games.html" },

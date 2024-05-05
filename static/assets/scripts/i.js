@@ -1,5 +1,5 @@
 window.addEventListener("load", () => {
-  navigator.serviceWorker.register("../sw.js?v=22", {
+  navigator.serviceWorker.register("../sw.js?v=24", {
     scope: "/a/",
   })
 })

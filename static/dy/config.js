@@ -5,7 +5,7 @@ self.__dynamic$config = {
   logLevel: 0,
   bare: {
     version: 2,
-    path: "/o/",
+    path: "/ov/",
   },
   tab: {
     title: null,
@@ -15,10 +15,10 @@ self.__dynamic$config = {
   assets: {
     prefix: "/dy/",
     files: {
-      handler: "handler.js?v=4",
-      client: "client.js?v=4",
-      worker: "worker.js?v=4",
-      config: "config.js?v=8",
+      handler: "handler.js?v=12",
+      client: "client.js?v=12",
+      worker: "worker.js?v=12",
+      config: "config.js?v=12",
       inject: "",
     },
   },
