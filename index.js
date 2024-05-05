@@ -5,30 +5,20 @@ import cors from "cors"
 import express from "express"
 import basicAuth from "express-basic-auth"
 import config from "./config.js"
-
 const __dirname = process.cwd()
 const server = http.createServer()
 const app = express()
 const bareServer = createBareServer("/o/")
 const PORT = process.env.PORT || 8080
-
 if (config.challenge) {
   console.log(`Password protection is enabled. Usernames are: ${Object.keys(config.users)}`)
   console.log(`Passwords are: ${Object.values(config.users)}`)
-
-  app.use(
-    basicAuth({
-      users: config.users,
-      challenge: true,
-    })
-  )
+  app.use(basicAuth({ users: config.users, challenge: true }))
 }
-
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(cors())
 app.use(express.static(path.join(__dirname, "static")))
-
+app.use("/o/", cors({ origin: true }))
 const routes = [
   { path: "/as", file: "apps.html" },
   { path: "/gm", file: "games.html" },
@@ -37,13 +27,11 @@ const routes = [
   { path: "/", file: "index.html" },
   { path: "/tos", file: "tos.html" },
 ]
-
 routes.forEach((route) => {
   app.get(route.path, (req, res) => {
     res.sendFile(path.join(__dirname, "static", route.file))
   })
 })
-
 app.get("/e/*", (req, res, next) => {
   const baseUrls = [
     "https://raw.githubusercontent.com/v-5x/x/fixy",
@@ -52,13 +40,11 @@ app.get("/e/*", (req, res, next) => {
   ]
   fetchData(req, res, next, baseUrls)
 })
-
 const fetchData = async (req, res, next, baseUrls) => {
   try {
     const reqTarget = baseUrls.map((baseUrl) => `${baseUrl}/${req.params[0]}`)
     let data
     let asset
-
     for (const target of reqTarget) {
       asset = await fetch(target)
       if (asset.ok) {
@@ -66,7 +52,6 @@ const fetchData = async (req, res, next, baseUrls) => {
         break
       }
     }
-
     if (data) {
       res.end(Buffer.from(data))
     } else {
@@ -77,12 +62,10 @@ const fetchData = async (req, res, next, baseUrls) => {
     res.status(500).send()
   }
 }
-
 app.use((err, req, res, next) => {
   console.error(err.stack)
   res.status(500).send()
 })
-
 server.on("request", (req, res) => {
   if (bareServer.shouldRoute(req)) {
     bareServer.routeRequest(req, res)
@@ -90,7 +73,6 @@ server.on("request", (req, res) => {
     app(req, res)
   }
 })
-
 server.on("upgrade", (req, socket, head) => {
   if (bareServer.shouldRoute(req)) {
     bareServer.routeUpgrade(req, socket, head)
@@ -98,11 +80,7 @@ server.on("upgrade", (req, socket, head) => {
     socket.end()
   }
 })
-
 server.on("listening", () => {
   console.log(`Running at http://localhost:${PORT}`)
 })
-
-server.listen({
-  port: PORT,
-})
+server.listen({ port: PORT })
