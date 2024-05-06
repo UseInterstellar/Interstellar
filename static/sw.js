@@ -1,7 +1,7 @@
 importScripts("/dy/config.js?v=12")
 importScripts("/dy/worker.js?v=12")
-importScripts("/assets/-/bundle.js?v=2")
-importScripts("/assets/-/config.js?v=2")
+importScripts("/assets/-/bundle.js?v=5-5-2024")
+importScripts("/assets/-/config.js?v=5-5-2024")
 importScripts(__uv$config.sw || "/assets/-/sw.js?v=2")
 
 const uv = new UVServiceWorker()
