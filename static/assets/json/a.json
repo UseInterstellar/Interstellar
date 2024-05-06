@@ -400,6 +400,12 @@
     "categories": ["all", "social", "game", "media"]
   },
   {
+    "name": "Five Nights at Winston's",
+    "link": "https://g.deev.is/fnaw/",
+    "image": "/assets/media/icons/fnaw.jpg",
+    "categories": ["all", "game"]
+  },
+  {
     "name": "Instagram",
     "image": "/assets/media/icons/insta.webp",
     "categories": ["all", "social", "message", "media"],
