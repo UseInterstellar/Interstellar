@@ -15,6 +15,25 @@ if (config.challenge) {
   console.log(`Passwords are: ${Object.values(config.users)}`)
   app.use(basicAuth({ users: config.users, challenge: true }))
 }
+if (config.multiServer) {
+  console.log(`Multiple server support is enabled. Additional servers are: ${Object.keys(config.servers)}`)
+  app.get("/sl", (req, res) => {
+    let roundedServers = {};
+    for (const serverName in config.servers) {
+      const server = config.servers[serverName]
+      roundedServers[serverName] = {
+        url: server.url,
+        latitude: server.latitude.toFixed(3),
+        longitude: server.longitude.toFixed(3),
+      }
+    }
+    res.send({enabled: true, servers: roundedServers})
+  })
+} else {
+  app.get("/sl", (req, res) => {
+    res.send({enabled: false})
+  })
+}
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, "static")))
