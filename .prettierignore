@@ -2,7 +2,7 @@ dist/
 node_modules
 package-lock.json
 package.json
-/static/assets/y/
+/static/assets/-/
 /static/dy/
 **/*.min.*
 prettierrc

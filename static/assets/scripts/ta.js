@@ -39,20 +39,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
     newIframe.dataset.tabId = tabCounter
     newIframe.classList.add("active")
 
-    newIframe.setAttribute("onload", "Load();")
-
-    const GoURL = sessionStorage.getItem("GoUrl")
-
-    if (tabCounter === 1) {
-      newIframe.src = window.location.origin + "/a/" + GoURL
-    } else if (tabCounter !== 1) {
-      newIframe.src = "/"
-    } else if (GoURL !== null) {
-      newIframe.src = window.location.origin + "/a/" + GoURL
-    }
-
-    iframeContainer.appendChild(newIframe)
-
     newIframe.addEventListener("load", () => {
       const title = newIframe.contentDocument.title
       if (title.length <= 1) {
@@ -60,8 +46,26 @@ document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         tabTitle.textContent = title
       }
-      Load()
+      if (newIframe.contentDocument.documentElement.outerHTML.trim().length > 0) {
+        Load()
+      }
     })
+
+    const GoURL = sessionStorage.getItem("GoUrl")
+
+    if (tabCounter === 1) {
+      if (GoURL.includes("/e/")) {
+        newIframe.src = window.location.origin + GoURL
+      } else {
+        newIframe.src = window.location.origin + "/a/" + GoURL
+      }
+    } else if (tabCounter !== 1) {
+      newIframe.src = "/"
+    } else if (GoURL !== null) {
+      newIframe.src = window.location.origin + "/a/" + GoURL
+    }
+
+    iframeContainer.appendChild(newIframe)
 
     tabCounter++
   }
@@ -301,8 +305,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   console.log(navIcon)
   navIcon.addEventListener("click", function () {
-    console.log("Nav icon clicked")
-
     var isOpen = navBar.classList.toggle("hidden")
     this.classList.toggle("open")
     if (isOpen) {
@@ -319,7 +321,28 @@ if (navigator.userAgent.includes("Chrome")) {
   })
 }
 
-// Decode URL
+function Load() {
+  const activeIframe = document.querySelector("#iframe-container iframe.active")
+  if (activeIframe && activeIframe.contentWindow.document.readyState === "complete") {
+    const website = activeIframe.contentWindow.document.location.href
+    if (website.includes("/a/")) {
+      const websitePath = website.replace(window.location.origin, "").replace("/a/", "")
+      localStorage.setItem("decoded", websitePath)
+      const decodedValue = decodeXor(websitePath)
+      document.getElementById("is").value = decodedValue
+    } else if (website.includes("/a/q/")) {
+      const websitePath = website.replace(window.location.origin, "").replace("/a/q/", "")
+      const decodedValue = decodeXor(websitePath)
+      localStorage.setItem("decoded", websitePath)
+      document.getElementById("is").value = decodedValue
+    } else {
+      const websitePath = website.replace(window.location.origin, "")
+      document.getElementById("is").value = websitePath
+      localStorage.setItem("decoded", websitePath)
+    }
+  }
+}
+
 function decodeXor(input) {
   if (!input) return input
   let [str, ...search] = input.split("?")
@@ -330,27 +353,4 @@ function decodeXor(input) {
       .map((char, ind) => (ind % 2 ? String.fromCharCode(char.charCodeAt(NaN) ^ 2) : char))
       .join("") + (search.length ? "?" + search.join("?") : "")
   )
-}
-
-function Load() {
-  const activeIframe = document.querySelector("#iframe-container iframe.active")
-  if (activeIframe && document.readyState === "complete") {
-    const website = activeIframe.contentWindow.document.location.href
-
-    if (website.includes("/a/")) {
-      const websitePath = website.replace(window.location.origin, "").replace("/a/", "")
-      const decodedValue = decodeXor(websitePath)
-      document.getElementById("is").value = decodedValue
-      localStorage.setItem("decoded", decodedValue)
-    } else if (website.includes("/a/q/")) {
-      const websitePath = website.replace(window.location.origin, "").replace("/a/q/", "")
-      const decodedValue = decodeXor(websitePath)
-      document.getElementById("is").value = decodedValue
-      localStorage.setItem("decoded", decodedValue)
-    } else {
-      const websitePath = website.replace(window.location.origin, "")
-      document.getElementById("is").value = websitePath
-      localStorage.setItem("decoded", websitePath)
-    }
-  }
 }

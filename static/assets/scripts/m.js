@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
 })
 // Dynamic & Ads
 document.addEventListener("DOMContentLoaded", function () {
-  if (localStorage.getItem("dy") === null || localStorage.getItem("ad") === "auto") {
+  if (localStorage.getItem("dy") === null || localStorage.getItem("dy") === undefined) {
     localStorage.setItem("dy", "false")
   }
 })
@@ -51,16 +51,12 @@ function Clear() {
   }
 }
 
-if (localStorage.getItem("cache") !== "true") {
+if (localStorage.getItem("cache") !== "3") {
   Clear()
-  localStorage.setItem("cache", "true")
+  localStorage.setItem("cache", "3")
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-  if (localStorage.getItem("dy") === null || localStorage.getItem("ad") === "auto") {
-    localStorage.setItem("dy", "false")
-  }
-})
+
 
 // Nav
 var nav = document.querySelector(".fixed-nav-bar")

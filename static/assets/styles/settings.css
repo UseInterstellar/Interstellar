@@ -1,7 +1,7 @@
 body {
   background-color: var(--page);
   font-family: Arial, sans;
-  color: #f0f0f0;
+  color: white;
   margin: 0;
   padding: 0;
   letter-spacing: 0px;
@@ -46,6 +46,10 @@ body {
 
 .settings-card p {
   color: var(--text-secondary);
+}
+
+a {
+  color: white;
 }
 
 .switch {
