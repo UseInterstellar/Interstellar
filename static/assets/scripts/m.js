@@ -10,10 +10,8 @@ document.addEventListener("DOMContentLoaded", function () {
     script.type = "text/javascript"
     script.src = "//oysterscoldtiny.com/1c/c3/8a/1cc38a6899fdf8ba4dfe779bcc54627b.js"
     advDiv.appendChild(script)
-    console.log("Script inserted inside the adv div.")
   } else if (advDiv && localStorage.getItem("ad") === "off") {
     advDiv.remove()
-    console.log("The adv div has been removed.")
   }
 })
 // Dynamic & Ads
@@ -33,21 +31,13 @@ function Clear() {
   sessionStorage.clear()
 
   if (caches && caches.keys) {
-    caches
-      .keys()
-      .then(function (cacheNames) {
-        return Promise.all(
-          cacheNames.map(function (cacheName) {
-            return caches.delete(cacheName)
-          })
-        )
-      })
-      .then(function () {
-        console.log("Cache storage cleared successfully.")
-      })
-      .catch(function (error) {
-        console.error("Failed to clear cache storage:", error)
-      })
+    caches.keys().then(function (cacheNames) {
+      return Promise.all(
+        cacheNames.map(function (cacheName) {
+          return caches.delete(cacheName)
+        })
+      )
+    })
   }
 }
 
@@ -55,8 +45,6 @@ if (localStorage.getItem("cache") !== "3") {
   Clear()
   localStorage.setItem("cache", "3")
 }
-
-
 
 // Nav
 var nav = document.querySelector(".fixed-nav-bar")
@@ -69,7 +57,7 @@ if (nav) {
     <div class="fixed-nav-bar-right">
       <a class="navbar-link" href="/./gm"><i class="fa-solid fa-gamepad navbar-icon"></i><an>Ga</an><an>mes</an></a>
       <a class="navbar-link" href="/./as"><i class="fa-solid fa-phone navbar-icon"></i><an>Ap</an><an>ps</an></a>
-      <a class="navbar-link" href="/./ta"><i class="fa-solid fa-laptop navbar-icon"></i><an>Ta</an><an>bs</an></a>
+      ${window.top.location.pathname !== "/ta" ? '<a class="navbar-link" href="/./ta"><i class="fa-solid fa-laptop navbar-icon"></i><an>Ta</an><an>bs</an></a>' : ""}
       <a class="navbar-link" href="/./st"><i class="fa-solid fa-gear navbar-icon settings-icon"></i><an>Set</an><an>tings</an></a>
     </div>`
   nav.innerHTML = html
@@ -99,11 +87,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
   const selectedValue = localStorage.getItem("selectedOption")
 
   function setCloak(nameValue, iconUrl) {
-    // Check for custom values in local storage
     const customName = localStorage.getItem("CustomName")
     const customIcon = localStorage.getItem("CustomIcon")
 
-    // If custom values exist, use them. Otherwise, use the provided values.
     if (customName) {
       nameValue = customName
     }

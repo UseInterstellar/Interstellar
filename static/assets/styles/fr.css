@@ -32,7 +32,7 @@ iframe {
   border-radius: 0 10px 10px 0;
   transform: translateX(0);
   width: 100vw;
-  height: 1vw;
+  height: 0.5vw;
   display: flex;
   align-items: center;
 }
@@ -54,7 +54,7 @@ iframe {
 .nav-bar {
   left: 0;
   right: 0;
-  height: 3em;
+  height: 2.5em;
   padding: 0 25px;
   background: var(--main);
   box-sizing: border-box;
@@ -247,7 +247,7 @@ iframe {
   height: 100%;
   border: none;
   left: 0;
-  top: 13%;
+  top: 10%;
 }
 
 /* Credits to https://codepen.io/designcouch/pen/ExvwPY for the hamburger animations */
