@@ -1863,6 +1863,12 @@
     "categories": ["all"]
   },
   {
+    "name": "Five Nights at Winston's",
+    "link": "https://g.deev.is/fnaw/",
+    "image": "/assets/media/icons/fnaw.webp",
+    "categories": ["all", "game"]
+  },
+  {
     "name": "Goomy Clicker 2",
     "link": "https://idle-js-games.github.io/goomyClicker2/",
     "image": "/assets/media/icons/gc2.webp",
