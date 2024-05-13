@@ -11,21 +11,6 @@ body {
   color: white;
 }
 
-iframe {
-  display: block;
-  border: none;
-  height: calc(100% - 3em);
-  width: 100vw;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  top: 3em;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  background: white;
-}
-
 .nav {
   padding: 1rem;
   transition: transform 0.5s ease;
@@ -249,81 +234,3 @@ iframe {
   left: 0;
   top: 10%;
 }
-
-/* Credits to https://codepen.io/designcouch/pen/ExvwPY for the hamburger animations */
-#nav-icon {
-  width: 20px;
-  position: fixed;
-  bottom: 5%;
-  left: 10px;
-  -webkit-transform: rotate(0deg);
-  -moz-transform: rotate(0deg);
-  -o-transform: rotate(0deg);
-  transform: rotate(0deg);
-  -webkit-transition: 0.5s ease-in-out;
-  -moz-transition: 0.5s ease-in-out;
-  -o-transition: 0.5s ease-in-out;
-  transition: 0.5s ease-in-out;
-  cursor: pointer;
-  z-index: 9999;
-}
-
-#nav-icon span {
-  display: block;
-  position: absolute;
-  height: 5px;
-  width: 100%;
-  background: var(--main);
-  border-radius: 9px;
-  opacity: 1;
-  left: 0;
-  -webkit-transform: rotate(0deg);
-  -moz-transform: rotate(0deg);
-  -o-transform: rotate(0deg);
-  transform: rotate(0deg);
-  -webkit-transition: 0.25s ease-in-out;
-  -moz-transition: 0.25s ease-in-out;
-  -o-transition: 0.25s ease-in-out;
-  transition: 0.25s ease-in-out;
-  cursor: pointer;
-  box-shadow: 0 0 0 1px white;
-}
-
-#nav-icon span:nth-child(1) {
-  top: 0px;
-}
-
-#nav-icon span:nth-child(2) {
-  top: 8px;
-}
-
-#nav-icon span:nth-child(3) {
-  top: 16px;
-}
-
-#nav-icon.open span:nth-child(1) {
-  top: 8px;
-  -webkit-transform: rotate(135deg);
-  -moz-transform: rotate(135deg);
-  -o-transform: rotate(135deg);
-  transform: rotate(135deg);
-}
-
-#nav-icon.open span:nth-child(2) {
-  opacity: 0;
-  left: -30px;
-}
-
-#nav-icon.open span:nth-child(3) {
-  top: 8px;
-  -webkit-transform: rotate(-135deg);
-  -moz-transform: rotate(-135deg);
-  -o-transform: rotate(-135deg);
-  transform: rotate(-135deg);
-}
-
-#right-side-nav.hidden {
-  display: none;
-}
-
-/* Credits to https://codepen.io/designcouch/pen/ExvwPY for the hamburger animations */

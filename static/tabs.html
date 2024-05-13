@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" id="tab-favicon" href="favicon.png" />
     <title id="tab-title">Home</title>
-    <link rel="stylesheet" href="assets/styles/fr.css?v=20" />
+    <link rel="stylesheet" href="assets/styles/fr.css?v=26" />
     <link rel="stylesheet" href="/assets/styles/global.css?v=8" />
     <script src="https://kit.fontawesome.com/1237c86ba0.js" crossorigin="anonymous"></script>
     <script>
@@ -16,11 +16,6 @@
     </script>
   </head>
   <body>
-    <div id="nav-icon">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
     <nav class="nav" id="right-side-nav">
       <ul id="tab-list"></ul>
       <button title="add-tab" id="add-tab"><i class="fa-solid fa-plus"></i></button>
@@ -49,16 +44,19 @@
             <i class="fa-solid fa-expand"></i>
           </button>
           <button title="Window Popout" id="popout-button" class="nav-button nav-btn-right" onclick="popout()">
-            <i class="fa-solid fa-solid fa-window-restore"></i>
+            <i class="fa-solid fa-up-right-from-square"></i>
           </button>
           <button title="Inspect" id="eruda-button" class="nav-button nav-btn-right" onclick="erudaToggle()">
             <i class="fa-solid fa-code"></i>
+          </button>
+          <button title="Tabs" id="tabs-button" class="nav-button nav-btn-right">
+            <i class="fa-solid fa-magnifying-glass-minus"></i>
           </button>
         </div>
       </div>
     </div>
     <div class="iframe-container" id="iframe-container"></div>
-    <script src="assets/scripts/ta.js?v=30"></script>
+    <script src="assets/scripts/ta.js?v=34"></script>
     <script src="/assets/scripts/m.js?v=54"></script>
     <script src="./assets/-/bundle.js?v=5-5-2024"></script>
     <script src="./assets/-/config.js?v=5-5-2024"></script>

@@ -55,16 +55,19 @@ const fetchData = async (req, res, next, baseUrls) => {
     if (data) {
       res.end(Buffer.from(data))
     } else {
-      res.status(404).send()
+      res.status(404).sendFile(path.join(__dirname, "static", "404.html"))
     }
   } catch (error) {
     console.error(`Error fetching ${req.url}:`, error)
-    res.status(500).send()
+    next(error)
   }
 }
+app.use((req, res, next) => {
+  res.status(404).sendFile(path.join(__dirname, "static", "404.html"))
+})
 app.use((err, req, res, next) => {
   console.error(err.stack)
-  res.status(500).send()
+  res.status(500).sendFile(path.join(__dirname, "static", "404.html"))
 })
 server.on("request", (req, res) => {
   if (bareServer.shouldRoute(req)) {

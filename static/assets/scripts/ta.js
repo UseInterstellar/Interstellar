@@ -286,22 +286,21 @@ function goForward() {
   }
 }
 // Remove Nav
-document.addEventListener("fullscreenchange", function () {
-  const isFullscreen = Boolean(document.fullscreenElement)
-  document.body.classList.toggle("fullscreen", isFullscreen)
-})
 document.addEventListener("DOMContentLoaded", function () {
-  var navIcon = document.getElementById("nav-icon")
-  var navBar = document.getElementById("right-side-nav")
-  const activeIframe = document.querySelector("#iframe-container iframe.active")
-  console.log(navIcon)
-  navIcon.addEventListener("click", function () {
-    var isOpen = navBar.classList.toggle("hidden")
-    this.classList.toggle("open")
-    if (isOpen) {
-      activeIframe.style.top = "5%"
+  var TB = document.getElementById("tabs-button")
+  var NB = document.getElementById("right-side-nav")
+  TB.addEventListener("click", function () {
+    var activeIframe = document.querySelector("#iframe-container iframe.active")
+    if (NB.style.display === "none") {
+      NB.style.display = ""
+      activeIframe.style.top = "10%"
+      TB.querySelector("i").classList.remove("fa-magnifying-glass-plus")
+      TB.querySelector("i").classList.add("fa-magnifying-glass-minus")
     } else {
-      activeIframe.style.top = "13%"
+      NB.style.display = "none"
+      activeIframe.style.top = "5%"
+      TB.querySelector("i").classList.remove("fa-magnifying-glass-minus")
+      TB.querySelector("i").classList.add("fa-magnifying-glass-plus")
     }
   })
 })
