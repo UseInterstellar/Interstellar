@@ -1,6 +1,6 @@
 let appInd
 let g = window.location.pathname === "/gm"
-let t = window.location.pathname === "/ta"
+let t = window.top.location.pathname === "/ta"
 function saveToLocal(path) {
   sessionStorage.setItem("GoUrl", path)
 }
@@ -19,13 +19,13 @@ function handleClick(app) {
   } else if (app.local2) {
     saveToLocal(app.link)
     window.location.href = app.link
-    if (t) {
-      window.location.href = app.link
-    }
   } else if (app.blank) {
     blank(app.link)
   } else if (app.now) {
     now(app.link)
+    if (t) {
+      window.location.href = app.link
+    }
   } else if (app.custom) {
     Custom(app)
   } else if (app.dy) {

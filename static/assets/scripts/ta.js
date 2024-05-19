@@ -1,7 +1,5 @@
 window.addEventListener("load", () => {
-  navigator.serviceWorker.register("../sw.js?v=5-5-2024", {
-    scope: "/a/",
-  })
+  navigator.serviceWorker.register("../sw.js?v=5-5-2024", { scope: "/a/" })
 })
 window.addEventListener("load", () => {
   const form = document.getElementById("fs")
@@ -49,6 +47,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     const newTab = document.createElement("li")
     const tabTitle = document.createElement("span")
     const newIframe = document.createElement("iframe")
+    newIframe.sandbox = "allow-same-origin allow-scripts allow-forms"
     tabTitle.textContent = `New Tab ${tabCounter}`
     tabTitle.className = "tab-title"
     newTab.dataset.tabId = tabCounter
@@ -71,9 +70,14 @@ document.addEventListener("DOMContentLoaded", function (event) {
     newIframe.addEventListener("load", () => {
       const title = newIframe.contentDocument.title
       if (title.length <= 1) {
-        tabTitle.textContent = "New Tab"
+        tabTitle.textContent = ""
       } else {
         tabTitle.textContent = title
+      }
+      newIframe.contentWindow.open = function (url) {
+        sessionStorage.setItem("URL", "/a/" + __uv$config.encodeUrl(url))
+        createNewTab()
+        return null
       }
       if (newIframe.contentDocument.documentElement.outerHTML.trim().length > 0) {
         Load()
@@ -81,6 +85,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
       Load()
     })
     const GoURL = sessionStorage.getItem("GoUrl")
+    const URL = sessionStorage.getItem("URL")
 
     if (tabCounter === 1) {
       if (GoURL !== null) {
@@ -92,9 +97,23 @@ document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         newIframe.src = "/"
       }
-    } else {
-      newIframe.src = "/"
+    } else if (tabCounter > 1) {
+      if (URL !== null) {
+        newIframe.src = window.location.origin + URL
+        sessionStorage.removeItem("URL")
+      } else if (GoURL !== null) {
+        if (GoURL.includes("/e/")) {
+          newIframe.src = window.location.origin + GoURL
+          sessionStorage.removeItem("GoUrl")
+        } else {
+          newIframe.src = window.location.origin + "/a/" + GoURL
+          sessionStorage.removeItem("GoUrl")
+        }
+      } else {
+        newIframe.src = "/"
+      }
     }
+
     iframeContainer.appendChild(newIframe)
     tabCounter += 1
   }
@@ -287,10 +306,10 @@ function goForward() {
 }
 // Remove Nav
 document.addEventListener("DOMContentLoaded", function () {
-  var TB = document.getElementById("tabs-button")
-  var NB = document.getElementById("right-side-nav")
+  const TB = document.getElementById("tabs-button")
+  const NB = document.getElementById("right-side-nav")
   TB.addEventListener("click", function () {
-    var activeIframe = document.querySelector("#iframe-container iframe.active")
+    const activeIframe = document.querySelector("#iframe-container iframe.active")
     if (NB.style.display === "none") {
       NB.style.display = ""
       activeIframe.style.top = "10%"
@@ -335,7 +354,6 @@ function decodeXor(input) {
     return input
   }
   let [str, ...search] = input.split("?")
-
   return (
     decodeURIComponent(str)
       .split("")
