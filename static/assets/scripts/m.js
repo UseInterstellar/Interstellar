@@ -109,6 +109,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
   const options = {
     Google: { name: "Google", icon: "/assets/media/favicon/google.png" },
+    "Savvas Realize": { name: "Savvas Realize", icon: "/assets/media/favicon/savvas-realize.png" },
     Drive: { name: "My Drive - Google Drive", icon: "/assets/media/favicon/drive.png" },
     Classroom: { name: "Home", icon: "/assets/media/favicon/classroom.png" },
     Schoology: { name: "Home | Schoology", icon: "/assets/media/favicon/schoology.png" },
