@@ -114,6 +114,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     "World Book Online - Super Home": { name: "Super Home Page", icon: "/assets/media/favicon/wbo.ico" },
     "World Book Online - Student": { name: "WBO Student | Home Page", icon: "/assets/media/favicon/wbo.ico" },
     "World Book Online - Timelines": { name: "Timelines - Home Page", icon: "/assets/media/favicon/wbo.ico" },
+    Naviance: { name: "Naviance Student", icon: "/assets/media/favicon/naviance.png" },
     Drive: { name: "My Drive - Google Drive", icon: "/assets/media/favicon/drive.png" },
     Classroom: { name: "Home", icon: "/assets/media/favicon/classroom.png" },
     Schoology: { name: "Home | Schoology", icon: "/assets/media/favicon/schoology.png" },
