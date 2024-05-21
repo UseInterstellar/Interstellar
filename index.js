@@ -28,6 +28,7 @@ const routes = [
   { path: "/gm", file: "games.html" },
   { path: "/st", file: "settings.html" },
   { path: "/ta", file: "tabs.html" },
+  { path: "/ts", file: "tools.html" },
   { path: "/", file: "index.html" },
   { path: "/tos", file: "tos.html" },
 ]

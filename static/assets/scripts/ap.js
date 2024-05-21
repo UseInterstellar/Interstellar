@@ -1,6 +1,9 @@
 let appInd
 let g = window.location.pathname === "/gm"
+let a = window.location.pathname === "/as"
+let c = window.location.pathname === "/ts"
 let t = window.top.location.pathname === "/ta"
+
 function saveToLocal(path) {
   sessionStorage.setItem("GoUrl", path)
 }
@@ -43,7 +46,9 @@ function CustomApp(customApp) {
   let apps
   if (g) {
     apps = localStorage.getItem("Gcustom")
-  } else {
+  } else if (c) {
+    apps = localStorage.getItem("Tcustom")
+  } else if (a) {
     apps = localStorage.getItem("Acustom")
   }
 
@@ -59,7 +64,9 @@ function CustomApp(customApp) {
 
   if (g) {
     localStorage.setItem("Gcustom", JSON.stringify(apps))
-  } else {
+  } else if (c) {
+    localStorage.setItem("Tcustom", JSON.stringify(apps))
+  } else if (a) {
     localStorage.setItem("Acustom", JSON.stringify(apps))
   }
 }
@@ -68,7 +75,9 @@ function setPin(index) {
   let pins
   if (g) {
     pins = localStorage.getItem("Gpinned")
-  } else {
+  } else if (c) {
+    pins = localStorage.getItem("Tpinned")
+  } else if (a) {
     pins = localStorage.getItem("Apinned")
   }
 
@@ -85,7 +94,9 @@ function setPin(index) {
   }
   if (g) {
     localStorage.setItem("Gpinned", pins)
-  } else {
+  } else if (c) {
+    localStorage.setItem("Tpinned", pins)
+  } else if (a) {
     localStorage.setItem("Apinned", pins)
   }
   location.reload()
@@ -169,7 +180,9 @@ document.addEventListener("DOMContentLoaded", () => {
   let storedApps
   if (g) {
     storedApps = JSON.parse(localStorage.getItem("Gcustom"))
-  } else {
+  } else if (c) {
+    storedApps = JSON.parse(localStorage.getItem("Tcustom"))
+  } else if (a) {
     storedApps = JSON.parse(localStorage.getItem("Acustom"))
   }
   if (storedApps) {
@@ -182,7 +195,9 @@ document.addEventListener("DOMContentLoaded", () => {
 let path = "/assets/json/a.min.json"
 if (g) {
   path = "/assets/json/g.min.json"
-} else {
+} else if (c) {
+  path = "/assets/json/t.min.json"
+} else if (a) {
   path = "/assets/json/a.min.json"
 }
 fetch(path)
@@ -199,8 +214,10 @@ fetch(path)
     const pinnedApps = document.querySelector(".pinned-apps")
     if (g) {
       var pinList = localStorage.getItem("Gpinned") || ""
-    } else {
+    } else if (a) {
       var pinList = localStorage.getItem("Apinned") || ""
+    } else if (c) {
+      var pinList = localStorage.getItem("Tpinned") || ""
     }
     pinList = pinList ? pinList.split(",").map(Number) : []
     appInd = 0

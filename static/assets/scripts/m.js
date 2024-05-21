@@ -20,32 +20,6 @@ document.addEventListener("DOMContentLoaded", function () {
     localStorage.setItem("dy", "false")
   }
 })
-// Clear Cache
-function Clear() {
-  document.cookie.split("; ").forEach(function (cookie) {
-    var cookieName = cookie.split("=")[0]
-    document.cookie = cookieName + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT"
-  })
-
-  localStorage.clear()
-  sessionStorage.clear()
-
-  if (caches && caches.keys) {
-    caches.keys().then(function (cacheNames) {
-      return Promise.all(
-        cacheNames.map(function (cacheName) {
-          return caches.delete(cacheName)
-        })
-      )
-    })
-  }
-}
-
-if (localStorage.getItem("cache") !== "3") {
-  Clear()
-  localStorage.setItem("cache", "3")
-}
-
 // Nav
 var nav = document.querySelector(".fixed-nav-bar")
 
@@ -57,6 +31,7 @@ if (nav) {
     <div class="fixed-nav-bar-right">
       <a class="navbar-link" href="/./gm"><i class="fa-solid fa-gamepad navbar-icon"></i><an>Ga</an><an>mes</an></a>
       <a class="navbar-link" href="/./as"><i class="fa-solid fa-phone navbar-icon"></i><an>Ap</an><an>ps</an></a>
+            <a class="navbar-link" href="/./ts"><i class="fa-solid fa-folder navbar-icon"></i><an>To</an><an>ols</an></a>
       ${window.top.location.pathname !== "/ta" ? '<a class="navbar-link" href="/./ta"><i class="fa-solid fa-laptop navbar-icon"></i><an>Ta</an><an>bs</an></a>' : ""}
       <a class="navbar-link" href="/./st"><i class="fa-solid fa-gear navbar-icon settings-icon"></i><an>Set</an><an>tings</an></a>
     </div>`
