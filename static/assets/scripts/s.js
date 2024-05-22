@@ -1,3 +1,4 @@
+/*
 // Ads
 document.addEventListener("DOMContentLoaded", function () {
   function adChange(selectedValue) {
@@ -24,18 +25,18 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       adTypeElement.value = "default"
     }
-  }
-  // Makes the custom icon and name persistent
-  const iconElement = document.getElementById("icon")
-  const nameElement = document.getElementById("name")
-  const customIcon = localStorage.getItem("CustomIcon")
-  const customName = localStorage.getItem("CustomName")
-  iconElement.value = customIcon
-  nameElement.value = customName
+  } */
 
-  localStorage.setItem("ab", true)
-  document.getElementById("ab-settings-switch").checked = true
-})
+// Makes the custom icon and name persistent
+const iconElement = document.getElementById("icon")
+const nameElement = document.getElementById("name")
+const customIcon = localStorage.getItem("CustomIcon")
+const customName = localStorage.getItem("CustomName")
+iconElement.value = customIcon
+nameElement.value = customName
+
+localStorage.setItem("ab", true)
+document.getElementById("ab-settings-switch").checked = true
 
 // Dyn
 document.addEventListener("DOMContentLoaded", function () {
