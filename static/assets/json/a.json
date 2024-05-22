@@ -62,12 +62,6 @@
     "categories": ["all", "emu", "android"]
   },
   {
-    "name": "Movie Web",
-    "link": "https://movie-web.app",
-    "image": "/assets/media/icons/movie-web.webp",
-    "categories": ["all", "media", "stream"]
-  },
-  {
     "name": "Scratch",
     "link": "https://scratch.mit.edu",
     "image": "/assets/media/icons/scratch.webp",
