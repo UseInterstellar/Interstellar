@@ -1,3 +1,4 @@
+/*
 // Ads
 document.addEventListener("DOMContentLoaded", function () {
   if (localStorage.getItem("ad") === null || localStorage.getItem("ad") === "default") {
@@ -8,56 +9,19 @@ document.addEventListener("DOMContentLoaded", function () {
   if (advDiv && localStorage.getItem("ad") === "on") {
     var script = document.createElement("script")
     script.type = "text/javascript"
-    script.src = "//oysterscoldtiny.com/1c/c3/8a/1cc38a6899fdf8ba4dfe779bcc54627b.js"
+    script.src = "//oysterscoldtiny.com/4d/2f/92/4d2f92b8c68718dd3efb74b9f9b5fa4e.js"
     advDiv.appendChild(script)
-    console.log("Script inserted inside the adv div.")
-  } else if (advDiv && localStorage.getItem("ad") === "off") {
+  } else if (advDiv && localStorage.getItem("ad") === "banner") {
     advDiv.remove()
-    console.log("The adv div has been removed.")
   }
-})
+}) */
+
 // Dynamic & Ads
 document.addEventListener("DOMContentLoaded", function () {
   if (localStorage.getItem("dy") === null || localStorage.getItem("dy") === undefined) {
     localStorage.setItem("dy", "false")
   }
 })
-// Clear Cache
-function Clear() {
-  document.cookie.split("; ").forEach(function (cookie) {
-    var cookieName = cookie.split("=")[0]
-    document.cookie = cookieName + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT"
-  })
-
-  localStorage.clear()
-  sessionStorage.clear()
-
-  if (caches && caches.keys) {
-    caches
-      .keys()
-      .then(function (cacheNames) {
-        return Promise.all(
-          cacheNames.map(function (cacheName) {
-            return caches.delete(cacheName)
-          })
-        )
-      })
-      .then(function () {
-        console.log("Cache storage cleared successfully.")
-      })
-      .catch(function (error) {
-        console.error("Failed to clear cache storage:", error)
-      })
-  }
-}
-
-if (localStorage.getItem("cache") !== "3") {
-  Clear()
-  localStorage.setItem("cache", "3")
-}
-
-
-
 // Nav
 var nav = document.querySelector(".fixed-nav-bar")
 
@@ -69,7 +33,8 @@ if (nav) {
     <div class="fixed-nav-bar-right">
       <a class="navbar-link" href="/./gm"><i class="fa-solid fa-gamepad navbar-icon"></i><an>Ga</an><an>mes</an></a>
       <a class="navbar-link" href="/./as"><i class="fa-solid fa-phone navbar-icon"></i><an>Ap</an><an>ps</an></a>
-      <a class="navbar-link" href="/./ta"><i class="fa-solid fa-laptop navbar-icon"></i><an>Ta</an><an>bs</an></a>
+      <a class="navbar-link" href="/./ts"><i class="fa-solid fa-folder navbar-icon"></i><an>To</an><an>ols</an></a>
+      ${!(window.top !== window || window.location.pathname === "/ta") ? '<a class="navbar-link" href="/./ta"><i class="fa-solid fa-laptop navbar-icon"></i><an>Ta</an><an>bs</an></a>' : ""}
       <a class="navbar-link" href="/./st"><i class="fa-solid fa-gear navbar-icon settings-icon"></i><an>Set</an><an>tings</an></a>
     </div>`
   nav.innerHTML = html
@@ -99,11 +64,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
   const selectedValue = localStorage.getItem("selectedOption")
 
   function setCloak(nameValue, iconUrl) {
-    // Check for custom values in local storage
     const customName = localStorage.getItem("CustomName")
     const customIcon = localStorage.getItem("CustomIcon")
 
-    // If custom values exist, use them. Otherwise, use the provided values.
     if (customName) {
       nameValue = customName
     }
@@ -123,6 +86,17 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
   const options = {
     Google: { name: "Google", icon: "/assets/media/favicon/google.png" },
+    "Savvas Realize": { name: "Savvas Realize", icon: "/assets/media/favicon/savvas-realize.png" },
+    SmartPass: { name: "SmartPass", icon: "/assets/media/favicon/smartpass.png" },
+    "World Book Online - Super Home": { name: "Super Home Page", icon: "/assets/media/favicon/wbo.ico" },
+    "World Book Online - Student": { name: "WBO Student | Home Page", icon: "/assets/media/favicon/wbo.ico" },
+    "World Book Online - Timelines": { name: "Timelines - Home Page", icon: "/assets/media/favicon/wbo.ico" },
+    Naviance: { name: "Naviance Student", icon: "/assets/media/favicon/naviance.png" },
+    "PBS Learning Media": {
+      name: "PBS LearningMedia | Teaching Resources For Students And Teachers",
+      icon: "/assets/media/favicon/pbslearningmedia.ico",
+    },
+    "PBS Learning Media Student Home": { name: "Student Homepage | PBS LearningMedia", icon: "/assets/media/favicon/pbslearningmedia.ico" },
     Drive: { name: "My Drive - Google Drive", icon: "/assets/media/favicon/drive.png" },
     Classroom: { name: "Home", icon: "/assets/media/favicon/classroom.png" },
     Schoology: { name: "Home | Schoology", icon: "/assets/media/favicon/schoology.png" },
