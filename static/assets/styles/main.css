@@ -12,6 +12,17 @@ body {
   background-attachment: fixed;
 }
 
+.banner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%); 
+    margin-bottom: 20px; 
+}
+
 .fn {
   font-weight: normal;
 }
@@ -259,12 +270,12 @@ img {
 }
 
 .input-container {
-  position: relative;
-  margin-top: 150px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.5em;
+    position: relative;
+    margin-top: 200px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5em;
 }
 
 input {
