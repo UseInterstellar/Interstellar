@@ -313,11 +313,13 @@ document.addEventListener("DOMContentLoaded", function () {
     if (NB.style.display === "none") {
       NB.style.display = ""
       activeIframe.style.top = "10%"
+      activeIframe.style.height = "90%"
       TB.querySelector("i").classList.remove("fa-magnifying-glass-plus")
       TB.querySelector("i").classList.add("fa-magnifying-glass-minus")
     } else {
       NB.style.display = "none"
       activeIframe.style.top = "5%"
+      activeIframe.style.height = "95%"
       TB.querySelector("i").classList.remove("fa-magnifying-glass-minus")
       TB.querySelector("i").classList.add("fa-magnifying-glass-plus")
     }
