@@ -8,12 +8,13 @@ document.addEventListener("DOMContentLoaded", function () {
   if (advDiv && localStorage.getItem("ad") === "on") {
     var script = document.createElement("script")
     script.type = "text/javascript"
-    script.src = "//oysterscoldtiny.com/1c/c3/8a/1cc38a6899fdf8ba4dfe779bcc54627b.js"
+    script.src = "//oysterscoldtiny.com/4d/2f/92/4d2f92b8c68718dd3efb74b9f9b5fa4e.js"
     advDiv.appendChild(script)
-  } else if (advDiv && localStorage.getItem("ad") === "off") {
+  } else if (advDiv && localStorage.getItem("ad") === "banner") {
     advDiv.remove()
   }
 })
+
 // Dynamic & Ads
 document.addEventListener("DOMContentLoaded", function () {
   if (localStorage.getItem("dy") === null || localStorage.getItem("dy") === undefined) {
@@ -31,8 +32,8 @@ if (nav) {
     <div class="fixed-nav-bar-right">
       <a class="navbar-link" href="/./gm"><i class="fa-solid fa-gamepad navbar-icon"></i><an>Ga</an><an>mes</an></a>
       <a class="navbar-link" href="/./as"><i class="fa-solid fa-phone navbar-icon"></i><an>Ap</an><an>ps</an></a>
-            <a class="navbar-link" href="/./ts"><i class="fa-solid fa-folder navbar-icon"></i><an>To</an><an>ols</an></a>
-      ${window.top.location.pathname !== "/ta" ? '<a class="navbar-link" href="/./ta"><i class="fa-solid fa-laptop navbar-icon"></i><an>Ta</an><an>bs</an></a>' : ""}
+      <a class="navbar-link" href="/./ts"><i class="fa-solid fa-folder navbar-icon"></i><an>To</an><an>ols</an></a>
+      ${!(window.top !== window || window.location.pathname === "/ta") ? '<a class="navbar-link" href="/./ta"><i class="fa-solid fa-laptop navbar-icon"></i><an>Ta</an><an>bs</an></a>' : ""}
       <a class="navbar-link" href="/./st"><i class="fa-solid fa-gear navbar-icon settings-icon"></i><an>Set</an><an>tings</an></a>
     </div>`
   nav.innerHTML = html
@@ -90,7 +91,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
     "World Book Online - Student": { name: "WBO Student | Home Page", icon: "/assets/media/favicon/wbo.ico" },
     "World Book Online - Timelines": { name: "Timelines - Home Page", icon: "/assets/media/favicon/wbo.ico" },
     Naviance: { name: "Naviance Student", icon: "/assets/media/favicon/naviance.png" },
-    "PBS Learning Media": { name: "PBS LearningMedia | Teaching Resources For Students And Teachers", icon: "/assets/media/favicon/pbslearningmedia.ico" },
+    "PBS Learning Media": {
+      name: "PBS LearningMedia | Teaching Resources For Students And Teachers",
+      icon: "/assets/media/favicon/pbslearningmedia.ico",
+    },
     "PBS Learning Media Student Home": { name: "Student Homepage | PBS LearningMedia", icon: "/assets/media/favicon/pbslearningmedia.ico" },
     Drive: { name: "My Drive - Google Drive", icon: "/assets/media/favicon/drive.png" },
     Classroom: { name: "Home", icon: "/assets/media/favicon/classroom.png" },
