@@ -1,6 +1,6 @@
 {
   "name": "interstellar",
-  "version": "5.2.2",
+  "version": "5.2.3",
   "type": "module",
   "engines": {
     "npm": ">=7.0.0",
@@ -14,7 +14,9 @@
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "@tomphttp/bare-server-node": "^2.0.3",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-basic-auth": "^1.2.1"
   },
