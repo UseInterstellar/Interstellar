@@ -196,12 +196,16 @@ a {
 #add-tab {
   padding: 0.5rem;
   cursor: pointer;
-  background-color: var(--accent-color);
+  background-color: var(--block);
   color: var(--text-color);
   border: none;
   border-radius: 5px;
   margin-right: 0.5rem;
   transition: background-color 0.3s ease;
+}
+
+#add-tab:hover {
+  background-color: var(--accent-color)
 }
 
 ul {
@@ -212,7 +216,7 @@ ul {
 
 li {
   padding: 0.4rem;
-  background-color: var(--accent-color);
+  background-color: var(--block);
   margin-right: 0.5rem;
   cursor: pointer;
   border-radius: 5px;
@@ -222,8 +226,16 @@ li {
   justify-content: center;
 }
 
+li.active {
+  background-color: var(--accent-color); 
+}
+
+li.active:hover {
+  background-color: var(--accent-color)
+}
+
 li:hover {
-  background-color: var(--hover-color);
+  background-color: var(--tab-hover);
 }
 
 iframe {
