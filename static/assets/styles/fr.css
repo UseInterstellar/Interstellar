@@ -205,7 +205,7 @@ a {
 }
 
 #add-tab:hover {
-  background-color: var(--accent-color)
+  background-color: var(--accent-color);
 }
 
 ul {
@@ -227,11 +227,11 @@ li {
 }
 
 li.active {
-  background-color: var(--accent-color); 
+  background-color: var(--accent-color);
 }
 
 li.active:hover {
-  background-color: var(--accent-color)
+  background-color: var(--accent-color);
 }
 
 li:hover {

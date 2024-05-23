@@ -57,7 +57,9 @@ This includes methods of deploying to Render/OnRender.
 As of January 1st, 2024, Replit is [no longer free](https://blog.replit.com/hosting-changes). Try GitHub Codespaces instead.
 
 ### GitHub Codespaces
+
 > If you're setting the port below 1023, then you must run `sudo PORT=1023`
+
 1. Create a GitHub account if you haven't already.
 2. Click "Code" (green button) and then "Create Codespace on main."
 3. In the terminal at the bottom, paste `pnpm i && pnpm start`.
