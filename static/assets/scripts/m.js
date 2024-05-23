@@ -1,4 +1,3 @@
-/*
 // Ads
 document.addEventListener("DOMContentLoaded", function () {
   if (localStorage.getItem("ad") === null || localStorage.getItem("ad") === "default") {
@@ -9,12 +8,12 @@ document.addEventListener("DOMContentLoaded", function () {
   if (advDiv && localStorage.getItem("ad") === "on") {
     var script = document.createElement("script")
     script.type = "text/javascript"
-    script.src = "//oysterscoldtiny.com/4d/2f/92/4d2f92b8c68718dd3efb74b9f9b5fa4e.js"
+    script.src = "//oysterscoldtiny.com/54/8d/25/548d25a3d0428027eb19da7447bb6c85.js"
     advDiv.appendChild(script)
-  } else if (advDiv && localStorage.getItem("ad") === "banner") {
+  } else if (advDiv && localStorage.getItem("ad") === "no") {
     advDiv.remove()
   }
-}) */
+})
 
 // Dynamic & Ads
 document.addEventListener("DOMContentLoaded", function () {
