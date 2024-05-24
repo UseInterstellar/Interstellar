@@ -27,7 +27,7 @@ app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-if (!process.env.MASQR_CHECK || process.env.MASQR_CHECK !== "false") {
+if (process.env.MASQR_CHECK === "true") {
   app.use(async (req, res, next) => {
     if (req.url.includes("/ov/")) {
       next()
