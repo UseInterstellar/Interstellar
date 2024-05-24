@@ -6,10 +6,11 @@ Only current versions of the site are being updated, if you are using an older v
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :x:                |
-| < 4.0   | :x:                |
+| V5.2.x | ✔️|
+| V5.1.x   | :x: |
+| V5.0.x   | :x:                |
+| V4.x.x   | :x:                |
+| < V4.0   | :x:                |
 
 ## Reporting a Vulnerability
 
