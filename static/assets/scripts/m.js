@@ -24,6 +24,10 @@ document.addEventListener("DOMContentLoaded", function () {
     script.type = "text/javascript"
     script.src = "//oysterscoldtiny.com/54/8d/25/548d25a3d0428027eb19da7447bb6c85.js"
     advDiv.appendChild(script)
+    var script2 = document.createElement("script")
+    script2.type = "text/javascript"
+    script2.src = "//oysterscoldtiny.com/87/17/b8/8717b825d69c8461460199fb3c6249e4.js"
+    advDiv.appendChild(script2)
   } else if (advDiv && localStorage.getItem("ad") === "no") {
     advDiv.remove()
   }
