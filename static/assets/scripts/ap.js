@@ -13,33 +13,54 @@ function handleClick(app) {
     alert(app.say)
   }
 
+  let Selected = app.link
+  if (app.links && app.links.length > 1) {
+    Selected = getSelected(app.links)
+    if (!Selected) {
+      return false
+    }
+  }
+
   if (app.local) {
-    saveToLocal(app.link)
+    saveToLocal(Selected)
     window.location.href = "ta"
     if (t) {
-      window.location.href = app.link
+      window.location.href = Selected
     }
   } else if (app.local2) {
-    saveToLocal(app.link)
-    window.location.href = app.link
+    saveToLocal(Selected)
+    window.location.href = Selected
   } else if (app.blank) {
-    blank(app.link)
+    blank(Selected)
   } else if (app.now) {
-    now(app.link)
+    now(Selected)
     if (t) {
-      window.location.href = app.link
+      window.location.href = Selected
     }
   } else if (app.custom) {
     Custom(app)
   } else if (app.dy) {
-    dy(app.link)
+    dy(Selected)
   } else {
-    go(app.link)
+    go(Selected)
     if (t) {
-      blank(app.link)
+      blank(Selected)
     }
   }
   return false
+}
+
+function getSelected(links) {
+  let options = links.map((link, index) => `${index + 1}: ${link.name}`).join("\n")
+  let choice = prompt(`Select a link by entering the corresponding number:\n${options}`)
+  let selectedIndex = parseInt(choice, 10) - 1
+
+  if (isNaN(selectedIndex) || selectedIndex < 0 || selectedIndex >= links.length) {
+    alert("Invalid selection. Please try again.")
+    return null
+  }
+
+  return links[selectedIndex].url
 }
 
 function CustomApp(customApp) {

@@ -81,8 +81,12 @@
   },
   {
     "name": "Discord",
-    "link": "https://canary.discord.com",
-    "image": "/assets/media/icons/discord.webp",
+    "links": [
+      { "name": "Discord", "url": "https://discord.com" },
+      { "name": "Discord Canary", "url": "https://canary.discord.com" },
+      { "name": "Discord PTB", "url": "https://ptb.discord.com" }
+    ],
+    "image": "/assets/media/icons/dc.jpg",
     "categories": ["all", "social"]
   },
   {
@@ -317,8 +321,12 @@
   },
   {
     "name": "Discord - Login",
-    "link": "https://canary.discord.com/login",
-    "image": "/assets/media/icons/discord.webp",
+    "links": [
+      { "name": "Discord", "url": "https://discord.com/login" },
+      { "name": "Discord Canary", "url": "https://canary.discord.com/login" },
+      { "name": "Discord PTB", "url": "https://ptb.discord.com/login" }
+    ],
+    "image": "/assets/media/icons/dc.jpg",
     "categories": ["all", "social"],
     "blank": "true"
   },
