@@ -4,13 +4,13 @@
 
 Only current versions of the site are being updated, if you are using an older version of the site, consider upgrading to the latest version.
 
-| Version | Supported          |
-| ------- | ------------------ |
-| V5.2.x | ✔️|
-| V5.1.x   | :x: |
-| V5.0.x   | :x:                |
-| V4.x.x   | :x:                |
-| < V4.0   | :x:                |
+| Version | Supported |
+| ------- | --------- |
+| V5.2.x  | ✔️        |
+| V5.1.x  | :x:       |
+| V5.0.x  | :x:       |
+| V4.x.x  | :x:       |
+| < V4.0  | :x:       |
 
 ## Reporting a Vulnerability
 

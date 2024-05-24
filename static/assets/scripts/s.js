@@ -5,6 +5,8 @@ document.addEventListener("DOMContentLoaded", function () {
       localStorage.setItem("ad", "on")
     } else if (selectedValue === "popups") {
       localStorage.setItem("ad", "popups")
+    } else if (selectedValue === "off") {
+      localStorage.setItem("ad", "off")
     }
   }
 
@@ -21,6 +23,8 @@ document.addEventListener("DOMContentLoaded", function () {
       adTypeElement.value = "default"
     } else if (storedAd === "popups") {
       adTypeElement.value = "popups"
+    } else if (storedAd === "off") {
+      adTypeElement.value = "off"
     } else {
       adTypeElement.value = "default"
     }

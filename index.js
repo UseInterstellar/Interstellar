@@ -111,7 +111,7 @@ app.get("/e/*", (req, res, next) => {
     "https://raw.githubusercontent.com/ypxa/y/main",
     "https://raw.githubusercontent.com/ypxa/w/master",
   ]
-   fetchData(req, res, next, baseUrls)
+  fetchData(req, res, next, baseUrls)
 })
 
 const fetchData = async (req, res, next, baseUrls) => {

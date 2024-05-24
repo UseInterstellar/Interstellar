@@ -12,24 +12,45 @@ async function checkLicense(pass) {
   return false
 } */
 
-// Ads
 document.addEventListener("DOMContentLoaded", function () {
-  if (localStorage.getItem("ad") === null || localStorage.getItem("ad") === "default") {
+  let ad = localStorage.getItem("ad")
+  if (ad === null || ad === "default" || ad === "true") {
     localStorage.setItem("ad", "on")
+    ad = "on"
+  } else if (ad === "popups") {
+    ad = "popups"
+  } else if (ad === "off" || ad === "no") {
+    ad = "off"
   }
 
-  var advDiv = document.getElementById("adv")
-  if (advDiv && localStorage.getItem("ad") === "on") {
-    var script = document.createElement("script")
-    script.type = "text/javascript"
-    script.src = "//oysterscoldtiny.com/54/8d/25/548d25a3d0428027eb19da7447bb6c85.js"
-    advDiv.appendChild(script)
-    var script2 = document.createElement("script")
-    script2.type = "text/javascript"
-    script2.src = "//oysterscoldtiny.com/87/17/b8/8717b825d69c8461460199fb3c6249e4.js"
-    advDiv.appendChild(script2)
-  } else if (advDiv && localStorage.getItem("ad") === "no") {
-    advDiv.remove()
+  let div = document.getElementById("adv")
+  if (div) {
+    if (ad === "on") {
+      let scripts = [
+        "//alleygoat.com/4d/2f/92/4d2f92b8c68718dd3efb74b9f9b5fa4e.js",
+        "//alleygoat.com/87/17/b8/8717b825d69c8461460199fb3c6249e4.js",
+        "//alleygoat.com/54/8d/25/548d25a3d0428027eb19da7447bb6c85.js",
+        "//alleygoat.com/1c/c3/8a/1cc38a6899fdf8ba4dfe779bcc54627b.js",
+      ]
+
+      scripts.forEach(function (src) {
+        let script = document.createElement("script")
+        script.type = "text/javascript"
+        script.src = src
+        div.appendChild(script)
+      })
+    } else if (ad === "popups") {
+      let scripts = ["//alleygoat.com/4d/2f/92/4d2f92b8c68718dd3efb74b9f9b5fa4e.js", "//alleygoat.com/1c/c3/8a/1cc38a6899fdf8ba4dfe779bcc54627b.js"]
+
+      scripts.forEach(function (src) {
+        let script = document.createElement("script")
+        script.type = "text/javascript"
+        script.src = src
+        div.appendChild(script)
+      })
+    } else if (ad === "off") {
+      div.remove()
+    }
   }
 })
 
