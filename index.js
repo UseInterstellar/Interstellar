@@ -1,15 +1,13 @@
 import http from "node:http"
 import path from "node:path"
-import fs from "fs"
 import { createBareServer } from "@tomphttp/bare-server-node"
 import cors from "cors"
 import express from "express"
 import basicAuth from "express-basic-auth"
 import cookieParser from "cookie-parser"
+import mime from "mime"
 import config from "./config.js"
-
-const LICENSE_SERVER_URL = "https://masqr.gointerstellar.app/validate?license="
-const Fail = fs.readFileSync("Failed.html", "utf8")
+import { setupMasqr } from "./Masqr.js"
 
 const __dirname = process.cwd()
 const server = http.createServer()
@@ -23,69 +21,52 @@ if (config.challenge) {
   app.use(basicAuth({ users: config.users, challenge: true }))
 }
 
+app.get("/e/*", async (req, res, next) => {
+  const baseUrls = {
+    "/e/1/": "https://raw.githubusercontent.com/v-5x/x/fixy/",
+    "/e/2/": "https://raw.githubusercontent.com/ypxa/y/main/",
+    "/e/3/": "https://raw.githubusercontent.com/ypxa/w/master/",
+  }
+
+  let reqTarget
+  for (const [prefix, baseUrl] of Object.entries(baseUrls)) {
+    if (req.path.startsWith(prefix)) {
+      reqTarget = baseUrl + req.path.slice(prefix.length)
+      break
+    }
+  }
+
+  if (!reqTarget) {
+    return next()
+  }
+
+  try {
+    const asset = await fetch(reqTarget)
+    if (asset.status !== 200) {
+      return next()
+    }
+
+    const data = Buffer.from(await asset.arrayBuffer())
+    const ext = path.extname(reqTarget)
+    const no = [".unityweb"]
+    const contentType = no.includes(ext) ? "application/octet-stream" : mime.getType(ext)
+
+    res.writeHead(200, { "Content-Type": contentType })
+    res.end(data)
+  } catch (error) {
+    console.error(error)
+    res.setHeader("Content-Type", "text/html")
+  }
+})
+
 app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-if (process.env.MASQR_CHECK === "true") {
-  app.use(async (req, res, next) => {
-    if (req.url.includes("/ov/")) {
-      next()
-      return
-    }
-
-    const authheader = req.headers.authorization
-
-    if (req.cookies["authcheck"]) {
-      next()
-      return
-    }
-
-    if (req.cookies["refreshcheck"] != "true") {
-      res.cookie("refreshcheck", "true", { maxAge: 10000 })
-      MasqFail(req, res)
-      return
-    }
-
-    if (!authheader) {
-      res.setHeader("WWW-Authenticate", "Basic")
-      res.status(401)
-      MasqFail(req, res)
-      return
-    }
-
-    const auth = Buffer.from(authheader.split(" ")[1], "base64").toString().split(":")
-    const pass = auth[1]
-
-    const licenseCheck = (await (await fetch(LICENSE_SERVER_URL + pass + "&host=" + req.headers.host)).json())["status"]
-    console.log(LICENSE_SERVER_URL + pass + "&host=" + req.headers.host + " returned " + licenseCheck)
-    if (licenseCheck === "License valid") {
-      res.cookie("authcheck", "true", { expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000) })
-      res.send(`<script> window.location.href = window.location.href </script>`)
-      return
-    }
-
-    MasqFail(req, res)
-  })
-
-  async function MasqFail(req, res) {
-    if (!req.headers.host) {
-      return
-    }
-    const unsafeSuffix = req.headers.host + ".html"
-    let safeSuffix = path.normalize(unsafeSuffix).replace(/^(\.\.(\/|\\|$))+/, "")
-    let safeJoin = path.join(process.cwd() + "/Masqrd", safeSuffix)
-    try {
-      await fs.promises.access(safeJoin)
-      const FailLocal = await fs.promises.readFile(safeJoin, "utf8")
-      res.setHeader("Content-Type", "text/html")
-      res.send(FailLocal)
-    } catch (e) {
-      res.setHeader("Content-Type", "text/html")
-      res.send(Fail)
-    }
-  }
+if (process.env.MASQR === "true") {
+  setupMasqr(app)
 }
+
 app.use(express.static(path.join(__dirname, "static")))
 app.use("/ov", cors({ origin: true }))
 
@@ -104,38 +85,6 @@ routes.forEach((route) => {
     res.sendFile(path.join(__dirname, "static", route.file))
   })
 })
-
-app.get("/e/*", (req, res, next) => {
-  const baseUrls = [
-    "https://raw.githubusercontent.com/v-5x/x/fixy",
-    "https://raw.githubusercontent.com/ypxa/y/main",
-    "https://raw.githubusercontent.com/ypxa/w/master",
-  ]
-  fetchData(req, res, next, baseUrls)
-})
-
-const fetchData = async (req, res, next, baseUrls) => {
-  try {
-    const reqTarget = baseUrls.map((baseUrl) => `${baseUrl}/${req.params[0]}`)
-    let data
-    let asset
-    for (const target of reqTarget) {
-      asset = await fetch(target)
-      if (asset.ok) {
-        data = await asset.arrayBuffer()
-        break
-      }
-    }
-    if (data) {
-      res.end(Buffer.from(data))
-    } else {
-      next()
-    }
-  } catch (error) {
-    console.error(`Error fetching ${req.url}:`, error)
-    next(error)
-  }
-}
 
 app.use((req, res, next) => {
   res.status(404).sendFile(path.join(__dirname, "static", "404.html"))

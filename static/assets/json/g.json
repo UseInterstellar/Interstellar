@@ -709,7 +709,7 @@
   },
   {
     "name": "1",
-    "link": "/e/1/index.html",
+    "link": "/e/1/1/index.html",
     "image": "/assets/media/icons/1.webp",
     "categories": ["all", "local"]
   },
@@ -865,7 +865,7 @@
   },
   {
     "name": "Cluster Rush",
-    "link": "/e/Cluster-Rush/index.html",
+    "link": "/e/2/Cluster-Rush/index.html",
     "image": "/assets/media/icons/cluster-rush.webp",
     "categories": ["all", "local"]
   },
@@ -895,7 +895,7 @@
   },
   {
     "name": "Doge Miner",
-    "link": "/e/DogeMiner/index.html",
+    "link": "/e/1/DogeMiner/index.html",
     "image": "/assets/media/icons/doge-miner-1.webp",
     "categories": ["all", "local"]
   },
@@ -1105,7 +1105,7 @@
   },
   {
     "name": "Monkey Mart",
-    "link": "/e/monkey-mart/index.html",
+    "link": "/e/2/monkey-mart/index.html",
     "image": "/assets/media/icons/mm.webp",
     "categories": ["all", "local"]
   },
@@ -1545,7 +1545,7 @@
   },
   {
     "name": "Retro Bowl",
-    "link": "/e/retro/index.html",
+    "link": "/e/2/retro/index.html",
     "image": "/assets/media/icons/retro.webp",
     "categories": ["all,", "sports", "local"]
   },
@@ -1755,13 +1755,13 @@
   },
   {
     "name": "Minecraft 1.5.2 (Eaglercraft)",
-    "link": "/e/ec-15/index.html",
+    "link": "/e/1/ec-15/index.html",
     "image": "/assets/media/icons/mc.webp",
     "categories": ["all", "2P", "emu", "local"]
   },
   {
     "name": "Minecraft 1.8 (Eaglercraft)",
-    "link": "/e/ec-18/index.html",
+    "link": "/e/1/ec-18/index.html",
     "image": "/assets/media/icons/mc.webp",
     "categories": ["all", "2P", "emu", "local"]
   },
@@ -1780,43 +1780,43 @@
   },
   {
     "name": "2048",
-    "link": "/e/2048/index.html",
+    "link": "/e/1/2048/index.html",
     "image": "/assets/media/icons/2048.webp",
     "categories": ["all", "local"]
   },
   {
     "name": "2048 Multitasking",
-    "link": "/e/2048-multitask/index.html",
+    "link": "/e/1/2048-multitask/index.html",
     "image": "/assets/media/icons/2048.webp",
     "categories": ["all", "local"]
   },
   {
     "name": "Vex 7",
-    "link": "/e/vex7/index.html",
+    "link": "/e/1/vex7/index.html",
     "image": "/assets/media/icons/vex7.webp",
     "categories": ["all", "local"]
   },
   {
     "name": "Vex 6",
-    "link": "/e/vex6/index.html",
+    "link": "/e/1/vex6/index.html",
     "image": "/assets/media/icons/vex6.webp",
     "categories": ["all", "local"]
   },
   {
     "name": "Vex 5",
-    "link": "/e/vex5/index.html",
+    "link": "/e/1/vex5/index.html",
     "image": "/assets/media/icons/vex5.webp",
     "categories": ["all", "local"]
   },
   {
     "name": "Vex 3",
-    "link": "/e/vex3/index.html",
+    "link": "/e/1/vex3/index.html",
     "image": "/assets/media/icons/vex3.webp",
     "categories": ["all", "local"]
   },
   {
     "name": "Vex 4",
-    "link": "/e/vex4/index.html",
+    "link": "/e/1/vex4/index.html",
     "image": "/assets/media/icons/vex4.webp",
     "categories": ["all", "local"]
   },
