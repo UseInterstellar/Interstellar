@@ -295,8 +295,13 @@ fetch(path)
       const image = document.createElement("img")
       image.width = 145
       image.height = 145
-      image.src = app.image
       image.loading = "lazy"
+
+      if (app.image) {
+        image.src = app.image
+      } else {
+        image.style.display = "none"
+      }
 
       const paragraph = document.createElement("p")
       paragraph.textContent = app.name
