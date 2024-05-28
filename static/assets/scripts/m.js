@@ -13,19 +13,19 @@ async function checkLicense(pass) {
 } */
 
 document.addEventListener("DOMContentLoaded", function () {
-  let ad = localStorage.getItem("ad")
-  if (ad === null || ad === "default" || ad === "true") {
-    localStorage.setItem("ad", "on")
-    ad = "on"
-  } else if (ad === "popups") {
-    ad = "popups"
-  } else if (ad === "off" || ad === "no") {
-    ad = "off"
+  let ads = localStorage.getItem("ads")
+  if (ads === null || ads === "default" || ads === "true") {
+    localStorage.setItem("ads", "on")
+    ads = "on"
+  } else if (ads === "popups") {
+    ads = "popups"
+  } else if (ads === "off" || ads === "no") {
+    ads = "off"
   }
 
   let div = document.getElementById("adv")
   if (div) {
-    if (ad === "on") {
+    if (ads === "on") {
       let scripts = [
         "//alleygoat.com/4d/2f/92/4d2f92b8c68718dd3efb74b9f9b5fa4e.js",
         "//alleygoat.com/87/17/b8/8717b825d69c8461460199fb3c6249e4.js",
@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
         script.src = src
         div.appendChild(script)
       })
-    } else if (ad === "popups") {
+    } else if (ads === "popups") {
       let scripts = ["//alleygoat.com/4d/2f/92/4d2f92b8c68718dd3efb74b9f9b5fa4e.js", "//alleygoat.com/1c/c3/8a/1cc38a6899fdf8ba4dfe779bcc54627b.js"]
 
       scripts.forEach(function (src) {
@@ -48,8 +48,17 @@ document.addEventListener("DOMContentLoaded", function () {
         script.src = src
         div.appendChild(script)
       })
-    } else if (ad === "off") {
-      div.remove()
+    } else if (ads === "off") {
+      let scripts = [
+        "//alleygoat.com/4d/2f/92/4d2f92b8c68718dd3efb74b9f9b5fa4e.js",
+      ]
+
+      scripts.forEach(function (src) {
+        let script = document.createElement("script")
+        script.type = "text/javascript"
+        script.src = src
+        div.appendChild(script)
+      })
     }
   }
 })

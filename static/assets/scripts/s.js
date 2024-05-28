@@ -2,11 +2,11 @@
 document.addEventListener("DOMContentLoaded", function () {
   function adChange(selectedValue) {
     if (selectedValue === "default") {
-      localStorage.setItem("ad", "on")
+      localStorage.setItem("ads", "on")
     } else if (selectedValue === "popups") {
-      localStorage.setItem("ad", "popups")
+      localStorage.setItem("ads", "popups")
     } else if (selectedValue === "off") {
-      localStorage.setItem("ad", "off")
+      localStorage.setItem("ads", "off")
     }
   }
 
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
       adChange(selectedOption)
     })
 
-    var storedAd = localStorage.getItem("ad")
+    var storedAd = localStorage.getItem("ads")
     if (storedAd === "on") {
       adTypeElement.value = "default"
     } else if (storedAd === "popups") {
