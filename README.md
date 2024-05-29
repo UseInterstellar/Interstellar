@@ -33,15 +33,19 @@
 ### Server Deployment
 
 You must run these commands on your server:  
-`git clone https://github.com/InterstellarNetwork/interstellar`  
-`cd interstellar`  
-`npm install`  
-`npm start`
+```bash
+git clone https://github.com/InterstellarNetwork/Interstellar
+cd Interstellar 
+npm install
+npm start
+```
 
 ### Updating
 
-`cd interstellar`  
-`git pull --force --allow-unrelated-histories`
+```bash
+cd Interstellar
+git pull --force --allow-unrelated-histories # may overwrite changes!
+```
 
 <a target="_blank" href="https://heroku.com/deploy/?template=https://github.com/interstellarnetwork/interstellar"><img alt="Deploy to Heroku" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/heroku.svg"></a>
 <a target="_blank" href="https://app.koyeb.com/deploy?type=git&repository=github.com/interstellarnetwork/interstellar"><img alt="Deploy to Koyeb" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/koyeb.svg"></a>
