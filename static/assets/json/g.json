@@ -1039,9 +1039,9 @@
   },
   {
     "name": "Idle Breakout",
-    "link": "https://interstellarnetwork.github.io/Interstellar-Assets/play/idle-breakout/index.html",
+    "link": "/e/1/idle-breakout/index.html",
     "image": "/assets/media/icons/idlebreakout.webp",
-    "categories": ["all"]
+    "categories": ["all", "local"]
   },
   {
     "name": "Isleward",
