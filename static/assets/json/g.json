@@ -14,7 +14,7 @@
   {
     "name": "Fancade",
     "link": "https://play.fancade.com",
-    "image": "https://www.fancade.com/images/fancade.jpg",
+    "image": "/assets/media/icon/fancade.jpg",
     "categories": ["all"]
   },
   {
@@ -1877,5 +1877,11 @@
     "link": "https://idle-js-games.github.io/goomyClicker2/",
     "image": "/assets/media/icons/gc2.webp",
     "categories": ["all"]
+  },
+  {
+    "name": "Space Company",
+    "link": "/e/1/space-company/index.html",
+    "image": "",
+    "categories": ["all", "local"]
   }
 ]

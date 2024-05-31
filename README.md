@@ -32,10 +32,11 @@
 
 ### Server Deployment
 
-You must run these commands on your server:  
+You must run these commands on your server:
+
 ```bash
 git clone https://github.com/InterstellarNetwork/Interstellar
-cd Interstellar 
+cd Interstellar
 npm install
 npm start
 ```
