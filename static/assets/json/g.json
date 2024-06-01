@@ -1164,12 +1164,6 @@
     "categories": ["all"]
   },
   {
-    "name": "NG Space Company",
-    "link": "https://interstellarnetwork.github.io/interstellar-assets/play/ng-space-company/frontend/dist/index.html",
-    "image": "/assets/media/icons/ng.webp",
-    "categories": ["all"]
-  },
-  {
     "name": "Ninja Cat Exploit",
     "link": "https://html5.gamedistribution.com/rvvASMiM/903ba9346b9d437e9c7e81d672cead44/index.html",
     "image": "/assets/media/icons/ninja-cat.webp",
@@ -1881,7 +1875,7 @@
   {
     "name": "Space Company",
     "link": "/e/1/space-company/index.html",
-    "image": "",
+    "image": "/assets/media/icons/sc.png",
     "categories": ["all", "local"]
   },
   {
