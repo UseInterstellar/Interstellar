@@ -412,5 +412,11 @@
     "image": "/assets/media/icons/proton.webp",
     "categories": ["all"],
     "error": "true"
-  }
+  },
+    {
+    "name": "SpaceHey",
+    "link": "https://www.spacehey.com",
+    "image": "/assets/media/icons/spacehey.png",
+    "categories": ["all", "social", "media"]
+  },
 ]
