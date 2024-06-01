@@ -1883,5 +1883,17 @@
     "link": "/e/1/space-company/index.html",
     "image": "",
     "categories": ["all", "local"]
+  },
+  {
+    "name": "Mario Kart DS",
+    "link": "https://seraph.reveriestudios.online/games/mariokartds/index.html",
+    "image": "/assets/media/icons/mariokartds.jpg",
+    "categories": ["all", "emu"]
+  },
+  {
+    "name": "Cooking Mama",
+    "link": "https://seraph.reveriestudios.online/games/cookingmama/index.html",
+    "image": "/assets/media/icons/cookingmama.jpg",
+    "categories": ["all", "emu"]
   }
 ]
