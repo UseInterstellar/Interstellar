@@ -5,8 +5,8 @@ try {
 } catch (e) {
   inFrame = true
 }
-
-if (!inFrame && !navigator.userAgent.includes("Firefox")) {
+if (!localStorage.getItem("ab")) localStorage.setItem("ab", true)
+if (!inFrame && !navigator.userAgent.includes("Firefox") && localStorage.getItem("ab") === "true") {
   const popup = open("about:blank", "_blank")
   if (!popup || popup.closed) {
     alert("Please allow popups and redirects.")
@@ -47,7 +47,7 @@ if (!inFrame && !navigator.userAgent.includes("Firefox")) {
   }
 }
 // Particles
-document.addEventListener("DOMContentLoaded", function (event) {
+document.addEventListener("DOMContentLoaded", (event) => {
   if (window.localStorage.getItem("Particles") === "true") {
     var particlesConfig = {
       particles: {
@@ -163,7 +163,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
   }
 })
 // Splash
-let SplashT = [
+const SplashT = [
   "Over 8 Million Users since 2023",
   "Fastest growing proxy server",
   "Made by xBubbo",
