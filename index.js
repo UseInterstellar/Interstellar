@@ -18,7 +18,7 @@ const PORT = process.env.PORT || 8080
 const cache = new Map()
 const CACHE_TTL = 30 * 24 * 60 * 60 * 1000 // Cache for 30 Days
 
-if (config.challenge) {
+if (process.env.config === "true" && config.challenge) {
   console.log(`Password protection is enabled. Usernames are: ${Object.keys(config.users)}`)
   console.log(`Passwords are: ${Object.values(config.users)}`)
   app.use(basicAuth({ users: config.users, challenge: true }))

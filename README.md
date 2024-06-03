@@ -30,6 +30,12 @@
 > [!IMPORTANT]
 > You **cannot** deploy to static web hosts, including Netlify, Cloudflare Pages, and GitHub Pages.
 
+### Password Protection
+
+1. Go to the `config.js` file and set `challenge` to **true**. Then, set the environment variable as follows:
+2. For PNPM: Run either `config=true pnpm start` or `$env:config=true; pnpm start`, depending on your server.
+3. For NPM: Run either `config=true npm start` or `$env:config=true; npm start` if you prefer NPM.
+
 ### Server Deployment
 
 You must run these commands on your server:
