@@ -362,19 +362,21 @@ document.addEventListener("DOMContentLoaded", () => {
     dropdown.value = selectedEngineName
   }
 })
+
 function getRandomURL() {
   let randomURLS = [
-    "https://kahoot.it", 
+    "https://kahoot.it",
     "https://classroom.google.com",
     "https://drive.google.com",
     "https://google.com",
     "https://docs.google.com",
     "https://slides.google.com",
     "https://www.nasa.gov",
-    "https://blooket.com"
+    "https://blooket.com",
   ]
-  return randomURLS[randRange(1, 6)]
+  return randomURLS[randRange(0, randomURLS.length)]
 }
+
 function randRange(min, max) {
-    return Math.floor(Math.random() * (max - min) + min)
+  return Math.floor(Math.random() * (max - min) + min)
 }
