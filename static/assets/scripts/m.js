@@ -12,7 +12,7 @@ async function checkLicense(pass) {
   return false
 } */
 
-document.addEventListener("DOMContentLoaded", function () {
+/* document.addEventListener("DOMContentLoaded", function () {
   let ads = localStorage.getItem("ads")
   if (ads === null || ads === "default" || ads === "true") {
     localStorage.setItem("ads", "on")
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
     })
   }
 })
-
+*/
 // Dynamic & Ads
 document.addEventListener("DOMContentLoaded", function () {
   if (localStorage.getItem("dy") === null || localStorage.getItem("dy") === undefined) {
