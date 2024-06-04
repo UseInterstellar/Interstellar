@@ -10,15 +10,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  var adTypeElement = document.getElementById("adType")
+  let adTypeElement = document.getElementById("adType")
 
   if (adTypeElement) {
     adTypeElement.addEventListener("change", function () {
-      var selectedOption = this.value
+      let selectedOption = this.value
       adChange(selectedOption)
     })
 
-    var storedAd = localStorage.getItem("ads")
+    let storedAd = localStorage.getItem("ads")
     if (storedAd === "on") {
       adTypeElement.value = "default"
     } else if (storedAd === "popups") {
@@ -53,15 +53,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  var pChangeElement = document.getElementById("pChange")
+  let pChangeElement = document.getElementById("pChange")
 
   if (pChangeElement) {
     pChangeElement.addEventListener("change", function () {
-      var selectedOption = this.value
+      let selectedOption = this.value
       pChange(selectedOption)
     })
 
-    var storedP = localStorage.getItem("uv")
+    let storedP = localStorage.getItem("uv")
     if (storedP === "true") {
       pChangeElement.value = "uv"
     } else if (localStorage.getItem("dy") === "true" || localStorage.getItem("dy") === "auto") {
@@ -92,7 +92,7 @@ eventKeyInput.addEventListener("input", () => {
   eventKey = eventKeyInput.value.split(",")
 })
 
-var linkInput = document.getElementById("linkInput")
+let linkInput = document.getElementById("linkInput")
 linkInput.addEventListener("input", () => {
   pLink = linkInput.value
 })
@@ -106,10 +106,10 @@ function saveEventKey() {
   window.location = window.location
 }
 // Tab Cloaker
-var dropdown = document.getElementById("dropdown")
-var options = dropdown.getElementsByTagName("option")
+let dropdown = document.getElementById("dropdown")
+let options = dropdown.getElementsByTagName("option")
 
-var sortedOptions = Array.from(options).sort((a, b) => a.textContent.localeCompare(b.textContent))
+let sortedOptions = Array.from(options).sort((a, b) => a.textContent.localeCompare(b.textContent))
 
 while (dropdown.firstChild) {
   dropdown.removeChild(dropdown.firstChild)
@@ -154,8 +154,8 @@ function ResetCustomCloak() {
 }
 
 function redirectToMainDomain() {
-  var currentUrl = window.location.href
-  var mainDomainUrl = currentUrl.replace(/\/[^\/]*$/, "")
+  let currentUrl = window.location.href
+  let mainDomainUrl = currentUrl.replace(/\/[^\/]*$/, "")
   if (window != top) {
     top.location.href = mainDomainUrl + window.location.pathname
   } else {
@@ -166,13 +166,13 @@ function redirectToMainDomain() {
 document.addEventListener("DOMContentLoaded", (event) => {
   const icon = document.getElementById("tab-favicon")
   const name = document.getElementById("tab-title")
-  var selectedValue = localStorage.getItem("selectedOption") || "Default"
+  let selectedValue = localStorage.getItem("selectedOption") || "Default"
   document.getElementById("dropdown").value = selectedValue
   updateHeadSection(selectedValue)
 })
 
 function handleDropdownChange(selectElement) {
-  var selectedValue = selectElement.value
+  let selectedValue = selectElement.value
   localStorage.removeItem("CustomName")
   localStorage.removeItem("CustomIcon")
   localStorage.setItem("selectedOption", selectedValue)
@@ -195,10 +195,10 @@ function updateHeadSection(selectedValue) {
 }
 // Background Image
 document.addEventListener("DOMContentLoaded", () => {
-  var saveButton = document.getElementById("save-button")
+  let saveButton = document.getElementById("save-button")
   saveButton.addEventListener("click", () => {
-    var backgroundInput = document.getElementById("background-input")
-    var imageURL = backgroundInput.value
+    let backgroundInput = document.getElementById("background-input")
+    let imageURL = backgroundInput.value
 
     if (imageURL !== "") {
       localStorage.setItem("backgroundImage", imageURL)
@@ -208,13 +208,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   })
 
-  var resetButton = document.getElementById("reset-button")
+  let resetButton = document.getElementById("reset-button")
   resetButton.addEventListener("click", () => {
     localStorage.removeItem("backgroundImage")
     document.body.style.backgroundImage = "url('default-background.jpg')"
   })
 
-  var savedBackgroundImage = localStorage.getItem("backgroundImage")
+  let savedBackgroundImage = localStorage.getItem("backgroundImage")
   if (savedBackgroundImage) {
     document.body.style.backgroundImage = "url('" + savedBackgroundImage + "')"
   }
@@ -284,7 +284,7 @@ function newCustomTheme() {
     alert("Name cannot contain a comma.")
     return
   }
-  if (localStorage.getItem("customThemes") != "") {
+  if (!localStorage.getItem("customThemes")) {
     localStorage.setItem("customThemes", localStorage.getItem("customThemes") + "," + themeName)
   } else {
     localStorage.setItem("customThemes", themeName)
@@ -342,16 +342,16 @@ if (themeId == "") {
 }
 
 if (themeId == "catppuccinMocha" || themeId == "catppuccinMacchiato" || themeId == "catppuccinFrappe" || themeId == "catppuccinLatte" || themeId == "d") {
-  document.getElementById("currentThemeText").innerHTML = "Selected Theme: Default Themes"
+  document.getElementById("currentThemeText").textContent = "Selected Theme: Default Themes"
   document.getElementById("et").disabled = true
   document.getElementById("ext").disabled = true
   document.getElementById("dt").disabled = true
 } else {
-  document.getElementById("currentThemeText").innerHTML = "Selected Theme: " + themeId
+  document.getElementById("currentThemeText").textContent = "Selected Theme: " + themeId
 }
 
 if (document.URL.endsWith("?theme-code")) {
-  document.body.innerHTML = ""
+  document.body.textContent = ""
   l = document.createElement("p")
   l.textContent = localStorage.getItem("theme-" + localStorage.getItem("theme"))
   document.body.appendChild(l)
@@ -439,9 +439,9 @@ function toggleAB() {
 }
 // Search Engine
 function EngineChange(dropdown) {
-  var selectedEngine = dropdown.value
+  let selectedEngine = dropdown.value
 
-  var engineUrls = {
+  let engineUrls = {
     Google: "https://www.google.com/search?q=",
     Bing: "https://www.bing.com/search?q=",
     DuckDuckGo: "https://duckduckgo.com/?q=",
@@ -458,7 +458,7 @@ function EngineChange(dropdown) {
 }
 
 function SaveEngine() {
-  var customEngine = document.getElementById("engine-form").value
+  let customEngine = document.getElementById("engine-form").value
   if (customEngine.trim() !== "") {
     localStorage.setItem("engine", customEngine)
     localStorage.setItem("enginename", "Custom")
@@ -468,8 +468,8 @@ function SaveEngine() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  var selectedEngineName = localStorage.getItem("enginename")
-  var dropdown = document.getElementById("engine")
+  let selectedEngineName = localStorage.getItem("enginename")
+  let dropdown = document.getElementById("engine")
   if (selectedEngineName) {
     dropdown.value = selectedEngineName
   }
