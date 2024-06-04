@@ -153,7 +153,17 @@
             <option value="catppuccinMacchiato">Macchiato</option>
             <option value="catppuccinFrappe">Frappe</option>
             <option value="catppuccinLatte">Latte</option>
+            <option disabled selected>Custom Themes</option>
           </select>
+        </div>
+        <div class="settings-card">
+          <h3>Custom Themes</h3>
+          <p id="currentThemeText">Selected Theme: (loading)</p>
+          <button class="key-button" id="ct" onclick="newCustomTheme();">Create</button>
+          <p id="currentThemeText">Import theme:</p>
+          <input id="et" type="file" accept=".css" />
+          <button class="key-button" id="dt" onclick="deleteCustomTheme();">Delete Current Theme</button>
+          <button class="key-button" id="ext" onclick="exportCustomTheme();">Export Current Theme</button>
         </div>
         <div class="settings-card">
           <h3>Information</h3>
