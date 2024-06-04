@@ -243,116 +243,118 @@ switches.addEventListener("change", (event) => {
 // Custom Themes
 
 function loadCustomThemes() {
+  let customThemes = localStorage.getItem("customThemes")
 
-  let customThemes = localStorage.getItem("customThemes");
-
-  customThemes = customThemes.split(",");
-  if(customThemes[0] != "" && customThemes.length == 1) {customThemes.forEach(addToCustomThemes);}
+  customThemes = customThemes.split(",")
+  if (customThemes[0] != "" && customThemes.length == 1) {
+    customThemes.forEach(addToCustomThemes)
+  }
 }
 
 function addToCustomThemes(item) {
-  console.log(item)
-  let dropdownbox = document.getElementsByClassName("td")[0];
-  var newTheme = document.createElement("option");
-  newTheme.text = item.toString();
-  newTheme.value = item.toString();
+  let dropdownbox = document.getElementsByClassName("td")[0]
+  const newTheme = Object.assign(document.createElement("option"), {
+    text: item.toString(),
+    value: item.toString(),
+  })
 
-  dropdownbox.add(newTheme);
+  dropdownbox.add(newTheme)
 }
 
 function newCustomTheme() {
-  var themeName = prompt("Give your theme a name:");
+  let themeName = prompt("Give your theme a name:")
 
-  let customThemes = localStorage.getItem("customThemes");
-  customThemes = customThemes.split(",");
-  if(customThemes.indexOf(themeName)!=-1) {
+  let customThemes = localStorage.getItem("customThemes")
+  customThemes = customThemes.split(",")
+  if (customThemes.indexOf(themeName) != -1) {
     alert("This name already exists!")
-    return;
+    return
   }
-  if(themeName=="catppuccinMocha" || themeName=="catppuccinMacchiato" || themeName=="catppuccinFrappe" || themeName=="catppuccinLatte" || themeName=="d") {
+  if (
+    themeName == "catppuccinMocha" ||
+    themeName == "catppuccinMacchiato" ||
+    themeName == "catppuccinFrappe" ||
+    themeName == "catppuccinLatte" ||
+    themeName == "d"
+  ) {
     alert("This theme name cannot be used.")
-    return;
+    return
   }
-  if(themeName.includes(",")) {
+  if (themeName.includes(",")) {
     alert("Name cannot contain a comma.")
-    return;
+    return
   }
-  if(themeName == "") {
-    return;
-  }
-  if(localStorage.getItem("customThemes") != "") {
-    localStorage.setItem("customThemes", localStorage.getItem("customThemes")+","+themeName)
-  }
-  else {
+  if (localStorage.getItem("customThemes") != "") {
+    localStorage.setItem("customThemes", localStorage.getItem("customThemes") + "," + themeName)
+  } else {
     localStorage.setItem("customThemes", themeName)
   }
-  localStorage.setItem("theme-"+themeName, ":root {}")
-  window.location = window.location;
+  localStorage.setItem("theme-" + themeName, ":root {}")
+  window.location = window.location
 }
 
 function deleteCustomTheme() {
-  let customThemes = localStorage.getItem("customThemes");
-  customThemes = customThemes.split(",");
-  let index = customThemes.indexOf(localStorage.getItem("theme"));
+  let customThemes = localStorage.getItem("customThemes")
+  customThemes = customThemes.split(",")
+  let index = customThemes.indexOf(localStorage.getItem("theme"))
   if (index !== -1) {
-      customThemes.splice(index, 1);
+    customThemes.splice(index, 1)
   }
   localStorage.setItem("customThemes", customThemes)
-  localStorage.removeItem("theme-"+localStorage.getItem("theme"));
-  localStorage.setItem("theme" , "d");
-  window.location = window.location;
+  localStorage.removeItem("theme-" + localStorage.getItem("theme"))
+  localStorage.setItem("theme", "d")
+  window.location = window.location
 }
 
 function exportCustomTheme() {
-  const blob = new Blob([localStorage.getItem("theme-"+localStorage.getItem("theme"))], { type: 'text/css' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = localStorage.getItem("theme");
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+  const blob = new Blob([localStorage.getItem("theme-" + localStorage.getItem("theme"))], { type: "text/css" })
+  const url = URL.createObjectURL(blob)
+  const a = Object.assign(document.createElement("a"), {
+    href: url,
+    download: localStorage.getItem("theme"),
+  })
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
+  URL.revokeObjectURL(url)
 }
 
-document.getElementById('et').addEventListener('change', importTheme, false);
+document.getElementById("et").addEventListener("change", importTheme, false)
 
 function importTheme(event) {
-    const file = event.target.files[0];
-    if (!file) return;
+  const file = event.target.files[0]
+  if (!file) return
 
-    const reader = new FileReader();
-    reader.onload = function(event) {
-        const contents = event.target.result;
-        localStorage.setItem("theme-"+localStorage.getItem("theme"),contents);
-        window.location = window.location;
-    };
-    reader.readAsText(file);
+  const reader = new FileReader()
+  reader.onload = function (event) {
+    const contents = event.target.result
+    localStorage.setItem("theme-" + localStorage.getItem("theme"), contents)
+    window.location = window.location
+  }
+  reader.readAsText(file)
 }
 
+loadCustomThemes()
 
-loadCustomThemes();
-
-var themeId = localStorage.getItem("theme")
+let themeId = localStorage.getItem("theme")
 if (themeId == "") {
   themeId = "d"
 }
 
-if(themeId=="catppuccinMocha" || themeId=="catppuccinMacchiato" || themeId=="catppuccinFrappe" || themeId=="catppuccinLatte" || themeId=="d") {
-  document.getElementById("currentThemeText").innerHTML="Selected Theme: Default Themes";
-  document.getElementById("et").disabled = true;
-  document.getElementById("ext").disabled = true;
-  document.getElementById("dt").disabled = true;
-}
-else {
-  document.getElementById("currentThemeText").innerHTML="Selected Theme: "+themeId;
+if (themeId == "catppuccinMocha" || themeId == "catppuccinMacchiato" || themeId == "catppuccinFrappe" || themeId == "catppuccinLatte" || themeId == "d") {
+  document.getElementById("currentThemeText").innerHTML = "Selected Theme: Default Themes"
+  document.getElementById("et").disabled = true
+  document.getElementById("ext").disabled = true
+  document.getElementById("dt").disabled = true
+} else {
+  document.getElementById("currentThemeText").innerHTML = "Selected Theme: " + themeId
 }
 
-if(document.URL.endsWith("?theme-code")) {
-  document.body.innerHTML="";
-  l = document.createElement("p");
-  l.textContent=localStorage.getItem("theme-"+localStorage.getItem("theme"));
-  document.body.appendChild(l);
+if (document.URL.endsWith("?theme-code")) {
+  document.body.innerHTML = ""
+  l = document.createElement("p")
+  l.textContent = localStorage.getItem("theme-" + localStorage.getItem("theme"))
+  document.body.appendChild(l)
 }
 
 document.getElementsByClassName("td")[0].value = themeId
