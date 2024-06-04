@@ -284,7 +284,7 @@ function newCustomTheme() {
     alert("Name cannot contain a comma.")
     return
   }
-  if (!localStorage.getItem("customThemes")) {
+  if (localStorage.getItem("customThemes" !== "")) {
     localStorage.setItem("customThemes", localStorage.getItem("customThemes") + "," + themeName)
   } else {
     localStorage.setItem("customThemes", themeName)
