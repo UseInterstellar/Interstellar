@@ -246,12 +246,17 @@ function loadCustomThemes() {
   let customThemes = localStorage.getItem("customThemes")
 
   customThemes = customThemes.split(",")
-  if (customThemes[0] != "" && customThemes.length == 1) {
+  if (customThemes[0] && customThemes.length == 1) {
+    return
+  } else {
     customThemes.forEach(addToCustomThemes)
   }
 }
 
 function addToCustomThemes(item) {
+  if (!item) {
+    return
+  }
   let dropdownbox = document.getElementsByClassName("td")[0]
   const newTheme = Object.assign(document.createElement("option"), {
     text: item.toString(),
