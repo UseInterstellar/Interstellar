@@ -1,6 +1,6 @@
 self.__dynamic$config = {
   prefix: "/a/q/",
-  encoding: "xor",
+  
   mode: "production",
   logLevel: 0,
   bare: {
