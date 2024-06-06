@@ -51,7 +51,7 @@ npm start
 
 ```bash
 cd Interstellar
-git pull --force --allow-unrelated-histories # may overwrite changes!
+git pull --force --allow-unrelated-histories # This may overwrite your local changes
 ```
 
 <a target="_blank" href="https://heroku.com/deploy/?template=https://github.com/interstellarnetwork/interstellar"><img alt="Deploy to Heroku" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/heroku.svg"></a>
@@ -69,14 +69,15 @@ As of January 1st, 2024, Replit is [no longer free](https://blog.replit.com/host
 
 ### GitHub Codespaces
 
+> [!NOTE]
 > If you're setting the port below 1023, then you must run `sudo PORT=1023`
 
 1. Create a GitHub account if you haven't already.
 2. Click "Code" (green button) and then "Create Codespace on main."
 3. In the terminal at the bottom, paste `pnpm i && pnpm start`.
 4. Respond to the application popup by clicking "Make public."
-   > [!IMPORTANT]
-   > Make sure you click the "Make public." button, or the proxy won't function properly.
+> [!IMPORTANT]
+> Make sure you click the "Make public." button, or the proxy won't function properly.
 5. Access the deployed website from the ports tab.
 6. For subsequent uses in the same codespace, just run `pnpm start`
 
