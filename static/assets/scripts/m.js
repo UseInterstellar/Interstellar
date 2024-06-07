@@ -101,11 +101,10 @@ if (themeid == "catppuccinFrappe") {
 if (themeid == "catppuccinLatte") {
   themeEle.href = "/assets/styles/themes/catppuccin/latte.css?v=1"
   document.body.appendChild(themeEle)
-}
-else {
-  var customThemeEle = document.createElement("style");
-  customThemeEle.textContent = localStorage.getItem("theme-"+themeid);
-  document.head.appendChild(customThemeEle);
+} else {
+  var customThemeEle = document.createElement("style")
+  customThemeEle.textContent = localStorage.getItem("theme-" + themeid)
+  document.head.appendChild(customThemeEle)
 }
 // Tab Cloaker
 document.addEventListener("DOMContentLoaded", function (event) {
