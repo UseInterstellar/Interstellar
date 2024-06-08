@@ -1,21 +1,21 @@
 @import url("https://unpkg.com/@catppuccin/palette/css/catppuccin.css");
 :root {
-  --page: var(--ctp-mocha-base) /*base*/;
+  --background-image: var(--ctp-mocha-base) /*base*/;
   --background: #1e1e2e;
-  --background-secondary: var(--ctp-mocha-mantle) /*mantle*/;
+  --background-input: var(--ctp-mocha-mantle) /*mantle*/;
   --background-dark: #11111b /*crust*/;
 
-  --title: var(--ctp-mocha-blue) /*blue*/;
-  --block: var(--ctp-mocha-surface0) /*surface0*/;
-  --block-buttons: var(--ctp-mocha-surface1) /*surface1*/;
+  --text-primary: var(--ctp-mocha-blue) /*blue*/;
+  --background-settings: var(--ctp-mocha-surface0) /*surface0*/;
+  --background-settings-buttons: var(--ctp-mocha-surface1) /*surface1*/;
   --input: var(--ctp-mocha-surface0) /*surface0*/;
-  --column: var(--ctp-mocha-crust) /*crust*/;
+  --background-column: var(--ctp-mocha-crust) /*crust*/;
 
   --text-primary: var(--ctp-mocha-text) /*text*/;
   --text-secondary: var(--ctp-mocha-subtext1) /*subtext1*/;
   --text-placeholder: var(--ctp-mocha-subtext0) /*subtext0*/;
-  --main: var(--ctp-mocha-base) /* base */;
-  --accent-color: var(--ctp-mocha-mantle) /* mantle */;
+  --background-color: var(--ctp-mocha-base) /* base */;
+  --background-accent: var(--ctp-mocha-mantle) /* mantle */;
 }
 
 input,

@@ -1,21 +1,21 @@
 @import url("https://unpkg.com/@catppuccin/palette/css/catppuccin.css");
 :root {
-  --page: var(--ctp-frappe-base) /*base*/;
+  --background-image: var(--ctp-frappe-base) /*base*/;
   --background: #1e1e2e;
-  --background-secondary: var(--ctp-frappe-mantle) /*mantle*/;
+  --background-input: var(--ctp-frappe-mantle) /*mantle*/;
   --background-dark: #11111b /*crust*/;
 
-  --title: var(--ctp-frappe-blue) /*blue*/;
-  --block: var(--ctp-frappe-surface0) /*surface0*/;
-  --block-buttons: var(--ctp-frappe-surface1) /*surface1*/;
+  --text-primary: var(--ctp-frappe-blue) /*blue*/;
+  --background-settings: var(--ctp-frappe-surface0) /*surface0*/;
+  --background-settings-buttons: var(--ctp-frappe-surface1) /*surface1*/;
   --input: var(--ctp-frappe-surface0) /*surface0*/;
-  --column: var(--ctp-frappe-crust) /*crust*/;
+  --background-column: var(--ctp-frappe-crust) /*crust*/;
 
   --text-primary: var(--ctp-frappe-text) /*text*/;
   --text-secondary: var(--ctp-frappe-subtext1) /*subtext1*/;
   --text-placeholder: var(--ctp-frappe-subtext0) /*subtext0*/;
-  --main: var(--ctp-frappe-base) /* base */;
-  --accent-color: var(--ctp-frappe-mantle) /* mantle */;
+  --background-color: var(--ctp-frappe-base) /* base */;
+  --background-accent: var(--ctp-frappe-mantle) /* mantle */;
 }
 
 input,

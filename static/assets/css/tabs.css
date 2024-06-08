@@ -7,8 +7,8 @@ body {
   margin: 0;
   overflow-x: hidden;
   overflow-y: hidden;
-  background: var(--main);
-  color: white;
+  background: var(--background-color);
+  color: var(--text-primary);
 }
 
 .nav {
@@ -26,14 +26,14 @@ body {
   border: none;
   background: none;
   font-size: 12px;
-  color: white;
+  color: var(--text-primary);
   cursor: pointer;
   transition: color 0.3s ease;
   width: 20px;
 }
 
 .close-tab:hover {
-  color: var(--text-color);
+  color: var(--text-primary);
 }
 
 .nav-bar {
@@ -41,7 +41,7 @@ body {
   right: 0;
   height: 2.5em;
   padding: 0 25px;
-  background: var(--main);
+  background: var(--background-color);
   box-sizing: border-box;
   transition: 0.35s ease;
   width: fill;
@@ -135,7 +135,7 @@ body {
   height: 2em;
   border: none;
   background: none;
-  color: #fff;
+  color: var(--text-primary);
   width: 60vw;
   height: 30px;
   border-radius: 5px;
@@ -143,11 +143,11 @@ body {
 }
 
 .navsearch:focus {
-  background: var(--background-secondary);
+  background: var(--background-input);
   box-shadow: none;
   border: none;
   outline: none;
-  color: #fff;
+  color: var(--text-primary);
   transition: 0.3s;
 }
 
@@ -155,7 +155,7 @@ body {
   padding: none;
   float: right;
   margin-top: 0em;
-  color: #fff;
+  color: var(--text-primary);
   height: 30px;
   border-radius: 5px;
 }
@@ -170,19 +170,15 @@ body {
 
 h1 {
   text-align: center;
-  color: white;
+  color: var(--text-primary);
   font-size: 50px;
   white-space: nowrap;
 }
 
 p {
   text-align: center;
-  color: white;
+  color: var(--text-primary);
   font-size: 25px;
-}
-
-a {
-  color: #6495ed;
 }
 
 .iframe-container iframe {
@@ -196,8 +192,8 @@ a {
 #add-tab {
   padding: 0.5rem;
   cursor: pointer;
-  background-color: var(--block);
-  color: var(--text-color);
+  background-color: var(--background-settings);
+  color: var(--text-primary);
   border: none;
   border-radius: 5px;
   margin-right: 0.5rem;
@@ -205,7 +201,7 @@ a {
 }
 
 #add-tab:hover {
-  background-color: var(--accent-color);
+  background-color: var(--background-accent);
 }
 
 ul {
@@ -216,7 +212,7 @@ ul {
 
 li {
   padding: 0.4rem;
-  background-color: var(--block);
+  background-color: var(--background-settings);
   margin-right: 0.5rem;
   cursor: pointer;
   border-radius: 5px;
@@ -227,11 +223,11 @@ li {
 }
 
 li.active {
-  background-color: var(--accent-color);
+  background-color: var(--background-accent);
 }
 
 li.active:hover {
-  background-color: var(--accent-color);
+  background-color: var(--background-accent);
 }
 
 li:hover {

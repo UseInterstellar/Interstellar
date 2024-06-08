@@ -10,7 +10,8 @@
     "**/env": true,
     "**/venv": true,
     "**/.github": true,
-    "**/.vscode": true
+    "**/.vscode": true,
+    "Failed.html": true
   },
   "files.watcherExclude": {
     "**/.git/objects/**": true,
@@ -18,6 +19,7 @@
     "**/node_modules/**": true,
     "**/env/**": true,
     "**/venv/**": true,
-    "env-*": true
+    "env-*": true,
+    "Failed.html": true
   }
 }
