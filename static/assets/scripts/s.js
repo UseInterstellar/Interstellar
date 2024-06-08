@@ -347,7 +347,14 @@ if (themeId == "") {
   themeId = "d"
 }
 
-if (themeId == "catppuccinMocha" || themeId == "catppuccinMacchiato" || themeId == "catppuccinFrappe" || themeId == "catppuccinLatte" || themeId == "d" || themeId == "Inverted") {
+if (
+  themeId == "catppuccinMocha" ||
+  themeId == "catppuccinMacchiato" ||
+  themeId == "catppuccinFrappe" ||
+  themeId == "catppuccinLatte" ||
+  themeId == "d" ||
+  themeId == "Inverted"
+) {
   document.getElementById("currentThemeText").textContent = "Selected Theme: Default Themes"
   document.getElementById("et").disabled = true
   document.getElementById("ext").disabled = true

@@ -109,8 +109,9 @@ if (themeid == "catppuccinFrappe") {
 if (themeid == "catppuccinLatte") {
   themeEle.href = "/assets/css/themes/catppuccin/latte.css?v=1"
   document.body.appendChild(themeEle)
-} if (themeid == "Inverted") {
-  themeEle.href = "/assets/css/themes/colors/inverted.css?v=1"
+}
+if (themeid == "Inverted") {
+  themeEle.href = "/assets/css/themes/colors/inverted.css?v=2"
   document.body.appendChild(themeEle)
 } else {
   var customThemeEle = document.createElement("style")
