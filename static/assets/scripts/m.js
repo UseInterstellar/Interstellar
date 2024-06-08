@@ -68,9 +68,17 @@ document.addEventListener("DOMContentLoaded", function () {
 var nav = document.querySelector(".fixed-nav-bar")
 
 if (nav) {
+  var themeId = localStorage.getItem("theme")
+  var LogoUrl = "/assets/media/favicon/main.png"
+  var LogoUrl
+  if (themeId === "Inverted") {
+    LogoUrl = "/assets/media/favicon/main-inverted.png"
+  } else {
+    LogoUrl = LogoUrl
+  }
   var html = `
     <div class="fixed-nav-bar-container">
-      <a class="icon" href="/./"><img alt="nav" id="INImg" src="/assets/media/favicon/main.png"/></a>
+      <a class="icon" href="/./"><img alt="nav" id="INImg" src="${LogoUrl}"/></a>
     </div>
     <div class="fixed-nav-bar-right">
       <a class="navbar-link" href="/./gm"><i class="fa-solid fa-gamepad navbar-icon"></i><an>Ga</an><an>mes</an></a>
@@ -100,6 +108,9 @@ if (themeid == "catppuccinFrappe") {
 }
 if (themeid == "catppuccinLatte") {
   themeEle.href = "/assets/css/themes/catppuccin/latte.css?v=1"
+  document.body.appendChild(themeEle)
+} if (themeid == "Inverted") {
+  themeEle.href = "/assets/css/themes/colors/inverted.css?v=1"
   document.body.appendChild(themeEle)
 } else {
   var customThemeEle = document.createElement("style")

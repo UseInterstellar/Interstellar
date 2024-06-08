@@ -280,6 +280,7 @@ function newCustomTheme() {
     themeName == "catppuccinMacchiato" ||
     themeName == "catppuccinFrappe" ||
     themeName == "catppuccinLatte" ||
+    themeName == "Inverted" ||
     themeName == "d"
   ) {
     alert("This theme name cannot be used.")
@@ -346,7 +347,7 @@ if (themeId == "") {
   themeId = "d"
 }
 
-if (themeId == "catppuccinMocha" || themeId == "catppuccinMacchiato" || themeId == "catppuccinFrappe" || themeId == "catppuccinLatte" || themeId == "d") {
+if (themeId == "catppuccinMocha" || themeId == "catppuccinMacchiato" || themeId == "catppuccinFrappe" || themeId == "catppuccinLatte" || themeId == "d" || themeId == "Inverted") {
   document.getElementById("currentThemeText").textContent = "Selected Theme: Default Themes"
   document.getElementById("et").disabled = true
   document.getElementById("ext").disabled = true

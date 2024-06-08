@@ -14,6 +14,7 @@
   --background-accent: #444; /* Accent Color for Tabs */
   --background-slider: #4caf50; /* Active Slider Background Color */
   --slider-accent: #ccc; /*  Slider Background Color */
+  --nav-image: url("/./assets/media/favicon/main.png"); /* Nav Logo */
   /* Text Variables */
   --text-primary: #fff; /* Primary Text Color */
   --text-dark: #555; /* Dark Text Color for Error Page, Scrollbar, and Particles */
