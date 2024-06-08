@@ -152,6 +152,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
     Gmail: { name: "Gmail", icon: "/assets/media/favicon/gmail.png" },
     Clever: { name: "Clever | Portal", icon: "/assets/media/favicon/clever.png" },
     Khan: { name: "Dashboard | Khan Academy", icon: "/assets/media/favicon/khan.png" },
+    Dictionary: { name: "Dictionary.com | Meanings & Definitions of English Words", icon: "/assets/media/favicon/dictionary.png" },
+    Thesaurus: { name: "Synonyms and Antonyms of Words | Thesaurus.com", icon: "/assets/media/favicon/thesaurus.png" },
     Campus: { name: "Infinite Campus", icon: "/assets/media/favicon/campus.png" },
     IXL: { name: "IXL | Dashboard", icon: "/assets/media/favicon/ixl.png" },
     Canvas: { name: "Dashboard", icon: "/assets/media/favicon/canvas.png" },

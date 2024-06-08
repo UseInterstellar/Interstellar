@@ -198,6 +198,11 @@ function getRandomURL() {
     "https://slides.google.com",
     "https://www.nasa.gov",
     "https://blooket.com",
+    "https://clever.com",
+    "https://edpuzzle.com",
+    "https://khanacademy.org",
+    "https://wikipedia.org",
+    "https://dictionary.com"
   ]
   return randomURLS[randRange(0, randomURLS.length)]
 }
