@@ -13,7 +13,13 @@
   border-radius: 0px 0px 5px 5px;
   margin-top: 30vh;
   margin-bottom: 5vh;
+  transition: 0.35s ease;
   text-shadow: 2px 4px 6px rgb(0, 0, 0, 0.2);
+}
+
+.title:hover {
+  transform: translateY(-5%) scale(1.03);
+  font-weight: 800;
 }
 
 @media (orientation: portrait) {
