@@ -9,7 +9,7 @@ if (!localStorage.getItem("ab")) localStorage.setItem("ab", true)
 if (!inFrame && !navigator.userAgent.includes("Firefox") && localStorage.getItem("ab") === "true") {
   const popup = open("about:blank", "_blank")
   if (!popup || popup.closed) {
-    alert("Please allow popups and redirects.")
+    alert("Please allow popups for this site. Doing so will allow us to open the site in a about:blank tab and preventing this site from showing up in your history. You can turn this off in the site settings.")
   } else {
     const doc = popup.document
     const iframe = doc.createElement("iframe")
@@ -162,7 +162,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     particlesJS("particles-js", particlesConfig)
   }
 })
-// Splash
+// Splash texts
 const SplashT = [
   "Over 8 Million Users since 2023",
   "Fastest growing proxy server",
@@ -203,6 +203,7 @@ function getRandomURL() {
     "https://khanacademy.org",
     "https://wikipedia.org",
     "https://dictionary.com",
+    // what if we added the hub here :trol:
   ]
   return randomURLS[randRange(0, randomURLS.length)]
 }
