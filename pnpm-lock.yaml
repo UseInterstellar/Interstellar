@@ -10,6 +10,9 @@ importers:
       "@tomphttp/bare-server-node":
         specifier: ^2.0.3
         version: 2.0.3
+      chalk:
+        specifier: ^5.3.0
+        version: 5.3.0
       cookie-parser:
         specifier: ^1.4.6
         version: 1.4.6
@@ -71,6 +74,10 @@ packages:
   call-bind@1.0.7:
     resolution: { integrity: sha512-GHTSNSYICQ7scH7sZ+M2rFopRoLh8t2bLSW6BbgrtLsahOIB5iyAVJf9GjWK3cYTDaMj4XdBpM1cA6pIS0Kv2w== }
     engines: { node: ">= 0.4" }
+
+  chalk@5.3.0:
+    resolution: { integrity: sha512-dLitG79d+GV1Nb/VYcCDFivJeK1hiukt9QjRNVOsUtTy1rR1YJsmpGGTZ3qJos+uw7WmWF4wUwBd9jxjocFC2w== }
+    engines: { node: ^12.17.0 || ^14.13 || >=16.0.0 }
 
   commander@10.0.1:
     resolution: { integrity: sha512-y4Mg2tXshplEbSGzx7amzPwKKOCGuoSRP/CjEdwwk0FOGlUbq6lKuoyDZTNZkmxHdJtp54hdfY/JUrdL7Xfdug== }
@@ -440,6 +447,8 @@ snapshots:
       function-bind: 1.1.2
       get-intrinsic: 1.2.4
       set-function-length: 1.2.2
+
+  chalk@5.3.0: {}
 
   commander@10.0.1: {}
 

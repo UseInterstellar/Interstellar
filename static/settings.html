@@ -138,16 +138,20 @@
             <option value="Dictionary">Dictionary.com</option>
             <option value="Thesaurus">Thesaurus.com</option>
           </select>
-          <input class="key-form" type="text" id="icon" placeholder="Change Tab Icon" name="icon" />
-          <input class="key-form" type="text" id="name" name="name" placeholder="Change Tab Name" />
-          <button class="key-button" value="Save" onclick="CustomIcon(); CustomName(); redirectToMainDomain();">Save</button>
-          <button class="key-button" value="Reset" onclick="ResetCustomCloak(); redirectToMainDomain();">Reset Cloak</button>
+          <div>
+            <input class="key-form" type="text" id="icon" placeholder="Change Tab Icon" name="icon" />
+            <input class="key-form" type="text" id="name" name="name" placeholder="Change Tab Name" />
+          </div>
+          <div id="buttonLayer">
+            <button class="key-button" value="Save" onclick="CustomIcon(); CustomName(); redirectToMainDomain();">Save</button>
+            <button class="key-button" value="Reset" onclick="ResetCustomCloak(); redirectToMainDomain();">Reset Cloak</button>
+          </div>
         </div>
         <div class="settings-card">
-          <h3>Custimization</h3>
+          <h3>Customization</h3>
           <p>Change the theme, create your own custom theme, or just change the background image.</p>
-          <p>Custom Themes are currently broken</p>
-          <button class="key-button" value="Save" onclick="Popup()">Create Custom Theme</button>
+          <p>Custom Themes are currently broken, we are working to fix this as soon as possible</p>
+          <button class="key-button" value="Save" onclick="Popup()" style="width: 100%">Create Custom Theme</button>
         </div>
         <div class="settings-card">
           <h3>Search Engine</h3>
@@ -167,7 +171,7 @@
         <div class="settings-card">
           <h3>Choose your <an>Pro</an>xy</h3>
           <p>
-            Ultra<an>vio</an>let is the main <an>pro</an>xy, but Dynamic is faster and supports more sites! (Dynamic is still in beta, so it has some bugs.)
+            Ultra<an>vio</an>let is the main <an>pro</an>xy, but Dynamic is faster and supports more sites. (Dynamic is still in beta, so expect some bugs.)
           </p>
           <select id="pChange">
             <option value="uv">Ultraviolet (Default)</option>
@@ -184,7 +188,7 @@
         </div>
         <div class="settings-card">
           <h3>Themes!</h3>
-          <p>Pick from a variety of themes!</p>
+          <p>Pick from a variety of themes to customize your experience.</p>
           <select placeholder="Solid Color Themes" id="dropdown" class="td" onchange="themeChange(this)">
             <option disabled selected>Solid Color Themes</option>
             <option value="d">Default</option>
@@ -206,7 +210,8 @@
                   <p>Cookie Policy</p> --->
           <p>
             Questions? Join our
-            <a href="https://discord.gg/interstellar">Community</a>! Or email us hello@gointerstellar.app
+            <a href="https://discord.gg/interstellar">Discord community</a>! Or email us at
+            <a href="mailto:hello@gointerstellar.app">hello@gointerstellar.app</a>!
           </p>
         </div>
       </div>

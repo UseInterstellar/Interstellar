@@ -44,8 +44,9 @@ body {
   background: var(--background-color);
   box-sizing: border-box;
   transition: 0.35s ease;
-  width: fill;
+  border-top: 3px solid var(--background-input);
   z-index: 100;
+  width: 100vw;
   position: fixed;
 }
 
@@ -53,7 +54,7 @@ body {
   border-radius: 10px;
   color: var(--text-primary);
   background: none;
-  height: 2em;
+  height: 3em;
   border: none;
   right: 10px;
   top: auto;
@@ -132,20 +133,22 @@ body {
 }
 
 .navsearch {
-  height: 2em;
-  border: none;
+  height: 20px;
+  border-width: 0 3px 3px 3px;
+  border-style: none solid solid solid;
+  border-color: transparent var(--background-input) var(--background-input) var(--background-input);
   background: none;
   color: var(--text-primary);
   width: 60vw;
   height: 30px;
   border-radius: 5px;
+  margin: 0 auto;
   transition: 0.3s;
 }
 
 .navsearch:focus {
   background: var(--background-input);
   box-shadow: none;
-  border: none;
   outline: none;
   color: var(--text-primary);
   transition: 0.3s;
@@ -156,7 +159,6 @@ body {
   float: right;
   margin-top: 0em;
   color: var(--text-primary);
-  height: 30px;
   border-radius: 5px;
 }
 

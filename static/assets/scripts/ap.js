@@ -163,6 +163,7 @@ function initializeCustomApp(customApp) {
   const btn = document.createElement("button")
   btn.appendChild(pinIcon)
   btn.style.float = "right"
+  btn.style.cursor = "pointer"
   btn.style.backgroundColor = "rgb(45,45,45)"
   btn.style.borderRadius = "50%"
   btn.style.borderColor = "transparent"
