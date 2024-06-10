@@ -7,280 +7,144 @@
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" id="tab-favicon" href="favicon.png" />
-    <title id="tab-title">Home</title>
+    <title id="tab-title">Terms of service</title>
     <link rel="stylesheet" href="/assets/css/global.css?v=6" />
     <link rel="stylesheet" href="/assets/css/nav.css?v=2" />
     <script src="https://kit.fontawesome.com/1237c86ba0.js" crossorigin="anonymous"></script>
-
-    <style>
-      * {
-        color: var(--text-primary);
-      }
-    </style>
   </head>
   <body>
-    <br />
-    <br />
-    <br />
-    <br />
+    <style>
+      .c-container {
+        position: fixed;
+        top: 15%;
+        left: 5%;
+        width: 90%;
+        height: 80vh;
+        border-radius: 15px;
+        color: var(--text-primary);
+      }
+
+      .c-container h1 {
+        font-size: 25px;
+        margin-top: 20px;
+      }
+
+      .c-container h2 {
+        font-size: 20px;
+        margin-top: 15px;
+      }
+
+      .c-container h3 {
+        font-size: 45px;
+        margin-bottom: 10px;
+      }
+
+      .c-container p {
+        font-size: 15px;
+        line-height: 150%;
+        color: white;
+        margin: 10px;
+      }
+
+      .c-container #updated {
+        color: gray;
+        margin: 10px;
+      }
+
+      .c-container ul {
+        font-size: 15px;
+        color: white;
+        margin: 10px;
+      }
+
+      .c-container li {
+        margin: 10px;
+      }
+
+      .c-container a,
+      a:visited {
+        color: var(--text-primary);
+      }
+
+      .c-container a:hover {
+        text-decoration: underline;
+      }
+
+      .c-container div {
+        margin-top: 20px;
+      }
+
+      .card {
+        padding: 10px;
+        background-color: var(--background-settings);
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        height: 100%;
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        overflow: auto;
+      }
+    </style>
     <div class="fixed-nav-bar"></div>
-    <h1><a href="https://github.com/InterstellarNetwork/Interstellar">Interstellar</a> privacy policy and terms of use</h1>
-    <h2>Section 1: Definitions</h2>
-    <p>
-      In this privacy policy, "We" refers to "Interstellar". "Personally-identifiable information" (PII) refers to information that can be used to identify a
-      person such as IP addresses. "Official Interstellar deployments" refer to the Interstellar application
-      <b>running on the official server.</b> "Interstellar deployment operator" refers to the person(s) running the Interstellar application. "ToS" refers to
-      Terms of Service.
-    </p>
-    <p>
-      Please redirect any general inquiries to our official community on
-      <a href="https://discord.gg/interstellar">Discord</a>. Redirect any questions regarding unofficial Interstellar deployments to its operator.
-    </p>
-    <h2>Section 2: Summary</h2>
-    <ul>
-      <li>
-        <b
-          >By using Interstellar, you agree you understand and acknowledge this privacy policy and its clauses. This page has been created to help you
-          understand what types of data we collect, how we use and keep your data safe, etc. If you do not agree with this privacy policy and terms of service,
-          you must cease use of our services.</b
-        >
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <b
-          >Interstellar will not be held liable in any situation that may occur as a result of using or hosting the Interstellar application on ANY Interstellar
-          deployment.</b
-        >
-      </li>
-    </ul>
-    <ul>
-      <li>
-        The safest way to use Interstellar is by using its official deployments or by
-        <a href="https://docs.gointerstellar.app/windows-local">hosting Interstellar on your own machine</a>.
-      </li>
-    </ul>
-    <h3>Section 2.1: Summary - Offical Interstellar Deployment</h3>
-    <ul>
-      <li>
-        Official Interstellar deployments are run with privacy in mind.
-        <b
-          >We do temporarily collect and retain some PII such as IP addresses used to access the official Interstellar deployment, but this is not
-          intentional.</b
-        >
-      </li>
-    </ul>
-    <h3>Section 2.2: Summary - Unofficial Interstellar Deployments</h3>
-    <ul>
-      <li>
-        Interstellar developers are commited to ensuring Interstellar remains as a secure application. However, we cannot guarantee the same level of security
-        or privacy of unofficial Interstellar deployments.
-      </li>
-    </ul>
-    <ul>
-      <li>The type of information collected on community deployments is completely dependent on who and where the deployment is being hosted.</li>
-    </ul>
-    <ul>
-      <li>Generally, we recommend Interstellar deployment operators to collect as minimal information as possible.</li>
-    </ul>
-    <ul>
-      <li>We cannot control unofficial Interstellar deployments.</li>
-    </ul>
-    <ul>
-      <li>
-        We cannot verify the authenticity of the code in unofficial Interstellar deployments. This is an extremely rare situation, but we will not be held
-        responsible if your data such as an account becomes compromised as a result of malicious code in an unofficial Interstellar deployment.
-      </li>
-    </ul>
-    <h2>Section 3: Acceptable Use</h2>
-    <ul>
-      <li>Do not use any Interstellar deployment to do illegal activity.</li>
-    </ul>
-    <ul>
-      <li>If you are under 18, do not use any Interstellar deployment to access any adult sites.</li>
-    </ul>
-    <h2>Section 4: Third Parties</h2>
-    <h3>Section 4.1: Google Analytics Usage</h3>
-    <ul>
-      <li>Google Analytics is active and embedded in Interstellar's code.</li>
-    </ul>
-    <ul>
-      <li>
-        <a href="https://marketingplatform.google.com/about/analytics/terms/us/">You may read the Google Analytics ToS here.</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href="https://policies.google.com/technologies/partner-sites"
-          >You may read "HOW GOOGLE USES INFORMATION FROM SITES OR APPS THAT USE OUR SERVICES" here.</a
-        >
-      </li>
-    </ul>
-    <h3>Section 4.2: Our community on Discord</h3>
-    <ul>
-      <li>
-        Our official community on Discord is accessible at
-        <a href="https://discord.gg/interstellar">https://discord.gg/interstellar.</a>
-      </li>
-    </ul>
-    <ul>
-      <li>By joining, you agree and acknowledge our Discord server rules.</li>
-    </ul>
-    <ul>
-      <li>
-        <a href="https://discord.com/terms">You can read the Discord ToS here.</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href="https://discord.com/privacy">You can read the Discord privacy policy here.</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href="https://discord.com/guidelines">You can read the Discord community guidelines here.</a>
-      </li>
-    </ul>
-    <h3>Section 4.3: Our commmunity and repository at GitHub</h3>
-    <ul>
-      <li>
-        Interstellar is an open source project.
-        <a href="https://github.com/InterstellarNetwork/Interstellar">You can view its code by clicking here.</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href="https://docs.github.com/en/site-policy/github-terms/github-terms-of-service">You can read the GitHub ToS here.</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement"
-          >You can read the GitHub General Privacy Statement here.</a
-        >
-      </li>
-    </ul>
-    <h3>Section 4.4: Supporting Interstellar using Patreon</h3>
-    <ul>
-      <li>Interstellar uses Patreon as a way for people to donate and support Interstellar.</li>
-    </ul>
-    <ul>
-      <li>
-        <a href="https://www.patreon.com/policy/legal">You can read the Patreon ToS here.</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href="https://privacy.patreon.com/policies/en/">You can read the Patreon Privacy Policy here.</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href="https://www.patreon.com/policy/cookies">You can read the Patreon Cookie Policy here.</a>
-      </li>
-    </ul>
-    <h3>Section 4.5: Supporting Interstellar using Cash App</h3>
-    <ul>
-      <li>Interstellar accepts Cash App as a way for people to donate and support Interstellar.</li>
-    </ul>
-    <ul>
-      <li>
-        <a href="https://cash.app/legal/us/en-us/privacy">You can read the Cash App privacy policy here.</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href="https://cash.app/legal/us/en-us/tos">You can read the Cash App ToS here.</a>
-      </li>
-    </ul>
-    <h2>Section 5: The information we collect</h2>
-    <h3>Section 5.1: The official Interstellar deployment</h3>
-    <ul>
-      <li>
-        Information that may be unintentionally collected as part of using Interstellar's official deployment may include basic information such as your IP
-        address, web traffic when using Interstellar, etc. This information is temporary and is kept until the server is rebooted.
-      </li>
-    </ul>
-    <ul>
-      <li>We do not purposefully collect anyone's information. We try to limit the data collected by the official Interstellar deployment.</li>
-    </ul>
-    <ul>
-      <li>
-        We do not, will not, and will never knowingly collect the information of minors under the age of 13 (or the minimum age required by laws in your
-        country).
-      </li>
-    </ul>
-    <h3>Section 5.2: Unofficial Interstellar Deployments</h3>
-    <ul>
-      <li>
-        We can't give a definitive answer on what information is collected when you use a unofficial Interstellar deployment, only the operator of the
-        Interstellar deployment you're using can.
-      </li>
-    </ul>
-    <ul>
-      <li>We urge operators to collect and store as minimal information as possible, but we can't control what they do.</li>
-    </ul>
-    <h2>Section 6: Control</h2>
-    <ul>
-      <li>We do not have the power to control what unofficial Interstellar deployment operators do with their deployment.</li>
-    </ul>
-    <ul>
-      <li>
-        We protect information stored on the official Interstellar deployment by limiting access. The only person that has access to the server of which the
-        official Interstellar deployment runs on is the server host and the owner of Interstellar, xbubbo.
-      </li>
-    </ul>
-    <ul>
-      <li>
-        We cannot check every deployment for malicious code. If any data such as your account gets compromised after you access it on a unofficial Interstellar
-        deployment, we will not be held liable.
-      </li>
-    </ul>
-    <h2>Section 7: How we use basic information on the official Interstellar deployment that may be collected accidentally</h2>
-    <ul>
-      <li>
-        Your IP address is used to allow you to use the Interstellar service. This is how it works for every website you visit, not just Interstellar. The
-        difference is whether or not this data is intentionally collected and stored.
-      </li>
-    </ul>
-    <ul>
-      <li>Info about your web traffic while using Interstellar is needed to allow you to access the service you wish to access.</li>
-    </ul>
-    <ul>
-      <li>
-        Interstellar will NEVER sell your info to third-parties, other than to some ad companies. We do this so we can make enough money to pay for our server.
-      </li>
-    </ul>
-    <ul>
-      <li>
-        The official Interstellar server operator may respond to legal requests and assist law enforcement officials in legal investigations if ever needed. We
-        can't guarantee we'll always have information to hand out as the information that may be collected is automatically destroyed on reboot, but if we do
-        still have information relevent to the investigation, we may provide law enforcement officials with it. Please redirect all requests regarding data with
-        an unofficial Interstellar deployment to its operator, as we don't have control over unofficial deployments and couldn't comply with requests even if we
-        wanted to.
-      </li>
-    </ul>
-    <h2>Section 8: Supporters ❤</h2>
-    <ul>
-      <li>
-        You may choose to support Interstellar by joining our
-        <a href="https://discord.gg/interstellar">Discord community</a>, then purchasing a payment plan on the
-        <a href="https://patreon.com/gointerstellar">Patreon page</a> or by sending
-        <a href="https://cash.app/$akabubbo">$akabubbo money on Cash App.</a>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        As a thank you for supporting Interstellar, you get access to supporter features. This includes a server with an Interstellar deployment for supporters
-        only. We cannot guarantee 100% uptime. We reserve the right to discontinue any supporter perks at any time.
-      </li>
-    </ul>
-    <ul>
-      <li>This is NON-REFUNDABLE.</li>
-    </ul>
-    <h2>Last Updated</h2>
-    <p>April 25, 2024 - Made some clauses easier to read and understand.</p>
-    <p>April 12, 2024 - Privacy Policy & ToS created.</p>
+    <div class="c-container">
+      <div class="card">
+        <h3>Terms of Service</h3>
+        <p id="updated">Last Updated: Mon, 10 Jun 2024 16:08:49 GMT.</p>
+        <!--what is bro yapping about 💀💀-->
+        <p>By using our services, you agree to the following terms of service. Please read them carefully.</p>
+        <h2>1. Acceptance of Terms</h2>
+        <p>
+          By accessing or using Interstellar, you affirm that you are at least 13 years old and capable of forming a binding contract with us. If you are under
+          13, you may not use Interstellar.
+        </p>
+        <h2>2. Changes to Terms</h2>
+        <p>
+          We reserve the right to change these Terms at any time with or without warning. Your continued use of Interstellar following the posting of changes
+          means that you accept and agree to the changes.
+        </p>
+        <h2>3. Use of Interstellar</h2>
+        <p>By using of Interstellar, you agree to only use it for lawful purposes in accordance with these Terms. You agree not to:</p>
+        <ul>
+          <li>Use Interstellar in any way that violates any applicable local, national, or international law or regulation.</li>
+          <li>
+            Engage in any conduct that restricts or inhibits anyone's use or enjoyment of Interstellar, or which, as determined by us, may harm us or users of
+            Interstellar.
+          </li>
+          <li>
+            Attempt to gain unauthorized access to, interfere with, damage, or disrupt any parts of Interstellar, the server on which Interstellar is stored, or
+            any server, computer, or database connected to Interstellar.
+          </li>
+        </ul>
+        <h2>4. Privacy Policy</h2>
+        <p>Our Privacy Policy is available at <a href="/privacy">/privacy</a>. By using Interstellar, you have read and agree to our Privacy Policy.</p>
+        <h2>5. Limitation of Liability</h2>
+        <p>
+          Interstellar is provided on an "as-is" and "as-available" basis. You agree that your use of Interstellar and our services will be at your sole risk.
+          We are not responsible for any harm or damage caused while using our services. It is your duty to ensure that you are using our services safely and
+          securely.
+        </p>
+        <p>
+          Interstellar developers are commited to ensuring Interstellar remains as a secure application. However, we cannot guarantee the same level of security
+          or privacy of unofficial Interstellar deployments. The type of information collected on community deployments is completely dependent on who and where
+          the deployment is being hosted. We cannot control nor verify the authenticity of the code in unofficial Interstellar deployments. This is an extremely
+          rare situation, but we will not be held responsible if your data such as an account becomes compromised as a result of malicious code in an unofficial
+          Interstellar deployment.
+        </p>
+        <p>
+          We recommend using the official Interstellar deployment at <a href="https://gointerstellar.app">https://gointerstellar.app</a> or self hosting your
+          own copy for the most secure experience.
+        </p>
+        <h1>6. Contact Us</h1>
+        <p>
+          If you have any questions or concerns about the Terms of Service of Interstellar, please contact us by email at
+          <a target="_blank" href="mailto:hello@gointerstellar.app">hello@gointerstellar.app</a>.
+        </p>
+      </div>
+    </div>
     <script src="/assets/scripts/m.js?v=86"></script>
     <!-- DO NOT REMOVE-->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ"></script>
