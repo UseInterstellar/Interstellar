@@ -24,17 +24,54 @@
         color: var(--text-primary);
       }
 
+      .c-container h1 {
+        font-size: 25px;
+        margin-top: 20px;
+      }
+
+      .c-container h2 {
+        font-size: 20px;
+        margin-top: 15px;
+      }
+
       .c-container h3 {
-        position: fixed;
-        top: 10%;
         font-size: 45px;
+        margin-bottom: 10px;
       }
 
       .c-container p {
-        position: fixed;
-        top: 22%;
         font-size: 15px;
+        line-height: 150%;
+        color: white;
+        margin: 10px;
+      }
+
+      .c-container #updated {
         color: gray;
+        margin: 10px;
+      }
+
+      .c-container ul {
+        font-size: 15px;
+        color: white;
+        margin: 10px;
+      }
+
+      .c-container li {
+        margin: 10px;
+      }
+
+      .c-container a,
+      a:visited {
+        color: var(--text-primary);
+      }
+
+      .c-container a:hover {
+        text-decoration: underline;
+      }
+
+      .c-container div {
+        margin-top: 20px;
       }
 
       .card {
@@ -45,16 +82,94 @@
         transition: all 0.3s ease;
         height: 100%;
         display: flex;
-        justify-content: center;
+        flex-wrap: nowrap;
+        flex-direction: column;
+        justify-content: flex-start;
         align-items: center;
+        overflow: auto;
       }
     </style>
     <div class="fixed-nav-bar"></div>
     <div class="c-container">
       <div class="card">
         <h3>Privacy Policy</h3>
-        <p>Last Updated: April 19th, 2024.</p>
-        <!--some day we gotta add it-->
+        <p id="updated">Last Updated: Mon, 10 Jun 2024 12:30:24 GMT.</p>
+        <!--what is bro yapping about 💀💀-->
+        <p>
+          Welcome to Interstellar ("we", "our", "us"). We are committed to protecting your privacy and ensuring that your personal information is handled in a
+          safe and responsible manner. This Privacy Policy outlines how we collect, use, and protect your information when you visit our website.
+        </p>
+        <h1>0. Definitions</h1>
+        <p>The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.</p>
+        <p><strong>Company</strong> (referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to Interstellar.</p>
+        <p>
+          <strong>Website</strong> refers to Interstellar, accessible from
+          <a target="_blank" href="https://gointerstellar.app">https://gointerstellar.app</a> and any other domains running the Interstellar service
+        </p>
+        <p><strong>You</strong> means the individual accessing or using the Website</p>
+        <h1>1. Information We Collect</h1>
+        <h2>1.1 Personal Information</h2>
+        <p>We do not knowingly collect any personal information such as your name, address, email address, or phone number under any circumstances.</p>
+        <h2>1.2 Non-Personal Information</h2>
+        <p>
+          We may collect non-personal information about you whenever you interact with our Site. This information may include your IP address, your browser user
+          agent, your operating system, and referrer information. We may also collect information about your browsing behavior, such as the date and time you
+          visit the Site, the areas or pages of the Site that you visit, the amount of time you spend viewing the Site, and the number of times you return to
+          the Site.
+        </p>
+        <p>
+          Our partner, Google Analytics helps us collect and analyze this information. You can find out more details about our relationship with Google
+          Analytics in the "Third-Party Providers" section.
+        </p>
+        <h1>2. How We Use Your Information</h1>
+        <p>
+          We use the information we collect to analyze how people use our Site and to improve our Site. We do not sell your information to third parties. We may
+          share your information with third-party providers who help us analyze how people use our Site. You can find out more details about our relationship
+          with third-party providers in the "Third-Party Providers" section.
+        </p>
+        <h1>3. Third-Party Providers</h1>
+        <p>
+          We use third-party providers to help us analyze how people use our Site. These providers may collect information about you when you visit our Site.
+          You can find out more details about our relationship with these providers below.
+        </p>
+        <h2>3.1 Google Analytics</h2>
+        <p>
+          We use Google Analytics to help us analyze how people use our Site. Google Analytics collects information about you when you visit our Site. You can
+          find out more details about how Google Analytics collects and processes your information by visiting
+          <a target="_blank" href="https://https://policies.google.com/privacy">Google's Privacy Policy</a> page.
+        </p>
+        <h2>3.2 Cloudflare</h2>
+        <p>
+          We use Cloudflare to help us protect our Site from malicious attacks. Cloudflare may collect information about you when you visit our Site. You can
+          find out more details about how Cloudflare collects and processes your information by visiting
+          <a target="_blank" href="https://www.cloudflare.com/privacypolicy/">Cloudflare's Privacy Policy</a> page.
+        </p>
+        <h2>3.3 Adsterra</h2>
+        <p>
+          We use Adsterra to help us display advertisements on our Site. Adsterra may collect information about you when you visit our Site. You can find out
+          more details about how Adsterra collects and processes your information by visiting
+          <a target="_blank" href="https://adsterra.com/privacy-policy-managed/">Adsterra's Privacy Policy</a> page.
+        </p>
+        <h1>4. Changes to This Privacy Policy</h1>
+        <p>
+          We reserve the right to modify this Privacy Policy at any time, without prior notice. You are advised to review this Privacy Policy periodically for
+          any changes. Changes to this Privacy Policy are effective when they are posted on this page.
+        </p>
+        <h1>5. Opt-out</h1>
+        <p>
+          You can opt-out of having having your data collected and used by third parties by installing a content blocker such as
+          <a target="_blank" href="https://ublockorigin.com/">uBlock Origin</a>. This will block third-party scripts from Google Analytics, Cloudflare, and
+          Adsterra from running on our Site.
+        </p>
+        <p>
+          Even if you opt out, some data might be still be collected by our servers, but this is strictly used to provide our services and is not used for
+          product improvement or advertising.
+        </p>
+        <h1>6. Contact Us</h1>
+        <p>
+          If you have any questions or concerns about this Privacy Policy, please contact us by email at
+          <a target="_blank" href="mailto:hello@gointerstellar.app">hello@gointerstellar.app</a>.
+        </p>
       </div>
     </div>
     <script src="/assets/scripts/m.js?v=86"></script>
