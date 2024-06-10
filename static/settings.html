@@ -138,16 +138,20 @@
             <option value="Dictionary">Dictionary.com</option>
             <option value="Thesaurus">Thesaurus.com</option>
           </select>
-          <input class="key-form" type="text" id="icon" placeholder="Change Tab Icon" name="icon" />
-          <input class="key-form" type="text" id="name" name="name" placeholder="Change Tab Name" />
-          <button class="key-button" value="Save" onclick="CustomIcon(); CustomName(); redirectToMainDomain();">Save</button>
-          <button class="key-button" value="Reset" onclick="ResetCustomCloak(); redirectToMainDomain();">Reset Cloak</button>
+          <div>
+            <input class="key-form" type="text" id="icon" placeholder="Change Tab Icon" name="icon" />
+            <input class="key-form" type="text" id="name" name="name" placeholder="Change Tab Name" />
+          </div>
+          <div id="buttonLayer">
+            <button class="key-button" value="Save" onclick="CustomIcon(); CustomName(); redirectToMainDomain();">Save</button>
+            <button class="key-button" value="Reset" onclick="ResetCustomCloak(); redirectToMainDomain();">Reset Cloak</button>
+          </div>
         </div>
         <div class="settings-card">
-          <h3>Custimization</h3>
+          <h3>Customization</h3>
           <p>Change the theme, create your own custom theme, or just change the background image.</p>
-          <p>Custom Themes are currently broken</p>
-          <button class="key-button" value="Save" onclick="Popup()">Create Custom Theme</button>
+          <p>Custom Themes are currently broken, we are working to fix this as soon as possible</p>
+          <button class="key-button" value="Save" onclick="Popup()" style="width: 100%">Create Custom Theme</button>
         </div>
         <div class="settings-card">
           <h3>Search Engine</h3>
