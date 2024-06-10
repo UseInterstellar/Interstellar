@@ -100,11 +100,10 @@ input:checked + .slider-round:before {
 
 input {
   padding: 15px;
-  width: 93%;
-  border-radius: 5px;
+  border-radius: 10px;
   background: var(--background-input);
   text-align: center;
-  font-size: 24px;
+  font-size: 20px;
   border: none;
   outline: none;
   color: var(--text-primary);
@@ -112,11 +111,11 @@ input {
 
 .key-form {
   padding: 15px;
-  width: 93%;
-  border-radius: 5px;
+  width: 92.5%;
+  border-radius: 10px;
   background: var(--background-buttons);
   text-align: center;
-  font-size: 24px;
+  font-size: 20px;
   border: none;
   outline: none;
   color: var(--text-primary);
@@ -126,14 +125,15 @@ input {
 .key-button {
   cursor: pointer;
   border: 2px;
+  font-size: 20px;
   transition: 0.2s;
   margin-top: 10px;
   background-color: var(--background-buttons);
   padding: 0.5rem;
-  border-radius: 0.375rem;
+  border-radius: 10px;
   color: var(--text-primary);
   height: 50px;
-  width: 49%;
+  width: 50%;
   padding: 10px;
   text-align: center;
 }
@@ -145,7 +145,7 @@ button {
   margin-top: 10px;
   background-color: var(--background-buttons);
   padding: 0.5rem;
-  border-radius: 0.375rem;
+  border-radius: 10px;
   color: var(--text-primary);
   height: 50px;
   width: 35%;
@@ -154,13 +154,27 @@ button {
 }
 
 select {
-  padding: 20px;
-  border-radius: 5px;
+  padding: 15px;
+  width: 100%;
+  border-radius: 10px;
   background: var(--background-buttons);
   color: var(--text-primary);
   font-size: 20px;
   border: 0px;
   outline: none;
+}
+
+#buttonLayer {
+  width: 400px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+#buttonLayer > .key-button {
+  flex-grow: 1;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 @media screen and (max-width: 768px) {
@@ -252,7 +266,7 @@ select {
   margin: 0 auto;
   padding: 1.5vh 3vh;
   width: 70%;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 .popup .input-small {
@@ -260,7 +274,7 @@ select {
   margin: 0 auto;
   padding: 1.5vh 3vh;
   width: 40%;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 .popup button {
@@ -270,7 +284,7 @@ select {
   margin-top: 10px;
   background-color: var(--background-buttons);
   padding: 0.5rem;
-  border-radius: 0.375rem;
+  border-radius: 10px;
   color: var(--text-primary);
   height: 50px;
   width: 15%;
