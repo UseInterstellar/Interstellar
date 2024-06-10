@@ -3,7 +3,7 @@
 
 :root {
   /* Background Variables */
-  --background-image: url("/./assets/media/background/full2.png"); /* Background Image */
+  --background-image: url("/./assets/media/background/full-main.png"); /* Background Image */
   --backdrop-filter: blur(10px) brightness(80%); /* Nav Backdrop filter */
   --background-nav: rgba(255, 255, 255, 0.02); /* Nav Background */
   --background-color: #222; /* Main Background Color */
