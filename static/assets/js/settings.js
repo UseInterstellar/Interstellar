@@ -392,8 +392,8 @@ function updateHeadSection(selectedValue) {
 
 const switches = document.getElementById("2")
 
-if (window.localStorage.getItem("Particles") != "") {
-  if (window.localStorage.getItem("Particles") == "true") {
+if (window.localStorage.getItem("particles") != "") {
+  if (window.localStorage.getItem("particles") == "true") {
     switches.checked = true
   } else {
     switches.checked = false
@@ -402,9 +402,9 @@ if (window.localStorage.getItem("Particles") != "") {
 
 switches.addEventListener("change", (event) => {
   if (event.currentTarget.checked) {
-    window.localStorage.setItem("Particles", "true")
+    window.localStorage.setItem("particles", "true")
   } else {
-    window.localStorage.setItem("Particles", "false")
+    window.localStorage.setItem("particles", "false")
   }
 })
 // AB Cloak
@@ -420,7 +420,7 @@ function AB() {
   if (!inFrame && !navigator.userAgent.includes("Firefox")) {
     const popup = open("about:blank", "_blank")
     if (!popup || popup.closed) {
-      alert("Please allow popups and redirects.")
+      alert("Window blocked. Please allow popups for this site.")
     } else {
       const doc = popup.document
       const iframe = doc.createElement("iframe")
@@ -440,9 +440,6 @@ function AB() {
       style.border = style.outline = "none"
       style.width = style.height = "100%"
 
-      doc.head.appendChild(link)
-      doc.body.appendChild(iframe)
-
       const pLink = localStorage.getItem(encodeURI("pLink")) || getRandomURL()
       location.replace(pLink)
 
@@ -454,6 +451,8 @@ function AB() {
           return confirmationMessage;
         };
       `
+      doc.head.appendChild(link)
+      doc.body.appendChild(iframe)
       doc.head.appendChild(script)
     }
   }
@@ -462,7 +461,7 @@ function AB() {
 function toggleAB() {
   ab = localStorage.getItem("ab")
   if (!ab) {
-    localStorage.setItem("ab", "false")
+    localStorage.setItem("ab", "true")
   } else if (ab === "true") {
     localStorage.setItem("ab", "false")
   } else {
