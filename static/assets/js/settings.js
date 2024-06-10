@@ -1,3 +1,5 @@
+// if statement hell featuring a stupid amount of functions
+
 // Utility Functions
 function Popup() {
   document.querySelector(".settings-container").style.display = "none"
@@ -229,8 +231,9 @@ document.addEventListener("DOMContentLoaded", () => {
   iconElement.value = customIcon
   nameElement.value = customName
 
-  localStorage.setItem("ab", true)
-  document.getElementById("ab-settings-switch").checked = true
+  if (localStorage.getItem("ab") === "true") {
+    document.getElementById("ab-settings-switch").checked = true
+  }
 })
 
 // Dyn
