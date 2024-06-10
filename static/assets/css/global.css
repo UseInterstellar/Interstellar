@@ -3,7 +3,7 @@
 
 :root {
   /* Background Variables */
-  --background-image: url("/./assets/media/background/full2.png"); /* Background Image */
+  --background-image: url("/./assets/media/background/full-main.png"); /* Background Image */
   --backdrop-filter: blur(10px) brightness(80%); /* Nav Backdrop filter */
   --background-nav: rgba(255, 255, 255, 0.02); /* Nav Background */
   --background-color: #222; /* Main Background Color */
@@ -11,16 +11,20 @@
   --background-column: #353535; /* Background for Apps Container */
   --background-settings: #2a2a2a; /* Settings Card Background */
   --background-buttons: #333; /* Button Background Color */
-  --background-accent: #444; /* Accent Color for Tabs */
-  --background-slider: #4caf50; /* Active Slider Background Color */
-  --slider-accent: #ccc; /*  Slider Background Color */
+  --tab-active-background: #444; /* Accent Color for Tabs */
+  --tab-inactive-background: ; /* Background Color for Tabs Not In Use */
+  --slider-active-background: #4caf50; /* Active Slider Background Color */
+  --slider-inactive-background: #ccc; /*  Slider Background Color */
   --nav-image: url("/./assets/media/favicon/main.png"); /* Nav Logo */
   /* Text Variables */
   --text-primary: #fff; /* Primary Text Color */
   --text-dark: #555; /* Dark Text Color for Error Page, Scrollbar, and Particles */
   --text-placeholder: #aaa; /* Placeholder Text Color */
   /* Other Variables */
-  --tab-hover: #6c6e79; /* Tab Color on Hover */
+  --save-button: #4caf50; /* Save Button, Typically Green */
+  --reset-button: #f44336; /* Reset Button, Typically Red */
+  --import-button: #009688; /* Import Button, Typically Teal */
+  --export-button: #ea76cb; /* Export Button, Typically Pink */
 }
 
 ::-webkit-scrollbar {
@@ -72,3 +76,4 @@ body {
   position: absolute;
   z-index: 99;
 }
+

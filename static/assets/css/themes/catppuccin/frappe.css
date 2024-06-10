@@ -15,7 +15,7 @@
   --text-secondary: var(--ctp-frappe-subtext1) /*subtext1*/;
   --text-placeholder: var(--ctp-frappe-subtext0) /*subtext0*/;
   --background-color: var(--ctp-frappe-base) /* base */;
-  --background-accent: var(--ctp-frappe-mantle) /* mantle */;
+  --tab-active-background: var(--ctp-frappe-mantle) /* mantle */;
 }
 
 input,

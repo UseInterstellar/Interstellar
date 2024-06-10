@@ -201,7 +201,7 @@ p {
 }
 
 #add-tab:hover {
-  background-color: var(--background-accent);
+  background-color: var(--tab-active-background);
 }
 
 ul {
@@ -223,15 +223,11 @@ li {
 }
 
 li.active {
-  background-color: var(--background-accent);
-}
-
-li.active:hover {
-  background-color: var(--background-accent);
+  background-color: var(--tab-active-background);
 }
 
 li:hover {
-  background-color: var(--tab-hover);
+  background-color: var(--tab-active-background);
 }
 
 iframe {

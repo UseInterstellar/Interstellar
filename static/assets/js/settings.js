@@ -1,3 +1,195 @@
+// Utility Functions
+function Popup() {
+  document.querySelector(".settings-container").style.display = "none"
+  document.querySelector(".popup").style.display = "block"
+}
+
+function ClosePopup() {
+  document.querySelector(".settings-container").style.display = "flex"
+  document.querySelector(".popup").style.display = "none"
+}
+
+function initializeTheme() {
+  const themeId = localStorage.getItem("theme") || "d"
+  document.querySelector(".td").value = themeId
+}
+
+function handleThemeChange(event) {
+  const selectedValue = event.target.value
+  localStorage.setItem("theme", selectedValue)
+  window.location.reload()
+}
+
+function initializeBackground() {
+  const savedBackgroundImage = localStorage.getItem("backgroundImage")
+  if (savedBackgroundImage) {
+    setBackgroundImage(savedBackgroundImage)
+  }
+}
+
+function setBackgroundImage(imageURL) {
+  document.body.style.backgroundImage = `url('${imageURL}')`
+  document.querySelector("#background-input").value = imageURL
+}
+
+function handleFileChange(event) {
+  const fileInput = event.target
+  if (fileInput.files && fileInput.files[0]) {
+    const reader = new FileReader()
+    reader.onload = function (e) {
+      const imageURL = e.target.result
+      localStorage.setItem("backgroundImage", imageURL)
+      setBackgroundImage(imageURL)
+    }
+    reader.readAsDataURL(fileInput.files[0])
+  }
+}
+
+function resetBackground() {
+  localStorage.removeItem("backgroundImage")
+  const defaultBackground = "./assets/media/background/full-main.png"
+  setBackgroundImage(defaultBackground)
+}
+
+function handleBackgroundSave() {
+  const imageURL = document.querySelector("#background-input").value
+  if (imageURL.startsWith("https://")) {
+    localStorage.setItem("backgroundImage", imageURL)
+    setBackgroundImage(imageURL)
+    document.querySelector("#background-input").value = ""
+  } else {
+    alert("Please enter a URL starting with 'https://'")
+  }
+}
+
+// CSS Content Generator
+function generateCSSContent(themeData) {
+  let cssContent = `:root {`
+  for (const [key, value] of Object.entries(themeData)) {
+    if (value) {
+      cssContent += `\n--${key.replace(/([A-Z])/g, "-$1").toLowerCase()}: ${value};`
+    }
+  }
+  cssContent += `
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  background-color: var(--background-color);
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: var(--background-color);
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: var(--primary-text-color);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--dark-text-color);
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  text-decoration: none;
+  background: var(--background-image);
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+::placeholder {
+  color: var(--placeholder-text-color);
+  opacity: 1;
+}
+
+.main {
+  letter-spacing: 0px;
+  font-family: 'Inter', sans-serif;
+  width: 99%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  top: 0%;
+  position: absolute;
+  z-index: 99;
+}`
+
+  return cssContent
+}
+
+function saveTheme() {
+  const themeData = {
+    background: document.querySelector("#background-input").value || "url('/./assets/media/background/full-main.png')",
+    backgroundColor: document.querySelector("#background-color-input").value || "#222",
+    inputColor: document.querySelector("#input-color-input").value || "#4545459e",
+    appCardColor: document.querySelector("#app-card-color-input").value || "#353535",
+    settingsCardColor: document.querySelector("#settings-card-color-input").value || "#2a2a2a",
+    buttonColor: document.querySelector("#button-color-input").value || "#333",
+    tabAccentColor: document.querySelector("#tab-accent-color-input").value || "#444",
+    sliderActiveColor: document.querySelector("#slider-active-color-input").value || "#4caf50",
+    sliderInactiveColor: document.querySelector("#slider-inactive-color-input").value || "#ccc",
+    logoColor: document.querySelector("#white-logo").classList.contains("selected") ? "white" : "black",
+    primaryTextColor: document.querySelector("#primary-text-color-input").value || "#fff",
+    darkTextColor: document.querySelector("#dark-text-color-input").value || "#555",
+    placeholderTextColor: document.querySelector("#placeholder-text-color-input").value || "#aaa",
+  }
+
+  const cssContent = generateCSSContent(themeData)
+  localStorage.setItem("themeCSS", cssContent)
+}
+
+// Event Listeners
+document.addEventListener("DOMContentLoaded", () => {
+  initializeTheme()
+  initializeBackground()
+
+  document.querySelector(".td").addEventListener("change", handleThemeChange)
+
+  let fileInput = document.createElement("input")
+  fileInput.type = "file"
+  fileInput.accept = "image/*"
+  fileInput.style.display = "none"
+  document.body.appendChild(fileInput)
+
+  document.querySelector("#upload-button").addEventListener("click", () => fileInput.click())
+  fileInput.addEventListener("change", handleFileChange)
+
+  document.querySelector("#reset-button").addEventListener("click", resetBackground)
+
+  document.querySelector("#black-button").addEventListener("click", resetBackground)
+
+  document.querySelector("#white-button").addEventListener("click", () => {
+    const whiteBackgroundURL = "./assets/media/background/full-inverted.png"
+    localStorage.setItem("backgroundImage", whiteBackgroundURL)
+    setBackgroundImage(whiteBackgroundURL)
+  })
+
+  document.querySelector("#save-button").addEventListener("click", handleBackgroundSave)
+
+  document.querySelector("#save-theme").addEventListener("click", saveTheme)
+})
+
+function dataURItoBlob(dataURI) {
+  const byteString = dataURI.split(",")[0].indexOf("base64") >= 0 ? atob(dataURI.split(",")[1]) : unescape(dataURI.split(",")[1])
+  const mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0]
+
+  const arrayBuffer = new ArrayBuffer(byteString.length)
+  const ia = new Uint8Array(arrayBuffer)
+  for (let i = 0; i < byteString.length; i++) {
+    ia[i] = byteString.charCodeAt(i)
+  }
+
+  return new Blob([arrayBuffer], { type: mimeString })
+}
 // Ads
 document.addEventListener("DOMContentLoaded", () => {
   function adChange(selectedValue) {
@@ -193,32 +385,6 @@ function updateHeadSection(selectedValue) {
     localStorage.setItem("icon", customIcon)
   }
 }
-// Background Image
-document.addEventListener("DOMContentLoaded", () => {
-  let saveButton = document.getElementById("save-button")
-  saveButton.addEventListener("click", () => {
-    let backgroundInput = document.getElementById("background-input")
-    let imageURL = backgroundInput.value
-
-    if (imageURL !== "") {
-      localStorage.setItem("backgroundImage", imageURL)
-      document.body.style.backgroundImage = "url('" + imageURL + "')"
-      backgroundInput.value = ""
-    } else {
-    }
-  })
-
-  let resetButton = document.getElementById("reset-button")
-  resetButton.addEventListener("click", () => {
-    localStorage.removeItem("backgroundImage")
-    document.body.style.backgroundImage = "url('default-background.jpg')"
-  })
-
-  let savedBackgroundImage = localStorage.getItem("backgroundImage")
-  if (savedBackgroundImage) {
-    document.body.style.backgroundImage = "url('" + savedBackgroundImage + "')"
-  }
-})
 // Particles
 
 const switches = document.getElementById("2")
@@ -238,156 +404,6 @@ switches.addEventListener("change", (event) => {
     window.localStorage.setItem("Particles", "false")
   }
 })
-// Themes
-
-// Custom Themes
-
-function loadCustomThemes() {
-  let customThemes = localStorage.getItem("customThemes")
-
-  customThemes = customThemes.split(",")
-  if (customThemes[0] && customThemes.length == 1) {
-    return
-  } else {
-    customThemes.forEach(addToCustomThemes)
-  }
-}
-
-function addToCustomThemes(item) {
-  if (!item) {
-    return
-  }
-  let dropdownbox = document.getElementsByClassName("td")[0]
-  const newTheme = Object.assign(document.createElement("option"), {
-    text: item.toString(),
-    value: item.toString(),
-  })
-
-  dropdownbox.add(newTheme)
-}
-
-function newCustomTheme() {
-  let themeName = prompt("Give your theme a name:")
-
-  let customThemes = localStorage.getItem("customThemes")
-  customThemes = customThemes.split(",")
-  if (customThemes.indexOf(themeName) != -1) {
-    alert("This name already exists!")
-    return
-  }
-  if (
-    themeName == "catppuccinMocha" ||
-    themeName == "catppuccinMacchiato" ||
-    themeName == "catppuccinFrappe" ||
-    themeName == "catppuccinLatte" ||
-    themeName == "Inverted" ||
-    themeName == "d"
-  ) {
-    alert("This theme name cannot be used.")
-    return
-  }
-  if (themeName.includes(",")) {
-    alert("Name cannot contain a comma.")
-    return
-  }
-  if (localStorage.getItem("customThemes")) {
-    localStorage.setItem("customThemes", localStorage.getItem("customThemes") + "," + themeName)
-  } else {
-    localStorage.setItem("customThemes", themeName)
-  }
-  localStorage.setItem("theme-" + themeName, ":root {}")
-  window.location = window.location
-}
-
-function deleteCustomTheme() {
-  let customThemes = localStorage.getItem("customThemes")
-  customThemes = customThemes.split(",")
-  let index = customThemes.indexOf(localStorage.getItem("theme"))
-  if (index !== -1) {
-    customThemes.splice(index, 1)
-  }
-  localStorage.setItem("customThemes", customThemes)
-  localStorage.removeItem("theme-" + localStorage.getItem("theme"))
-  localStorage.setItem("theme", "d")
-  window.location = window.location
-}
-
-function exportCustomTheme() {
-  const blob = new Blob([localStorage.getItem("theme-" + localStorage.getItem("theme"))], { type: "text/css" })
-  const url = URL.createObjectURL(blob)
-  const a = Object.assign(document.createElement("a"), {
-    href: url,
-    download: localStorage.getItem("theme"),
-  })
-  document.body.appendChild(a)
-  a.click()
-  document.body.removeChild(a)
-  URL.revokeObjectURL(url)
-}
-
-document.getElementById("et").addEventListener("change", importTheme, false)
-
-function importTheme(event) {
-  const file = event.target.files[0]
-  if (!file) return
-
-  const reader = new FileReader()
-  reader.onload = function (event) {
-    const contents = event.target.result
-    localStorage.setItem("theme-" + localStorage.getItem("theme"), contents)
-    window.location = window.location
-  }
-  reader.readAsText(file)
-}
-
-loadCustomThemes()
-
-let themeId = localStorage.getItem("theme")
-if (themeId == "") {
-  themeId = "d"
-}
-
-if (
-  themeId == "catppuccinMocha" ||
-  themeId == "catppuccinMacchiato" ||
-  themeId == "catppuccinFrappe" ||
-  themeId == "catppuccinLatte" ||
-  themeId == "d" ||
-  themeId == "Inverted"
-) {
-  document.getElementById("currentThemeText").textContent = "Selected Theme: Default Themes"
-  document.getElementById("et").disabled = true
-  document.getElementById("ext").disabled = true
-  document.getElementById("dt").disabled = true
-} else {
-  document.getElementById("currentThemeText").textContent = "Selected Theme: " + themeId
-}
-
-if (document.URL.endsWith("?theme-code")) {
-  document.body.textContent = ""
-  l = document.createElement("p")
-  l.textContent = localStorage.getItem("theme-" + localStorage.getItem("theme"))
-  document.body.appendChild(l)
-}
-
-document.getElementsByClassName("td")[0].value = themeId
-
-const themeDropdown = document.getElementsByClassName("td")
-dropdown.addEventListener("change", () => {
-  const selectedValue = dropdown.value
-
-  localStorage.setItem("theme", selectedValue)
-
-  window.location = window.location
-})
-
-function themeChange(ele) {
-  const selTheme = ele.value
-
-  localStorage.setItem("theme", selTheme)
-
-  window.location = window.location
-}
 // AB Cloak
 function AB() {
   let inFrame

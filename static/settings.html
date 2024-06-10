@@ -8,15 +8,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" id="tab-favicon" href="favicon.png" />
     <title id="tab-title">Home</title>
-    <link rel="stylesheet" href="/assets/css/global.css?v=2" />
+    <link rel="stylesheet" id="global" href="/assets/css/global.css?v=4" />
     <link rel="stylesheet" href="/assets/css/container.css" />
     <link rel="stylesheet" href="/assets/css/nav.css" />
-    <link rel="stylesheet" href="/assets/css/settings.css" />
+    <link rel="stylesheet" href="/assets/css/settings.css?v=2" />
     <script src="https://kit.fontawesome.com/1237c86ba0.js" crossorigin="anonymous"></script>
   </head>
   <body>
     <div class="fixed-nav-bar"></div>
     <div class="main">
+      <div class="popup">
+        <h3>Theme Creator</h3>
+        <button class="export" id="export-theme">Export CSS</button>
+        <button class="import" id="import-theme-button">Import CSS</button>
+        <p>Change the background image</p>
+        <input type="text" id="background-input" placeholder="Enter image URL" />
+        <button class="green" id="save-button">Save Image</button>
+        <button id="upload-button">Upload Image</button>
+        <button id="black-button">Black Background</button>
+        <button id="white-button">White Background</button>
+        <button class="red" id="reset-button">Reset</button>
+        <p>Change the background color</p>
+        <input type="text" class="input-small" id="background-color-input" />
+        <p>Change the searchbar/input color</p>
+        <input type="text" class="input-small" id="input-color-input" />
+        <p>Change the app card color</p>
+        <input type="text" class="input-small" id="app-card-color-input" />
+        <p>Change the settings card color</p>
+        <input type="text" class="input-small" id="settings-card-color-input" />
+        <p>Change the color of buttons</p>
+        <input type="text" class="input-small" id="button-color-input" />
+        <p>Change the accent color of tabs</p>
+        <input type="text" class="input-small" id="tab-accent-color-input" />
+        <p>Change the background color of turned on sliders</p>
+        <input type="text" class="input-small" id="slider-active-color-input" />
+        <p>Change the background color of turned off sliders</p>
+        <input type="text" class="input-small" id="slider-inactive-color-input" />
+        <p>Change the color of our icon on the nav bar</p>
+        <button id="white-logo">White Logo</button>
+        <button id="black-logo">Black Logo</button>
+        <p>Change the primary color of text (Default Color: White)</p>
+        <input type="text" class="input-small" id="primary-text-color-input" />
+        <p>Change the color of dark text (Default Color: Gray)</p>
+        <input type="text" class="input-small" id="dark-text-color-input" />
+        <p>Change the color of placeholder text (Default Color: Light Gray)</p>
+        <input type="text" class="input-small" id="placeholder-text-color-input" />
+        <button onclick="ClosePopup()" id="save-theme">Save Theme</button>
+      </div>
       <div class="settings-container">
         <div class="settings-card">
           <h3>About:Blank</h3>
@@ -106,6 +144,12 @@
           <button class="key-button" value="Reset" onclick="ResetCustomCloak(); redirectToMainDomain();">Reset Cloak</button>
         </div>
         <div class="settings-card">
+          <h3>Custimization</h3>
+          <p>Change the theme, create your own custom theme, or just change the background image.</p>
+          <p>Custom Themes are currently broken</p>
+          <button class="key-button" value="Save" onclick="Popup()">Create Custom Theme</button>
+        </div>
+        <div class="settings-card">
           <h3>Search Engine</h3>
           <p>Change the search engine when searching.</p>
           <select title="engine" id="engine" onchange="EngineChange(this)">
@@ -121,7 +165,7 @@
           <button class="key-button" value="Save" onclick="SaveEngine();">Save</button>
         </div>
         <div class="settings-card">
-          <h3>Choose your <b>Pr</b>oxy</h3>
+          <h3>Choose your <an>Pro</an>xy</h3>
           <p>
             Ultra<an>vio</an>let is the main <an>pro</an>xy, but Dynamic is faster and supports more sites! (Dynamic is still in beta, so it has some bugs.)
           </p>
@@ -129,13 +173,6 @@
             <option value="uv">Ultraviolet (Default)</option>
             <option value="dy">Dynamic (Doesn't work in about:blank)</option>
           </select>
-        </div>
-        <div class="settings-card">
-          <h3>Set Background Image</h3>
-          <p>Change the site's background image.</p>
-          <input type="text" id="background-input" placeholder="Enter image URL" />
-          <button class="key-button" id="save-button">Save</button>
-          <button class="key-button" id="reset-button">Reset</button>
         </div>
         <div class="settings-card">
           <h3>Particles</h3>
@@ -161,21 +198,12 @@
           </select>
         </div>
         <div class="settings-card">
-          <h3>Custom Themes</h3>
-          <p id="currentThemeText">Selected Theme: (loading)</p>
-          <button class="key-button" id="ct" onclick="newCustomTheme();">Create</button>
-          <p id="currentThemeText">Import theme:</p>
-          <input id="et" type="file" accept=".css" />
-          <button class="key-button" id="dt" onclick="deleteCustomTheme();">Delete Current Theme</button>
-          <button class="key-button" id="ext" onclick="exportCustomTheme();">Export Current Theme</button>
-        </div>
-        <div class="settings-card">
           <h3>Information</h3>
           <p>Version: 5.2.4</p>
-          <p id="last-updated">Last Updated: June 8th, 2024</p>
+          <p id="last-updated">Last Updated: June 9th, 2024</p>
           <!--<p>Privacy Policy</p>
-          <p>Terms of Service</p>
-          <p>Cookie Policy</p> --->
+                  <p>Terms of Service</p>
+                  <p>Cookie Policy</p> --->
           <p>
             Questions? Join our
             <a href="https://discord.gg/interstellar">Community</a>! Or email us hello@gointerstellar.app
@@ -183,8 +211,8 @@
         </div>
       </div>
     </div>
-    <script src="/assets/scripts/m.js?v=82"></script>
-    <script src="/assets/scripts/s.js?v=50"></script>
+    <script src="/assets/scripts/m.js?v=84"></script>
+    <script src="/assets/js/settings.js?v=1"></script>
     <!-- DO NOT REMOVE-->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ"></script>
     <script>
