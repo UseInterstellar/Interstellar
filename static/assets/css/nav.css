@@ -46,7 +46,7 @@ img {
 }
 
 .fixed-nav-bar .icon:hover {
-  transform: translateY(-55%) scale(1.03);
+  transform: translateY(-15%) scale(1.03);
   font-weight: 800;
 }
 
