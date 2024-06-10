@@ -6,6 +6,18 @@
     "opsz" 48;
 }
 
+.fixed-nav-bar #icon-container {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  padding-top: 5px;
+}
+
 .fixed-nav-bar-container {
   min-width: 5vw;
   min-height: 10vh;
@@ -51,8 +63,7 @@
   font-style: normal;
   text-decoration: none;
   transition: all 0.2s ease;
-  height: 0.5vh;
-  width: 0.5vh;
+  height: 5vh; /* Adjust this value as needed */
   top: 18%;
 }
 
@@ -70,7 +81,7 @@
 .fixed-nav-bar-right .navbar-link {
   margin-left: 10px;
   text-transform: uppercase;
-  font-size: 14px;
+  font-size: 25px;
   cursor: pointer;
   color: var(--text-primary);
   font-weight: 800;
@@ -81,6 +92,7 @@
   transition: all 0.2s ease;
   transform: translateX(0%);
 }
+
 @media (orientation: portrait) {
   .fixed-nav-bar-right .navbar-link {
     margin-left: 10px;
@@ -144,11 +156,6 @@
   }
 }
 
-img {
-  width: 48px;
-  padding-top: 5px;
-}
-
 @keyframes spin {
   from {
     transform: rotate(0deg);
@@ -160,6 +167,6 @@ img {
 
 @media (orientation: portrait) {
   img {
-    width: 24px;
+    height: 48px;
   }
 }
