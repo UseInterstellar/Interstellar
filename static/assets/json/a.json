@@ -19,7 +19,7 @@
   },
   {
     "name": "Steam",
-    "link": "https://steampowered.com/",
+    "link": "https://store.steampowered.com/",
     "image": "/assets/media/icons/steam.webp",
     "categories": ["all"],
     "say": "Steam can't actually be added because it's an app, not a website. This only lets you browse the Steam website, you can't actually play any games unless you use Geforce Now.",
@@ -27,13 +27,13 @@
   },
   {
     "name": "BuzzFeed Quizzes",
-    "link": "https://buzzfeed.com/quizzes",
+    "link": "https://www.buzzfeed.com/quizzes",
     "image": "/assets/media/icons/buzzfeed.webp",
     "categories": ["all"]
   },
   {
     "name": "Guilded",
-    "link": "https://guilded.gg",
+    "link": "https://www.guilded.gg/",
     "image": "/assets/media/icons/guilded.webp",
     "categories": ["all", "social"]
   },
@@ -45,7 +45,7 @@
   },
   {
     "name": "Temu",
-    "link": "https://temu.com",
+    "link": "https://www.temu.com/",
     "image": "/assets/media/icons/temu.webp",
     "categories": ["all"]
   },
@@ -69,13 +69,13 @@
   },
   {
     "name": "Chess.com",
-    "link": "https://chess.com",
+    "link": "https://www.chess.com/",
     "image": "/assets/media/icons/chess.webp",
     "categories": ["all", "game"]
   },
   {
     "name": "Cool Math Games",
-    "link": "https://coolmathgames.com",
+    "link": "https://www.coolmathgames.com/",
     "image": "/assets/media/icons/coolmath.webp",
     "categories": ["all", "game"]
   },
@@ -309,15 +309,9 @@
   },
   {
     "name": "Wattpad",
-    "link": "https://wattpad.com/",
+    "link": "https://www.wattpad.com/",
     "image": "/assets/media/icons/wattpad.webp",
     "categories": ["all", "social"]
-  },
-  {
-    "name": "ChatGPT Clone",
-    "link": "https://chat.shuttleai.app/",
-    "image": "/assets/media/icons/chatgpt.webp",
-    "categories": ["all", "AI"]
   },
   {
     "name": "Discord - Login",
