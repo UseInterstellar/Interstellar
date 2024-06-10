@@ -123,12 +123,12 @@ window.addEventListener("load", function () {
   var cssContent = localStorage.getItem("themeCSS")
 
   if (cssContent) {
-    console.log("CSS Content from localStorage:", cssContent)
+    console.debug("CSS Content from localStorage:", cssContent)
     var blob = new Blob([cssContent], { type: "text/css" })
-    console.log("Blob:", blob)
+    console.debug("Blob:", blob)
     if (blob.size > 0) {
       var blobURL = URL.createObjectURL(blob)
-      console.log("Blob URL:", blobURL)
+      console.debug("Blob URL:", blobURL)
       var existingLink = document.getElementById("global")
       if (existingLink) {
         existingLink.href = blobURL
@@ -142,13 +142,13 @@ window.addEventListener("load", function () {
       }
       setTimeout(() => {
         URL.revokeObjectURL(blobURL)
-        console.log("Blob URL revoked:", blobURL)
+        console.debug("Blob URL revoked:", blobURL)
       }, 5000)
     } else {
       console.error("Blob is empty. Check the CSS content in localStorage.")
     }
   } else {
-    console.error("No CSS content found in localStorage.")
+    console.debug("No custom CSS content found in localStorage. Using defaults.")
   }
 })
 
