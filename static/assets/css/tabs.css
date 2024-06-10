@@ -44,7 +44,6 @@ body {
   background: var(--background-color);
   box-sizing: border-box;
   transition: 0.35s ease;
-  border-top: 3px solid var(--background-input);
   z-index: 100;
   width: 100vw;
   position: fixed;
@@ -134,10 +133,8 @@ body {
 
 .navsearch {
   height: 20px;
-  border-width: 0 3px 3px 3px;
-  border-style: none solid solid solid;
-  border-color: transparent var(--background-input) var(--background-input) var(--background-input);
   background: none;
+  border: none;
   color: var(--text-primary);
   width: 60vw;
   height: 30px;
