@@ -78,7 +78,9 @@ if (nav) {
   }
   var html = `
     <div class="fixed-nav-bar-container">
+    <div id=icon-container>
       <a class="icon" href="/./"><img alt="nav" id="INImg" src="${LogoUrl}"/></a>
+    </div>
     </div>
     <div class="fixed-nav-bar-right">
       <a class="navbar-link" href="/./gm"><i class="fa-solid fa-gamepad navbar-icon"></i><an>Ga</an><an>mes</an></a>
