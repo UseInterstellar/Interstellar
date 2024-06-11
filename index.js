@@ -98,6 +98,7 @@ const routes = [
   { path: "/ts", file: "tools.html" },
   { path: "/", file: "index.html" },
   { path: "/tos", file: "tos.html" },
+  { path: "/privacy", file: "privacy.html" },
 ]
 
 routes.forEach((route) => {

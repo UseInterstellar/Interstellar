@@ -279,6 +279,7 @@ select {
 
 .popup button {
   cursor: pointer;
+  font-size: 20px;
   border: 2px;
   transition: 0.2s;
   margin-top: 10px;
