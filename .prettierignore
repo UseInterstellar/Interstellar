@@ -7,3 +7,4 @@ package.json
 **/*.min.*
 prettierrc
 README.md
+compose.json
