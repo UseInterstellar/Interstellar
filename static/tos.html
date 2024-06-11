@@ -11,10 +11,40 @@
     <link rel="stylesheet" href="/assets/css/global.css?v=6" />
     <link rel="stylesheet" href="/assets/css/nav.css?v=2" />
     <script src="https://kit.fontawesome.com/1237c86ba0.js" crossorigin="anonymous"></script>
-
     <style>
-      * {
+      .c-container {
+        position: fixed;
+        top: 15%;
+        left: 5%;
+        width: 90%;
+        height: 80vh;
+        border-radius: 15px;
         color: var(--text-primary);
+      }
+
+      .c-container h3 {
+        position: fixed;
+        top: 10%;
+        font-size: 45px;
+      }
+
+      .c-container p {
+        position: fixed;
+        top: 22%;
+        font-size: 15px;
+        color: gray;
+      }
+
+      .card {
+        padding: 10px;
+        background-color: var(--background-settings);
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
     </style>
   </head>
