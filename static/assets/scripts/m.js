@@ -115,6 +115,10 @@ if (themeid == "catppuccinLatte") {
 if (themeid == "Inverted") {
   themeEle.href = "/assets/css/themes/colors/inverted.css?v=4"
   document.body.appendChild(themeEle)
+} 
+if (themeid == "sky") {
+  themeEle.href = "/assets/css/themes/colors/sky.css?v=4"
+  document.body.appendChild(themeEle)
 } else {
   var customThemeEle = document.createElement("style")
   customThemeEle.textContent = localStorage.getItem("theme-" + themeid)
