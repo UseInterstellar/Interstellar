@@ -1,0 +1,43 @@
+name: Update ad-free branch
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update-ad-free:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v2
+        with:
+          ref: main
+
+      - name: Create or update ad-free branch
+        run: |
+          git fetch origin
+          if git branch --list | grep -q 'ad-free'; then
+            git checkout ad-free
+            git merge main --no-edit
+          else
+            git checkout -b ad-free
+          fi
+
+      - name: Remove ads from HTML files
+        run: |
+          for file in /static/404.html /static/apps.html /static/games.html /static/index.html /static/privacy.html /static/settings.html /static/tools.html /static/tos.html; do
+            sed -i '/<div>/,/<\/div>/d' $file
+          done
+
+      - name: Commit changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add /static/404.html /static/apps.html /static/games.html /static/index.html /static/privacy.html /static/settings.html /static/tools.html /static/tos.html
+          git commit -m "Remove ads from HTML files"
+
+      - name: Push changes to ad-free branch
+        run: |
+          git push origin ad-free
