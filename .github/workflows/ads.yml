@@ -37,9 +37,12 @@ jobs:
           done
 
       - name: Commit changes
+        env:
+          GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
+          GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
         run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git config --global user.name "${GIT_USERNAME}"
+          git config --global user.email "${GIT_EMAIL}"
           git add static/404.html static/apps.html static/games.html static/index.html static/privacy.html static/settings.html static/tools.html static/tos.html
           git commit -m "Remove ads from HTML files"
 
