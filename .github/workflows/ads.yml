@@ -27,15 +27,19 @@ jobs:
 
       - name: Remove ads from HTML files
         run: |
-          for file in /static/404.html /static/apps.html /static/games.html /static/index.html /static/privacy.html /static/settings.html /static/tools.html /static/tos.html; do
-            sed -i '/<div>/,/<\/div>/d' $file
+          for file in static/404.html static/apps.html static/games.html static/index.html static/privacy.html static/settings.html static/tools.html static/tos.html; do
+            if [ -f "$file" ]; then
+              sed -i '/<div>/,/<\/div>/d' "$file"
+            else
+              echo "$file not found"
+            fi
           done
 
       - name: Commit changes
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add /static/404.html /static/apps.html /static/games.html /static/index.html /static/privacy.html /static/settings.html /static/tools.html /static/tos.html
+          git add static/404.html static/apps.html static/games.html static/index.html static/privacy.html static/settings.html static/tools.html static/tos.html
           git commit -m "Remove ads from HTML files"
 
       - name: Push changes to ad-free branch
