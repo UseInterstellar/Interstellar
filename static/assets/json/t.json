@@ -20,7 +20,7 @@
   {
     "name": "ChatGPT",
     "link": "https://chat.openai.com",
-    "image": "/assets/media/icons/gpt.jpg",
+    "image": "/assets/media/icons/chatgpt.webp",
     "categories": ["all", "ai"],
     "error": "true",
     "say": "You must have a ChatGPT account to use the site, also the site may have some issues if you don't minimize tabs while using it."
@@ -28,19 +28,19 @@
   {
     "name": "CopyLeaks.com",
     "link": "https://copyleaks.com/ai-content-detector",
-    "image": "/assets/media/icons/cl.jpg",
+    "image": "/assets/media/icons/cl.webp",
     "categories": ["all", "ad"]
   },
   {
     "name": "Writer.com",
     "link": "https://writer.com/ai-content-detector/",
-    "image": "/assets/media/icons/wr.png",
+    "image": "/assets/media/icons/wr.webp",
     "categories": ["all", "ad"]
   },
   {
     "name": "Quillbot.com AI Detector",
     "link": "https://quillbot.com/ai-content-detector",
-    "image": "/assets/media/icons/qb.jpg",
+    "image": "/assets/media/icons/qb.webp",
     "categories": ["all", "ad"]
   },
   {
@@ -52,19 +52,19 @@
   {
     "name": "NoteGPT.io YouTube Transcript",
     "link": "https://notegpt.io/youtube-transcript-generator",
-    "image": "/assets/media/icons/ng.jpg",
+    "image": "/assets/media/icons/ng.webp",
     "categories": ["all", "ts"]
   },
   {
     "name": "Grammarly Plagiarism Checker",
     "link": "https://www.grammarly.com/plagiarism-checker",
-    "image": "/assets/media/icons/gm.png",
+    "image": "/assets/media/icons/gm.webp",
     "categories": ["all", "pc"]
   },
   {
     "name": "Plagiarism Detector",
     "link": "https://plagiarismdetector.net/",
-    "image": "/assets/media/icons/pdn.png",
+    "image": "/assets/media/icons/pdn.webp",
     "categories": ["all", "pc"]
   },
   {
@@ -76,7 +76,7 @@
   {
     "name": "Edpuzzle Cheats",
     "link": "https://github.com/ading2210/edpuzzle-answers",
-    "image": "/assets/media/icons/ep.png",
+    "image": "/assets/media/icons/ep.webp",
     "categories": ["all", "ep", "cs"]
   },
   {

@@ -14,7 +14,7 @@
   {
     "name": "Fancade",
     "link": "https://play.fancade.com",
-    "image": "/assets/media/icon/fancade.jpg",
+    "image": "/assets/media/icons/fancade.webp",
     "categories": ["all"]
   },
   {
@@ -1875,19 +1875,19 @@
   {
     "name": "Space Company",
     "link": "/e/1/space-company/index.html",
-    "image": "/assets/media/icons/sc.png",
+    "image": "/assets/media/icons/sc.webp",
     "categories": ["all", "local"]
   },
   {
     "name": "Mario Kart DS",
     "link": "https://seraph.reveriestudios.online/games/mariokartds/index.html",
-    "image": "/assets/media/icons/mariokartds.jpg",
+    "image": "/assets/media/icons/mariokartds.webp",
     "categories": ["all", "emu"]
   },
   {
     "name": "Cooking Mama",
     "link": "https://seraph.reveriestudios.online/games/cookingmama/index.html",
-    "image": "/assets/media/icons/cookingmama.jpg",
+    "image": "/assets/media/icons/cookingmama.webp",
     "categories": ["all", "emu"]
   }
 ]

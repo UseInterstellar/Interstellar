@@ -86,7 +86,7 @@
       { "name": "Discord Canary", "url": "https://canary.discord.com" },
       { "name": "Discord PTB", "url": "https://ptb.discord.com" }
     ],
-    "image": "/assets/media/icons/dc.jpg",
+    "image": "/assets/media/icons/discord.webp",
     "categories": ["all", "social"]
   },
   {
@@ -320,7 +320,7 @@
       { "name": "Discord Canary", "url": "https://canary.discord.com/login" },
       { "name": "Discord PTB", "url": "https://ptb.discord.com/login" }
     ],
-    "image": "/assets/media/icons/dc.jpg",
+    "image": "/assets/media/icons/discord.webp",
     "categories": ["all", "social"],
     "blank": "true"
   },
@@ -410,13 +410,13 @@
   {
     "name": "SpaceHey",
     "link": "https://www.spacehey.com",
-    "image": "/assets/media/icons/spacehey.png",
+    "image": "/assets/media/icons/spacehey.webp",
     "categories": ["all", "social"]
   },
   {
     "name": "FMovies.to",
     "link": "https://fmovies24.to/",
-    "image": "/assets/media/icons/FM.png",
+    "image": "/assets/media/icons/FM.webp",
     "categories": ["all", "media"]
   },
   {
@@ -427,14 +427,14 @@
   {
     "name": "Movie Web",
     "link": "https://movie-web-me.vercel.app/",
-    "image": "/assets/media/icons/MW.png",
+    "image": "/assets/media/icons/MW.webp",
     "say": "This is not an official domain for Movie Web",
     "categories": ["all", "media"]
   },
   {
     "name": "Sudo-Flix.Lol (Movie Web Clone)",
     "link": "https://sudo-flix.lol/",
-    "image": "/assets/media/icons/MW.png",
+    "image": "/assets/media/icons/MW.webp",
     "say": "This is not an official domain for Movie Web",
     "categories": ["all", "media"]
   }
