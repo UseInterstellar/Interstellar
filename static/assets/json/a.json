@@ -437,5 +437,11 @@
     "image": "/assets/media/icons/MW.png",
     "say": "This is not an official domain for Movie Web",
     "categories": ["all", "media"]
+  },
+    {
+    "name": "GBA Games",
+    "link": "https://gba.js.org/",
+    "image": "/assets/media/icons/gba.png",
+    "categories": ["all", "emu"]
   }
 ]
