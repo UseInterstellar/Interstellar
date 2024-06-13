@@ -20,6 +20,7 @@ jobs:
           git fetch origin
           if git branch --list | grep -q 'Ad-Free'; then
             git checkout Ad-Free
+            git pull origin Ad-Free
             git merge main --no-edit
           else
             git checkout -b Ad-Free
@@ -44,4 +45,4 @@ jobs:
 
       - name: Push changes to Ad-Free branch
         run: |
-          git push origin Ad-Free
+          git push origin Ad-Free --force
