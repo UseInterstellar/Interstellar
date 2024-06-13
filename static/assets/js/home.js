@@ -189,7 +189,7 @@ function US() {
 SplashE.innerText = SplashT[SplashI]
 
 SplashE.addEventListener("click", US)
-
+// Random URL
 function getRandomURL() {
   let randomURLS = [
     "https://kahoot.it",
@@ -205,7 +205,6 @@ function getRandomURL() {
     "https://khanacademy.org",
     "https://wikipedia.org",
     "https://dictionary.com",
-    // what if we added the hub here :trol:
   ]
   return randomURLS[randRange(0, randomURLS.length)]
 }
