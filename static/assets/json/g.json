@@ -1128,7 +1128,7 @@
     "categories": ["all"]
   },
   {
-    "name": "Mr.Mine",
+    "name": "Mr. Mine",
     "link": "https://www.coolmathgames.com/0-mr-mine/play",
     "image": "/assets/media/icons/mrmine.webp",
     "categories": ["all"]
@@ -1889,5 +1889,52 @@
     "link": "https://seraph.reveriestudios.online/games/cookingmama/index.html",
     "image": "/assets/media/icons/cookingmama.jpg",
     "categories": ["all", "emu"]
+  },
+  {
+    "name": "Wordle",
+    "link": "https://www.nytimes.com/games/wordle/index.html",
+    "image": "/assets/media/icons/w.webp",
+    "categories": ["all"]
+  },
+  {
+    "name": "Wordle Unlimited",
+    "link": "https://wordleunlimited.org/",
+    "image": "/assets/media/icons/w.webp",
+    "categories": ["all"]
+  },
+  {
+    "name": "Wordly",
+    "link": "https://wordly.org/",
+    "image": "/assets/media/icons/w.webp",
+    "categories": ["all"]
+  },
+  {
+    "name": "Connections",
+    "link": "https://www.nytimes.com/games/connections",
+    "image": "/assets/media/icons/cn.png",
+    "categories": ["all"]
+  },
+  {
+    "name": "Connections Unlimited",
+    "link": "https://1games.io/game/connections-game/",
+    "image": "/assets/media/icons/cn.png",
+    "categories": ["all"]
+  },
+  {
+    "name": "Globle",
+    "link": "https://globle.org/?",
+    "image": "/assets/media/icons/cn.png",
+    "categories": ["all"]
+  },
+  {
+    "name": "Particle Clicker",
+    "link": "/e/1/particle-clicker/index.html",
+    "image": "/assets/media/icons/pc.png",
+    "categories": ["all,", "local"]
+  },
+  {
+    "name": "ShipCraft.io",
+    "link": "https://shipcraft.io/",
+    "categories": ["all"]
   }
 ]
