@@ -47,8 +47,7 @@ git clone https://github.com/UseInterstellar/Interstellar
 cd Interstellar
 ```
 
-**If you prefer not having ads on your links then run this instead**:
-
+#### Ad-Free Deployment
 ```bash
 git clone --branch Ad-Free https://github.com/UseInterstellar/Interstellar
 cd Interstellar
