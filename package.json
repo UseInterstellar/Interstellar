@@ -11,7 +11,7 @@
 		"prettier": "npx prettier . --write",
 		"precommit": "biome check --write .",
 		"lint": "biome lint --write .",
-		"format": "biome format --write ."
+		"biome-format": "biome format --write ."
 	},
 	"author": "InterstellarNetwork",
 	"license": "GPL-3.0-or-later",
