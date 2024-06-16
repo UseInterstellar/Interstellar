@@ -25,19 +25,19 @@ function processUrl(value, path) {
   if (!isUrl(url)) {
     url = searchUrl + url
   } else if (!(url.startsWith("https://") || url.startsWith("http://"))) {
-    url = "https://" + url
+    url = `https://${url}`
   }
 
   sessionStorage.setItem("GoUrl", __uv$config.encodeUrl(url))
   const dy = localStorage.getItem("dy")
 
   if (dy === "true") {
-    window.location.href = "/a/q/" + __uv$config.encodeUrl(url)
+    window.location.href = `/a/q/${__uv$config.encodeUrl(url)}`
   } else {
     if (path) {
       location.href = path
     } else {
-      window.location.href = "/a/" + __uv$config.encodeUrl(url)
+      window.location.href = `/a/${__uv$config.encodeUrl(url)}`
     }
   }
 }
@@ -51,7 +51,7 @@ function blank(value) {
 }
 
 function dy(value) {
-  processUrl(value, "/a/q/" + __uv$config.encodeUrl(value))
+  processUrl(value, `/a/q/${__uv$config.encodeUrl(value)}`)
 }
 
 function isUrl(val = "") {

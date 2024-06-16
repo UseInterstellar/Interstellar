@@ -36,9 +36,9 @@ function setBackgroundImage(imageURL) {
 
 function handleFileChange(event) {
   const fileInput = event.target
-  if (fileInput.files && fileInput.files[0]) {
+  if (fileInput.files?.[0]) {
     const reader = new FileReader()
-    reader.onload = function (e) {
+    reader.onload = (e) => {
       const imageURL = e.target.result
       localStorage.setItem("backgroundImage", imageURL)
       setBackgroundImage(imageURL)
@@ -66,7 +66,7 @@ function handleBackgroundSave() {
 
 // CSS Content Generator
 function generateCSSContent(themeData) {
-  let cssContent = `:root {`
+  let cssContent = ":root {"
   for (const [key, value] of Object.entries(themeData)) {
     if (value) {
       cssContent += `\n--${key.replace(/([A-Z])/g, "-$1").toLowerCase()}: ${value};`
@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.querySelector(".td").addEventListener("change", handleThemeChange)
 
-  let fileInput = document.createElement("input")
+  const fileInput = document.createElement("input")
   fileInput.type = "file"
   fileInput.accept = "image/*"
   fileInput.style.display = "none"
@@ -204,15 +204,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  let adTypeElement = document.getElementById("adType")
+  const adTypeElement = document.getElementById("adType")
 
   if (adTypeElement) {
     adTypeElement.addEventListener("change", function () {
-      let selectedOption = this.value
+      const selectedOption = this.value
       adChange(selectedOption)
     })
 
-    let storedAd = localStorage.getItem("ads")
+    const storedAd = localStorage.getItem("ads")
     if (storedAd === "on") {
       adTypeElement.value = "default"
     } else if (storedAd === "popups") {
@@ -248,15 +248,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  let pChangeElement = document.getElementById("pChange")
+  const pChangeElement = document.getElementById("pChange")
 
   if (pChangeElement) {
     pChangeElement.addEventListener("change", function () {
-      let selectedOption = this.value
+      const selectedOption = this.value
       pChange(selectedOption)
     })
 
-    let storedP = localStorage.getItem("uv")
+    const storedP = localStorage.getItem("uv")
     if (storedP === "true") {
       pChangeElement.value = "uv"
     } else if (localStorage.getItem("dy") === "true" || localStorage.getItem("dy") === "auto") {
@@ -287,7 +287,7 @@ eventKeyInput.addEventListener("input", () => {
   eventKey = eventKeyInput.value.split(",")
 })
 
-let linkInput = document.getElementById("linkInput")
+const linkInput = document.getElementById("linkInput")
 linkInput.addEventListener("input", () => {
   pLink = linkInput.value
 })
@@ -298,18 +298,18 @@ function saveEventKey() {
   localStorage.setItem("eventKey", JSON.stringify(eventKey))
   localStorage.setItem("pLink", pLink)
   localStorage.setItem("eventKeyRaw", eventKeyRaw)
-  window.location = window.location
 }
 // Tab Cloaker
-let dropdown = document.getElementById("dropdown")
-let options = dropdown.getElementsByTagName("option")
+const dropdown = document.getElementById("dropdown")
+const options = dropdown.getElementsByTagName("option")
 
-let sortedOptions = Array.from(options).sort((a, b) => a.textContent.localeCompare(b.textContent))
+const sortedOptions = Array.from(options).sort((a, b) => a.textContent.localeCompare(b.textContent))
 
 while (dropdown.firstChild) {
   dropdown.removeChild(dropdown.firstChild)
 }
 
+// biome-ignore lint/complexity/noForEach: <explanation>
 sortedOptions.forEach((option) => {
   dropdown.appendChild(option)
 })
@@ -349,9 +349,9 @@ function ResetCustomCloak() {
 }
 
 function redirectToMainDomain() {
-  let currentUrl = window.location.href
-  let mainDomainUrl = currentUrl.replace(/\/[^\/]*$/, "")
-  if (window != top) {
+  const currentUrl = window.location.href
+  const mainDomainUrl = currentUrl.replace(/\/[^\/]*$/, "")
+  if (window !== top) {
     top.location.href = mainDomainUrl + window.location.pathname
   } else {
     window.location.href = mainDomainUrl + window.location.pathname
@@ -361,13 +361,13 @@ function redirectToMainDomain() {
 document.addEventListener("DOMContentLoaded", (event) => {
   const icon = document.getElementById("tab-favicon")
   const name = document.getElementById("tab-title")
-  let selectedValue = localStorage.getItem("selectedOption") || "Default"
+  const selectedValue = localStorage.getItem("selectedOption") || "Default"
   document.getElementById("dropdown").value = selectedValue
   updateHeadSection(selectedValue)
 })
 
 function handleDropdownChange(selectElement) {
-  let selectedValue = selectElement.value
+  const selectedValue = selectElement.value
   localStorage.removeItem("CustomName")
   localStorage.removeItem("CustomIcon")
   localStorage.setItem("selectedOption", selectedValue)
@@ -392,8 +392,8 @@ function updateHeadSection(selectedValue) {
 
 const switches = document.getElementById("2")
 
-if (window.localStorage.getItem("particles") != "") {
-  if (window.localStorage.getItem("particles") == "true") {
+if (window.localStorage.getItem("particles") !== "") {
+  if (window.localStorage.getItem("particles") === "true") {
     switches.checked = true
   } else {
     switches.checked = false
@@ -470,9 +470,9 @@ function toggleAB() {
 }
 // Search Engine
 function EngineChange(dropdown) {
-  let selectedEngine = dropdown.value
+  const selectedEngine = dropdown.value
 
-  let engineUrls = {
+  const engineUrls = {
     Google: "https://www.google.com/search?q=",
     Bing: "https://www.bing.com/search?q=",
     DuckDuckGo: "https://duckduckgo.com/?q=",
@@ -489,7 +489,7 @@ function EngineChange(dropdown) {
 }
 
 function SaveEngine() {
-  let customEngine = document.getElementById("engine-form").value
+  const customEngine = document.getElementById("engine-form").value
   if (customEngine.trim() !== "") {
     localStorage.setItem("engine", customEngine)
     localStorage.setItem("enginename", "Custom")
@@ -499,15 +499,15 @@ function SaveEngine() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  let selectedEngineName = localStorage.getItem("enginename")
-  let dropdown = document.getElementById("engine")
+  const selectedEngineName = localStorage.getItem("enginename")
+  const dropdown = document.getElementById("engine")
   if (selectedEngineName) {
     dropdown.value = selectedEngineName
   }
 })
 
 function getRandomURL() {
-  let randomURLS = [
+  const randomURLS = [
     "https://kahoot.it",
     "https://classroom.google.com",
     "https://drive.google.com",

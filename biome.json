@@ -1,0 +1,15 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.7.0/schema.json",
+  "files": {
+    "ignore": ["static/dy/**", "static/assets/-/"]
+  },
+  "organizeImports": {
+    "enabled": true
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true
+    }
+  }
+}

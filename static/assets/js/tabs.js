@@ -6,7 +6,7 @@ window.addEventListener("load", () => {
     form.addEventListener("submit", async (event) => {
       event.preventDefault()
       const formValue = input.value.trim()
-      const url = isUrl(formValue) ? prependHttps(formValue) : "https://www.google.com/search?q=" + formValue
+      const url = isUrl(formValue) ? prependHttps(formValue) : `https://www.google.com/search?q=${formValue}`
       processUrl(url)
     })
   }
@@ -14,7 +14,7 @@ window.addEventListener("load", () => {
     sessionStorage.setItem("GoUrl", __uv$config.encodeUrl(url))
     const iframeContainer = document.getElementById("iframe-container")
     const activeIframe = Array.from(iframeContainer.querySelectorAll("iframe")).find((iframe) => iframe.classList.contains("active"))
-    activeIframe.src = "/a/" + __uv$config.encodeUrl(url)
+    activeIframe.src = `/a/${__uv$config.encodeUrl(url)}`
     activeIframe.dataset.tabUrl = url
     input.value = url
     console.log(activeIframe.dataset.tabUrl)
@@ -27,12 +27,12 @@ window.addEventListener("load", () => {
   }
   function prependHttps(url) {
     if (!url.startsWith("http://") && !url.startsWith("https://")) {
-      return "https://" + url
+      return `https://${url}`
     }
     return url
   }
 })
-document.addEventListener("DOMContentLoaded", function (event) {
+document.addEventListener("DOMContentLoaded", (event) => {
   const addTabButton = document.getElementById("add-tab")
   const tabList = document.getElementById("tab-list")
   const iframeContainer = document.getElementById("iframe-container")
@@ -60,9 +60,13 @@ document.addEventListener("DOMContentLoaded", function (event) {
     newTab.appendChild(closeButton)
     tabList.appendChild(newTab)
     const allTabs = Array.from(tabList.querySelectorAll("li"))
-    allTabs.forEach((tab) => tab.classList.remove("active"))
+    for (const tab of allTabs) {
+      tab.classList.remove("active")
+    }
     const allIframes = Array.from(iframeContainer.querySelectorAll("iframe"))
-    allIframes.forEach((iframe) => iframe.classList.remove("active"))
+    for (const iframe of allIframes) {
+      iframe.classList.remove("active")
+    }
     newTab.classList.add("active")
     newIframe.dataset.tabId = tabCounter
     newIframe.classList.add("active")
@@ -73,8 +77,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         tabTitle.textContent = title
       }
-      newIframe.contentWindow.open = function (url) {
-        sessionStorage.setItem("URL", "/a/" + __uv$config.encodeUrl(url))
+      newIframe.contentWindow.open = (url) => {
+        sessionStorage.setItem("URL", `/a/${__uv$config.encodeUrl(url)}`)
         createNewTab()
         return null
       }
@@ -91,7 +95,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         if (GoURL.includes("/e/")) {
           newIframe.src = window.location.origin + GoURL
         } else {
-          newIframe.src = window.location.origin + "/a/" + GoURL
+          newIframe.src = `${window.location.origin}/a/${GoURL}`
         }
       } else {
         newIframe.src = "/"
@@ -104,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         if (GoURL.includes("/e/")) {
           newIframe.src = window.location.origin + GoURL
         } else {
-          newIframe.src = window.location.origin + "/a/" + GoURL
+          newIframe.src = `${window.location.origin}/a/${GoURL}`
         }
       } else {
         newIframe.src = "/"
@@ -131,10 +135,14 @@ document.addEventListener("DOMContentLoaded", function (event) {
         if (nextTabIndex > -1) {
           const nextTabToActivate = remainingTabs[nextTabIndex]
           const nextIframeToActivate = iframeContainer.querySelector(`[data-tab-id='${nextTabToActivate.dataset.tabId}']`)
-          remainingTabs.forEach((tab) => tab.classList.remove("active"))
+          for (const tab of remainingTabs) {
+            tab.classList.remove("active")
+          }
           remainingTabs[nextTabIndex].classList.add("active")
           const allIframes = Array.from(iframeContainer.querySelectorAll("iframe"))
-          allIframes.forEach((iframe) => iframe.classList.remove("active"))
+          for (const iframe of allIframes) {
+            iframe.classList.remove("active")
+          }
           nextIframeToActivate.classList.add("active")
         }
       }
@@ -143,9 +151,13 @@ document.addEventListener("DOMContentLoaded", function (event) {
   function switchTab(event) {
     const tabId = event.target.closest("li").dataset.tabId
     const allTabs = Array.from(tabList.querySelectorAll("li"))
-    allTabs.forEach((tab) => tab.classList.remove("active"))
+    for (const tab of allTabs) {
+      tab.classList.remove("active")
+    }
     const allIframes = Array.from(iframeContainer.querySelectorAll("iframe"))
-    allIframes.forEach((iframe) => iframe.classList.remove("active"))
+    for (const iframe of allIframes) {
+      iframe.classList.remove("active")
+    }
     const selectedTab = tabList.querySelector(`[data-tab-id='${tabId}']`)
     if (selectedTab) {
       selectedTab.classList.add("active")
@@ -186,7 +198,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
 function reload() {
   const activeIframe = document.querySelector("#iframe-container iframe.active")
   if (activeIframe) {
-    activeIframe.src = activeIframe.src
     Load()
   } else {
     console.error("No active iframe found")
@@ -247,7 +258,7 @@ function erudaToggle() {
     }
     const script = erudaDocument.createElement("script")
     script.src = "https://cdn.jsdelivr.net/npm/eruda"
-    script.onload = function () {
+    script.onload = () => {
       if (!erudaWindow.eruda) {
         console.error("Failed to load Eruda in the active iframe")
         return
@@ -302,10 +313,10 @@ function goForward() {
   }
 }
 // Remove Nav
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
   const TB = document.getElementById("tabs-button")
   const NB = document.getElementById("right-side-nav")
-  TB.addEventListener("click", function () {
+  TB.addEventListener("click", () => {
     const activeIframe = document.querySelector("#iframe-container iframe.active")
     if (NB.style.display === "none") {
       NB.style.display = ""
@@ -323,7 +334,7 @@ document.addEventListener("DOMContentLoaded", function () {
   })
 })
 if (navigator.userAgent.includes("Chrome")) {
-  window.addEventListener("resize", function () {
+  window.addEventListener("resize", () => {
     navigator.keyboard.lock(["Escape"])
   })
 }
@@ -352,11 +363,11 @@ function decodeXor(input) {
   if (!input) {
     return input
   }
-  let [str, ...search] = input.split("?")
+  const [str, ...search] = input.split("?")
   return (
     decodeURIComponent(str)
       .split("")
-      .map((char, ind) => (ind % 2 ? String.fromCharCode(char.charCodeAt(NaN) ^ 2) : char))
-      .join("") + (search.length ? "?" + search.join("?") : "")
+      .map((char, ind) => (ind % 2 ? String.fromCharCode(char.charCodeAt(Number.NaN) ^ 2) : char))
+      .join("") + (search.length ? `?${search.join("?")}` : "")
   )
 }

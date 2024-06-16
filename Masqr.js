@@ -1,5 +1,5 @@
+import fs from "node:fs"
 import path from "node:path"
-import fs from "fs"
 import fetch from "node-fetch"
 
 const LICENSE_SERVER_URL = "https://masqr.gointerstellar.app/validate?license="
@@ -14,11 +14,13 @@ export function setupMasqr(app) {
 
     const authheader = req.headers.authorization
 
+    // biome-ignore lint/complexity/useLiteralKeys: <explanation>
     if (req.cookies["authcheck"]) {
       next()
       return
     }
 
+    // biome-ignore lint/complexity/useLiteralKeys: <explanation>
     if (req.cookies["refreshcheck"] !== "true") {
       res.cookie("refreshcheck", "true", { maxAge: 10000 })
       MasqFail(req, res)
@@ -36,11 +38,20 @@ export function setupMasqr(app) {
     const pass = auth[1]
 
     try {
-      const licenseCheckResponse = await fetch(LICENSE_SERVER_URL + pass + "&host=" + req.headers.host)
+      const licenseCheckResponse = await fetch(
+        // biome-ignore lint/style/useTemplate: <explanation>
+        LICENSE_SERVER_URL + pass + "&host=" + req.headers.host
+      )
+      // biome-ignore lint/complexity/useLiteralKeys: <explanation>
       const licenseCheck = (await licenseCheckResponse.json())["status"]
-      console.log(LICENSE_SERVER_URL + pass + "&host=" + req.headers.host + " returned " + licenseCheck)
+      console.log(
+        // biome-ignore lint/style/useTemplate: <explanation>
+        LICENSE_SERVER_URL + pass + "&host=" + req.headers.host + " returned " + licenseCheck
+      )
       if (licenseCheck === "License valid") {
-        res.cookie("authcheck", "true", { expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000) })
+        res.cookie("authcheck", "true", {
+          expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
+        })
         res.send("<script> window.location.href = window.location.href </script>")
         return
       }
@@ -57,8 +68,10 @@ async function MasqFail(req, res) {
   if (!req.headers.host) {
     return
   }
+  // biome-ignore lint/style/useTemplate: <explanation>
   const unsafeSuffix = req.headers.host + ".html"
   const safeSuffix = path.normalize(unsafeSuffix).replace(/^(\.\.(\/|\\|$))+/, "")
+  // biome-ignore lint/style/useTemplate: <explanation>
   const safeJoin = path.join(process.cwd() + "/Masqrd", safeSuffix)
   try {
     await fs.promises.access(safeJoin)

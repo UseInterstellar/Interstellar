@@ -7,17 +7,17 @@ importScripts(__uv$config.sw || "/assets/-/sw.js?v=2")
 const uv = new UVServiceWorker()
 const dynamic = new Dynamic()
 
-let userKey = new URL(location).searchParams.get("userkey")
+const userKey = new URL(location).searchParams.get("userkey")
 self.dynamic = dynamic
 
 self.addEventListener("fetch", (event) => {
   event.respondWith(
-    (async function () {
+    (async () => {
       if (await dynamic.route(event)) {
         return await dynamic.fetch(event)
       }
 
-      if (event.request.url.startsWith(location.origin + "/a/")) {
+      if (event.request.url.startsWith(`${location.origin}/a/`)) {
         return await uv.fetch(event)
       }
 

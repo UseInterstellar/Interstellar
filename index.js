@@ -1,15 +1,15 @@
 import http from "node:http"
 import path from "node:path"
 import { createBareServer } from "@tomphttp/bare-server-node"
+import chalk from "chalk"
+import cookieParser from "cookie-parser"
 import cors from "cors"
 import express from "express"
 import basicAuth from "express-basic-auth"
-import cookieParser from "cookie-parser"
 import mime from "mime"
 import fetch from "node-fetch"
-import config from "./config.js"
 import { setupMasqr } from "./Masqr.js"
-import chalk from "chalk"
+import config from "./config.js"
 
 console.log(chalk.yellow("🚀 Starting server..."))
 
@@ -23,6 +23,7 @@ const CACHE_TTL = 30 * 24 * 60 * 60 * 1000 // Cache for 30 Days
 
 if (config.challenge) {
   console.log(chalk.green("🔒 Password protection is enabled! Listing logins below"))
+  // biome-ignore lint/complexity/noForEach:
   Object.entries(config.users).forEach(([username, password]) => {
     console.log(chalk.blue(`Username: ${username}, Password: ${password}`))
   })
@@ -101,8 +102,9 @@ const routes = [
   { path: "/privacy", file: "privacy.html" },
 ]
 
+// biome-ignore lint/complexity/noForEach:
 routes.forEach((route) => {
-  app.get(route.path, (req, res) => {
+  app.get(route.path, (_req, res) => {
     res.sendFile(path.join(__dirname, "static", route.file))
   })
 })
