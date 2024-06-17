@@ -343,7 +343,3 @@ select {
   color: var(--black-button)
 } 
 */
-
-option:disabled { 
-  color: var(--option-disabled);
-}
