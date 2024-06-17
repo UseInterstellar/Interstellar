@@ -459,7 +459,7 @@ function AB() {
 }
 
 function toggleAB() {
-  ab = localStorage.getItem("ab")
+  const ab = localStorage.getItem("ab")
   if (!ab) {
     localStorage.setItem("ab", "true")
   } else if (ab === "true") {

@@ -31,17 +31,17 @@ if (config.challenge) {
 }
 
 app.get("/e/*", async (req, res, next) => {
-  if (cache.has(req.path)) {
-    const { data, contentType, timestamp } = cache.get(req.path)
-    if (Date.now() - timestamp > CACHE_TTL) {
-      cache.delete(req.path)
-    } else {
-      res.writeHead(200, { "Content-Type": contentType })
-      return res.end(data)
-    }
-  }
-
   try {
+    if (cache.has(req.path)) {
+      const { data, contentType, timestamp } = cache.get(req.path)
+      if (Date.now() - timestamp > CACHE_TTL) {
+        cache.delete(req.path)
+      } else {
+        res.writeHead(200, { "Content-Type": contentType })
+        return res.end(data)
+      }
+    }
+
     const baseUrls = {
       "/e/1/": "https://raw.githubusercontent.com/v-5x/x/fixy/",
       "/e/2/": "https://raw.githubusercontent.com/ypxa/y/main/",
@@ -61,7 +61,7 @@ app.get("/e/*", async (req, res, next) => {
     }
 
     const asset = await fetch(reqTarget)
-    if (asset.status !== 200) {
+    if (!asset.ok) {
       return next()
     }
 
@@ -74,7 +74,7 @@ app.get("/e/*", async (req, res, next) => {
     res.writeHead(200, { "Content-Type": contentType })
     res.end(data)
   } catch (error) {
-    console.error(error)
+    console.error("Error fetching asset:", error)
     res.setHeader("Content-Type", "text/html")
     res.status(500).send("Error fetching the asset")
   }
