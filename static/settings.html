@@ -58,11 +58,18 @@
       <div class="settings-container">
         <div class="settings-card">
           <h3>About:Blank</h3>
-          <p>Cloak the site in an about:blank page and toggle about:blank on startup (enabled by default)</p>
+          <p>
+            Cloak the site in an about:blank page and toggle about:blank on startup (enabled by
+            default)
+          </p>
           <div id="ab-settings">
             <div id="ab-settings-container">
               <label class="switch">
-                <input type="checkbox" id="ab-settings-switch" class="slider-checkbox" onchange="toggleAB()" />
+                <input
+                  type="checkbox"
+                  id="ab-settings-switch"
+                  class="slider-checkbox"
+                  onchange="toggleAB()" />
                 <span class="slider-round"></span>
               </label>
             </div>
@@ -72,10 +79,14 @@
         <div class="settings-card">
           <h3>Set Panic Key</h3>
           <p>
-            Quick open another site with one press. Used for redirects when about:blank is opened. For multiple key strokes separate them with a comma. Ex.
-            "A,B,C"
+            Quick open another site with one press. Used for redirects when about:blank is
+            opened. For multiple key strokes separate them with a comma. Ex. "A,B,C"
           </p>
-          <input type="text" id="eventKeyInput" placeholder="Panic Keys (comma separated)" class="key-form" />
+          <input
+            type="text"
+            id="eventKeyInput"
+            placeholder="Panic Keys (comma separated)"
+            class="key-form" />
           <input class="key-form" placeholder="Panic Link" type="text" id="linkInput" value />
           <button class="key-button" value="Save" onclick="saveEventKey()">Save</button>
         </div>
@@ -112,7 +123,9 @@
             <option value="Newsela Assignments">Newsela Assignments</option>
             <option value="Newsela Home">Newsela Home</option>
             <option value="PowerSchool Sign In">PowerSchool Sign In</option>
-            <option value="PowerSchool Grades and Attendance">PowerSchool Grades and Attendance</option>
+            <option value="PowerSchool Grades and Attendance">
+              PowerSchool Grades and Attendance
+            </option>
             <option value="PowerSchool Teacher Comments">PowerSchool Teacher Comments</option>
             <option value="PowerSchool Standards Grades">PowerSchool Standards Grades</option>
             <option value="PowerSchool Attendance">PowerSchool Attendance</option>
@@ -126,32 +139,67 @@
             <option value="GoGuardian Teacher Block">GoGuardian Teacher Block</option>
             <option value="World History Encyclopedia">World History Encyclopedia</option>
             <option value="Big Ideas Math">Big Ideas Math</option>
-            <option value="Big Ideas Math Assignment Player">Big Ideas Math Assignment Player</option>
+            <option value="Big Ideas Math Assignment Player">
+              Big Ideas Math Assignment Player
+            </option>
             <option value="Savvas Realize">Savvas Realize</option>
             <option value="SmartPass">SmartPass</option>
-            <option value="World Book Online - Super Home">World Book Online (Super Home)</option>
+            <option value="World Book Online - Super Home">
+              World Book Online (Super Home)
+            </option>
             <option value="World Book Online - Student">World Book Online (Student)</option>
-            <option value="World Book Online - Timelines">World Book Online (Timelines)</option>
+            <option value="World Book Online - Timelines">
+              World Book Online (Timelines)
+            </option>
             <option value="Naviance">Naviance Student</option>
             <option value="PBS Learning Media">PBS Learning Media</option>
-            <option value="PBS Learning Media Student Home">PBS Learning Media Student Home</option>
+            <option value="PBS Learning Media Student Home">
+              PBS Learning Media Student Home
+            </option>
             <option value="Dictionary">Dictionary.com</option>
             <option value="Thesaurus">Thesaurus.com</option>
           </select>
           <div>
-            <input class="key-form" type="text" id="icon" placeholder="Change Tab Icon" name="icon" />
-            <input class="key-form" type="text" id="name" name="name" placeholder="Change Tab Name" />
+            <input
+              class="key-form"
+              type="text"
+              id="icon"
+              placeholder="Change Tab Icon"
+              name="icon" />
+            <input
+              class="key-form"
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Change Tab Name" />
           </div>
           <div id="buttonLayer">
-            <button class="key-button" value="Save" onclick="CustomIcon(); CustomName(); redirectToMainDomain();">Save</button>
-            <button class="key-button" value="Reset" onclick="ResetCustomCloak(); redirectToMainDomain();">Reset Cloak</button>
+            <button
+              class="key-button"
+              value="Save"
+              onclick="CustomIcon(); CustomName(); redirectToMainDomain();">
+              Save
+            </button>
+            <button
+              class="key-button"
+              value="Reset"
+              onclick="ResetCustomCloak(); redirectToMainDomain();">
+              Reset Cloak
+            </button>
           </div>
         </div>
         <div class="settings-card">
           <h3>Customization</h3>
-          <p>Change the theme, create your own custom theme, or just change the background image.</p>
-          <p>Custom Themes are currently broken, we are working to fix this as soon as possible</p>
-          <button class="key-button" value="Save" onclick="Popup()" style="width: 100%">Create Custom Theme</button>
+          <p>
+            Change the theme, create your own custom theme, or just change the background
+            image.
+          </p>
+          <p>
+            Custom Themes are currently broken, we are working to fix this as soon as possible
+          </p>
+          <button class="key-button" value="Save" onclick="Popup()" style="width: 100%">
+            Create Custom Theme
+          </button>
         </div>
         <div class="settings-card">
           <h3>Search Engine</h3>
@@ -165,13 +213,19 @@
             <option value="SearchEncrypt">SearchEncrypt</option>
             <option value="Ecosia">Ecosia</option>
           </select>
-          <input class="key-form" type="text" id="engine-form" placeholder="Change Search Engine" name="engine" />
+          <input
+            class="key-form"
+            type="text"
+            id="engine-form"
+            placeholder="Change Search Engine"
+            name="engine" />
           <button class="key-button" value="Save" onclick="SaveEngine();">Save</button>
         </div>
         <div class="settings-card">
           <h3>Choose your <an>Pro</an>xy</h3>
           <p>
-            Ultra<an>vio</an>let is the main <an>pro</an>xy, but Dynamic is faster and supports more sites. (Dynamic is still in beta, so expect some bugs.)
+            Ultra<an>vio</an>let is the main <an>pro</an>xy, but Dynamic is faster and supports
+            more sites. (Dynamic is still in beta, so expect some bugs.)
           </p>
           <select id="pChange">
             <option value="uv">Ultraviolet (Default)</option>
@@ -189,7 +243,11 @@
         <div class="settings-card">
           <h3>Themes!</h3>
           <p>Pick from a variety of themes to customize your experience.</p>
-          <select placeholder="Solid Color Themes" id="dropdown" class="td" onchange="themeChange(this)">
+          <select
+            placeholder="Solid Color Themes"
+            id="dropdown"
+            class="td"
+            onchange="themeChange(this)">
             <option disabled selected>Solid Color Themes</option>
             <option value="d">Default</option>
             <option value="Inverted">Inverted</option>
@@ -205,18 +263,21 @@
         <div class="settings-card">
           <h3>Information</h3>
           <p>Version: v5.2.4</p>
-          <p id="last-updated">Last Updated: June 17th, 2024</p>
+          <p id="last-updated">Last Updated: June 19th, 2024</p>
           <p>
             Questions? Join our
             <a href="https://discord.gg/interstellar">Discord community</a>! Or email us at
             <a href="mailto:hello@gointerstellar.app">hello@gointerstellar.app</a>!
           </p>
-          <p>By using our site you agree to our <a href="/tos">Terms of service</a> and <a href="/privacy">Privacy policy</a></p>
+          <p>
+            By using our site you agree to our <a href="/tos">Terms of service</a> and
+            <a href="/privacy">Privacy policy</a>
+          </p>
         </div>
       </div>
     </div>
-    <script src="/assets/js/main.js?v=88"></script>
-    <script src="/assets/js/settings.js?v=6"></script>
+    <script src="/assets/js/main.js?v=90"></script>
+    <script src="/assets/js/settings.js?v=8"></script>
     <!-- DO NOT REMOVE-->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ"></script>
     <script>
@@ -230,7 +291,9 @@
     </script>
     <!-- DO NOT REMOVE-->
     <div>
-      <script type="text/javascript" src="//alleygoat.com/5e/6b/27/5e6b2776400180cc548a7dfd8ab3f717.js"></script>
+      <script
+        type="text/javascript"
+        src="//alleygoat.com/5e/6b/27/5e6b2776400180cc548a7dfd8ab3f717.js"></script>
     </div>
   </body>
 </html>

@@ -321,7 +321,8 @@ fetch(path)
       } else if (app.partial) {
         paragraph.style.color = "yellow"
         if (!app.say) {
-          app.say = "This app is currently experiencing some issues, it may not work for you. (Dynamic doesn't work in about:blank)"
+          app.say =
+            "This app is currently experiencing some issues, it may not work for you. (Dynamic doesn't work in about:blank)"
         }
       }
 
@@ -354,13 +355,18 @@ fetch(path)
   })
 
 function show_category() {
-  const selectedCategories = Array.from(document.querySelectorAll("#category option:checked")).map((option) => option.value)
+  const selectedCategories = Array.from(
+    document.querySelectorAll("#category option:checked")
+  ).map((option) => option.value)
   const games = document.getElementsByClassName("column")
 
   for (const game of games) {
     const categories = game.getAttribute("data-category").split(" ")
 
-    if (selectedCategories.length === 0 || selectedCategories.some((category) => categories.includes(category))) {
+    if (
+      selectedCategories.length === 0 ||
+      selectedCategories.some((category) => categories.includes(category))
+    ) {
       game.style.display = "block"
     } else {
       game.style.display = "none"

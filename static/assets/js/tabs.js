@@ -6,14 +6,18 @@ window.addEventListener("load", () => {
     form.addEventListener("submit", async (event) => {
       event.preventDefault()
       const formValue = input.value.trim()
-      const url = isUrl(formValue) ? prependHttps(formValue) : `https://www.google.com/search?q=${formValue}`
+      const url = isUrl(formValue)
+        ? prependHttps(formValue)
+        : `https://www.google.com/search?q=${formValue}`
       processUrl(url)
     })
   }
   function processUrl(url) {
     sessionStorage.setItem("GoUrl", __uv$config.encodeUrl(url))
     const iframeContainer = document.getElementById("iframe-container")
-    const activeIframe = Array.from(iframeContainer.querySelectorAll("iframe")).find((iframe) => iframe.classList.contains("active"))
+    const activeIframe = Array.from(iframeContainer.querySelectorAll("iframe")).find(
+      (iframe) => iframe.classList.contains("active")
+    )
     activeIframe.src = `/a/${__uv$config.encodeUrl(url)}`
     activeIframe.dataset.tabUrl = url
     input.value = url
@@ -45,7 +49,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
     const newTab = document.createElement("li")
     const tabTitle = document.createElement("span")
     const newIframe = document.createElement("iframe")
-    newIframe.sandbox = "allow-same-origin allow-scripts allow-forms allow-pointer-lock allow-modals allow-orientation-lock"
+    newIframe.sandbox =
+      "allow-same-origin allow-scripts allow-forms allow-pointer-lock allow-modals allow-orientation-lock"
     // When Top Navigation is not allowed links with the "top" value will be entirely blocked, if we allow Top Navigation it will overwrite the tab, which is obviously not wanted.
     tabTitle.textContent = `New Tab ${tabCounter}`
     tabTitle.className = "tab-title"
@@ -134,7 +139,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
         const nextTabIndex = remainingTabs.findIndex((tab) => tab.dataset.tabId !== tabId)
         if (nextTabIndex > -1) {
           const nextTabToActivate = remainingTabs[nextTabIndex]
-          const nextIframeToActivate = iframeContainer.querySelector(`[data-tab-id='${nextTabToActivate.dataset.tabId}']`)
+          const nextIframeToActivate = iframeContainer.querySelector(
+            `[data-tab-id='${nextTabToActivate.dataset.tabId}']`
+          )
           for (const tab of remainingTabs) {
             tab.classList.remove("active")
           }
@@ -198,11 +205,14 @@ document.addEventListener("DOMContentLoaded", (event) => {
 function reload() {
   const activeIframe = document.querySelector("#iframe-container iframe.active")
   if (activeIframe) {
+    // biome-ignore lint/correctness/noSelfAssign:
+    activeIframe.src = activeIframe.src
     Load()
   } else {
     console.error("No active iframe found")
   }
 }
+
 // Popout
 function popout() {
   const activeIframe = document.querySelector("#iframe-container iframe.active")
@@ -210,7 +220,9 @@ function popout() {
     const newWindow = window.open("about:blank", "_blank")
     if (newWindow) {
       const name = localStorage.getItem("name") || "My Drive - Google Drive"
-      const icon = localStorage.getItem("icon") || "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png"
+      const icon =
+        localStorage.getItem("icon") ||
+        "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png"
       newWindow.document.title = name
       const link = newWindow.document.createElement("link")
       link.rel = "icon"
@@ -367,7 +379,9 @@ function decodeXor(input) {
   return (
     decodeURIComponent(str)
       .split("")
-      .map((char, ind) => (ind % 2 ? String.fromCharCode(char.charCodeAt(Number.NaN) ^ 2) : char))
+      .map((char, ind) =>
+        ind % 2 ? String.fromCharCode(char.charCodeAt(Number.NaN) ^ 2) : char
+      )
       .join("") + (search.length ? `?${search.join("?")}` : "")
   )
 }

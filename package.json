@@ -8,10 +8,9 @@
 	},
 	"scripts": {
 		"start": "node index.js",
-		"prettier": "npx prettier . --write",
+		"format": "npx prettier . --write",
 		"precommit": "biome check --write .",
-		"lint": "biome lint --write .",
-		"biome-format": "biome format --write ."
+		"lint": "biome lint --write ."
 	},
 	"author": "InterstellarNetwork",
 	"license": "GPL-3.0-or-later",

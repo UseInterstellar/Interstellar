@@ -130,7 +130,9 @@ body {
 
 function saveTheme() {
   const themeData = {
-    background: document.querySelector("#background-input").value || "url('/./assets/media/background/full-main.png')",
+    background:
+      document.querySelector("#background-input").value ||
+      "url('/./assets/media/background/full-main.png')",
     backgroundColor: document.querySelector("#background-color-input").value || "#222",
     inputColor: document.querySelector("#input-color-input").value || "#4545459e",
     appCardColor: document.querySelector("#app-card-color-input").value || "#353535",
@@ -138,11 +140,15 @@ function saveTheme() {
     buttonColor: document.querySelector("#button-color-input").value || "#333",
     tabAccentColor: document.querySelector("#tab-accent-color-input").value || "#444",
     sliderActiveColor: document.querySelector("#slider-active-color-input").value || "#4caf50",
-    sliderInactiveColor: document.querySelector("#slider-inactive-color-input").value || "#ccc",
-    logoColor: document.querySelector("#white-logo").classList.contains("selected") ? "white" : "black",
+    sliderInactiveColor:
+      document.querySelector("#slider-inactive-color-input").value || "#ccc",
+    logoColor: document.querySelector("#white-logo").classList.contains("selected")
+      ? "white"
+      : "black",
     primaryTextColor: document.querySelector("#primary-text-color-input").value || "#fff",
     darkTextColor: document.querySelector("#dark-text-color-input").value || "#555",
-    placeholderTextColor: document.querySelector("#placeholder-text-color-input").value || "#aaa",
+    placeholderTextColor:
+      document.querySelector("#placeholder-text-color-input").value || "#aaa",
   }
 
   const cssContent = generateCSSContent(themeData)
@@ -181,7 +187,10 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 function dataURItoBlob(dataURI) {
-  const byteString = dataURI.split(",")[0].indexOf("base64") >= 0 ? atob(dataURI.split(",")[1]) : unescape(dataURI.split(",")[1])
+  const byteString =
+    dataURI.split(",")[0].indexOf("base64") >= 0
+      ? atob(dataURI.split(",")[1])
+      : unescape(dataURI.split(",")[1])
   const mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0]
 
   const arrayBuffer = new ArrayBuffer(byteString.length)
@@ -259,7 +268,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const storedP = localStorage.getItem("uv")
     if (storedP === "true") {
       pChangeElement.value = "uv"
-    } else if (localStorage.getItem("dy") === "true" || localStorage.getItem("dy") === "auto") {
+    } else if (
+      localStorage.getItem("dy") === "true" ||
+      localStorage.getItem("dy") === "auto"
+    ) {
       pChangeElement.value = "dy"
     } else {
       pChangeElement.value = "uv"
@@ -303,7 +315,9 @@ function saveEventKey() {
 const dropdown = document.getElementById("dropdown")
 const options = dropdown.getElementsByTagName("option")
 
-const sortedOptions = Array.from(options).sort((a, b) => a.textContent.localeCompare(b.textContent))
+const sortedOptions = Array.from(options).sort((a, b) =>
+  a.textContent.localeCompare(b.textContent)
+)
 
 while (dropdown.firstChild) {
   dropdown.removeChild(dropdown.firstChild)
@@ -428,7 +442,9 @@ function AB() {
       const link = doc.createElement("link")
 
       const name = localStorage.getItem("name") || "My Drive - Google Drive"
-      const icon = localStorage.getItem("icon") || "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png"
+      const icon =
+        localStorage.getItem("icon") ||
+        "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png"
 
       doc.title = name
       link.rel = "icon"

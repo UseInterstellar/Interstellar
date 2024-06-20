@@ -7,3 +7,4 @@ package.json
 .prettierrc
 *.md
 bun.lockb
+Failed.html

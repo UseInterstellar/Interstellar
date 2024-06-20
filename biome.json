@@ -1,7 +1,18 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.7.0/schema.json",
   "files": {
-    "ignore": ["static/assets/-dy/**", "static/assets/-uv/**", "static/assets/json/*.min.json"]
+    "ignore": [
+      "static/assets/-dy/**",
+      "static/assets/-uv/**",
+      "static/assets/json/*.min.json",
+      "Masqr.js",
+      "node_modules/**",
+      "package-lock.json",
+      "package.json",
+      "*.md",
+      "bun.lockb",
+      "Failed.html"
+    ]
   },
   "organizeImports": {
     "enabled": true
