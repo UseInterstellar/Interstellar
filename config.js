@@ -4,5 +4,5 @@ const config = {
     // You can add multiple users by doing username: 'password'.
     interstellar: "password",
   },
-}
-export default config
+};
+export default config;

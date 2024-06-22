@@ -1,61 +1,61 @@
-let inFrame
+let inFrame;
 
 try {
-  inFrame = window !== top
+  inFrame = window !== top;
 } catch (e) {
-  inFrame = true
+  inFrame = true;
 }
-if (!localStorage.getItem("ab")) localStorage.setItem("ab", true)
+if (!localStorage.getItem("ab")) localStorage.setItem("ab", true);
 if (
   !inFrame &&
   !navigator.userAgent.includes("Firefox") &&
   localStorage.getItem("ab") === "true"
 ) {
-  const popup = open("about:blank", "_blank")
+  const popup = open("about:blank", "_blank");
   if (!popup || popup.closed) {
     alert(
-      "Please allow popups for this site. Doing so will allow us to open the site in a about:blank tab and preventing this site from showing up in your history. You can turn this off in the site settings."
-    )
+      "Please allow popups for this site. Doing so will allow us to open the site in a about:blank tab and preventing this site from showing up in your history. You can turn this off in the site settings.",
+    );
   } else {
-    const doc = popup.document
-    const iframe = doc.createElement("iframe")
-    const style = iframe.style
-    const link = doc.createElement("link")
+    const doc = popup.document;
+    const iframe = doc.createElement("iframe");
+    const style = iframe.style;
+    const link = doc.createElement("link");
 
-    const name = localStorage.getItem("name") || "My Drive - Google Drive"
+    const name = localStorage.getItem("name") || "My Drive - Google Drive";
     const icon =
       localStorage.getItem("icon") ||
-      "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png"
+      "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png";
 
-    doc.title = name
-    link.rel = "icon"
-    link.href = icon
+    doc.title = name;
+    link.rel = "icon";
+    link.href = icon;
 
-    iframe.src = location.href
-    style.position = "fixed"
-    style.top = style.bottom = style.left = style.right = 0
-    style.border = style.outline = "none"
-    style.width = style.height = "100%"
+    iframe.src = location.href;
+    style.position = "fixed";
+    style.top = style.bottom = style.left = style.right = 0;
+    style.border = style.outline = "none";
+    style.width = style.height = "100%";
 
-    doc.head.appendChild(link)
-    doc.body.appendChild(iframe)
+    doc.head.appendChild(link);
+    doc.body.appendChild(iframe);
 
-    const pLink = localStorage.getItem(encodeURI("pLink")) || getRandomURL()
-    location.replace(pLink)
+    const pLink = localStorage.getItem(encodeURI("pLink")) || getRandomUrl();
+    location.replace(pLink);
 
-    const script = doc.createElement("script")
+    const script = doc.createElement("script");
     script.textContent = `
       window.onbeforeunload = function (event) {
         const confirmationMessage = 'Leave Site?';
         (event || window.event).returnValue = confirmationMessage;
         return confirmationMessage;
       };
-    `
-    doc.head.appendChild(script)
+    `;
+    doc.head.appendChild(script);
   }
 }
 // Particles
-document.addEventListener("DOMContentLoaded", (event) => {
+document.addEventListener("DOMContentLoaded", event => {
   if (window.localStorage.getItem("Particles") === "true") {
     const particlesConfig = {
       particles: {
@@ -166,10 +166,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
         },
       },
       retina_detect: true,
-    }
-    particlesJS("particles-js", particlesConfig)
+    };
+    particlesJS("particles-js", particlesConfig);
   }
-})
+});
 // Splash texts
 const SplashT = [
   "Over 8 Million Users since 2023",
@@ -182,22 +182,22 @@ const SplashT = [
   "Subscribe to my Youtube (@xbubbo)",
   "Check out the settings page",
   "Check out our Patreon (https://www.patreon.com/gointerstellar)",
-]
+];
 
-let SplashI = Math.floor(Math.random() * SplashT.length)
-const SplashE = document.getElementById("splash")
+let SplashI = Math.floor(Math.random() * SplashT.length);
+const SplashE = document.getElementById("splash");
 
 function US() {
-  SplashI = (SplashI + 1) % SplashT.length
-  SplashE.innerText = SplashT[SplashI]
+  SplashI = (SplashI + 1) % SplashT.length;
+  SplashE.innerText = SplashT[SplashI];
 }
 
-SplashE.innerText = SplashT[SplashI]
+SplashE.innerText = SplashT[SplashI];
 
-SplashE.addEventListener("click", US)
+SplashE.addEventListener("click", US);
 // Random URL
-function getRandomURL() {
-  const randomURLS = [
+function getRandomUrl() {
+  const randomUrls = [
     "https://kahoot.it",
     "https://classroom.google.com",
     "https://drive.google.com",
@@ -211,10 +211,10 @@ function getRandomURL() {
     "https://khanacademy.org",
     "https://wikipedia.org",
     "https://dictionary.com",
-  ]
-  return randomURLS[randRange(0, randomURLS.length)]
+  ];
+  return randomUrls[randRange(0, randomUrls.length)];
 }
 
 function randRange(min, max) {
-  return Math.floor(Math.random() * (max - min) + min)
+  return Math.floor(Math.random() * (max - min) + min);
 }

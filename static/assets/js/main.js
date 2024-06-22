@@ -1,18 +1,21 @@
 // Dynamic
 document.addEventListener("DOMContentLoaded", () => {
-  if (localStorage.getItem("dy") === null || localStorage.getItem("dy") === undefined) {
-    localStorage.setItem("dy", "false")
+  if (
+    localStorage.getItem("dy") === null ||
+    localStorage.getItem("dy") === undefined
+  ) {
+    localStorage.setItem("dy", "false");
   }
-})
+});
 
 // Nav
-const nav = document.querySelector(".fixed-nav-bar")
+const nav = document.querySelector(".fixed-nav-bar");
 
 if (nav) {
-  const themeId = localStorage.getItem("theme")
-  let LogoUrl = "/assets/media/favicon/main.png" // Declare LogoUrl once
+  const themeId = localStorage.getItem("theme");
+  let LogoUrl = "/assets/media/favicon/main.png"; // Declare LogoUrl once
   if (themeId === "Inverted") {
-    LogoUrl = "/assets/media/favicon/main-inverted.png"
+    LogoUrl = "/assets/media/favicon/main-inverted.png";
   }
   const html = `
     <div class="fixed-nav-bar-container">
@@ -24,16 +27,16 @@ if (nav) {
       <a class="navbar-link" href="/./gm"><i class="fa-solid fa-gamepad navbar-icon"></i><an>Ga</an><an>mes</an></a>
       <a class="navbar-link" href="/./as"><i class="fa-solid fa-phone navbar-icon"></i><an>Ap</an><an>ps</an></a>
       <a class="navbar-link" href="/./ts"><i class="fa-solid fa-folder navbar-icon"></i><an>To</an><an>ols</an></a>
-      ${!(window.top.location.pathname === "/ta") ? '<a class="navbar-link" href="/./ta"><i class="fa-solid fa-laptop navbar-icon"></i><an>Ta</an><an>bs</an></a>' : ""}
+      ${window.top.location.pathname === "/ta" ? "" : '<a class="navbar-link" href="/./ta"><i class="fa-solid fa-laptop navbar-icon"></i><an>Ta</an><an>bs</an></a>'}
       <a class="navbar-link" href="/./st"><i class="fa-solid fa-gear navbar-icon settings-icon"></i><an>Set</an><an>tings</an></a>
-    </div>`
-  nav.innerHTML = html
+    </div>`;
+  nav.innerHTML = html;
 }
 
 // Themes
-const themeid = localStorage.getItem("theme")
-const themeEle = document.createElement("link")
-themeEle.rel = "stylesheet"
+const themeid = localStorage.getItem("theme");
+const themeEle = document.createElement("link");
+themeEle.rel = "stylesheet";
 
 const themes = {
   catppuccinMocha: "/assets/css/themes/catppuccin/mocha.css?v=4",
@@ -42,76 +45,76 @@ const themes = {
   catppuccinLatte: "/assets/css/themes/catppuccin/latte.css?v=4",
   Inverted: "/assets/css/themes/colors/inverted.css?v=4",
   sky: "/assets/css/themes/colors/sky.css?v=4",
-}
+};
 
 if (themes[themeid]) {
-  themeEle.href = themes[themeid]
-  document.body.appendChild(themeEle)
+  themeEle.href = themes[themeid];
+  document.body.appendChild(themeEle);
 } else {
-  const customThemeEle = document.createElement("style")
-  customThemeEle.textContent = localStorage.getItem(`theme-${themeid}`)
-  document.head.appendChild(customThemeEle)
+  const customThemeEle = document.createElement("style");
+  customThemeEle.textContent = localStorage.getItem(`theme-${themeid}`);
+  document.head.appendChild(customThemeEle);
 }
 
 window.addEventListener("load", () => {
-  const cssContent = localStorage.getItem("themeCSS")
+  const cssContent = localStorage.getItem("themeCSS");
 
   if (cssContent) {
-    console.debug("CSS Content from localStorage:", cssContent)
-    const blob = new Blob([cssContent], { type: "text/css" })
-    console.debug("Blob:", blob)
+    console.debug("CSS Content from localStorage:", cssContent);
+    const blob = new Blob([cssContent], { type: "text/css" });
+    console.debug("Blob:", blob);
     if (blob.size > 0) {
-      const blobURL = URL.createObjectURL(blob)
-      console.debug("Blob URL:", blobURL)
-      const existingLink = document.getElementById("global")
+      const blobUrl = URL.createObjectURL(blob);
+      console.debug("Blob URL:", blobUrl);
+      const existingLink = document.getElementById("global");
       if (existingLink) {
-        existingLink.href = blobURL
+        existingLink.href = blobUrl;
       } else {
-        const link = document.createElement("link")
-        link.rel = "stylesheet"
-        link.href = blobURL
-        link.id = "global"
-        document.head.appendChild(link)
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = blobUrl;
+        link.id = "global";
+        document.head.appendChild(link);
       }
       setTimeout(() => {
-        URL.revokeObjectURL(blobURL)
-        console.debug("Blob URL revoked:", blobURL)
-      }, 5000)
+        URL.revokeObjectURL(blobUrl);
+        console.debug("Blob URL revoked:", blobUrl);
+      }, 5000);
     } else {
-      console.error("Blob is empty. Check the CSS content in localStorage.")
+      console.error("Blob is empty. Check the CSS content in localStorage.");
     }
   } else {
-    console.debug("No custom CSS content found in localStorage. Using defaults.")
+    console.debug("No custom CSS content found in localStorage. Using defaults.");
   }
-})
+});
 
 // Tab Cloaker
 document.addEventListener("DOMContentLoaded", () => {
-  const icon = document.getElementById("tab-favicon")
-  const name = document.getElementById("tab-title")
-  const selectedValue = localStorage.getItem("selectedOption")
+  const icon = document.getElementById("tab-favicon");
+  const name = document.getElementById("tab-title");
+  const selectedValue = localStorage.getItem("selectedOption");
 
   function setCloak(nameValue, iconUrl) {
-    const customName = localStorage.getItem("CustomName")
-    const customIcon = localStorage.getItem("CustomIcon")
+    const customName = localStorage.getItem("CustomName");
+    const customIcon = localStorage.getItem("CustomIcon");
 
-    let FinalNameValue = nameValue
-    let FinalIconURL = iconUrl
+    let FinalNameValue = nameValue;
+    let finalIconUrl = iconUrl;
 
     if (customName) {
-      FinalNameValue = customName
+      FinalNameValue = customName;
     }
     if (customIcon) {
-      FinalIconURL = customIcon
+      finalIconUrl = customIcon;
     }
 
-    if (FinalIconURL) {
-      icon.setAttribute("href", FinalIconURL)
-      localStorage.setItem("icon", FinalIconURL)
+    if (finalIconUrl) {
+      icon.setAttribute("href", finalIconUrl);
+      localStorage.setItem("icon", finalIconUrl);
     }
     if (FinalNameValue) {
-      name.textContent = FinalNameValue
-      localStorage.setItem("name", FinalNameValue)
+      name.textContent = FinalNameValue;
+      localStorage.setItem("name", FinalNameValue);
     }
   }
 
@@ -305,35 +308,35 @@ document.addEventListener("DOMContentLoaded", () => {
       name: "Big Ideas Math",
       icon: "/assets/media/favicon/bim.ico",
     },
-  }
+  };
 
   if (options[selectedValue]) {
-    setCloak(options[selectedValue].name, options[selectedValue].icon)
+    setCloak(options[selectedValue].name, options[selectedValue].icon);
   }
-})
+});
 
 // Key
 document.addEventListener("DOMContentLoaded", () => {
-  const eventKey = JSON.parse(localStorage.getItem("eventKey")) || ["Ctrl", "E"]
-  const pLink = localStorage.getItem("pLink") || "https://classroom.google.com/"
-  let pressedKeys = []
+  const eventKey = JSON.parse(localStorage.getItem("eventKey")) || ["Ctrl", "E"];
+  const pLink = localStorage.getItem("pLink") || "https://classroom.google.com/";
+  let pressedKeys = [];
 
-  document.addEventListener("keydown", (event) => {
-    pressedKeys.push(event.key)
+  document.addEventListener("keydown", event => {
+    pressedKeys.push(event.key);
     if (pressedKeys.length > eventKey.length) {
-      pressedKeys.shift()
+      pressedKeys.shift();
     }
     if (eventKey.every((key, index) => key === pressedKeys[index])) {
-      window.location.href = pLink
-      pressedKeys = []
+      window.location.href = pLink;
+      pressedKeys = [];
     }
-  })
-})
+  });
+});
 
 // Background Image
 document.addEventListener("DOMContentLoaded", () => {
-  const savedBackgroundImage = localStorage.getItem("backgroundImage")
+  const savedBackgroundImage = localStorage.getItem("backgroundImage");
   if (savedBackgroundImage) {
-    document.body.style.backgroundImage = `url('${savedBackgroundImage}')`
+    document.body.style.backgroundImage = `url('${savedBackgroundImage}')`;
   }
-})
+});
