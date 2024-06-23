@@ -5,6 +5,12 @@
     "categories": ["all"],
     "custom": "true"
   },
+   {
+    "name": "! Interstellar FAQ/Docs",
+    "image": "/assets/media/icons/help_center_googlefonts.png",
+    "link": "https://docs.gointerstellar.app",
+    "categories": ["all"]
+  },
   {
     "name": "! [NEW] Request A Game",
     "link": "https://forms.gle/vwdHN3iPz5cLaHaMA",
