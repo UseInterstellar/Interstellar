@@ -32,7 +32,6 @@ if (config.challenge) {
   app.use(basicAuth({ users: config.users, challenge: true }));
 }
 app.use(async (req, res, next) => {
-  console.log(req.headers.host, req.headers.referer)
   if (req.headers.host?.includes("gointerstellar.app")) {
     return next()
   }
