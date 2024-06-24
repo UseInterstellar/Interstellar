@@ -31,7 +31,16 @@ if (config.challenge) {
   });
   app.use(basicAuth({ users: config.users, challenge: true }));
 }
-
+app.use(async (req, res, next) => {
+  console.log(req.headers.host, req.headers.referer)
+  if (req.headers.host?.includes("gointerstellar.app")) {
+    return next()
+  }
+  if (req.headers.referer?.includes("google")) {
+    return res.redirect(307, "https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+  }
+  return next()
+})
 app.get("/e/*", async (req, res, next) => {
   try {
     if (cache.has(req.path)) {
