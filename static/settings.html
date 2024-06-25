@@ -274,10 +274,47 @@
             By using Interstellar services, you confirm you have read and agreed to the terms listed in our <a href="/tos">Terms of Service and Privacy Policy</a>.
           </p>
         </div>
+        <div class="settings-card">
+          <h3>Set Cloak site</h3>
+          <p>
+            Set what site you cloak with. Type in 'reset' to reset to the default cloak settings
+          </p>
+          <input
+            type="text"
+            id="cloakSiteBtn"
+            placeholder="Cloak site"
+            class="key-form" />
+          <button class="key-button" onclick="saveCloaksite()">Save</button>
+        </div>
       </div>
     </div>
     <script src="/assets/js/main.js?v=90"></script>
     <script src="/assets/js/settings.js?v=8"></script>
+    <script>
+      // Saves whatever site you set as your cloaked site
+      function saveCloaksite() {
+        if (document.getElementById('cloakSiteBtn').value.includes('http')) {
+        setCookie('csite', document.getElementById('cloakSiteBtn').value, 365);
+        } else if (document.getElementById('cloakSiteBtn').value == 'reset') {
+          deleteCookie('csite');
+        }else {
+          alert('Please enter a valid URL')
+        }
+      }
+      function deleteCookie(name) {
+        document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+      }
+      // Sets the value of a cookie and creates one if it doesn't exist
+      function setCookie(name, value, daysToExpire) {
+        var expires = "";
+          if (daysToExpire) {
+              var date = new Date();
+              date.setTime(date.getTime() + (daysToExpire * 24 * 60 * 60 * 1000));
+              expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + value + expires + "; path=/";
+        }
+    </script>
     <!-- DO NOT REMOVE-->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ"></script>
     <script>
