@@ -26,6 +26,6 @@
 		"node-fetch": "^3.3.2"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "1.8.2"
+		"@biomejs/biome": "1.8.3"
 	}
 }
