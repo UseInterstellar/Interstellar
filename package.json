@@ -22,7 +22,7 @@
 		"dotenv": "^16.4.5",
 		"express": "^4.19.2",
 		"express-basic-auth": "^1.2.1",
-		"mime": "^4.0.3",
+		"mime": "^4.0.4",
 		"node-fetch": "^3.3.2"
 	},
 	"devDependencies": {
