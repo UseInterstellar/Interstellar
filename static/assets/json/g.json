@@ -1942,5 +1942,11 @@
     "name": "ShipCraft.io",
     "link": "https://shipcraft.io/",
     "categories": ["all"]
+  },
+   {
+    "name": "BFDIA 5b",
+    "link": "https://coppersalts.github.io/HTML5b/",
+    "image": "https://m.gjcdn.net/game-screenshot/400/5205389-r43zkmrs-v4.webp",
+    "categories": ["all"]
   }
 ]
