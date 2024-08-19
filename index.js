@@ -21,7 +21,7 @@ const PORT = process.env.PORT || 8080;
 const cache = new Map();
 const CACHE_TTL = 30 * 24 * 60 * 60 * 1000; // Cache for 30 Days
 
-if (config.challenge) {
+if (config.challenge !== false && process.env.challenge !== "false") {
   console.log(
     chalk.green("🔒 Password protection is enabled! Listing logins below"),
   );
