@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -14,13 +14,23 @@
     <link rel="stylesheet" href="/assets/css/container.css?v=2" />
     <link rel="stylesheet" href="/assets/css/nav.css?v=2" />
     <script src="/assets/js/index.js?v=46"></script>
-    <script src="https://kit.fontawesome.com/1237c86ba0.js" crossorigin="anonymous"></script>
+    <script src="assets/js/fa.js"></script>
   </head>
   <body>
     <div class="fixed-nav-bar"></div>
     <div class="input-container">
-      <input type="text" id="searchbarbottom" onkeyup="search_bar()" placeholder="Search" />
-      <select title="Category" id="category" name="category" onchange="show_category()">
+      <input
+        type="text"
+        id="searchbarbottom"
+        onkeyup="search_bar()"
+        placeholder="Search"
+      />
+      <select
+        title="Category"
+        id="category"
+        name="category"
+        onchange="show_category()"
+      >
         <option value="all">All</option>
         <option value="android">Android Emulator</option>
         <option value="social">Social</option>
@@ -39,16 +49,19 @@
     <div class="container-apps"></div>
     <script src="assets/js/container.js?v=126"></script>
     <script src="/assets/js/main.js?v=90"></script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ"></script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ"
+    ></script>
     <!-- DO NOT REMOVE-->
     <script>
-      window.dataLayer = window.dataLayer || []
+      window.dataLayer = window.dataLayer || [];
       function gtag() {
-        dataLayer.push(arguments)
+        dataLayer.push(arguments);
       }
-      gtag("js", new Date())
+      gtag("js", new Date());
 
-      gtag("config", "G-WKJQ5QHQTJ")
+      gtag("config", "G-WKJQ5QHQTJ");
     </script>
     <!-- DO NOT REMOVE-->
   </body>

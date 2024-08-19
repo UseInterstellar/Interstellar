@@ -1,83 +1,83 @@
 .error {
-	color: var(--text-primary);
-	font-family: "Inter", sans-serif;
-	font-weight: 900;
-	top: 15%;
-	text-align: center;
+   color: var(--text-primary);
+   font-family: "Inter", sans-serif;
+   font-weight: 900;
+   top: 15%;
+   text-align: center;
 }
 
 .error h1 {
-	font-size: 10vw;
-	margin: 0 auto -2vw auto;
-	background: linear-gradient(150deg, #746eff 0%, #ff00bb 51%, #746eff 100%);
-	-webkit-background-clip: text;
-	-moz-background-clip: text;
-	background-clip: text;
-	color: transparent;
+   font-size: 10vw;
+   margin: 0 auto -2vw auto;
+   background: linear-gradient(150deg, #746eff 0%, #ff00bb 51%, #746eff 100%);
+   -webkit-background-clip: text;
+   -moz-background-clip: text;
+   background-clip: text;
+   color: transparent;
 }
 
 .error h3 {
-	font-size: 4vw;
-	margin-bottom: auto;
-	margin-top: auto;
-	font-weight: 600;
+   font-size: 4vw;
+   margin-bottom: auto;
+   margin-top: auto;
+   font-weight: 600;
 }
 
 .error p {
-	font-size: 2vw;
-	font-weight: 700;
-	margin-top: 0.5%;
-	margin-bottom: 1%;
-	font-weight: 900;
-	color: var(--text-dark);
+   font-size: 2vw;
+   font-weight: 700;
+   margin-top: 0.5%;
+   margin-bottom: 1%;
+   font-weight: 900;
+   color: var(--text-dark);
 }
 
 .error button {
-	padding: 15px;
-	border-radius: 5px;
-	background: var(--background-buttons);
-	color: inherit;
-	font-size: 24px;
-	border: 2px solid var(--background-buttons);
-	outline: none;
-	margin-bottom: 10px;
-	cursor: pointer;
+   padding: 15px;
+   border-radius: 5px;
+   background: var(--background-buttons);
+   color: inherit;
+   font-size: 24px;
+   border: 2px solid var(--background-buttons);
+   outline: none;
+   margin-bottom: 10px;
+   cursor: pointer;
 }
 
 .error .one:hover {
-	color: #ef6e78;
-	border: 2px solid #ef6e78;
-	background: transparent;
+   color: #ef6e78;
+   border: 2px solid #ef6e78;
+   background: transparent;
 }
 
 .error .two:hover {
-	color: #ef996e;
-	border: 2px solid #ef996e;
-	background: transparent;
+   color: #ef996e;
+   border: 2px solid #ef996e;
+   background: transparent;
 }
 
 .error .three:hover {
-	color: #ef6ee4;
-	border: 2px solid #ef6ee4;
-	background: transparent;
+   color: #ef6ee4;
+   border: 2px solid #ef6ee4;
+   background: transparent;
 }
 
 @media (max-width: 768px) {
-	.error h1 {
-		font-size: 12vw;
-	}
+   .error h1 {
+      font-size: 12vw;
+   }
 
-	.error h3 {
-		font-size: 5vw;
-	}
+   .error h3 {
+      font-size: 5vw;
+   }
 
-	.error p {
-		font-size: 3vw;
-		margin-top: 5px;
-		margin-bottom: 5px;
-	}
+   .error p {
+      font-size: 3vw;
+      margin-top: 5px;
+      margin-bottom: 5px;
+   }
 
-	.error button {
-		font-size: 16px;
-	}
+   .error button {
+      font-size: 16px;
+   }
 }

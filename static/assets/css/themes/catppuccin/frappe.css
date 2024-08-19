@@ -1,21 +1,21 @@
 @import url("https://unpkg.com/@catppuccin/palette/css/catppuccin.css");
 :root {
-	--background-image: var(--ctp-frappe-base) /*base*/;
-	--background: #1e1e2e;
-	--background-input: var(--ctp-frappe-mantle) /*mantle*/;
-	--background-dark: #11111b /*crust*/;
+   --background-image: var(--ctp-frappe-base) /*base*/;
+   --background: #1e1e2e;
+   --background-input: var(--ctp-frappe-mantle) /*mantle*/;
+   --background-dark: #11111b /*crust*/;
 
-	--text-primary: var(--ctp-frappe-blue) /*blue*/;
-	--background-settings: var(--ctp-frappe-surface0) /*surface0*/;
-	--background-settings-buttons: var(--ctp-frappe-surface1) /*surface1*/;
-	--input: var(--ctp-frappe-surface0) /*surface0*/;
-	--background-column: var(--ctp-frappe-crust) /*crust*/;
+   --text-primary: var(--ctp-frappe-blue) /*blue*/;
+   --background-settings: var(--ctp-frappe-surface0) /*surface0*/;
+   --background-settings-buttons: var(--ctp-frappe-surface1) /*surface1*/;
+   --input: var(--ctp-frappe-surface0) /*surface0*/;
+   --background-column: var(--ctp-frappe-crust) /*crust*/;
 
-	--text-primary: var(--ctp-frappe-text) /*text*/;
-	--text-secondary: var(--ctp-frappe-subtext1) /*subtext1*/;
-	--text-placeholder: var(--ctp-frappe-subtext0) /*subtext0*/;
-	--background-color: var(--ctp-frappe-base) /* base */;
-	--tab-active-background: var(--ctp-frappe-mantle) /* mantle */;
+   --text-primary: var(--ctp-frappe-text) /*text*/;
+   --text-secondary: var(--ctp-frappe-subtext1) /*subtext1*/;
+   --text-placeholder: var(--ctp-frappe-subtext0) /*subtext0*/;
+   --background-color: var(--ctp-frappe-base) /* base */;
+   --tab-active-background: var(--ctp-frappe-mantle) /* mantle */;
 }
 
 input,
@@ -25,22 +25,22 @@ select,
 button,
 .key-button,
 .searchbar {
-	background-color: var(--ctp-frappe-surface0) /*surface0*/;
-	color: var(--ctp-frappe-subtext1) /*subtext1*/;
+   background-color: var(--ctp-frappe-surface0) /*surface0*/;
+   color: var(--ctp-frappe-subtext1) /*subtext1*/;
 }
 
 .settings-card {
-	background-color: var(--ctp-frappe-mantle) /*mantle*/;
+   background-color: var(--ctp-frappe-mantle) /*mantle*/;
 }
 
 input:checked + .slider-round {
-	background-color: #000;
+   background-color: #000;
 }
 
 .fixed-nav-bar-right .navbar-link {
-	color: var(--ctp-frappe-mauve) /*mauve*/;
+   color: var(--ctp-frappe-mauve) /*mauve*/;
 }
 
 .fixed-nav-bar-right:hover .navbar-link:hover {
-	color: var(--ctp-frappe-blue) /*blue*/;
+   color: var(--ctp-frappe-blue) /*blue*/;
 }

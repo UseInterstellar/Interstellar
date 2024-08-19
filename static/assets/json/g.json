@@ -5,7 +5,7 @@
     "categories": ["all"],
     "custom": "true"
   },
-   {
+  {
     "name": "! Interstellar FAQ/Docs",
     "image": "/assets/media/icons/help_center_googlefonts.png",
     "link": "https://docs.gointerstellar.app",

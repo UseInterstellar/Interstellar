@@ -1,19 +1,19 @@
 :root {
-	/* Background Variables */
-	--background-color: #ddd; /* Main Background Color */
-	--background-input: #cccccc; /* Input Field Background Color */
-	--background-column: #cacaca; /* Background for Apps Container */
-	--background-settings: #d5d5d5; /* Settings Card Background */
-	--background-buttons: #ccc; /* Button Background Color */
-	--tab-active-background: #bbb; /* Accent Color for Tabs */
-	--tab-inactive-background: ; /* Background Color for Tabs Not In Use */
-	--slider-active-background: #b3b0af; /* Active Slider Background Color */
-	--slider-inactive-background: #333; /* Slider Background Color */
-	--nav-image: url("/./assets/media/favicon/main-inverted.png"); /* Nav Logo */
-	--save-button: #a6d189; /* Save Button, Normally Green */
-	/* Text Variables */
-	--text-primary: #000; /* Primary Text Color */
-	--text-dark: #aaa; /* Dark Text Color for Error Page, Scrollbar, and Particles */
-	--text-placeholder: #555; /* Placeholder Text Color */
-	/* Other Variables */
+   /* Background Variables */
+   --background-color: #ddd; /* Main Background Color */
+   --background-input: #cccccc; /* Input Field Background Color */
+   --background-column: #cacaca; /* Background for Apps Container */
+   --background-settings: #d5d5d5; /* Settings Card Background */
+   --background-buttons: #ccc; /* Button Background Color */
+   --tab-active-background: #bbb; /* Accent Color for Tabs */
+   --tab-inactive-background: ; /* Background Color for Tabs Not In Use */
+   --slider-active-background: #b3b0af; /* Active Slider Background Color */
+   --slider-inactive-background: #333; /* Slider Background Color */
+   --nav-image: url("/./assets/media/favicon/main-inverted.png"); /* Nav Logo */
+   --save-button: #a6d189; /* Save Button, Normally Green */
+   /* Text Variables */
+   --text-primary: #000; /* Primary Text Color */
+   --text-dark: #aaa; /* Dark Text Color for Error Page, Scrollbar, and Particles */
+   --text-placeholder: #555; /* Placeholder Text Color */
+   /* Other Variables */
 }

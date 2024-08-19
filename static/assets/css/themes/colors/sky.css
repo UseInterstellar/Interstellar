@@ -1,21 +1,21 @@
 :root {
-	/* Background Variables */
-	--background-image: url("/./assets/media/background/full-main.png"); /* Background Image */
-	--backdrop-filter: blur(10px) brightness(80%); /* Nav Backdrop filter */
-	--background-nav: #173055; /* Nav Background */
-	--background-color: #173055; /* Main Background Color */
-	--background-input: #4a6fa5; /* Input Field Background Color */
-	--background-column: #173055; /* Background for Apps Container */
-	--background-settings: #173055; /* Settings Card Background */
-	--background-buttons: #3665ac; /* Button Background Color */
-	--tab-active-background: #204a88; /* Accent Color for Tabs */
-	--slider-active-background: #204a88; /* Active Slider Background Color */
-	--slider-inactive-background: #204a88; /* Slider Background Color */
-	--nav-image: url("/./assets/media/favicon/main.png"); /* Nav Logo */
-	/* Text Variables */
-	--text-primary: #ffffff; /* Primary Text Color */
-	--text-dark: #1b50cc; /* Dark Text Color for Error Page, Scrollbar, and Particles */
-	--text-placeholder: #00d9ff; /* Placeholder Text Color */
-	/* Other Variables */
-	--tab-hover: #a05959; /* Tab Color on Hover */
+   /* Background Variables */
+   --background-image: url("/./assets/media/background/full-main.png"); /* Background Image */
+   --backdrop-filter: blur(10px) brightness(80%); /* Nav Backdrop filter */
+   --background-nav: #173055; /* Nav Background */
+   --background-color: #173055; /* Main Background Color */
+   --background-input: #4a6fa5; /* Input Field Background Color */
+   --background-column: #173055; /* Background for Apps Container */
+   --background-settings: #173055; /* Settings Card Background */
+   --background-buttons: #3665ac; /* Button Background Color */
+   --tab-active-background: #204a88; /* Accent Color for Tabs */
+   --slider-active-background: #204a88; /* Active Slider Background Color */
+   --slider-inactive-background: #204a88; /* Slider Background Color */
+   --nav-image: url("/./assets/media/favicon/main.png"); /* Nav Logo */
+   /* Text Variables */
+   --text-primary: #ffffff; /* Primary Text Color */
+   --text-dark: #1b50cc; /* Dark Text Color for Error Page, Scrollbar, and Particles */
+   --text-placeholder: #00d9ff; /* Placeholder Text Color */
+   /* Other Variables */
+   --tab-hover: #a05959; /* Tab Color on Hover */
 }

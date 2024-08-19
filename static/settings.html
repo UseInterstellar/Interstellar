@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="/assets/css/container.css?v=2" />
     <link rel="stylesheet" href="/assets/css/nav.css?v=2" />
     <link rel="stylesheet" href="/assets/css/settings.css?v=4" />
-    <script src="https://kit.fontawesome.com/1237c86ba0.js" crossorigin="anonymous"></script>
+    <script src="assets/js/fa.js"></script>
   </head>
   <body>
     <div class="fixed-nav-bar"></div>
@@ -22,7 +22,11 @@
         <button class="export" id="export-theme">Export CSS</button>
         <button class="import" id="import-theme-button">Import CSS</button>
         <p>Change the background image</p>
-        <input type="text" id="background-input" placeholder="Enter image URL" />
+        <input
+          type="text"
+          id="background-input"
+          placeholder="Enter image URL"
+        />
         <button class="green" id="save-button">Save Image</button>
         <button id="upload-button">Upload Image</button>
         <button id="black-button">Black Background</button>
@@ -43,7 +47,11 @@
         <p>Change the background color of turned on sliders</p>
         <input type="text" class="input-small" id="slider-active-color-input" />
         <p>Change the background color of turned off sliders</p>
-        <input type="text" class="input-small" id="slider-inactive-color-input" />
+        <input
+          type="text"
+          class="input-small"
+          id="slider-inactive-color-input"
+        />
         <p>Change the color of our icon on the nav bar</p>
         <button id="white-logo">White Logo</button>
         <button id="black-logo">Black Logo</button>
@@ -52,15 +60,19 @@
         <p>Change the color of dark text (Default Color: Gray)</p>
         <input type="text" class="input-small" id="dark-text-color-input" />
         <p>Change the color of placeholder text (Default Color: Light Gray)</p>
-        <input type="text" class="input-small" id="placeholder-text-color-input" />
+        <input
+          type="text"
+          class="input-small"
+          id="placeholder-text-color-input"
+        />
         <button onclick="ClosePopup()" id="save-theme">Save Theme</button>
       </div>
       <div class="settings-container">
         <div class="settings-card">
           <h3>About:Blank</h3>
           <p>
-            Cloak the site in an about:blank page and toggle about:blank on startup (enabled by
-            default)
+            Cloak the site in an about:blank page and toggle about:blank on
+            startup (enabled by default)
           </p>
           <div id="ab-settings">
             <div id="ab-settings-container">
@@ -69,7 +81,8 @@
                   type="checkbox"
                   id="ab-settings-switch"
                   class="slider-checkbox"
-                  onchange="toggleAB()" />
+                  onchange="toggleAB()"
+                />
                 <span class="slider-round"></span>
               </label>
             </div>
@@ -79,16 +92,26 @@
         <div class="settings-card">
           <h3>Set Panic Key</h3>
           <p>
-            Quick open another site with one press. Used for redirects when about:blank is
-            opened. For multiple key strokes separate them with a comma. Ex. "A,B,C"
+            Quick open another site with one press. Used for redirects when
+            about:blank is opened. For multiple key strokes separate them with a
+            comma. Ex. "A,B,C"
           </p>
           <input
             type="text"
             id="eventKeyInput"
             placeholder="Panic Keys (comma separated)"
-            class="key-form" />
-          <input class="key-form" placeholder="Panic Link" type="text" id="linkInput" value />
-          <button class="key-button" value="Save" onclick="saveEventKey()">Save</button>
+            class="key-form"
+          />
+          <input
+            class="key-form"
+            placeholder="Panic Link"
+            type="text"
+            id="linkInput"
+            value
+          />
+          <button class="key-button" value="Save" onclick="saveEventKey()">
+            Save
+          </button>
         </div>
         <div class="settings-card">
           <h3>Tab Cloaker</h3>
@@ -117,7 +140,9 @@
             <option value="Britannica">Britannica</option>
             <option value="Ducksters">Ducksters</option>
             <option value="Minga">Minga</option>
-            <option value="i-Ready Learning Games">i-Ready Learning Games</option>
+            <option value="i-Ready Learning Games">
+              i-Ready Learning Games
+            </option>
             <option value="NoRedInk Home">NoRedInk Home</option>
             <option value="Newsela Binder">Newsela Binder</option>
             <option value="Newsela Assignments">Newsela Assignments</option>
@@ -126,18 +151,32 @@
             <option value="PowerSchool Grades and Attendance">
               PowerSchool Grades and Attendance
             </option>
-            <option value="PowerSchool Teacher Comments">PowerSchool Teacher Comments</option>
-            <option value="PowerSchool Standards Grades">PowerSchool Standards Grades</option>
-            <option value="PowerSchool Attendance">PowerSchool Attendance</option>
+            <option value="PowerSchool Teacher Comments">
+              PowerSchool Teacher Comments
+            </option>
+            <option value="PowerSchool Standards Grades">
+              PowerSchool Standards Grades
+            </option>
+            <option value="PowerSchool Attendance">
+              PowerSchool Attendance
+            </option>
             <option value="Nearpod">Nearpod</option>
             <option value="StudentVUE">StudentVUE</option>
             <option value="Quizlet Home">Quizlet Home</option>
-            <option value="Google Forms Locked Mode">Google Forms - Locked Mode</option>
+            <option value="Google Forms Locked Mode">
+              Google Forms - Locked Mode
+            </option>
             <option value="DeltaMath">DeltaMath</option>
             <option value="Kami">Kami</option>
-            <option value="GoGuardian Admin Restricted">GoGuardian Admin Block</option>
-            <option value="GoGuardian Teacher Block">GoGuardian Teacher Block</option>
-            <option value="World History Encyclopedia">World History Encyclopedia</option>
+            <option value="GoGuardian Admin Restricted">
+              GoGuardian Admin Block
+            </option>
+            <option value="GoGuardian Teacher Block">
+              GoGuardian Teacher Block
+            </option>
+            <option value="World History Encyclopedia">
+              World History Encyclopedia
+            </option>
             <option value="Big Ideas Math">Big Ideas Math</option>
             <option value="Big Ideas Math Assignment Player">
               Big Ideas Math Assignment Player
@@ -147,7 +186,9 @@
             <option value="World Book Online - Super Home">
               World Book Online (Super Home)
             </option>
-            <option value="World Book Online - Student">World Book Online (Student)</option>
+            <option value="World Book Online - Student">
+              World Book Online (Student)
+            </option>
             <option value="World Book Online - Timelines">
               World Book Online (Timelines)
             </option>
@@ -163,13 +204,15 @@
             <button
               class="key-button"
               value="Save"
-              onclick="CustomIcon(); CustomName(); redirectToMainDomain();">
+              onclick="CustomIcon(); CustomName(); redirectToMainDomain();"
+            >
               Save
             </button>
             <button
               class="key-button"
               value="Reset"
-              onclick="ResetCustomCloak(); redirectToMainDomain();">
+              onclick="ResetCustomCloak(); redirectToMainDomain();"
+            >
               Reset Cloak
             </button>
           </div>
@@ -177,13 +220,19 @@
         <div class="settings-card">
           <h3>Customization</h3>
           <p>
-            Change the theme, create your own custom theme, or just change the background
-            image.
+            Change the theme, create your own custom theme, or just change the
+            background image.
           </p>
           <p>
-            Custom Themes are currently broken, we are working to fix this as soon as possible
+            Custom Themes are currently broken, we are working to fix this as
+            soon as possible
           </p>
-          <button class="key-button" value="Save" onclick="Popup()" style="width: 100%">
+          <button
+            class="key-button"
+            value="Save"
+            onclick="Popup()"
+            style="width: 100%"
+          >
             Create Custom Theme
           </button>
         </div>
@@ -204,14 +253,18 @@
             type="text"
             id="engine-form"
             placeholder="Change Search Engine"
-            name="engine" />
-          <button class="key-button" value="Save" onclick="SaveEngine();">Save</button>
+            name="engine"
+          />
+          <button class="key-button" value="Save" onclick="SaveEngine();">
+            Save
+          </button>
         </div>
         <div class="settings-card">
           <h3>Choose your <an>Pro</an>xy</h3>
           <p>
-            Ultra<an>vio</an>let is the main <an>pro</an>xy, but Dynamic is faster and supports
-            more sites. (Dynamic is still in beta, so expect some bugs.)
+            Ultra<an>vio</an>let is the main <an>pro</an>xy, but Dynamic is
+            faster and supports more sites. (Dynamic is still in beta, so expect
+            some bugs.)
           </p>
           <select id="pChange">
             <option value="uv">Ultraviolet (Default)</option>
@@ -220,7 +273,10 @@
         </div>
         <div class="settings-card">
           <h3>Particles</h3>
-          <p>Add the particles that are from the previous version to the new site.</p>
+          <p>
+            Add the particles that are from the previous version to the new
+            site.
+          </p>
           <label class="switch">
             <input type="checkbox" class="slider-checkbox" id="2" />
             <span class="slider-round"></span>
@@ -233,7 +289,8 @@
             placeholder="Solid Color Themes"
             id="dropdown"
             class="td"
-            onchange="themeChange(this)">
+            onchange="themeChange(this)"
+          >
             <option disabled selected>Solid Color Themes</option>
             <option value="d">Default</option>
             <option value="Inverted">Inverted</option>
@@ -252,12 +309,17 @@
           <p id="last-updated">Last Updated: June 19th, 2024</p>
           <p>
             Questions? Join our
-            <a href="https://discord.gg/interstellar">Discord community</a>, email us at
-            <a href="mailto:hello@gointerstellar.app">hello@gointerstellar.app</a>, or
+            <a href="https://discord.gg/interstellar">Discord community</a>,
+            email us at
+            <a href="mailto:hello@gointerstellar.app"
+              >hello@gointerstellar.app</a
+            >, or
             <a href="https://docs.gointerstellar.app/faq">check our FAQ</a>!
           </p>
           <p>
-            By using Interstellar services, you confirm you have read and agreed to the terms listed in our <a href="/tos">Terms of Service and Privacy Policy</a>.
+            By using Interstellar services, you confirm you have read and agreed
+            to the terms listed in our
+            <a href="/tos">Terms of Service and Privacy Policy</a>.
           </p>
         </div>
       </div>
@@ -265,15 +327,18 @@
     <script src="/assets/js/main.js?v=90"></script>
     <script src="/assets/js/settings.js?v=8"></script>
     <!-- DO NOT REMOVE-->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ"></script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ"
+    ></script>
     <script>
-      window.dataLayer = window.dataLayer || []
+      window.dataLayer = window.dataLayer || [];
       function gtag() {
-        dataLayer.push(arguments)
+        dataLayer.push(arguments);
       }
-      gtag("js", new Date())
+      gtag("js", new Date());
 
-      gtag("config", "G-WKJQ5QHQTJ")
+      gtag("config", "G-WKJQ5QHQTJ");
     </script>
     <!-- DO NOT REMOVE-->
   </body>

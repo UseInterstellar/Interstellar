@@ -1,328 +1,328 @@
 body {
-	background-color: var(--background-image);
-	font-family: arial, sans;
-	color: var(--text-primary);
-	margin: 0;
-	padding: 0;
-	letter-spacing: 0px;
-	overflow-x: hidden;
+   background-color: var(--background-image);
+   font-family: arial, sans;
+   color: var(--text-primary);
+   margin: 0;
+   padding: 0;
+   letter-spacing: 0px;
+   overflow-x: hidden;
 }
 
 .settings-container {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	gap: 20px;
-	padding: 20% 20px 20px 20px;
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   gap: 20px;
+   padding: 20% 20px 20px 20px;
 }
 
 .settings-title {
-	display: block;
-	font-size: 70px;
-	margin-block-start: 0.67em;
-	margin-block-end: 0.67em;
-	margin-inline-start: 0px;
-	margin-inline-end: 0px;
-	font-weight: bold;
+   display: block;
+   font-size: 70px;
+   margin-block-start: 0.67em;
+   margin-block-end: 0.67em;
+   margin-inline-start: 0px;
+   margin-inline-end: 0px;
+   font-weight: bold;
 }
 
 .settings-card {
-	background-color: var(--background-settings);
-	border-radius: 10px;
-	padding: 20px;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-	width: 400px;
-	transition: all 0.3s ease;
+   background-color: var(--background-settings);
+   border-radius: 10px;
+   padding: 20px;
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+   width: 400px;
+   transition: all 0.3s ease;
 }
 
 .settings-card:hover {
-	transform: translatey(-5px);
-	box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+   transform: translatey(-5px);
+   box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
 }
 
 .settings-card h3 {
-	margin-top: 0;
-	color: var(--text-primary);
+   margin-top: 0;
+   color: var(--text-primary);
 }
 
 .settings-card p {
-	color: var(--text-placeholder);
+   color: var(--text-placeholder);
 }
 
 a {
-	color: var(--text-primary);
+   color: var(--text-primary);
 }
 
 .switch {
-	position: relative;
-	display: inline-block;
-	width: 60px;
-	height: 34px;
+   position: relative;
+   display: inline-block;
+   width: 60px;
+   height: 34px;
 }
 
 .switch input {
-	opacity: 0;
-	width: 0;
-	height: 0;
+   opacity: 0;
+   width: 0;
+   height: 0;
 }
 
 .slider-round {
-	position: absolute;
-	cursor: pointer;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background-color: var(--slider-inactive-background);
-	transition: 0.4s;
-	border-radius: 34px;
+   position: absolute;
+   cursor: pointer;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   background-color: var(--slider-inactive-background);
+   transition: 0.4s;
+   border-radius: 34px;
 }
 
 .slider-round:before {
-	position: absolute;
-	content: "";
-	height: 26px;
-	width: 26px;
-	left: 4px;
-	bottom: 4px;
-	background-color: var(--text-primary);
-	transition: 0.4s;
-	border-radius: 50%;
+   position: absolute;
+   content: "";
+   height: 26px;
+   width: 26px;
+   left: 4px;
+   bottom: 4px;
+   background-color: var(--text-primary);
+   transition: 0.4s;
+   border-radius: 50%;
 }
 
 input:checked + .slider-round {
-	background-color: var(--slider-active-background);
+   background-color: var(--slider-active-background);
 }
 
 input:checked + .slider-round:before {
-	transform: translateX(26px);
+   transform: translateX(26px);
 }
 
 input {
-	padding: 15px;
-	border-radius: 10px;
-	background: var(--background-input);
-	text-align: center;
-	font-size: 20px;
-	border: none;
-	outline: none;
-	color: var(--text-primary);
+   padding: 15px;
+   border-radius: 10px;
+   background: var(--background-input);
+   text-align: center;
+   font-size: 20px;
+   border: none;
+   outline: none;
+   color: var(--text-primary);
 }
 
 .key-form {
-	padding: 15px;
-	width: 92.5%;
-	border-radius: 10px;
-	background: var(--background-buttons);
-	text-align: center;
-	font-size: 20px;
-	border: none;
-	outline: none;
-	color: var(--text-primary);
-	margin-top: 10px;
+   padding: 15px;
+   width: 92.5%;
+   border-radius: 10px;
+   background: var(--background-buttons);
+   text-align: center;
+   font-size: 20px;
+   border: none;
+   outline: none;
+   color: var(--text-primary);
+   margin-top: 10px;
 }
 
 .key-button {
-	cursor: pointer;
-	border: 2px;
-	font-size: 20px;
-	transition: 0.2s;
-	margin-top: 10px;
-	background-color: var(--background-buttons);
-	padding: 0.5rem;
-	border-radius: 10px;
-	color: var(--text-primary);
-	height: 50px;
-	width: 50%;
-	padding: 10px;
-	text-align: center;
+   cursor: pointer;
+   border: 2px;
+   font-size: 20px;
+   transition: 0.2s;
+   margin-top: 10px;
+   background-color: var(--background-buttons);
+   padding: 0.5rem;
+   border-radius: 10px;
+   color: var(--text-primary);
+   height: 50px;
+   width: 50%;
+   padding: 10px;
+   text-align: center;
 }
 
 button {
-	cursor: pointer;
-	border: 2px;
-	transition: 0.2s;
-	margin-top: 10px;
-	background-color: var(--background-buttons);
-	padding: 0.5rem;
-	border-radius: 10px;
-	color: var(--text-primary);
-	height: 50px;
-	width: 35%;
-	padding: 10px;
-	text-align: center;
+   cursor: pointer;
+   border: 2px;
+   transition: 0.2s;
+   margin-top: 10px;
+   background-color: var(--background-buttons);
+   padding: 0.5rem;
+   border-radius: 10px;
+   color: var(--text-primary);
+   height: 50px;
+   width: 35%;
+   padding: 10px;
+   text-align: center;
 }
 
 select {
-	padding: 15px;
-	width: 100%;
-	border-radius: 10px;
-	background: var(--background-buttons);
-	color: var(--text-primary);
-	font-size: 20px;
-	border: 0px;
-	outline: none;
+   padding: 15px;
+   width: 100%;
+   border-radius: 10px;
+   background: var(--background-buttons);
+   color: var(--text-primary);
+   font-size: 20px;
+   border: 0px;
+   outline: none;
 }
 
 #buttonLayer {
-	width: 400px;
-	display: flex;
-	justify-content: center;
-	gap: 10px;
+   width: 400px;
+   display: flex;
+   justify-content: center;
+   gap: 10px;
 }
 
 #buttonLayer > .key-button {
-	flex-grow: 1;
-	padding: 10px;
-	box-sizing: border-box;
+   flex-grow: 1;
+   padding: 10px;
+   box-sizing: border-box;
 }
 
 @media screen and (max-width: 768px) {
-	.settings-container {
-		padding: 25% 20px 20px 20px;
-	}
-	.settings-card {
-		width: 100%;
-		max-width: 400px;
-	}
+   .settings-container {
+      padding: 25% 20px 20px 20px;
+   }
+   .settings-card {
+      width: 100%;
+      max-width: 400px;
+   }
 
-	.settings-title {
-		font-size: 40px;
-	}
+   .settings-title {
+      font-size: 40px;
+   }
 
-	input,
-	.key-form {
-		width: 90%;
-	}
+   input,
+   .key-form {
+      width: 90%;
+   }
 
-	button,
-	.key-button {
-		width: 100%;
-		max-width: 200px;
-	}
+   button,
+   .key-button {
+      width: 100%;
+      max-width: 200px;
+   }
 }
 
 @media screen and (max-width: 500px) {
-	.settings-container {
-		padding-top: 35%;
-	}
+   .settings-container {
+      padding-top: 35%;
+   }
 }
 
 @media screen and (min-width: 1000px) {
-	.settings-container {
-		padding-top: 10%;
-	}
+   .settings-container {
+      padding-top: 10%;
+   }
 }
 
 #last-updated {
-	margin-top: -3%;
+   margin-top: -3%;
 }
 
 #ab-settings {
-	display: flex;
-	align-items: center;
-	gap: 5vw;
+   display: flex;
+   align-items: center;
+   gap: 5vw;
 }
 
 #ab-settings-container {
-	margin-top: 13px;
-	margin-left: 20px;
+   margin-top: 13px;
+   margin-left: 20px;
 }
 
 .popup {
-	display: none;
-	width: 85%;
-	height: 80%;
-	left: 50%;
-	top: 58%;
-	transform: translate(-50%, -50%);
-	position: fixed;
-	text-align: center;
-	background-color: var(--background-settings);
-	padding: 20px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-	border-radius: 10px;
-	overflow-y: auto;
+   display: none;
+   width: 85%;
+   height: 80%;
+   left: 50%;
+   top: 58%;
+   transform: translate(-50%, -50%);
+   position: fixed;
+   text-align: center;
+   background-color: var(--background-settings);
+   padding: 20px;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+   border-radius: 10px;
+   overflow-y: auto;
 }
 
 .popup h3 {
-	text-align: center;
-	color: var(--text-primary);
-	font-size: 8vh;
-	margin-top: 0;
-	margin-bottom: 1vh;
+   text-align: center;
+   color: var(--text-primary);
+   font-size: 8vh;
+   margin-top: 0;
+   margin-bottom: 1vh;
 }
 
 .popup p {
-	text-align: center;
-	color: var(--text-placeholder);
-	font-size: 22px;
-	margin-top: 1vh;
-	margin-bottom: 1vh;
+   text-align: center;
+   color: var(--text-placeholder);
+   font-size: 22px;
+   margin-top: 1vh;
+   margin-bottom: 1vh;
 }
 
 .popup input {
-	display: block;
-	margin: 0 auto;
-	padding: 1.5vh 3vh;
-	width: 70%;
-	border-radius: 10px;
+   display: block;
+   margin: 0 auto;
+   padding: 1.5vh 3vh;
+   width: 70%;
+   border-radius: 10px;
 }
 
 .popup .input-small {
-	display: block;
-	margin: 0 auto;
-	padding: 1.5vh 3vh;
-	width: 40%;
-	border-radius: 10px;
+   display: block;
+   margin: 0 auto;
+   padding: 1.5vh 3vh;
+   width: 40%;
+   border-radius: 10px;
 }
 
 .popup button {
-	cursor: pointer;
-	font-size: 20px;
-	border: 2px;
-	transition: 0.2s;
-	margin-top: 10px;
-	background-color: var(--background-buttons);
-	padding: 0.5rem;
-	border-radius: 10px;
-	color: var(--text-primary);
-	height: 50px;
-	width: 15%;
-	padding: 10px;
-	text-align: center;
+   cursor: pointer;
+   font-size: 20px;
+   border: 2px;
+   transition: 0.2s;
+   margin-top: 10px;
+   background-color: var(--background-buttons);
+   padding: 0.5rem;
+   border-radius: 10px;
+   color: var(--text-primary);
+   height: 50px;
+   width: 15%;
+   padding: 10px;
+   text-align: center;
 }
 
 .popup button.green {
-	border: 2px solid var(--save-button);
+   border: 2px solid var(--save-button);
 }
 
 .popup button.green:hover {
-	background-color: var(--save-button);
+   background-color: var(--save-button);
 }
 
 .popup button.red {
-	border: 2px solid var(--reset-button);
+   border: 2px solid var(--reset-button);
 }
 
 .popup button.red:hover {
-	background-color: var(--reset-button);
+   background-color: var(--reset-button);
 }
 
 .popup button.import {
-	border: 2px solid var(--import-button);
+   border: 2px solid var(--import-button);
 }
 
 .popup button.import:hover {
-	background-color: var(--import-button);
+   background-color: var(--import-button);
 }
 
 .popup button.export {
-	border: 2px solid var(--export-button);
+   border: 2px solid var(--export-button);
 }
 
 .popup button.export:hover {
-	background-color: var(--export-button);
+   background-color: var(--export-button);
 }
 
 /*

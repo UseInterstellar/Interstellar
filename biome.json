@@ -11,7 +11,8 @@
       "package.json",
       "*.md",
       "bun.lockb",
-      "Failed.html"
+      "Failed.html",
+      "static/assets/js/fa.js"
     ]
   },
   "organizeImports": {

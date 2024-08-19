@@ -1,21 +1,21 @@
 :root {
-	/* Background Variables */
-	--background-image: url("/./assets/media/background/full-inverted.png"); /* Background Image */
-	--backdrop-filter: blur(10px) brightness(80%); /* Nav Backdrop filter */
-	--background-nav: rgba(0, 0, 0, 0.02); /* Nav Background */
-	--background-color: #ddd; /* Main Background Color */
-	--background-input: #cccccc; /* Input Field Background Color */
-	--background-column: #cacaca; /* Background for Apps Container */
-	--background-settings: #d5d5d5; /* Settings Card Background */
-	--background-buttons: #ccc; /* Button Background Color */
-	--tab-active-background: #bbb; /* Accent Color for Tabs */
-	--slider-active-background: #b3b0af; /* Active Slider Background Color */
-	--slider-inactive-background: #333; /* Slider Background Color */
-	--nav-image: url("/./assets/media/favicon/main-inverted.png"); /* Nav Logo */
-	/* Text Variables */
-	--text-primary: #000; /* Primary Text Color */
-	--text-dark: #aaa; /* Dark Text Color for Error Page, Scrollbar, and Particles */
-	--text-placeholder: #555; /* Placeholder Text Color */
-	/* Other Variables */
-	--tab-hover: #bbb; /* Tab Color on Hover */
+   /* Background Variables */
+   --background-image: url("/./assets/media/background/full-inverted.png"); /* Background Image */
+   --backdrop-filter: blur(10px) brightness(80%); /* Nav Backdrop filter */
+   --background-nav: rgba(0, 0, 0, 0.02); /* Nav Background */
+   --background-color: #ddd; /* Main Background Color */
+   --background-input: #cccccc; /* Input Field Background Color */
+   --background-column: #cacaca; /* Background for Apps Container */
+   --background-settings: #d5d5d5; /* Settings Card Background */
+   --background-buttons: #ccc; /* Button Background Color */
+   --tab-active-background: #bbb; /* Accent Color for Tabs */
+   --slider-active-background: #b3b0af; /* Active Slider Background Color */
+   --slider-inactive-background: #333; /* Slider Background Color */
+   --nav-image: url("/./assets/media/favicon/main-inverted.png"); /* Nav Logo */
+   /* Text Variables */
+   --text-primary: #000; /* Primary Text Color */
+   --text-dark: #aaa; /* Dark Text Color for Error Page, Scrollbar, and Particles */
+   --text-placeholder: #555; /* Placeholder Text Color */
+   /* Other Variables */
+   --tab-hover: #bbb; /* Tab Color on Hover */
 }

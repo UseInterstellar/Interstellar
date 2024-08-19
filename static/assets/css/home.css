@@ -1,98 +1,98 @@
 .center {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+   display: flex;
+   justify-content: center;
+   align-items: center;
 }
 
 .title {
-	font-size: 10vh;
-	color: var(--text-primary);
-	font-family: "Inter", sans-serif;
-	text-align: center;
-	text-transform: uppercase;
-	border-radius: 0px 0px 5px 5px;
-	margin-top: 30vh;
-	margin-bottom: 5vh;
-	transition: 0.35s ease;
-	text-shadow: 2px 4px 6px rgb(0, 0, 0, 0.2);
+   font-size: 10vh;
+   color: var(--text-primary);
+   font-family: "Inter", sans-serif;
+   text-align: center;
+   text-transform: uppercase;
+   border-radius: 0px 0px 5px 5px;
+   margin-top: 30vh;
+   margin-bottom: 5vh;
+   transition: 0.35s ease;
+   text-shadow: 2px 4px 6px rgb(0, 0, 0, 0.2);
 }
 
 .title:hover {
-	transform: translateY(-5%) scale(1.03);
-	font-weight: 800;
+   transform: translateY(-5%) scale(1.03);
+   font-weight: 800;
 }
 
 @media (orientation: portrait) {
-	.title {
-		position: relative;
-		top: -10vw;
-		font-size: 10vw;
-		color: var(--text-primary);
-		font-family: "Inter", sans-serif;
-		text-align: center;
-		text-transform: uppercase;
-		border-radius: 0px 0px 5px 5px;
-	}
+   .title {
+      position: relative;
+      top: -10vw;
+      font-size: 10vw;
+      color: var(--text-primary);
+      font-family: "Inter", sans-serif;
+      text-align: center;
+      text-transform: uppercase;
+      border-radius: 0px 0px 5px 5px;
+   }
 }
 
 .search-container {
-	display: flex;
-	width: 100%;
-	text-align: center;
-	justify-content: center;
-	align-items: center;
+   display: flex;
+   width: 100%;
+   text-align: center;
+   justify-content: center;
+   align-items: center;
 }
 
 .main-search {
-	width: 50vw;
-	height: 5vh;
-	font-family: "Poppins", sans-serif;
-	font-size: 16px;
-	box-shadow: 0 0 15px 2px rgba(0, 0, 0, 0.2);
-	background: var(--background-input);
-	-webkit-backdrop-filter: var(--backdrop-filter);
-	backdrop-filter: var(--backdrop-filter);
+   width: 50vw;
+   height: 5vh;
+   font-family: "Poppins", sans-serif;
+   font-size: 16px;
+   box-shadow: 0 0 15px 2px rgba(0, 0, 0, 0.2);
+   background: var(--background-input);
+   -webkit-backdrop-filter: var(--backdrop-filter);
+   backdrop-filter: var(--backdrop-filter);
 }
 
 input {
-	padding: 20px;
-	width: 550px;
-	border-radius: 5px;
-	background: var(--background-column);
-	text-align: center;
-	font-size: 24px;
-	border: none;
-	outline: none;
-	color: var(--text-primary);
-	transition: 0.4s;
+   padding: 20px;
+   width: 550px;
+   border-radius: 5px;
+   background: var(--background-column);
+   text-align: center;
+   font-size: 24px;
+   border: none;
+   outline: none;
+   color: var(--text-primary);
+   transition: 0.4s;
 }
 
 #particles-js {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	top: 0vw;
-	background-color: var(--bg-c);
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-position: 50% 50%;
-	overflow: hidden;
+   position: absolute;
+   width: 100%;
+   height: 100%;
+   top: 0vw;
+   background-color: var(--bg-c);
+   background-repeat: no-repeat;
+   background-size: cover;
+   background-position: 50% 50%;
+   overflow: hidden;
 }
 
 .particles-js-canvas-el {
-	z-index: 0;
-	top: 0;
-	left: 0;
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	pointer-events: none;
+   z-index: 0;
+   top: 0;
+   left: 0;
+   position: absolute;
+   width: 100%;
+   height: 100%;
+   pointer-events: none;
 }
 
 #splash {
-	color: var(--text-dark);
-	margin-bottom: 1em;
-	margin-top: -2em;
-	padding: 0;
-	font-family: "Poppins", sans-serif;
+   color: var(--text-dark);
+   margin-bottom: 1em;
+   margin-top: -2em;
+   padding: 0;
+   font-family: "Poppins", sans-serif;
 }
