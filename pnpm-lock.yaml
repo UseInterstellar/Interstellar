@@ -9,7 +9,7 @@ importers:
   .:
     dependencies:
       '@tomphttp/bare-server-node':
-        specifier: ^2.0.3
+        specifier: 2.0.3
         version: 2.0.3
       chalk:
         specifier: ^5.3.0
