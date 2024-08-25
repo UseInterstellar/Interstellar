@@ -7,4 +7,14 @@ self.__uv$config = {
   bundle: "/assets/-uv/bundle.js?v=6-17-2024",
   config: "/assets/-uv/config.js?v=6-17-2024",
   sw: "/assets/-uv/sw.js?v=6-17-2024",
+  inject: [
+    {
+      host: /discord.com*/g,
+      injectTo: "head",
+      html: `
+      <script src="https://raw.githubusercontent.com/Vencord/builds/main/browser.js"></script>
+      <link rel="stylesheet" href="https://raw.githubusercontent.com/Vencord/builds/main/browser.css">
+      `
+    }
+  ]
 }
