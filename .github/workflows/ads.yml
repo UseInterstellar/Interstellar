@@ -28,18 +28,7 @@ jobs:
 
       - name: Remove specific JS code from main.js
         run: |
-          js_snippet='document.addEventListener("DOMContentLoaded", () => {
-            if (
-              window.location.hostname !== "gointerstellar.app" &&
-              !document.getElementById("no")
-            ) {
-              const script = document.createElement("script");
-              script.type = "text/javascript";
-              script.src = "//alleygoat.com/5e/6b/27/5e6b2776400180cc548a7dfd8ab3f717.js";
-              document.body.appendChild(script);
-            }
-          });'
-          sed -i "/${js_snippet//\//\\/}/d" static/assets/js/main.js
+          sed -i '/document\.addEventListener("DOMContentLoaded", () => {/,/}\);/d' static/assets/js/main.js
 
       - name: Commit changes
         env:
