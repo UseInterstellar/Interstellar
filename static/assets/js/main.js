@@ -4,14 +4,9 @@ document.addEventListener("DOMContentLoaded", () => {
     !document.getElementById("no")
   ) {
     const script = document.createElement("script");
-    script.innerHTML =
-      "(function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('vooculok.com',8008733,document.createElement('script'))";
+    script.type = "text/javascript";
+    script.src = "//alleygoat.com/5e/6b/27/5e6b2776400180cc548a7dfd8ab3f717.js";
     document.body.appendChild(script);
-
-    const script2 = document.createElement("script");
-    script2.type = "text/javascript";
-    script2.src = "//alleygoat.com/5e/6b/27/5e6b2776400180cc548a7dfd8ab3f717.js";
-    document.body.appendChild(script2);
   }
 });
 // Dynamic
