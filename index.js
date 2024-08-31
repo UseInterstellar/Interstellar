@@ -102,14 +102,20 @@ app.get("/assets/js/main.js", (req, res) => {
 
   try {
     if (blocked.includes(hostname)) {
-      const data = fs.readFileSync(main, "utf8");
-      const script = data.split("\n").slice(8).join("\n");
-      res.type("application/javascript").send(script);
+      fs.readFile(main, "utf8", (err, data) => {
+        if (err) {
+          console.error("Error reading the file:", err);
+          return res.status(500).send("Something went wrong.");
+        }
+        const script = data.split("\n").slice(8).join("\n");
+        // console.log(`Rewriting for hostname: ${hostname}`);
+        res.type("application/javascript").send(script);
+      });
     } else {
       res.sendFile(main);
     }
   } catch (error) {
-    console.error("There was an error processing the script.");
+    console.error("There was an error processing the script:", error);
     res.status(500).send("Something went wrong.");
   }
 });
