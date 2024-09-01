@@ -1,4 +1,4 @@
-name: Update Ad-Free branch
+name: Remove Ads
 
 on:
   push:
@@ -15,7 +15,7 @@ jobs:
         with:
           ref: main
 
-      - name: Create or update Ad-Free branch
+      - name: Remove Ads
         run: |
           git fetch origin
           if git branch --list | grep -q 'Ad-Free'; then
