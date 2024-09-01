@@ -1,4 +1,4 @@
-name: Update Ad-Free branch
+name: Remove Ads
 
 on:
   push:
@@ -15,7 +15,7 @@ jobs:
         with:
           ref: main
 
-      - name: Create or update Ad-Free branch
+      - name: Remove Ads
         run: |
           git fetch origin
           if git branch --list | grep -q 'Ad-Free'; then
@@ -26,11 +26,10 @@ jobs:
             git checkout -b Ad-Free
           fi
 
- - name: Remove specific JS code from main.js
-  run: |
-    sed -i '/document\.addEventListener("DOMContentLoaded", () => {/,/document\.body\.appendChild(script);/d' static/assets/js/main.js
-
-
+      - name: Remove first 9 lines from main.js
+        run: |
+          sed -i '1,9d' static/assets/js/main.js
+  
       - name: Commit changes
         env:
           GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
