@@ -6,9 +6,9 @@
     "custom": "true"
   },
   {
-    "name": "! Interstellar FAQ/Docs",
+    "name": "! Hello FAQ/Docs",
     "image": "/assets/media/icons/help_center_googlefonts.png",
-    "link": "https://docs.gointerstellar.app",
+    "link": "https://docs.goHello.app",
     "categories": ["all"]
   },
   {
@@ -45,7 +45,7 @@
   },
   {
     "name": "Android",
-    "link": "https://now.gg/iframe/snippet?app_pkg=com.uncube.launcher3&partner=interstellar",
+    "link": "https://now.gg/iframe/snippet?app_pkg=com.uncube.launcher3&partner=Hello",
     "image": "/assets/media/icons/android.webp",
     "categories": ["all", "emu", "android"]
   },
@@ -57,13 +57,13 @@
   },
   {
     "name": "Character AI",
-    "link": "https://now.gg/iframe/snippet?app_pkg=ai.character.app&partner=interstellar",
+    "link": "https://now.gg/iframe/snippet?app_pkg=ai.character.app&partner=Hello",
     "image": "/assets/media/icons/characterai.webp",
     "categories": ["all", "emu", "android"]
   },
   {
     "name": "Aptoide",
-    "link": "https://now.gg/iframe/snippet?app_pkg=com.aptoide.partners.nowgg.store&partner=interstellar",
+    "link": "https://now.gg/iframe/snippet?app_pkg=com.aptoide.partners.nowgg.store&partner=Hello",
     "image": "/assets/media/icons/aptoide.webp",
     "categories": ["all", "emu", "android"]
   },

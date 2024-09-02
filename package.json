@@ -1,5 +1,5 @@
 {
-  "name": "interstellar",
+  "name": "Hello",
   "version": "5.2.3",
   "type": "module",
   "engines": {
@@ -12,7 +12,7 @@
     "precommit": "biome check --write .",
     "lint": "biome lint --write ."
   },
-  "author": "InterstellarNetwork",
+  "author": "HelloNetwork",
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "@tomphttp/bare-server-node": "2.0.3",

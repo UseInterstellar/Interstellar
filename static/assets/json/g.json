@@ -6,9 +6,9 @@
     "custom": "true"
   },
   {
-    "name": "! Interstellar FAQ/Docs",
+    "name": "! Hello FAQ/Docs",
     "image": "/assets/media/icons/help_center_googlefonts.png",
-    "link": "https://docs.gointerstellar.app",
+    "link": "https://docs.goHello.app",
     "categories": ["all"]
   },
   {
@@ -356,7 +356,7 @@
     "image": "/assets/media/icons/nealfun.webp",
     "categories": ["all"],
     "error": "true",
-    "say": "Neal.fun does not work on Interstellar because of Cloudflare protection."
+    "say": "Neal.fun does not work on Hello because of Cloudflare protection."
   },
   {
     "name": "YoHoHo.io",
@@ -1555,127 +1555,127 @@
   },
   {
     "name": "Roblox (Now.GG)",
-    "link": "https://now.gg/iframe/snippet?app_pkg=com.roblox.client&partner=interstellar",
+    "link": "https://now.gg/iframe/snippet?app_pkg=com.roblox.client&partner=Hello",
     "image": "/assets/media/icons/roblox.webp",
     "categories": ["all", "emu", "android"]
   },
   {
     "name": "Madden NFL 24",
-    "link": "https://now.gg/iframe/snippet?app_pkg=com.ea.gp.maddennfl21mobile&partner=interstellar",
+    "link": "https://now.gg/iframe/snippet?app_pkg=com.ea.gp.maddennfl21mobile&partner=Hello",
     "image": "/assets/media/icons/maddennfl24.webp",
     "categories": ["all", "emu", "android"]
   },
   {
     "name": "Android",
-    "link": "https://now.gg/iframe/snippet?app_pkg=com.uncube.launcher3&partner=interstellar",
+    "link": "https://now.gg/iframe/snippet?app_pkg=com.uncube.launcher3&partner=Hello",
     "image": "/assets/media/icons/android.webp",
     "categories": ["all", "emu", "android"]
   },
   {
     "name": "Genshin Impact",
-    "link": "https://now.gg/iframe/snippet?app_pkg=com.miHoYo.GenshinImpact&partner=interstellar",
+    "link": "https://now.gg/iframe/snippet?app_pkg=com.miHoYo.GenshinImpact&partner=Hello",
     "image": "/assets/media/icons/genshinimpact.webp",
     "categories": ["all", "emu", "android"]
   },
   {
     "name": "Fortnite (Now.GG)",
-    "link": "https://now.gg/iframe/snippet?app_pkg=com.epicgames.fortnite&partner=interstellar",
+    "link": "https://now.gg/iframe/snippet?app_pkg=com.epicgames.fortnite&partner=Hello",
     "image": "/assets/media/icons/fortnite.webp",
     "categories": ["all", "emu", "android"]
   },
   {
     "name": "EA SPORTS FC™ MOBILE 24 SOCCER",
-    "link": "https://now.gg/iframe/snippet?app_pkg=com.ea.gp.fifamobile&partner=interstellar",
+    "link": "https://now.gg/iframe/snippet?app_pkg=com.ea.gp.fifamobile&partner=Hello",
     "image": "/assets/media/icons/easports-fcmobile24.webp",
     "categories": ["all", "emu", "android"]
   },
   {
     "name": "EA SPORTS™ UFC® Mobile 2",
-    "link": "https://now.gg/iframe/snippet?app_pkg=com.ea.gp.easportsufc2&partner=interstellar",
+    "link": "https://now.gg/iframe/snippet?app_pkg=com.ea.gp.easportsufc2&partner=Hello",
     "image": "/assets/media/icons/easports-ufc.webp",
     "categories": ["all", "emu", "android"]
   },
   {
     "name": "Melon Playground",
-    "link": "https://now.gg/iframe/snippet?app_pkg=com.studio27.MelonPlayground&partner=interstellar",
+    "link": "https://now.gg/iframe/snippet?app_pkg=com.studio27.MelonPlayground&partner=Hello",
     "image": "/assets/media/icons/melonplayground.webp",
     "categories": ["all", "emu", "android"]
   },
   {
     "name": "Solar Smash",
-    "link": "https://now.gg/iframe/snippet?app_pkg=com.paradyme.solarsmash&partner=interstellar",
+    "link": "https://now.gg/iframe/snippet?app_pkg=com.paradyme.solarsmash&partner=Hello",
     "image": "/assets/media/icons/solarsmash.webp",
     "categories": ["all", "emu", "android"]
   },
   {
     "name": "Bloons TD Battles 2",
-    "link": "https://now.gg/iframe/snippet?app_pkg=com.ninjakiwi.bloonstdbattles2&partner=interstellar",
+    "link": "https://now.gg/iframe/snippet?app_pkg=com.ninjakiwi.bloonstdbattles2&partner=Hello",
     "image": "/assets/media/icons/bloonstd2.webp",
     "categories": ["all", "emu", "android"]
   },
   {
     "name": "Bloons TD Battles",
-    "link": "https://now.gg/iframe/snippet?app_pkg=com.ninjakiwi.bloonstdbattles&partner=interstellar",
+    "link": "https://now.gg/iframe/snippet?app_pkg=com.ninjakiwi.bloonstdbattles&partner=Hello",
     "image": "/assets/media/icons/bloonstd.webp",
     "categories": ["all", "emu", "android"]
   },
   {
     "name": "Cookie Run Kingdom",
-    "link": "https://now.gg/iframe/snippet?app_pkg=com.devsisters.ck&partner=interstellar",
+    "link": "https://now.gg/iframe/snippet?app_pkg=com.devsisters.ck&partner=Hello",
     "image": "/assets/media/icons/cookierunkingdom.webp",
     "categories": ["all", "emu", "android"]
   },
   {
     "name": "Character AI",
-    "link": "https://now.gg/iframe/snippet?app_pkg=ai.character.app&partner=interstellar",
+    "link": "https://now.gg/iframe/snippet?app_pkg=ai.character.app&partner=Hello",
     "image": "/assets/media/icons/characterai.webp",
     "categories": ["all", "emu", "android"]
   },
   {
     "name": "Aptoide",
-    "link": "https://now.gg/iframe/snippet?app_pkg=com.aptoide.partners.nowgg.store&partner=interstellar",
+    "link": "https://now.gg/iframe/snippet?app_pkg=com.aptoide.partners.nowgg.store&partner=Hello",
     "image": "/assets/media/icons/aptoide.webp",
     "categories": ["all", "emu", "android"]
   },
   {
     "name": "Akinator",
-    "link": "https://now.gg/iframe/snippet?app_pkg=com.digidust.elokence.akinator.freemium&partner=interstellar",
+    "link": "https://now.gg/iframe/snippet?app_pkg=com.digidust.elokence.akinator.freemium&partner=Hello",
     "image": "/assets/media/icons/akinator.webp",
     "categories": ["all", "emu", "android"]
   },
   {
     "name": "WorldBox",
-    "link": "https://now.gg/iframe/snippet?app_pkg=com.mkarpenko.worldbox&partner=interstellar",
+    "link": "https://now.gg/iframe/snippet?app_pkg=com.mkarpenko.worldbox&partner=Hello",
     "image": "/assets/media/icons/worldbox.webp",
     "categories": ["all", "emu", "android"]
   },
   {
     "name": "Toca Life World",
-    "link": "https://now.gg/iframe/snippet?app_pkg=com.tocaboca.tocalifeworld&partner=interstellar",
+    "link": "https://now.gg/iframe/snippet?app_pkg=com.tocaboca.tocalifeworld&partner=Hello",
     "image": "/assets/media/icons/tocalifeworld.webp",
     "categories": ["all", "emu", "android"]
   },
   {
     "name": "Toca Hair Salon 4",
-    "link": "https://now.gg/iframe/snippet?app_pkg=com.tocaboca.tocahairsalon4&partner=interstellar",
+    "link": "https://now.gg/iframe/snippet?app_pkg=com.tocaboca.tocahairsalon4&partner=Hello",
     "image": "/assets/media/icons/tocabocahairsalon4.webp",
     "categories": ["all", "emu", "android"]
   },
   {
     "name": "Toca Kitchen 2",
-    "link": "https://now.gg/iframe/snippet?app_pkg=com.tocaboca.tocakitchen2&partner=interstellar",
+    "link": "https://now.gg/iframe/snippet?app_pkg=com.tocaboca.tocakitchen2&partner=Hello",
     "image": "/assets/media/icons/tocakitchen2.webp",
     "categories": ["all", "emu", "android"]
   },
   {
     "name": "Free Fire",
-    "link": "https://now.gg/iframe/snippet?app_pkg=com.dts.freefireth&partner=interstellar",
+    "link": "https://now.gg/iframe/snippet?app_pkg=com.dts.freefireth&partner=Hello",
     "image": "/assets/media/icons/freefire.webp",
     "categories": ["all", "emu", "android"]
   },
   {
     "name": "Stumble Guys (Android)",
-    "link": "https://now.gg/iframe/snippet?app_pkg=com.kitkagames.fallbuddies&partner=interstellar",
+    "link": "https://now.gg/iframe/snippet?app_pkg=com.kitkagames.fallbuddies&partner=Hello",
     "image": "/assets/media/icons/stumble-guys.webp",
     "categories": ["all", "emu", "android"]
   },
@@ -1777,7 +1777,7 @@
   },
   {
     "name": "Eaglercraft 1.5.2 [Singleplayer]",
-    "link": "https://interstellar-assets.pages.dev/minecraft-15/",
+    "link": "https://Hello-assets.pages.dev/minecraft-15/",
     "image": "/assets/media/icons/mc.webp",
     "categories": ["all", "2P", "emu"],
     "blank": "true"
