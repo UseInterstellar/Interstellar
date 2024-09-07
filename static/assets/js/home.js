@@ -177,7 +177,7 @@ const SplashT = [
   "Made by khcrysalis",
   "Thanks for using the site",
   "Check out the settings page",
-  "Common bug fixes by khcrysalis",
+  "Bug fixes by khcrysalis",
 ];
 
 let SplashI = Math.floor(Math.random() * SplashT.length);
