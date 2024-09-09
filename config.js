@@ -10,6 +10,8 @@ const config = {
     rebirth: "1234",
     neeraj123: "rebirth",
     MrClean_pillows: "aadarsh01",
+    Afra99: "Afraz9",
+
   },
 };
 
