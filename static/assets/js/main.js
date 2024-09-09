@@ -64,38 +64,6 @@ if (themes[themeid]) {
   document.head.appendChild(customThemeEle);
 }
 
-window.addEventListener("load", () => {
-  const cssContent = localStorage.getItem("themeCSS");
-
-  if (cssContent) {
-    console.debug("CSS Content from localStorage:", cssContent);
-    const blob = new Blob([cssContent], { type: "text/css" });
-    console.debug("Blob:", blob);
-    if (blob.size > 0) {
-      const blobUrl = URL.createObjectURL(blob);
-      console.debug("Blob URL:", blobUrl);
-      const existingLink = document.getElementById("global");
-      if (existingLink) {
-        existingLink.href = blobUrl;
-      } else {
-        const link = document.createElement("link");
-        link.rel = "stylesheet";
-        link.href = blobUrl;
-        link.id = "global";
-        document.head.appendChild(link);
-      }
-      setTimeout(() => {
-        URL.revokeObjectURL(blobUrl);
-        console.debug("Blob URL revoked:", blobUrl);
-      }, 5000);
-    } else {
-      console.error("Blob is empty. Check the CSS content in localStorage.");
-    }
-  } else {
-    console.debug("No custom CSS content found in localStorage. Using defaults.");
-  }
-});
-
 // Tab Cloaker
 document.addEventListener("DOMContentLoaded", () => {
   const icon = document.getElementById("tab-favicon");

@@ -11,7 +11,7 @@
     <link rel="stylesheet" id="global" href="/assets/css/global.css?v=6" />
     <link rel="stylesheet" href="/assets/css/container.css?v=2" />
     <link rel="stylesheet" href="/assets/css/nav.css?v=2" />
-    <link rel="stylesheet" href="/assets/css/settings.css?v=4" />
+    <link rel="stylesheet" href="/assets/css/settings.css?v=05" />
     <script src="assets/js/fa.js"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6840529569014734"
      crossorigin="anonymous"></script>
@@ -20,56 +20,6 @@
   <body>
     <div class="fixed-nav-bar"></div>
     <div class="main">
-      <div class="popup">
-        <h3>Theme Creator</h3>
-        <button class="export" id="export-theme">Export CSS</button>
-        <button class="import" id="import-theme-button">Import CSS</button>
-        <p>Change the background image</p>
-        <input
-          type="text"
-          id="background-input"
-          placeholder="Enter image URL"
-        />
-        <button class="green" id="save-button">Save Image</button>
-        <button id="upload-button">Upload Image</button>
-        <button id="black-button">Black Background</button>
-        <button id="white-button">White Background</button>
-        <button class="red" id="reset-button">Reset</button>
-        <p>Change the background color</p>
-        <input type="text" class="input-small" id="background-color-input" />
-        <p>Change the searchbar/input color</p>
-        <input type="text" class="input-small" id="input-color-input" />
-        <p>Change the app card color</p>
-        <input type="text" class="input-small" id="app-card-color-input" />
-        <p>Change the settings card color</p>
-        <input type="text" class="input-small" id="settings-card-color-input" />
-        <p>Change the color of buttons</p>
-        <input type="text" class="input-small" id="button-color-input" />
-        <p>Change the accent color of tabs</p>
-        <input type="text" class="input-small" id="tab-accent-color-input" />
-        <p>Change the background color of turned on sliders</p>
-        <input type="text" class="input-small" id="slider-active-color-input" />
-        <p>Change the background color of turned off sliders</p>
-        <input
-          type="text"
-          class="input-small"
-          id="slider-inactive-color-input"
-        />
-        <p>Change the color of our icon on the nav bar</p>
-        <button id="white-logo">White Logo</button>
-        <button id="black-logo">Black Logo</button>
-        <p>Change the primary color of text (Default Color: White)</p>
-        <input type="text" class="input-small" id="primary-text-color-input" />
-        <p>Change the color of dark text (Default Color: Gray)</p>
-        <input type="text" class="input-small" id="dark-text-color-input" />
-        <p>Change the color of placeholder text (Default Color: Light Gray)</p>
-        <input
-          type="text"
-          class="input-small"
-          id="placeholder-text-color-input"
-        />
-        <button onclick="ClosePopup()" id="save-theme">Save Theme</button>
-      </div>
       <div class="settings-container">
         <div class="settings-card">
           <h3>About:Blank</h3>
@@ -221,23 +171,11 @@
           </div>
         </div>
         <div class="settings-card">
-          <h3>Customization</h3>
-          <p>
-            Change the theme, create your own custom theme, or just change the
-            background image.
-          </p>
-          <p>
-            Custom Themes are currently broken, we are working to fix this as
-            soon as possible
-          </p>
-          <button
-            class="key-button"
-            value="Save"
-            onclick="Popup()"
-            style="width: 100%"
-          >
-            Create Custom Theme
-          </button>
+          <h3>Set Background Image</h3>
+          <p>Change the site's background image.</p>
+          <input class="key-form" type="text" id="background-input" placeholder="Enter image URL" />
+          <button class="key-button" id="save-button">Save</button>
+          <button class="key-button" id="reset-button">Reset</button>
         </div>
         <div class="settings-card">
           <h3>Search Engine</h3>
@@ -327,8 +265,8 @@
         </div>
       </div>
     </div>
-    <script src="/assets/js/main.js?v=96"></script>
-    <script src="/assets/js/settings.js?v=8"></script>
+    <script src="/assets/js/main.js?v=01"></script>
+    <script src="/assets/js/settings.js?v=09"></script>
     <!-- DO NOT REMOVE-->
     <script
       async

@@ -1,215 +1,3 @@
-// if statement hell featuring a stupid amount of functions
-
-// Utility Functions
-function Popup() {
-  document.querySelector(".settings-container").style.display = "none";
-  document.querySelector(".popup").style.display = "block";
-}
-
-function ClosePopup() {
-  document.querySelector(".settings-container").style.display = "flex";
-  document.querySelector(".popup").style.display = "none";
-}
-
-function initializeTheme() {
-  const themeId = localStorage.getItem("theme") || "d";
-  document.querySelector(".td").value = themeId;
-}
-
-function handleThemeChange(event) {
-  const selectedValue = event.target.value;
-  localStorage.setItem("theme", selectedValue);
-  window.location.reload();
-}
-
-function initializeBackground() {
-  const savedBackgroundImage = localStorage.getItem("backgroundImage");
-  if (savedBackgroundImage) {
-    setBackgroundImage(savedBackgroundImage);
-  }
-}
-
-function setBackgroundImage(imageUrl) {
-  document.body.style.backgroundImage = `url('${imageUrl}')`;
-  document.querySelector("#background-input").value = imageUrl;
-}
-
-function handleFileChange(event) {
-  const fileInput = event.target;
-  if (fileInput.files?.[0]) {
-    const reader = new FileReader();
-    reader.onload = e => {
-      const imageUrl = e.target.result;
-      localStorage.setItem("backgroundImage", imageUrl);
-      setBackgroundImage(imageUrl);
-    };
-    reader.readAsDataURL(fileInput.files[0]);
-  }
-}
-
-function resetBackground() {
-  localStorage.removeItem("backgroundImage");
-  const defaultBackground = "./assets/media/background/full-main.png";
-  setBackgroundImage(defaultBackground);
-}
-
-function handleBackgroundSave() {
-  const imageUrl = document.querySelector("#background-input").value;
-  if (imageUrl.startsWith("https://")) {
-    localStorage.setItem("backgroundImage", imageUrl);
-    setBackgroundImage(imageUrl);
-    document.querySelector("#background-input").value = "";
-  } else {
-    alert("Please enter a URL starting with 'https://'");
-  }
-}
-
-// CSS Content Generator
-function generateCssContent(themeData) {
-  let cssContent = ":root {";
-  for (const [key, value] of Object.entries(themeData)) {
-    if (value) {
-      cssContent += `\n--${key.replace(/([A-Z])/g, "-$1").toLowerCase()}: ${value};`;
-    }
-  }
-  cssContent += `
-}
-
-::-webkit-scrollbar {
-  width: 6px;
-  background-color: var(--background-color);
-}
-
-::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  border-radius: 10px;
-  background-color: var(--background-color);
-}
-
-::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  background-color: var(--primary-text-color);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-color: var(--dark-text-color);
-}
-
-body {
-  font-family: 'Inter', sans-serif;
-  text-decoration: none;
-  background: var(--background-image);
-  height: 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
-}
-
-::placeholder {
-  color: var(--placeholder-text-color);
-  opacity: 1;
-}
-
-.main {
-  letter-spacing: 0px;
-  font-family: 'Inter', sans-serif;
-  width: 99%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  top: 0%;
-  position: absolute;
-  z-index: 99;
-}`;
-
-  return cssContent;
-}
-
-function saveTheme() {
-  const themeData = {
-    background:
-      document.querySelector("#background-input").value ||
-      "url('/./assets/media/background/full-main.png')",
-    backgroundColor:
-      document.querySelector("#background-color-input").value || "#222",
-    inputColor: document.querySelector("#input-color-input").value || "#4545459e",
-    appCardColor: document.querySelector("#app-card-color-input").value || "#353535",
-    settingsCardColor:
-      document.querySelector("#settings-card-color-input").value || "#2a2a2a",
-    buttonColor: document.querySelector("#button-color-input").value || "#333",
-    tabAccentColor:
-      document.querySelector("#tab-accent-color-input").value || "#444",
-    sliderActiveColor:
-      document.querySelector("#slider-active-color-input").value || "#4caf50",
-    sliderInactiveColor:
-      document.querySelector("#slider-inactive-color-input").value || "#ccc",
-    logoColor: document.querySelector("#white-logo").classList.contains("selected")
-      ? "white"
-      : "black",
-    primaryTextColor:
-      document.querySelector("#primary-text-color-input").value || "#fff",
-    darkTextColor: document.querySelector("#dark-text-color-input").value || "#555",
-    placeholderTextColor:
-      document.querySelector("#placeholder-text-color-input").value || "#aaa",
-  };
-
-  const cssContent = generateCssContent(themeData);
-  localStorage.setItem("themeCSS", cssContent);
-}
-
-// Event Listeners
-document.addEventListener("DOMContentLoaded", () => {
-  initializeTheme();
-  initializeBackground();
-
-  document.querySelector(".td").addEventListener("change", handleThemeChange);
-
-  const fileInput = document.createElement("input");
-  fileInput.type = "file";
-  fileInput.accept = "image/*";
-  fileInput.style.display = "none";
-  document.body.appendChild(fileInput);
-
-  document
-    .querySelector("#upload-button")
-    .addEventListener("click", () => fileInput.click());
-  fileInput.addEventListener("change", handleFileChange);
-
-  document.querySelector("#reset-button").addEventListener("click", resetBackground);
-
-  document.querySelector("#black-button").addEventListener("click", resetBackground);
-
-  document.querySelector("#white-button").addEventListener("click", () => {
-    const whiteBackgroundUrl = "./assets/media/background/full-inverted.png";
-    localStorage.setItem("backgroundImage", whiteBackgroundUrl);
-    setBackgroundImage(whiteBackgroundUrl);
-  });
-
-  document
-    .querySelector("#save-button")
-    .addEventListener("click", handleBackgroundSave);
-
-  document.querySelector("#save-theme").addEventListener("click", saveTheme);
-});
-
-function dataUrItoBlob(dataUri) {
-  const byteString =
-    dataUri.split(",")[0].indexOf("base64") >= 0
-      ? atob(dataUri.split(",")[1])
-      : unescape(dataUri.split(",")[1]);
-  const mimeString = dataUri.split(",")[0].split(":")[1].split(";")[0];
-
-  const arrayBuffer = new ArrayBuffer(byteString.length);
-  const ia = new Uint8Array(arrayBuffer);
-  for (let i = 0; i < byteString.length; i++) {
-    ia[i] = byteString.charCodeAt(i);
-  }
-
-  return new Blob([arrayBuffer], { type: mimeString });
-}
 // Ads
 document.addEventListener("DOMContentLoaded", () => {
   function adChange(selectedValue) {
@@ -319,6 +107,8 @@ function saveEventKey() {
   localStorage.setItem("eventKey", JSON.stringify(eventKey));
   localStorage.setItem("pLink", pLink);
   localStorage.setItem("eventKeyRaw", eventKeyRaw);
+  // biome-ignore lint/correctness/noSelfAssign:
+  window.location = window.location;
 }
 // Tab Cloaker
 const dropdown = document.getElementById("dropdown");
@@ -332,10 +122,9 @@ while (dropdown.firstChild) {
   dropdown.removeChild(dropdown.firstChild);
 }
 
-// biome-ignore lint/complexity/noForEach: <explanation>
-sortedOptions.forEach(option => {
+for (const option of sortedOptions) {
   dropdown.appendChild(option);
-});
+}
 
 function saveIcon() {
   const iconElement = document.getElementById("icon");
@@ -411,8 +200,31 @@ function updateHeadSection(selectedValue) {
     localStorage.setItem("icon", customIcon);
   }
 }
-// Particles
+// Custom Background
+document.addEventListener("DOMContentLoaded", () => {
+  const saveButton = document.getElementById("save-button");
+  const backgroundInput = document.getElementById("background-input");
+  const resetButton = document.getElementById("reset-button");
 
+  saveButton.addEventListener("click", () => {
+    const imageURL = backgroundInput.value;
+    if (imageURL.trim() !== "") {
+      localStorage.setItem("backgroundImage", imageURL);
+      document.body.style.backgroundImage = `url('${imageURL}')`;
+      backgroundInput.value = "";
+    } else {
+      console.log("No image URL entered.");
+    }
+  });
+
+  resetButton.addEventListener("click", () => {
+    localStorage.removeItem("backgroundImage");
+    document.body.style.backgroundImage = "url('default-background.jpg')";
+    window.location.reload();
+  });
+});
+
+// Particles
 const switches = document.getElementById("2");
 
 if (window.localStorage.getItem("particles") !== "") {
@@ -465,7 +277,7 @@ function AB() {
       style.border = style.outline = "none";
       style.width = style.height = "100%";
 
-      const pLink = localStorage.getItem(encodeURI("pLink")) || getRandomUrl();
+      const pLink = localStorage.getItem(encodeURI("pLink")) || getRandomURL();
       location.replace(pLink);
 
       const script = doc.createElement("script");
@@ -483,8 +295,8 @@ function AB() {
   }
 }
 
-function toggleAb() {
-  const ab = localStorage.getItem("ab");
+function toggleAB() {
+  ab = localStorage.getItem("ab");
   if (!ab) {
     localStorage.setItem("ab", "true");
   } else if (ab === "true") {
@@ -531,8 +343,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-function getRandomUrl() {
-  const randomUrls = [
+function getRandomURL() {
+  const randomURLS = [
     "https://kahoot.it",
     "https://classroom.google.com",
     "https://drive.google.com",
@@ -547,7 +359,7 @@ function getRandomUrl() {
     "https://wikipedia.org",
     "https://dictionary.com",
   ];
-  return randomUrls[randRange(0, randomUrls.length)];
+  return randomURLS[randRange(0, randomURLS.length)];
 }
 
 function randRange(min, max) {
