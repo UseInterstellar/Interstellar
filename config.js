@@ -13,6 +13,7 @@ const config = {
     Afra99: "Afraz9",
     mfortnite: "bummy911",
     monkey: "1234",
+    fortnite: "1234",
 
   },
 };
