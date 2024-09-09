@@ -174,10 +174,10 @@ document.addEventListener("DOMContentLoaded", event => {
 const SplashT = [
   "Over 8 Million Users since 2023",
   "Fastest growing proxy server",
-  "Made by khcrysalis",
+  "Gabriel is a weirdo",
   "Thanks for using the site",
   "Check out the settings page",
-  "Bug fixes by khcrysalis",
+  "Bug fixes by Ilyaas",
 ];
 
 let SplashI = Math.floor(Math.random() * SplashT.length);
