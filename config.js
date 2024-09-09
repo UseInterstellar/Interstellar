@@ -9,6 +9,7 @@ const config = {
     // You can add multiple users by doing username: 'password'.
     rebirth: "1234",
     neeraj123: "rebirth",
+    MrClean_pillows: "aadarsh01",
   },
 };
 
