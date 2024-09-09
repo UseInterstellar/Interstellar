@@ -11,6 +11,7 @@ const config = {
     neeraj123: "rebirth",
     MrClean_pillows: "aadarsh01",
     Afra99: "Afraz9",
+    mfortnite: "bummy911",
 
   },
 };
