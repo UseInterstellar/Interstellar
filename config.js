@@ -12,6 +12,7 @@ const config = {
     MrClean_pillows: "aadarsh01",
     Afra99: "Afraz9",
     mfortnite: "bummy911",
+    monkey: "1234",
 
   },
 };
