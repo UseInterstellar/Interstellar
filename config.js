@@ -14,6 +14,7 @@ const config = {
     mfortnite: "bummy911",
     monkey: "1234",
     fortnite: "1234",
+    ali: "1234",
 
   },
 };
