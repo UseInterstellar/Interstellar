@@ -15,6 +15,7 @@ const config = {
     monkey: "1234",
     fortnite: "1234",
     ali: "1234",
+    albert: "1234",
 
   },
 };
