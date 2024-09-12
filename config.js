@@ -16,6 +16,7 @@ const config = {
     fortnite: "1234",
     ali: "1234",
     albert: "1234",
+    zev: "1234",
 
   },
 };
