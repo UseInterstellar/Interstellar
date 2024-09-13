@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import http from "node:http";
 import path from "node:path";
-import { createBareServer } from "@tomphttp/bare-server-node";
+import { createBareServer } from "@nebula-services/bare-server-node";
 import chalk from "chalk";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -46,9 +46,9 @@ app.get("/e/*", async (req, res, next) => {
     }
 
     const baseUrls = {
-      "/e/1/": "https://raw.githubusercontent.com/v-5x/x/fixy/",
-      "/e/2/": "https://raw.githubusercontent.com/ypxa/y/main/",
-      "/e/3/": "https://raw.githubusercontent.com/ypxa/w/master/",
+      "/e/1/": "https://raw.githubusercontent.com/qrs/x/fixy/",
+      "/e/2/": "https://raw.githubusercontent.com/3v1/V5-Assets/main/",
+      "/e/3/": "https://raw.githubusercontent.com/3v1/V5-Retro/master/",
     };
 
     let reqTarget;
