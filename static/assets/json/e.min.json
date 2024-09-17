@@ -1,0 +1,26 @@
+[
+  {
+    "name": "! [NEW] Request An App",
+    "link": "https://form.jotform.com/240043772556153",
+    "image": "/assets/media/icons/request.webp",
+    "categories": ["all", "NES"]
+  },
+  {
+    "name": "Super Mario Bros.",
+    "link": "https://emulator-games.pages.dev/nes/Super Mario Bros.",
+    "image": "/assets/media/icons/emulator/smb.webp",
+    "categories": ["all", "NES"]
+  },
+  {
+    "name": "Super Mario Bros. 2",
+    "link": "https://emulator-games.pages.dev/nes/Super Mario Bros. 2",
+    "image": "/assets/media/icons/emulator/smb2.webp",
+    "categories": ["all", "NES"]
+  },
+  {
+    "name": "Super Mario Bros. 3",
+    "link": "https://emulator-games.pages.dev/nes/Super Mario Bros. 3",
+    "image": "/assets/media/icons/emulator/smb3.webp",
+    "categories": ["all", "NES"]
+  }
+]

@@ -90,3 +90,7 @@ select {
    justify-content: center;
    gap: 0.5em;
 }
+
+input::placeholder {
+   color: var(--text-primary);
+}

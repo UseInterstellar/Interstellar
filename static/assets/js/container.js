@@ -3,6 +3,7 @@ const g = window.location.pathname === "/gm";
 const a = window.location.pathname === "/as";
 const c = window.location.pathname === "/ts";
 const t = window.top.location.pathname === "/ta";
+const e = window.location.pathname === "/em";
 
 function saveToLocal(path) {
   sessionStorage.setItem("GoUrl", path);
@@ -79,6 +80,8 @@ function CustomApp(customApp) {
     apps = localStorage.getItem("Tcustom");
   } else if (a) {
     apps = localStorage.getItem("Acustom");
+  } else if (e) {
+    apps = localStorage.getItem("Ecustom");
   }
 
   if (apps === null) {
@@ -97,6 +100,8 @@ function CustomApp(customApp) {
     localStorage.setItem("Tcustom", JSON.stringify(apps));
   } else if (a) {
     localStorage.setItem("Acustom", JSON.stringify(apps));
+  } else if (e) {
+    localStorage.setItem("Ecustom", JSON.stringify(apps));
   }
 }
 
@@ -108,6 +113,8 @@ function setPin(index) {
     pins = localStorage.getItem("Tpinned");
   } else if (a) {
     pins = localStorage.getItem("Apinned");
+  } else if (e) {
+    pins = localStorage.getItem("Epinned");
   }
 
   if (pins === null || pins === "") {
@@ -127,6 +134,8 @@ function setPin(index) {
     localStorage.setItem("Tpinned", pins);
   } else if (a) {
     localStorage.setItem("Apinned", pins);
+  } else if (e) {
+    localStorage.setItem("Epinned", pins);
   }
   location.reload();
 }
@@ -214,6 +223,8 @@ document.addEventListener("DOMContentLoaded", () => {
     storedApps = JSON.parse(localStorage.getItem("Tcustom"));
   } else if (a) {
     storedApps = JSON.parse(localStorage.getItem("Acustom"));
+  } else if (e) {
+    storedApps = JSON.parse(localStorage.getItem("Ecustom"));
   }
   if (storedApps) {
     for (const app of Object.values(storedApps)) {
@@ -229,6 +240,8 @@ if (g) {
   path = "/assets/json/t.min.json";
 } else if (a) {
   path = "/assets/json/a.min.json";
+} else if (e) {
+  path = "/assets/json/e.min.json";
 }
 fetch(path)
   .then(response => {
@@ -253,6 +266,8 @@ fetch(path)
       pinList = localStorage.getItem("Apinned") || "";
     } else if (c) {
       pinList = localStorage.getItem("Tpinned") || "";
+    } else if (e) {
+      pinList = localStorage.getItem("Epinned") || "";
     }
     pinList = pinList ? pinList.split(",").map(Number) : [];
     appInd = 0;

@@ -20,6 +20,7 @@
    --text-primary: #fff; /* Primary Text Color */
    --text-dark: #555; /* Dark Text Color for Error Page, Scrollbar, and Particles */
    --text-placeholder: #aaa; /* Placeholder Text Color */
+   --option-disabled: #939292; /* Disabled Option Text Color */
    /* Other Variables */
    --save-button: #4caf50; /* Save Button, Typically Green */
    --reset-button: #f44336; /* Reset Button, Typically Red */

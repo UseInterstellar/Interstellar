@@ -40,13 +40,27 @@ body {
    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
 }
 
+.settings-card h4 {
+   margin-top: 0;
+   color: var(--text-primary);
+   text-align: center;
+}
+
 .settings-card h3 {
    margin-top: 0;
    color: var(--text-primary);
+   text-align: center;
+}
+
+.settings-card h2 {
+   margin-top: 0;
+   color: var(--text-primary);
+   text-align: center;
 }
 
 .settings-card p {
    color: var(--text-placeholder);
+   text-align: center;
 }
 
 a {

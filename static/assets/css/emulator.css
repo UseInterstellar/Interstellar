@@ -1,0 +1,15 @@
+.dropbtn {
+   padding: 20px;
+   width: 200px;
+   border-radius: 5px;
+   background: var(--background-column);
+   text-align: center;
+   font-size: 20px;
+   border: none;
+   outline: none;
+   color: var(--text-primary);
+   transition: 0.4s;
+   padding: 16px;
+   cursor: pointer;
+   height: 64px;
+}
