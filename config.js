@@ -17,6 +17,7 @@ const config = {
     ali: "1234",
     albert: "1234",
     zev: "1234",
+    idontcare: "1234",
 
   },
 };
