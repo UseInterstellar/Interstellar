@@ -18,6 +18,7 @@ const config = {
     albert: "1234",
     zev: "1234",
     idontcare: "1234",
+    maseed: "fortnite",
 
   },
 };
