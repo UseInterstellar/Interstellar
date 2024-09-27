@@ -1,6 +1,6 @@
 body {
    background-color: var(--background-image);
-   font-family: arial, sans;
+   font-family: "Inter", sans-serif;
    color: var(--text-primary);
    margin: 0;
    padding: 0;
