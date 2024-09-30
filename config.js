@@ -10,6 +10,7 @@ const config = {
     mfortnite: "1234",
     saeedkarimzai: "saeed",
     Afra99: "1234",
+    Jacob: "1234",
   },
 };
 
