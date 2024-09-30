@@ -14,6 +14,7 @@ const config = {
     mfortnite: "maseed911",
     1234: "1234",
     fortnite: "fortnite",
+    Afra99: "1234",
   },
 };
 
