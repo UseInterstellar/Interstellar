@@ -13,6 +13,7 @@ const config = {
     Rhys: "1234",
     mfortnite: "maseed911",
     1234: "1234",
+    fortnite: "fortnite",
   },
 };
 
