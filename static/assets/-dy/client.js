@@ -7749,7 +7749,7 @@ ${t}`;
 			return (
 				r &&
 					(t = `
-      if (typeof self !== undefined && typeof self.importScripts == 'function' && typeof self.__dynamic == 'undefined') importScripts('/assets/-dy/config.js?v=6-17-2024', '/assets/-dy/handler.js?v=6-17-2024'+Math.floor(Math.random()*(99999-10000)+10000));
+      if (typeof self !== undefined && typeof self.importScripts == 'function' && typeof self.__dynamic == 'undefined') importScripts('/assets/-dy/config.js?v=9-30-2024', '/assets/-dy/handler.js?v=9-30-2024'+Math.floor(Math.random()*(99999-10000)+10000));
 
       ${t}`),
 				t
@@ -7992,9 +7992,9 @@ ${t}`;
 		} else t = await fetch(e);
 		let r = await t.blob();
 		return (
-			(e.url.startsWith(location.origin + "/assets/-dy/config.js?v=6-17-2024") ||
+			(e.url.startsWith(location.origin + "/assets/-dy/config.js?v=9-30-2024") ||
 				e.url.startsWith(
-					location.origin + "/assets/-dy/client.js?v=6-17-2024",
+					location.origin + "/assets/-dy/client.js?v=9-30-2024",
 				)) &&
 				(r = new Blob(
 					[
@@ -8109,8 +8109,8 @@ self.document?.currentScript?.remove();`,
 										o,
 										t,
 										this.ctx.rewrite.html.generateHead(
-											location.origin + "/assets/-dy/client.js?v=6-17-2024",
-											location.origin + "/assets/-dy/config.js?v=6-17-2024",
+											location.origin + "/assets/-dy/client.js?v=9-30-2024",
+											location.origin + "/assets/-dy/config.js?v=9-30-2024",
 											"",
 											`window.__dynamic$url = "${t.href}"; window.__dynamic$parentURL = "${location.href}";`,
 										),
@@ -9043,7 +9043,7 @@ self.document?.currentScript?.remove();`,
 				e.location.protocol.replace("http", "ws") +
 				"//" +
 				new URL(
-					(e.__dynamic$config.bare.path + "/" || "/ov/") + "v1/",
+					(e.__dynamic$config.bare.path + "/" || "/fq/") + "v1/",
 					new URL(location.origin),
 				).href
 					.replace(/http(s?):\/\//g, "")
