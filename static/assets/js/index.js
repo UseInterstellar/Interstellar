@@ -1,5 +1,5 @@
 window.addEventListener("load", () => {
-  navigator.serviceWorker.register("../sw.js?v=6-17-2024", {
+  navigator.serviceWorker.register("../sw.js?v=9-30-2024", {
     scope: "/a/",
   });
 });
@@ -10,10 +10,10 @@ const input = document.getElementById("is");
 if (form && input) {
   form.addEventListener("submit", async event => {
     event.preventDefault();
-    if (window.top.location.pathname === "/ta") {
+    if (window.top.location.pathname === "/rx") {
       processUrl(input.value, "");
     } else {
-      processUrl(input.value, "/ta");
+      processUrl(input.value, "/rx");
     }
   });
 }
@@ -41,7 +41,7 @@ function processUrl(value, path) {
 }
 
 function go(value) {
-  processUrl(value, "/ta");
+  processUrl(value, "/rx");
 }
 
 function blank(value) {
