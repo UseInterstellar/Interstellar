@@ -23,7 +23,10 @@
     "express": "^4.19.2",
     "express-basic-auth": "^1.2.1",
     "mime": "^4.0.4",
-    "node-fetch": "^3.3.2"
+    "node-fetch": "^3.3.2",
+    "npm": "^10.8.3",
+    "run": "^1.5.0",
+    "start": "^5.1.0"
   },
   "devDependencies": {
     "@biomejs/biome": "1.8.3"
