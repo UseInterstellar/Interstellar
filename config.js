@@ -11,6 +11,7 @@ const config = {
     saeedkarimzai: "saeed",
     Afra99: "1234",
     Jacob: "1234",
+    Rhys: "1234",
   },
 };
 
