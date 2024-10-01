@@ -8,13 +8,7 @@ const config = {
   users: {
     // You can add multiple users by doing username: 'password'.
     mfortnite: "1234",
-    saeedkarimzai: "saeed",
-    Jacob: "1234",
-    Rhys: "1234",
-    mfortnite: "maseed911",
-    1234: "1234",
-    fortnite: "fortnite",
-    Afra99: "1234",
+    skibidi: "1234",
   },
 };
 
