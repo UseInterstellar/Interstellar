@@ -4,8 +4,8 @@ window.addEventListener("load", () => {
   });
 });
 
-const form = document.getElementById("fs");
-const input = document.getElementById("is");
+const form = document.getElementById("fv");
+const input = document.getElementById("iv");
 
 if (form && input) {
   form.addEventListener("submit", async event => {

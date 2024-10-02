@@ -1,7 +1,7 @@
 window.addEventListener("load", () => {
   navigator.serviceWorker.register("../sw.js?v=10-02-2024", { scope: "/a/" });
-  const form = document.getElementById("fs");
-  const input = document.getElementById("is");
+  const form = document.getElementById("fv");
+  const input = document.getElementById("iv");
   if (form && input) {
     form.addEventListener("submit", async event => {
       event.preventDefault();
@@ -137,7 +137,7 @@ document.addEventListener("DOMContentLoaded", event => {
       const remainingTabs = Array.from(tabList.querySelectorAll("li"));
       if (remainingTabs.length === 0) {
         tabCounter = 0;
-        document.getElementById("is").value = "";
+        document.getElementById("iv").value = "";
       } else {
         const nextTabIndex = remainingTabs.findIndex(
           tab => tab.dataset.tabId !== tabId,
@@ -368,17 +368,17 @@ function Load() {
         .replace("/a/", "");
       localStorage.setItem("decoded", websitePath);
       const decodedValue = decodeXor(websitePath);
-      document.getElementById("is").value = decodedValue;
+      document.getElementById("iv").value = decodedValue;
     } else if (website.includes("/a/q/")) {
       const websitePath = website
         .replace(window.location.origin, "")
         .replace("/a/q/", "");
       const decodedValue = decodeXor(websitePath);
       localStorage.setItem("decoded", websitePath);
-      document.getElementById("is").value = decodedValue;
+      document.getElementById("iv").value = decodedValue;
     } else {
       const websitePath = website.replace(window.location.origin, "");
-      document.getElementById("is").value = websitePath;
+      document.getElementById("iv").value = websitePath;
       localStorage.setItem("decoded", websitePath);
     }
   }
