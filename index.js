@@ -11,7 +11,7 @@ import mime from "mime";
 import fetch from "node-fetch";
 // import { setupMasqr } from "./Masqr.js";
 import config from "./config.js";
-
+import { Analytics } from "@vercel/analytics/react"
 console.log(chalk.yellow("🚀 Starting server..."));
 
 const __dirname = process.cwd();
