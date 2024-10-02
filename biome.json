@@ -12,7 +12,7 @@
       "*.md",
       "bun.lockb",
       "Failed.html",
-      "static/assets/js/fa.js"
+      "static/assets/js/f.js"
     ]
   },
   "organizeImports": {

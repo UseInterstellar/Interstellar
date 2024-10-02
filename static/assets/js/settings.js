@@ -172,7 +172,7 @@ function redirectToMainDomain() {
 
 document.addEventListener("DOMContentLoaded", event => {
   const icon = document.getElementById("tab-favicon");
-  const name = document.getElementById("tab-title");
+  const name = document.getElementById("t");
   const selectedValue = localStorage.getItem("selectedOption") || "Default";
   document.getElementById("dropdown").value = selectedValue;
   updateHeadSection(selectedValue);
@@ -189,7 +189,7 @@ function handleDropdownChange(selectElement) {
 
 function updateHeadSection(selectedValue) {
   const icon = document.getElementById("tab-favicon");
-  const name = document.getElementById("tab-title");
+  const name = document.getElementById("t");
   const customName = localStorage.getItem("CustomName");
   const customIcon = localStorage.getItem("CustomIcon");
 

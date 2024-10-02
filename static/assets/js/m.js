@@ -27,18 +27,15 @@ if (nav) {
     LogoUrl = "/assets/media/favicon/main-inverted.png";
   }
   const html = `
-    <div class="fixed-nav-bar-container">
-      <div id="icon-container">
-        <a class="icon" href="/./"><img alt="nav" id="INImg" src="${LogoUrl}"/></a>
-      </div>
-    </div>
-    <div class="fixed-nav-bar-right">
-      <a class="navbar-link" href="/./up"><i class="fa-solid fa-gamepad navbar-icon"></i><an>Ga</an><an>mes</an></a>
-      <a class="navbar-link" href="/./yz"><i class="fa-solid fa-phone navbar-icon"></i><an>Ap</an><an>ps</an></a>
-      <a class="navbar-link" href="/./gt"><i class="fa-solid fa-folder navbar-icon"></i><an>To</an><an>ols</an></a>
-      ${window.top.location.pathname === "/rx" ? "" : '<a class="navbar-link" href="/./rx"><i class="fa-solid fa-laptop navbar-icon"></i><an>Ta</an><an>bs</an></a>'}
-      <a class="navbar-link" href="/./vk"><i class="fa-solid fa-gear navbar-icon settings-icon"></i><an>Set</an><an>tings</an></a>
-    </div>`;
+<div id="icon-container">
+    <a class="icon" href="/./"><img alt="nav" id="INImg" src="${LogoUrl}"/></a>
+</div>
+<div class="fixed-nav-bar-right">
+    <a class="navbar-link" href="/./up"><i class="fa-solid fa-gamepad navbar-icon"></i><an>&#71;&#97;</an><an>&#109;&#101;&#115;</an></a>
+    <a class="navbar-link" href="/./yz"><i class="fa-solid fa-phone navbar-icon"></i><an>&#65;&#112;</an><an>&#112;&#115;</an></a>
+    ${window.top.location.pathname === "/rx" ? "" : '<a class="navbar-link" href="/./rx"><i class="fa-solid fa-laptop navbar-icon"></i><an>&#84;&#97;</an><an>&#98;&#115;</an></a>'}
+    <a class="navbar-link" href="/./vk"><i class="fa-solid fa-gear navbar-icon settings-icon"></i><an>&#83;&#101;&#116;</an><an>&#116;&#105;&#110;&#103;</an></a>
+</div>`;
   nav.innerHTML = html;
 }
 
@@ -68,7 +65,7 @@ if (themes[themeid]) {
 // Tab Cloaker
 document.addEventListener("DOMContentLoaded", () => {
   const icon = document.getElementById("tab-favicon");
-  const name = document.getElementById("tab-title");
+  const name = document.getElementById("t");
   const selectedValue = localStorage.getItem("selectedOption");
 
   function setCloak(nameValue, iconUrl) {

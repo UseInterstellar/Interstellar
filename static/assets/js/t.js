@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", event => {
       "allow-same-origin allow-scripts allow-forms allow-pointer-lock allow-modals allow-orientation-lock";
     // When Top Navigation is not allowed links with the "top" value will be entirely blocked, if we allow Top Navigation it will overwrite the tab, which is obviously not wanted.
     tabTitle.textContent = `New Tab ${tabCounter}`;
-    tabTitle.className = "tab-title";
+    tabTitle.className = "t";
     newTab.dataset.tabId = tabCounter;
     newTab.addEventListener("click", switchTab);
     newTab.setAttribute("draggable", true);

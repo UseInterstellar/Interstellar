@@ -96,9 +96,9 @@ app.use(express.urlencoded({ extended: true }));
 
 const blocked = Object.keys(config.blocked);
 
-app.get("/assets/js/main.js", (req, res) => {
+app.get("/assets/js/m.js", (req, res) => {
   const hostname = req.hostname;
-  const main = path.join(__dirname, "static/assets/js/main.js");
+  const main = path.join(__dirname, "static/assets/js/m.js");
 
   try {
     if (blocked.includes(hostname)) {
@@ -128,7 +128,6 @@ const routes = [
   { path: "/up", file: "games.html" },
   { path: "/vk", file: "settings.html" },
   { path: "/rx", file: "tabs.html" },
-  { path: "/gt", file: "tools.html" },
   { path: "/", file: "index.html" },
   { path: "/tos", file: "tos.html" },
   { path: "/privacy", file: "privacy.html" },
