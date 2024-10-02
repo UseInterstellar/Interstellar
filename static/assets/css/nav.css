@@ -5,7 +5,6 @@
 .fixed-nav-bar #icon-container {
    display: flex;
    align-items: center;
-   height: 100%;
 }
 
 img {
@@ -59,7 +58,7 @@ img {
    font-style: normal;
    text-decoration: none;
    transition: all 0.2s ease;
-   height: 5vh; /* Adjust this value as needed */
+   height: 5vh;
    top: 18%;
 }
 
@@ -161,6 +160,6 @@ img {
 
 @media (orientation: portrait) {
    img {
-      height: 48px;
+      height: 40px;
    }
 }
