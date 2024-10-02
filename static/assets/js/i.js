@@ -1,5 +1,5 @@
 window.addEventListener("load", () => {
-  navigator.serviceWorker.register("../sw.js?v=9-30-2024", {
+  navigator.serviceWorker.register("../sw.js?v=10-02-2024", {
     scope: "/a/",
   });
 });
