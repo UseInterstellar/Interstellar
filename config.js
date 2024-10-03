@@ -12,7 +12,8 @@ const config = {
     admin: "Tmoney$12",
     zack: "Zak2024",
     carson: "CarsonBrzozowski!",
-    biscuit: "0316"
+    biscuit: "0316",
+    Coolkid534: "Hunterkiller?1002"
   },
 };
 
