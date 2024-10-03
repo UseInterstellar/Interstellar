@@ -28,7 +28,7 @@ jobs:
 
       - name: Remove first 9 lines from main.js
         run: |
-          sed -i '1,9d' static/assets/js/main.js
+          sed -i '1,9d' static/assets/js/m.js
   
       - name: Commit changes
         env:
