@@ -23,7 +23,7 @@ function handleClick(app) {
 
   if (app.local) {
     saveToLocal(Selected);
-    window.location.href = "ta";
+    window.location.href = "rx";
     if (t) {
       window.location.href = Selected;
     }
