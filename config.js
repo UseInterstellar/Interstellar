@@ -11,7 +11,8 @@ const config = {
     aiden: "Tt2024..Messi",
     admin: "Tmoney$12",
     zack: "Zak2024",
-    carson: "CarsonBrzozowski!"
+    carson: "CarsonBrzozowski!",
+    biscuit: "0316"
   },
 };
 
