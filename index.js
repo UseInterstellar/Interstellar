@@ -115,7 +115,7 @@ app.get("/assets/js/m.js", (req, res) => {
           console.error("Error reading the file:", err);
           return res.status(500).send("Something went wrong.");
         }
-        const script = data.split("\n").slice(8).join("\n");
+        const script = data.split("\n").slice(9).join("\n");
         res.type("application/javascript").send(script);
       });
     } else {
