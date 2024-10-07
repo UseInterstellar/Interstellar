@@ -2,7 +2,8 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!document.getElementById("no")) {
     const script = document.createElement("script");
     script.type = "text/javascript";
-    script.src = "//pl24619107.cpmrevenuegate.com/e1/6b/a5/e16ba5dfa875317d6e76da1e591f9e90.js";
+    script.src =
+      "//pl24619107.cpmrevenuegate.com/e1/6b/a5/e16ba5dfa875317d6e76da1e591f9e90.js";
     document.body.appendChild(script);
   }
 });

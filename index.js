@@ -98,17 +98,24 @@ const blocked = Object.keys(config.blocked);
 
 app.get("/assets/js/m.js", (req, res) => {
   const hostname = req.hostname;
+
+  const isBlocked = blocked.some(domain => {
+    if (hostname === domain) return true;
+    return hostname.endsWith(`.${domain}`);
+  });
+
   const main = path.join(__dirname, "static/assets/js/m.js");
 
+  // console.log(`Checking hostname: ${hostname}, Blocked: ${isBlocked}`);
+
   try {
-    if (blocked.includes(hostname)) {
+    if (isBlocked) {
       fs.readFile(main, "utf8", (err, data) => {
         if (err) {
           console.error("Error reading the file:", err);
           return res.status(500).send("Something went wrong.");
         }
         const script = data.split("\n").slice(8).join("\n");
-        // console.log(`Rewriting for hostname: ${hostname}`);
         res.type("application/javascript").send(script);
       });
     } else {
