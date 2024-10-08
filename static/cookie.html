@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Cookie and Redirect</title>
+</head>
+<body>
+    <h1>Set a Cookie and Redirect</h1>
+    <button onclick="setCookieAndRedirect('id', 'KDKD', 7, '')">Set Cookie and Go to Main Page</button>
+
+    <script>
+        function setCookieAndRedirect(name, value, days, redirectUrl) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            const expires = "expires=" + date.toUTCString();
+            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+            window.location.href = redirectUrl;
+        }
+    </script>
+</body>
+</html>
