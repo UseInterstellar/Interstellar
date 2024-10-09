@@ -17,7 +17,7 @@
   "dependencies": {
     "@nebula-services/bare-server-node": "^2.0.4",
     "chalk": "^5.3.0",
-    "cookie-parser": "^1.4.6",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
