@@ -27,7 +27,6 @@ jobs:
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        git remote add origin https://github-actions[bot]:${{ secrets.GITHUB_TOKEN }}@github.com/NullClock/Interstellar
         git add *
         git commit -m "${{ inputs.commit_msg }}"
         git push origin vercel
