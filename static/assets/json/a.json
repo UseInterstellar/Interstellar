@@ -126,6 +126,12 @@
     "categories": ["all", "media"]
   },
   {
+    "name": "SFlix",
+    "link": "https://sflix.to/",
+    "image": "/assets/media/icons/sflix.webp",
+    "categories": ["all","media"]
+  },
+  {
     "name": "Geforce NOW",
     "link": "https://play.geforcenow.com",
     "image": "/assets/media/icons/geforce-now.webp",
