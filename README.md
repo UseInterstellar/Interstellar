@@ -1,3 +1,5 @@
+# I DO NOT OWN AND AM NOT IN ANY FORM RELATED TO OR TO THE CREATORS OF THE INTERSTELLAR WEB PROXY. THIS REPO IS HERE FOR HOSTING.
+
 <div align="center">
     <img src="https://raw.githubusercontent.com/UseInterstellar/Interstellar/main/.github/branding/in.png">
     <p>Serving over 8+ million users since 2023.<p>
