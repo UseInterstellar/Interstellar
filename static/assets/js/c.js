@@ -369,9 +369,9 @@ function showCategory() {
   const selectedCategories = Array.from(
     document.querySelectorAll("#category option:checked"),
   ).map(option => option.value);
-  const games = document.getElementsByClassName("column");
+  const g = document.getElementsByClassName("column");
 
-  for (const game of games) {
+  for (const game of g) {
     const categories = game.getAttribute("data-category").split(" ");
 
     if (
@@ -388,9 +388,9 @@ function showCategory() {
 function searchBar() {
   const input = document.getElementById("searchbarbottom");
   const filter = input.value.toLowerCase();
-  const games = document.getElementsByClassName("column");
+  const g = document.getElementsByClassName("column");
 
-  for (const game of games) {
+  for (const game of g) {
     const name = game.getElementsByTagName("p")[0].textContent.toLowerCase();
 
     if (name.includes(filter)) {

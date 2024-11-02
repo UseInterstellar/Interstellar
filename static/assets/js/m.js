@@ -62,7 +62,6 @@ if (themes[themeid]) {
   document.head.appendChild(customThemeEle);
 }
 
-// Tab Cloaker
 document.addEventListener("DOMContentLoaded", () => {
   const icon = document.getElementById("tab-favicon");
   const name = document.getElementById("t");
