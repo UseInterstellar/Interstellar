@@ -136,8 +136,6 @@ const routes = [
   { path: "/vk", file: "settings.html" },
   { path: "/rx", file: "tabs.html" },
   { path: "/", file: "index.html" },
-  { path: "/tos", file: "tos.html" },
-  { path: "/privacy", file: "privacy.html" },
 ];
 
 // biome-ignore lint/complexity/noForEach:
