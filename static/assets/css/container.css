@@ -41,7 +41,7 @@
    transform: translateX(-50%) scale(1.3);
 }
 
-.container-apps {
+.apps {
    display: flex;
    flex-wrap: wrap;
    justify-content: center;
@@ -50,7 +50,7 @@
    margin-top: 30px;
 }
 
-.pinned-apps {
+.pinned {
    margin-top: 20px;
    display: flex;
    flex-wrap: wrap;
@@ -82,7 +82,7 @@ select {
    cursor: pointer;
 }
 
-.input-container {
+.input-c {
    position: relative;
    margin-top: 150px;
    display: flex;

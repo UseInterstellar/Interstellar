@@ -208,13 +208,12 @@ function CreateCustomApp(customApp) {
     paragraph.appendChild(span);
   }
 
-
   linkElem.appendChild(image);
   linkElem.appendChild(paragraph);
   columnDiv.appendChild(linkElem);
   columnDiv.appendChild(btn);
 
-  const nonPinnedApps = document.querySelector(".container-apps");
+  const nonPinnedApps = document.querySelector(".apps");
   nonPinnedApps.insertBefore(columnDiv, nonPinnedApps.firstChild);
 }
 
@@ -256,8 +255,8 @@ fetch(path)
       }
       return a.name.localeCompare(b.name);
     });
-    const nonPinnedApps = document.querySelector(".container-apps");
-    const pinnedApps = document.querySelector(".pinned-apps");
+    const nonPinnedApps = document.querySelector(".apps");
+    const pinnedApps = document.querySelector(".pinned");
     let pinList;
     if (g) {
       pinList = localStorage.getItem("Gpinned") || "";
@@ -329,9 +328,9 @@ fetch(path)
       }
 
       const paragraph = document.createElement("p");
-    
+
       for (const span of Span(app.name)) {
-      paragraph.appendChild(span);
+        paragraph.appendChild(span);
       }
 
       if (app.error) {
@@ -380,7 +379,7 @@ fetch(path)
     console.error("Error fetching JSON data:", error);
   });
 
-function showCategory() {
+function category() {
   const selectedCategories = Array.from(
     document.querySelectorAll("#category option:checked"),
   ).map(option => option.value);
@@ -400,8 +399,8 @@ function showCategory() {
   }
 }
 
-function searchBar() {
-  const input = document.getElementById("searchbarbottom");
+function bar() {
+  const input = document.getElementById("search");
   const filter = input.value.toLowerCase();
   const g = document.getElementsByClassName("column");
 
