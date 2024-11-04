@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap');
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  background: url('/assets/images/background/minecraft-shaders.png') no-repeat center center fixed;
+  background-size: cover;
+  max-width: 100%;
+  background-color: black
+}
+
+body {
+  font-family: Arial, Tahoma, Serif;
+  color: white;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+}
+
+nav li {
+  padding-left: 1rem;
+}
+
+nav a {
+  text-decoration: none;
+  color: white;
+}
+
+/* 
+  Extra small devices (phones, 600px and down) 
+*/
+@media only screen and (max-width: 600px) {
+  nav {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  nav ul {
+    flex-direction: column;
+    padding-top: 0.5rem;
+  }
+
+  nav li {
+    padding: 0.5rem 0;
+  }
+}
+

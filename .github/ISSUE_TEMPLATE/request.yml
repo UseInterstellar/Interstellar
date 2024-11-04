@@ -1,0 +1,29 @@
+name: Feature Request
+description: Have a idea you want to add? Know a game that you want to see on this site?
+title: Feature Request
+labels: ✨ Enhancement
+body:
+  - type: dropdown
+    attributes:
+      label: What is this request?
+      description: Is it a game? New feature?
+      options:
+        - New game
+        - New feature
+        - Something else
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: If you said other in the dropdown above, please specify what below
+      description: This is not required! Only put something here if you said "Something else" above
+  - type: textarea
+    attributes:
+      label: Please describe the new feature here
+      description: If it is a game, please say the title of the game, add any links to the game if you can. If it is a feature, please say how you want it to be!
+      placeholder: Please type something here...
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: Thank you for your input on this website!

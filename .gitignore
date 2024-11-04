@@ -1,6 +1,3 @@
-node_modules
-.idea
-.DS_Store
-.hintrc
-.gitpod.yml 
-.env
+.vscode/launch.json
+CHANGELOG.md
+README.md

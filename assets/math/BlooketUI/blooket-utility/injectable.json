@@ -1,0 +1,11 @@
+{
+	"title": "BlooketUI",
+	"description": "Adds the BlooketUI Cheat Tool, from https://github.com/Blooketware/BlooketUI",
+	"author": "smint + zastix",
+	"url": "https://blooketware.github.io/BlooketUI/blooket-utility/injectable.json",
+	"scripts": [
+		"https://blooketware.github.io/BlooketUI/blooket-utility/injectable.js"
+	],
+	"setupScript": "https://blooketware.github.io/BlooketUI/blooket-utility/setup.js",
+	"cleanupScript": "https://blooketware.github.io/BlooketUI/blooket-utility/cleanup.js"
+}

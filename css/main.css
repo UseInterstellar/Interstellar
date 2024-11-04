@@ -1,0 +1,48 @@
+body, h1, h2, h3, h4, h5, h6 {
+    font-family: Arial, Helvetica, sans-serif ;
+   text-align: center;
+     font-weight:100;
+  color: white;
+
+  }
+  
+  p { 
+   font: 15px Arial, sans-serif;
+   text-align: center;
+     font-weight:100;
+  
+  }
+  
+  div {
+  text-align: center;}
+  
+  
+  .button {
+   background-color: black;
+    color: white;
+    border: 2px solid white;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: 1s;
+  }
+  
+  .button:hover {
+    background-color: white;
+    color: black;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+  
+  }
+  
+  body {
+      background-color: #111;
+        background-image: url('/media/banners/stars.png');
+  }
+
+
+  

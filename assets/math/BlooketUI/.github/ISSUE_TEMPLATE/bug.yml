@@ -1,0 +1,27 @@
+name: Bug report
+description: Found a bug? Report it here!
+title: '[Bug] : '
+labels:
+  - bug
+body:
+  - type: input
+    attributes:
+      label: What device do you use?
+      placeholder: e.g. Chromebook, PC, Tablet
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: What browser do you use?
+      placeholder: e.g. Chrome, Edge, Firefox, Opera
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Describe the error in detail.
+      description: >-
+        Add any screenshots, screen recordings if you can. Explain the steps to
+        produce the bug as well.
+      placeholder: Start typing here...
+    validations:
+      required: true

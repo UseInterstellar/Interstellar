@@ -1,0 +1,70 @@
+body, h1, h2, h3, h4, h5, h6 {
+    font-family: Arial, Helvetica, sans-serif ;
+   text-align: center;
+     font-weight:100;
+  color: black;
+
+}
+  .row{
+        float: left;
+    }
+.card:hover {
+  transform: scale(1.3); 
+}
+img {
+  height: auto;max-height: 990px;width: 145px;border: 0;-ms-interpolation-mode: bicubic;vertical-align: middle;border-radius: 25px;max-height: 145px;max-width: 145px;
+}
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.1s;
+  width: 158px;
+  background-color: transparent;
+  margin: 15px;
+}
+   html {
+    margin-left: 25%;
+    margin-right: 25%;
+    padding: 15px 0;
+    text-align: center;
+    margin: 20px 10px;
+    border-radius: 20px;
+    font-weight: 700;
+    border: 2px solid var(--textcolor);
+    background: 0 0;
+    color: white;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s ease;
+    height: 150px;
+  }
+  .imagebutton {
+    color: transparent;
+    width: 150px;
+    padding: 15px 0;
+    text-align: center;
+    margin: 20px 10px;
+    border-radius: 20px;
+    border: 0 solid var(--textcolor);
+    font-weight: 700;
+    background: 0 0;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.5s ease;
+    height: 150px;
+  }
+  button:hover {
+    -webkit-transition: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2);
+    transition: 1.5s ease;
+    text-decoration: none;
+  }
+  h2 {
+    color: white;
+    text-align: center;
+    align-self: center;
+    align-content: center;
+    display: inline-block;
+
+  }

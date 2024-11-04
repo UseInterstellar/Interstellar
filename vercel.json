@@ -1,15 +1,8 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "index.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "index.js"
-    }
-  ]
+    "routes": [
+        {
+            "src": "/arc-sw.js",
+            "dest": "https://arc.io/arc-sw.js"
+        }
+    ]
 }
