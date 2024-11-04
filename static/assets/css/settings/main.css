@@ -1,0 +1,156 @@
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  font-weight: 100;
+  color: white;
+}
+
+p {
+  font: 15px Arial, sans-serif;
+  text-align: center;
+  font-weight: 100;
+}
+
+div {
+  text-align: center;
+}
+
+.tab-cloak {
+  cursor: pointer;
+  border: 2px solid white;
+  transition: 0.2s;
+  margin-top: 10px;
+}
+
+.tab-cloak:hover {
+  scale: 1.1;
+  transition: 0.2s;
+}
+
+.button {
+  background-color: black;
+  color: white;
+  border: 2px solid white;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: 1s;
+}
+
+.button:hover {
+  background-color: white;
+  color: black;
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+body {
+  background: #111;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.p-2 {
+  padding: 0.5rem;
+}
+
+.rounded-md {
+  border-radius: 0.375rem;
+}
+
+.border-solid {
+  border-style: solid;
+}
+
+.option {
+  cursor: pointer;
+}
+
+.border-2 {
+  border-width: 2px;
+}
+
+.border-black {
+  border-color: #000;
+}
+
+.w-12 {
+  width: 3rem;
+}
+
+.bg-gray-900 {
+  background-color: #111;
+  cursor: pointer;
+}
+
+.w-48 {
+  width: 12rem;
+}
+
+.border-white {
+  border-color: #fff;
+}
+
+.text-white {
+  color: #fff;
+}
+
+/*.button3 {
+/*  border: 2px solid #fff;
+/*  font-size: 16px;
+/*  cursor: pointer;
+/*  text-align: center;
+/*  padding: 15px 32px;
+/*  margin: 4px 2px;
+/*  border-radius: 10px;
+/*}
+/*.button2 {
+/*  background-color: #000;
+/*  color: white;
+/*  border: 2px solid #fff;
+/*}
+/*.button2:hover {
+/*  background-color: #fff;
+/*  color: black;
+/*  border: 2px solid #000;
+/*}*/
+
+button {
+  background-color: #161616;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 16px;
+  padding: 15px 32px;
+  margin: 4px 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: all 0.5s ease-in-out;
+}
+
+button:hover {
+  background-color: #000000;
+}
+
+button:active {
+  box-shadow: none;
+}

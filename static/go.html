@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Classes</title>
+  <link rel="icon" type="image/x-icon" href="assets/images/branding/favicon/favicon.png" />
+  <script src="uv/uv.bundle.js"></script>
+  <script src="uv/uv.config.js"></script>
+  <style>
+    body {
+      margin: 0;
+    }
+
+    iframe {
+      display: block;
+      background: #000;
+      border: none;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    .tip {
+      width: calc(100% - 37%);
+      right: 0;
+      bottom: 15px;
+      margin: 0 auto;
+      font-size: 14px;
+      padding: 15px 20px;
+      text-align: center;
+      position: absolute;
+    }
+
+    .controlpanel {
+      display: flex;
+      position: absolute;
+      z-index: 900;
+      width: 100%;
+      max-width: 500px;
+      color: #222;
+      font-family: Roboto;
+      align-self: center;
+      max-height: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .controlpanel .controls {
+      background: black;
+      transform: translateY(-100%);
+      transition: 0.2s;
+      visibility: hidden;
+      width: 100%;
+      padding: 7px 10px;
+      display: flex;
+      align-items: center;
+      border-top: none;
+      border-radius: 30px 30px 30px 30px;
+      box-shadow: #000000 0px 3px 8px;
+      height: 15px;
+    }
+
+    .controlpanel:hover .controls {
+      transform: none;
+      visibility: visible;
+      max-height: none;
+      height: 51.4px;
+    }
+
+    .controlpanel .controls input {
+      background: none;
+      border: none;
+      margin: 0px 20px;
+      color: white;
+      flex-grow: 1;
+      outline: none;
+      font-size: 24px;
+    }
+
+    .controlpanel .controls .icon {
+      width: 20px;
+      height: 20px;
+      margin: 0px 2x 0px 2px;
+    }
+
+    .controlpanel .controls .button {
+      background: none;
+      font-size: 2px;
+      cursor: pointer;
+      font-family: Material Icons;
+      padding: 2px 7px;
+      margin: 0px 2px;
+    }
+
+    .home-icon {
+      display: none;
+    }
+
+    .Home:before {
+      content: url(/assets/images/icons/homeicon.svg);
+      display: block;
+      width: 20px;
+      height: 20px;
+    }
+
+    .fullscreen-icon {
+      display: none;
+    }
+
+    .Fullscreen:before {
+      content: url(/assets/images/icons/fullscreen.svg);
+      display: block;
+      width: 20px;
+      height: 20px;
+    }
+
+    .button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+
+<body style="margin: 0">
+  <img class="home-icon" src="/assets/images/icons/homeicon.svg" />
+  <img class="fullscreen-icon" src="/assets/images/icons/fullscreen.svg" />
+  <div class="controlpanel">
+    <div class="controls">
+      <img class="icon" src="/assets/images/branding/favicon/interstellar.ico" />
+      <form>
+        <input disabled />
+      </form>
+      <button class="button Fullscreen" id="fullscreen-button" style="margin-right: 5px">Fullscreen</button>
+      <button class="button Home" id="home-button">Home</button>
+    </div>
+  </div>
+  <script>
+    const homeButton = document.getElementById("home-button");
+    homeButton.addEventListener("click", function () {
+      window.location.href = "./";
+    });
+    const fullscreenButton = document.getElementById("fullscreen-button");
+    fullscreenButton.addEventListener("click", function () {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        document.exitFullscreen();
+      }
+    });
+    window.onload = function () {
+      let encodedUrl = sessionStorage.getItem("encodedUrl");
+      encodedUrl = "/service/" + encodedUrl;
+      document.querySelector("#iframeId").src = encodedUrl;
+    };
+  </script>
+  <iframe src="" id="iframeId" style="bottom: 0; border: 0" name="Iframe" scrolling="yes" allowfullscreen></iframe>
+  
+</body>
+</html>

@@ -1,0 +1,279 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@700&display=swap');
+
+
+
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.mainhead{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 1.2em;
+}
+
+
+.title {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    font-family: 'Source Sans Pro', sans-serif;
+    line-height: 1.5em;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: rgba(0, 0, 0, 0);
+    border-radius: 0px 0px 5px 5px;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    user-select: none;
+    animation: dropin 1s ease-in-out;
+
+
+}
+
+.title:hover {
+    background: rgba(255, 255, 255, 0);
+    color: rgba(82, 42, 244, 0.096);
+    text-shadow: 0px 0px 2px rgba(255, 255, 255, 0);
+    transform: scale(1.1);
+}
+
+
+.desc {
+    font-size: 1em;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    font-family: 'Source Sans Pro', sans-serif;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: rgba(0, 0, 0, 0);
+    border-radius: 0px 0px 5px 5px;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    user-select: none;
+    animation: dropin 1s ease-in-out;
+    margin-bottom: 10px;
+}
+
+
+.galaxy-input{
+    width: 300px;
+    height: 30px;
+    background-color: rgba(59, 56, 56, 0.356);
+    border: none;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 1em;
+    color: white;
+    transition: all 0.5s ease-in-out;
+}
+.galaxy-input:focus, .galaxy-input:hover {
+    background-color: rgba(59, 56, 56, 0.8);
+    outline: none;
+    scale: 1.1;
+    outline: none;
+    background-color: rgba(59, 56, 56, 0.356);
+    caret-color: rgba(255, 255, 255, 0.534);
+
+
+}
+
+
+
+
+.search-btn {
+    margin-top: 10px;
+    width: 200px;
+    height: 40px;
+    background-color: rgba(59, 56, 56, 0.356);
+    border: none;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 1em;
+    color: white;
+    transition: all 0.5s ease-in-out;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+}
+
+.search-btn:hover{
+    background-color: rgba(59, 56, 56, 0.356);
+    color: rgba(0, 0, 0, 0.534);
+    scale: 1.1;
+
+}
+
+
+
+.discord-btn{
+    margin-top: 10px;
+    width: 200px;
+    height: 40px;
+    background-color: rgba(59, 56, 56, 0.356);
+    border: none;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 1em;
+    color: white;
+    transition: all 0.5s ease-in-out;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+}
+
+.discord-btn:hover{
+    background-color: rgba(0, 0, 0, 0.356);
+    color: rgba(255, 255, 255, 0.534);
+    scale: 1.1;
+
+}
+
+.discord-btn2{
+    margin-top: 10px;
+    width: 200px;
+    height: 40px;
+    background-color: rgba(59, 56, 56, 0.356);
+    border: none;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 1em;
+    color: white;
+    transition: all 0.5s ease-in-out;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+}
+
+.discord-btn2:hover{
+    background-color: rgba(0, 0, 0, 0.356);
+    color: rgba(255, 255, 255, 0.534);
+    scale: 1.1;
+
+}
+
+#cookieNotice.display-right {
+    right: 30px;
+    bottom: 30px;
+    max-width: 395px;
+  }
+  #cookieNotice.light {
+    background-color: #222;
+    color: #fff;
+  }
+  #cookieNotice {
+    box-sizing: border-box;
+    position: fixed;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 6px 6px rgb(0 0 0 / 25%);
+    font-family: inherit;
+    z-index: 999997;
+    color: #111;
+  }
+  #cookieNotice #closeIcon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    color: #31ffff;
+    overflow: hidden;
+    opacity: 0.85;
+    z-index: 999999;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  #cookieNotice * {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+  }
+  #cookieNotice .title-wrap {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-left: 45px;
+    height: 40px;
+  }
+  #cookieNotice .title-wrap svg {
+    margin-right: 10px;
+  }
+  #cookieNotice h4 {
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 18px;
+    color: #fff;
+  }
+  #cookieNotice.light p,
+  #cookieNotice.light ul {
+    color: #fff;
+  }
+  #cookieNotice p,
+  #cookieNotice ul {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+  #cookieNotice .btn-wrap {
+    display: flex;
+    flex-direction: row;
+    font-weight: 700;
+    justify-content: center;
+    margin: 0 -5px 0 -5px;
+    flex-wrap: wrap;
+    color: #000;
+  }
+  
+  .popupbutton {
+    background-color: white;
+    color: black;
+    border: 2px solid #555555;
+    flex-grow: 1;
+    padding: 0 7px;
+    margin: 0 5px 10px 5px;
+    border-radius: 20px;
+    cursor: pointer;
+    white-space: nowrap;
+    min-width: 130px;
+    line-height: 36px;
+    border: none;
+    font-family: inherit;
+    font-size: 16px;
+    transition: box-shadow 0.3s;
+  }
+  
+  .popupbutton:hover {
+    background-color: #000;
+    color: white;
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+      0 17px 50px 0 rgba(0, 0, 0, 0.19);
+  }
+  

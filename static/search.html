@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Classes</title>
+  <link rel="icon" type="image/x-icon" href="assets/images/branding/favicon/favicon.png">
+  <link rel="stylesheet" href="assets/css/settings/main.css">
+  <link rel="stylesheet" href="resources/css/main.css">
+  <link rel="stylesheet" href="assets/css/nav.css">
+  <link rel="stylesheet" href="resources/css/main.css">
+</head>
+
+<body>
+  <div class="header2">
+    <br>
+    <a href="/../" class="logo">Interstellar</a>
+    <div class="header2-right">
+      <a href="photography">Proxy</a>
+      <a href="mathematics">Games</a>
+      <a href="ocean">Apps</a>
+      <a href="forest">Chatroom</a>
+      <a href="settings">Settings</a>
+    </div>
+  </div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <div class="searchbar">
+    <form>
+      <input tag="searchbar" id="searchbar" placeholder="Search the web freely">
+    </form>
+<script src="./uv/uv.bundle.js"></script>
+  <script src="./uv/uv.config.js"></script>
+  <script src="resources/js/index.js"></script>
+  <script>
+    const searchbar = document.getElementById("searchbar");
+    searchbar.addEventListener("input", function () {
+      if (searchbar.value === '') {
+        searchbar.style.width = "25%";
+        searchbar.style.height = "60px";
+      } else {
+        searchbar.style.width = "70%";
+        searchbar.style.height = "60px";
+      }
+    });
+  </script>
+  <div>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'G-WKJQ5QHQTJ');
+    </script>
+  </div>
+</body>
+</html>

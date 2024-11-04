@@ -1,32 +1,27 @@
 {
-  "name": "interstellar",
-  "version": "5.2.5",
+  "name": "educational-site",
+  "version": "4.5.0",
+  "description": "https://discord.gg/gointerstellar",
   "type": "module",
   "engines": {
     "npm": ">=7.0.0",
     "node": ">=16.0.0"
   },
   "scripts": {
-    "start": "node index.js",
-    "format": "biome format --write .",
-    "precommit": "pnpm run format && biome check --write .",
-    "lint": "biome lint --write ."
+    "start": "node index.js"
   },
-  "author": "InterstellarNetwork",
+  "keywords": [
+    "proxy"
+  ],
+  "author": "",
   "license": "GPL-3.0-or-later",
   "dependencies": {
-    "@nebula-services/bare-server-node": "^2.0.4",
-    "chalk": "^5.3.0",
-    "cookie-parser": "^1.4.7",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
-    "express": "^4.21.1",
-    "express-basic-auth": "^1.2.1",
-    "mime": "^4.0.4",
-    "node-fetch": "^3.3.2"
+    "@titaniumnetwork-dev/ultraviolet": "^1.0.10",
+    "@tomphttp/bare-server-node": "^1.2.6",
+    "express": "^4.18.2"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.4"
-  },
-  "packageManager": "pnpm@9.10.0"
+    "eslint": "^8.36.0",
+    "prettier": "^2.8.4"
+  }
 }

@@ -1,0 +1,208 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+
+body {
+  background-color: #111;
+  text-align: center;
+  font-family: "Inter", sans-serif;
+}
+
+.row {
+  margin-right: auto;
+  grid-gap: 2rem;
+  position: absolute;
+  top: 105px;
+  left: 2%;
+  right: 2%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-top: 9vh;
+}
+
+.card {
+  transition: 0.3s;
+  border-radius: 30px;
+  width: 30%;
+  height: 250px;
+  color: white;
+  background-color: rgba(34, 34, 34, 0.5);
+  max-height: 100%;
+  border: none;
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+.card:hover {
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.08),
+    0 17px 50px 0 rgba(0, 0, 0, 0.05), 0 4px 4px 0 rgba(0, 0, 0, 0.12),
+    0 7px 14px 0 rgba(0, 0, 0, 0.09);
+  transform: scale(1.05);
+}
+
+.container {
+  padding: 2px 16px;
+}
+
+.title {
+  margin-top: 20px;
+  text-align: center;
+  font-family: "Inter", sans-serif;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+p {
+  margin-top: 6px;
+  font-family: "Inter", sans-serif;
+  font-weight: 5px;
+}
+
+h1 {
+  top: 50px;
+  text-align: center;
+}
+
+.tab-cloak {
+  cursor: pointer;
+  border: 2px;
+  transition: 0.2s;
+  margin-top: 10px;
+  background-color: #333;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  color: white;
+  height: 50px;
+  width: 50%;
+  padding: 10px;
+  text-align: center;
+}
+
+.tab-cloak:hover {
+  scale: 1.1;
+}
+
+img {
+  border-radius: 5px 5px 0 0;
+}
+
+button {
+  font-family: "Inter", sans-serif;
+  border: none;
+  background-color: #333;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+button:hover {
+  background-color: #444;
+}
+
+select,
+input {
+  font-family: "Inter", sans-serif;
+  border: none;
+  background-color: #333;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.15);
+}
+
+select:hover,
+input:hover {
+  opacity: 0.8;
+}
+
+input:focus {
+  outline: none;
+  opacity: 0.6;
+}
+
+input[type="text"] {
+  height: 40px;
+  width: 80%;
+  margin-bottom: 10px;
+}
+
+select {
+  height: 40px;
+  width: 80%;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.rounded-md {
+  border-radius: 0.375rem;
+}
+
+.border-solid {
+  border-style: solid;
+}
+
+.option {
+  cursor: pointer;
+}
+
+.border-2 {
+  border-width: 2px;
+}
+
+.border-black {
+  border-color: #000;
+}
+
+.w-12 {
+  width: 3rem;
+}
+
+.border-white {
+  border-color: #fff;
+}
+
+.text-white {
+  color: #fff;
+}
+
+.themes2 {
+  cursor: pointer;
+  border: 2px;
+  transition: 0.2s;
+  margin-top: 10px;
+  background-color: #333;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  border-color: white;
+  color: white;
+  height: 50px;
+  width: 200px;
+}
+
+.t:hover {
+  scale: 1.1;
+}
+
+.tab-cloaker-form {
+  border-radius: 0.375rem;
+  color: #fff;
+  cursor: pointer;
+  border: 2px;
+  transition: 0.2s;
+  margin-top: 10px;
+  background-color: #333;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  color: white;
+  height: 40px;
+  width: 50%;
+  padding: 10px;
+  text-align: center;
+}
