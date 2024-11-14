@@ -7,7 +7,7 @@ const Fail = fs.readFileSync("Failed.html", "utf8")
 
 export function setupMasqr(app) {
   app.use(async (req, res, next) => {
-    if (req.url.includes("/ov/")) {
+    if (req.url.includes("/fq/")) {
       next()
       return
     }

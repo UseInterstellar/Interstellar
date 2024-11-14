@@ -26,9 +26,9 @@ jobs:
             git checkout -b Ad-Free
           fi
 
-      - name: Remove first 9 lines from main.js
+      - name: Remove first 9 lines from m.js
         run: |
-          sed -i '1,9d' static/assets/js/main.js
+          sed -i '1,9d' static/assets/js/m.js
   
       - name: Commit changes
         env:
@@ -37,8 +37,8 @@ jobs:
         run: |
           git config --global user.name "${GIT_USERNAME}"
           git config --global user.email "${GIT_EMAIL}"
-          git add static/assets/js/main.js
-          git commit -m "Remove specific JS code from main.js"
+          git add static/assets/js/m.js
+          git commit -m "Remove specific JS code from m.js"
 
       - name: Push changes to Ad-Free branch
         run: |

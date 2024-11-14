@@ -131,7 +131,7 @@ body {
    height: 100%;
 }
 
-.navsearch {
+.bar {
    height: 20px;
    background: none;
    border: none;
@@ -143,7 +143,7 @@ body {
    transition: 0.3s;
 }
 
-.navsearch:focus {
+.bar:focus {
    background: var(--background-input);
    box-shadow: none;
    outline: none;
@@ -180,11 +180,11 @@ p {
    font-size: 25px;
 }
 
-.iframe-container iframe {
+.frame-container iframe {
    display: none;
 }
 
-.iframe-container iframe.active {
+.frame-container iframe.active {
    display: block;
 }
 
