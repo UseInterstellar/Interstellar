@@ -94,39 +94,6 @@ app.use(express.urlencoded({ extended: true }));
   setupMasqr(app);
 } */
 
-const blocked = Object.keys(config.blocked);
-
-app.get("/assets/js/m.js", (req, res) => {
-  const hostname = req.hostname;
-
-  const isBlocked = blocked.some(domain => {
-    if (hostname === domain) return true;
-    return hostname.endsWith(`.${domain}`);
-  });
-
-  const main = path.join(__dirname, "static/assets/js/m.js");
-
-  // console.log(`Checking hostname: ${hostname}, Blocked: ${isBlocked}`);
-
-  try {
-    if (isBlocked) {
-      fs.readFile(main, "utf8", (err, data) => {
-        if (err) {
-          console.error("Error reading the file:", err);
-          return res.status(500).send("Something went wrong.");
-        }
-        const script = data.split("\n").slice(9).join("\n");
-        res.type("application/javascript").send(script);
-      });
-    } else {
-      res.sendFile(main);
-    }
-  } catch (error) {
-    console.error("There was an error processing the script:", error);
-    res.status(500).send("Something went wrong.");
-  }
-});
-
 app.use(express.static(path.join(__dirname, "static")));
 app.use("/fq", cors({ origin: true }));
 

