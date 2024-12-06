@@ -7,7 +7,7 @@
     "node": ">=16.0.0"
   },
   "scripts": {
-    "start": "node index.js",
+    "start": "node index.html",
     "format": "biome format --write .",
     "precommit": "pnpm run format && biome check --write .",
     "lint": "biome lint --write ."
