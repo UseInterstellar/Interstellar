@@ -1,8 +1,8 @@
 const config = {
-  challenge: false, // Set to true if you want to enable password protection.
-  users: {
-    // You can add multiple users by doing username: 'password'.
-    interstellar: "password",
+  challenge: true
+  users: {99
+    
+    interstellar: "Ls386ukz",
   },
 };
 
