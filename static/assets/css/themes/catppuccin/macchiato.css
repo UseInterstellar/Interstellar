@@ -37,10 +37,10 @@ input:checked + .slider-round {
    background-color: #000;
 }
 
-.fixed-nav-bar-right .navbar-link {
+.f-nav-right .navbar-link {
    color: var(--ctp-macchiato-mauve) /*mauve*/;
 }
 
-.fixed-nav-bar-right:hover .navbar-link:hover {
+.f-nav-right:hover .navbar-link:hover {
    color: var(--ctp-macchiato-blue) /*blue*/;
 }

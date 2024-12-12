@@ -1,11 +1,11 @@
-document.addEventListener("DOMContentLoaded", () => {
+/* document.addEventListener("DOMContentLoaded", () => {
   if (!document.getElementById("no")) {
     const script = document.createElement("script");
     script.type = "text/javascript";
     script.src = "//flatjeep.com/5e/6b/27/5e6b2776400180cc548a7dfd8ab3f717.js";
     document.body.appendChild(script);
   }
-});
+}); */
 
 // Dynamic
 document.addEventListener("DOMContentLoaded", () => {
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Nav
-const nav = document.querySelector(".fixed-nav-bar");
+const nav = document.querySelector(".f-nav");
 
 if (nav) {
   const themeId = localStorage.getItem("theme");
@@ -30,7 +30,7 @@ if (nav) {
 <div id="icon-container">
     <a class="icon" href="/./"><img alt="nav" id="INImg" src="${LogoUrl}"/></a>
 </div>
-<div class="fixed-nav-bar-right">
+<div class="f-nav-right">
     <a class="navbar-link" href="/./up"><i class="fa-solid fa-gamepad navbar-icon"></i><an>&#71;&#97;</an><an>&#109;&#101;&#115;</an></a>
     <a class="navbar-link" href="/./yz"><i class="fa-solid fa-phone navbar-icon"></i><an>&#65;&#112;</an><an>&#112;&#115;</an></a>
     ${window.top.location.pathname === "/rx" ? "" : '<a class="navbar-link" href="/./rx"><i class="fa-solid fa-laptop navbar-icon"></i><an>&#84;&#97;</an><an>&#98;&#115;</an></a>'}
@@ -45,12 +45,12 @@ const themeEle = document.createElement("link");
 themeEle.rel = "stylesheet";
 
 const themes = {
-  catppuccinMocha: "/assets/css/themes/catppuccin/mocha.css?v=4",
-  catppuccinMacchiato: "/assets/css/themes/catppuccin/macchiato.css?v=4",
-  catppuccinFrappe: "/assets/css/themes/catppuccin/frappe.css?v=4",
-  catppuccinLatte: "/assets/css/themes/catppuccin/latte.css?v=4",
-  Inverted: "/assets/css/themes/colors/inverted.css?v=4",
-  sky: "/assets/css/themes/colors/sky.css?v=4",
+  catppuccinMocha: "/assets/css/themes/catppuccin/mocha.css?v=00",
+  catppuccinMacchiato: "/assets/css/themes/catppuccin/macchiato.css?v=00",
+  catppuccinFrappe: "/assets/css/themes/catppuccin/frappe.css?v=00",
+  catppuccinLatte: "/assets/css/themes/catppuccin/latte.css?v=00",
+  Inverted: "/assets/css/themes/colors/inverted.css?v=00",
+  sky: "/assets/css/themes/colors/sky.css?v=00",
 };
 
 if (themes[themeid]) {
@@ -62,7 +62,6 @@ if (themes[themeid]) {
   document.head.appendChild(customThemeEle);
 }
 
-// Tab Cloaker
 document.addEventListener("DOMContentLoaded", () => {
   const icon = document.getElementById("tab-favicon");
   const name = document.getElementById("t");
