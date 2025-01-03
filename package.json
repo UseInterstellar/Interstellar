@@ -19,7 +19,7 @@
     "chalk": "^5.3.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
+    "dotenv": "^16.4.7",
     "express": "^4.21.1",
     "express-basic-auth": "^1.2.1",
     "mime": "^4.0.4",
