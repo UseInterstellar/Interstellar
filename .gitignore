@@ -4,3 +4,5 @@ node_modules
 .hintrc
 .gitpod.yml 
 .env
+node_modules/
+*.local

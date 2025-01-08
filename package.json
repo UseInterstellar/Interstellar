@@ -22,6 +22,7 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.1",
     "express-basic-auth": "^1.2.1",
+    "firebase": "^11.1.0",
     "mime": "^4.0.6",
     "node-fetch": "^3.3.2"
   },
