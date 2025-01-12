@@ -2,7 +2,18 @@ let appInd;
 const g = window.location.pathname === "/up";
 const a = window.location.pathname === "/yz";
 const c = window.location.pathname === "/gt";
-const t = window.top.location.pathname === "/rx";
+
+let t;
+
+try {
+  t = window.top.location.pathname === "/rx";
+} catch {
+  try {
+    t = window.parent.location.pathname === "/rx";   
+  } catch {
+    t = false;
+  }
+}
 
 function Span(name) {
   return name.split("").map(char => {

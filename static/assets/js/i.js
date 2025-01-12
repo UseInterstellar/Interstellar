@@ -4,15 +4,28 @@ window.addEventListener("load", () => {
   });
 });
 
+let xl;
+
+try {
+  xl = window.top.location.pathname === "/rx";
+} catch {
+  try {
+    xl = window.parent.location.pathname === "/rx";   
+  } catch {
+    xl = false;
+  }
+}
+
 const form = document.getElementById("fv");
 const input = document.getElementById("iv");
 
 if (form && input) {
   form.addEventListener("submit", async event => {
     event.preventDefault();
-    if (window.top.location.pathname === "/rx") {
-      processUrl(input.value, "");
-    } else {
+    try {
+      if (xl) processUrl(input.value, "");
+      else processUrl(input.value, "/rx");
+    } catch {
       processUrl(input.value, "/rx");
     }
   });
