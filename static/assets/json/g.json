@@ -1753,13 +1753,19 @@
   },
   {
     "name": "Minecraft 1.5.2 (Eaglercraft)",
-    "link": "/e/1/ec-15/index.html",
+    "link": "/e/2/eag15/index.html",
     "image": "/assets/media/icons/mc.webp",
     "categories": ["all", "2P", "emu", "local"]
   },
   {
     "name": "Minecraft 1.8 (Eaglercraft)",
-    "link": "/e/1/ec-18/index.html",
+    "link": "/e/2/eag18/offline.html",
+    "image": "/assets/media/icons/mc.webp",
+    "categories": ["all", "2P", "emu", "local"]
+  },
+  {
+    "name": "Minecraft 1.8 (Eagler WASM)",
+    "link": "/e/2/eag18/wasm.html",
     "image": "/assets/media/icons/mc.webp",
     "categories": ["all", "2P", "emu", "local"]
   },
@@ -1768,13 +1774,6 @@
     "link": "https://www.twoplayergames.org/embed/getaway-shootout",
     "image": "/assets/media/icons/getaway.webp",
     "categories": ["all", "2P"]
-  },
-  {
-    "name": "Eaglercraft 1.5.2 [Singleplayer]",
-    "link": "https://interstellar-assets.pages.dev/minecraft-15/",
-    "image": "/assets/media/icons/mc.webp",
-    "categories": ["all", "2P", "emu"],
-    "blank": "true"
   },
   {
     "name": "2048",
