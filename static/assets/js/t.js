@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", event => {
     newIframe.addEventListener("load", () => {
       const title = newIframe.contentDocument.title;
       if (title.length <= 1) {
-        tabTitle.textContent = "";
+        tabTitle.textContent = "Tab";
       } else {
         tabTitle.textContent = title;
       }
