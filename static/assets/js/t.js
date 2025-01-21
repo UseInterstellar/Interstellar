@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", event => {
     const tabTitle = document.createElement("span");
     const newIframe = document.createElement("iframe");
     newIframe.sandbox =
-      "allow-same-origin allow-scripts allow-forms allow-pointer-lock allow-modals allow-orientation-lock";
+      "allow-same-origin allow-scripts allow-forms allow-pointer-lock allow-modals allow-orientation-lock allow-presentation allow-storage-access-by-user-activation";
     // When Top Navigation is not allowed links with the "top" value will be entirely blocked, if we allow Top Navigation it will overwrite the tab, which is obviously not wanted.
     tabTitle.textContent = `New Tab ${tabCounter}`;
     tabTitle.className = "t";
