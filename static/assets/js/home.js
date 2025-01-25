@@ -54,7 +54,7 @@ if (
     `;
       doc.head.appendChild(script);
     }
-  }, 5000);
+  }, 2000);
 }
 // Particles
 document.addEventListener("DOMContentLoaded", event => {
