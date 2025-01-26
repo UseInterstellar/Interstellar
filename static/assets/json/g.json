@@ -1356,12 +1356,6 @@
     "categories": ["all"]
   },
   {
-    "name": "Retro Arch",
-    "link": "https://binbashbanana.github.io/webretro/",
-    "image": "/assets/media/icons/webretro.webp",
-    "categories": ["all"]
-  },
-  {
     "name": "Riddle School 2",
     "link": "https://f.silvergames.com/ruffle/player.php?id=8564",
     "image": "/assets/media/icons/rs2.webp",
