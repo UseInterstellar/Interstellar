@@ -24,7 +24,7 @@ importers:
         specifier: ^16.4.7
         version: 16.4.7
       express:
-        specifier: ^4.21.1
+        specifier: ^4.21.2
         version: 4.21.2
       express-basic-auth:
         specifier: ^1.2.1
