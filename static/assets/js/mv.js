@@ -36,15 +36,15 @@ document.addEventListener("DOMContentLoaded", () => {
       LogoUrl = "/assets/media/favicon/main-inverted.png";
     }
     const html = `
-      <div id="icon-container">
-        <a class="icon" href="/./"><img alt="nav" id="INImg" src="${LogoUrl}"/></a>
-      </div>
+     <!-- <div id="icon-container">
+        <a target="_blank" href="/./"><img width="10" height="10" src="https://silicajello.neocities.org/main/vs.jpeg" alt="voidious" /></a>
+        //  <select id="pChange">
+            <option value="uv">Ultraviolet (Default)</option>
+            <option value="dy">Dynamic (Doesn't work in about:blank)</option>
+          </select>
+      </div> -->
       <div class="f-nav-right">
-        <a class="navbar-link" href="/./up"><i class="fa-solid fa-gamepad navbar-icon"></i><an>&#71;&#97;</an><an>&#109;&#101;&#115;</an></a>
-        <a class="navbar-link" href="/./yz"><i class="fa-solid fa-phone navbar-icon"></i><an>&#65;&#112;</an><an>&#112;&#115;</an></a>
-        ${qp ? "" : '<a class="navbar-link" href="/./rx"><i class="fa-solid fa-laptop navbar-icon"></i><an>&#84;&#97;</an><an>&#98;&#115;</an></a>'}
-        <a class="navbar-link" href="/./vk"><i class="fa-solid fa-gear navbar-icon settings-icon"></i><an>&#83;&#101;&#116;</an><an>&#116;&#105;&#110;&#103;</an></a>
-      </div>`;
+        </div>`;
     nav.innerHTML = html;
   }
 

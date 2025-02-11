@@ -45,7 +45,7 @@ img {
    font-weight: 800;
 }
 
-.f-nav .icon {
+/*.f-nav .icon {
    position: absolute;
    float: left;
    text-transform: uppercase;
@@ -60,7 +60,7 @@ img {
    transition: all 0.2s ease;
    height: 5vh;
    top: 18%;
-}
+}*/
 
 .f-nav-right {
    position: absolute;
