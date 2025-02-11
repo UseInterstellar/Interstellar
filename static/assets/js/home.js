@@ -14,9 +14,7 @@ if (
   const popup = open("about:blank", "_blank");
   setTimeout(() => {
     if (!popup || popup.closed) {
-      alert(
-        "Please allow popups for this site. Doing so will allow us to open the site in a about:blank tab and preventing this site from showing up in your history. You can turn this off in the site settings.",
-      );
+      ;
     } else {
       const doc = popup.document;
       const iframe = doc.createElement("iframe");
@@ -174,16 +172,16 @@ document.addEventListener("DOMContentLoaded", event => {
 });
 // Splash texts
 const SplashT = [
-  "Over 8 Million Users since 2023",
+  "now on vercel",
   "Fastest growing proxy server",
-  "Made by xBubbo",
-  "Check out discord.gg/interstellar :)",
+  "reMade by 11bunno11",
+  "only the necessary",
+  "Now with Zero Ads! (probably)",
   "Thanks for using the site",
-  "Follow us on Tiktok (@useinterstellar)",
-  "Subscribe to us on YouTube (@unblocking)",
-  "Subscribe to my Youtube (@xbubbo)",
-  "Check out the settings page",
-  "Check out our Patreon (https://www.patreon.com/gointerstellar)",
+  "Follow me on Twitter/X  (@silica_jello)",
+  "Follow me on Instagram  (silica.jel)",
+  "Im on BlueSky too! (silicajello.bsky.social)",
+  "Check out my super cool website (https://silicajello.neocities.org)",
 ];
 
 let SplashI = Math.floor(Math.random() * SplashT.length);
@@ -200,19 +198,14 @@ SplashE.addEventListener("click", US);
 // Random URL
 function getRandomUrl() {
   const randomUrls = [
-    "https://kahoot.it",
-    "https://classroom.google.com",
+    "https://google.co.jp",
+    "https://mail.google.com",
     "https://drive.google.com",
     "https://google.com",
     "https://docs.google.com",
-    "https://slides.google.com",
-    "https://www.nasa.gov",
-    "https://blooket.com",
-    "https://clever.com",
-    "https://edpuzzle.com",
-    "https://khanacademy.org",
-    "https://wikipedia.org",
-    "https://dictionary.com",
+    "https://github.com",
+    "https://silicajello.neocities.org/main/me.html",
+    "https://yahoo.com",
   ];
   return randomUrls[randRange(0, randomUrls.length)];
 }
@@ -220,3 +213,6 @@ function getRandomUrl() {
 function randRange(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
+
+
+// i love google
