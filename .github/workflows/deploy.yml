@@ -29,16 +29,16 @@ jobs:
           node-version: lts/*
 
       - name: Install step
-        run: "Npm install"
+        run: "npm install"
 
       - name: Build step
-        run: "npm run start"
+        run: "npm run build"
 
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
-          project: "xyz-thech-interstella-69"
-          entrypoint: "Main"
-          root: ""
+          project: "xyz-thech-interstella-54"
+          entrypoint: "https://deno.land/std@0.217.0/http/file_server.ts"
+          root: "out"
           
           
