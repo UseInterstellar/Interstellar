@@ -37,8 +37,8 @@ jobs:
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
-          project: "xyz-thech-interstella-21"
-          entrypoint: "server/entry.mjs"
-          root: "dist"
-          
+          project: "xyz-thech-interstella-56"
+          entrypoint: "jsr:@deno/nextjs-start"
+          root: "."
+          include: .next, public
           
