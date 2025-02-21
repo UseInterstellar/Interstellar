@@ -1,0 +1,8 @@
+[build]
+  publish = "public"
+  functions = "functions"
+
+[[redirects]]
+  from = "/e/*"
+  to = "/.netlify/functions/fetch-asset/e/:splat"
+  status = 200
