@@ -3,7 +3,7 @@
   publish = "."
 
 [context.production.environment]
-  NODE_VERSION = "16"  # Set to the Node version you need
+  NODE_VERSION = "18.12"  # Set Node.js version to v18.12
   PNPM_VERSION = "7"  # Use the pnpm version you want
 
 [[plugins]]
