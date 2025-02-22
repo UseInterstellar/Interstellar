@@ -7,10 +7,10 @@
     "node": ">=16.0.0"
   },
   "scripts": {
-    "start": "netlify-lambda serve",  // For local serverless function testing
+    "start": "netlify-lambda serve",  // For local testing of serverless functions
     "build": "netlify-lambda build netlify/functions",  // Build serverless functions
     "format": "biome format --write .",
-    "precommit": "pnpm run format && biome check --write .",
+    "precommit": "npm run format && biome check --write .",
     "lint": "biome lint --write ."
   },
   "author": "InterstellarNetwork",
@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
-    "netlify-lambda": "^2.0.0"  // Ensure the package is installed for building & serving functions locally
+    "netlify-lambda": "^2.0.0"  // Added for building and serving functions locally
   },
-  "packageManager": "pnpm@9.10.0"
+  "packageManager": "npm@7.0.0"
 }
