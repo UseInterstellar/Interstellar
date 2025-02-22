@@ -1,0 +1,10 @@
+[build]
+  command = "pnpm run build"   # Your build command, make sure it's correctly set
+  publish = "public"           # Your publish directory, adjust if necessary
+
+[build.environment]
+  GO_VERSION = "1.19"  # Ensure Go version 1.19 is set for the build process
+  NETLIFY_USE_PNPM = "true"  # Ensure PNPM is used for dependency installation
+
+[[plugins]]
+  package = "@netlify/plugin-pnpm"  # The plugin for PNPM (if you haven't done so already)
