@@ -1,7 +1,10 @@
 [build]
-  base = "/"  # Root directory
-  command = "pnpm build"  # Build the functions
-  publish = "static"  # Publish static files from the "static" directory
+  command = "pnpm install && pnpm run build"
+  publish = "."
 
 [context.production.environment]
-  NODE_ENV = "production"
+  NODE_VERSION = "16"  # Set to the Node version you need
+  PNPM_VERSION = "7"  # Use the pnpm version you want
+
+[[plugins]]
+  package = "@netlify/plugin-pnpm"
