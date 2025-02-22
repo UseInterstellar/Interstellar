@@ -1315,7 +1315,7 @@
   },
   {
     "name": "Precision Client",
-    "link": "https://raw.githack.com/3kh0/3kh0-assets/main/precision-client/index.html",
+    "link": "https://glcdn.githack.com/3kh0/3kh0-assets/-/raw/main/precision-client/index.html",
     "image": "/assets/media/icons/precision.webp",
     "categories": ["all"]
   },
@@ -1353,12 +1353,6 @@
     "name": "Red Ball 4 Vol. 3",
     "link": "https://www.algebrashelper.com/red-ball-4v3",
     "image": "/assets/media/icons/redball4vol3.webp",
-    "categories": ["all"]
-  },
-  {
-    "name": "Retro Arch",
-    "link": "https://binbashbanana.github.io/webretro/",
-    "image": "/assets/media/icons/webretro.webp",
     "categories": ["all"]
   },
   {
