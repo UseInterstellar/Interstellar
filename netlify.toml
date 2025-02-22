@@ -1,9 +1,10 @@
 [build]
-  command = "go build"  # Specify your build command
-  publish = "public"    # Set the correct directory for your build output
-
-[build.environment]
-  GO_VERSION = "1.19"  # Specify Go version 1.19 to install it during the build process
+  command = "pnpm run build"  # Your build command, make sure it's correctly set
+  publish = "public"          # Replace with your actual publish directory
 
 [[plugins]]
-  package = "@netlify/plugin-go"  # Add a plugin to install Go version 1.19 if needed
+  package = "@netlify/plugin-pnpm"  # Added the plugin to the build configuration
+
+[build.environment]
+  NETLIFY_USE_PNPM = "true"  # Ensure that PNPM is used during the build process
+  GO_VERSION = "1.19"        # Specify Go version if needed (optional)
