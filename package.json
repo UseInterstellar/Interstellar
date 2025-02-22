@@ -9,9 +9,11 @@
   "scripts": {
     "start": "node index.js",
     "format": "biome format --write .",
-    "precommit": "npm run format && biome check --write .",
+    "precommit": "pnpm run format && biome check --write .",
     "lint": "biome lint --write ."
   },
+  "author": "InterstellarNetwork",
+  "license": "GPL-3.0-or-later",
   "dependencies": {
     "@nebula-services/bare-server-node": "^2.0.4",
     "chalk": "^5.4.1",
@@ -26,5 +28,5 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4"
   },
-  "packageManager": "npm@7.0.0"
+  "packageManager": "pnpm@9.10.0"
 }
