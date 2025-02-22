@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
-    "@netlify/plugin-pnpm": "^1.0.0"  // This is important, ensure it's here
+    "@netlify/plugin-pnpm": "^1.0.0"  // Make sure the plugin is included here
   },
-  "packageManager": "pnpm@9.10.0"
+  "packageManager": "pnpm@7.0.0"  // Use pnpm version 7.x.x
 }
