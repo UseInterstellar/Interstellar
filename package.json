@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "node index.js",
-    "build": "echo 'Skipping build step for now'", 
+    "build": "echo 'Skipping build step for now'",
     "format": "biome format --write .",
     "precommit": "pnpm run format && biome check --write .",
     "lint": "biome lint --write ."
@@ -27,7 +27,8 @@
     "node-fetch": "^3.3.2"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.4"
+    "@biomejs/biome": "1.9.4",
+    "@netlify/plugin-pnpm": "^1.0.0"  // This is important, ensure it's here
   },
   "packageManager": "pnpm@9.10.0"
 }
