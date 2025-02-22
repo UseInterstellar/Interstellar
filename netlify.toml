@@ -1,5 +1,7 @@
 [build]
-  functions = "netlify/functions" # Netlify function directory
+  base = "/"  # Root directory
+  command = "pnpm build"  # Build the functions
+  publish = "static"  # Publish static files from the "static" directory
 
 [context.production.environment]
   NODE_ENV = "production"
