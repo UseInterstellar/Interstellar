@@ -1,8 +1,5 @@
 [build]
-  publish = "public"
-  functions = "functions"
+  functions = "netlify/functions" # Netlify function directory
 
-[[redirects]]
-  from = "/e/*"
-  to = "/.netlify/functions/fetch-asset/e/:splat"
-  status = 200
+[context.production.environment]
+  NODE_ENV = "production"
