@@ -1,6 +1,9 @@
 [build]
-  command = "go build"  # Or your build command if it's different
-  publish = "public"    # Or the correct directory where your build output is
+  command = "go build"  # Specify your build command
+  publish = "public"    # Set the correct directory for your build output
 
 [build.environment]
-  GO_VERSION = "1.19"  # Specify the Go version
+  GO_VERSION = "1.19"  # Specify Go version 1.19 to install it during the build process
+
+[[plugins]]
+  package = "@netlify/plugin-go"  # Add a plugin to install Go version 1.19 if needed
