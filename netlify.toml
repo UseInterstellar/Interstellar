@@ -1,10 +1,6 @@
 [build]
-  command = "pnpm install && pnpm run build"
-  publish = "."
-
-[context.production.environment]
-  NODE_VERSION = "18.12"  # Set Node.js version to v18.12
-  PNPM_VERSION = "7"  # Use the pnpm version you want
+  command = "pnpm run build"  # If you have a build command, change accordingly
+  publish = "dist"            # Adjust if your publish directory is different
 
 [[plugins]]
-  package = "@netlify/plugin-pnpm"
+package = "@netlify/plugin-pnpm"  # Ensure the pnpm plugin is included
