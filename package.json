@@ -8,6 +8,7 @@
   },
   "scripts": {
     "start": "node index.js",
+    "build": "echo 'Skipping build step for now'", 
     "format": "biome format --write .",
     "precommit": "pnpm run format && biome check --write .",
     "lint": "biome lint --write ."
