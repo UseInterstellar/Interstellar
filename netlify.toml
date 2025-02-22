@@ -1,6 +1,6 @@
 [build]
-  command = "pnpm run build"  # If you have a build command, change accordingly
-  publish = "dist"            # Adjust if your publish directory is different
+  command = "go build"  # Or your build command if it's different
+  publish = "public"    # Or the correct directory where your build output is
 
-[[plugins]]
-package = "@netlify/plugin-pnpm"  # Ensure the pnpm plugin is included
+[build.environment]
+  GO_VERSION = "1.19"  # Specify the Go version
