@@ -7,8 +7,8 @@
     "node": ">=16.0.0"
   },
   "scripts": {
-    "start": "netlify-lambda serve",  // To run locally, you can use netlify-lambda to serve functions
-    "build": "netlify-lambda build",  // Netlify build script for functions
+    "start": "netlify-lambda serve",  // For local serverless function testing
+    "build": "netlify-lambda build netlify/functions",  // Build serverless functions
     "format": "biome format --write .",
     "precommit": "pnpm run format && biome check --write .",
     "lint": "biome lint --write ."
@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
-    "netlify-lambda": "^2.0.0"  // This package is for local testing and building Netlify functions
+    "netlify-lambda": "^2.0.0"  // Ensure the package is installed for building & serving functions locally
   },
   "packageManager": "pnpm@9.10.0"
 }
