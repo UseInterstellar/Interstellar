@@ -29,5 +29,5 @@
     "@biomejs/biome": "1.9.4",
     "@netlify/plugin-pnpm": "^1.0.0"
   },
-  "packageManager": "pnpm@9.10.0"
+  "packageManager": "npm@9.10.0"
 }
