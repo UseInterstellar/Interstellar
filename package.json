@@ -10,7 +10,9 @@
     "start": "node index.js",
     "format": "biome format --write .",
     "precommit": "pnpm run format && biome check --write .",
-    "lint": "biome lint --write ."
+    "lint": "biome lint --write .",
+    "install-go": "curl -LO https://golang.org/dl/go1.19.linux-amd64.tar.gz && sudo tar -C /usr/local -xvzf go1.19.linux-amd64.tar.gz",
+    "postinstall": "npm run install-go"
   },
   "author": "InterstellarNetwork",
   "license": "GPL-3.0-or-later",
