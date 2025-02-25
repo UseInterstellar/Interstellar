@@ -22,5 +22,8 @@
     "env-*": true,
     "Failed.html": true,
     "static/assets/js/fa.js": true
+  },
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
   }
 }
