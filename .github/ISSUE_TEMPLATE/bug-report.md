@@ -26,7 +26,7 @@ If applicable, add screenshots to help explain your problem.
 **Device Information (please complete the following information):**
 
 - Device: [Ex. Chromebook, iPad, etc.]
-- OS [Ex. ChromeOS, Windows, iOS
+- OS [Ex. ChromeOS, Windows, iOS]
 - Browser [Ex. Chrome, Safari]
 
 **Additional context**
