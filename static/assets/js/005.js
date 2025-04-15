@@ -11,7 +11,7 @@ try {
   xl = window.top.location.pathname === "/d";
 } catch {
   try {
-    xl = window.parent.location.pathname === "/d";   
+    xl = window.parent.location.pathname === "/d";
   } catch {
     xl = false;
   }

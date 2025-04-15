@@ -5,7 +5,7 @@ try {
   qp = window.top.location.pathname === "/d";
 } catch {
   try {
-    qp = window.parent.location.pathname === "/d";   
+    qp = window.parent.location.pathname === "/d";
   } catch {
     qp = false;
   }
@@ -13,7 +13,7 @@ try {
 
 document.addEventListener("DOMContentLoaded", () => {
   // Blocked Hostnames Check
-   const blockedHostnames = [
+  const blockedHostnames = [
     "gointerstellar.app",
     "computers-science.com",
     "roundrockisd.online",
@@ -24,9 +24,10 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!blockedHostnames.includes(window.location.hostname)) {
     const script = document.createElement("script");
     script.type = "text/javascript";
-    script.src = "//angelabedsautopsy.com/1c/c3/8a/1cc38a6899fdf8ba4dfe779bcc54627b.js";
+    script.src =
+      "//angelabedsautopsy.com/1c/c3/8a/1cc38a6899fdf8ba4dfe779bcc54627b.js";
     document.body.appendChild(script);
-  } 
+  }
 
   const nav = document.querySelector(".f-nav");
 

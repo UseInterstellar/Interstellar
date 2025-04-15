@@ -10,7 +10,7 @@ try {
   t = window.top.location.pathname === "/d";
 } catch {
   try {
-    t = window.parent.location.pathname === "/d";   
+    t = window.parent.location.pathname === "/d";
   } catch {
     t = false;
   }

@@ -166,12 +166,12 @@ function redirectToMainDomain() {
   const target = mainDomainUrl + window.location.pathname;
   if (window !== top) {
     try {
-      top.location.href = target
+      top.location.href = target;
     } catch {
       try {
-        parent.location.href = target
+        parent.location.href = target;
       } catch {
-        window.location.href = target
+        window.location.href = target;
       }
     }
   } else window.location.href = mainDomainUrl + window.location.pathname;
@@ -375,17 +375,17 @@ function randRange(min, max) {
 
 function exportSaveData() {
   function getCookies() {
-    let cookies = document.cookie.split('; ');
-    let cookieObj = {};
+    const cookies = document.cookie.split("; ");
+    const cookieObj = {};
     cookies.forEach(cookie => {
-      let [name, value] = cookie.split('=');
+      const [name, value] = cookie.split("=");
       cookieObj[name] = value;
     });
     return cookieObj;
   }
   function getLocalStorage() {
-    let localStorageObj = {};
-    for (let key in localStorage) {
+    const localStorageObj = {};
+    for (const key in localStorage) {
       if (localStorage.hasOwnProperty(key)) {
         localStorageObj[key] = localStorage.getItem(key);
       }
@@ -394,14 +394,14 @@ function exportSaveData() {
   }
   const data = {
     cookies: getCookies(),
-    localStorage: getLocalStorage()
+    localStorage: getLocalStorage(),
   };
   const dataStr = JSON.stringify(data, null, 2);
-  const blob = new Blob([dataStr], { type: 'application/json' });
+  const blob = new Blob([dataStr], { type: "application/json" });
   const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
+  const a = document.createElement("a");
   a.href = url;
-  a.download = 'save_data.json';
+  a.download = "save_data.json";
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
@@ -409,14 +409,14 @@ function exportSaveData() {
 }
 
 function importSaveData() {
-  const input = document.createElement('input');
-  input.type = 'file';
-  input.accept = 'application/json';
-  input.onchange = function(event) {
+  const input = document.createElement("input");
+  input.type = "file";
+  input.accept = "application/json";
+  input.onchange = event => {
     const file = event.target.files[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = function(e) {
+    reader.onload = e => {
       try {
         const data = JSON.parse(e.target.result);
         if (data.cookies) {
@@ -429,14 +429,15 @@ function importSaveData() {
             localStorage.setItem(key, value);
           });
         }
-        alert('Your save data has been imported. Please test it out.')
-        alert('If you find any issues then report it in GitHub or the Interstellar Discord.')
+        alert("Your save data has been imported. Please test it out.");
+        alert(
+          "If you find any issues then report it in GitHub or the Interstellar Discord.",
+        );
       } catch (error) {
-        console.error('Error parsing JSON file:', error);
+        console.error("Error parsing JSON file:", error);
       }
     };
     reader.readAsText(file);
   };
   input.click();
 }
-
