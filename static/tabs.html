@@ -1,113 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="referrer" content="no-referrer" />
-    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
-    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" id="tab-favicon" href="favicon.png" />
-    <title id="t">Home</title>
-    <link rel="stylesheet" href="/assets/css/global.css?v=6" />
-    <link rel="stylesheet" href="/assets/css/t.css?v=02" />
-    <script src="assets/js/f.js"></script>
-    <script>
-      window.addEventListener("resize", navigator.keyboard.lock(["Escape"]));
-    </script>
-  </head>
-  <body id="no">
-    <nav class="nav" id="right-side-nav">
-      <ul id="tab-list"></ul>
-      <button title="add-tab" id="add-tab">
-        <i class="fa-solid fa-plus"></i>
-      </button>
-    </nav>
-    <div class="nav-bar">
-      <div class="nav-container">
-        <div class="nav-left">
-          <button
-            title="Home Page"
-            id="home-page"
-            class="nav-button"
-            onclick="Home()"
-          >
-            <i class="fa-solid fa-house"></i>
-          </button>
-          <button title="Back Arrow" class="nav-button" onclick="goBack()">
-            <i class="fa-solid fa-arrow-left"></i>
-          </button>
-          <button
-            title="Forward Arrow"
-            class="nav-button"
-            onclick="goForward()"
-          >
-            <i class="fa-solid fa-arrow-right"></i>
-          </button>
-          <button title="Reload" onclick="reload()" class="nav-button">
-            <i class="fa-solid fa-rotate-right"></i>
-          </button>
-          <form id="fv" class="navpost" method="POST">
-            <input
-              id="iv"
-              class="bar"
-              placeholder="Search or enter a new URL"
-              type="text"
-            />
-          </form>
-        </div>
-        <div class="nav-right">
-          <button
-            title="Fullscreen"
-            id="fullscreen-button"
-            class="nav-button nav-btn-right"
-            onclick="FS()"
-          >
-            <i class="fa-solid fa-expand"></i>
-          </button>
-          <button
-            title="Window Popout"
-            id="popout-button"
-            class="nav-button nav-btn-right"
-            onclick="popout()"
-          >
-            <i class="fa-solid fa-up-right-from-square"></i>
-          </button>
-          <button
-            title="Inspect"
-            class="nav-button nav-btn-right"
-            onclick="eToggle()"
-          >
-            <i class="fa-solid fa-code"></i>
-          </button>
-          <button
-            title="Tabs"
-            id="tabs-button"
-            class="nav-button nav-btn-right"
-          >
-            <i class="fa-solid fa-magnifying-glass-minus"></i>
-          </button>
-        </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="referrer" content="no-referrer" />
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" id="tab-favicon" href="favicon.png" />
+  <title id="t">Home</title>
+  <link rel="stylesheet" href="/assets/css/global.css?v=6" />
+  <link rel="stylesheet" href="/assets/css/t.css?v=02" />
+  <script src="assets/js/003.js?v=000"></script>
+  <script>
+    window.addEventListener("resize", navigator.keyboard.lock(["Escape"]));
+  </script>
+</head>
+
+<body id="no">
+  <nav class="nav" id="right-side-nav">
+    <ul id="tab-list"></ul>
+    <button title="add-tab" id="add-tab">
+      <i class="fa-solid fa-plus"></i>
+    </button>
+  </nav>
+  <div class="nav-bar">
+    <div class="nav-container">
+      <div class="nav-left">
+        <button title="Home Page" id="home-page" class="nav-button" onclick="Home()">
+          <i class="fa-solid fa-house"></i>
+        </button>
+        <button title="Back Arrow" class="nav-button" onclick="goBack()">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+        <button title="Forward Arrow" class="nav-button" onclick="goForward()">
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+        <button title="Reload" onclick="reload()" class="nav-button">
+          <i class="fa-solid fa-rotate-right"></i>
+        </button>
+        <form id="fv" class="navpost" method="POST">
+          <input id="iv" class="bar" placeholder="Search or enter a new URL" type="text" />
+        </form>
+      </div>
+      <div class="nav-right">
+        <button title="Fullscreen" id="fullscreen-button" class="nav-button nav-btn-right" onclick="FS()">
+          <i class="fa-solid fa-expand"></i>
+        </button>
+        <button title="Window Popout" id="popout-button" class="nav-button nav-btn-right" onclick="popout()">
+          <i class="fa-solid fa-up-right-from-square"></i>
+        </button>
+        <button title="Inspect" class="nav-button nav-btn-right" onclick="eToggle()">
+          <i class="fa-solid fa-code"></i>
+        </button>
+        <button title="Tabs" id="tabs-button" class="nav-button nav-btn-right">
+          <i class="fa-solid fa-magnifying-glass-minus"></i>
+        </button>
       </div>
     </div>
-    <div class="frame-container" id="frame-container"></div>
-    <script src="assets/js/t.js?v=03"></script>
-    <script src="./assets/ultra/bundle.js?v=10-02-2024"></script>
-    <script src="./assets/ultra/config.js?v=10-02-2024"></script>
-    <script src="/assets/js/mv.js?v=003"></script>
-    <!-- DO NOT REMOVE-->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
+  </div>
+  <div class="frame-container" id="frame-container"></div>
+  <script src="assets/js/007.js?v=000"></script>
+  <script src="./assets/mathematics/bundle.js?v=2025-04-15"></script>
+  <script src="./assets/mathematics/config.js?v=2025-04-15"></script>
+  <script src="/assets/js/001.js?v=001"></script>
+  <!-- DO NOT REMOVE-->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
 
-      gtag("config", "G-WKJQ5QHQTJ");
-    </script>
-    <!-- DO NOT REMOVE-->
-  </body>
+    gtag("config", "G-WKJQ5QHQTJ");
+  </script>
+  <!-- DO NOT REMOVE-->
+</body>
+
 </html>

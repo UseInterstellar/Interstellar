@@ -2,8 +2,8 @@
   "$schema": "https://biomejs.dev/schemas/1.8.2/schema.json",
   "files": {
     "ignore": [
-      "static/assets/dyn/**",
-      "static/assets/ultra/**",
+      "static/assets/history/**",
+      "static/assets/mathematics/**",
       "static/assets/json/*.min.json",
       "Masqr.js",
       "node_modules/**",
@@ -12,7 +12,7 @@
       "*.md",
       "bun.lockb",
       "Failed.html",
-      "static/assets/js/f.js"
+      "static/assets/js/003.js"
     ]
   },
   "organizeImports": {

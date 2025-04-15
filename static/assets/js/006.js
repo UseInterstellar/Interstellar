@@ -1,4 +1,5 @@
 // Ads
+// settings.js
 document.addEventListener("DOMContentLoaded", () => {
   function adChange(selectedValue) {
     if (selectedValue === "default") {

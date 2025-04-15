@@ -5,7 +5,7 @@ self.__dynamic$config = {
 	logLevel: 0,
 	bare: {
 		version: 2,
-		path: "/fq/",
+		path: "/ca/",
 	},
 	tab: {
 		title: null,
@@ -13,12 +13,12 @@ self.__dynamic$config = {
 		ua: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.3",
 	},
 	assets: {
-		prefix: "/assets/dyn/",
+		prefix: "/assets/history/",
 		files: {
-			handler: "handler.js?v=10-02-2024",
+			handler: "handler.js?v=2025-04-15",
 			client: "client.js?v=12",
 			worker: "worker.js?v=12",
-			config: "config.js?v=10-02-2024",
+			config: "config.js?v=2025-04-15",
 			inject: "",
 		},
 	},

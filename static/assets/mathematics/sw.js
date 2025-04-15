@@ -1,9 +1,9 @@
-importScripts("/assets/ultra/bundle.js?v=9-30-2024"),
-  importScripts("/assets/ultra/config.js?v=9-30-2024");
+importScripts("/assets/mathematics/bundle.js?v=9-30-2024"),
+  importScripts("/assets/mathematics/config.js?v=9-30-2024");
 class UVServiceWorker extends EventEmitter {
   constructor(e = __uv$config) {
     super(),
-      e.bare || (e.bare = "/fq/"),
+      e.bare || (e.bare = "/ca/"),
       (this.addresses =
         "string" == typeof e.bare
           ? [new URL(e.bare, location)]
