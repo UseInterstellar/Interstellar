@@ -133,6 +133,24 @@ If you encounter problems, open an issue on GitHub, and we'll address it promptl
 > [!TIP]
 > If you're having trouble, don't hesitate to reach out to us on [Discord](https://discord.gg/interstellar) for personalized support.
 
+## Installer Proxy
+
+This repository now ships with an optional Python based **installer proxy**. It
+can log and filter commands such as `pip`, `curl` and `apt` before forwarding
+them to the real system installer. Logs are stored in a SQLite database and can
+be viewed using a lightweight Flask dashboard.
+
+```bash
+# run a command via the proxy
+python installer_proxy.py pip install requests
+
+# start the log dashboard (http://localhost:5000 by default)
+python dashboard.py
+```
+
+You can customise whitelists, blacklists and mirrors using environment
+variables; see the source of `installer_proxy.py` for details.
+
 # Credits
 
 A huge thanks goes out to all of the people who have contributed to Interstellar.
