@@ -1,7 +1,7 @@
 <div align="center">
     <img src="https://raw.githubusercontent.com/UseInterstellar/Interstellar/main/.github/branding/in.png">
     <p>Serving over 8+ million users since 2023.<p>
-    <p>Interstellar is a web proxy with a Clean and Sleek UI and easy to use menus. Our goal is to provide the best user experience to everyone.</p>
+    <p>Starlancer is a web proxy with a Clean and Sleek UI and easy to use menus. Our goal is to provide the best user experience to everyone.</p>
 </div>
 
 ![inpreview](https://github.com/UseInterstellar/Interstellar/assets/89202835/2669efed-5186-4932-83c4-725acae60bd2)
@@ -95,7 +95,7 @@ git pull --force --allow-unrelated-histories # This may overwrite your local cha
 
 ### Deployment Alternatives
 
-For more deployment options, join our [Discord Server](https://discord.gg/interstellar) for various ways to deploy Interstellar.
+For more deployment options, join our [Discord Server](https://discord.gg/interstellar) for various ways to deploy Starlancer.
 This includes methods of deploying to Render/OnRender.
 
 #### What happened to Replit Deployment?
@@ -125,7 +125,7 @@ As of January 1st, 2024, Replit is [no longer free](https://blog.replit.com/host
 4. Right-click Visibility and set Port Visibility to Public.
 
 > [!NOTE]
-> We are committed to making Interstellar easy and personalized however, as of now we need your support in making it ad-free. Consider keeping ads so Interstellar can run freely or contribute by being a supporter.
+> We are committed to making Starlancer easy and personalized however, as of now we need your support in making it ad-free. Consider keeping ads so Starlancer can run freely or contribute by being a supporter.
 
 ## Report Issues
 
@@ -136,6 +136,6 @@ If you encounter problems, open an issue on GitHub, and we'll address it promptl
 
 # Credits
 
-A huge thanks goes out to all of the people who have contributed to Interstellar.
+A huge thanks goes out to all of the people who have contributed to Starlancer.
 
 [![Contributors](https://contrib.rocks/image?repo=UseInterstellar/Interstellar)](https://github.com/UseInterstellar/Interstellar/graphs/contributors)
