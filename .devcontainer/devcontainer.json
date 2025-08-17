@@ -1,0 +1,29 @@
+{
+  "name": "Interstellar Dev",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20",
+      "pnpm": "true"
+    }
+  },
+  "forwardPorts": [8080],
+  "portsAttributes": {
+    "8080": {
+      "label": "Interstellar",
+      "onAutoForward": "openBrowser"
+    }
+  },
+  "postCreateCommand": "pnpm install",
+  "postStartCommand": "pnpm start",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "task.allowAutomaticTasks": "on",
+        "terminal.integrated.defaultProfile.linux": "bash"
+      },
+      "extensions": [
+        "biomejs.biome"
+      ]
+    }
+  }
+}

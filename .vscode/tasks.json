@@ -1,0 +1,13 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start Interstellar",
+      "type": "shell",
+      "command": "pnpm start",
+  "isBackground": true,
+  "runOptions": { "runOn": "folderOpen" },
+  "problemMatcher": []
+    }
+  ]
+}
