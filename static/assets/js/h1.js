@@ -7,17 +7,11 @@ try {
   inFrame = true;
 }
 if (!localStorage.getItem("ab")) localStorage.setItem("ab", true);
-if (
-  !inFrame &&
-  !navigator.userAgent.includes("Firefox") &&
-  localStorage.getItem("ab") === "true"
-) {
+if (!inFrame && !navigator.userAgent.includes("Firefox") && localStorage.getItem("ab") === "true") {
   const popup = open("about:blank", "_blank");
   setTimeout(() => {
     if (!popup || popup.closed) {
-      alert(
-        "Please allow popups for this site. Doing so will allow us to open the site in a about:blank tab and preventing this site from showing up in your history. You can turn this off in the site settings.",
-      );
+      alert("Please allow popups for this site. Doing so will allow us to open the site in a about:blank tab and preventing this site from showing up in your history. You can turn this off in the site settings.");
     } else {
       const doc = popup.document;
       const iframe = doc.createElement("iframe");
@@ -25,9 +19,7 @@ if (
       const link = doc.createElement("link");
 
       const name = localStorage.getItem("name") || "My Drive - Google Drive";
-      const icon =
-        localStorage.getItem("icon") ||
-        "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png";
+      const icon = localStorage.getItem("icon") || "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png";
 
       doc.title = name;
       link.rel = "icon";

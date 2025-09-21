@@ -71,19 +71,11 @@ function handleClick(app) {
 }
 
 function getSelected(links) {
-  const options = links
-    .map((link, index) => `${index + 1}: ${link.name}`)
-    .join("\n");
-  const choice = prompt(
-    `Select a link by entering the corresponding number:\n${options}`,
-  );
+  const options = links.map((link, index) => `${index + 1}: ${link.name}`).join("\n");
+  const choice = prompt(`Select a link by entering the corresponding number:\n${options}`);
   const selectedIndex = Number.parseInt(choice, 10) - 1;
 
-  if (
-    Number.isNaN(selectedIndex) ||
-    selectedIndex < 0 ||
-    selectedIndex >= links.length
-  ) {
+  if (Number.isNaN(selectedIndex) || selectedIndex < 0 || selectedIndex >= links.length) {
     alert("Invalid selection. Please try again.");
     return null;
   }
@@ -283,10 +275,7 @@ fetch(path)
     for (const app of appsList) {
       if (app.categories?.includes("local")) {
         app.local = true;
-      } else if (
-        app.link &&
-        (app.link.includes("now.gg") || app.link.includes("nowgg.me"))
-      ) {
+      } else if (app.link && (app.link.includes("now.gg") || app.link.includes("nowgg.me"))) {
         if (app.partial === null || app.partial === undefined) {
           app.partial = true;
           app.say = "Now.gg is currently not working for some users.";
@@ -358,8 +347,7 @@ fetch(path)
       } else if (app.partial) {
         paragraph.style.color = "yellow";
         if (!app.say) {
-          app.say =
-            "This app is currently experiencing some issues, it may not work for you. (Dynamic doesn't work in about:blank)";
+          app.say = "This app is currently experiencing some issues, it may not work for you. (Dynamic doesn't work in about:blank)";
         }
       }
 
@@ -392,18 +380,13 @@ fetch(path)
   });
 
 function category() {
-  const selectedCategories = Array.from(
-    document.querySelectorAll("#category option:checked"),
-  ).map(option => option.value);
+  const selectedCategories = Array.from(document.querySelectorAll("#category option:checked")).map(option => option.value);
   const g = document.getElementsByClassName("column");
 
   for (const game of g) {
     const categories = game.getAttribute("data-category").split(" ");
 
-    if (
-      selectedCategories.length === 0 ||
-      selectedCategories.some(category => categories.includes(category))
-    ) {
+    if (selectedCategories.length === 0 || selectedCategories.some(category => categories.includes(category))) {
       game.style.display = "block";
     } else {
       game.style.display = "none";

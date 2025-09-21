@@ -66,10 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const storedP = localStorage.getItem("uv");
     if (storedP === "true") {
       pChangeElement.value = "uv";
-    } else if (
-      localStorage.getItem("dy") === "true" ||
-      localStorage.getItem("dy") === "auto"
-    ) {
+    } else if (localStorage.getItem("dy") === "true" || localStorage.getItem("dy") === "auto") {
       pChangeElement.value = "dy";
     } else {
       pChangeElement.value = "uv";
@@ -114,9 +111,7 @@ function saveEventKey() {
 const dropdown = document.getElementById("dropdown");
 const options = dropdown.getElementsByTagName("option");
 
-const sortedOptions = Array.from(options).sort((a, b) =>
-  a.textContent.localeCompare(b.textContent),
-);
+const sortedOptions = Array.from(options).sort((a, b) => a.textContent.localeCompare(b.textContent));
 
 while (dropdown.firstChild) {
   dropdown.removeChild(dropdown.firstChild);
@@ -270,9 +265,7 @@ function AB() {
       const link = doc.createElement("link");
 
       const name = localStorage.getItem("name") || "My Drive - Google Drive";
-      const icon =
-        localStorage.getItem("icon") ||
-        "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png";
+      const icon = localStorage.getItem("icon") || "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png";
 
       doc.title = name;
       link.rel = "icon";
@@ -430,9 +423,7 @@ function importSaveData() {
           });
         }
         alert("Your save data has been imported. Please test it out.");
-        alert(
-          "If you find any issues then report it in GitHub or the Interstellar Discord.",
-        );
+        alert("If you find any issues then report it in GitHub or the Interstellar Discord.");
       } catch (error) {
         console.error("Error parsing JSON file:", error);
       }
