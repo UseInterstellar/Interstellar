@@ -1,4 +1,4 @@
-// i.js
+// index.js
 window.addEventListener("load", () => {
   navigator.serviceWorker.register("../sw.js?v=2025-04-15", {
     scope: "/a/",
