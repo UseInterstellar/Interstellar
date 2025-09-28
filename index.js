@@ -5,11 +5,18 @@ import { createBareServer } from '@tomphttp/bare-server-node'
 import path from 'node:path'
 import cors from 'cors'
 import config from './config.js'
+import NodeCache from 'node-cache'
+import compression from 'compression'
+
 const __dirname = process.cwd()
 const server = http.createServer()
+const assetCache = new NodeCache({ stdTTL: 300 }) // Cache assets for 5 minutes
 const app = express(server)
 const bareServer = createBareServer('/o/')
 const PORT = process.env.PORT || 8080
+
+app.use(compression()) // Enable response compression
+
 if (config.challenge) {
   console.log('Password protection is enabled. Usernames are: ' + Object.keys(config.users))
   console.log('Passwords are: ' + Object.values(config.users))
@@ -45,32 +52,32 @@ if (config.routes !== false) {
 
 if (config.local !== false) {
   app.get('/e/*', (req, res, next) => {
+    const assetPath = req.params[0]
+    const cachedData = assetCache.get(assetPath)
+    if (cachedData) {
+      return res.end(Buffer.from(cachedData))
+    }
     fetchData(req, res, next, config.baseUrls)
   })
 }
 
 const fetchData = async (req, res, next, baseUrls) => {
+  const assetPath = req.params[0]
   try {
-    const reqTarget = baseUrls.map((baseUrl) => `${baseUrl}/${req.params[0]}`)
-    let data
-    let asset
+    const fetchPromises = baseUrls.map((baseUrl) =>
+      fetch(`${baseUrl}/${assetPath}`).then((response) => {
+        if (!response.ok) throw new Error(`Failed with status ${response.status}`)
+        return response.arrayBuffer()
+      }),
+    )
 
-    for (const target of reqTarget) {
-      asset = await fetch(target)
-      if (asset.ok) {
-        data = await asset.arrayBuffer()
-        break
-      }
-    }
-
-    if (data) {
-      res.end(Buffer.from(data))
-    } else {
-      next()
-    }
+    const data = await Promise.any(fetchPromises)
+    const buffer = Buffer.from(data)
+    assetCache.set(assetPath, buffer)
+    res.end(buffer)
   } catch (error) {
-    console.error('Error fetching:', error)
-    next(error)
+    console.error('Error fetching asset. All sources failed:', error instanceof AggregateError ? error.errors : error)
+    next()
   }
 }
 

@@ -14,9 +14,11 @@
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "@tomphttp/bare-server-node": "2.0.3",
+    "compression": "^1.8.1",
     "cors": "^2.8.5",
     "express": "^4.19.2",
-    "express-basic-auth": "^1.2.1"
+    "express-basic-auth": "^1.2.1",
+    "node-cache": "^5.1.2"
   },
   "devDependencies": {
     "prettier": "3.2.5"
