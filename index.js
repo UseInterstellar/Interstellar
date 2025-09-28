@@ -45,12 +45,7 @@ if (config.routes !== false) {
 
 if (config.local !== false) {
   app.get('/e/*', (req, res, next) => {
-    const baseUrls = [
-      'https://raw.githubusercontent.com/v-5x/x/fixy',
-      'https://raw.githubusercontent.com/ypxa/y/main',
-      'https://raw.githubusercontent.com/ypxa/w/master',
-    ]
-    fetchData(req, res, next, baseUrls)
+    fetchData(req, res, next, config.baseUrls)
   })
 }
 
