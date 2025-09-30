@@ -29,7 +29,7 @@ jobs:
             git checkout -b Ad-Free origin/main
           fi
 
-      - name: Remove ad script block from m.js
+      - name: Remove ad script block from m1.js
         run: |
           sed -i '/const blockedHostnames/,/document.body.appendChild(script);/d' static/assets/js/m1.js
 
@@ -38,8 +38,8 @@ jobs:
           if git diff --quiet; then
             echo "No changes detected"
           else
-            git add static/assets/js/m.js
-            git commit -m "Remove ad injection block from m.js"
+            git add static/assets/js/m1.js
+            git commit -m "Remove ad injection block from m1.js"
           fi
 
       - name: Push changes
