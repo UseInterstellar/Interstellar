@@ -31,7 +31,7 @@ jobs:
 
       - name: Remove ad script block from m1.js
         run: |
-          sed -i '/const blockedHostnames/,/document.body.appendChild(script);/d' static/assets/js/m1.js
+          sed -i '/const blockedHostnames/,/^\s*}\s*$/d' static/assets/js/m1.js
 
       - name: Commit changes
         run: |
