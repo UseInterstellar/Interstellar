@@ -18,7 +18,7 @@ try {
 }
 
 const form = document.getElementById("fv");
-const input = document.getElementById("iv");
+const input = document.getElementById("input");
 
 if (form && input) {
   form.addEventListener("submit", async event => {

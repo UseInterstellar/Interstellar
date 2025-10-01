@@ -43,7 +43,7 @@
    align-items: center;
 }
 
-.search-home {
+.truncate {
    width: 50vw;
    height: 5vh;
    font-family: "Poppins", sans-serif;
