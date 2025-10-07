@@ -105,7 +105,7 @@ function saveEventKey() {
   localStorage.setItem("eventKey", JSON.stringify(eventKey));
   localStorage.setItem("pLink", pLink);
   localStorage.setItem("eventKeyRaw", eventKeyRaw);
-  // biome-ignore lint/correctness/noSelfAssign:
+  // biome-ignore lint: idk
   window.location = window.location;
 }
 const dropdown = document.getElementById("dropdown");
@@ -157,7 +157,7 @@ function ResetCustomCloak() {
 
 function redirectToMainDomain() {
   const currentUrl = window.location.href;
-  const mainDomainUrl = currentUrl.replace(/\/[^\/]*$/, "");
+  const mainDomainUrl = currentUrl.replace(/\/[^/]*$/, "");
   const target = mainDomainUrl + window.location.pathname;
   if (window !== top) {
     try {
@@ -379,7 +379,7 @@ function exportSaveData() {
   function getLocalStorage() {
     const localStorageObj = {};
     for (const key in localStorage) {
-      if (localStorage.hasOwnProperty(key)) {
+      if (Object.hasOwn(localStorage, key)) {
         localStorageObj[key] = localStorage.getItem(key);
       }
     }

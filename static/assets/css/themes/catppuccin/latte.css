@@ -4,8 +4,6 @@
    --background: #1e1e2e;
    --background-input: var(--ctp-latte-mantle) /*mantle*/;
    --background-dark: #11111b /*crust*/;
-
-   --text-primary: var(--ctp-latte-blue) /*blue*/;
    --background-settings: var(--ctp-latte-surface0) /*surface0*/;
    --background-settings-buttons: var(--ctp-latte-surface1) /*surface1*/;
    --input: var(--ctp-latte-surface0) /*surface0*/;
