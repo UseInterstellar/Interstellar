@@ -129,7 +129,6 @@ input {
    transition: 0.2s;
    margin-top: 10px;
    background-color: var(--background-buttons);
-   padding: 0.5rem;
    border-radius: 10px;
    color: var(--text-primary);
    height: 50px;
@@ -144,7 +143,6 @@ button {
    transition: 0.2s;
    margin-top: 10px;
    background-color: var(--background-buttons);
-   padding: 0.5rem;
    border-radius: 10px;
    color: var(--text-primary);
    height: 50px;

@@ -8,8 +8,8 @@
   },
   "scripts": {
     "start": "node index.js",
-    "format": "biome format --write .",
-    "precommit": "pnpm run format && biome check --write .",
+    "format": "pnpm biome format --write .",
+    "precommit": "pnpm run format && pnpm biome check --write .",
     "lint": "biome lint --write ."
   },
   "author": "InterstellarNetwork",

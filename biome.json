@@ -1,7 +1,7 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.2.2/schema.json",
   "files": {
-    "includes": ["**", "!**/static/assets/history/**", "!**/static/assets/mathematics/**", "!**/static/assets/json/**/*.min.json", "!**/Masqr.js", "!**/node_modules/**", "!**/package-lock.json", "!**/package.json", "!**/*.md", "!**/bun.lockb", "!**/Failed.html"]
+    "includes": ["**", "!**/static/assets/history", "!**/static/assets/mathematics", "!**/static/assets/json/**/*.min.json", "!**/Masqr.js", "!**/node_modules", "!**/package-lock.json", "!**/package.json", "!**/*.md", "!**/bun.lockb", "!**/Failed.html"]
   },
   "assist": { "actions": { "source": { "organizeImports": "on" } } },
   "linter": {

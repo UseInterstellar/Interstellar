@@ -132,7 +132,6 @@ body {
 }
 
 .bar {
-   height: 20px;
    background: none;
    border: none;
    color: var(--text-primary);

@@ -7,7 +7,7 @@ window.addEventListener("load", () => {
     form.addEventListener("submit", async event => {
       event.preventDefault();
       const formValue = input.value.trim();
-      const url = isUrl(formValue) ? prependHttps(formValue) : `https://www.google.com/search?q=${formValue}`;
+      const url = isUrl(formValue) ? prependHttps(formValue) : `https://duckduckgo.com/?q=${formValue}`;
       processUrl(url);
     });
   }
@@ -199,7 +199,7 @@ document.addEventListener("DOMContentLoaded", event => {
 function reload() {
   const activeIframe = document.querySelector("#frame-container iframe.active");
   if (activeIframe) {
-    // biome-ignore lint/correctness/noSelfAssign:
+    // biome-ignore lint: idk
     activeIframe.src = activeIframe.src;
     Load();
   } else {
