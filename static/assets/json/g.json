@@ -1947,5 +1947,11 @@
     "link": "https://emulator-games.pages.dev/nes/Super Mario Bros. 3",
     "image": "/assets/media/icons/emulator/smb3.webp",
     "categories": ["all", "emu"]
+  },
+  {
+    "name": "Traffic Rider",
+    "link": "https://traffic-rider.co/",
+    "image": "/assets/media/icons/mx3m.webp",
+    "categories": ["all"]
   }
 ]
