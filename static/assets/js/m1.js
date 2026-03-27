@@ -165,6 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     IXL: { name: "IXL | Dashboard", icon: "/assets/media/favicon/ixl.png" },
     Canvas: { name: "Dashboard", icon: "/assets/media/favicon/canvas.png" },
+    CodeHS: { name: "Sandbox | CodeHS", icon: "/assets/media/favicon/codehs.png" },
     LinkIt: { name: "Test Taker", icon: "/assets/media/favicon/linkit.ico" },
     Edpuzzle: { name: "Edpuzzle", icon: "/assets/media/favicon/edpuzzle.png" },
     "i-Ready Math": {
