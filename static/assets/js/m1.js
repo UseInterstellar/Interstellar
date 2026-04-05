@@ -43,11 +43,6 @@ document.addEventListener("DOMContentLoaded", () => {
     nav.innerHTML = html;
   }
 
-  // LocalStorage Setup for 'dy'
-  if (localStorage.getItem("dy") === null || localStorage.getItem("dy") === undefined) {
-    localStorage.setItem("dy", "false");
-  }
-
   // Theme Logic
   const themeid = localStorage.getItem("theme");
   const themeEle = document.createElement("link");
