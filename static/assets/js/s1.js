@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
       pChange(selectedOption);
     });
 
-    const choice = localStorage.getItem("pchoice") || "uv";
+    const choice = localStorage.getItem("pchoice") || "sj";
     if (choice === "sj") {
       pChangeElement.value = "sj";
     } else if (choice === "dy") {
