@@ -92,12 +92,6 @@
     "categories": ["all", "social"]
   },
   {
-    "name": "DuckDuckGo",
-    "link": "https://start.duckduckgo.com/",
-    "image": "/assets/media/icons/duckduckgo.webp",
-    "categories": ["all"]
-  },
-  {
     "name": "ESPN",
     "link": "https://www.espn.com/watch/",
     "image": "/assets/media/icons/espn.webp",
