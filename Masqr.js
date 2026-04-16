@@ -63,9 +63,11 @@ async function MasqFail(req, res) {
   if (!req.headers.host) {
     return
   }
+  if (!/^[a-zA-Z0-9.\-:]+$/.test(req.headers.host)) {
+    return
+  }
   const unsafeSuffix = req.headers.host + ".html"
-  const safeSuffix = path.normalize(unsafeSuffix).replace(/^(\.\.(\/|\\|$))+/, "")
-  const safeJoin = path.join(process.cwd() + "/Masqrd", safeSuffix)
+  const safeJoin = path.join(process.cwd(), "Masqrd", path.basename(unsafeSuffix))
   try {
     await fs.promises.access(safeJoin)
     const FailLocal = await fs.promises.readFile(safeJoin, "utf8")

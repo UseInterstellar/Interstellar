@@ -1,10 +1,10 @@
 import fs from "node:fs";
 import http from "node:http";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { createBareServer } from "@nebula-services/bare-server-node";
 import chalk from "chalk";
 import cookieParser from "cookie-parser";
-import cors from "cors";
 import express from "express";
 import basicAuth from "express-basic-auth";
 import mime from "mime";
@@ -14,7 +14,7 @@ import config from "./config.js";
 
 console.log(chalk.yellow("🚀 Starting server..."));
 
-const __dirname = process.cwd();
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const server = http.createServer();
 const app = express();
 const bareServer = createBareServer("/ca/");
@@ -69,7 +69,7 @@ app.get("/e/*", async (req, res, next) => {
     const data = Buffer.from(await asset.arrayBuffer());
     const ext = path.extname(reqTarget);
     const no = [".unityweb"];
-    const contentType = no.includes(ext) ? "application/octet-stream" : mime.getType(ext);
+    const contentType = no.includes(ext) ? "application/octet-stream" : (mime.getType(ext) ?? "application/octet-stream");
 
     cache.set(req.path, { data, contentType, timestamp: Date.now() });
     res.writeHead(200, { "Content-Type": contentType });
@@ -91,7 +91,6 @@ app.use(express.urlencoded({ extended: true }));
 } */
 
 app.use(express.static(path.join(__dirname, "static")));
-app.use("/ca", cors({ origin: true }));
 
 const routes = [
   { path: "/b", file: "apps.html" },
@@ -115,11 +114,25 @@ app.use((req, res, next) => {
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).sendFile(path.join(__dirname, "static", "404.html"));
+  res.status(500).sendFile(path.join(__dirname, "static", "500.html"));
 });
 
 server.on("request", (req, res) => {
   if (bareServer.shouldRoute(req)) {
+    const origin = req.headers.origin;
+    if (typeof origin === "string" && origin.length > 0) {
+      res.setHeader("Access-Control-Allow-Origin", origin);
+      res.setHeader("Vary", "Origin");
+    } else {
+      res.setHeader("Access-Control-Allow-Origin", "*");
+    }
+    res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    if (req.method === "OPTIONS") {
+      res.statusCode = 204;
+      res.end();
+      return;
+    }
     bareServer.routeRequest(req, res);
   } else {
     app(req, res);
