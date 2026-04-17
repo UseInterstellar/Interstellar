@@ -15,7 +15,7 @@
 
 - About:Blank Cloaking
 - Tab Cloaking
-- Wide collection of apps & games
+- Wide collection 0f apps & games
 - Clean, Easy to use UI
 - Inspect Element
 - Various Themes
