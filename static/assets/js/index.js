@@ -1,4 +1,3 @@
-// index.js
 window.addEventListener("load", () => {
   navigator.serviceWorker.register("../sw.js", {
     scope: "/uv/",
@@ -8,10 +7,10 @@ window.addEventListener("load", () => {
 let xl;
 
 try {
-  xl = window.top.location.pathname === "/d";
+  xl = window.top.location.pathname === "/tabs";
 } catch {
   try {
-    xl = window.parent.location.pathname === "/d";
+    xl = window.parent.location.pathname === "/tabs";
   } catch {
     xl = false;
   }
@@ -25,9 +24,9 @@ if (form && input) {
     event.preventDefault();
     try {
       if (xl) await processUrl(input.value, "");
-      else await processUrl(input.value, "/d");
+      else await processUrl(input.value, "/tabs");
     } catch {
-      await processUrl(input.value, "/d");
+      await processUrl(input.value, "/tabs");
     }
   });
 }
@@ -74,7 +73,7 @@ async function processUrl(value, path) {
 }
 
 function go(value) {
-  processUrl(value, "/d");
+  processUrl(value, "/tabs");
 }
 
 function blank(value) {

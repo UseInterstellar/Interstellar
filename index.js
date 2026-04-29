@@ -120,11 +120,11 @@ app.use("/bm", express.static(baremuxPath, transportStaticOptions));
 app.use("/ep", express.static(epoxyDistPath, transportStaticOptions));
 
 const routes = [
-  { path: "/b", file: "apps.html" },
-  { path: "/a", file: "games.html" },
+  { path: "/apps", file: "apps.html" },
+  { path: "/games", file: "games.html" },
   { path: "/play.html", file: "games.html" },
-  { path: "/c", file: "settings.html" },
-  { path: "/d", file: "tabs.html" },
+  { path: "/settings", file: "settings.html" },
+  { path: "/tabs", file: "tabs.html" },
   { path: "/", file: "index.html" },
 ];
 

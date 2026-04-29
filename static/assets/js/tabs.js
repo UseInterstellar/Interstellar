@@ -1,4 +1,3 @@
-// tabs.js
 window.addEventListener("load", () => {
   navigator.serviceWorker.register("../sw.js", { scope: "/uv/" });
   const form = document.getElementById("fv");

@@ -1,15 +1,15 @@
 let appInd;
-const g = window.location.pathname === "/a";
-const a = window.location.pathname === "/b";
+const g = window.location.pathname === "/games";
+const a = window.location.pathname === "/apps";
 const c = window.location.pathname === "/gt";
 
 let t;
 
 try {
-  t = window.top.location.pathname === "/d";
+  t = window.top.location.pathname === "/tabs";
 } catch {
   try {
-    t = window.parent.location.pathname === "/d";
+    t = window.parent.location.pathname === "/tabs";
   } catch {
     t = false;
   }
