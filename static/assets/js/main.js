@@ -47,12 +47,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const themeEle = document.createElement("link");
   themeEle.rel = "stylesheet";
   const themes = {
-    catppuccinMocha: "/assets/css/themes/catppuccin/mocha.css?v=00",
-    catppuccinMacchiato: "/assets/css/themes/catppuccin/macchiato.css?v=00",
-    catppuccinFrappe: "/assets/css/themes/catppuccin/frappe.css?v=00",
-    catppuccinLatte: "/assets/css/themes/catppuccin/latte.css?v=00",
-    Inverted: "/assets/css/themes/colors/inverted.css?v=00",
-    sky: "/assets/css/themes/colors/sky.css?v=00",
+    catppuccinMocha: "/assets/css/themes/catppuccin/mocha.css",
+    catppuccinMacchiato: "/assets/css/themes/catppuccin/macchiato.css",
+    catppuccinFrappe: "/assets/css/themes/catppuccin/frappe.css",
+    catppuccinLatte: "/assets/css/themes/catppuccin/latte.css",
+    Inverted: "/assets/css/themes/colors/inverted.css",
+    sky: "/assets/css/themes/colors/sky.css",
   };
 
   if (themes[themeid]) {
