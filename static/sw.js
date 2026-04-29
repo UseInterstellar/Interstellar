@@ -1,9 +1,9 @@
-importScripts("/assets/history/config.js?v=2025-04-15");
-importScripts("/assets/history/worker.js?v=2025-04-15");
-importScripts("/assets/mathematics/bundle.js?v=2025-04-15");
-importScripts("/assets/mathematics/config.js?v=2025-04-15");
-importScripts(__uv$config.sw || "/assets/mathematics/sw.js?v=2025-04-15");
-importScripts("/assets/languagearts/sj.all.js?v=2025-04-15");
+importScripts("/assets/dynamic/config.js");
+importScripts("/assets/dynamic/worker.js");
+importScripts("/assets/ultraviolet/bundle.js");
+importScripts("/assets/ultraviolet/config.js");
+importScripts(__uv$config.sw || "/assets/ultraviolet/sw.js");
+importScripts("/assets/scramjet/sj.all.js");
 const { ScramjetServiceWorker } = $scramjetLoadWorker();
 
 const uv = new UVServiceWorker();
@@ -26,7 +26,7 @@ self.addEventListener("fetch", event => {
         return await dynamic.fetch(event);
       }
 
-      if (event.request.url.startsWith(`${location.origin}/a/`)) {
+      if (event.request.url.startsWith(`${location.origin}/uv/`)) {
         return await uv.fetch(event);
       }
 

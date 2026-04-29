@@ -1,7 +1,7 @@
 // index.js
 window.addEventListener("load", () => {
-  navigator.serviceWorker.register("../sw.js?v=2025-04-15", {
-    scope: "/a/",
+  navigator.serviceWorker.register("../sw.js", {
+    scope: "/uv/",
   });
 });
 
@@ -46,7 +46,7 @@ async function getPxyUrl(url) {
     }
   }
 
-  return `/a/${__uv$config.encodeUrl(url)}`;
+  return `/uv/${__uv$config.encodeUrl(url)}`;
 }
 
 async function processUrl(value, path) {
@@ -65,7 +65,7 @@ async function processUrl(value, path) {
   const pchoice = localStorage.getItem("pchoice");
 
   if (pchoice === "dy") {
-    window.location.href = `/a/q/${__uv$config.encodeUrl(url)}`;
+    window.location.href = `/uv/dynamic/${__uv$config.encodeUrl(url)}`;
   } else if (path) {
     location.href = path;
   } else {
@@ -82,7 +82,7 @@ function blank(value) {
 }
 
 function dy(value) {
-  processUrl(value, `/a/q/${__uv$config.encodeUrl(value)}`);
+  processUrl(value, `/uv/dynamic/${__uv$config.encodeUrl(value)}`);
 }
 
 function isUrl(val = "") {

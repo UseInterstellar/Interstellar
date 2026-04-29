@@ -6,11 +6,11 @@
   window.__isSjTpReady = true;
 
   const sjConfig = {
-    prefix: "/a/sj/",
+    prefix: "/uv/scramjet/",
     files: {
-      wasm: "/assets/languagearts/sj.wasm.wasm",
-      all: "/assets/languagearts/sj.all.js",
-      sync: "/assets/languagearts/sj.sync.js",
+      wasm: "/assets/scramjet/sj.wasm.wasm",
+      all: "/assets/scramjet/sj.all.js",
+      sync: "/assets/scramjet/sj.sync.js",
     },
     flags: {
       rewriterLogs: false,

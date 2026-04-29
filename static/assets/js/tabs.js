@@ -1,6 +1,6 @@
 // tabs.js
 window.addEventListener("load", () => {
-  navigator.serviceWorker.register("../sw.js?v=2025-04-15", { scope: "/a/" });
+  navigator.serviceWorker.register("../sw.js", { scope: "/uv/" });
   const form = document.getElementById("fv");
   const input = document.getElementById("input");
   if (form && input) {
@@ -27,7 +27,7 @@ window.addEventListener("load", () => {
       }
     }
 
-    return `/a/${__uv$config.encodeUrl(url)}`;
+    return `/uv/${__uv$config.encodeUrl(url)}`;
   }
 
   function getPxyUrlSync(url) {
@@ -35,7 +35,7 @@ window.addEventListener("load", () => {
       return window.__isSj.encodeUrl(url);
     }
 
-    return `/a/${__uv$config.encodeUrl(url)}`;
+    return `/uv/${__uv$config.encodeUrl(url)}`;
   }
 
   async function processUrl(url) {
@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", event => {
       newIframe.contentWindow.open = url => {
         const pxyUrl = window.__isGetPxyUrl
           ? window.__isGetPxyUrl(url)
-          : `/a/${__uv$config.encodeUrl(url)}`;
+          : `/uv/${__uv$config.encodeUrl(url)}`;
         sessionStorage.setItem("URL", pxyUrl);
         createNewTab();
         return null;
@@ -391,7 +391,7 @@ function Load() {
   const activeIframe = document.querySelector("#frame-container iframe.active");
   if (activeIframe && activeIframe.contentWindow.document.readyState === "complete") {
     const website = activeIframe.contentWindow.document.location.href;
-    if (website.includes("/a/sj/")) {
+    if (website.includes("/uv/scramjet/")) {
       if (window.__isSj?.decodeUrl) {
         const decodedValue = window.__isSj.decodeUrl(website);
         localStorage.setItem("decoded", decodedValue);
@@ -399,13 +399,13 @@ function Load() {
       } else {
         document.getElementById("input").value = website;
       }
-    } else if (website.includes("/a/q/")) {
-      const websitePath = website.replace(window.location.origin, "").replace("/a/q/", "");
+    } else if (website.includes("/uv/dynamic/")) {
+      const websitePath = website.replace(window.location.origin, "").replace("/uv/dynamic/", "");
       const decodedValue = decodeXor(websitePath);
       localStorage.setItem("decoded", websitePath);
       document.getElementById("input").value = decodedValue;
-    } else if (website.includes("/a/")) {
-      const websitePath = website.replace(window.location.origin, "").replace("/a/", "");
+    } else if (website.includes("/uv/")) {
+      const websitePath = website.replace(window.location.origin, "").replace("/uv/", "");
       localStorage.setItem("decoded", websitePath);
       const decodedValue = decodeXor(websitePath);
       document.getElementById("input").value = decodedValue;

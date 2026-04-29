@@ -19,7 +19,7 @@ console.log(chalk.yellow("🚀 Starting server..."));
 const __dirname = process.cwd();
 const server = http.createServer();
 const app = express();
-const bareServer = createBareServer("/ca/");
+const bareServer = createBareServer("/bare/");
 const { baremuxPath } = bareMuxNode;
 const epoxyDistPath = path.join(
   __dirname,
@@ -115,7 +115,7 @@ const transportStaticOptions = {
 };
 
 app.use(express.static(path.join(__dirname, "static")));
-app.use("/ca", cors({ origin: true }));
+app.use("/bare", cors({ origin: true }));
 app.use("/bm", express.static(baremuxPath, transportStaticOptions));
 app.use("/ep", express.static(epoxyDistPath, transportStaticOptions));
 
