@@ -1,21 +1,15 @@
 [
-  {
-    "name": "! Create Custom App",
-    "image": "/assets/media/icons/custom.webp",
-    "categories": ["all"],
-    "custom": "true"
-  },
-  {
-    "name": "! Interstellar FAQ/Docs",
-    "image": "/assets/media/icons/help_center_googlefonts.png",
-    "link": "https://docs.gointerstellar.app",
-    "categories": ["all"]
-  },
-  {
-    "name": "! [NEW] Request A Game",
+    {
+    "name": "Request A Game",
     "link": "https://forms.gle/vwdHN3iPz5cLaHaMA",
     "image": "/assets/media/icons/request.webp",
     "categories": ["all"]
+  },
+  {
+    "name": "Create Custom Game",
+    "image": "/assets/media/icons/custom.webp",
+    "categories": ["all"],
+    "custom": "true"
   },
   {
     "name": "Fancade",

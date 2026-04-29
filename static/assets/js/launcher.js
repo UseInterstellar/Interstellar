@@ -118,8 +118,8 @@ function createCustomApp() {
     saveCustomApp(customApp);
 
     const card = renderAppCard(customApp, 0, true);
-    const nonPinnedContainer = document.querySelector(".apps");
-    nonPinnedContainer.insertBefore(card, nonPinnedContainer.firstChild);
+    const pinnedContainer = document.querySelector(".pinned");
+    pinnedContainer.appendChild(card);
   }
 }
 
@@ -214,25 +214,11 @@ function renderAppCard(app, appIndex, isCustom = false) {
   link.appendChild(paragraph);
   columnDiv.appendChild(link);
 
-  if (appIndex !== 0) {
+  if (appIndex !== 0 && appIndex !== 1) {
     columnDiv.appendChild(createPinButton(appIndex));
   }
 
   return columnDiv;
-}
-
-function loadCustomApps() {
-  const storedApps = getFromStorage("custom");
-
-  if (storedApps) {
-    const apps = JSON.parse(storedApps);
-    const nonPinnedContainer = document.querySelector(".apps");
-
-    Object.values(apps).forEach(app => {
-      const card = renderAppCard(app, 0, true);
-      nonPinnedContainer.insertBefore(card, nonPinnedContainer.firstChild);
-    });
-  }
 }
 
 function getJsonPath() {
@@ -268,15 +254,25 @@ function loadAppsFromJson() {
   fetch(jsonPath)
     .then(response => response.json())
     .then(appsList => {
+      const nonPinnedContainer = document.querySelector(".apps");
+      const pinnedContainer = document.querySelector(".pinned");
+      const pinnedList = getPinnedApps();
+
+      const appsContainer = document.getElementById("apps-container");
+      if (appsContainer) {
+        appsContainer.appendChild(pinnedContainer);
+        appsContainer.appendChild(nonPinnedContainer);
+      }
+
+      const specialCards = appsList.splice(0, 2);
+
       appsList.sort((a, b) => {
         if (a.name.startsWith("[Custom]")) return -1;
         if (b.name.startsWith("[Custom]")) return 1;
         return a.name.localeCompare(b.name);
       });
 
-      const nonPinnedContainer = document.querySelector(".apps");
-      const pinnedContainer = document.querySelector(".pinned");
-      const pinnedList = getPinnedApps();
+      appsList.unshift(...specialCards);
 
       let appIndex = 0;
 
@@ -285,7 +281,9 @@ function loadAppsFromJson() {
 
         const card = renderAppCard(app, appIndex);
 
-        if (appIndex !== 0 && isAppPinned(appIndex, pinnedList)) {
+        if (appIndex === 0 || appIndex === 1) {
+          pinnedContainer.appendChild(card);
+        } else if (pinnedList != null && isAppPinned(appIndex, pinnedList)) {
           pinnedContainer.appendChild(card);
         } else {
           nonPinnedContainer.appendChild(card);
@@ -294,13 +292,25 @@ function loadAppsFromJson() {
         appIndex++;
       });
 
-      const appsContainer = document.getElementById("apps-container");
-      appsContainer.appendChild(pinnedContainer);
-      appsContainer.appendChild(nonPinnedContainer);
+      loadCustomAppsInline();
     })
     .catch(error => {
       console.error("Error fetching app data:", error);
     });
+}
+
+function loadCustomAppsInline() {
+  const storedApps = getFromStorage("custom");
+
+  if (storedApps) {
+    const apps = JSON.parse(storedApps);
+
+    const pinnedContainer = document.querySelector(".pinned");
+    Object.values(apps).forEach(app => {
+      const card = renderAppCard(app, 0, true);
+      pinnedContainer.appendChild(card);
+    });
+  }
 }
 
 function filterByCategory() {
@@ -331,6 +341,5 @@ window.category = filterByCategory;
 window.bar = filterBySearchTerm;
 
 document.addEventListener("DOMContentLoaded", () => {
-  loadCustomApps();
   loadAppsFromJson();
 });
