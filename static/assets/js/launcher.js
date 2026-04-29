@@ -103,24 +103,33 @@ function saveCustomApp(customApp) {
   setInStorage("custom", JSON.stringify(apps));
 }
 
-function createCustomApp() {
-  const title = prompt("Enter title for the app:");
-  const link = prompt("Enter link for the app:");
-
-  if (title && link) {
-    const customApp = {
-      name: `[Custom] ${title}`,
-      link: link,
-      image: "/assets/media/icons/custom.webp",
-      custom: false,
-    };
-
-    saveCustomApp(customApp);
-
-    const card = renderAppCard(customApp, 0, true);
-    const pinnedContainer = document.querySelector(".pinned");
-    pinnedContainer.appendChild(card);
+function promptRequired(message) {
+  while (true) {
+    const value = prompt(message);
+    if (value === null) return null;
+    if (value.trim() !== "") return value.trim();
+    alert("This field is required. Please enter a value.");
   }
+}
+
+function createCustomApp() {
+  const title = promptRequired("Enter title for the app:");
+  if (!title) return;
+
+  const link = promptRequired("Enter link for the app:");
+  if (!link) return;
+  const customApp = {
+    name: `[Custom] ${title}`,
+    link: link,
+    image: "/assets/media/icons/custom.webp",
+    custom: false,
+  };
+
+  saveCustomApp(customApp);
+
+  const card = renderAppCard(customApp, 0, true);
+  const pinnedContainer = document.querySelector(".pinned");
+  pinnedContainer.appendChild(card);
 }
 
 function getPinnedApps() {
@@ -136,14 +145,29 @@ function togglePin(appIndex) {
   let pins = getPinnedApps();
 
   const pinIndex = pins.indexOf(appIndex);
-  if (pinIndex !== -1) {
+  const isCurrentlyPinned = pinIndex !== -1;
+
+  if (isCurrentlyPinned) {
     pins.splice(pinIndex, 1);
   } else {
     pins.push(appIndex);
   }
 
   savePinnedApps(pins);
-  location.reload();
+
+  const card = document.querySelector(`.column[data-app-index="${appIndex}"]`);
+  if (card) {
+    const pinnedContainer = document.querySelector(".pinned");
+    const nonPinnedContainer = document.querySelector(".apps");
+    if (isCurrentlyPinned) {
+      const unpinnedCards = Array.from(nonPinnedContainer.getElementsByClassName("column"));
+      const cardName = card.getElementsByTagName("p")[0].textContent.toLowerCase();
+      const insertBefore = unpinnedCards.find(c => c.getElementsByTagName("p")[0].textContent.toLowerCase() > cardName);
+      nonPinnedContainer.insertBefore(card, insertBefore ?? null);
+    } else {
+      pinnedContainer.appendChild(card);
+    }
+  }
 }
 
 function isAppPinned(appIndex, pinnedList) {
@@ -179,6 +203,7 @@ function renderAppCard(app, appIndex, isCustom = false) {
 
   const categories = isCustom ? "all" : (app.categories || []).join(" ");
   columnDiv.setAttribute("data-category", categories);
+  columnDiv.setAttribute("data-app-index", appIndex);
 
   const link = document.createElement("a");
   link.onclick = () => handleAppClick(app);
@@ -313,28 +338,27 @@ function loadCustomAppsInline() {
   }
 }
 
-function filterByCategory() {
+function applyFilters() {
+  const searchTerm = (document.getElementById("search")?.value ?? "").toLowerCase();
   const selectedCategories = Array.from(document.querySelectorAll("#category option:checked")).map(option => option.value);
 
-  const appCards = document.getElementsByClassName("column");
-
-  Array.from(appCards).forEach(card => {
+  Array.from(document.getElementsByClassName("column")).forEach(card => {
+    const appName = card.getElementsByTagName("p")[0].textContent.toLowerCase();
     const categories = card.getAttribute("data-category").split(" ");
-    const shouldShow = selectedCategories.length === 0 || selectedCategories.some(cat => categories.includes(cat));
 
-    card.style.display = shouldShow ? "block" : "none";
+    const matchesSearch = !searchTerm || appName.includes(searchTerm);
+    const matchesCategory = selectedCategories.length === 0 || selectedCategories.some(cat => categories.includes(cat));
+
+    card.style.display = matchesSearch && matchesCategory ? "block" : "none";
   });
 }
 
-function filterBySearchTerm() {
-  const input = document.getElementById("search");
-  const searchTerm = input.value.toLowerCase();
-  const appCards = document.getElementsByClassName("column");
+function filterByCategory() {
+  applyFilters();
+}
 
-  Array.from(appCards).forEach(card => {
-    const appName = card.getElementsByTagName("p")[0].textContent.toLowerCase();
-    card.style.display = appName.includes(searchTerm) ? "block" : "none";
-  });
+function filterBySearchTerm() {
+  applyFilters();
 }
 
 window.category = filterByCategory;
