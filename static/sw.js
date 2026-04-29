@@ -3,7 +3,7 @@ importScripts("/assets/dynamic/worker.js");
 importScripts("/assets/ultraviolet/bundle.js");
 importScripts("/assets/ultraviolet/config.js");
 importScripts(__uv$config.sw || "/assets/ultraviolet/sw.js");
-importScripts("/assets/scramjet/sj.all.js");
+importScripts("/assets/scramjet/scramjet.all.js");
 const { ScramjetServiceWorker } = $scramjetLoadWorker();
 
 const uv = new UVServiceWorker();

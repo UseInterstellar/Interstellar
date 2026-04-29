@@ -8,9 +8,9 @@
   const sjConfig = {
     prefix: "/uv/scramjet/",
     files: {
-      wasm: "/assets/scramjet/sj.wasm.wasm",
-      all: "/assets/scramjet/sj.all.js",
-      sync: "/assets/scramjet/sj.sync.js",
+      wasm: "/assets/scramjet/scramjet.wasm",
+      all: "/assets/scramjet/scramjet.all.js",
+      sync: "/assets/scramjet/scramjet.sync.js",
     },
     flags: {
       rewriterLogs: false,
