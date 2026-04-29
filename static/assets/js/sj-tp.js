@@ -30,10 +30,7 @@
       throw new Error("Sj bundle did not load.");
     }
 
-    const [{ BareMuxConnection }, { ScramjetController }] = await Promise.all([
-      import("/bm/index.mjs"),
-      Promise.resolve(window.$scramjetLoadController()),
-    ]);
+    const [{ BareMuxConnection }, { ScramjetController }] = await Promise.all([import("/bm/index.mjs"), Promise.resolve(window.$scramjetLoadController())]);
 
     const sj = new ScramjetController(sjConfig);
     await sj.init();
@@ -44,9 +41,9 @@
     window.__isSj = {
       connection,
       controller: sj,
-      encodeUrl: (url) => sj.encodeUrl(url),
-      decodeUrl: (url) => sj.decodeUrl(url),
-      pxyUrl: (url) => sj.encodeUrl(url),
+      encodeUrl: url => sj.encodeUrl(url),
+      decodeUrl: url => sj.decodeUrl(url),
+      pxyUrl: url => sj.encodeUrl(url),
     };
   }
 
@@ -60,9 +57,13 @@
 
   if (document.readyState === "loading") {
     window.__isSjReady = new Promise(resolve => {
-      document.addEventListener("DOMContentLoaded", () => {
-        void boot().finally(resolve);
-      }, { once: true });
+      document.addEventListener(
+        "DOMContentLoaded",
+        () => {
+          void boot().finally(resolve);
+        },
+        { once: true },
+      );
     });
   } else {
     window.__isSjReady = boot();

@@ -1,14 +1,14 @@
 import fs from "node:fs";
 import http from "node:http";
 import path from "node:path";
+import bareMuxNode from "@mercuryworkshop/bare-mux/node";
+import { server as wisp } from "@mercuryworkshop/wisp-js/server";
 import { createBareServer } from "@nebula-services/bare-server-node";
 import chalk from "chalk";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
 import basicAuth from "express-basic-auth";
-import bareMuxNode from "@mercuryworkshop/bare-mux/node";
-import { server as wisp } from "@mercuryworkshop/wisp-js/server";
 import mime from "mime";
 import fetch from "node-fetch";
 // import { setupMasqr } from "./Masqr.js";
@@ -21,13 +21,7 @@ const server = http.createServer();
 const app = express();
 const bareServer = createBareServer("/bare/");
 const { baremuxPath } = bareMuxNode;
-const epoxyDistPath = path.join(
-  __dirname,
-  "node_modules",
-  "@mercuryworkshop",
-  "epoxy-transport",
-  "dist",
-);
+const epoxyDistPath = path.join(__dirname, "node_modules", "@mercuryworkshop", "epoxy-transport", "dist");
 const PORT = process.env.PORT || 8080;
 const cache = new Map();
 const CACHE_TTL = 30 * 24 * 60 * 60 * 1000; // Cache for 30 Days

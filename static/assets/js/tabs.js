@@ -108,9 +108,7 @@ document.addEventListener("DOMContentLoaded", event => {
         tabTitle.textContent = title;
       }
       newIframe.contentWindow.open = url => {
-        const pxyUrl = window.__isGetPxyUrl
-          ? window.__isGetPxyUrl(url)
-          : `/uv/${__uv$config.encodeUrl(url)}`;
+        const pxyUrl = window.__isGetPxyUrl ? window.__isGetPxyUrl(url) : `/uv/${__uv$config.encodeUrl(url)}`;
         sessionStorage.setItem("URL", pxyUrl);
         createNewTab();
         return null;
