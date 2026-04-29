@@ -176,12 +176,11 @@
       <div class="settings-card">
         <h3>Choose your <an>Pro</an>xy</h3>
         <p>
-          Ultra<an>vio</an>let is the main <an>pro</an>xy, but Dynamic is
-          faster and supports more sites. (Dynamic is still in beta, so expect
-          some bugs.)
+          Choose the <an>pro</an>xy you want to use.
         </p>
         <select id="pChange">
-          <option value="uv">Ultra<an>vio</an>let (Default)</option>
+          <option value="sj">Scram<an>jet</an> (Default)</option>
+          <option value="uv">Ultra<an>vio</an>let (Legacy)</option>
           <option value="dy">Dynamic (Doesn't work in about:blank)</option>
         </select>
       </div>
@@ -214,7 +213,7 @@
       </div>
       <div class="settings-card">
         <h3>Save Data Management</h3>
-        <p>Export your Interstellar data on this site and import it on another site.
+        <p>Export your saved data on this site and import it on another site.
           This is useful because this site might be blocked in the future,
           but you don't want to lose your save data.
         </p>
@@ -236,6 +235,16 @@
       </div>
     </div>
   </div>
+  <script>
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("../sw.js?v=2025-04-15", {
+        scope: "/a/",
+      });
+    });
+  </script>
+  <script src="/assets/languagearts/sj.all.js?v=2025-04-15"></script>
+  <script src="/assets/js/sj-tp.js?v=2025-04-15"></script>
+  <script src="/assets/js/mg-pxy.js"></script>
   <script src="/assets/js/m1.js"></script>
   <script src="/assets/js/s1.js"></script>
   <!-- DO NOT REMOVE-->

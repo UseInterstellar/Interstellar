@@ -7,6 +7,8 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
 import basicAuth from "express-basic-auth";
+import bareMuxNode from "@mercuryworkshop/bare-mux/node";
+import { server as wisp } from "@mercuryworkshop/wisp-js/server";
 import mime from "mime";
 import fetch from "node-fetch";
 // import { setupMasqr } from "./Masqr.js";
@@ -18,9 +20,20 @@ const __dirname = process.cwd();
 const server = http.createServer();
 const app = express();
 const bareServer = createBareServer("/ca/");
+const { baremuxPath } = bareMuxNode;
+const epoxyDistPath = path.join(
+  __dirname,
+  "node_modules",
+  "@mercuryworkshop",
+  "epoxy-transport",
+  "dist",
+);
 const PORT = process.env.PORT || 8080;
 const cache = new Map();
 const CACHE_TTL = 30 * 24 * 60 * 60 * 1000; // Cache for 30 Days
+
+wisp.options.allow_loopback_ips = true;
+wisp.options.allow_private_ips = true;
 
 if (config.challenge !== false) {
   console.log(chalk.green("🔒 Password protection is enabled! Listing logins below"));
@@ -90,8 +103,21 @@ app.use(express.urlencoded({ extended: true }));
   setupMasqr(app);
 } */
 
+const transportStaticOptions = {
+  setHeaders: (res, filePath) => {
+    const ext = path.extname(filePath);
+    if (ext === ".mjs" || ext === ".js") {
+      res.type("text/javascript");
+    } else if (ext === ".wasm") {
+      res.type("application/wasm");
+    }
+  },
+};
+
 app.use(express.static(path.join(__dirname, "static")));
 app.use("/ca", cors({ origin: true }));
+app.use("/bm", express.static(baremuxPath, transportStaticOptions));
+app.use("/ep", express.static(epoxyDistPath, transportStaticOptions));
 
 const routes = [
   { path: "/b", file: "apps.html" },
@@ -130,7 +156,7 @@ server.on("upgrade", (req, socket, head) => {
   if (bareServer.shouldRoute(req)) {
     bareServer.routeUpgrade(req, socket, head);
   } else {
-    socket.end();
+    wisp.routeRequest(req, socket, head);
   }
 });
 

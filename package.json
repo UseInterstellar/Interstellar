@@ -15,6 +15,10 @@
   "author": "InterstellarNetwork",
   "license": "GPL-3.0-or-later",
   "dependencies": {
+    "@mercuryworkshop/bare-mux": "^2.1.8",
+    "@mercuryworkshop/epoxy-transport": "2.1.28",
+    "@mercuryworkshop/scramjet": "^1.0.2",
+    "@mercuryworkshop/wisp-js": "^0.4.1",
     "@nebula-services/bare-server-node": "^2.0.4",
     "chalk": "^5.4.1",
     "cookie-parser": "^1.4.7",
@@ -28,5 +32,5 @@
   "devDependencies": {
     "@biomejs/biome": "2.2.2"
   },
-  "packageManager": "pnpm@9.10.0"
+  "packageManager": "pnpm@10.33.0+sha512.10568bb4a6afb58c9eb3630da90cc9516417abebd3fabbe6739f0ae795728da1491e9db5a544c76ad8eb7570f5c4bb3d6c637b2cb41bfdcdb47fa823c8649319"
 }

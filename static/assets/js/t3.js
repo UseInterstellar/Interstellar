@@ -8,14 +8,42 @@ window.addEventListener("load", () => {
       event.preventDefault();
       const formValue = input.value.trim();
       const url = isUrl(formValue) ? prependHttps(formValue) : `https://search.brave.com/search?q=${formValue}`;
-      processUrl(url);
+      await processUrl(url);
     });
   }
-  function processUrl(url) {
-    sessionStorage.setItem("GoUrl", __uv$config.encodeUrl(url));
+
+  function useScramjetPxy() {
+    const p = localStorage.getItem("pchoice");
+    return p === "sj";
+  }
+
+  async function getPxyUrl(url) {
+    if (useScramjetPxy()) {
+      if (window.__isSjReady) {
+        await window.__isSjReady;
+      }
+      if (window.__isSj?.encodeUrl) {
+        return window.__isSj.encodeUrl(url);
+      }
+    }
+
+    return `/a/${__uv$config.encodeUrl(url)}`;
+  }
+
+  function getPxyUrlSync(url) {
+    if (useScramjetPxy() && window.__isSj?.encodeUrl) {
+      return window.__isSj.encodeUrl(url);
+    }
+
+    return `/a/${__uv$config.encodeUrl(url)}`;
+  }
+
+  async function processUrl(url) {
+    const pxyUrl = await getPxyUrl(url);
+    sessionStorage.setItem("GoUrl", pxyUrl);
     const iframeContainer = document.getElementById("frame-container");
     const activeIframe = Array.from(iframeContainer.querySelectorAll("iframe")).find(iframe => iframe.classList.contains("active"));
-    activeIframe.src = `/a/${__uv$config.encodeUrl(url)}`;
+    activeIframe.src = pxyUrl;
     activeIframe.dataset.tabUrl = url;
     input.value = url;
     console.log(activeIframe.dataset.tabUrl);
@@ -32,6 +60,8 @@ window.addEventListener("load", () => {
     }
     return url;
   }
+
+  window.__isGetPxyUrl = getPxyUrlSync;
 });
 document.addEventListener("DOMContentLoaded", event => {
   const addTabButton = document.getElementById("add-tab");
@@ -79,7 +109,10 @@ document.addEventListener("DOMContentLoaded", event => {
         tabTitle.textContent = title;
       }
       newIframe.contentWindow.open = url => {
-        sessionStorage.setItem("URL", `/a/${__uv$config.encodeUrl(url)}`);
+        const pxyUrl = window.__isGetPxyUrl
+          ? window.__isGetPxyUrl(url)
+          : `/a/${__uv$config.encodeUrl(url)}`;
+        sessionStorage.setItem("URL", pxyUrl);
         createNewTab();
         return null;
       };
@@ -91,25 +124,37 @@ document.addEventListener("DOMContentLoaded", event => {
     const goUrl = sessionStorage.getItem("GoUrl");
     const url = sessionStorage.getItem("URL");
 
+    const resolveStoredUrl = value => {
+      if (!value) {
+        return null;
+      }
+
+      if (value.startsWith("/")) {
+        return window.location.origin + value;
+      }
+
+      return value;
+    };
+
     if (tabCounter === 0 || tabCounter === 1) {
       if (goUrl !== null) {
         if (goUrl.includes("/e/")) {
           newIframe.src = window.location.origin + goUrl;
         } else {
-          newIframe.src = `${window.location.origin}/a/${goUrl}`;
+          newIframe.src = resolveStoredUrl(goUrl);
         }
       } else {
         newIframe.src = "/";
       }
     } else if (tabCounter > 1) {
       if (url !== null) {
-        newIframe.src = window.location.origin + url;
+        newIframe.src = resolveStoredUrl(url);
         sessionStorage.removeItem("URL");
       } else if (goUrl !== null) {
         if (goUrl.includes("/e/")) {
           newIframe.src = window.location.origin + goUrl;
         } else {
-          newIframe.src = `${window.location.origin}/a/${goUrl}`;
+          newIframe.src = resolveStoredUrl(goUrl);
         }
       } else {
         newIframe.src = "/";
@@ -346,15 +391,23 @@ function Load() {
   const activeIframe = document.querySelector("#frame-container iframe.active");
   if (activeIframe && activeIframe.contentWindow.document.readyState === "complete") {
     const website = activeIframe.contentWindow.document.location.href;
-    if (website.includes("/a/")) {
-      const websitePath = website.replace(window.location.origin, "").replace("/a/", "");
-      localStorage.setItem("decoded", websitePath);
-      const decodedValue = decodeXor(websitePath);
-      document.getElementById("input").value = decodedValue;
+    if (website.includes("/a/sj/")) {
+      if (window.__isSj?.decodeUrl) {
+        const decodedValue = window.__isSj.decodeUrl(website);
+        localStorage.setItem("decoded", decodedValue);
+        document.getElementById("input").value = decodedValue;
+      } else {
+        document.getElementById("input").value = website;
+      }
     } else if (website.includes("/a/q/")) {
       const websitePath = website.replace(window.location.origin, "").replace("/a/q/", "");
       const decodedValue = decodeXor(websitePath);
       localStorage.setItem("decoded", websitePath);
+      document.getElementById("input").value = decodedValue;
+    } else if (website.includes("/a/")) {
+      const websitePath = website.replace(window.location.origin, "").replace("/a/", "");
+      localStorage.setItem("decoded", websitePath);
+      const decodedValue = decodeXor(websitePath);
       document.getElementById("input").value = decodedValue;
     } else {
       const websitePath = website.replace(window.location.origin, "");

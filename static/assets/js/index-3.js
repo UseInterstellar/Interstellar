@@ -24,14 +24,32 @@ if (form && input) {
   form.addEventListener("submit", async event => {
     event.preventDefault();
     try {
-      if (xl) processUrl(input.value, "");
-      else processUrl(input.value, "/d");
+      if (xl) await processUrl(input.value, "");
+      else await processUrl(input.value, "/d");
     } catch {
-      processUrl(input.value, "/d");
+      await processUrl(input.value, "/d");
     }
   });
 }
-function processUrl(value, path) {
+function useScramjetPxy() {
+  const p = localStorage.getItem("pchoice");
+  return p === "sj";
+}
+
+async function getPxyUrl(url) {
+  if (useScramjetPxy()) {
+    if (window.__isSjReady) {
+      await window.__isSjReady;
+    }
+    if (window.__isSj?.encodeUrl) {
+      return window.__isSj.encodeUrl(url);
+    }
+  }
+
+  return `/a/${__uv$config.encodeUrl(url)}`;
+}
+
+async function processUrl(value, path) {
   let url = value.trim();
   const engine = localStorage.getItem("engine");
   const searchUrl = engine ? engine : "https://search.brave.com/search?q=";
@@ -42,15 +60,16 @@ function processUrl(value, path) {
     url = `https://${url}`;
   }
 
-  sessionStorage.setItem("GoUrl", __uv$config.encodeUrl(url));
-  const dy = localStorage.getItem("dy");
+  const pxyUrl = await getPxyUrl(url);
+  sessionStorage.setItem("GoUrl", pxyUrl);
+  const pchoice = localStorage.getItem("pchoice");
 
-  if (dy === "true") {
+  if (pchoice === "dy") {
     window.location.href = `/a/q/${__uv$config.encodeUrl(url)}`;
   } else if (path) {
     location.href = path;
   } else {
-    window.location.href = `/a/${__uv$config.encodeUrl(url)}`;
+    window.location.href = pxyUrl;
   }
 }
 
