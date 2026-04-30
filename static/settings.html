@@ -4,7 +4,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="referrer" content="no-referrer" />
-  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="shortcut icon" id="tab-favicon" href="favicon.png" />
@@ -55,7 +54,7 @@
       <div class="settings-card">
         <h3>&#84;&#97;&#98;&#32;&#67;&#108;&#111;&#97;&#107;&#101;&#114;</h3>
         <p>Change the title and icon of the page.</p>
-        <select id="dropdown" onchange="handleDropdownChange(this)">
+        <select id="cloak-dropdown">
           <option value="Classroom">Default</option>
           <option value="Clever">Clever</option>
           <option value="Canvas">Canvas</option>
@@ -140,13 +139,11 @@
           <option value="Dictionary">Dictionary.com</option>
           <option value="Thesaurus">Thesaurus.com</option>
         </select>
+        <input class="key-form" type="text" id="custom-cloak-name" placeholder="Custom tab name (optional)" />
+        <input class="key-form" type="text" id="custom-cloak-icon" placeholder="Custom icon URL (optional)" />
         <div id="buttonLayer">
-          <button class="key-button" value="Save" onclick="CustomIcon(); CustomName(); redirectToMainDomain();">
-            Save
-          </button>
-          <button class="key-button" value="Reset" onclick="ResetCustomCloak(); redirectToMainDomain();">
-            Reset Cloak
-          </button>
+          <button class="key-button" id="cloak-save-btn">Save</button>
+          <button class="key-button" id="cloak-reset-btn">Reset Cloak</button>
         </div>
       </div>
       <div class="settings-card">
@@ -159,7 +156,7 @@
       <div class="settings-card">
         <h3>Search Engine</h3>
         <p>Change the search engine when searching.</p>
-        <select title="engine" id="engine" onchange="EngineChange(this)">
+        <select title="engine" id="engine" onchange="changeEngine(this)">
           <option value="Brave">Brave (Default)</option>
           <option value="Google">Google</option>
           <option value="Bing">Bing</option>
@@ -169,9 +166,7 @@
           <option value="Ecosia">Ecosia</option>
         </select>
         <input class="key-form" type="text" id="engine-form" placeholder="Change Search Engine" name="engine" />
-        <button class="key-button" value="Save" onclick="SaveEngine();">
-          Save
-        </button>
+        <button class="key-button" id="engine-save-btn">Save</button>
       </div>
       <div class="settings-card">
         <h3>Choose your <an>Pro</an>xy</h3>
@@ -198,7 +193,7 @@
       <div class="settings-card">
         <h3>Themes!</h3>
         <p>Pick from a variety of themes to customize your experience.</p>
-        <select placeholder="Solid Color Themes" id="dropdown" class="td" onchange="themeChange(this)">
+        <select placeholder="Solid Color Themes" id="theme-dropdown" class="td">
           <option disabled selected>Solid Color Themes</option>
           <option value="d">Default</option>
           <option value="Inverted">Inverted</option>

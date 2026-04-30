@@ -1,58 +1,115 @@
-const adTypeElement = document.getElementById("adType");
-if (adTypeElement) {
-  adTypeElement.addEventListener("change", function () {
-    localStorage.setItem("ads", this.value === "default" ? "on" : this.value);
+document.addEventListener("DOMContentLoaded", () => {
+
+  const adTypeElement = document.getElementById("adType");
+  if (adTypeElement) {
+    adTypeElement.addEventListener("change", function () {
+      localStorage.setItem("ads", this.value === "default" ? "on" : this.value);
+    });
+    const storedAd = localStorage.getItem("ads");
+    adTypeElement.value = storedAd === "popups" || storedAd === "off" ? storedAd : "default";
+  }
+
+  const pChangeElement = document.getElementById("pChange");
+  if (pChangeElement) {
+    pChangeElement.addEventListener("change", function () {
+      localStorage.setItem("pchoice", this.value);
+    });
+    pChangeElement.value = localStorage.getItem("pchoice") || "sj";
+  }
+
+
+  const eventKeyInput = document.getElementById("eventKeyInput");
+  const linkInput = document.getElementById("linkInput");
+
+  let eventKey = JSON.parse(localStorage.getItem("eventKey")) || ["Ctrl", "E"];
+  let eventKeyRaw = localStorage.getItem("eventKeyRaw") || "Ctrl,E";
+  let pLink = localStorage.getItem("pLink") || "https://classroom.google.com/";
+
+  eventKeyInput.value = eventKeyRaw;
+  linkInput.value = pLink;
+
+  eventKeyInput.addEventListener("input", () => {
+    eventKey = eventKeyInput.value.split(",");
+  });
+  linkInput.addEventListener("input", () => {
+    pLink = linkInput.value;
   });
 
-  const storedAd = localStorage.getItem("ads");
-  adTypeElement.value = storedAd === "popups" || storedAd === "off" ? storedAd : "default";
-}
+  const cloakDropdown = document.getElementById("cloak-dropdown");
 
-const pChangeElement = document.getElementById("pChange");
-if (pChangeElement) {
-  pChangeElement.addEventListener("change", function () {
-    localStorage.setItem("pchoice", this.value);
+  const sortedOptions = Array.from(cloakDropdown.getElementsByTagName("option"))
+    .sort((a, b) => a.textContent.localeCompare(b.textContent));
+  while (cloakDropdown.firstChild) cloakDropdown.removeChild(cloakDropdown.firstChild);
+  for (const option of sortedOptions) cloakDropdown.appendChild(option);
+
+  cloakDropdown.value = localStorage.getItem("selectedOption") || "Classroom";
+  cloakDropdown.addEventListener("change", () => handleDropdownChange(cloakDropdown));
+
+  document.getElementById("cloak-save-btn").addEventListener("click", () => {
+    saveCustomCloak();
+    redirectToMainDomain();
+  });
+  document.getElementById("cloak-reset-btn").addEventListener("click", () => {
+    resetCustomCloak();
+    redirectToMainDomain();
   });
 
-  pChangeElement.value = localStorage.getItem("pchoice") || "sj";
-}
+  document.getElementById("custom-cloak-name").value = localStorage.getItem("CustomName") || "";
+  document.getElementById("custom-cloak-icon").value = localStorage.getItem("CustomIcon") || "";
 
-let eventKey = localStorage.getItem("eventKey") || "`";
-let eventKeyRaw = localStorage.getItem("eventKeyRaw") || "`";
-let pLink = localStorage.getItem("pLink") || "https://classroom.google.com/";
+  if (localStorage.getItem("ab") === "true") {
+    document.getElementById("ab-settings-switch").checked = true;
+  }
 
-const eventKeyInput = document.getElementById("eventKeyInput");
-const linkInput = document.getElementById("linkInput");
+  document.getElementById("save-button").addEventListener("click", () => {
+    const imageURL = document.getElementById("background-input").value.trim();
+    if (imageURL) {
+      localStorage.setItem("backgroundImage", imageURL);
+      document.body.style.backgroundImage = `url('${imageURL}')`;
+      document.getElementById("background-input").value = "";
+    }
+  });
 
-eventKeyInput.value = eventKeyRaw;
-linkInput.value = pLink;
+  document.getElementById("reset-button").addEventListener("click", () => {
+    localStorage.removeItem("backgroundImage");
+    document.body.style.backgroundImage = "";
+    window.location.reload();
+  });
 
-eventKeyInput.addEventListener("input", () => {
-  eventKey = eventKeyInput.value.split(",");
-});
+  document.getElementById("engine").addEventListener("change", function () {
+    changeEngine(this);
+  });
+  document.getElementById("engine-save-btn").addEventListener("click", saveCustomEngine);
 
-linkInput.addEventListener("input", () => {
-  pLink = linkInput.value;
+  const savedEngineName = localStorage.getItem("enginename");
+  if (savedEngineName) document.getElementById("engine").value = savedEngineName;
+
+  const particlesSwitch = document.getElementById("2");
+  particlesSwitch.checked = localStorage.getItem("particles") === "true";
+  particlesSwitch.addEventListener("change", event => {
+    localStorage.setItem("particles", event.currentTarget.checked ? "true" : "false");
+  });
+
+  const themeDropdown = document.getElementById("theme-dropdown");
+  themeDropdown.addEventListener("change", function () {
+    themeChange(this);
+  });
+
 });
 
 function saveEventKey() {
-  eventKey = eventKeyInput.value.split(",");
-  eventKeyRaw = eventKeyInput.value;
+  const eventKeyInput = document.getElementById("eventKeyInput");
+  const linkInput = document.getElementById("linkInput");
+  const eventKey = eventKeyInput.value.split(",");
+  const eventKeyRaw = eventKeyInput.value;
+  const pLink = linkInput.value;
   localStorage.setItem("eventKey", JSON.stringify(eventKey));
-  localStorage.setItem("pLink", pLink);
   localStorage.setItem("eventKeyRaw", eventKeyRaw);
+  localStorage.setItem("pLink", pLink);
   // biome-ignore lint: idk
   window.location = window.location;
 }
 
-const cloakDropdown = document.getElementById("dropdown");
-const sortedOptions = Array.from(cloakDropdown.getElementsByTagName("option")).sort((a, b) =>
-  a.textContent.localeCompare(b.textContent)
-);
-while (cloakDropdown.firstChild) cloakDropdown.removeChild(cloakDropdown.firstChild);
-for (const option of sortedOptions) cloakDropdown.appendChild(option);
-
-cloakDropdown.value = localStorage.getItem("selectedOption") || "Default";
 
 const cloakOptions = {
   Google: { name: "Google", icon: "/assets/media/favicon/google.png" },
@@ -123,7 +180,6 @@ function handleDropdownChange(selectElement) {
   if (preset) {
     localStorage.setItem("name", preset.name);
     localStorage.setItem("icon", preset.icon);
-
     document.getElementById("t").textContent = preset.name;
     document.getElementById("tab-favicon").setAttribute("href", preset.icon);
   }
@@ -131,117 +187,108 @@ function handleDropdownChange(selectElement) {
   redirectToMainDomain();
 }
 
-function saveCustomIcon() {
-  const value = document.getElementById("icon").value;
-  localStorage.setItem("CustomIcon", value);
-  localStorage.setItem("icon", value);
-}
-
-function saveCustomName() {
-  const value = document.getElementById("name").value;
-  localStorage.setItem("CustomName", value);
-  localStorage.setItem("name", value);
+function saveCustomCloak() {
+  const nameVal = document.getElementById("custom-cloak-name").value.trim();
+  const iconVal = document.getElementById("custom-cloak-icon").value.trim();
+  if (nameVal) {
+    localStorage.setItem("CustomName", nameVal);
+    localStorage.setItem("name", nameVal);
+  }
+  if (iconVal) {
+    localStorage.setItem("CustomIcon", iconVal);
+    localStorage.setItem("icon", iconVal);
+  }
 }
 
 function resetCustomCloak() {
   localStorage.removeItem("CustomName");
   localStorage.removeItem("CustomIcon");
-  document.getElementById("icon").value = "";
-  document.getElementById("name").value = "";
-}
-
-document.getElementById("icon").value = localStorage.getItem("CustomIcon") || "";
-document.getElementById("name").value = localStorage.getItem("CustomName") || "";
-
-if (localStorage.getItem("ab") === "true") {
-  document.getElementById("ab-settings-switch").checked = true;
+  document.getElementById("custom-cloak-name").value = "";
+  document.getElementById("custom-cloak-icon").value = "";
 }
 
 function redirectToMainDomain() {
   const target = window.location.origin + window.location.pathname;
   if (window !== top) {
-    try {
-      top.location.href = target;
-    } catch {
-      try {
-        parent.location.href = target;
-      } catch {
-        window.location.href = target;
-      }
-    }
+    try { top.location.href = target; }
+    catch { try { parent.location.href = target; } catch { window.location.href = target; } }
   } else {
     window.location.href = target;
   }
 }
 
-document.getElementById("save-button").addEventListener("click", () => {
-  const imageURL = document.getElementById("background-input").value.trim();
-  if (imageURL) {
-    localStorage.setItem("backgroundImage", imageURL);
-    document.body.style.backgroundImage = `url('${imageURL}')`;
-    document.getElementById("background-input").value = "";
+const themeMap = {
+  catppuccinMocha: "/assets/css/themes/catppuccin/mocha.css",
+  catppuccinMacchiato: "/assets/css/themes/catppuccin/macchiato.css",
+  catppuccinFrappe: "/assets/css/themes/catppuccin/frappe.css",
+  catppuccinLatte: "/assets/css/themes/catppuccin/latte.css",
+  Inverted: "/assets/css/themes/colors/inverted.css",
+  sky: "/assets/css/themes/colors/sky.css",
+};
+
+function themeChange(selectElement) {
+  const value = selectElement.value;
+  if (value === "d") {
+    localStorage.removeItem("theme");
+  } else {
+    localStorage.setItem("theme", value);
   }
-});
-
-document.getElementById("reset-button").addEventListener("click", () => {
-  localStorage.removeItem("backgroundImage");
-  document.body.style.backgroundImage = "url('default-background.jpg')";
   window.location.reload();
-});
-
-const particlesSwitch = document.getElementById("2");
-particlesSwitch.checked = localStorage.getItem("particles") === "true";
-particlesSwitch.addEventListener("change", event => {
-  localStorage.setItem("particles", event.currentTarget.checked ? "true" : "false");
-});
+}
 
 function AB() {
   let inFrame;
-  try {
-    inFrame = window !== top;
-  } catch {
-    inFrame = true;
+  try { inFrame = window !== top; }
+  catch { inFrame = true; }
+
+  if (inFrame) {
+    alert("Please open the settings page directly (not inside a frame) to use the AB popup.");
+    return;
+  }
+  if (navigator.userAgent.includes("Firefox")) {
+    alert("AB cloak is not supported in Firefox.");
+    return;
   }
 
-  if (!inFrame && !navigator.userAgent.includes("Firefox")) {
-    const popup = open("about:blank", "_blank");
-    if (!popup || popup.closed) {
-      alert("Window blocked. Please allow popups for this site.");
-    } else {
-      const doc = popup.document;
-      const iframe = doc.createElement("iframe");
-      const link = doc.createElement("link");
-
-      const name = localStorage.getItem("name") || "My Drive - Google Drive";
-      const icon = localStorage.getItem("icon") || "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png";
-
-      doc.title = name;
-      link.rel = "icon";
-      link.href = icon;
-
-      iframe.src = location.href;
-      const style = iframe.style;
-      style.position = "fixed";
-      style.top = style.bottom = style.left = style.right = 0;
-      style.border = style.outline = "none";
-      style.width = style.height = "100%";
-
-      const panicLink = localStorage.getItem("pLink") || getRandomURL();
-      location.replace(panicLink);
-
-      const script = doc.createElement("script");
-      script.textContent = `
-        window.onbeforeunload = function (event) {
-          const confirmationMessage = 'Leave Site?';
-          (event || window.event).returnValue = confirmationMessage;
-          return confirmationMessage;
-        };
-      `;
-      doc.head.appendChild(link);
-      doc.body.appendChild(iframe);
-      doc.head.appendChild(script);
-    }
+  const popup = open("about:blank", "_blank");
+  if (!popup || popup.closed) {
+    alert("Window blocked. Please allow popups for this site.");
+    return;
   }
+
+  const name = localStorage.getItem("name") || "My Drive - Google Drive";
+  const icon = localStorage.getItem("icon") || "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png";
+  const panicLink = localStorage.getItem("pLink") || getRandomURL();
+
+  const doc = popup.document;
+  const iframe = doc.createElement("iframe");
+  const link = doc.createElement("link");
+  const script = doc.createElement("script");
+
+  doc.title = name;
+  link.rel = "icon";
+  link.href = icon;
+
+  iframe.src = location.href;
+  const style = iframe.style;
+  style.position = "fixed";
+  style.top = style.bottom = style.left = style.right = 0;
+  style.border = style.outline = "none";
+  style.width = style.height = "100%";
+
+  script.textContent = `
+    window.onbeforeunload = function (event) {
+      const message = 'Leave Site?';
+      (event || window.event).returnValue = message;
+      return message;
+    };
+  `;
+
+  doc.head.appendChild(link);
+  doc.head.appendChild(script);
+  doc.body.appendChild(iframe);
+
+  location.replace(panicLink);
 }
 
 function toggleAB() {
@@ -259,7 +306,6 @@ function changeEngine(dropdown) {
     SearchEncrypt: "https://www.searchencrypt.com/search/?q=",
     Ecosia: "https://www.ecosia.org/search?q=",
   };
-
   const selected = dropdown.value;
   localStorage.setItem("engine", engineUrls[selected]);
   localStorage.setItem("enginename", selected);
@@ -275,20 +321,15 @@ function saveCustomEngine() {
   }
 }
 
-const engineDropdown = document.getElementById("engine");
-const savedEngineName = localStorage.getItem("enginename");
-if (savedEngineName) engineDropdown.value = savedEngineName;
-
 function exportSaveData() {
   const cookies = Object.fromEntries(
-    document.cookie.split("; ").map(c => c.split("="))
+    document.cookie.split("; ").filter(Boolean).map(c => c.split("="))
   );
   const localStorageData = Object.fromEntries(
     Object.keys(localStorage)
       .filter(k => Object.hasOwn(localStorage, k))
       .map(k => [k, localStorage.getItem(k)])
   );
-
   const blob = new Blob([JSON.stringify({ cookies, localStorage: localStorageData }, null, 2)], {
     type: "application/json",
   });
@@ -339,18 +380,10 @@ function importSaveData() {
 
 function getRandomURL() {
   const urls = [
-    "https://kahoot.it",
-    "https://classroom.google.com",
-    "https://drive.google.com",
-    "https://google.com",
-    "https://docs.google.com",
-    "https://slides.google.com",
-    "https://www.nasa.gov",
-    "https://blooket.com",
-    "https://clever.com",
-    "https://edpuzzle.com",
-    "https://khanacademy.org",
-    "https://wikipedia.org",
+    "https://kahoot.it", "https://classroom.google.com", "https://drive.google.com",
+    "https://google.com", "https://docs.google.com", "https://slides.google.com",
+    "https://www.nasa.gov", "https://blooket.com", "https://clever.com",
+    "https://edpuzzle.com", "https://khanacademy.org", "https://wikipedia.org",
     "https://dictionary.com",
   ];
   return urls[Math.floor(Math.random() * urls.length)];
