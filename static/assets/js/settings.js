@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-
   const adTypeElement = document.getElementById("adType");
   if (adTypeElement) {
     adTypeElement.addEventListener("change", function () {
@@ -16,7 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     pChangeElement.value = localStorage.getItem("pchoice") || "sj";
   }
-
 
   const eventKeyInput = document.getElementById("eventKeyInput");
   const linkInput = document.getElementById("linkInput");
@@ -37,8 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const cloakDropdown = document.getElementById("cloak-dropdown");
 
-  const sortedOptions = Array.from(cloakDropdown.getElementsByTagName("option"))
-    .sort((a, b) => a.textContent.localeCompare(b.textContent));
+  const sortedOptions = Array.from(cloakDropdown.getElementsByTagName("option")).sort((a, b) => a.textContent.localeCompare(b.textContent));
   while (cloakDropdown.firstChild) cloakDropdown.removeChild(cloakDropdown.firstChild);
   for (const option of sortedOptions) cloakDropdown.appendChild(option);
 
@@ -94,7 +91,6 @@ document.addEventListener("DOMContentLoaded", () => {
   themeDropdown.addEventListener("change", function () {
     themeChange(this);
   });
-
 });
 
 function saveEventKey() {
@@ -109,7 +105,6 @@ function saveEventKey() {
   // biome-ignore lint: idk
   window.location = window.location;
 }
-
 
 const cloakOptions = {
   Google: { name: "Google", icon: "/assets/media/favicon/google.png" },
@@ -210,8 +205,15 @@ function resetCustomCloak() {
 function redirectToMainDomain() {
   const target = window.location.origin + window.location.pathname;
   if (window !== top) {
-    try { top.location.href = target; }
-    catch { try { parent.location.href = target; } catch { window.location.href = target; } }
+    try {
+      top.location.href = target;
+    } catch {
+      try {
+        parent.location.href = target;
+      } catch {
+        window.location.href = target;
+      }
+    }
   } else {
     window.location.href = target;
   }
@@ -238,8 +240,11 @@ function themeChange(selectElement) {
 
 function AB() {
   let inFrame;
-  try { inFrame = window !== top; }
-  catch { inFrame = true; }
+  try {
+    inFrame = window !== top;
+  } catch {
+    inFrame = true;
+  }
 
   if (inFrame) {
     alert("Please open the settings page directly (not inside a frame) to use the AB popup.");
@@ -323,12 +328,15 @@ function saveCustomEngine() {
 
 function exportSaveData() {
   const cookies = Object.fromEntries(
-    document.cookie.split("; ").filter(Boolean).map(c => c.split("="))
+    document.cookie
+      .split("; ")
+      .filter(Boolean)
+      .map(c => c.split("=")),
   );
   const localStorageData = Object.fromEntries(
     Object.keys(localStorage)
       .filter(k => Object.hasOwn(localStorage, k))
-      .map(k => [k, localStorage.getItem(k)])
+      .map(k => [k, localStorage.getItem(k)]),
   );
   const blob = new Blob([JSON.stringify({ cookies, localStorage: localStorageData }, null, 2)], {
     type: "application/json",
@@ -380,10 +388,18 @@ function importSaveData() {
 
 function getRandomURL() {
   const urls = [
-    "https://kahoot.it", "https://classroom.google.com", "https://drive.google.com",
-    "https://google.com", "https://docs.google.com", "https://slides.google.com",
-    "https://www.nasa.gov", "https://blooket.com", "https://clever.com",
-    "https://edpuzzle.com", "https://khanacademy.org", "https://wikipedia.org",
+    "https://kahoot.it",
+    "https://classroom.google.com",
+    "https://drive.google.com",
+    "https://google.com",
+    "https://docs.google.com",
+    "https://slides.google.com",
+    "https://www.nasa.gov",
+    "https://blooket.com",
+    "https://clever.com",
+    "https://edpuzzle.com",
+    "https://khanacademy.org",
+    "https://wikipedia.org",
     "https://dictionary.com",
   ];
   return urls[Math.floor(Math.random() * urls.length)];
