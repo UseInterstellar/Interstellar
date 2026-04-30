@@ -1,3 +1,30 @@
+// Theme is applied immediately, to prevent flashing on page load
+(() => {
+  const themeid = localStorage.getItem("theme");
+  const themes = {
+    catppuccinMocha: "/assets/css/themes/catppuccin/mocha.css",
+    catppuccinMacchiato: "/assets/css/themes/catppuccin/macchiato.css",
+    catppuccinFrappe: "/assets/css/themes/catppuccin/frappe.css",
+    catppuccinLatte: "/assets/css/themes/catppuccin/latte.css",
+    Inverted: "/assets/css/themes/colors/inverted.css",
+    sky: "/assets/css/themes/colors/sky.css",
+  };
+
+  if (themes[themeid]) {
+    const themeLink = document.createElement("link");
+    themeLink.rel = "stylesheet";
+    themeLink.href = themes[themeid];
+    document.head.appendChild(themeLink);
+  } else {
+    const customThemeCss = localStorage.getItem(`theme-${themeid}`);
+    if (customThemeCss) {
+      const customThemeStyle = document.createElement("style");
+      customThemeStyle.textContent = customThemeCss;
+      document.head.appendChild(customThemeStyle);
+    }
+  }
+})();
+
 let isInTabMode;
 
 try {
@@ -39,31 +66,6 @@ document.addEventListener("DOMContentLoaded", () => {
         <a class="navbar-link" href="/./settings"><i class="fa-solid fa-gear navbar-icon settings-icon"></i><an>&#83;&#101;&#116;</an><an>&#116;&#105;&#110;&#103;</an></a>
       </div>`;
     nav.innerHTML = html;
-  }
-
-  // Theme Logic
-  const themeid = localStorage.getItem("theme");
-  const themes = {
-    catppuccinMocha: "/assets/css/themes/catppuccin/mocha.css",
-    catppuccinMacchiato: "/assets/css/themes/catppuccin/macchiato.css",
-    catppuccinFrappe: "/assets/css/themes/catppuccin/frappe.css",
-    catppuccinLatte: "/assets/css/themes/catppuccin/latte.css",
-    Inverted: "/assets/css/themes/colors/inverted.css",
-    sky: "/assets/css/themes/colors/sky.css",
-  };
-
-  if (themes[themeid]) {
-    const themeLink = document.createElement("link");
-    themeLink.rel = "stylesheet";
-    themeLink.href = themes[themeid];
-    document.body.appendChild(themeLink);
-  } else {
-    const customThemeCss = localStorage.getItem(`theme-${themeid}`);
-    if (customThemeCss) {
-      const customThemeStyle = document.createElement("style");
-      customThemeStyle.textContent = customThemeCss;
-      document.head.appendChild(customThemeStyle);
-    }
   }
 
   // Favicon and Name Logic
