@@ -279,7 +279,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Event Key Logic
-  const eventKey = JSON.parse(localStorage.getItem("eventKey")) || ["Ctrl", "E"];
+  const eventKey = JSON.parse(localStorage.getItem("eventKey")) || ["`"];
   const pLink = localStorage.getItem("pLink") || "https://classroom.google.com/";
   let pressedKeys = [];
 
