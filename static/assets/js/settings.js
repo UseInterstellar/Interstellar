@@ -19,8 +19,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const eventKeyInput = document.getElementById("eventKeyInput");
   const linkInput = document.getElementById("linkInput");
 
-  let eventKey = JSON.parse(localStorage.getItem("eventKey")) || ["Ctrl", "E"];
-  let eventKeyRaw = localStorage.getItem("eventKeyRaw") || "Ctrl,E";
+  let eventKey = JSON.parse(localStorage.getItem("eventKey")) || ["`"];
+  let eventKeyRaw = localStorage.getItem("eventKeyRaw") || "`";
   let pLink = localStorage.getItem("pLink") || "https://classroom.google.com/";
 
   eventKeyInput.value = eventKeyRaw;
@@ -58,17 +58,20 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("ab-settings-switch").checked = true;
   }
 
+  const backgroundInput = document.getElementById("background-input");
+  backgroundInput.value = localStorage.getItem("backgroundImage") || "";
+
   document.getElementById("save-button").addEventListener("click", () => {
-    const imageURL = document.getElementById("background-input").value.trim();
+    const imageURL = backgroundInput.value.trim();
     if (imageURL) {
       localStorage.setItem("backgroundImage", imageURL);
       document.body.style.backgroundImage = `url('${imageURL}')`;
-      document.getElementById("background-input").value = "";
     }
   });
 
   document.getElementById("reset-button").addEventListener("click", () => {
     localStorage.removeItem("backgroundImage");
+    backgroundInput.value = "";
     document.body.style.backgroundImage = "";
     window.location.reload();
   });
