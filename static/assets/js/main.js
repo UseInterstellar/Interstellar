@@ -1,12 +1,12 @@
-let qp;
+let isInTabMode;
 
 try {
-  qp = window.top.location.pathname === "/tabs";
+  isInTabMode = window.top.location.pathname === "/tabs";
 } catch {
   try {
-    qp = window.parent.location.pathname === "/tabs";
+    isInTabMode = window.parent.location.pathname === "/tabs";
   } catch {
-    qp = false;
+    isInTabMode = false;
   }
 }
 
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="f-nav-right">
         <a class="navbar-link" href="/./games"><i class="fa-solid fa-gamepad navbar-icon"></i><an>&#71;&#97;</an><an>&#109;&#101;&#115;</an></a>
         <a class="navbar-link" href="/./apps"><i class="fa-solid fa-phone navbar-icon"></i><an>&#65;&#112;</an><an>&#112;&#115;</an></a>
-        ${qp ? "" : '<a class="navbar-link" href="/./tabs"><i class="fa-solid fa-laptop navbar-icon"></i><an>&#84;&#97;</an><an>&#98;&#115;</an></a>'}
+        ${isInTabMode ? "" : '<a class="navbar-link" href="/./tabs"><i class="fa-solid fa-laptop navbar-icon"></i><an>&#84;&#97;</an><an>&#98;&#115;</an></a>'}
         <a class="navbar-link" href="/./settings"><i class="fa-solid fa-gear navbar-icon settings-icon"></i><an>&#83;&#101;&#116;</an><an>&#116;&#105;&#110;&#103;</an></a>
       </div>`;
     nav.innerHTML = html;
@@ -43,8 +43,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Theme Logic
   const themeid = localStorage.getItem("theme");
-  const themeEle = document.createElement("link");
-  themeEle.rel = "stylesheet";
   const themes = {
     catppuccinMocha: "/assets/css/themes/catppuccin/mocha.css",
     catppuccinMacchiato: "/assets/css/themes/catppuccin/macchiato.css",
@@ -55,12 +53,17 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   if (themes[themeid]) {
-    themeEle.href = themes[themeid];
-    document.body.appendChild(themeEle);
+    const themeLink = document.createElement("link");
+    themeLink.rel = "stylesheet";
+    themeLink.href = themes[themeid];
+    document.body.appendChild(themeLink);
   } else {
-    const customThemeEle = document.createElement("style");
-    customThemeEle.textContent = localStorage.getItem(`theme-${themeid}`);
-    document.head.appendChild(customThemeEle);
+    const customThemeCss = localStorage.getItem(`theme-${themeid}`);
+    if (customThemeCss) {
+      const customThemeStyle = document.createElement("style");
+      customThemeStyle.textContent = customThemeCss;
+      document.head.appendChild(customThemeStyle);
+    }
   }
 
   // Favicon and Name Logic
@@ -69,27 +72,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const selectedValue = localStorage.getItem("selectedOption");
 
   function setCloak(nameValue, iconUrl) {
-    const customName = localStorage.getItem("CustomName");
-    const customIcon = localStorage.getItem("CustomIcon");
+    const finalName = localStorage.getItem("CustomName") || nameValue;
+    const finalIcon = localStorage.getItem("CustomIcon") || iconUrl;
 
-    let FinalNameValue = nameValue;
-    let finalIconUrl = iconUrl;
-
-    if (customName) {
-      FinalNameValue = customName;
-    }
-    if (customIcon) {
-      finalIconUrl = customIcon;
-    }
-
-    if (finalIconUrl) {
-      icon.setAttribute("href", finalIconUrl);
-      localStorage.setItem("icon", finalIconUrl);
-    }
-    if (FinalNameValue) {
-      name.textContent = FinalNameValue;
-      localStorage.setItem("name", FinalNameValue);
-    }
+    if (finalIcon) icon.setAttribute("href", finalIcon);
+    if (finalName) name.textContent = finalName;
   }
 
   const options = {
@@ -296,10 +283,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.addEventListener("keydown", event => {
     pressedKeys.push(event.key);
-    if (pressedKeys.length > eventKey.length) {
-      pressedKeys.shift();
-    }
-    if (eventKey.every((key, index) => key === pressedKeys[index])) {
+    const recentKeys = pressedKeys.slice(-eventKey.length);
+    if (recentKeys.length === eventKey.length && eventKey.every((key, i) => key === recentKeys[i])) {
       window.location.href = pLink;
       pressedKeys = [];
     }
