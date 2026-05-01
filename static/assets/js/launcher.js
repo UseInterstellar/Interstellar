@@ -43,7 +43,7 @@ function handleAppClick(app) {
   // isInTabMode is declared in main.js
   if (app.local) {
     saveUrlToSession(selectedUrl);
-    window.location.href = isInTabMode ? selectedUrl : "rx";
+    window.location.href = isInTabMode ? selectedUrl : "tabs";
   } else if (app.local2) {
     saveUrlToSession(selectedUrl);
     window.location.href = selectedUrl;
