@@ -2,17 +2,6 @@ const isGamesPage = window.location.pathname === "/games";
 const isAppsPage = window.location.pathname === "/apps";
 const isToolsPage = window.location.pathname === "/gt";
 
-let isInTabMode = false;
-try {
-  isInTabMode = window.top.location.pathname === "/tabs";
-} catch {
-  try {
-    isInTabMode = window.parent.location.pathname === "/tabs";
-  } catch {
-    isInTabMode = false;
-  }
-}
-
 function getStorageKey(baseKey) {
   if (isGamesPage) return `G${baseKey}`;
   if (isToolsPage) return `T${baseKey}`;
@@ -51,6 +40,7 @@ function handleAppClick(app) {
     if (!selectedUrl) return false;
   }
 
+  // isInTabMode is declared in main.js
   if (app.local) {
     saveUrlToSession(selectedUrl);
     window.location.href = isInTabMode ? selectedUrl : "rx";

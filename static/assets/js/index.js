@@ -4,18 +4,6 @@ window.addEventListener("load", () => {
   });
 });
 
-let xl;
-
-try {
-  xl = window.top.location.pathname === "/tabs";
-} catch {
-  try {
-    xl = window.parent.location.pathname === "/tabs";
-  } catch {
-    xl = false;
-  }
-}
-
 const form = document.getElementById("fv");
 const input = document.getElementById("input");
 
@@ -23,7 +11,8 @@ if (form && input) {
   form.addEventListener("submit", async event => {
     event.preventDefault();
     try {
-      if (xl) await processUrl(input.value, "");
+      // isInTabMode is declared in main.js
+      if (isInTabMode) await processUrl(input.value, "");
       else await processUrl(input.value, "/tabs");
     } catch {
       await processUrl(input.value, "/tabs");
@@ -77,7 +66,11 @@ function go(value) {
 }
 
 function blank(value) {
-  processUrl(value);
+  processUrl(value, "");
+}
+
+function now(value) {
+  processUrl(value, "");
 }
 
 function dy(value) {
