@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
     nav.innerHTML = html;
   }
 
-  // Favicon and Name Logic 
+  // Favicon and Name Logic
   const icon = document.getElementById("tab-favicon");
   const title = document.getElementById("t");
   const cloakName = localStorage.getItem("CustomName") || localStorage.getItem("name");
