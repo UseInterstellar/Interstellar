@@ -129,7 +129,6 @@ document.addEventListener("DOMContentLoaded", event => {
     };
     particlesJS("particles-js", particlesConfig);
 
-
     window.addEventListener("click", e => {
       const pJS = window.pJSDom?.[0]?.pJS;
       if (!pJS) return;
@@ -138,7 +137,7 @@ document.addEventListener("DOMContentLoaded", event => {
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
       for (let i = 0; i < 30; i++) {
-        pJS.fn.vendors.destroypJS; 
+        pJS.fn.vendors.destroypJS;
         pJS.fn.modes.pushParticles(1, { pos_x: x, pos_y: y });
       }
     });
