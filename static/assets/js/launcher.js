@@ -50,12 +50,12 @@ function handleAppClick(app) {
   } else if (app.blank) {
     blank(selectedUrl, proxy);
   } else if (app.now) {
-    now(selectedUrl, proxy);
+    blank(selectedUrl, proxy);
     if (isInTabMode) window.location.href = selectedUrl;
   } else if (app.custom) {
     createCustomApp();
   } else if (app.dy) {
-    dy(selectedUrl);
+    useDynamic(selectedUrl);
   } else {
     go(selectedUrl, proxy);
     if (isInTabMode) blank(selectedUrl, proxy);

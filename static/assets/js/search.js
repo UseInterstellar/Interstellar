@@ -12,20 +12,21 @@ if (form && input) {
     event.preventDefault();
     try {
       // isInTabMode is declared in main.js
-      if (isInTabMode) await processUrl(input.value, "");
-      else await processUrl(input.value, "/tabs");
+      if (isInTabMode) await navigate(input.value, "");
+      else await navigate(input.value, "/tabs");
     } catch {
-      await processUrl(input.value, "/tabs");
+      await navigate(input.value, "/tabs");
     }
   });
 }
-function useScramjetPxy(proxyOverride) {
-  const p = proxyOverride ?? localStorage.getItem("pchoice");
-  return p === "sj";
+
+function isScramjet(proxyOverride) {
+  const choice = proxyOverride ?? localStorage.getItem("pchoice");
+  return choice === "sj";
 }
 
-async function getPxyUrl(url, proxyOverride) {
-  if (useScramjetPxy(proxyOverride)) {
+async function encodeUrl(url, proxyOverride) {
+  if (isScramjet(proxyOverride)) {
     if (window.__isSjReady) {
       await window.__isSjReady;
     }
@@ -37,49 +38,44 @@ async function getPxyUrl(url, proxyOverride) {
   return `/uv/${__uv$config.encodeUrl(url)}`;
 }
 
-async function processUrl(value, path, proxyOverride) {
+async function navigate(value, path, proxyOverride) {
   let url = value.trim();
   const engine = localStorage.getItem("engine");
   const searchUrl = engine ? engine : "https://search.brave.com/search?q=";
 
-  if (!isUrl(url)) {
+  if (!isValidUrl(url)) {
     url = searchUrl + url;
   } else if (!(url.startsWith("https://") || url.startsWith("http://"))) {
     url = `https://${url}`;
   }
 
   const pchoice = proxyOverride ?? localStorage.getItem("pchoice");
-  const pxyUrl = await getPxyUrl(url, pchoice);
-  sessionStorage.setItem("GoUrl", pxyUrl);
+  const proxyUrl = await encodeUrl(url, pchoice);
+  sessionStorage.setItem("GoUrl", proxyUrl);
 
   if (pchoice === "dy") {
     window.location.href = `/uv/dynamic/${__uv$config.encodeUrl(url)}`;
   } else if (path) {
     location.href = path;
   } else {
-    window.location.href = pxyUrl;
+    window.location.href = proxyUrl;
   }
 }
 
+// Open link in the tabs page
 function go(value, proxyOverride) {
-  processUrl(value, "/tabs", proxyOverride);
+  navigate(value, "/tabs", proxyOverride);
 }
 
+// Open link in about:blank
 function blank(value, proxyOverride) {
-  processUrl(value, "", proxyOverride);
+  navigate(value, "", proxyOverride);
 }
 
-function now(value, proxyOverride) {
-  processUrl(value, "", proxyOverride);
+function useDynamic(value) {
+  navigate(value, `/uv/dynamic/${__uv$config.encodeUrl(value)}`, "dy");
 }
 
-function dy(value) {
-  processUrl(value, `/uv/dynamic/${__uv$config.encodeUrl(value)}`, "dy");
-}
-
-function isUrl(val = "") {
-  if (/^http(s?):\/\//.test(val) || (val.includes(".") && val.substr(0, 1) !== " ")) {
-    return true;
-  }
-  return false;
+function isValidUrl(val = "") {
+  return /^http(s?):\/\//.test(val) || (val.includes(".") && val[0] !== " ");
 }
