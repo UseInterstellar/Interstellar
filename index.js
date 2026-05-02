@@ -37,7 +37,7 @@ if (config.challenge !== false) {
   app.use(basicAuth({ users: config.users, challenge: true }));
 }
 
-app.get("/e/*", async (req, res, next) => {
+app.get("/gh-games/*", async (req, res, next) => {
   try {
     if (cache.has(req.path)) {
       const { data, contentType, timestamp } = cache.get(req.path);
@@ -50,9 +50,9 @@ app.get("/e/*", async (req, res, next) => {
     }
 
     const baseUrls = {
-      "/e/1/": "https://raw.githubusercontent.com/qrs/x/fixy/",
-      "/e/2/": "https://raw.githubusercontent.com/3v1/V5-Assets/main/",
-      "/e/3/": "https://raw.githubusercontent.com/3v1/V5-Retro/master/",
+      "/gh-games/1/": "https://raw.githubusercontent.com/qrs/x/fixy/",
+      "/gh-games/2/": "https://raw.githubusercontent.com/3v1/V5-Assets/main/",
+      "/gh-games/3/": "https://raw.githubusercontent.com/3v1/V5-Retro/master/",
     };
 
     let reqTarget;

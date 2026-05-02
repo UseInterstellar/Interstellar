@@ -310,13 +310,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const storedUrl = sessionStorage.getItem("URL");
 
     if (tabCounter === 1) {
-      newIframe.src = goUrl ? (goUrl.includes("/e/") ? window.location.origin + goUrl : resolveStoredUrl(goUrl)) : "/";
+      newIframe.src = goUrl ? (goUrl.includes("/gh-games/") ? window.location.origin + goUrl : resolveStoredUrl(goUrl)) : "/";
     } else {
       if (storedUrl) {
         newIframe.src = resolveStoredUrl(storedUrl);
         sessionStorage.removeItem("URL");
       } else if (goUrl) {
-        newIframe.src = goUrl.includes("/e/") ? window.location.origin + goUrl : resolveStoredUrl(goUrl);
+        newIframe.src = goUrl.includes("/gh-games/") ? window.location.origin + goUrl : resolveStoredUrl(goUrl);
       } else {
         newIframe.src = "/";
       }

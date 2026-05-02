@@ -292,7 +292,7 @@
   },
   {
     "name": "Stickman Hook",
-    "link": "/e/stickman-hook/index.html",
+    "link": "/gh-games/stickman-hook/index.html",
     "image": "/assets/media/icons/stickmanhook.webp",
     "categories": ["all", "local"]
   },
@@ -390,7 +390,7 @@
   },
   {
     "name": "Jetpack Joyride",
-    "link": "/e/jetpack-joyride/index.html",
+    "link": "/gh-games/jetpack-joyride/index.html",
     "image": "/assets/media/icons/jetpackjoyride.webp",
     "categories": ["all", "local"]
   },
@@ -558,7 +558,7 @@
   },
   {
     "name": "Duck Life 4",
-    "link": "/e/ducklife4/index.html",
+    "link": "/gh-games/ducklife4/index.html",
     "image": "/assets/media/icons/dl4.webp",
     "categories": ["all", "local"],
     "load": true
@@ -685,7 +685,7 @@
   },
   {
     "name": "Web Retro",
-    "link": "/e/index.html",
+    "link": "/gh-games/index.html",
     "image": "/assets/media/icons/webretro.webp",
     "categories": ["all,", "emu", "local"]
   },
@@ -709,7 +709,7 @@
   },
   {
     "name": "1",
-    "link": "/e/1/1/index.html",
+    "link": "/gh-games/1/1/index.html",
     "image": "/assets/media/icons/1.webp",
     "categories": ["all", "local"]
   },
@@ -865,7 +865,7 @@
   },
   {
     "name": "Cluster Rush",
-    "link": "/e/2/Cluster-Rush/index.html",
+    "link": "/gh-games/2/Cluster-Rush/index.html",
     "image": "/assets/media/icons/cluster-rush.webp",
     "categories": ["all", "local"]
   },
@@ -895,7 +895,7 @@
   },
   {
     "name": "Doge Miner",
-    "link": "/e/1/DogeMiner/index.html",
+    "link": "/gh-games/1/DogeMiner/index.html",
     "image": "/assets/media/icons/doge-miner-1.webp",
     "categories": ["all", "local"]
   },
@@ -1039,7 +1039,7 @@
   },
   {
     "name": "Idle Breakout",
-    "link": "/e/1/idle-breakout/index.html",
+    "link": "/gh-games/1/idle-breakout/index.html",
     "image": "/assets/media/icons/idlebreakout.webp",
     "categories": ["all", "local"]
   },
@@ -1105,7 +1105,7 @@
   },
   {
     "name": "Monkey Mart",
-    "link": "/e/2/monkey-mart/index.html",
+    "link": "/gh-games/2/monkey-mart/index.html",
     "image": "/assets/media/icons/mm.webp",
     "categories": ["all", "local"]
   },
@@ -1237,7 +1237,7 @@
   },
   {
     "name": "Pizza Tower",
-    "link": "https://gamaverse.com/c/e/g/pizza-tower-1678640389/index.html",
+    "link": "https://gamaverse.com/c/gh-games/g/pizza-tower-1678640389/index.html",
     "image": "/assets/media/icons/pizza-tower.webp",
     "categories": ["all"]
   },
@@ -1531,7 +1531,7 @@
   },
   {
     "name": "Retro Bowl",
-    "link": "/e/2/retro/index.html",
+    "link": "/gh-games/2/retro/index.html",
     "image": "/assets/media/icons/retro.webp",
     "categories": ["all,", "sports", "local"]
   },
@@ -1741,19 +1741,19 @@
   },
   {
     "name": "Minecraft 1.5.2 (Eaglercraft)",
-    "link": "/e/2/eag15/index.html",
+    "link": "/gh-games/2/eag15/index.html",
     "image": "/assets/media/icons/mc.webp",
     "categories": ["all", "2P", "emu", "local"]
   },
   {
     "name": "Minecraft 1.8 (Eaglercraft)",
-    "link": "/e/2/eag18/offline.html",
+    "link": "/gh-games/2/eag18/offline.html",
     "image": "/assets/media/icons/mc.webp",
     "categories": ["all", "2P", "emu", "local"]
   },
   {
     "name": "Minecraft 1.8 (Eagler WASM)",
-    "link": "/e/2/eag18/wasm.html",
+    "link": "/gh-games/2/eag18/wasm.html",
     "image": "/assets/media/icons/mc.webp",
     "categories": ["all", "2P", "emu", "local"]
   },
@@ -1765,43 +1765,43 @@
   },
   {
     "name": "2048",
-    "link": "/e/1/2048/index.html",
+    "link": "/gh-games/1/2048/index.html",
     "image": "/assets/media/icons/2048.webp",
     "categories": ["all", "local"]
   },
   {
     "name": "2048 Multitasking",
-    "link": "/e/1/2048-multitask/index.html",
+    "link": "/gh-games/1/2048-multitask/index.html",
     "image": "/assets/media/icons/2048.webp",
     "categories": ["all", "local"]
   },
   {
     "name": "Vex 7",
-    "link": "/e/1/vex7/index.html",
+    "link": "/gh-games/1/vex7/index.html",
     "image": "/assets/media/icons/vex7.webp",
     "categories": ["all", "local"]
   },
   {
     "name": "Vex 6",
-    "link": "/e/1/vex6/index.html",
+    "link": "/gh-games/1/vex6/index.html",
     "image": "/assets/media/icons/vex6.webp",
     "categories": ["all", "local"]
   },
   {
     "name": "Vex 5",
-    "link": "/e/1/vex5/index.html",
+    "link": "/gh-games/1/vex5/index.html",
     "image": "/assets/media/icons/vex5.webp",
     "categories": ["all", "local"]
   },
   {
     "name": "Vex 3",
-    "link": "/e/1/vex3/index.html",
+    "link": "/gh-games/1/vex3/index.html",
     "image": "/assets/media/icons/vex3.webp",
     "categories": ["all", "local"]
   },
   {
     "name": "Vex 4",
-    "link": "/e/1/vex4/index.html",
+    "link": "/gh-games/1/vex4/index.html",
     "image": "/assets/media/icons/vex4.webp",
     "categories": ["all", "local"]
   },
@@ -1861,7 +1861,7 @@
   },
   {
     "name": "Space Company",
-    "link": "/e/1/space-company/index.html",
+    "link": "/gh-games/1/space-company/index.html",
     "image": "/assets/media/icons/sc.png",
     "categories": ["all", "local"]
   },
@@ -1915,7 +1915,7 @@
   },
   {
     "name": "Particle Clicker",
-    "link": "/e/1/particle-clicker/index.html",
+    "link": "/gh-games/1/particle-clicker/index.html",
     "image": "/assets/media/icons/pc.png",
     "categories": ["all,", "local"]
   },
