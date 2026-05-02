@@ -19,42 +19,42 @@
 </head>
 
 <body id="no">
-  <nav class="nav" id="right-side-nav">
+  <nav class="browser" id="right-side-nav">
     <ul id="tab-list"></ul>
     <button title="add-tab" id="add-tab">
       <i class="fa-solid fa-plus"></i>
     </button>
   </nav>
-  <div class="nav-bar">
-    <div class="nav-container">
-      <div class="nav-left">
-        <button title="Home Page" id="home-page" class="nav-button" onclick="goHome()">
+  <div class="browser-bar">
+    <div class="browser-container">
+      <div class="browser-left">
+        <button title="Home Page" id="home-page" class="browser-button" onclick="goHome()">
           <i class="fa-solid fa-house"></i>
         </button>
-        <button title="Back Arrow" class="nav-button" onclick="goBack()">
+        <button title="Back Arrow" class="browser-button" onclick="goBack()">
           <i class="fa-solid fa-arrow-left"></i>
         </button>
-        <button title="Forward Arrow" class="nav-button" onclick="goForward()">
+        <button title="Forward Arrow" class="browser-button" onclick="goForward()">
           <i class="fa-solid fa-arrow-right"></i>
         </button>
-        <button title="Reload" onclick="reload()" class="nav-button">
+        <button title="Reload" onclick="reload()" class="browser-button">
           <i class="fa-solid fa-rotate-right"></i>
         </button>
-        <form id="fv" class="navpost" method="POST">
+        <form id="fv" class="browser-post" method="POST">
           <input id="input" class="bar" placeholder="Search or enter a new URL" type="text" />
         </form>
       </div>
-      <div class="nav-right">
-        <button title="Fullscreen" id="fullscreen-button" class="nav-button nav-btn-right" onclick="toggleFullscreen()">
+      <div class="browser-right">
+        <button title="Fullscreen" id="fullscreen-button" class="browser-button browser-button-right" onclick="toggleFullscreen()">
           <i class="fa-solid fa-expand"></i>
         </button>
-        <button title="Window Popout" id="popout-button" class="nav-button nav-btn-right" onclick="popoutTab()">
+        <button title="Window Popout" id="popout-button" class="browser-button browser-button-right" onclick="popoutTab()">
           <i class="fa-solid fa-up-right-from-square"></i>
         </button>
-        <button title="Inspect" class="nav-button nav-btn-right" onclick="toggleDevTools()">
+        <button title="Inspect" class="browser-button browser-button-right" onclick="toggleDevTools()">
           <i class="fa-solid fa-code"></i>
         </button>
-        <button title="Tabs" id="tabs-button" class="nav-button nav-btn-right">
+        <button title="Tabs" id="tabs-button" class="browser-button browser-button-right">
           <i class="fa-solid fa-magnifying-glass-minus"></i>
         </button>
       </div>
