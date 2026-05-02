@@ -1,10 +1,8 @@
 const isGamesPage = window.location.pathname === "/games";
 const isAppsPage = window.location.pathname === "/apps";
-const isToolsPage = window.location.pathname === "/gt";
 
 function getStorageKey(baseKey) {
   if (isGamesPage) return `G${baseKey}`;
-  if (isToolsPage) return `T${baseKey}`;
   if (isAppsPage) return `A${baseKey}`;
   return baseKey;
 }
@@ -40,6 +38,8 @@ function handleAppClick(app) {
     if (!selectedUrl) return false;
   }
 
+  const proxy = app.proxy;
+
   // isInTabMode is declared in main.js
   if (app.local) {
     saveUrlToSession(selectedUrl);
@@ -48,17 +48,17 @@ function handleAppClick(app) {
     saveUrlToSession(selectedUrl);
     window.location.href = selectedUrl;
   } else if (app.blank) {
-    blank(selectedUrl);
+    blank(selectedUrl, proxy);
   } else if (app.now) {
-    now(selectedUrl);
+    now(selectedUrl, proxy);
     if (isInTabMode) window.location.href = selectedUrl;
   } else if (app.custom) {
     createCustomApp();
   } else if (app.dy) {
     dy(selectedUrl);
   } else {
-    go(selectedUrl);
-    if (isInTabMode) blank(selectedUrl);
+    go(selectedUrl, proxy);
+    if (isInTabMode) blank(selectedUrl, proxy);
   }
 
   return false;
@@ -238,7 +238,6 @@ function renderAppCard(app, appIndex, isCustom = false) {
 
 function getJsonPath() {
   if (isGamesPage) return "/assets/json/games.min.json";
-  if (isToolsPage) return "/assets/json/t.min.json";
   if (isAppsPage) return "/assets/json/apps.min.json";
   return "/assets/json/apps.min.json";
 }

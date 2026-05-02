@@ -19,13 +19,13 @@ if (form && input) {
     }
   });
 }
-function useScramjetPxy() {
-  const p = localStorage.getItem("pchoice");
+function useScramjetPxy(proxyOverride) {
+  const p = proxyOverride ?? localStorage.getItem("pchoice");
   return p === "sj";
 }
 
-async function getPxyUrl(url) {
-  if (useScramjetPxy()) {
+async function getPxyUrl(url, proxyOverride) {
+  if (useScramjetPxy(proxyOverride)) {
     if (window.__isSjReady) {
       await window.__isSjReady;
     }
@@ -37,7 +37,7 @@ async function getPxyUrl(url) {
   return `/uv/${__uv$config.encodeUrl(url)}`;
 }
 
-async function processUrl(value, path) {
+async function processUrl(value, path, proxyOverride) {
   let url = value.trim();
   const engine = localStorage.getItem("engine");
   const searchUrl = engine ? engine : "https://search.brave.com/search?q=";
@@ -48,9 +48,9 @@ async function processUrl(value, path) {
     url = `https://${url}`;
   }
 
-  const pxyUrl = await getPxyUrl(url);
+  const pchoice = proxyOverride ?? localStorage.getItem("pchoice");
+  const pxyUrl = await getPxyUrl(url, pchoice);
   sessionStorage.setItem("GoUrl", pxyUrl);
-  const pchoice = localStorage.getItem("pchoice");
 
   if (pchoice === "dy") {
     window.location.href = `/uv/dynamic/${__uv$config.encodeUrl(url)}`;
@@ -61,20 +61,20 @@ async function processUrl(value, path) {
   }
 }
 
-function go(value) {
-  processUrl(value, "/tabs");
+function go(value, proxyOverride) {
+  processUrl(value, "/tabs", proxyOverride);
 }
 
-function blank(value) {
-  processUrl(value, "");
+function blank(value, proxyOverride) {
+  processUrl(value, "", proxyOverride);
 }
 
-function now(value) {
-  processUrl(value, "");
+function now(value, proxyOverride) {
+  processUrl(value, "", proxyOverride);
 }
 
 function dy(value) {
-  processUrl(value, `/uv/dynamic/${__uv$config.encodeUrl(value)}`);
+  processUrl(value, `/uv/dynamic/${__uv$config.encodeUrl(value)}`, "dy");
 }
 
 function isUrl(val = "") {
