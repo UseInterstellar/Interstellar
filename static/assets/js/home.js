@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", event => {
     const particlesConfig = {
       particles: {
         number: {
-          value: 350,
+          value: 200,
           density: {
             enable: true,
             value_area: 800,
@@ -84,12 +84,12 @@ document.addEventListener("DOMContentLoaded", event => {
           },
         },
         size: {
-          value: 3,
+          value: 4,
           random: true,
           anim: {
             enable: true,
             speed: 1.1,
-            size_min: 0.3,
+            size_min: 0.1,
             sync: false,
           },
         },
@@ -98,22 +98,23 @@ document.addEventListener("DOMContentLoaded", event => {
         },
         move: {
           enable: true,
-          speed: 3,
+          speed: 4,
           direction: "none",
           random: true,
           straight: true,
           out_mode: "out",
           bounce: false,
+          variations: true,
         },
       },
       interactivity: {
-        detect_on: "canvas",
+        detect_on: "window",
         events: {
           onhover: {
             enable: false,
           },
           onclick: {
-            enable: true,
+            enable: false,
             mode: "push",
           },
           resize: true,
@@ -127,6 +128,20 @@ document.addEventListener("DOMContentLoaded", event => {
       retina_detect: true,
     };
     particlesJS("particles-js", particlesConfig);
+
+
+    window.addEventListener("click", e => {
+      const pJS = window.pJSDom?.[0]?.pJS;
+      if (!pJS) return;
+      const canvas = pJS.canvas.el;
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      for (let i = 0; i < 30; i++) {
+        pJS.fn.vendors.destroypJS; 
+        pJS.fn.modes.pushParticles(1, { pos_x: x, pos_y: y });
+      }
+    });
   }
 });
 // Splash texts
