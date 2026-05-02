@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.appendChild(script);
   }
 
-  const nav = document.querySelector(".f-nav");
+  const nav = document.querySelector(".nav-bar");
 
   if (nav) {
     const themeId = localStorage.getItem("theme");
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <div id="icon-container">
         <a class="icon" href="/./"><img alt="nav" id="INImg" src="${LogoUrl}"/></a>
       </div>
-      <div class="f-nav-right">
+      <div class="nav-bar-right">
         <a class="navbar-link" href="/./games"><i class="fa-solid fa-gamepad navbar-icon"></i><an>&#71;&#97;</an><an>&#109;&#101;&#115;</an></a>
         <a class="navbar-link" href="/./apps"><i class="fa-solid fa-phone navbar-icon"></i><an>&#65;&#112;</an><an>&#112;&#115;</an></a>
         ${isInTabMode ? "" : '<a class="navbar-link" href="/./tabs"><i class="fa-solid fa-laptop navbar-icon"></i><an>&#84;&#97;</an><an>&#98;&#115;</an></a>'}

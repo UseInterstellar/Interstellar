@@ -6,7 +6,7 @@
       "opsz" 48;
 }
 
-.f-nav #icon-container {
+.nav-bar #icon-container {
    display: flex;
    align-items: center;
 }
@@ -17,13 +17,13 @@ img {
    padding-top: 5px;
 }
 
-.f-nav-container {
+.nav-bar-container {
    min-width: 5vw;
    min-height: 10vh;
    display: inline;
 }
 
-.f-nav {
+.nav-bar {
    top: 0;
    letter-spacing: 2px;
    font-size: 22px;
@@ -44,12 +44,12 @@ img {
    position: fixed;
 }
 
-.f-nav .icon:hover {
+.nav-bar .icon:hover {
    transform: translateY(-15%) scale(1.03);
    font-weight: 800;
 }
 
-.f-nav .icon {
+.nav-bar .icon {
    position: absolute;
    float: left;
    text-transform: uppercase;
@@ -66,7 +66,7 @@ img {
    top: 18%;
 }
 
-.f-nav-right {
+.nav-bar-right {
    position: absolute;
    top: 50%;
    transform: translateY(-50%);
@@ -77,7 +77,7 @@ img {
    right: 2%;
 }
 
-.f-nav-right .navbar-link {
+.nav-bar-right .navbar-link {
    margin-left: 10px;
    text-transform: uppercase;
    cursor: pointer;
@@ -92,7 +92,7 @@ img {
 }
 
 @media (orientation: portrait) {
-   .f-nav-right .navbar-link {
+   .nav-bar-right .navbar-link {
       margin-left: 10px;
       text-transform: uppercase;
       font-size: 2.5vw;
@@ -106,7 +106,7 @@ img {
       transition: all 0.2s ease;
       transform: translateX(0%);
    }
-   .f-nav-right .navbar-link:hover {
+   .nav-bar-right .navbar-link:hover {
       text-transform: uppercase;
       cursor: pointer;
       font-weight: 800;
@@ -117,7 +117,7 @@ img {
    }
 }
 
-.f-nav-right .navbar-link:hover {
+.nav-bar-right .navbar-link:hover {
    text-transform: uppercase;
    cursor: pointer;
    font-weight: 800;
@@ -142,13 +142,13 @@ img {
 }
 
 @media (max-width: 768px) {
-   .f-nav-right .navbar-link an {
+   .nav-bar-right .navbar-link an {
       display: none;
    }
-   .f-nav-right .fa-solid {
+   .nav-bar-right .fa-solid {
       display: inline;
    }
-   .f-nav-right .navbar-link {
+   .nav-bar-right .navbar-link {
       font-size: 4.5vw;
    }
 }
