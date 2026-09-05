@@ -259,6 +259,44 @@ document.addEventListener("DOMContentLoaded", () => {
     for (const frame of iframeContainer.querySelectorAll("iframe")) frame.classList.remove("active");
   }
 
+  function openInNewTab(destination) {
+    const proxyUrl =
+      destination.startsWith("/") || destination.startsWith(window.location.origin)
+        ? destination
+        : window.__encodeProxyUrl
+          ? window.__encodeProxyUrl(destination)
+          : `/uv/${__uv$config.encodeUrl(destination)}`;
+    sessionStorage.setItem("URL", proxyUrl);
+    createNewTab();
+  }
+
+  // The sandbox has no allow-top-navigation, so "_top" from inside a tab is dead on arrival.
+  // Grab it here and open the destination in a new tab; leave every other target alone.
+  function handleTopNavigation(event) {
+    const isSubmit = event.type === "submit";
+    const source = isSubmit ? event.target : event.target?.closest?.("a[target], area[target]");
+    if (source?.target?.toLowerCase() !== "_top") return;
+
+    let destination;
+    if (isSubmit) {
+      // Can't fold a POST body into a URL, so just let POST forms submit in place.
+      // (A scripted form.submit() fires no submit event — the shim in createNewTab handles it.)
+      if ((source.method || "get").toLowerCase() !== "get") {
+        source.target = "_self";
+        return;
+      }
+      const action = new URL(source.action, source.ownerDocument.baseURI);
+      action.search = new URLSearchParams(new FormData(source)).toString();
+      destination = action.href;
+    } else {
+      destination = source.href;
+    }
+    if (!destination) return;
+
+    event.preventDefault();
+    openInNewTab(destination);
+  }
+
   function createNewTab() {
     const newTab = document.createElement("li");
     const tabTitle = document.createElement("span");
@@ -299,6 +337,22 @@ document.addEventListener("DOMContentLoaded", () => {
           createNewTab();
           return null;
         };
+
+        // Some logins frame-bust by scripting form.submit() to _top. That fires no submit
+        // event for handleTopNavigation to catch, so retarget it here and let the POST run
+        // in this tab.
+        const formProto = newIframe.contentWindow.HTMLFormElement.prototype;
+        for (const method of ["submit", "requestSubmit"]) {
+          const original = formProto[method];
+          formProto[method] = function (...args) {
+            if (this.target?.toLowerCase() === "_top") this.target = "_self";
+            return original.apply(this, args);
+          };
+        }
+
+        const doc = newIframe.contentDocument;
+        doc.addEventListener("click", handleTopNavigation, true);
+        doc.addEventListener("submit", handleTopNavigation, true);
       } catch {}
       updateAddressBar();
     });
