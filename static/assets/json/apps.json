@@ -50,12 +50,6 @@
     "categories": ["all"]
   },
   {
-    "name": "Character AI",
-    "link": "https://now.gg/iframe/snippet?app_pkg=ai.character.app&partner=interstellar",
-    "image": "/assets/media/icons/characterai.webp",
-    "categories": ["all", "emu", "android"]
-  },
-  {
     "name": "Aptoide",
     "link": "https://now.gg/iframe/snippet?app_pkg=com.aptoide.partners.nowgg.store&partner=interstellar",
     "image": "/assets/media/icons/aptoide.webp",
@@ -358,9 +352,7 @@
     "name": "Outlook",
     "link": "https://outlook.live.com/",
     "image": "/assets/media/icons/outlook.webp",
-    "categories": ["all", "mail"],
-    "dy": "true",
-    "partial": "true"
+    "categories": ["all", "mail"]
   },
   {
     "name": "Snapchat",
