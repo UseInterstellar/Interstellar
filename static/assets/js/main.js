@@ -25,7 +25,7 @@
   }
 
   const PROXY_KEY = "proxy";
-  const ALLOWED = ["uv", "sj", "dy"];
+  const ALLOWED = ["uv", "sj"];
   const DEFAULT = "uv";
 
   function initProxy() {

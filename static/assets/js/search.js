@@ -111,7 +111,6 @@ async function encodeUrl(url, proxyOverride) {
     }
   }
 
-  if (proxyOverride === "dy") return `/uv/dynamic/${window.encode.xor(url)}`;
   return `/uv/${__uv$config.encodeUrl ? __uv$config.encodeUrl(url) : window.encode.xor(url)}`;
 }
 
@@ -132,9 +131,7 @@ async function navigate(value, path, proxyOverride) {
   const proxyUrl = await encodeUrl(url, proxyChoice);
   sessionStorage.setItem("GoUrl", proxyUrl);
 
-  if (proxyChoice === "dy") {
-    window.location.href = `/uv/dynamic/${window.encode.xor(url)}`;
-  } else if (path) {
+  if (path) {
     location.href = path;
   } else {
     window.location.href = proxyUrl;
@@ -148,10 +145,6 @@ function go(value, proxyOverride) {
 // Open link in about:blank
 function blank(value, proxyOverride) {
   navigate(value, "", proxyOverride);
-}
-
-function useDynamic(value) {
-  navigate(value, `/uv/dynamic/${window.encode.xor(value)}`, "dy");
 }
 
 function isValidUrl(val = "") {

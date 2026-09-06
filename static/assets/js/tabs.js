@@ -15,23 +15,15 @@ async function encodeProxyUrl(url) {
     if (window.__isSjReady) await window.__isSjReady;
     if (window.__isSj?.encodeUrl) return window.__isSj.encodeUrl(url);
   }
-  if (localStorage.getItem("proxy") === "dy") return `/uv/dynamic/${window.encode.xor(url)}`;
   return `/uv/${__uv$config.encodeUrl ? __uv$config.encodeUrl(url) : window.encode.xor(url)}`;
 }
 
 function encodeProxyUrlSync(url) {
   if (isScramjetEnabled() && window.__isSj?.encodeUrl) return window.__isSj.encodeUrl(url);
-  if (localStorage.getItem("proxy") === "dy") return `/uv/dynamic/${window.encode.xor(url)}`;
   return `/uv/${__uv$config.encodeUrl ? __uv$config.encodeUrl(url) : window.encode.xor(url)}`;
 }
 
 window.__encodeProxyUrl = encodeProxyUrlSync;
-
-function decodeDynamicPath(input) {
-  if (!input) return input;
-  const [str, ...search] = input.split("?");
-  return window.decode.xor(str) + (search.length ? `?${search.join("?")}` : "");
-}
 
 function updateAddressBar() {
   const activeIframe = document.querySelector("#frame-container iframe.active");
@@ -56,10 +48,6 @@ function updateAddressBar() {
     } else {
       input.value = currentUrl;
     }
-  } else if (currentUrl.includes("/uv/dynamic/")) {
-    const path = currentUrl.replace(window.location.origin, "").replace("/uv/dynamic/", "");
-    localStorage.setItem("decoded", path);
-    input.value = decodeDynamicPath(path);
   } else if (currentUrl.includes("/uv/")) {
     const path = currentUrl.replace(window.location.origin, "").replace("/uv/", "");
     localStorage.setItem("decoded", path);
@@ -260,12 +248,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function openInNewTab(destination) {
-    const proxyUrl =
-      destination.startsWith("/") || destination.startsWith(window.location.origin)
-        ? destination
-        : window.__encodeProxyUrl
-          ? window.__encodeProxyUrl(destination)
-          : `/uv/${__uv$config.encodeUrl(destination)}`;
+    const proxyUrl = destination.startsWith("/") || destination.startsWith(window.location.origin) ? destination : window.__encodeProxyUrl ? window.__encodeProxyUrl(destination) : `/uv/${__uv$config.encodeUrl(destination)}`;
     sessionStorage.setItem("URL", proxyUrl);
     createNewTab();
   }

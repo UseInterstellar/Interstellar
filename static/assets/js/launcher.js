@@ -54,8 +54,6 @@ function handleAppClick(app) {
     if (isInTabMode) window.location.href = selectedUrl;
   } else if (app.custom) {
     createCustomApp();
-  } else if (app.dy) {
-    useDynamic(selectedUrl);
   } else {
     go(selectedUrl, proxy);
     if (isInTabMode) blank(selectedUrl, proxy);
@@ -222,7 +220,7 @@ function renderAppCard(app, appIndex, isCustom = false) {
     app.say = app.say || "This app may experience excessive loading times.";
   } else if (app.partial) {
     paragraph.style.color = "yellow";
-    app.say = app.say || "This app is currently experiencing some issues, it may not work for you. (Dynamic doesn't work in about:blank)";
+    app.say = app.say || "This app is currently experiencing some issues, it may not work for you.";
   }
 
   link.appendChild(image);

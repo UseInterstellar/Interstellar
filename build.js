@@ -22,10 +22,8 @@ const SRC_DIR = path.join(process.cwd(), "static");
 const DIST_DIR = path.join(process.cwd(), "dist");
 const JS_DIR = path.join(DIST_DIR, "assets", "js");
 const UV_DIR = path.join(DIST_DIR, "assets", "ultraviolet");
-const DYNAMIC_DIR = path.join(DIST_DIR, "assets", "dynamic");
 
 const UV_PREFIX = "ultraviolet.";
-const DYNAMIC_PREFIX = "dynamic.";
 
 const KEEP_IN_PLACE = new Set();
 
@@ -37,24 +35,15 @@ const SKIP_OBFUSCATE = new Set([
   "scramjet.sync.js",
   "sj-tp.js",
   "ultraviolet.config.js",
-  // Dynamic's rewriter (acorn parser + AST transform + codegen) runs in the service
-  // worker for every proxied JS file. Obfuscating it multiplies that cost per request,
-  // same reason scramjet.* is skipped above.
-  "dynamic.worker.js",
-  "dynamic.client.js",
-  "dynamic.handler.js",
-  "dynamic.html.js",
   // Ultraviolet's bundle is the largest emitted file when obfuscated
   // (784 KB -> 4.2 MB) and the service worker imports it on every load.
   "ultraviolet.bundle.js",
 ]);
 
-const OLD_DYNAMIC_PREFIX = "/assets/dynamic/";
 const OLD_UV_PREFIX = "/assets/ultraviolet/";
 
 const OLD_UV_SCOPE = "/uv/";
 const OLD_SCRAMJET_SCOPE = "/uv/scramjet/";
-const OLD_DYNAMIC_SCOPE = "/uv/dynamic/";
 
 const WORDS = [
   "api",
@@ -347,7 +336,6 @@ function getUrlCodecFunctions(codec, key) {
 function createProxyCodecs() {
   return {
     uv: randomCodecSpec(URL_CODEC_NAMES),
-    dynamic: randomCodecSpec(URL_CODEC_NAMES),
     scramjet: randomCodecSpec(URL_CODEC_NAMES),
   };
 }
@@ -371,78 +359,12 @@ function patchOrFail(content, pattern, replacement, label, required = true) {
   return content.replace(pattern, replacement);
 }
 
-// Local patches on the vendored Dynamic bundles. A vendor drop or a formatter reflow
-// aborts the build instead of shipping a half-patched proxy. See dynamic-changes.md.
-const FIX2_GUARD = `("PropertyDefinition"!=t.type||t.key!=e||t.computed)`;
-const FIX3_GUARD = `"MetaProperty"==e.object.type`;
-const FIX4_GUARD = `"null"===e.origin?e.href:`;
-const FIX5_GUARD = `m.set(i,v.bind(e))`;
-const LOCAL_PATCH_ASSERTIONS = {
-  "dynamic.worker.js": [
-    ["Fix 1 html module filename", `[["html","dynamic.html.js"]]`, 1],
-    ["Fix 2 PropertyDefinition.key guard", FIX2_GUARD, 1],
-    ["Fix 3 import.meta.url base", FIX3_GUARD, 1],
-    ["Fix 4 opaque-origin guard", FIX4_GUARD, 1],
-  ],
-  "dynamic.client.js": [
-    ["Fix 5 proxy bind", FIX5_GUARD, 1],
-    ["Fix 2 PropertyDefinition.key guard", FIX2_GUARD, 1],
-    ["Fix 3 import.meta.url base", FIX3_GUARD, 1],
-    ["Fix 4 opaque-origin guard", FIX4_GUARD, 1],
-  ],
-  "dynamic.handler.js": [
-    ["Fix 5 proxy bind", FIX5_GUARD, 1],
-    ["Fix 2 PropertyDefinition.key guard", FIX2_GUARD, 1],
-    ["Fix 3 import.meta.url base", FIX3_GUARD, 1],
-    ["Fix 4 opaque-origin guard", FIX4_GUARD, 1],
-  ],
-};
-
-function assertLocalPatches(content, basename) {
-  const checks = LOCAL_PATCH_ASSERTIONS[basename];
-  if (!checks) return content;
-  for (const [label, needle, expected] of checks) {
-    const found = content.split(needle).length - 1;
-    if (found !== expected) {
-      throw new CodecPatchError(
-        `${basename}: local patch "${label}" expected ${expected} occurrence(s) in the minified source, found ${found}. The vendor bundle or the minifier changed - re-apply the patch (see static/assets/dynamic/dynamic-changes.md).`,
-      );
-    }
-  }
-  return content;
-}
-
 function patchProxyCodecs(content, basename, proxyCodecs) {
   if (basename === "ultraviolet.config.js") {
     const { codec, key } = parseCodecSpec(proxyCodecs.uv);
     const uvCodec = getUrlCodecFunctions(codec, key);
     content = patchOrFail(content, /encodeUrl:\s*Ultraviolet\.codec\.\w+\.encode,/, `encodeUrl: ${uvCodec.encode},`, "ultraviolet.config.js encodeUrl");
     content = patchOrFail(content, /decodeUrl:\s*Ultraviolet\.codec\.\w+\.decode,/, `decodeUrl: ${uvCodec.decode},`, "ultraviolet.config.js decodeUrl");
-  }
-
-  if (basename === "dynamic.config.js") {
-    content = patchOrFail(content, /encoding:\s*["']\w+["']/, 'encoding: "xor"', "dynamic.config.js encoding");
-  }
-
-  // All three bundles inline the same codec, and the client and handler rewrite in-page
-  // links, so patching only the worker breaks every navigation after the first.
-  if (basename === "dynamic.worker.js" || basename === "dynamic.client.js" || basename === "dynamic.handler.js") {
-    const { key } = parseCodecSpec(proxyCodecs.dynamic);
-    const dynamicKey = xorKeyValue(key);
-    content = patchOrFail(
-      content,
-      /\{encode:\(e,t=2\)=>e&&encodeURIComponent\(e\.split\(""\)\.map\(\(e,i\)=>i%t\?String\.fromCharCode\(e\.charCodeAt\(0\)\^t\):e\)\.join\(""\)\),decode:\(e,t=2\)=>e&&decodeURIComponent\(e\)\.split\(""\)\.map\(\(e,i\)=>i%t\?String\.fromCharCode\(e\.charCodeAt\(0\)\^t\):e\)\.join\(""\)\}/g,
-      `{encode:e=>e&&encodeURIComponent(e.split("").map((e,i)=>i%${dynamicKey}?String.fromCharCode(e.charCodeAt(0)^${dynamicKey}):e).join("")),decode:e=>e&&decodeURIComponent(e).split("").map((e,i)=>i%${dynamicKey}?String.fromCharCode(e.charCodeAt(0)^${dynamicKey}):e).join("")}`,
-      `${basename} xor codec`,
-    );
-  }
-
-  if (basename === "search.js" || basename === "tabs.js") {
-    const { key } = parseCodecSpec(proxyCodecs.dynamic);
-    const dynamicKey = JSON.stringify(key || "2");
-    content = patchOrFail(content, /\/uv\/dynamic\/\$\{window\.encode\.xor\(url\)\}/g, `/uv/dynamic/\${window.encode.xor(url, ${dynamicKey})}`, `${basename} dynamic encode(url)`);
-    content = patchOrFail(content, /\/uv\/dynamic\/\$\{window\.encode\.xor\(value\)\}/g, `/uv/dynamic/\${window.encode.xor(value, ${dynamicKey})}`, `${basename} dynamic encode(value)`, basename === "search.js");
-    content = patchOrFail(content, /return window\.decode\.xor\(str\) \+ \(search\.length/g, `return window.decode.xor(str, ${dynamicKey}) + (search.length`, `${basename} dynamic decode`, basename === "tabs.js");
   }
 
   if (basename === "sj-tp.js") {
@@ -637,13 +559,12 @@ async function getHtmlFiles(dir) {
   return files;
 }
 
-async function updateServerRoutes(uvScope, scramjetScope, dynamicScope) {
+async function updateServerRoutes(uvScope, scramjetScope) {
   const indexPath = path.join(process.cwd(), "index.js");
   try {
     let content = await readFile(indexPath, "utf8");
     content = replaceAll(content, OLD_UV_SCOPE, uvScope);
     content = replaceAll(content, OLD_SCRAMJET_SCOPE, scramjetScope);
-    content = replaceAll(content, OLD_DYNAMIC_SCOPE, dynamicScope);
     await writeFile(indexPath, content, "utf8");
     console.log(chalk.green("  + index.js (scope routes updated)"));
   } catch {}
@@ -660,37 +581,25 @@ async function build() {
 
   const uvBase = randomWord();
   const scramjetSub = randomWord();
-  const dynamicSub = randomWord();
 
   const NEW_UV_SCOPE = `/${uvBase}/`;
   const NEW_SCRAMJET_SCOPE = `/${uvBase}/${scramjetSub}/`;
-  const NEW_DYNAMIC_SCOPE = `/${uvBase}/${dynamicSub}/`;
   const proxyCodecs = createProxyCodecs();
 
   console.log(`\nScope paths:`);
   console.log(`  ${OLD_UV_SCOPE} -> ${NEW_UV_SCOPE}`);
   console.log(`  ${OLD_SCRAMJET_SCOPE} -> ${NEW_SCRAMJET_SCOPE}`);
-  console.log(`  ${OLD_DYNAMIC_SCOPE} -> ${NEW_DYNAMIC_SCOPE}`);
   console.log(`\nURL codecs:`);
   console.log(`  ultraviolet: ${proxyCodecs.uv}`);
   console.log(`  scramjet:    ${proxyCodecs.scramjet}`);
-  console.log(`  dynamic:     ${proxyCodecs.dynamic}`);
 
-  let jsPublicDir, dynPublicDir;
-  do {
-    jsPublicDir = randomDir();
-    dynPublicDir = randomDir();
-  } while (jsPublicDir === dynPublicDir);
-
+  const jsPublicDir = randomDir();
   const jsDirFull = path.join(DIST_DIR, jsPublicDir);
-  const dynDirFull = path.join(DIST_DIR, dynPublicDir);
   await mkdir(jsDirFull, { recursive: true });
-  await mkdir(dynDirFull, { recursive: true });
 
-  const NEW_DYNAMIC_FILE_PREFIX = `/${dynPublicDir}/`;
   const NEW_UV_FILE_PREFIX = `/${jsPublicDir}/`;
 
-  const PROTECTED = ["/bare/", "/wisp/", "/baremux/", "/epoxy/", "/libcurl/", "/assets/scramjet/", NEW_UV_SCOPE, NEW_SCRAMJET_SCOPE, NEW_DYNAMIC_SCOPE];
+  const PROTECTED = ["/bare/", "/wisp/", "/baremux/", "/epoxy/", "/libcurl/", "/assets/scramjet/", NEW_UV_SCOPE, NEW_SCRAMJET_SCOPE];
 
   const usedPaths = new Set();
 
@@ -716,7 +625,6 @@ async function build() {
   }
 
   const jsRenameMap = new Map();
-  const dynRenameMap = new Map();
   const plan = new Map();
 
   for (const filePath of await getJsFiles(JS_DIR)) {
@@ -747,25 +655,7 @@ async function build() {
     jsRenameMap.set(name, newPublicPath);
   }
 
-  for (const filePath of await getJsFiles(DYNAMIC_DIR)) {
-    const basename = path.basename(filePath);
-
-    if (basename.startsWith(DYNAMIC_PREFIX)) {
-      // Dynamic rebuilds these URLs at runtime from assets.prefix plus hardcoded
-      // fragments, so the filenames must survive. Randomize the directory only.
-      const newPublicPath = `/${dynPublicDir}/${basename}`;
-      const newFullPath = path.join(dynDirFull, basename);
-      usedPaths.add(newPublicPath);
-      plan.set(filePath, { basename, newPublicPath, newFullPath, inPlace: false, group: "dynamic" });
-      dynRenameMap.set(basename, newPublicPath);
-    } else {
-      const rel = path.relative(DIST_DIR, filePath).replace(/\\/g, "/");
-      plan.set(filePath, { basename, newPublicPath: `/${rel}`, newFullPath: filePath, inPlace: true, group: "dynamic" });
-    }
-  }
-
-  console.log(`\nJS/UV output:   /${jsPublicDir}`);
-  console.log(`Dynamic output: /${dynPublicDir}\n`);
+  console.log(`\nJS/UV output:   /${jsPublicDir}\n`);
 
   let passed = 0;
   let failed = 0;
@@ -775,24 +665,14 @@ async function build() {
     [...plan.entries()].map(async ([filePath, { basename, newPublicPath, newFullPath, inPlace, group }]) => {
       try {
         let output = await readFile(filePath, "utf8");
-        output = assertLocalPatches(output, basename);
         output = patchProxyCodecs(output, basename, proxyCodecs);
 
         output = replaceAll(output, OLD_SCRAMJET_SCOPE, NEW_SCRAMJET_SCOPE);
-        output = replaceAll(output, OLD_DYNAMIC_SCOPE, NEW_DYNAMIC_SCOPE);
         output = replaceAll(output, OLD_UV_SCOPE, NEW_UV_SCOPE);
 
         if (group === "js" || group === "uv") {
           output = replaceAll(output, OLD_UV_PREFIX, NEW_UV_FILE_PREFIX);
           output = applyRenameMap(output, jsRenameMap, PROTECTED);
-          output = replaceAll(output, OLD_DYNAMIC_PREFIX, NEW_DYNAMIC_FILE_PREFIX);
-          output = applyRenameMap(output, dynRenameMap, PROTECTED);
-        }
-
-        if (group === "dynamic") {
-          // Directory only: absolute paths in dynamic.config.js's assets.files.* would make
-          // Dynamic request assets.prefix + "/dir/file.js" -> /dir//dir/file.js.
-          output = replaceAll(output, OLD_DYNAMIC_PREFIX, NEW_DYNAMIC_FILE_PREFIX);
         }
 
         const shouldObfuscate = OBFUSCATE && !SKIP_OBFUSCATE.has(basename);
@@ -823,11 +703,11 @@ async function build() {
     process.exit(1);
   }
 
-  for (const dir of [JS_DIR, UV_DIR, DYNAMIC_DIR]) {
+  for (const dir of [JS_DIR, UV_DIR]) {
     await rm(dir, { recursive: true, force: true });
   }
 
-  const allRenames = new Map([...jsRenameMap, ...dynRenameMap]);
+  const allRenames = new Map([...jsRenameMap]);
   const htmlFiles = await getHtmlFiles(DIST_DIR);
   console.log(`\nUpdating ${htmlFiles.length} HTML files${OBFUSCATE_HTML ? " + obfuscating" : ""}...\n`);
 
@@ -838,7 +718,6 @@ async function build() {
 
       for (const [oldScope, newScope] of [
         [OLD_SCRAMJET_SCOPE, NEW_SCRAMJET_SCOPE],
-        [OLD_DYNAMIC_SCOPE, NEW_DYNAMIC_SCOPE],
         [OLD_UV_SCOPE, NEW_UV_SCOPE],
       ]) {
         const updated = replaceAll(html, oldScope, newScope);
@@ -875,7 +754,7 @@ async function build() {
   );
 
   const allJs = await getJsFiles(DIST_DIR);
-  const otherJs = allJs.filter(f => !f.startsWith(jsDirFull) && !f.startsWith(dynDirFull) && !f.startsWith(JS_DIR) && !f.startsWith(UV_DIR) && !f.startsWith(DYNAMIC_DIR));
+  const otherJs = allJs.filter(f => !f.startsWith(jsDirFull) && !f.startsWith(JS_DIR) && !f.startsWith(UV_DIR));
 
   if (otherJs.length) {
     console.log(`\nUpdating ${otherJs.length} other JS files...\n`);
@@ -884,10 +763,8 @@ async function build() {
         const content = await readFile(jsPath, "utf8");
         let updated = content;
         updated = replaceAll(updated, OLD_SCRAMJET_SCOPE, NEW_SCRAMJET_SCOPE);
-        updated = replaceAll(updated, OLD_DYNAMIC_SCOPE, NEW_DYNAMIC_SCOPE);
         updated = replaceAll(updated, OLD_UV_SCOPE, NEW_UV_SCOPE);
         updated = replaceAll(updated, OLD_UV_PREFIX, NEW_UV_FILE_PREFIX);
-        updated = replaceAll(updated, OLD_DYNAMIC_PREFIX, NEW_DYNAMIC_FILE_PREFIX);
         updated = applyRenameMap(updated, allRenames, PROTECTED);
         if (updated !== content) {
           await writeFile(jsPath, updated, "utf8");
@@ -898,10 +775,10 @@ async function build() {
   }
 
   console.log("\nUpdating server routes...\n");
-  await updateServerRoutes(NEW_UV_SCOPE, NEW_SCRAMJET_SCOPE, NEW_DYNAMIC_SCOPE);
+  await updateServerRoutes(NEW_UV_SCOPE, NEW_SCRAMJET_SCOPE);
 
   console.log(chalk.green("\nBuild complete -> dist/"));
-  console.log(chalk.blue(`\nNew scope: ${NEW_UV_SCOPE}  scramjet: ${NEW_SCRAMJET_SCOPE}  dynamic: ${NEW_DYNAMIC_SCOPE}`));
+  console.log(chalk.blue(`\nNew scope: ${NEW_UV_SCOPE}  scramjet: ${NEW_SCRAMJET_SCOPE}`));
 }
 
 build().catch(err => {
