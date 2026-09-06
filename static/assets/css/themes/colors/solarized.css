@@ -1,0 +1,42 @@
+/* Solarized */
+:root {
+   --background: #002b36;
+   --surface: #073642;
+   --surface-card: #073642;
+   --surface-tile: #0a3d49;
+   --surface-raised: #0f4653;
+   --surface-overlay: #0a3d49;
+   --surface-input: #0a3d49;
+   --surface-button: #0a3d49;
+   --surface-button-hover: #0f4653;
+   --surface-hover: #0f4653;
+   --surface-active: #0f4653;
+   --surface-nav: rgba(0, 43, 54, 0.5);
+   --surface-nav-active: rgba(15, 70, 83, 0.5);
+
+   --border: rgba(131, 148, 150, 0.1);
+   --border-subtle: rgba(131, 148, 150, 0.05);
+   --border-strong: rgba(131, 148, 150, 0.18);
+
+   --text: #93a1a1;
+   --text-muted: #839496;
+   --text-faint: #586e75;
+
+   --accent: #268bd2;
+   --accent-hover: #2aa198;
+   --accent-text: #002b36;
+
+   --success: #859900;
+   --warning: #b58900;
+   --danger: #dc322f;
+
+   --toggle-on: var(--success);
+   --toggle-off: #0f4653;
+
+   --tab: #073642;
+   --tab-active: #0f4653;
+   --tab-hover: #0a3d49;
+   --tab-border: transparent;
+
+   --background-image: var(--background);
+}

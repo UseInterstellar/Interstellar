@@ -13,6 +13,14 @@
     rosePine: "/assets/css/themes/colors/rose-pine.css",
     oled: "/assets/css/themes/colors/oled.css",
     light: "/assets/css/themes/colors/light.css",
+    gruvbox: "/assets/css/themes/colors/gruvbox.css",
+    gruvboxLight: "/assets/css/themes/colors/gruvbox-light.css",
+    everforest: "/assets/css/themes/colors/everforest.css",
+    monokai: "/assets/css/themes/colors/monokai.css",
+    oneDark: "/assets/css/themes/colors/one-dark.css",
+    synthwave: "/assets/css/themes/colors/synthwave.css",
+    solarized: "/assets/css/themes/colors/solarized.css",
+    solarizedLight: "/assets/css/themes/colors/solarized-light.css",
   };
 
   if (themes[themeid]) {
@@ -89,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (nav) {
     const themeId = localStorage.getItem("theme");
-    const lightThemes = ["Inverted", "light"];
+    const lightThemes = ["Inverted", "light", "gruvboxLight", "solarizedLight"];
     const LogoUrl = lightThemes.includes(themeId) ? "/assets/media/favicon/main-inverted.png" : "/assets/media/favicon/main.png";
     const html = `
       <div id="icon-container">

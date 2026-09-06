@@ -33,7 +33,7 @@ img {
    padding: 0 25px;
    box-sizing: border-box;
    background-color: var(--surface-nav);
-   box-shadow: 0 0 15px 2px rgba(0, 0, 0, 0.5);
+   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
    -webkit-backdrop-filter: var(--backdrop-filter);
    backdrop-filter: var(--backdrop-filter);
    transition: 0.35s ease;

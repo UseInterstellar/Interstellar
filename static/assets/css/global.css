@@ -50,7 +50,7 @@
 
    /* Assets */
    --background-image: url("/./assets/media/background/full-main.png");
-   --backdrop-filter: blur(10px) brightness(80%);
+   --backdrop-filter: blur(10px);
    --nav-image: url("/./assets/media/favicon/main.png");
 
    /* Legacy aliases */

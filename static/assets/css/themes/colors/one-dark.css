@@ -1,0 +1,42 @@
+/* One Dark */
+:root {
+   --background: #282c34;
+   --surface: #21252b;
+   --surface-card: #21252b;
+   --surface-tile: #2c313a;
+   --surface-raised: #3a3f4b;
+   --surface-overlay: #2c313a;
+   --surface-input: #2c313a;
+   --surface-button: #2c313a;
+   --surface-button-hover: #3e4451;
+   --surface-hover: #3e4451;
+   --surface-active: #3e4451;
+   --surface-nav: rgba(33, 37, 43, 0.5);
+   --surface-nav-active: rgba(62, 68, 81, 0.5);
+
+   --border: rgba(171, 178, 191, 0.08);
+   --border-subtle: rgba(171, 178, 191, 0.04);
+   --border-strong: rgba(171, 178, 191, 0.16);
+
+   --text: #d7dae0;
+   --text-muted: #9099a6;
+   --text-faint: #5c6370;
+
+   --accent: #61afef;
+   --accent-hover: #c678dd;
+   --accent-text: #282c34;
+
+   --success: #98c379;
+   --warning: #e5c07b;
+   --danger: #e06c75;
+
+   --toggle-on: var(--success);
+   --toggle-off: #3e4451;
+
+   --tab: #21252b;
+   --tab-active: #3e4451;
+   --tab-hover: #2c313a;
+   --tab-border: transparent;
+
+   --background-image: var(--background);
+}

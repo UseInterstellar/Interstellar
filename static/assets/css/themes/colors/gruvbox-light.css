@@ -1,0 +1,42 @@
+/* Gruvbox Light */
+:root {
+   --background: #fbf1c7;
+   --surface: #f2e5bc;
+   --surface-card: #f2e5bc;
+   --surface-tile: #ebdbb2;
+   --surface-raised: #d5c4a1;
+   --surface-overlay: #ebdbb2;
+   --surface-input: #ebdbb2;
+   --surface-button: #ebdbb2;
+   --surface-button-hover: #d5c4a1;
+   --surface-hover: #d5c4a1;
+   --surface-active: #d5c4a1;
+   --surface-nav: rgba(60, 56, 54, 0.04);
+   --surface-nav-active: rgba(60, 56, 54, 0.08);
+
+   --border: rgba(60, 56, 54, 0.12);
+   --border-subtle: rgba(60, 56, 54, 0.06);
+   --border-strong: rgba(60, 56, 54, 0.2);
+
+   --text: #3c3836;
+   --text-muted: #7c6f64;
+   --text-faint: #928374;
+
+   --accent: #af3a03;
+   --accent-hover: #b57614;
+   --accent-text: #fbf1c7;
+
+   --success: #79740e;
+   --warning: #b57614;
+   --danger: #9d0006;
+
+   --toggle-on: var(--success);
+   --toggle-off: #bdae93;
+
+   --tab: #f2e5bc;
+   --tab-active: #d5c4a1;
+   --tab-hover: #ebdbb2;
+   --tab-border: transparent;
+
+   --background-image: var(--background);
+}
