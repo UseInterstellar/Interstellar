@@ -6,8 +6,13 @@
     catppuccinMacchiato: "/assets/css/themes/catppuccin/macchiato.css",
     catppuccinFrappe: "/assets/css/themes/catppuccin/frappe.css",
     catppuccinLatte: "/assets/css/themes/catppuccin/latte.css",
-    Inverted: "/assets/css/themes/colors/inverted.css",
+    Inverted: "/assets/css/themes/colors/light.css",
     sky: "/assets/css/themes/colors/sky.css",
+    tokyoNight: "/assets/css/themes/colors/tokyo-night.css",
+    nord: "/assets/css/themes/colors/nord.css",
+    rosePine: "/assets/css/themes/colors/rose-pine.css",
+    oled: "/assets/css/themes/colors/oled.css",
+    light: "/assets/css/themes/colors/light.css",
   };
 
   if (themes[themeid]) {
@@ -84,10 +89,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (nav) {
     const themeId = localStorage.getItem("theme");
-    let LogoUrl = "/assets/media/favicon/main.png";
-    if (themeId === "Inverted") {
-      LogoUrl = "/assets/media/favicon/main-inverted.png";
-    }
+    const lightThemes = ["Inverted", "light"];
+    const LogoUrl = lightThemes.includes(themeId) ? "/assets/media/favicon/main-inverted.png" : "/assets/media/favicon/main.png";
     const html = `
       <div id="icon-container">
         <a class="icon" href="/./"><img alt="nav" id="INImg" src="${LogoUrl}"/></a>

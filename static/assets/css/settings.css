@@ -1,7 +1,7 @@
 body {
    background-color: var(--background-image);
    font-family: "Inter", sans-serif;
-   color: var(--text-primary);
+   color: var(--text);
    margin: 0;
    padding: 0;
    letter-spacing: 0px;
@@ -27,7 +27,7 @@ body {
 }
 
 .settings-card {
-   background-color: var(--background-settings);
+   background-color: var(--surface-card);
    border-radius: 10px;
    padding: 20px;
    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -42,26 +42,26 @@ body {
 
 .settings-card h3 {
    margin-top: 0;
-   color: var(--text-primary);
+   color: var(--text);
 }
 
 .settings-card p {
-   color: var(--text-placeholder);
+   color: var(--text-muted);
 }
 
 a {
-   color: var(--text-primary);
+   color: var(--text);
 }
 
 input {
    padding: 15px;
    border-radius: 10px;
-   background: var(--background-input);
+   background: var(--surface-input);
    text-align: center;
    font-size: 20px;
    border: none;
    outline: none;
-   color: var(--text-primary);
+   color: var(--text);
 }
 
 .switch {
@@ -84,7 +84,7 @@ input {
    left: 0;
    right: 0;
    bottom: 0;
-   background-color: var(--slider-inactive-background);
+   background-color: var(--toggle-off);
    transition: 0.4s;
    border-radius: 34px;
 }
@@ -96,13 +96,13 @@ input {
    width: 26px;
    left: 4px;
    bottom: 4px;
-   background-color: var(--text-primary);
+   background-color: var(--toggle-knob);
    transition: 0.4s;
    border-radius: 50%;
 }
 
 input:checked + .slider-round {
-   background-color: var(--slider-active-background);
+   background-color: var(--toggle-on);
 }
 
 input:checked + .slider-round:before {
@@ -113,12 +113,12 @@ input:checked + .slider-round:before {
    padding: 15px;
    width: 92.5%;
    border-radius: 10px;
-   background: var(--background-buttons);
+   background: var(--surface-button);
    text-align: center;
    font-size: 20px;
    border: none;
    outline: none;
-   color: var(--text-primary);
+   color: var(--text);
    margin-top: 10px;
 }
 
@@ -128,9 +128,9 @@ input:checked + .slider-round:before {
    font-size: 20px;
    transition: 0.2s;
    margin-top: 10px;
-   background-color: var(--background-buttons);
+   background-color: var(--surface-button);
    border-radius: 10px;
-   color: var(--text-primary);
+   color: var(--text);
    height: 50px;
    width: 50%;
    padding: 10px;
@@ -142,9 +142,9 @@ button {
    border: 2px;
    transition: 0.2s;
    margin-top: 10px;
-   background-color: var(--background-buttons);
+   background-color: var(--surface-button);
    border-radius: 10px;
-   color: var(--text-primary);
+   color: var(--text);
    height: 50px;
    width: 35%;
    padding: 10px;
@@ -155,8 +155,8 @@ select {
    padding: 15px;
    width: 100%;
    border-radius: 10px;
-   background: var(--background-buttons);
-   color: var(--text-primary);
+   background: var(--surface-button);
+   color: var(--text);
    font-size: 20px;
    border: 0px;
    outline: none;
@@ -166,7 +166,7 @@ select {
    display: block;
    margin-top: 10px;
    margin-bottom: 4px;
-   color: var(--text-primary);
+   color: var(--text);
 }
 
 #buttonLayer {
@@ -235,5 +235,5 @@ select {
 }
 
 #warning {
-   color: red;
+   color: var(--danger);
 }

@@ -1,43 +1,41 @@
-@import url("https://unpkg.com/@catppuccin/palette/css/catppuccin.css");
+/* Catppuccin Latte */
+@import url("palette.css");
 :root {
-   --background-image: var(--ctp-latte-base) /*base*/;
-   --background: #1e1e2e;
-   --background-input: var(--ctp-latte-mantle) /*mantle*/;
-   --background-dark: #11111b /*crust*/;
-   --background-settings: var(--ctp-latte-surface0) /*surface0*/;
-   --background-settings-buttons: var(--ctp-latte-surface1) /*surface1*/;
-   --input: var(--ctp-latte-surface0) /*surface0*/;
-   --background-column: var(--ctp-latte-crust) /*crust*/;
-   --text-primary: var(--ctp-latte-text) /*text*/;
-   --text-secondary: var(--ctp-latte-subtext1) /*subtext1*/;
-   --text-placeholder: var(--ctp-latte-subtext0) /*subtext0*/;
-   --background-color: var(--ctp-latte-base) /* base */;
-   --tab-active-background: var(--ctp-latte-mantle) /* mantle */;
-}
+   --background: var(--ctp-latte-base);
+   --surface: var(--ctp-latte-mantle);
+   --surface-card: var(--ctp-latte-mantle);
+   --surface-tile: var(--ctp-latte-crust);
+   --surface-raised: var(--ctp-latte-surface0);
+   --surface-overlay: var(--ctp-latte-surface0);
+   --surface-input: var(--ctp-latte-surface0);
+   --surface-button: var(--ctp-latte-surface0);
+   --surface-button-hover: var(--ctp-latte-surface1);
+   --surface-hover: var(--ctp-latte-surface1);
+   --surface-active: var(--ctp-latte-surface1);
 
-input,
-select,
-.column,
-.key-form,
-button,
-.key-button,
-.searchbar {
-   background-color: var(--ctp-latte-surface0) /*surface0*/;
-   color: var(--ctp-latte-subtext1) /*subtext1*/;
-}
+   --border: rgba(76, 79, 105, 0.1);
+   --border-subtle: rgba(76, 79, 105, 0.05);
+   --border-strong: rgba(76, 79, 105, 0.18);
 
-.settings-card {
-   background-color: var(--ctp-latte-mantle) /*mantle*/;
-}
+   --text: var(--ctp-latte-text);
+   --text-muted: var(--ctp-latte-subtext0);
+   --text-faint: var(--ctp-latte-overlay0);
 
-input:checked + .slider-round {
-   background-color: #000;
-}
+   --accent: var(--ctp-latte-text);
+   --accent-hover: var(--ctp-latte-mauve);
+   --accent-text: var(--ctp-latte-base);
 
-.nav-bar-right .navbar-link {
-   color: var(--ctp-latte-mauve) /*mauve*/;
-}
+   --success: var(--ctp-latte-green);
+   --warning: var(--ctp-latte-yellow);
+   --danger: var(--ctp-latte-red);
 
-.nav-bar-right:hover .navbar-link:hover {
-   color: var(--ctp-latte-blue) /*blue*/;
+   --toggle-on: var(--success);
+   --toggle-off: var(--ctp-latte-surface1);
+
+   --tab: var(--ctp-latte-mantle);
+   --tab-active: var(--ctp-latte-surface0);
+   --tab-hover: var(--ctp-latte-surface0);
+   --tab-border: transparent;
+
+   --background-image: var(--ctp-latte-base);
 }

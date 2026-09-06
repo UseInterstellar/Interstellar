@@ -1,0 +1,42 @@
+/* Black */
+:root {
+   --background: #000000;
+   --surface: #0a0a0a;
+   --surface-card: #0d0d0d;
+   --surface-tile: #141414;
+   --surface-raised: #1a1a1a;
+   --surface-overlay: #141414;
+   --surface-input: #141414;
+   --surface-button: #1a1a1a;
+   --surface-button-hover: #242424;
+   --surface-hover: #1e1e1e;
+   --surface-active: #2a2a2a;
+   --surface-nav: rgba(255, 255, 255, 0.03);
+   --surface-nav-active: rgba(255, 255, 255, 0.07);
+
+   --border: rgba(255, 255, 255, 0.1);
+   --border-subtle: rgba(255, 255, 255, 0.05);
+   --border-strong: rgba(255, 255, 255, 0.2);
+
+   --text: #ffffff;
+   --text-muted: #9a9a9a;
+   --text-faint: #555555;
+
+   --accent: #ffffff;
+   --accent-hover: #bbbbbb;
+   --accent-text: #000000;
+
+   --success: #3fb950;
+   --warning: #d29922;
+   --danger: #f85149;
+
+   --toggle-on: var(--success);
+   --toggle-off: #333333;
+
+   --tab: #0d0d0d;
+   --tab-active: #242424;
+   --tab-hover: #1e1e1e;
+   --tab-border: transparent;
+
+   --background-image: var(--background);
+}

@@ -1,43 +1,37 @@
-@import url("https://unpkg.com/@catppuccin/palette/css/catppuccin.css");
+/* Catppuccin Mocha */
+@import url("palette.css");
 :root {
-   --background-image: var(--ctp-mocha-base) /*base*/;
-   --background: #1e1e2e;
-   --background-input: var(--ctp-mocha-mantle) /*mantle*/;
-   --background-dark: #11111b /*crust*/;
-   --background-settings: var(--ctp-mocha-surface0) /*surface0*/;
-   --background-settings-buttons: var(--ctp-mocha-surface1) /*surface1*/;
-   --input: var(--ctp-mocha-surface0) /*surface0*/;
-   --background-column: var(--ctp-mocha-crust) /*crust*/;
-   --text-primary: var(--ctp-mocha-text) /*text*/;
-   --text-secondary: var(--ctp-mocha-subtext1) /*subtext1*/;
-   --text-placeholder: var(--ctp-mocha-subtext0) /*subtext0*/;
-   --background-color: var(--ctp-mocha-base) /* base */;
-   --tab-active-background: var(--ctp-mocha-mantle) /* mantle */;
-}
+   --background: var(--ctp-mocha-base);
+   --surface: var(--ctp-mocha-mantle);
+   --surface-card: var(--ctp-mocha-mantle);
+   --surface-tile: var(--ctp-mocha-crust);
+   --surface-raised: var(--ctp-mocha-surface0);
+   --surface-overlay: var(--ctp-mocha-surface0);
+   --surface-input: var(--ctp-mocha-surface0);
+   --surface-button: var(--ctp-mocha-surface0);
+   --surface-button-hover: var(--ctp-mocha-surface1);
+   --surface-hover: var(--ctp-mocha-surface1);
+   --surface-active: var(--ctp-mocha-surface1);
 
-input,
-select,
-.column,
-.key-form,
-button,
-.key-button,
-.searchbar {
-   background-color: var(--ctp-mocha-surface0) /*surface0*/;
-   color: var(--ctp-mocha-subtext1) /*subtext1*/;
-}
+   --text: var(--ctp-mocha-text);
+   --text-muted: var(--ctp-mocha-subtext0);
+   --text-faint: var(--ctp-mocha-overlay0);
 
-.settings-card {
-   background-color: var(--ctp-mocha-mantle) /*mantle*/;
-}
+   --accent: var(--ctp-mocha-mauve);
+   --accent-hover: var(--ctp-mocha-blue);
+   --accent-text: var(--ctp-mocha-base);
 
-input:checked + .slider-round {
-   background-color: #000;
-}
+   --success: var(--ctp-mocha-green);
+   --warning: var(--ctp-mocha-yellow);
+   --danger: var(--ctp-mocha-red);
 
-.nav-bar-right .navbar-link {
-   color: var(--ctp-mocha-mauve) /*mauve*/;
-}
+   --toggle-on: var(--success);
+   --toggle-off: var(--ctp-mocha-surface1);
 
-.nav-bar-right:hover .navbar-link:hover {
-   color: var(--ctp-mocha-blue) /*blue*/;
+   --tab: var(--ctp-mocha-mantle);
+   --tab-active: var(--ctp-mocha-surface0);
+   --tab-hover: var(--ctp-mocha-surface0);
+   --tab-border: transparent;
+
+   --background-image: var(--ctp-mocha-base);
 }

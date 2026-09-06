@@ -7,8 +7,8 @@ body {
    margin: 0;
    overflow-x: hidden;
    overflow-y: hidden;
-   background: var(--background-color);
-   color: var(--text-primary);
+   background: var(--background);
+   color: var(--text);
 }
 
 .browser {
@@ -26,14 +26,14 @@ body {
    border: none;
    background: none;
    font-size: 12px;
-   color: var(--text-primary);
+   color: var(--text);
    cursor: pointer;
    transition: color 0.3s ease;
    width: 20px;
 }
 
 .close-tab:hover {
-   color: var(--text-primary);
+   color: var(--text);
 }
 
 .browser-bar {
@@ -41,7 +41,7 @@ body {
    right: 0;
    height: 2.5em;
    padding: 0 25px;
-   background: var(--background-color);
+   background: var(--background);
    box-sizing: border-box;
    transition: 0.35s ease;
    z-index: 100;
@@ -51,7 +51,7 @@ body {
 
 .browser-button {
    border-radius: 10px;
-   color: var(--text-primary);
+   color: var(--text);
    background: none;
    height: 3em;
    border: none;
@@ -134,7 +134,7 @@ body {
 .bar {
    background: none;
    border: none;
-   color: var(--text-primary);
+   color: var(--text);
    width: 60vw;
    height: 30px;
    border-radius: 5px;
@@ -143,10 +143,10 @@ body {
 }
 
 .bar:focus {
-   background: var(--background-input);
+   background: var(--surface-input);
    box-shadow: none;
    outline: none;
-   color: var(--text-primary);
+   color: var(--text);
    transition: 0.3s;
 }
 
@@ -154,7 +154,7 @@ body {
    padding: none;
    float: right;
    margin-top: 0em;
-   color: var(--text-primary);
+   color: var(--text);
    border-radius: 5px;
 }
 
@@ -168,14 +168,14 @@ body {
 
 h1 {
    text-align: center;
-   color: var(--text-primary);
+   color: var(--text);
    font-size: 50px;
    white-space: nowrap;
 }
 
 p {
    text-align: center;
-   color: var(--text-primary);
+   color: var(--text);
    font-size: 25px;
 }
 
@@ -190,8 +190,8 @@ p {
 #add-tab {
    padding: 0.5rem;
    cursor: pointer;
-   background-color: var(--background-settings);
-   color: var(--text-primary);
+   background-color: var(--tab);
+   color: var(--text);
    border: none;
    border-radius: 5px;
    margin-right: 0.5rem;
@@ -199,7 +199,7 @@ p {
 }
 
 #add-tab:hover {
-   background-color: var(--tab-active-background);
+   background-color: var(--tab-hover);
 }
 
 ul {
@@ -210,7 +210,7 @@ ul {
 
 li {
    padding: 0.4rem;
-   background-color: var(--background-settings);
+   background-color: var(--tab);
    margin-right: 0.5rem;
    cursor: pointer;
    border-radius: 5px;
@@ -221,11 +221,11 @@ li {
 }
 
 li.active {
-   background-color: var(--tab-active-background);
+   background-color: var(--tab-active);
 }
 
 li:hover {
-   background-color: var(--tab-active-background);
+   background-color: var(--tab-hover);
 }
 
 iframe {

@@ -272,15 +272,6 @@ function redirectToMainDomain() {
   }
 }
 
-const themeMap = {
-  catppuccinMocha: "/assets/css/themes/catppuccin/mocha.css",
-  catppuccinMacchiato: "/assets/css/themes/catppuccin/macchiato.css",
-  catppuccinFrappe: "/assets/css/themes/catppuccin/frappe.css",
-  catppuccinLatte: "/assets/css/themes/catppuccin/latte.css",
-  Inverted: "/assets/css/themes/colors/inverted.css",
-  sky: "/assets/css/themes/colors/sky.css",
-};
-
 function themeChange(selectElement) {
   const value = selectElement.value;
   if (value === "d") {

@@ -1,43 +1,37 @@
-@import url("https://unpkg.com/@catppuccin/palette/css/catppuccin.css");
+/* Catppuccin Macchiato */
+@import url("palette.css");
 :root {
-   --background-image: var(--ctp-macchiato-base) /*base*/;
-   --background: #1e1e2e;
-   --background-input: var(--ctp-macchiato-mantle) /*mantle*/;
-   --background-dark: #11111b /*crust*/;
-   --background-settings: var(--ctp-macchiato-surface0) /*surface0*/;
-   --background-settings-buttons: var(--ctp-macchiato-surface1) /*surface1*/;
-   --input: var(--ctp-macchiato-surface0) /*surface0*/;
-   --background-column: var(--ctp-macchiato-crust) /*crust*/;
-   --text-primary: var(--ctp-macchiato-text) /*text*/;
-   --text-secondary: var(--ctp-macchiato-subtext1) /*subtext1*/;
-   --text-placeholder: var(--ctp-macchiato-subtext0) /*subtext0*/;
-   --background-color: var(--ctp-macchiato-base) /* base */;
-   --tab-active-background: var(--ctp-macchiato-mantle) /* mantle */;
-}
+   --background: var(--ctp-macchiato-base);
+   --surface: var(--ctp-macchiato-mantle);
+   --surface-card: var(--ctp-macchiato-mantle);
+   --surface-tile: var(--ctp-macchiato-crust);
+   --surface-raised: var(--ctp-macchiato-surface0);
+   --surface-overlay: var(--ctp-macchiato-surface0);
+   --surface-input: var(--ctp-macchiato-surface0);
+   --surface-button: var(--ctp-macchiato-surface0);
+   --surface-button-hover: var(--ctp-macchiato-surface1);
+   --surface-hover: var(--ctp-macchiato-surface1);
+   --surface-active: var(--ctp-macchiato-surface1);
 
-input,
-select,
-.column,
-.key-form,
-button,
-.key-button,
-.searchbar {
-   background-color: var(--ctp-macchiato-surface0) /*surface0*/;
-   color: var(--ctp-macchiato-subtext1) /*subtext1*/;
-}
+   --text: var(--ctp-macchiato-text);
+   --text-muted: var(--ctp-macchiato-subtext0);
+   --text-faint: var(--ctp-macchiato-overlay0);
 
-.settings-card {
-   background-color: var(--ctp-macchiato-mantle) /*mantle*/;
-}
+   --accent: var(--ctp-macchiato-mauve);
+   --accent-hover: var(--ctp-macchiato-blue);
+   --accent-text: var(--ctp-macchiato-base);
 
-input:checked + .slider-round {
-   background-color: #000;
-}
+   --success: var(--ctp-macchiato-green);
+   --warning: var(--ctp-macchiato-yellow);
+   --danger: var(--ctp-macchiato-red);
 
-.nav-bar-right .navbar-link {
-   color: var(--ctp-macchiato-mauve) /*mauve*/;
-}
+   --toggle-on: var(--success);
+   --toggle-off: var(--ctp-macchiato-surface1);
 
-.nav-bar-right:hover .navbar-link:hover {
-   color: var(--ctp-macchiato-blue) /*blue*/;
+   --tab: var(--ctp-macchiato-mantle);
+   --tab-active: var(--ctp-macchiato-surface0);
+   --tab-hover: var(--ctp-macchiato-surface0);
+   --tab-border: transparent;
+
+   --background-image: var(--ctp-macchiato-base);
 }

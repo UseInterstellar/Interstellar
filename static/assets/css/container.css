@@ -2,7 +2,7 @@
    width: 145px;
    transition: all 0.2s ease;
    cursor: pointer;
-   background: var(--background-column);
+   background: var(--surface-tile);
    border-radius: 5px;
    padding-left: 10px;
    padding-right: 10px;
@@ -26,7 +26,7 @@
    font-size: 18px;
    line-height: 19px;
    text-align: center;
-   color: var(--text-primary);
+   color: var(--text);
    text-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5);
    padding-top: 136px;
    padding-bottom: 12px;
@@ -61,20 +61,20 @@ input {
    padding: 20px;
    width: 550px;
    border-radius: 5px;
-   background: var(--background-column);
+   background: var(--surface-input);
    text-align: center;
    font-size: 20px;
    border: none;
    outline: none;
-   color: var(--text-primary);
+   color: var(--text);
    transition: 0.4s;
 }
 
 select {
    padding: 20px;
    border-radius: 5px;
-   background: var(--background-column);
-   color: var(--text-primary);
+   background: var(--surface-input);
+   color: var(--text);
    font-size: 20px;
    border: 0px;
    outline: none;

@@ -1,7 +1,6 @@
-/* Theme template — copy, rename, set the values. Only override tokens here, no element rules. */
+/* Light */
 :root {
-   /* Surfaces */
-   --background: #ddd;
+   --background: #dddddd;
    --surface: #d5d5d5;
    --surface-card: #d5d5d5;
    --surface-tile: #cacaca;
@@ -15,36 +14,29 @@
    --surface-nav: rgba(0, 0, 0, 0.03);
    --surface-nav-active: rgba(0, 0, 0, 0.06);
 
-   /* Borders */
    --border: rgba(0, 0, 0, 0.1);
    --border-subtle: rgba(0, 0, 0, 0.05);
    --border-strong: rgba(0, 0, 0, 0.18);
 
-   /* Text */
-   --text: #000;
-   --text-muted: #555;
-   --text-faint: #888;
+   --text: #000000;
+   --text-muted: #555555;
+   --text-faint: #888888;
 
-   /* Accent */
-   --accent: #000;
-   --accent-hover: #333;
-   --accent-text: #fff;
+   --accent: #000000;
+   --accent-hover: #333333;
+   --accent-text: #ffffff;
 
-   /* Status */
    --success: #2e9e4f;
    --warning: #b8860b;
    --danger: #c0392b;
 
-   /* Toggle */
    --toggle-on: var(--success);
-   --toggle-off: #999;
+   --toggle-off: #999999;
 
-   /* Tabs */
    --tab: #d5d5d5;
-   --tab-active: #bbb;
+   --tab-active: #bbbbbb;
    --tab-hover: #c2c2c2;
    --tab-border: transparent;
 
-   /* Assets */
    --background-image: var(--background);
 }
