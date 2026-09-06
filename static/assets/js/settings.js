@@ -8,12 +8,24 @@ document.addEventListener("DOMContentLoaded", () => {
     adTypeElement.value = storedAd === "popups" || storedAd === "off" ? storedAd : "default";
   }
 
+  const transportRow = document.getElementById("transport-row");
   const pChangeElement = document.getElementById("pChange");
   if (pChangeElement) {
     pChangeElement.addEventListener("change", function () {
       localStorage.setItem("proxy", this.value);
+      if (transportRow) transportRow.style.display = this.value === "sj" ? "" : "none";
     });
     pChangeElement.value = localStorage.getItem("proxy") || "sj";
+  }
+
+  const transportElement = document.getElementById("transport-dropdown");
+  if (transportElement) {
+    transportElement.value = localStorage.getItem("is-sj-transport") === "libcurl" ? "libcurl" : "epoxy";
+    transportElement.addEventListener("change", function () {
+      localStorage.setItem("is-sj-transport", this.value);
+      window.location.reload();
+    });
+    if (transportRow) transportRow.style.display = (localStorage.getItem("proxy") || "sj") === "sj" ? "" : "none";
   }
 
   const eventKeyInput = document.getElementById("eventKeyInput");

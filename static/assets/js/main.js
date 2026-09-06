@@ -26,7 +26,7 @@
 
   const PROXY_KEY = "proxy";
   const ALLOWED = ["uv", "sj"];
-  const DEFAULT = "uv";
+  const DEFAULT = "sj";
 
   function initProxy() {
     const current = localStorage.getItem(PROXY_KEY);
