@@ -162,6 +162,13 @@ select {
    outline: none;
 }
 
+.settings-card label:not(.switch) {
+   display: block;
+   margin-top: 10px;
+   margin-bottom: 4px;
+   color: var(--text-primary);
+}
+
 #buttonLayer {
    width: 400px;
    display: flex;
