@@ -12,14 +12,14 @@
    text-transform: uppercase;
    border-radius: 0px 0px 5px 5px;
    margin-top: 30vh;
-   margin-bottom: 5vh;
-   transition: 0.35s ease;
+   margin-bottom: 3.5vh;
+   line-height: 1.1;
+   transition: var(--transition-slow);
    text-shadow: 2px 4px 6px rgb(0, 0, 0, 0.2);
 }
 
 .title:hover {
-   transform: translateY(-5%) scale(1.03);
-   font-weight: 800;
+   transform: translateY(-2px) scale(1.05);
 }
 
 @media (orientation: portrait) {
@@ -57,14 +57,20 @@
 input {
    padding: 20px;
    width: 550px;
-   border-radius: 5px;
+   border-radius: var(--radius-md);
    background: var(--surface-input);
    text-align: center;
    font-size: 24px;
-   border: none;
+   border: 1px solid var(--border);
    outline: none;
    color: var(--text);
-   transition: 0.4s;
+   transition: var(--transition);
+}
+
+input:hover,
+input:focus {
+   background: var(--surface-hover);
+   border-color: var(--border-strong);
 }
 
 #splash {
@@ -73,4 +79,16 @@ input {
    margin-top: -2em;
    padding: 0;
    font-family: "Poppins", sans-serif;
+   animation: splashSwitch 0.35s ease;
+}
+
+@keyframes splashSwitch {
+   from {
+      opacity: 0;
+      transform: translateY(6px);
+   }
+   to {
+      opacity: 1;
+      transform: translateY(0);
+   }
 }

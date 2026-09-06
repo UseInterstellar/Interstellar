@@ -28,16 +28,18 @@ body {
 
 .settings-card {
    background-color: var(--surface-card);
-   border-radius: 10px;
+   border: 1px solid var(--border);
+   border-radius: var(--radius-lg);
    padding: 20px;
-   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
    width: 400px;
-   transition: all 0.3s ease;
+   transition: var(--transition);
 }
 
 .settings-card:hover {
    transform: translatey(-5px);
-   box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+   border-color: var(--border-strong);
+   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.26);
 }
 
 .settings-card h3 {
@@ -55,13 +57,20 @@ a {
 
 input {
    padding: 15px;
-   border-radius: 10px;
+   border-radius: var(--radius-md);
    background: var(--surface-input);
    text-align: center;
    font-size: 20px;
-   border: none;
+   border: 1px solid var(--border);
    outline: none;
    color: var(--text);
+   transition: var(--transition);
+}
+
+input:hover,
+input:focus {
+   background: var(--surface-hover);
+   border-color: var(--border-strong);
 }
 
 .switch {
@@ -85,7 +94,7 @@ input {
    right: 0;
    bottom: 0;
    background-color: var(--toggle-off);
-   transition: 0.4s;
+   transition: var(--transition);
    border-radius: 34px;
 }
 
@@ -97,7 +106,7 @@ input {
    left: 4px;
    bottom: 4px;
    background-color: var(--toggle-knob);
-   transition: 0.4s;
+   transition: var(--transition);
    border-radius: 50%;
 }
 
@@ -112,24 +121,25 @@ input:checked + .slider-round:before {
 .key-form {
    padding: 15px;
    width: 92.5%;
-   border-radius: 10px;
-   background: var(--surface-button);
+   border-radius: var(--radius-md);
+   background: var(--surface-input);
    text-align: center;
    font-size: 20px;
-   border: none;
+   border: 1px solid var(--border);
    outline: none;
    color: var(--text);
    margin-top: 10px;
+   transition: var(--transition);
 }
 
 .key-button {
    cursor: pointer;
-   border: 2px;
+   border: 1px solid var(--border);
    font-size: 20px;
-   transition: 0.2s;
+   transition: var(--transition);
    margin-top: 10px;
    background-color: var(--surface-button);
-   border-radius: 10px;
+   border-radius: var(--radius-md);
    color: var(--text);
    height: 50px;
    width: 50%;
@@ -139,11 +149,11 @@ input:checked + .slider-round:before {
 
 button {
    cursor: pointer;
-   border: 2px;
-   transition: 0.2s;
+   border: 1px solid var(--border);
+   transition: var(--transition);
    margin-top: 10px;
    background-color: var(--surface-button);
-   border-radius: 10px;
+   border-radius: var(--radius-md);
    color: var(--text);
    height: 50px;
    width: 35%;
@@ -151,15 +161,27 @@ button {
    text-align: center;
 }
 
+.key-button:hover,
+button:hover {
+   background-color: var(--surface-button-hover);
+   border-color: var(--border-strong);
+}
+
 select {
    padding: 15px;
    width: 100%;
-   border-radius: 10px;
+   border-radius: var(--radius-md);
    background: var(--surface-button);
    color: var(--text);
    font-size: 20px;
-   border: 0px;
+   border: 1px solid var(--border);
    outline: none;
+   transition: var(--transition);
+}
+
+select:hover {
+   background: var(--surface-button-hover);
+   border-color: var(--border-strong);
 }
 
 .settings-card label:not(.switch) {

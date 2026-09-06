@@ -48,6 +48,16 @@
    --tab-hover: #444;
    --tab-border: transparent;
 
+   /* Radius */
+   --radius-sm: 6px;
+   --radius-md: 10px;
+   --radius-lg: 14px;
+
+   /* Motion */
+   --transition: 0.2s ease;
+   --transition-slow: 0.35s ease;
+   --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+
    /* Assets */
    --background-image: url("/./assets/media/background/full-main.png");
    --backdrop-filter: blur(10px);

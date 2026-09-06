@@ -13,7 +13,7 @@ body {
 
 .browser {
    padding: 1rem;
-   transition: transform 0.5s ease;
+   transition: transform var(--transition-slow);
    border-radius: 0 10px 10px 0;
    transform: translateX(0);
    width: 100vw;
@@ -28,7 +28,7 @@ body {
    font-size: 12px;
    color: var(--text);
    cursor: pointer;
-   transition: color 0.3s ease;
+   transition: color var(--transition);
    width: 20px;
 }
 
@@ -43,14 +43,14 @@ body {
    padding: 0 25px;
    background: var(--background);
    box-sizing: border-box;
-   transition: 0.35s ease;
+   transition: var(--transition-slow);
    z-index: 100;
    width: 100vw;
    position: fixed;
 }
 
 .browser-button {
-   border-radius: 10px;
+   border-radius: var(--radius-md);
    color: var(--text);
    background: none;
    height: 3em;
@@ -59,7 +59,7 @@ body {
    top: auto;
    box-sizing: border-box;
    margin-right: 10px;
-   transition: 0.2s ease;
+   transition: var(--transition);
    margin-top: 0 auto;
    margin-bottom: 0 auto;
 }
@@ -137,9 +137,9 @@ body {
    color: var(--text);
    width: 60vw;
    height: 30px;
-   border-radius: 5px;
+   border-radius: var(--radius-sm);
    margin: 0 auto;
-   transition: 0.3s;
+   transition: var(--transition);
 }
 
 .bar:focus {
@@ -147,7 +147,7 @@ body {
    box-shadow: none;
    outline: none;
    color: var(--text);
-   transition: 0.3s;
+   transition: var(--transition);
 }
 
 .browser-post {
@@ -155,7 +155,7 @@ body {
    float: right;
    margin-top: 0em;
    color: var(--text);
-   border-radius: 5px;
+   border-radius: var(--radius-sm);
 }
 
 .overlay {
@@ -192,14 +192,15 @@ p {
    cursor: pointer;
    background-color: var(--tab);
    color: var(--text);
-   border: none;
-   border-radius: 5px;
+   border: 1px solid var(--border);
+   border-radius: var(--radius-md);
    margin-right: 0.5rem;
-   transition: background-color 0.3s ease;
+   transition: var(--transition);
 }
 
 #add-tab:hover {
    background-color: var(--tab-hover);
+   border-color: var(--border-strong);
 }
 
 ul {
@@ -213,8 +214,9 @@ li {
    background-color: var(--tab);
    margin-right: 0.5rem;
    cursor: pointer;
-   border-radius: 5px;
-   transition: background-color 0.3s ease;
+   border: 1px solid var(--border);
+   border-radius: var(--radius-md);
+   transition: var(--transition);
    display: flex;
    align-items: center;
    justify-content: center;
@@ -222,6 +224,7 @@ li {
 
 li.active {
    background-color: var(--tab-active);
+   border-color: var(--border-strong);
 }
 
 li:hover {

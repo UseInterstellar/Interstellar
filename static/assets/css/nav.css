@@ -36,8 +36,8 @@ img {
    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
    -webkit-backdrop-filter: var(--backdrop-filter);
    backdrop-filter: var(--backdrop-filter);
-   transition: 0.35s ease;
-   border-radius: 15px;
+   transition: var(--transition-slow);
+   border-radius: var(--radius-lg);
    width: fill;
    margin: 15px;
    z-index: 100;
@@ -45,8 +45,8 @@ img {
 }
 
 .nav-bar .icon:hover {
-   transform: translateY(-15%) scale(1.03);
-   font-weight: 800;
+   filter: drop-shadow(0 0 8px var(--accent));
+   transform: translateY(-2px);
 }
 
 .nav-bar .icon {
@@ -61,7 +61,7 @@ img {
    margin-left: 5px;
    font-style: normal;
    text-decoration: none;
-   transition: all 0.2s ease;
+   transition: var(--transition);
    height: 5vh;
    top: 18%;
 }
@@ -91,7 +91,7 @@ img {
    font-family: "Inter", sans-serif;
    font-style: normal;
    text-decoration: none;
-   transition: all 0.2s ease;
+   transition: var(--transition);
    transform: translateX(0%);
 }
 
@@ -107,7 +107,7 @@ img {
       font-family: "Inter", sans-serif;
       font-style: normal;
       text-decoration: none;
-      transition: all 0.2s ease;
+      transition: var(--transition);
       transform: translateX(0%);
    }
    .nav-bar-right .navbar-link:hover {
@@ -135,7 +135,7 @@ img {
 
 .navbar-icon {
    margin-right: 5px;
-   transition: all 0.2s ease;
+   transition: var(--transition);
 }
 
 .navbar-link:hover > .settings-icon {

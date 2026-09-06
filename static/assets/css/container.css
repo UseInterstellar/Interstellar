@@ -1,9 +1,12 @@
 .column {
    width: 145px;
-   transition: all 0.2s ease;
+   position: relative;
+   transition:
+      transform 0.25s var(--ease-spring),
+      box-shadow 0.25s ease;
    cursor: pointer;
    background: var(--surface-tile);
-   border-radius: 5px;
+   border-radius: var(--radius-md);
    padding-left: 10px;
    padding-right: 10px;
    padding-top: 5px;
@@ -14,8 +17,7 @@
    position: absolute;
    width: 145px;
    height: 145px;
-   transition: all 0.2s ease;
-   border-radius: 10px;
+   border-radius: var(--radius-md);
 }
 
 .column p {
@@ -33,7 +35,8 @@
 }
 
 .column:hover {
-   transform: scale(1.2);
+   transform: translateY(-8px) scale(1.04);
+   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.35);
 }
 
 .column:hover .label {
@@ -60,25 +63,37 @@
 input {
    padding: 20px;
    width: 550px;
-   border-radius: 5px;
+   border-radius: var(--radius-md);
    background: var(--surface-input);
    text-align: center;
    font-size: 20px;
-   border: none;
+   border: 1px solid var(--border);
    outline: none;
    color: var(--text);
-   transition: 0.4s;
+   transition: var(--transition);
+}
+
+input:hover,
+input:focus {
+   background: var(--surface-hover);
+   border-color: var(--border-strong);
 }
 
 select {
    padding: 20px;
-   border-radius: 5px;
+   border-radius: var(--radius-md);
    background: var(--surface-input);
    color: var(--text);
    font-size: 20px;
-   border: 0px;
+   border: 1px solid var(--border);
    outline: none;
    cursor: pointer;
+   transition: var(--transition);
+}
+
+select:hover {
+   background: var(--surface-button-hover);
+   border-color: var(--border-strong);
 }
 
 .input-c {

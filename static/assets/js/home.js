@@ -69,6 +69,10 @@ const SplashE = document.getElementById("splash");
 function US() {
   SplashI = (SplashI + 1) % SplashT.length;
   SplashE.innerText = SplashT[SplashI];
+  // Re-trigger the switch animation
+  SplashE.style.animation = "none";
+  void SplashE.offsetWidth;
+  SplashE.style.animation = "";
 }
 
 SplashE.innerText = SplashT[SplashI];
