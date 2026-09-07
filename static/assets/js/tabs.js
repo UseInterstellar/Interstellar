@@ -12,14 +12,14 @@ function isScramjetEnabled() {
 
 async function encodeProxyUrl(url) {
   if (isScramjetEnabled()) {
-    if (window.__isSjReady) await window.__isSjReady;
-    if (window.__isSj?.encodeUrl) return window.__isSj.encodeUrl(url);
+    if (window.scramjetReady) await window.scramjetReady;
+    if (window.scramjet?.encodeUrl) return window.scramjet.encodeUrl(url);
   }
   return `/uv/${__uv$config.encodeUrl ? __uv$config.encodeUrl(url) : window.encode.xor(url)}`;
 }
 
 function encodeProxyUrlSync(url) {
-  if (isScramjetEnabled() && window.__isSj?.encodeUrl) return window.__isSj.encodeUrl(url);
+  if (isScramjetEnabled() && window.scramjet?.encodeUrl) return window.scramjet.encodeUrl(url);
   return `/uv/${__uv$config.encodeUrl ? __uv$config.encodeUrl(url) : window.encode.xor(url)}`;
 }
 
@@ -41,8 +41,8 @@ function updateAddressBar() {
   if (!input) return;
 
   if (currentUrl.includes("/uv/scramjet/")) {
-    if (window.__isSj?.decodeUrl) {
-      const decoded = window.__isSj.decodeUrl(currentUrl);
+    if (window.scramjet?.decodeUrl) {
+      const decoded = window.scramjet.decodeUrl(currentUrl);
       localStorage.setItem("decoded", decoded);
       input.value = decoded;
     } else {

@@ -28,12 +28,12 @@ const UV_PREFIX = "ultraviolet.";
 const KEEP_IN_PLACE = new Set();
 
 // scramjet.*: already-built vendor bundles.
-// sj-tp.js / ultraviolet.config.js: hold codec functions the proxies eval in another
-// realm, where the obfuscator's string-array helpers do not exist.
+// scramjet.config.js / ultraviolet.config.js: hold codec functions the proxies eval in
+// another realm, where the obfuscator's string-array helpers do not exist.
 const SKIP_OBFUSCATE = new Set([
   "scramjet.all.js",
   "scramjet.sync.js",
-  "sj-tp.js",
+  "scramjet.config.js",
   "ultraviolet.config.js",
   // Ultraviolet's bundle is the largest emitted file when obfuscated
   // (784 KB -> 4.2 MB) and the service worker imports it on every load.
@@ -367,10 +367,10 @@ function patchProxyCodecs(content, basename, proxyCodecs) {
     content = patchOrFail(content, /decodeUrl:\s*Ultraviolet\.codec\.\w+\.decode,/, `decodeUrl: ${uvCodec.decode},`, "ultraviolet.config.js decodeUrl");
   }
 
-  if (basename === "sj-tp.js") {
+  if (basename === "scramjet.config.js") {
     const { codec, key } = parseCodecSpec(proxyCodecs.scramjet);
     const sjCodec = getUrlCodecFunctions(codec, key);
-    content = patchOrFail(content, /codec:\s*\{[\s\S]*?\n\s*\},\n\s*files:/, `codec: {\n      encode: ${sjCodec.encode},\n      decode: ${sjCodec.decode},\n    },\n    files:`, "sj-tp.js codec");
+    content = patchOrFail(content, /codec:\s*\{[\s\S]*?\n\s*\},\n\s*files:/, `codec: {\n    encode: ${sjCodec.encode},\n    decode: ${sjCodec.decode},\n  },\n  files:`, "scramjet.config.js codec");
   }
 
   return content;

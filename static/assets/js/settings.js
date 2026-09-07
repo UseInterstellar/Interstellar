@@ -28,6 +28,24 @@ document.addEventListener("DOMContentLoaded", () => {
     if (transportRow) transportRow.style.display = (localStorage.getItem("proxy") || "sj") === "sj" ? "" : "none";
   }
 
+  const wispInput = document.getElementById("wisp-input");
+  const wispSaveBtn = document.getElementById("wisp-save-btn");
+  if (wispInput && wispSaveBtn) {
+    wispInput.value = localStorage.getItem("wisp-url") || "";
+    wispSaveBtn.addEventListener("click", () => {
+      const val = wispInput.value.trim();
+      if (val === "") {
+        localStorage.removeItem("wisp-url");
+      } else if (/^wss?:\/\//i.test(val)) {
+        localStorage.setItem("wisp-url", val);
+      } else {
+        alert("Enter a valid Wisp URL starting with ws:// or wss://");
+        return;
+      }
+      window.location.reload();
+    });
+  }
+
   const eventKeyInput = document.getElementById("eventKeyInput");
   const linkInput = document.getElementById("linkInput");
 
@@ -133,8 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       localStorage.setItem("pointer", val);
     }
-    const existing = document.getElementById("pointer-canvas");
-    if (existing) existing.remove();
+    window.location.reload();
   });
 
   document.getElementById("engine").addEventListener("change", function () {
