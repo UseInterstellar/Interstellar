@@ -762,6 +762,7 @@ async function build() {
       otherJs.map(async jsPath => {
         const content = await readFile(jsPath, "utf8");
         let updated = content;
+        updated = patchProxyCodecs(updated, path.basename(jsPath), proxyCodecs);
         updated = replaceAll(updated, OLD_SCRAMJET_SCOPE, NEW_SCRAMJET_SCOPE);
         updated = replaceAll(updated, OLD_UV_SCOPE, NEW_UV_SCOPE);
         updated = replaceAll(updated, OLD_UV_PREFIX, NEW_UV_FILE_PREFIX);
