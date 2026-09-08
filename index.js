@@ -19,6 +19,7 @@ const { epoxyPath } = require("@mercuryworkshop/epoxy-transport");
 const { baremuxPath } = require("@mercuryworkshop/bare-mux/node");
 const { libcurlPath } = require("@mercuryworkshop/libcurl-transport");
 const { uvPath } = require("@titaniumnetwork-dev/ultraviolet");
+const scramjetPath = path.join(__dirname, "node_modules", "@mercuryworkshop", "scramjet", "dist");
 
 const DIST_DIR = path.join(__dirname, "dist");
 const STATIC_DIR = path.join(__dirname, "static");
@@ -127,6 +128,7 @@ app.use("/epoxy/", express.static(epoxyPath));
 app.use("/libcurl/", express.static(libcurlPath));
 app.use("/baremux/", express.static(baremuxPath));
 app.use("/assets/ultraviolet/", express.static(uvPath, jsStaticOptions));
+app.use("/assets/scramjet/", express.static(scramjetPath, jsStaticOptions));
 
 const routes = [
   { path: "/apps", file: "apps.html" },

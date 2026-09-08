@@ -5,7 +5,7 @@ self.__scramjet$config = {
     decode: url => url && decodeURIComponent(url),
   },
   files: {
-    wasm: "/assets/scramjet/scramjet.wasm",
+    wasm: "/assets/scramjet/scramjet.wasm.wasm",
     all: "/assets/scramjet/scramjet.all.js",
     sync: "/assets/scramjet/scramjet.sync.js",
   },
