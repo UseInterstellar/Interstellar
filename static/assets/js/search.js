@@ -163,32 +163,6 @@ function isValidUrl(val = "") {
     return `${protocol}://${location.host}/wisp/`;
   }
 
-  // libcurl-transport 2.0.5 and bare-mux 2.1.9 disagree on header shape: bare-mux passes request
-  // headers as an object but libcurl wants [key, value] pairs, and libcurl returns response
-  // headers as pairs but bare-mux wants an object (repeats kept as arrays so set-cookie survives).
-  // This subclass converts both directions. setManualTransport takes source text, so it's a string.
-  const LIBCURL_COMPAT = `
-    const { default: BareTransport } = await import("${LIBCURL}");
-    const pairsToObject = headers => {
-      if (!headers || typeof headers !== "object" || typeof headers[Symbol.iterator] !== "function") return headers;
-      const object = {};
-      for (const [name, value] of headers) {
-        const key = String(name).toLowerCase();
-        object[key] = key in object ? [].concat(object[key], value) : value;
-      }
-      return object;
-    };
-    class LibcurlCompat extends BareTransport {
-      async request(remote, method, body, headers, signal) {
-        const pairs = headers?.[Symbol.iterator] ? headers : Object.entries(headers || {});
-        const response = await super.request(remote, method, body, pairs, signal);
-        response.headers = pairsToObject(response.headers);
-        return response;
-      }
-    }
-    return [LibcurlCompat, "${LIBCURL} (compat)"];
-  `;
-
   async function init() {
     const [{ BareMuxConnection }, { ScramjetController }] = await Promise.all([import(`${BAREMUX}index.mjs`), window.$scramjetLoadController()]);
 
@@ -197,8 +171,8 @@ function isValidUrl(val = "") {
 
     const wisp = getWispUrl();
     const connection = new BareMuxConnection(`${BAREMUX}worker.js`);
-    if (localStorage.getItem("is-sj-transport") === "libcurl") {
-      await connection.setManualTransport(LIBCURL_COMPAT, [{ wisp }]);
+    if (localStorage.getItem("transport") === "libcurl") {
+      await connection.setTransport(LIBCURL, [{ websocket: wisp }]);
     } else {
       await connection.setTransport(EPOXY, [{ wisp }]);
     }

@@ -19,7 +19,7 @@ const require = createRequire(import.meta.url);
 const __dirname = process.cwd();
 const { epoxyPath } = require("@mercuryworkshop/epoxy-transport");
 const { baremuxPath } = require("@mercuryworkshop/bare-mux/node");
-const libcurlPath = path.dirname(require.resolve("@mercuryworkshop/libcurl-transport"));
+const { libcurlPath } = require("@mercuryworkshop/libcurl-transport");
 
 const DIST_DIR = path.join(__dirname, "dist");
 const STATIC_DIR = path.join(__dirname, "static");

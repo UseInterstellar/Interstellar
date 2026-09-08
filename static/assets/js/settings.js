@@ -20,9 +20,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const transportElement = document.getElementById("transport-dropdown");
   if (transportElement) {
-    transportElement.value = localStorage.getItem("is-sj-transport") === "libcurl" ? "libcurl" : "epoxy";
+    transportElement.value = localStorage.getItem("transport") === "libcurl" ? "libcurl" : "epoxy";
     transportElement.addEventListener("change", function () {
-      localStorage.setItem("is-sj-transport", this.value);
+      localStorage.setItem("transport", this.value);
       window.location.reload();
     });
     if (transportRow) transportRow.style.display = (localStorage.getItem("proxy") || "sj") === "sj" ? "" : "none";
