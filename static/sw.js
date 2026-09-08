@@ -1,6 +1,6 @@
-importScripts("/assets/ultraviolet/ultraviolet.bundle.js");
-importScripts("/assets/ultraviolet/ultraviolet.config.js");
-importScripts(__uv$config.sw || "/assets/ultraviolet/ultraviolet.sw.js");
+importScripts("/assets/ultraviolet/uv.bundle.js");
+importScripts("/assets/ultraviolet/uv.config.js");
+importScripts(__uv$config.sw || "/assets/ultraviolet/uv.sw.js");
 importScripts("/assets/scramjet/scramjet.all.js");
 const { ScramjetServiceWorker } = $scramjetLoadWorker();
 

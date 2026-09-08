@@ -21,26 +21,18 @@ const OBFUSCATE_HTML = true;
 const SRC_DIR = path.join(process.cwd(), "static");
 const DIST_DIR = path.join(process.cwd(), "dist");
 const JS_DIR = path.join(DIST_DIR, "assets", "js");
-const UV_DIR = path.join(DIST_DIR, "assets", "ultraviolet");
-
-const UV_PREFIX = "ultraviolet.";
 
 const KEEP_IN_PLACE = new Set();
 
 // scramjet.*: already-built vendor bundles.
-// scramjet.config.js / ultraviolet.config.js: hold codec functions the proxies eval in
-// another realm, where the obfuscator's string-array helpers do not exist.
+// scramjet.config.js / uv.config.js: hold codec functions the proxies eval in another
+// realm, where the obfuscator's string-array helpers do not exist.
 const SKIP_OBFUSCATE = new Set([
   "scramjet.all.js",
   "scramjet.sync.js",
   "scramjet.config.js",
-  "ultraviolet.config.js",
-  // Ultraviolet's bundle is the largest emitted file when obfuscated
-  // (784 KB -> 4.2 MB) and the service worker imports it on every load.
-  "ultraviolet.bundle.js",
+  "uv.config.js",
 ]);
-
-const OLD_UV_PREFIX = "/assets/ultraviolet/";
 
 const OLD_UV_SCOPE = "/uv/";
 const OLD_SCRAMJET_SCOPE = "/uv/scramjet/";
@@ -360,11 +352,11 @@ function patchOrFail(content, pattern, replacement, label, required = true) {
 }
 
 function patchProxyCodecs(content, basename, proxyCodecs) {
-  if (basename === "ultraviolet.config.js") {
+  if (basename === "uv.config.js") {
     const { codec, key } = parseCodecSpec(proxyCodecs.uv);
     const uvCodec = getUrlCodecFunctions(codec, key);
-    content = patchOrFail(content, /encodeUrl:\s*Ultraviolet\.codec\.\w+\.encode,/, `encodeUrl: ${uvCodec.encode},`, "ultraviolet.config.js encodeUrl");
-    content = patchOrFail(content, /decodeUrl:\s*Ultraviolet\.codec\.\w+\.decode,/, `decodeUrl: ${uvCodec.decode},`, "ultraviolet.config.js decodeUrl");
+    content = patchOrFail(content, /encodeUrl:\s*Ultraviolet\.codec\.\w+\.encode,/, `encodeUrl: ${uvCodec.encode},`, "uv.config.js encodeUrl");
+    content = patchOrFail(content, /decodeUrl:\s*Ultraviolet\.codec\.\w+\.decode,/, `decodeUrl: ${uvCodec.decode},`, "uv.config.js decodeUrl");
   }
 
   if (basename === "scramjet.config.js") {
@@ -597,9 +589,7 @@ async function build() {
   const jsDirFull = path.join(DIST_DIR, jsPublicDir);
   await mkdir(jsDirFull, { recursive: true });
 
-  const NEW_UV_FILE_PREFIX = `/${jsPublicDir}/`;
-
-  const PROTECTED = ["/bare/", "/wisp/", "/baremux/", "/epoxy/", "/libcurl/", "/assets/scramjet/", NEW_UV_SCOPE, NEW_SCRAMJET_SCOPE];
+  const PROTECTED = ["/wisp/", "/baremux/", "/epoxy/", "/libcurl/", "/assets/scramjet/", "/assets/ultraviolet/", NEW_UV_SCOPE, NEW_SCRAMJET_SCOPE];
 
   const usedPaths = new Set();
 
@@ -634,13 +624,6 @@ async function build() {
     jsRenameMap.set(basename, newPublicPath);
   }
 
-  for (const filePath of await getJsFiles(UV_DIR)) {
-    const basename = path.basename(filePath);
-    const { publicPath: newPublicPath, fullPath: newFullPath } = nextOutputPath(jsPublicDir, jsDirFull);
-    plan.set(filePath, { basename, newPublicPath, newFullPath, inPlace: false, group: "uv" });
-    jsRenameMap.set(basename, newPublicPath);
-  }
-
   const ROOT_JS = ["sw.js"];
   for (const name of ROOT_JS) {
     const filePath = path.join(DIST_DIR, name);
@@ -671,7 +654,6 @@ async function build() {
         output = replaceAll(output, OLD_UV_SCOPE, NEW_UV_SCOPE);
 
         if (group === "js" || group === "uv") {
-          output = replaceAll(output, OLD_UV_PREFIX, NEW_UV_FILE_PREFIX);
           output = applyRenameMap(output, jsRenameMap, PROTECTED);
         }
 
@@ -703,7 +685,7 @@ async function build() {
     process.exit(1);
   }
 
-  for (const dir of [JS_DIR, UV_DIR]) {
+  for (const dir of [JS_DIR]) {
     await rm(dir, { recursive: true, force: true });
   }
 
@@ -754,7 +736,7 @@ async function build() {
   );
 
   const allJs = await getJsFiles(DIST_DIR);
-  const otherJs = allJs.filter(f => !f.startsWith(jsDirFull) && !f.startsWith(JS_DIR) && !f.startsWith(UV_DIR));
+  const otherJs = allJs.filter(f => !f.startsWith(jsDirFull) && !f.startsWith(JS_DIR));
 
   if (otherJs.length) {
     console.log(`\nUpdating ${otherJs.length} other JS files...\n`);
@@ -765,7 +747,6 @@ async function build() {
         updated = patchProxyCodecs(updated, path.basename(jsPath), proxyCodecs);
         updated = replaceAll(updated, OLD_SCRAMJET_SCOPE, NEW_SCRAMJET_SCOPE);
         updated = replaceAll(updated, OLD_UV_SCOPE, NEW_UV_SCOPE);
-        updated = replaceAll(updated, OLD_UV_PREFIX, NEW_UV_FILE_PREFIX);
         updated = applyRenameMap(updated, allRenames, PROTECTED);
         if (updated !== content) {
           await writeFile(jsPath, updated, "utf8");

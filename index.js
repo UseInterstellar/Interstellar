@@ -3,10 +3,8 @@ import http from "node:http";
 import { createRequire } from "node:module";
 import path from "node:path";
 import { server as wisp } from "@mercuryworkshop/wisp-js/server";
-import { createBareServer } from "@nebula-services/bare-server-node";
 import chalk from "chalk";
 import cookieParser from "cookie-parser";
-import cors from "cors";
 import express from "express";
 import basicAuth from "express-basic-auth";
 import rateLimit from "express-rate-limit";
@@ -20,6 +18,7 @@ const __dirname = process.cwd();
 const { epoxyPath } = require("@mercuryworkshop/epoxy-transport");
 const { baremuxPath } = require("@mercuryworkshop/bare-mux/node");
 const { libcurlPath } = require("@mercuryworkshop/libcurl-transport");
+const { uvPath } = require("@titaniumnetwork-dev/ultraviolet");
 
 const DIST_DIR = path.join(__dirname, "dist");
 const STATIC_DIR = path.join(__dirname, "static");
@@ -28,7 +27,6 @@ console.log(chalk.blue(`Serving from ${path.relative(__dirname, SERVE_DIR)}/`));
 
 const server = http.createServer();
 const app = express();
-const bareServer = createBareServer("/bare/");
 const PORT = process.env.PORT || 8080;
 
 wisp.options.allow_loopback_ips = true;
@@ -125,10 +123,10 @@ const jsStaticOptions = {
 };
 
 app.use(express.static(SERVE_DIR, jsStaticOptions));
-app.use("/bare", cors({ origin: true }));
 app.use("/epoxy/", express.static(epoxyPath));
 app.use("/libcurl/", express.static(libcurlPath));
 app.use("/baremux/", express.static(baremuxPath));
+app.use("/assets/ultraviolet/", express.static(uvPath, jsStaticOptions));
 
 const routes = [
   { path: "/apps", file: "apps.html" },
@@ -155,19 +153,11 @@ app.use(generalLimiter, (err, _req, res, _next) => {
 });
 
 server.on("request", (req, res) => {
-  if (bareServer.shouldRoute(req)) {
-    bareServer.routeRequest(req, res);
-  } else {
-    app(req, res);
-  }
+  app(req, res);
 });
 
 server.on("upgrade", (req, socket, head) => {
-  if (bareServer.shouldRoute(req)) {
-    bareServer.routeUpgrade(req, socket, head);
-  } else {
-    wisp.routeRequest(req, socket, head);
-  }
+  wisp.routeRequest(req, socket, head);
 });
 
 server.on("listening", () => {
