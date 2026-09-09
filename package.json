@@ -15,7 +15,7 @@
   "author": "InterstellarNetwork",
   "license": "GPL-3.0-or-later",
   "dependencies": {
-    "@mercuryworkshop/bare-mux": "^2.1.8",
+    "@mercuryworkshop/bare-mux": "^2.1.9",
     "@mercuryworkshop/epoxy-transport": "2.1.28",
     "@mercuryworkshop/scramjet": "^1.0.2",
     "@mercuryworkshop/wisp-js": "^0.4.1",
