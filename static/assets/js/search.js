@@ -116,6 +116,7 @@ async function encodeUrl(url, proxyOverride) {
 
 async function navigate(value, path, proxyOverride) {
   await waitForServiceWorker();
+  if (window.waitForProxyBoot) await window.waitForProxyBoot();
 
   let url = value.trim();
   const engine = localStorage.getItem("engine");
@@ -162,6 +163,18 @@ function isValidUrl(val = "") {
     return `${protocol}://${location.host}/wisp/`;
   }
 
+  async function ensureTransport(connection, transportPath, options, signature) {
+    let current = "";
+    try {
+      current = await connection.getTransport();
+    } catch {}
+
+    if (current === transportPath && localStorage.getItem("transport-signature") === signature) return;
+
+    await connection.setTransport(transportPath, options);
+    localStorage.setItem("transport-signature", signature);
+  }
+
   async function init() {
     const [{ BareMuxConnection }, { ScramjetController }] = await Promise.all([import(vendor.baremux), window.$scramjetLoadController()]);
 
@@ -171,9 +184,9 @@ function isValidUrl(val = "") {
     const wisp = getWispUrl();
     const connection = new BareMuxConnection(vendor.baremuxWorker);
     if (localStorage.getItem("transport") === "libcurl") {
-      await connection.setTransport(vendor.libcurl, [{ websocket: wisp }]);
+      await ensureTransport(connection, vendor.libcurl, [{ websocket: wisp }], `${vendor.libcurl}|${wisp}`);
     } else {
-      await connection.setTransport(vendor.epoxy, [{ wisp }]);
+      await ensureTransport(connection, vendor.epoxy, [{ wisp }], `${vendor.epoxy}|${wisp}`);
     }
 
     window.scramjet = {
@@ -195,3 +208,8 @@ function isValidUrl(val = "") {
 
   window.scramjetReady = domReady.then(boot);
 })();
+
+window.waitForProxyBoot = async function waitForProxyBoot(timeout = 8000) {
+  if (!window.scramjetReady) return;
+  await Promise.race([window.scramjetReady.catch(() => {}), new Promise(resolve => setTimeout(resolve, timeout))]);
+};

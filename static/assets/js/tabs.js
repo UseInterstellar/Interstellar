@@ -180,7 +180,7 @@ function goForward() {
 }
 
 window.addEventListener("load", () => {
-  navigator.serviceWorker.register("../sw.js", { scope: "/uv/" });
+  navigator.serviceWorker.register("../sw.js", { scope: "/uv/" }).catch(err => console.error("[SW] registration failed:", err));
 
   const form = document.getElementById("fv");
   const input = document.getElementById("input");
@@ -196,6 +196,7 @@ window.addEventListener("load", () => {
   }
 
   async function navigateActiveTab(url) {
+    if (window.waitForProxyBoot) await window.waitForProxyBoot();
     const proxyUrl = await encodeProxyUrl(url);
     sessionStorage.setItem("GoUrl", proxyUrl);
     const iframeContainer = document.getElementById("frame-container");
@@ -263,7 +264,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let destination;
     if (isSubmit) {
       // Can't fold a POST body into a URL, so just let POST forms submit in place.
-      // (A scripted form.submit() fires no submit event — the shim in createNewTab handles it.)
+      // (A scripted form.submit() fires no submit event, the shim in createNewTab handles it.)
       if ((source.method || "get").toLowerCase() !== "get") {
         source.target = "_self";
         return;
@@ -343,20 +344,27 @@ document.addEventListener("DOMContentLoaded", () => {
     const goUrl = sessionStorage.getItem("GoUrl");
     const storedUrl = sessionStorage.getItem("URL");
 
+    let src;
     if (tabCounter === 1) {
-      newIframe.src = goUrl ? (goUrl.includes("/gh-games/") ? window.location.origin + goUrl : resolveStoredUrl(goUrl)) : "/";
+      src = goUrl ? (goUrl.includes("/gh-games/") ? window.location.origin + goUrl : resolveStoredUrl(goUrl)) : "/";
+    } else if (storedUrl) {
+      src = resolveStoredUrl(storedUrl);
+      sessionStorage.removeItem("URL");
+    } else if (goUrl) {
+      src = goUrl.includes("/gh-games/") ? window.location.origin + goUrl : resolveStoredUrl(goUrl);
     } else {
-      if (storedUrl) {
-        newIframe.src = resolveStoredUrl(storedUrl);
-        sessionStorage.removeItem("URL");
-      } else if (goUrl) {
-        newIframe.src = goUrl.includes("/gh-games/") ? window.location.origin + goUrl : resolveStoredUrl(goUrl);
-      } else {
-        newIframe.src = "/";
-      }
+      src = "/";
     }
 
     iframeContainer.appendChild(newIframe);
+
+    if (window.waitForProxyBoot) {
+      window.waitForProxyBoot().then(() => {
+        newIframe.src = src;
+      });
+    } else {
+      newIframe.src = src;
+    }
     tabCounter += 1;
   }
 
