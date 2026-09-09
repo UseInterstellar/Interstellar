@@ -12,8 +12,8 @@ importers:
         specifier: ^2.1.8
         version: 2.1.8
       '@mercuryworkshop/epoxy-transport':
-        specifier: 2.1.28
-        version: 2.1.28
+        specifier: 3.0.1
+        version: 3.0.1
       '@mercuryworkshop/scramjet':
         specifier: ^1.0.2
         version: 1.0.2(esbuild@0.28.0)
@@ -273,14 +273,15 @@ packages:
   '@mercuryworkshop/bare-mux@2.1.8':
     resolution: {integrity: sha512-rI3S7Osyr2ZWmG6J6v3MLS1ZT269lx1DrAjM47q0aoBYnfgUZTRvZqY0Globb8ipTi02d5x6dTJBeUBt6dZsag==}
 
-  '@mercuryworkshop/epoxy-tls@2.1.18-1':
-    resolution: {integrity: sha512-2N1BYn/+FJxIbRw+sipbl3mQPinRflqQDB9HGAXJEVj4Ok4FIlTlS4fO2cpXKEq5yoD3oaKb8GyNaQfndNui9w==}
+  '@mercuryworkshop/epoxy-tls@2.1.19-1':
+    resolution: {integrity: sha512-lF3WVDmKDWfClgFaDm1OAGI6PStcUUKUjNh2AJbfmLXEGh+dT4nvsuTY2QGRImnajCboIRyrpx9eGNY0egZSVg==}
 
-  '@mercuryworkshop/epoxy-transport@2.1.28':
-    resolution: {integrity: sha512-lv/Kfdn37y8ZCXQaIT3Ebj4OSztBqeXdbR9rchbHQBKIw/fNSQJLGNBHV5ScXSzqt7NCwv8ZiZx7urRyk7Ua/Q==}
+  '@mercuryworkshop/epoxy-transport@3.0.1':
+    resolution: {integrity: sha512-8YzL73WaXZJLBRydmmY6NNPt5leB8ygBYuqgLn4+pGQ+wgi+JUC7ZdBQrA86TR6Oue3twbdfDvLRp48bzZ7DSw==}
 
   '@mercuryworkshop/scramjet@1.0.2':
     resolution: {integrity: sha512-65k+TXYlMAnqTrcTyVlXyG+CVymOSHMW4a8ofJtX6yHDKmWGHL4LVzls+ukoTqth6JyqOk7OoT3iQdufZMoE7g==}
+    deprecated: this version is incredibly outdated, please switch to a new build
 
   '@mercuryworkshop/wisp-js@0.4.1':
     resolution: {integrity: sha512-104LwiXiuhti/e32gmv0Da0u0yuLFDHX8JawCzleTPWJ5t5qTX4EYi4E7/ucbjBPN9wwVPWHE5g5yGqzl/NzQA==}
@@ -688,6 +689,7 @@ packages:
 
   uuid@9.0.1:
     resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
+    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
     hasBin: true
 
   vary@1.1.2:
@@ -844,11 +846,11 @@ snapshots:
 
   '@mercuryworkshop/bare-mux@2.1.8': {}
 
-  '@mercuryworkshop/epoxy-tls@2.1.18-1': {}
+  '@mercuryworkshop/epoxy-tls@2.1.19-1': {}
 
-  '@mercuryworkshop/epoxy-transport@2.1.28':
+  '@mercuryworkshop/epoxy-transport@3.0.1':
     dependencies:
-      '@mercuryworkshop/epoxy-tls': 2.1.18-1
+      '@mercuryworkshop/epoxy-tls': 2.1.19-1
 
   '@mercuryworkshop/scramjet@1.0.2(esbuild@0.28.0)':
     dependencies:
