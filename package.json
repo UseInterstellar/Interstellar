@@ -17,7 +17,7 @@
   "dependencies": {
     "@mercuryworkshop/bare-mux": "^2.1.8",
     "@mercuryworkshop/epoxy-transport": "2.1.28",
-    "@mercuryworkshop/scramjet": "^1.0.2",
+    "@mercuryworkshop/scramjet": "^1.1.0",
     "@mercuryworkshop/wisp-js": "^0.4.1",
     "@nebula-services/bare-server-node": "^2.0.4",
     "chalk": "^5.4.1",
