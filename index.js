@@ -15,16 +15,20 @@ console.log(chalk.yellow("🚀 Starting server..."));
 
 const require = createRequire(import.meta.url);
 const __dirname = process.cwd();
-const { epoxyPath } = require("@mercuryworkshop/epoxy-transport");
-const { baremuxPath } = require("@mercuryworkshop/bare-mux/node");
-const { libcurlPath } = require("@mercuryworkshop/libcurl-transport");
-const { uvPath } = require("@titaniumnetwork-dev/ultraviolet");
-const scramjetPath = path.join(__dirname, "node_modules", "@mercuryworkshop", "scramjet", "dist");
 
 const DIST_DIR = path.join(__dirname, "dist");
 const STATIC_DIR = path.join(__dirname, "static");
-const SERVE_DIR = existsSync(DIST_DIR) ? DIST_DIR : STATIC_DIR;
+
+const VENDOR_MAP_PATH = path.join(DIST_DIR, ".runtime", "vendor-map.cjs");
+const vendorMap = existsSync(VENDOR_MAP_PATH) ? require(VENDOR_MAP_PATH) : null;
+
+const SERVE_DIR = vendorMap ? DIST_DIR : STATIC_DIR;
 console.log(chalk.blue(`Serving from ${path.relative(__dirname, SERVE_DIR)}/`));
+if (vendorMap) {
+  console.log(chalk.blue(`Build ${vendorMap.build}, proxy scope ${vendorMap.scopes.uv}, scramjet ${vendorMap.scopes.scramjet}`));
+} else if (existsSync(DIST_DIR)) {
+  console.log(chalk.yellow("dist/ exists but has no .runtime/vendor-map.cjs, run `pnpm build`. Falling back to static/."));
+}
 
 const server = http.createServer();
 const app = express();
@@ -123,12 +127,25 @@ const jsStaticOptions = {
   },
 };
 
-app.use(express.static(SERVE_DIR, jsStaticOptions));
-app.use("/epoxy/", express.static(epoxyPath));
-app.use("/libcurl/", express.static(libcurlPath));
-app.use("/baremux/", express.static(baremuxPath));
-app.use("/assets/ultraviolet/", express.static(uvPath, jsStaticOptions));
-app.use("/assets/scramjet/", express.static(scramjetPath, jsStaticOptions));
+app.use("/.runtime", (_req, res) => {
+  res.sendStatus(404);
+});
+
+app.use(express.static(SERVE_DIR, { ...jsStaticOptions, dotfiles: "ignore" }));
+
+if (!vendorMap) {
+  const { epoxyPath } = require("@mercuryworkshop/epoxy-transport");
+  const { baremuxPath } = require("@mercuryworkshop/bare-mux/node");
+  const { libcurlPath } = require("@mercuryworkshop/libcurl-transport");
+  const { uvPath } = require("@titaniumnetwork-dev/ultraviolet");
+  const { scramjetPath } = require("@mercuryworkshop/scramjet/path");
+
+  app.use("/epoxy/", express.static(epoxyPath));
+  app.use("/libcurl/", express.static(libcurlPath));
+  app.use("/baremux/", express.static(baremuxPath));
+  app.use("/assets/ultraviolet/", express.static(uvPath, jsStaticOptions));
+  app.use("/assets/scramjet/", express.static(scramjetPath, jsStaticOptions));
+}
 
 const routes = [
   { path: "/apps", file: "apps.html" },

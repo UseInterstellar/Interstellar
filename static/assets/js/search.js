@@ -152,9 +152,8 @@ function isValidUrl(val = "") {
 }
 
 (() => {
-  const BAREMUX = "/baremux/";
-  const EPOXY = "/epoxy/index.mjs";
-  const LIBCURL = "/libcurl/index.mjs";
+  // Full paths only, never concatenated: the build rewrites whole literals.
+  const vendor = self.__vendor || {};
 
   function getWispUrl() {
     const custom = localStorage.getItem("wisp-url")?.trim();
@@ -164,17 +163,17 @@ function isValidUrl(val = "") {
   }
 
   async function init() {
-    const [{ BareMuxConnection }, { ScramjetController }] = await Promise.all([import(`${BAREMUX}index.mjs`), window.$scramjetLoadController()]);
+    const [{ BareMuxConnection }, { ScramjetController }] = await Promise.all([import(vendor.baremux), window.$scramjetLoadController()]);
 
     const scramjet = new ScramjetController(self.__scramjet$config);
     await scramjet.init();
 
     const wisp = getWispUrl();
-    const connection = new BareMuxConnection(`${BAREMUX}worker.js`);
+    const connection = new BareMuxConnection(vendor.baremuxWorker);
     if (localStorage.getItem("transport") === "libcurl") {
-      await connection.setTransport(LIBCURL, [{ websocket: wisp }]);
+      await connection.setTransport(vendor.libcurl, [{ websocket: wisp }]);
     } else {
-      await connection.setTransport(EPOXY, [{ wisp }]);
+      await connection.setTransport(vendor.epoxy, [{ wisp }]);
     }
 
     window.scramjet = {

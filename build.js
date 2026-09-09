@@ -1,9 +1,10 @@
-import { createHash } from "node:crypto";
-import { cp, readdir, readFile, writeFile, rm, mkdir } from "node:fs/promises";
+import { createHash, randomBytes } from "node:crypto";
+import { access, cp, mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
+import { createRequire } from "node:module";
 import path from "node:path";
-import { minify } from "terser";
-import JavaScriptObfuscator from "javascript-obfuscator";
 import chalk from "chalk";
+import JavaScriptObfuscator from "javascript-obfuscator";
+import { minify } from "terser";
 
 const OBFUSCATOR_PROMO_PATTERN = /\[javascript-obfuscator\]|JavaScript Obfuscator Pro|obfuscator\.io/i;
 
@@ -21,21 +22,65 @@ const OBFUSCATE_HTML = true;
 const SRC_DIR = path.join(process.cwd(), "static");
 const DIST_DIR = path.join(process.cwd(), "dist");
 const JS_DIR = path.join(DIST_DIR, "assets", "js");
+const RUNTIME_DIR = path.join(DIST_DIR, ".runtime");
 
-const KEEP_IN_PLACE = new Set();
+const require = createRequire(import.meta.url);
+const { epoxyPath } = require("@mercuryworkshop/epoxy-transport");
+const { baremuxPath } = require("@mercuryworkshop/bare-mux/node");
+const { libcurlPath } = require("@mercuryworkshop/libcurl-transport");
+const { uvPath } = require("@titaniumnetwork-dev/ultraviolet");
+const { scramjetPath } = require("@mercuryworkshop/scramjet/path");
 
-// scramjet.*: already-built vendor bundles.
-// scramjet.config.js / uv.config.js: hold codec functions the proxies eval in another
-// realm, where the obfuscator's string-array helpers do not exist.
-const SKIP_OBFUSCATE = new Set([
-  "scramjet.all.js",
-  "scramjet.sync.js",
-  "scramjet.config.js",
-  "uv.config.js",
-]);
+// Obfuscates the object that search.js reads back
+const TERSER_ONLY = new Set(["vendor.js"]);
+
+const VENDOR_DROPPED_CONSOLE = ["console.log", "console.debug", "console.info", "console.warn"];
+
+const VENDOR_SIZE_TOLERANCE = 1;
+
+const RESERVED_GLOBALS = [
+  "Ultraviolet",
+  "UVClient",
+  "UVServiceWorker",
+  "__uv",
+  "__uvHook",
+  "__uv$config",
+  "__uv$cookies",
+  "__uv$referrer",
+  "$scramjetLoadWorker",
+  "$scramjetLoadController",
+  "$scramjetLoadClient",
+  "$scramjetRequire",
+  "$scramjetVersion",
+  "__scramjet$config",
+  "COOKIE",
+  "WASM",
+  "BareMuxConnection",
+  "BareClient",
+  "BareWebSocket",
+  "WebSocketFields",
+  "WorkerConnection",
+  "browserSupportsTransferringStreams",
+  "maxRedirects",
+  "validProtocol",
+  "epoxyInfo",
+  "onconnect",
+];
+
+function vendorTerserOptions({ module, aggressive }) {
+  return {
+    ecma: 2020,
+    module,
+    compress: { passes: 2, pure_funcs: VENDOR_DROPPED_CONSOLE },
+    mangle: { toplevel: Boolean(aggressive), reserved: RESERVED_GLOBALS },
+    format: { comments: false },
+  };
+}
 
 const OLD_UV_SCOPE = "/uv/";
 const OLD_SCRAMJET_SCOPE = "/uv/scramjet/";
+
+const RETIRED_PUBLIC_PREFIXES = ["/assets/ultraviolet/", "/assets/scramjet/", "/epoxy/", "/libcurl/", "/baremux/"];
 
 const WORDS = [
   "api",
@@ -243,35 +288,71 @@ function randomWord() {
   return randomItem(WORDS);
 }
 
-function randomDir() {
-  const depth = randomInt(1, 2);
-  return Array.from({ length: depth }, randomSegment).join("/");
-}
-
 function randomFilename() {
   if (Math.random() < 0.1) return `${randomItem(FILENAMES)}-${randomItem(FILENAMES)}`;
   return randomItem(FILENAMES);
 }
 
-function escapeRegex(str) {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
-function applyRenameMap(content, renameMap, protectedPrefixes) {
-  let result = content;
-  for (const [original, newPublicPath] of renameMap) {
-    const q = `['"\`]`;
-    const pattern = new RegExp(`(${q})([^'"\`]*${escapeRegex(original)})(${q})`, "g");
-    result = result.replace(pattern, (_m, open, inner, close) => {
-      if (protectedPrefixes.some(p => inner.includes(p))) return `${open}${inner}${close}`;
-      return `${open}${newPublicPath}${close}`;
-    });
-  }
-  return result;
-}
-
 function replaceAll(content, oldStr, newStr) {
   return content.split(oldStr).join(newStr);
+}
+
+class PathRegistry {
+  constructor() {
+    this.paths = new Set();
+    this.topDirs = new Set();
+  }
+
+  reserveTopDir(name) {
+    this.topDirs.add(name);
+  }
+
+  dir() {
+    for (;;) {
+      const depth = randomInt(1, 2);
+      const segments = Array.from({ length: depth }, randomSegment);
+      if (this.topDirs.has(segments[0])) continue;
+      return segments.join("/");
+    }
+  }
+
+  file(ext, baseDir) {
+    for (;;) {
+      const dir = baseDir ?? this.dir();
+      const publicPath = `/${dir}/${randomFilename()}${ext}`;
+      if (this.paths.has(publicPath)) continue;
+      this.paths.add(publicPath);
+      return publicPath;
+    }
+  }
+
+  rootFile(ext) {
+    for (;;) {
+      const publicPath = `/${randomFilename()}${ext}`;
+      if (this.paths.has(publicPath)) continue;
+      this.paths.add(publicPath);
+      return publicPath;
+    }
+  }
+}
+
+// Never register a bare "sw.js", it is a substring of "uv.sw.js".
+function pathVariants(publicPath, { bare = true, parent = false } = {}) {
+  const relative = publicPath.slice(1);
+  const variants = [publicPath, `./${relative}`];
+  if (parent) variants.push(`../${relative}`);
+  if (bare) variants.push(relative);
+  return variants;
+}
+
+function orderRewrites(map) {
+  return [...map.entries()].sort((a, b) => b[0].length - a[0].length);
+}
+
+function applyRewrites(content, orderedRewrites) {
+  let result = content;
+  for (const [from, to] of orderedRewrites) result = replaceAll(result, from, to);
+  return result;
 }
 
 const URL_CODEC_NAMES = ["xor"];
@@ -341,6 +422,13 @@ class CodecPatchError extends Error {
   }
 }
 
+class VerificationError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "VerificationError";
+  }
+}
+
 // Optional patches cover patterns that exist in only some files sharing a branch below.
 function patchOrFail(content, pattern, replacement, label, required = true) {
   if (!pattern.test(content)) {
@@ -372,6 +460,16 @@ function patchProxyCodecs(content, basename, proxyCodecs) {
 // obfuscator's hex identifiers collide. Give each file its own prefix.
 function identifiersPrefixFor(scopeKey) {
   return `_${createHash("sha1").update(scopeKey).digest("hex").slice(0, 8)}_`;
+}
+
+async function minifyVendor(source, { module, aggressive }) {
+  const result = await minify(source, vendorTerserOptions({ module, aggressive }));
+  if (!result.code) throw new Error("Terser returned empty output");
+  return result.code;
+}
+
+async function assertParses(source, { module }) {
+  await minify(source, { module, compress: false, mangle: false, format: { comments: true } });
 }
 
 async function runObfuscator(source, scopeKey) {
@@ -519,7 +617,7 @@ async function obfuscateHtml(html, htmlName) {
   return obfuscateHtmlMarkup(minifyHtml(await obfuscateInlineScripts(html, htmlName)));
 }
 
-async function getJsFiles(dir) {
+async function collectFiles(dir, predicate) {
   let entries;
   try {
     entries = await readdir(dir, { withFileTypes: true });
@@ -529,37 +627,193 @@ async function getJsFiles(dir) {
   const files = [];
   for (const entry of entries) {
     const full = path.join(dir, entry.name);
-    if (entry.isDirectory()) files.push(...(await getJsFiles(full)));
-    else if (entry.name.endsWith(".js")) files.push(full);
+    if (entry.isDirectory()) files.push(...(await collectFiles(full, predicate)));
+    else if (predicate(entry.name)) files.push(full);
   }
   return files;
 }
 
-async function getHtmlFiles(dir) {
-  let entries;
+const getJsFiles = dir => collectFiles(dir, name => name.endsWith(".js"));
+const getHtmlFiles = dir => collectFiles(dir, name => name.endsWith(".html"));
+
+async function exists(filePath) {
   try {
-    entries = await readdir(dir, { withFileTypes: true });
+    await access(filePath);
+    return true;
   } catch {
-    return [];
+    return false;
   }
-  const files = [];
-  for (const entry of entries) {
-    const full = path.join(dir, entry.name);
-    if (entry.isDirectory()) files.push(...(await getHtmlFiles(full)));
-    else if (entry.name.endsWith(".html")) files.push(full);
-  }
-  return files;
 }
 
-async function updateServerRoutes(uvScope, scramjetScope) {
-  const indexPath = path.join(process.cwd(), "index.js");
-  try {
-    let content = await readFile(indexPath, "utf8");
-    content = replaceAll(content, OLD_UV_SCOPE, uvScope);
-    content = replaceAll(content, OLD_SCRAMJET_SCOPE, scramjetScope);
-    await writeFile(indexPath, content, "utf8");
-    console.log(chalk.green("  + index.js (scope routes updated)"));
-  } catch {}
+function vendorSpecs() {
+  return [
+    {
+      id: "uv.bundle",
+      src: path.join(uvPath, "uv.bundle.js"),
+      old: "/assets/ultraviolet/uv.bundle.js",
+      ext: ".js",
+      globals: ["Ultraviolet", "__uv$cookies", "__uv$referrer"],
+    },
+    { id: "uv.client", src: path.join(uvPath, "uv.client.js"), old: "/assets/ultraviolet/uv.client.js", ext: ".js", globals: ["UVClient"] },
+    {
+      id: "uv.handler",
+      src: path.join(uvPath, "uv.handler.js"),
+      old: "/assets/ultraviolet/uv.handler.js",
+      ext: ".js",
+      globals: ["__uvHook", "Ultraviolet", "UVClient", "__uv$config", "__uv$cookies", "__uv"],
+    },
+    { id: "uv.sw", src: path.join(uvPath, "uv.sw.js"), old: "/assets/ultraviolet/uv.sw.js", ext: ".js", globals: ["UVServiceWorker", "Ultraviolet", "__uv"] },
+    {
+      id: "uv.config",
+      src: path.join(SRC_DIR, "assets", "ultraviolet", "uv.config.js"),
+      old: "/assets/ultraviolet/uv.config.js",
+      ext: ".js",
+      // Holds codec arrows UV serializes into another realm, so Terser stays off.
+      minify: false,
+      rewritePaths: true,
+      rewriteScopes: true,
+      patchCodec: true,
+      globals: ["__uv$config"],
+    },
+    {
+      id: "sj.all",
+      src: path.join(scramjetPath, "scramjet.all.js"),
+      old: "/assets/scramjet/scramjet.all.js",
+      ext: ".js",
+      globals: ["$scramjetLoadWorker", "$scramjetLoadController", "$scramjetLoadClient", "$scramjetRequire", "$scramjetVersion", "COOKIE", "WASM"],
+    },
+    { id: "sj.sync", src: path.join(scramjetPath, "scramjet.sync.js"), old: "/assets/scramjet/scramjet.sync.js", ext: ".js" },
+    { id: "sj.wasm", src: path.join(scramjetPath, "scramjet.wasm.wasm"), old: "/assets/scramjet/scramjet.wasm.wasm", ext: ".wasm", binary: true },
+    {
+      id: "sj.config",
+      src: path.join(SRC_DIR, "assets", "scramjet", "scramjet.config.js"),
+      old: "/assets/scramjet/scramjet.config.js",
+      ext: ".js",
+      minify: false,
+      rewritePaths: true,
+      rewriteScopes: true,
+      patchCodec: true,
+      globals: ["__scramjet$config"],
+    },
+    {
+      id: "baremux",
+      src: path.join(baremuxPath, "index.mjs"),
+      old: "/baremux/index.mjs",
+      ext: ".mjs",
+      module: true,
+      aggressive: true,
+      globals: ["BareMuxConnection", "BareClient", "BareWebSocket", "WebSocketFields", "WorkerConnection", "browserSupportsTransferringStreams", "maxRedirects", "validProtocol"],
+    },
+    { id: "baremux.worker", src: path.join(baremuxPath, "worker.js"), old: "/baremux/worker.js", ext: ".js", aggressive: true, globals: ["onconnect"] },
+    {
+      id: "epoxy",
+      src: path.join(epoxyPath, "index.mjs"),
+      old: "/epoxy/index.mjs",
+      ext: ".mjs",
+      module: true,
+      aggressive: true,
+      globals: ["epoxyInfo"],
+      mangledAway: ["__wbg_get_imports", "getStringFromWasm", "EpoxyClientOptions"],
+    },
+    {
+      id: "libcurl",
+      src: path.join(libcurlPath, "index.mjs"),
+      old: "/libcurl/index.mjs",
+      ext: ".mjs",
+      module: true,
+      aggressive: true,
+      mangledAway: ["moduleOverrides", "ENVIRONMENT_IS_WEB", "wasmBinaryFile"],
+    },
+  ];
+}
+
+function browserVendorModule(manifest) {
+  const map = {
+    baremux: manifest.vendor.baremux,
+    baremuxWorker: manifest.vendor["baremux.worker"],
+    epoxy: manifest.vendor.epoxy,
+    libcurl: manifest.vendor.libcurl,
+  };
+  return `self.__vendor = ${JSON.stringify(map, null, 2)};\n`;
+}
+
+function formatKb(bytes) {
+  return `${(bytes / 1024).toFixed(1)}kb`;
+}
+
+async function verifyBuild({ manifest, specs, emitted, references, distJsFiles }) {
+  const failures = [];
+  const emittedPaths = new Set(emitted.keys());
+
+  for (const [id, publicPath] of Object.entries(manifest.vendor)) {
+    const full = path.join(DIST_DIR, publicPath);
+    if (!(await exists(full))) failures.push(`manifest asset "${id}" -> ${publicPath} is missing from dist/`);
+    if (!emittedPaths.has(publicPath)) failures.push(`manifest asset "${id}" -> ${publicPath} was never emitted`);
+  }
+
+  if (!emittedPaths.has(manifest.sw)) failures.push(`service worker ${manifest.sw} was never emitted`);
+  if (!(await exists(path.join(DIST_DIR, manifest.sw)))) failures.push(`service worker ${manifest.sw} is missing from dist/`);
+
+  for (const [publicPath, fullPath] of emitted) {
+    if (!(await exists(fullPath))) failures.push(`emitted path ${publicPath} does not resolve to a file`);
+  }
+
+  for (const { file, source, module } of distJsFiles) {
+    try {
+      await assertParses(source, { module });
+    } catch (err) {
+      failures.push(`${file} does not parse: ${err.message}`);
+    }
+  }
+
+  for (const spec of specs) {
+    if (!spec.globals && !spec.mangledAway && spec.minify === false) continue;
+    const emittedPath = manifest.vendor[spec.id];
+    if (spec.binary) continue;
+    const source = await readFile(path.join(DIST_DIR, emittedPath), "utf8");
+
+    for (const identifier of spec.globals ?? []) {
+      if (!source.includes(identifier)) failures.push(`global "${identifier}" did not survive processing of ${spec.id} (${emittedPath})`);
+    }
+
+    for (const identifier of spec.mangledAway ?? []) {
+      if (source.includes(identifier)) {
+        failures.push(`internal identifier "${identifier}" survived mangling in ${spec.id} (${emittedPath}) - mangling regressed, or upstream renamed it`);
+      }
+    }
+
+    if (spec.minify !== false) {
+      const before = (await readFile(spec.src, "utf8")).length;
+      const after = source.length;
+      if (after > before * VENDOR_SIZE_TOLERANCE + 256) {
+        failures.push(`${spec.id} inflated: ${formatKb(before)} -> ${formatKb(after)} (limit ${(VENDOR_SIZE_TOLERANCE * 100).toFixed(0)}% + 256b)`);
+      }
+    }
+  }
+
+  const maps = await collectFiles(DIST_DIR, name => name.endsWith(".map"));
+  for (const file of maps) failures.push(`source map shipped to production: ${path.relative(DIST_DIR, file)}`);
+
+  for (const { file, source } of distJsFiles) {
+    if (source.includes("sourceMappingURL")) failures.push(`${file} still carries a sourceMappingURL comment`);
+  }
+
+  let checkedReferences = 0;
+  for (const { file, source } of references) {
+    for (const prefix of RETIRED_PUBLIC_PREFIXES) {
+      if (source.includes(prefix)) failures.push(`${file} still references the retired public path ${prefix}`);
+    }
+
+    for (const [, literal] of source.matchAll(/["'`](\/[A-Za-z0-9_\-./]*\.(?:js|mjs|wasm))["'`]/g)) {
+      checkedReferences++;
+      if (!emittedPaths.has(literal)) failures.push(`${file} references ${literal}, which is not an emitted manifest path`);
+    }
+  }
+
+  if (failures.length) {
+    throw new VerificationError(`${failures.length} verification failure(s):\n${failures.map(message => `  - ${message}`).join("\n")}`);
+  }
+  return { checkedReferences };
 }
 
 async function build() {
@@ -571,12 +825,60 @@ async function build() {
 
   console.log(OBFUSCATE ? chalk.yellow("Obfuscation: ON") : chalk.yellow("Obfuscation: OFF (rename + rewrite only)"));
 
+  const registry = new PathRegistry();
+
   const uvBase = randomWord();
   const scramjetSub = randomWord();
+  registry.reserveTopDir(uvBase);
 
   const NEW_UV_SCOPE = `/${uvBase}/`;
   const NEW_SCRAMJET_SCOPE = `/${uvBase}/${scramjetSub}/`;
   const proxyCodecs = createProxyCodecs();
+
+  const manifest = {
+    build: randomBytes(4).toString("hex"),
+    scopes: { uv: NEW_UV_SCOPE, scramjet: NEW_SCRAMJET_SCOPE },
+    sw: null,
+    vendor: {},
+  };
+
+  const specs = vendorSpecs();
+  for (const spec of specs) {
+    spec.publicPath = registry.file(spec.ext);
+    manifest.vendor[spec.id] = spec.publicPath;
+  }
+
+  await writeFile(path.join(JS_DIR, "vendor.js"), browserVendorModule(manifest), "utf8");
+
+  const jsPublicDir = registry.dir();
+  const appPlan = new Map();
+  for (const filePath of await getJsFiles(JS_DIR)) {
+    const publicPath = registry.file(".js", jsPublicDir);
+    appPlan.set(filePath, { basename: path.basename(filePath), publicPath, fullPath: path.join(DIST_DIR, publicPath) });
+  }
+
+  const swSource = path.join(DIST_DIR, "sw.js");
+  manifest.sw = registry.rootFile(".js");
+  appPlan.set(swSource, { basename: "sw.js", publicPath: manifest.sw, fullPath: path.join(DIST_DIR, manifest.sw) });
+
+  const rewriteMap = new Map();
+  for (const spec of specs) {
+    for (const variant of pathVariants(spec.old)) rewriteMap.set(variant, spec.publicPath);
+  }
+  for (const [filePath, entry] of appPlan) {
+    if (filePath === swSource) {
+      for (const variant of pathVariants("/sw.js", { bare: false, parent: true })) rewriteMap.set(variant, entry.publicPath);
+    } else {
+      const oldPublic = `/${path.relative(DIST_DIR, filePath).split(path.sep).join("/")}`;
+      for (const variant of pathVariants(oldPublic)) rewriteMap.set(variant, entry.publicPath);
+    }
+  }
+  const rewrites = orderRewrites(rewriteMap);
+
+  const scopeRewrites = [
+    [OLD_SCRAMJET_SCOPE, NEW_SCRAMJET_SCOPE],
+    [OLD_UV_SCOPE, NEW_UV_SCOPE],
+  ];
 
   console.log(`\nScope paths:`);
   console.log(`  ${OLD_UV_SCOPE} -> ${NEW_UV_SCOPE}`);
@@ -585,88 +887,67 @@ async function build() {
   console.log(`  ultraviolet: ${proxyCodecs.uv}`);
   console.log(`  scramjet:    ${proxyCodecs.scramjet}`);
 
-  const jsPublicDir = randomDir();
-  const jsDirFull = path.join(DIST_DIR, jsPublicDir);
-  await mkdir(jsDirFull, { recursive: true });
+  const emitted = new Map();
+  const references = [];
 
-  const PROTECTED = ["/wisp/", "/baremux/", "/epoxy/", "/libcurl/", "/assets/scramjet/", "/assets/ultraviolet/", NEW_UV_SCOPE, NEW_SCRAMJET_SCOPE];
+  console.log(`\nVendor assets:\n`);
+  for (const spec of specs) {
+    const destination = path.join(DIST_DIR, spec.publicPath);
+    await mkdir(path.dirname(destination), { recursive: true });
 
-  const usedPaths = new Set();
+    if (spec.binary) {
+      const buffer = await readFile(spec.src);
+      await writeFile(destination, buffer);
+      emitted.set(spec.publicPath, destination);
+      console.log(chalk.green(`  + ${spec.id} -> ${spec.publicPath} (${formatKb(buffer.length)}, copied)`));
+      continue;
+    }
 
-  function nextOutputPath(basePublicDir, baseDirFull) {
-    const existingSegments = new Set(basePublicDir.split("/").filter(Boolean));
-    let publicPath, fullPath;
-    do {
-      const filename = `${randomFilename()}.js`;
-      if (Math.random() < 0.05) {
-        let subDir;
-        do {
-          subDir = randomWord();
-        } while (existingSegments.has(subDir));
-        publicPath = `/${basePublicDir}/${subDir}/${filename}`;
-        fullPath = path.join(baseDirFull, subDir, filename);
-      } else {
-        publicPath = `/${basePublicDir}/${filename}`;
-        fullPath = path.join(baseDirFull, filename);
-      }
-    } while (usedPaths.has(publicPath));
-    usedPaths.add(publicPath);
-    return { publicPath, fullPath };
+    let source = await readFile(spec.src, "utf8");
+    const sizeIn = Buffer.byteLength(source);
+
+    if (spec.patchCodec) source = patchProxyCodecs(source, path.basename(spec.src), proxyCodecs);
+    if (spec.rewriteScopes) for (const [from, to] of scopeRewrites) source = replaceAll(source, from, to);
+    if (spec.rewritePaths) {
+      source = applyRewrites(source, rewrites);
+      references.push({ file: `${spec.id} (${spec.publicPath})`, source });
+    }
+
+    const minified = spec.minify === false ? source : await minifyVendor(source, { module: Boolean(spec.module), aggressive: Boolean(spec.aggressive) });
+    await writeFile(destination, minified, "utf8");
+    emitted.set(spec.publicPath, destination);
+
+    const sizeOut = Buffer.byteLength(minified);
+    const delta = spec.minify === false ? "terser off" : `${(((sizeIn - sizeOut) / sizeIn) * 100).toFixed(1)}% smaller`;
+    console.log(chalk.green(`  + ${spec.id} -> ${spec.publicPath} (${formatKb(sizeIn)} -> ${formatKb(sizeOut)}, ${delta})`));
   }
 
-  const jsRenameMap = new Map();
-  const plan = new Map();
+  await rm(path.join(DIST_DIR, "assets", "ultraviolet"), { recursive: true, force: true });
+  await rm(path.join(DIST_DIR, "assets", "scramjet"), { recursive: true, force: true });
 
-  for (const filePath of await getJsFiles(JS_DIR)) {
-    const basename = path.basename(filePath);
-    const { publicPath: newPublicPath, fullPath: newFullPath } = nextOutputPath(jsPublicDir, jsDirFull);
-    plan.set(filePath, { basename, newPublicPath, newFullPath, inPlace: false, group: "js" });
-    jsRenameMap.set(basename, newPublicPath);
-  }
+  console.log(`\nApplication JS -> /${jsPublicDir}\n`);
 
-  const ROOT_JS = ["sw.js"];
-  for (const name of ROOT_JS) {
-    const filePath = path.join(DIST_DIR, name);
-    let newName;
-    do {
-      newName = `${randomFilename()}.js`;
-    } while (usedPaths.has(`/${newName}`));
-    usedPaths.add(`/${newName}`);
-    const newPublicPath = `/${newName}`;
-    const newFullPath = path.join(DIST_DIR, newName);
-    plan.set(filePath, { basename: name, newPublicPath, newFullPath, inPlace: false, group: "uv" });
-    jsRenameMap.set(name, newPublicPath);
-  }
-
-  console.log(`\nJS/UV output:   /${jsPublicDir}\n`);
-
-  let passed = 0;
   let failed = 0;
   const codecFailures = [];
 
   await Promise.all(
-    [...plan.entries()].map(async ([filePath, { basename, newPublicPath, newFullPath, inPlace, group }]) => {
+    [...appPlan.entries()].map(async ([filePath, { basename, publicPath, fullPath }]) => {
       try {
         let output = await readFile(filePath, "utf8");
-        output = patchProxyCodecs(output, basename, proxyCodecs);
+        for (const [from, to] of scopeRewrites) output = replaceAll(output, from, to);
+        output = applyRewrites(output, rewrites);
+        references.push({ file: `${basename} (${publicPath})`, source: output });
 
-        output = replaceAll(output, OLD_SCRAMJET_SCOPE, NEW_SCRAMJET_SCOPE);
-        output = replaceAll(output, OLD_UV_SCOPE, NEW_UV_SCOPE);
+        const terserOnly = TERSER_ONLY.has(basename);
+        if (OBFUSCATE) output = terserOnly ? await minifyVendor(output, { module: false }) : await runObfuscator(output, basename);
 
-        if (group === "js" || group === "uv") {
-          output = applyRenameMap(output, jsRenameMap, PROTECTED);
-        }
+        await mkdir(path.dirname(fullPath), { recursive: true });
+        await writeFile(fullPath, output, "utf8");
+        await rm(filePath);
+        emitted.set(publicPath, fullPath);
 
-        const shouldObfuscate = OBFUSCATE && !SKIP_OBFUSCATE.has(basename);
-        if (shouldObfuscate) output = await runObfuscator(output, basename);
-
-        await mkdir(path.dirname(newFullPath), { recursive: true });
-        await writeFile(newFullPath, output, "utf8");
-        if (!inPlace) await rm(filePath);
-
-        const tag = shouldObfuscate ? "(obfuscated)" : SKIP_OBFUSCATE.has(basename) ? "(skip-obfuscate)" : inPlace ? "(in place)" : "(renamed)";
-        console.log(chalk.green(`  + ${basename} -> ${newPublicPath} ${tag}`));
-        passed++;
+        const tag = !OBFUSCATE ? "(renamed)" : terserOnly ? "(terser only)" : "(obfuscated)";
+        console.log(chalk.green(`  + ${basename} -> ${publicPath} ${tag}`));
       } catch (err) {
         if (err instanceof CodecPatchError) codecFailures.push(err.message);
         console.error(chalk.red(`  x ${basename}: ${err.message}`));
@@ -675,95 +956,57 @@ async function build() {
     }),
   );
 
-  console.log(`\n${passed} processed${failed ? `, ${failed} failed` : ""}`);
-
   if (codecFailures.length) {
     console.error(chalk.red("\nAborting: URL codec patching failed."));
     console.error(chalk.red("The client and the proxy would encode/decode with mismatched keys, breaking every proxied URL.\n"));
     for (const message of codecFailures) console.error(chalk.red(`  - ${message}`));
-    console.error(chalk.gray("\ndist/ is incomplete and will be rebuilt from static/ on the next run.\n"));
     process.exit(1);
   }
+  if (failed) throw new Error(`${failed} file(s) failed to process`);
 
-  for (const dir of [JS_DIR]) {
-    await rm(dir, { recursive: true, force: true });
-  }
+  await rm(JS_DIR, { recursive: true, force: true });
 
-  const allRenames = new Map([...jsRenameMap]);
   const htmlFiles = await getHtmlFiles(DIST_DIR);
   console.log(`\nUpdating ${htmlFiles.length} HTML files${OBFUSCATE_HTML ? " + obfuscating" : ""}...\n`);
 
   await Promise.all(
     htmlFiles.map(async htmlPath => {
+      const name = path.relative(DIST_DIR, htmlPath).split(path.sep).join("/");
       let html = await readFile(htmlPath, "utf8");
-      let changed = false;
+      for (const [from, to] of scopeRewrites) html = replaceAll(html, from, to);
+      html = applyRewrites(html, rewrites);
+      references.push({ file: name, source: html });
 
-      for (const [oldScope, newScope] of [
-        [OLD_SCRAMJET_SCOPE, NEW_SCRAMJET_SCOPE],
-        [OLD_UV_SCOPE, NEW_UV_SCOPE],
-      ]) {
-        const updated = replaceAll(html, oldScope, newScope);
-        if (updated !== html) {
-          html = updated;
-          changed = true;
-        }
-      }
-
-      for (const [original, newPublicPath] of allRenames) {
-        const pattern = new RegExp(`((?:src|href)=["'])[^"']*${escapeRegex(original)}(["'])`, "g");
-        const updated = html.replace(pattern, `$1${newPublicPath}$2`);
-        if (updated !== html) {
-          html = updated;
-          changed = true;
-        }
-      }
-
-      if (OBFUSCATE_HTML) {
-        const obfuscated = await obfuscateHtml(html, path.relative(DIST_DIR, htmlPath));
-        if (obfuscated !== html) {
-          html = obfuscated;
-          changed = true;
-        }
-      }
-
-      if (changed) {
-        await writeFile(htmlPath, html, "utf8");
-        console.log(chalk.green(`  + ${path.relative(DIST_DIR, htmlPath)}${OBFUSCATE_HTML ? " (html-obfuscated)" : ""}`));
-      } else {
-        console.log(chalk.gray(`  - ${path.relative(DIST_DIR, htmlPath)} (no changes)`));
-      }
+      if (OBFUSCATE_HTML) html = await obfuscateHtml(html, name);
+      await writeFile(htmlPath, html, "utf8");
+      console.log(chalk.green(`  + ${name}${OBFUSCATE_HTML ? " (html-obfuscated)" : ""}`));
     }),
   );
 
-  const allJs = await getJsFiles(DIST_DIR);
-  const otherJs = allJs.filter(f => !f.startsWith(jsDirFull) && !f.startsWith(JS_DIR));
+  await mkdir(RUNTIME_DIR, { recursive: true });
+  await writeFile(path.join(RUNTIME_DIR, "vendor-map.cjs"), `"use strict";\n// Generated by build.js on every build. Do not edit; do not serve.\nmodule.exports = ${JSON.stringify(manifest, null, 2)};\n`, "utf8");
 
-  if (otherJs.length) {
-    console.log(`\nUpdating ${otherJs.length} other JS files...\n`);
-    await Promise.all(
-      otherJs.map(async jsPath => {
-        const content = await readFile(jsPath, "utf8");
-        let updated = content;
-        updated = patchProxyCodecs(updated, path.basename(jsPath), proxyCodecs);
-        updated = replaceAll(updated, OLD_SCRAMJET_SCOPE, NEW_SCRAMJET_SCOPE);
-        updated = replaceAll(updated, OLD_UV_SCOPE, NEW_UV_SCOPE);
-        updated = applyRenameMap(updated, allRenames, PROTECTED);
-        if (updated !== content) {
-          await writeFile(jsPath, updated, "utf8");
-          console.log(chalk.green(`  + ${path.relative(DIST_DIR, jsPath)}`));
-        }
-      }),
-    );
+  console.log("\nVerifying build...");
+  const distJsFiles = [];
+  for (const file of await collectFiles(DIST_DIR, name => name.endsWith(".js") || name.endsWith(".mjs"))) {
+    if (file.startsWith(RUNTIME_DIR)) continue;
+    distJsFiles.push({ file: path.relative(DIST_DIR, file).split(path.sep).join("/"), source: await readFile(file, "utf8"), module: file.endsWith(".mjs") });
   }
 
-  console.log("\nUpdating server routes...\n");
-  await updateServerRoutes(NEW_UV_SCOPE, NEW_SCRAMJET_SCOPE);
+  const { checkedReferences } = await verifyBuild({ manifest, specs, emitted, references, distJsFiles });
+  console.log(chalk.green(`  all checks passed (${emitted.size} emitted assets, ${distJsFiles.length} scripts parsed, ${checkedReferences} asset references resolved across ${references.length} files)`));
 
   console.log(chalk.green("\nBuild complete -> dist/"));
-  console.log(chalk.blue(`\nNew scope: ${NEW_UV_SCOPE}  scramjet: ${NEW_SCRAMJET_SCOPE}`));
+  console.log(chalk.blue(`\nBuild id: ${manifest.build}  scope: ${NEW_UV_SCOPE}  scramjet: ${NEW_SCRAMJET_SCOPE}  sw: ${manifest.sw}`));
 }
 
 build().catch(err => {
-  console.error(chalk.red("\nBuild failed:"), err);
+  if (err instanceof VerificationError) {
+    console.error(chalk.red("\nBuild verification failed:\n"));
+    console.error(chalk.red(err.message));
+    console.error(chalk.gray("\ndist/ is incomplete and will be rebuilt from static/ on the next run.\n"));
+  } else {
+    console.error(chalk.red("\nBuild failed:"), err);
+  }
   process.exit(1);
 });
