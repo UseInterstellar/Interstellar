@@ -450,7 +450,7 @@ function patchProxyCodecs(content, basename, proxyCodecs) {
   if (basename === "scramjet.config.js") {
     const { codec, key } = parseCodecSpec(proxyCodecs.scramjet);
     const sjCodec = getUrlCodecFunctions(codec, key);
-    content = patchOrFail(content, /codec:\s*\{[\s\S]*?\n\s*\},\n\s*files:/, `codec: {\n    encode: ${sjCodec.encode},\n    decode: ${sjCodec.decode},\n  },\n  files:`, "scramjet.config.js codec");
+    content = patchOrFail(content, /codec:\s*\{[\s\S]*?\},\s*files:/, `codec: {\n    encode: ${sjCodec.encode},\n    decode: ${sjCodec.decode},\n  },\n  files:`, "scramjet.config.js codec");
   }
 
   return content;
