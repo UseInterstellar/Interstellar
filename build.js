@@ -816,6 +816,241 @@ async function verifyBuild({ manifest, specs, emitted, references, distJsFiles }
   return { checkedReferences };
 }
 
+// CDN stylesheets define the fa/material names; rc- ids reach gsap.to() and a morphSVG
+// property rather than a selector call.
+const SELECTOR_KEEP = [/^fa$|^fas$|^far$|^fab$|^fa-/, /^material-symbols/, /^adsbygoogle$/, /^rc-/];
+
+// Applied via `["stars",...].forEach(id => el.id = id)`, so renaming them would mean
+// guessing at ordinary strings.
+const SELECTOR_KEEP_DYNAMIC = new Set(["stars", "stars2", "stars3"]);
+
+function isKeptSelector(name) {
+  return SELECTOR_KEEP.some(pattern => pattern.test(name)) || SELECTOR_KEEP_DYNAMIC.has(name);
+}
+
+const CSS_NESTING_AT_RULES = /^@(media|supports|document|layer|container|scope|keyframes)\b/i;
+// A preceding word character is allowed: `li.active` and `div#main` are selectors too.
+const CSS_CLASS_TOKEN = /(?<!\\)\.(-?[_a-zA-Z][\w-]*)/g;
+const CSS_ID_TOKEN = /(?<!\\)#(-?[_a-zA-Z][\w-]*)/g;
+
+function mapSelectorText(text, fn) {
+  return text
+    .split(/(["'][^"']*["'])/)
+    .map((part, index) => {
+      if (index % 2) return part;
+      return part.replace(CSS_CLASS_TOKEN, (_m, name) => `.${fn("class", name)}`).replace(CSS_ID_TOKEN, (_m, name) => `#${fn("id", name)}`);
+    })
+    .join("");
+}
+
+function transformCss(css, fn) {
+  let out = "";
+  // Unmappable, or "/* based on codepen.io/... */" yields a class named io.
+  let parts = [];
+  const stack = [];
+  let i = 0;
+
+  const inDeclarations = () => stack[stack.length - 1] === "declarations";
+  const preludeText = () => parts.map(part => part.text).join("");
+  const emitPrelude = at => {
+    const text = preludeText();
+    if (at === "rule") out += parts.map(part => (part.map ? mapSelectorText(part.text, fn) : part.text)).join("");
+    else out += text;
+    parts = [];
+    return text;
+  };
+  const push = (text, map) => {
+    if (inDeclarations()) {
+      out += text;
+      return;
+    }
+    const last = parts[parts.length - 1];
+    if (last?.map && map) last.text += text;
+    else parts.push({ text, map });
+  };
+
+  while (i < css.length) {
+    const ch = css[i];
+
+    if (ch === "/" && css[i + 1] === "*") {
+      const end = css.indexOf("*/", i + 2);
+      const stop = end < 0 ? css.length : end + 2;
+      push(css.slice(i, stop), false);
+      i = stop;
+      continue;
+    }
+
+    if (ch === '"' || ch === "'") {
+      let j = i + 1;
+      while (j < css.length && css[j] !== ch) j += css[j] === "\\" ? 2 : 1;
+      push(css.slice(i, Math.min(j + 1, css.length)), false);
+      i = j + 1;
+      continue;
+    }
+
+    if (ch === "{") {
+      if (inDeclarations()) {
+        out += ch;
+        stack.push("declarations");
+      } else {
+        const trimmed = preludeText().trim();
+        const nesting = CSS_NESTING_AT_RULES.test(trimmed);
+        emitPrelude(nesting || !trimmed.length ? "verbatim" : "rule");
+        out += ch;
+        stack.push(nesting ? "container" : "declarations");
+      }
+      i++;
+      continue;
+    }
+
+    if (ch === "}") {
+      emitPrelude(preludeText().trim() && !inDeclarations() ? "rule" : "verbatim");
+      stack.pop();
+      out += ch;
+      i++;
+      continue;
+    }
+
+    push(ch, true);
+    i++;
+  }
+
+  emitPrelude(preludeText().trim() ? "rule" : "verbatim");
+  return out;
+}
+
+function transformMarkupAttrs(text, fn) {
+  return text
+    .replace(
+      /(\sclass\s*=\s*)(["'])([^"']*)\2/gi,
+      (_m, lead, quote, value) =>
+        `${lead}${quote}${value
+          .split(/(\s+)/)
+          .map(token => (token.trim() ? fn("class", token) : token))
+          .join("")}${quote}`,
+    )
+    .replace(/(\sid\s*=\s*)(["'])([^"']*)\2/gi, (_m, lead, quote, value) => `${lead}${quote}${value.trim() ? fn("id", value.trim()) : value}${quote}`);
+}
+
+// Quotes stay inside the class, or `.column[data-x="${i}"]` never matches.
+const QUOTED = `((?:\\\\.|(?!\\2)[^\\\\])*)\\2`;
+const SELECTOR_CALLS = new RegExp(`\\.(querySelectorAll|querySelector|closest|matches)\\s*\\(\\s*(["'\`])${QUOTED}`, "g");
+const ID_CALLS = new RegExp(`\\.getElementById\\s*\\(\\s*()(["'\`])${QUOTED}`, "g");
+const CLASS_NAME_CALLS = new RegExp(`\\.getElementsByClassName\\s*\\(\\s*()(["'\`])${QUOTED}`, "g");
+const CLASS_LIST_CALLS = /\.classList\s*\.\s*(?:add|remove|toggle|contains|replace)\s*\(([^)]*)\)/g;
+const CLASS_NAME_ASSIGN = new RegExp(`\\.className\\s*=\\s*()(["'\`])${QUOTED}`, "g");
+const ID_ASSIGN = new RegExp(`\\.id\\s*=\\s*()(["'\`])${QUOTED}`, "g");
+
+const mapClassList = (value, fn) =>
+  value
+    .split(/(\s+)/)
+    .map(token => (token.trim() ? fn("class", token) : token))
+    .join("");
+
+function transformJsSelectors(js, fn) {
+  let out = js;
+  out = out.replace(SELECTOR_CALLS, (_m, method, quote, selector) => `.${method}(${quote}${mapSelectorText(selector, fn)}${quote}`);
+  out = out.replace(ID_CALLS, (_m, _pad, quote, name) => `.getElementById(${quote}${fn("id", name)}${quote}`);
+  out = out.replace(CLASS_NAME_CALLS, (_m, _pad, quote, name) => `.getElementsByClassName(${quote}${fn("class", name)}${quote}`);
+  out = out.replace(CLASS_LIST_CALLS, (m, args) =>
+    m.replace(
+      args,
+      args.replace(/(["'])([^"']+)\1/g, (_s, quote, name) => `${quote}${fn("class", name)}${quote}`),
+    ),
+  );
+  out = out.replace(CLASS_NAME_ASSIGN, (_m, _pad, quote, value) => `.className = ${quote}${mapClassList(value, fn)}${quote}`);
+  out = out.replace(ID_ASSIGN, (_m, _pad, quote, name) => `.id = ${quote}${fn("id", name)}${quote}`);
+  return transformMarkupAttrs(out, fn);
+}
+
+// Deliberately not sharing the rewrite regexes, so a construct they miss is still caught.
+// Input must be comment-free, or an apostrophe in prose reads as a string opener.
+const JS_STRING_LITERAL = /(["'`])((?:\\.|(?!\1)[^\\])*)\1/g;
+
+async function stripJsComments(js) {
+  const result = await minify(js, { compress: false, mangle: false, format: { comments: false } });
+  return result.code ?? js;
+}
+
+function findStaleSelectorStrings(js, maps) {
+  const stale = new Set();
+  for (const [, , value] of js.matchAll(JS_STRING_LITERAL)) {
+    if (!/[.#][a-zA-Z_-]/.test(value)) continue;
+    for (const [, name] of value.matchAll(CSS_CLASS_TOKEN)) if (maps.class.has(name)) stale.add(`class .${name}`);
+    for (const [, name] of value.matchAll(CSS_ID_TOKEN)) if (maps.id.has(name)) stale.add(`id #${name}`);
+  }
+  return stale;
+}
+
+function findStaleSelectorsInCss(css, maps) {
+  const stale = new Set();
+  const unquoted = css.replace(/\/\*[\s\S]*?\*\//g, "").replace(/(["'])(?:\\.|(?!\1)[^\\])*\1/g, '""');
+  for (const [, name] of unquoted.matchAll(CSS_CLASS_TOKEN)) if (maps.class.has(name)) stale.add(`class .${name}`);
+  for (const [, name] of unquoted.matchAll(CSS_ID_TOKEN)) if (maps.id.has(name)) stale.add(`id #${name}`);
+  return stale;
+}
+
+async function obfuscateSelectors() {
+  const cssFiles = await collectFiles(DIST_DIR, name => name.endsWith(".css"));
+  const htmlFiles = await getHtmlFiles(DIST_DIR);
+  const jsFiles = await getJsFiles(JS_DIR);
+
+  const read = async file => ({ file, source: await readFile(file, "utf8") });
+  const css = await Promise.all(cssFiles.map(read));
+  const html = await Promise.all(htmlFiles.map(read));
+  const js = await Promise.all(jsFiles.map(read));
+
+  const seen = { class: new Set(), id: new Set() };
+  const kept = new Set();
+  const collect = (type, name) => {
+    if (!name) return name;
+    if (isKeptSelector(name)) kept.add(name);
+    else seen[type].add(name);
+    return name;
+  };
+
+  for (const { source } of css) transformCss(source, collect);
+  for (const { source } of html) transformMarkupAttrs(source, collect);
+  for (const { source } of js) transformJsSelectors(source, collect);
+
+  const used = new Set();
+  const nextIdent = () => {
+    for (;;) {
+      const ident = `${randomItem("abcdefghijklmnopqrstuvwxyz".split(""))}${randomBytes(3).toString("hex").slice(0, 4)}`;
+      if (!used.has(ident)) {
+        used.add(ident);
+        return ident;
+      }
+    }
+  };
+
+  const maps = { class: new Map(), id: new Map() };
+  for (const type of ["class", "id"]) for (const name of [...seen[type]].sort()) maps[type].set(name, nextIdent());
+
+  const apply = (type, name) => maps[type].get(name) ?? name;
+
+  await Promise.all([...css.map(({ file, source }) => writeFile(file, transformCss(source, apply), "utf8")), ...html.map(({ file, source }) => writeFile(file, transformMarkupAttrs(source, apply), "utf8")), ...js.map(({ file, source }) => writeFile(file, transformJsSelectors(source, apply), "utf8"))]);
+
+  const leaked = new Set();
+  const recheck = (type, name) => {
+    if (maps[type].has(name)) leaked.add(`${type} ${name}`);
+    return name;
+  };
+  for (const file of await collectFiles(DIST_DIR, name => name.endsWith(".css"))) {
+    const source = await readFile(file, "utf8");
+    transformCss(source, recheck);
+    for (const entry of findStaleSelectorsInCss(source, maps)) leaked.add(`${path.basename(file)}: ${entry}`);
+  }
+  for (const file of await getHtmlFiles(DIST_DIR)) transformMarkupAttrs(await readFile(file, "utf8"), recheck);
+  for (const file of await getJsFiles(JS_DIR)) {
+    const source = await readFile(file, "utf8");
+    transformJsSelectors(source, recheck);
+    for (const entry of findStaleSelectorStrings(await stripJsComments(source), maps)) leaked.add(`${path.basename(file)}: ${entry}`);
+  }
+
+  return { maps, kept: [...kept].sort(), leaked: [...leaked].sort() };
+}
+
 async function build() {
   console.log("Cleaning dist/...");
   await rm(DIST_DIR, { recursive: true, force: true });
@@ -824,6 +1059,15 @@ async function build() {
   await cp(SRC_DIR, DIST_DIR, { recursive: true });
 
   console.log(OBFUSCATE ? chalk.yellow("Obfuscation: ON") : chalk.yellow("Obfuscation: OFF (rename + rewrite only)"));
+
+  const selectors = await obfuscateSelectors();
+  console.log(`\nSelectors: ${selectors.maps.class.size} classes, ${selectors.maps.id.size} ids obfuscated`);
+  if (selectors.kept.length) console.log(chalk.gray(`  kept (externally owned or not statically resolvable): ${selectors.kept.join(", ")}`));
+  if (selectors.leaked.length) {
+    console.error(chalk.red(`\nAborting: ${selectors.leaked.length} selector reference(s) were renamed in one file but not another.`));
+    for (const entry of selectors.leaked) console.error(chalk.red(`  - ${entry}`));
+    process.exit(1);
+  }
 
   const registry = new PathRegistry();
 
