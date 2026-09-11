@@ -132,8 +132,23 @@ app.use("/.runtime", (_req, res) => {
 });
 
 if (vendorMap?.analytics) {
-  const { id, loader, transport } = vendorMap.analytics;
+  const { id, loader, transport, sink, param, key } = vendorMap.analytics;
   let cached = null;
+
+  const unpack = value => {
+    const raw = Buffer.from(String(value).replace(/-/g, "+").replace(/_/g, "/"), "base64");
+    return Buffer.from(raw.map((byte, index) => byte ^ key[index % key.length])).toString("utf8");
+  };
+
+  // gtag builds its own URL and always ends it with /g/collect?v=2&tid=G-..., so the
+  // recognizable shape can only be removed after gtag hands the request to the browser.
+  // These wrappers pass everything that is not a collect hit straight through.
+  const requestHook = `(function(){var B=location.origin+${JSON.stringify(transport)}+"/g/collect",S=${JSON.stringify(sink)},P=${JSON.stringify(param)},K=${JSON.stringify(key)};
+function pack(s){var o="";for(var i=0;i<s.length;i++)o+=String.fromCharCode(s.charCodeAt(i)^K[i%K.length]);return btoa(o).replace(/\\+/g,"-").replace(/\\//g,"_").replace(/=+$/,"")}
+function re(u){try{u=String(u);if(u.indexOf(B)!==0)return null;var q=u.indexOf("?");return S+"?"+P+"="+pack(q<0?"":u.slice(q+1))}catch(e){return null}}
+var sb=navigator.sendBeacon&&navigator.sendBeacon.bind(navigator);if(sb)navigator.sendBeacon=function(u,d){return sb(re(u)||u,d)};
+var of=window.fetch;if(of)window.fetch=function(u,o){if(typeof u==="string"){var r=re(u);if(r)u=r}return of.call(this,u,o)};
+var xo=XMLHttpRequest.prototype.open;XMLHttpRequest.prototype.open=function(m,u){var a=[].slice.call(arguments);a[1]=re(u)||u;return xo.apply(this,a)}})();\n`;
 
   app.get(loader, async (_req, res) => {
     try {
@@ -144,7 +159,8 @@ if (vendorMap?.analytics) {
         // Bootstrapping here rather than inline in the page is what keeps the measurement
         // id out of the HTML. transport_url sends hits to our own origin.
         const boot = `\n;window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config",${JSON.stringify(id)},{transport_url:location.origin+${JSON.stringify(transport)}});`;
-        cached = { at: Date.now(), body: body + boot };
+        // Hook first: gtag captures its transport references as it initialises.
+        cached = { at: Date.now(), body: requestHook + body + boot };
       }
       res.type("text/javascript").set("Cache-Control", "public, max-age=900").send(cached.body);
     } catch {
@@ -152,10 +168,10 @@ if (vendorMap?.analytics) {
     }
   });
 
-  app.all(`${transport}/g/collect`, express.raw({ type: "*/*", limit: "64kb" }), async (req, res) => {
+  app.all(sink, express.raw({ type: "*/*", limit: "64kb" }), async (req, res) => {
     try {
       const target = new URL("https://www.google-analytics.com/g/collect");
-      target.search = new URLSearchParams(req.query).toString();
+      target.search = unpack(req.query[param] ?? "");
       const upstream = await fetch(target, {
         method: req.method === "GET" ? "GET" : "POST",
         headers: {

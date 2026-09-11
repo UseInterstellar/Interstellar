@@ -1226,7 +1226,13 @@ async function build() {
   await rm(JS_DIR, { recursive: true, force: true });
 
   const htmlFiles = await getHtmlFiles(DIST_DIR);
-  const analyticsPaths = { loader: registry.file(".js"), transport: `/${registry.dir()}` };
+  const analyticsPaths = {
+    loader: registry.file(".js"),
+    transport: `/${registry.dir()}`,
+    sink: registry.file(""),
+    param: randomItem(FILENAMES).slice(0, 2),
+    key: Array.from(randomBytes(8)),
+  };
   const analyticsIds = new Set();
   console.log(`\nUpdating ${htmlFiles.length} HTML files${OBFUSCATE_HTML ? " + obfuscating" : ""}...\n`);
 
