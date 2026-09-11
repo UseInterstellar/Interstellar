@@ -93,6 +93,16 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.appendChild(script);
   }
 
+  // The AdSense account is tied to gointerstellar.app, so forks and mirrors must not serve
+  // it. The tabs page never carried the loader either.
+  if (window.location.hostname === "gointerstellar.app" && !document.getElementById("frame-container")) {
+    const ads = document.createElement("script");
+    ads.async = true;
+    ads.crossOrigin = "anonymous";
+    ads.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6840529569014734";
+    document.head.appendChild(ads);
+  }
+
   const nav = document.querySelector(".nav-bar");
 
   if (nav) {

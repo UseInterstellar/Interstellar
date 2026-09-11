@@ -131,6 +131,47 @@ app.use("/.runtime", (_req, res) => {
   res.sendStatus(404);
 });
 
+if (vendorMap?.analytics) {
+  const { id, loader, transport } = vendorMap.analytics;
+  let cached = null;
+
+  app.get(loader, async (_req, res) => {
+    try {
+      if (!cached || Date.now() - cached.at > 3600000) {
+        const upstream = await fetch(`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(id)}`);
+        if (!upstream.ok) return res.sendStatus(502);
+        const body = await upstream.text();
+        // Bootstrapping here rather than inline in the page is what keeps the measurement
+        // id out of the HTML. transport_url sends hits to our own origin.
+        const boot = `\n;window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config",${JSON.stringify(id)},{transport_url:location.origin+${JSON.stringify(transport)}});`;
+        cached = { at: Date.now(), body: body + boot };
+      }
+      res.type("text/javascript").set("Cache-Control", "public, max-age=900").send(cached.body);
+    } catch {
+      res.sendStatus(502);
+    }
+  });
+
+  app.all(`${transport}/g/collect`, express.raw({ type: "*/*", limit: "64kb" }), async (req, res) => {
+    try {
+      const target = new URL("https://www.google-analytics.com/g/collect");
+      target.search = new URLSearchParams(req.query).toString();
+      const upstream = await fetch(target, {
+        method: req.method === "GET" ? "GET" : "POST",
+        headers: {
+          "User-Agent": req.get("user-agent") ?? "",
+          "X-Forwarded-For": req.ip,
+          ...(req.get("content-type") ? { "Content-Type": req.get("content-type") } : {}),
+        },
+        body: req.method === "GET" || !req.body?.length ? undefined : req.body,
+      });
+      res.status(upstream.status).send(Buffer.from(await upstream.arrayBuffer()));
+    } catch {
+      res.sendStatus(204);
+    }
+  });
+}
+
 app.use(express.static(SERVE_DIR, { ...jsStaticOptions, dotfiles: "ignore" }));
 
 if (!vendorMap) {
