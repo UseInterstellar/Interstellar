@@ -260,11 +260,23 @@ function applyAppFlags(app) {
   }
 }
 
+// Replaced at build time with the per-build key. [0] is identity, so dev serves the plain
+// dataset and the production payload arrives as an encoded string instead of an array.
+const CATALOGUE_KEY = [0];
+
+function decodeCatalogue(payload) {
+  const binary = atob(payload.replace(/-/g, "+").replace(/_/g, "/"));
+  const bytes = new Uint8Array(binary.length);
+  for (let index = 0; index < binary.length; index++) bytes[index] = binary.charCodeAt(index) ^ CATALOGUE_KEY[index % CATALOGUE_KEY.length];
+  return JSON.parse(new TextDecoder().decode(bytes));
+}
+
 function loadAppsFromJson() {
   const jsonPath = getJsonPath();
 
   fetch(jsonPath)
     .then(response => response.json())
+    .then(data => (typeof data === "string" ? decodeCatalogue(data) : data))
     .then(appsList => {
       const nonPinnedContainer = document.querySelector(".apps");
       const pinnedContainer = document.querySelector(".pinned");

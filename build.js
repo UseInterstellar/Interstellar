@@ -34,6 +34,22 @@ const { scramjetPath } = require("@mercuryworkshop/scramjet/path");
 // Application files to run through Terser instead of the obfuscator.
 const TERSER_ONLY = new Set();
 
+function createCatalogueKey() {
+  return Array.from(randomBytes(16));
+}
+
+// XOR then base64url, wrapped as a JSON string so the asset stays valid JSON. Obfuscation
+// only: the key ships in launcher.js.
+function encodeCatalogue(json, key) {
+  const bytes = Buffer.from(json, "utf8");
+  const out = Buffer.alloc(bytes.length);
+  for (let index = 0; index < bytes.length; index++) out[index] = bytes[index] ^ key[index % key.length];
+  return JSON.stringify(out.toString("base64").replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""));
+}
+
+const UNUSED_JSON = ["apps.json", "games.json"];
+const RANDOMIZED_JSON = ["apps.min.json", "games.min.json"];
+
 const VENDOR_DROPPED_CONSOLE = ["console.log", "console.debug", "console.info", "console.warn"];
 
 const VENDOR_SIZE_TOLERANCE = 1;
@@ -949,6 +965,7 @@ async function build() {
   const scramjetGlobals = createScramjetGlobals();
   const identifierRenames = createScramjetIdentifiers();
   const scramjetStrings = createScramjetStrings();
+  const catalogueKey = createCatalogueKey();
   console.log(`Scramjet identifiers: ${[...identifierRenames].map(([from, to]) => `${from} -> ${to}`).join(", ")}`);
   console.log(`Scramjet strings: attr ${SCRAMJET_ATTR_PREFIX} -> ${scramjetStrings.attr}, idb ${SCRAMJET_IDB_NAME} -> ${scramjetStrings.idb}`);
 
@@ -978,9 +995,23 @@ async function build() {
   manifest.sw = registry.rootFile(".js");
   appPlan.set(swSource, { basename: "sw.js", publicPath: manifest.sw, fullPath: path.join(DIST_DIR, manifest.sw) });
 
+  // apps.json and games.json are byte-equivalent duplicates of the .min files that nothing
+  // fetches, so they are dropped rather than shipped as a second plaintext copy.
+  for (const name of UNUSED_JSON) await rm(path.join(DIST_DIR, "assets", "json", name), { force: true });
+
+  const jsonMoves = new Map();
+  for (const name of RANDOMIZED_JSON) {
+    const source = path.join(DIST_DIR, "assets", "json", name);
+    if (!(await exists(source))) throw new Error(`expected dataset ${name} is missing from dist/assets/json`);
+    jsonMoves.set(source, registry.file(".json"));
+  }
+
   const rewriteMap = new Map();
   for (const spec of specs) {
     for (const variant of pathVariants(spec.old)) rewriteMap.set(variant, spec.publicPath);
+  }
+  for (const [source, publicPath] of jsonMoves) {
+    for (const variant of pathVariants(`/${path.relative(DIST_DIR, source).split(path.sep).join("/")}`)) rewriteMap.set(variant, publicPath);
   }
   for (const [filePath, entry] of appPlan) {
     if (filePath === swSource) {
@@ -1006,6 +1037,15 @@ async function build() {
 
   const emitted = new Map();
   const references = [];
+
+  for (const [source, publicPath] of jsonMoves) {
+    const destination = path.join(DIST_DIR, publicPath);
+    await mkdir(path.dirname(destination), { recursive: true });
+    await writeFile(destination, encodeCatalogue(await readFile(source, "utf8"), catalogueKey), "utf8");
+    await rm(source);
+    emitted.set(publicPath, destination);
+    console.log(chalk.green(`  + ${path.basename(source)} -> ${publicPath}`));
+  }
 
   console.log(`\nVendor assets:\n`);
   for (const spec of specs) {
@@ -1072,6 +1112,7 @@ async function build() {
         for (const [from, to] of scopeRewrites) output = replaceAll(output, from, to);
         output = applyRewrites(output, rewrites);
         output = applyIdentifierRenames(output, identifierRenames);
+        if (basename === "launcher.js") output = patchOrFail(output, /const CATALOGUE_KEY = \[0\];/, `const CATALOGUE_KEY = ${JSON.stringify(catalogueKey)};`, "launcher.js catalogue key");
         references.push({ file: `${basename} (${publicPath})`, source: output });
 
         const terserOnly = TERSER_ONLY.has(basename);
