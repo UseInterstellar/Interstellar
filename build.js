@@ -31,8 +31,8 @@ const { libcurlPath } = require("@mercuryworkshop/libcurl-transport");
 const { uvPath } = require("@titaniumnetwork-dev/ultraviolet");
 const { scramjetPath } = require("@mercuryworkshop/scramjet/path");
 
-// Obfuscates the object that search.js reads back
-const TERSER_ONLY = new Set(["vendor.js"]);
+// Application files to run through Terser instead of the obfuscator.
+const TERSER_ONLY = new Set();
 
 const VENDOR_DROPPED_CONSOLE = ["console.log", "console.debug", "console.info", "console.warn"];
 
@@ -236,7 +236,58 @@ function patchOrFail(content, pattern, replacement, label, required = true) {
   return content.replace(pattern, replacement);
 }
 
-function patchProxyCodecs(content, basename, proxyCodecs) {
+// Emitted by the wasm rewriter into every proxied page. wrappropertybase is concatenated
+// with a property name, so each value must be a valid identifier alone and as a prefix.
+const SCRAMJET_GLOBAL_DEFAULTS = {
+  wrapfn: "$scramjet$wrap",
+  wrappropertybase: "$scramjet__",
+  wrappropertyfn: "$scramjet$prop",
+  cleanrestfn: "$scramjet$clean",
+  importfn: "$scramjet$import",
+  rewritefn: "$scramjet$rewrite",
+  metafn: "$scramjet$meta",
+  setrealmfn: "$scramjet$setrealm",
+  pushsourcemapfn: "$scramjet$pushsourcemap",
+  trysetfn: "$scramjet$tryset",
+  templocid: "$scramjet$temploc",
+  tempunusedid: "$scramjet$tempunused",
+};
+
+function createScramjetGlobals() {
+  const token = randomBytes(4).toString("hex");
+  const globals = {};
+  let index = 0;
+  for (const name of Object.keys(SCRAMJET_GLOBAL_DEFAULTS)) globals[name] = `_${token}$${(index++).toString(36)}${randomBytes(2).toString("hex")}`;
+  return globals;
+}
+
+// Names we own on both sides. Upstream Scramjet reads none of them, and none is reachable
+// from HTML.
+const SCRAMJET_IDENTIFIERS = ["__scramjet$config", "isScramjet", "isScramjetEnabled", "ScramjetServiceWorker", "ScramjetController", "$scramjetLoadWorker", "$scramjetLoadController", "$scramjetLoadClient"];
+
+// scramjet.all.js strips this with a hardcoded `e.slice(14)`, so the replacement must keep
+// the same length, and stay lowercase because setAttribute lowercases.
+const SCRAMJET_ATTR_PREFIX = "scramjet-attr";
+const SCRAMJET_IDB_NAME = "$scramjet";
+
+function createScramjetIdentifiers() {
+  return new Map(SCRAMJET_IDENTIFIERS.map(name => [name, `_${randomBytes(5).toString("hex")}`]));
+}
+
+function createScramjetStrings() {
+  const attr = randomItem("abcdefghijklmnopqrstuvwxyz".split("")) + randomBytes(6).toString("hex");
+  if (attr.length !== SCRAMJET_ATTR_PREFIX.length) throw new Error(`attribute prefix must stay ${SCRAMJET_ATTR_PREFIX.length} chars to keep slice(14) correct, got ${attr.length}`);
+  return { attr, idb: `_${randomBytes(5).toString("hex")}` };
+}
+
+// The lookarounds stop isScramjet matching inside isScramjetEnabled.
+function applyIdentifierRenames(source, renames) {
+  let out = source;
+  for (const [from, to] of renames) out = out.replace(new RegExp(`(?<![\\w$])${from.replace(/\$/g, "\\$")}(?![\\w$])`, "g"), to);
+  return out;
+}
+
+function patchProxyCodecs(content, basename, proxyCodecs, scramjetGlobals) {
   if (basename === "uv.config.js") {
     const { codec, key } = parseCodecSpec(proxyCodecs.uv);
     const uvCodec = getUrlCodecFunctions(codec, key);
@@ -247,7 +298,10 @@ function patchProxyCodecs(content, basename, proxyCodecs) {
   if (basename === "scramjet.config.js") {
     const { codec, key } = parseCodecSpec(proxyCodecs.scramjet);
     const sjCodec = getUrlCodecFunctions(codec, key);
-    content = patchOrFail(content, /codec:\s*\{[\s\S]*?\},\s*files:/, `codec: {\n    encode: ${sjCodec.encode},\n    decode: ${sjCodec.decode},\n  },\n  files:`, "scramjet.config.js codec");
+    const globals = Object.entries(scramjetGlobals)
+      .map(([name, value]) => `    ${name}: ${JSON.stringify(value)},`)
+      .join("\n");
+    content = patchOrFail(content, /codec:\s*\{[\s\S]*?\},\s*files:/, `codec: {\n    encode: ${sjCodec.encode},\n    decode: ${sjCodec.decode},\n  },\n  globals: {\n${globals}\n  },\n  files:`, "scramjet.config.js codec");
   }
 
   return content;
@@ -477,6 +531,9 @@ function vendorSpecs() {
       src: path.join(scramjetPath, "scramjet.all.js"),
       old: "/assets/scramjet/scramjet.all.js",
       ext: ".js",
+      rewriteGlobals: true,
+      renameIdentifiers: true,
+      rewriteScramjetStrings: true,
       globals: ["$scramjetLoadWorker", "$scramjetLoadController", "$scramjetLoadClient", "$scramjetRequire", "$scramjetVersion", "COOKIE", "WASM"],
     },
     { id: "sj.sync", src: path.join(scramjetPath, "scramjet.sync.js"), old: "/assets/scramjet/scramjet.sync.js", ext: ".js" },
@@ -490,6 +547,7 @@ function vendorSpecs() {
       rewritePaths: true,
       rewriteScopes: true,
       patchCodec: true,
+      renameIdentifiers: true,
       globals: ["__scramjet$config"],
     },
     {
@@ -538,7 +596,7 @@ function formatKb(bytes) {
   return `${(bytes / 1024).toFixed(1)}kb`;
 }
 
-async function verifyBuild({ manifest, specs, emitted, references, distJsFiles, serverRoutes = [] }) {
+async function verifyBuild({ manifest, specs, emitted, references, distJsFiles, serverRoutes = [], identifierRenames = new Map() }) {
   const failures = [];
   const emittedPaths = new Set([...emitted.keys(), ...serverRoutes]);
 
@@ -570,7 +628,7 @@ async function verifyBuild({ manifest, specs, emitted, references, distJsFiles, 
     const source = await readFile(path.join(DIST_DIR, emittedPath), "utf8");
 
     for (const identifier of spec.globals ?? []) {
-      if (!source.includes(identifier)) failures.push(`global "${identifier}" did not survive processing of ${spec.id} (${emittedPath})`);
+      if (!source.includes(identifierRenames.get(identifier) ?? identifier)) failures.push(`global "${identifier}" did not survive processing of ${spec.id} (${emittedPath})`);
     }
 
     for (const identifier of spec.mangledAway ?? []) {
@@ -613,12 +671,10 @@ async function verifyBuild({ manifest, specs, emitted, references, distJsFiles, 
   return { checkedReferences };
 }
 
-// CDN stylesheets define the fa/material names; rc- ids reach gsap.to() and a morphSVG
-// property rather than a selector call.
+// CDN stylesheets own the fa/material names; rc- ids reach gsap.to(), not a selector call.
 const SELECTOR_KEEP = [/^fa$|^fas$|^far$|^fab$|^fa-/, /^material-symbols/, /^adsbygoogle$/, /^rc-/];
 
-// Applied via `["stars",...].forEach(id => el.id = id)`, so renaming them would mean
-// guessing at ordinary strings.
+// Applied from a bare array literal, so renaming means guessing at ordinary strings.
 const SELECTOR_KEEP_DYNAMIC = new Set(["stars", "stars2", "stars3"]);
 
 function isKeptSelector(name) {
@@ -792,7 +848,7 @@ const GTAG_BOOTSTRAP = /[ \t]*<script>\s*window\.dataLayer[\s\S]*?gtag\("config"
 const GTAG_MARKER = /[ \t]*<!--\s*DO NOT REMOVE\s*-->\r?\n/g;
 
 // Keeps the measurement id out of the served HTML. It still travels in the proxied script
-// body and in the collect payload, so this hides the tag from source, not from the network.
+// body, so this hides the tag from source, not from the network.
 function replaceAnalytics(html, loaderPath) {
   const loader = html.match(GTAG_LOADER);
   if (!loader) return { html, id: null };
@@ -890,6 +946,11 @@ async function build() {
   const NEW_UV_SCOPE = `/${uvBase}/`;
   const NEW_SCRAMJET_SCOPE = `/${uvBase}/${scramjetSub}/`;
   const proxyCodecs = createProxyCodecs();
+  const scramjetGlobals = createScramjetGlobals();
+  const identifierRenames = createScramjetIdentifiers();
+  const scramjetStrings = createScramjetStrings();
+  console.log(`Scramjet identifiers: ${[...identifierRenames].map(([from, to]) => `${from} -> ${to}`).join(", ")}`);
+  console.log(`Scramjet strings: attr ${SCRAMJET_ATTR_PREFIX} -> ${scramjetStrings.attr}, idb ${SCRAMJET_IDB_NAME} -> ${scramjetStrings.idb}`);
 
   const manifest = {
     build: randomBytes(4).toString("hex"),
@@ -962,7 +1023,25 @@ async function build() {
     let source = await readFile(spec.src, "utf8");
     const sizeIn = Buffer.byteLength(source);
 
-    if (spec.patchCodec) source = patchProxyCodecs(source, path.basename(spec.src), proxyCodecs);
+    if (spec.patchCodec) source = patchProxyCodecs(source, path.basename(spec.src), proxyCodecs, scramjetGlobals);
+    if (spec.rewriteGlobals) {
+      for (const [name, fallback] of Object.entries(SCRAMJET_GLOBAL_DEFAULTS)) {
+        const literal = `"${fallback}"`;
+        if (!source.includes(literal)) throw new CodecPatchError(`scramjet.all.js: default global ${name} (${fallback}) not found. Upstream changed - update SCRAMJET_GLOBAL_DEFAULTS.`);
+        source = replaceAll(source, literal, `"${scramjetGlobals[name]}"`);
+      }
+    }
+    if (spec.renameIdentifiers) source = applyIdentifierRenames(source, identifierRenames);
+    if (spec.rewriteScramjetStrings) {
+      for (const [literal, label] of [
+        [SCRAMJET_ATTR_PREFIX, "attribute prefix"],
+        [`"${SCRAMJET_IDB_NAME}"`, "IndexedDB name"],
+      ]) {
+        if (!source.includes(literal)) throw new CodecPatchError(`scramjet.all.js: ${label} ${literal} not found. Upstream changed.`);
+      }
+      source = replaceAll(source, SCRAMJET_ATTR_PREFIX, scramjetStrings.attr);
+      source = replaceAll(source, `"${SCRAMJET_IDB_NAME}"`, `"${scramjetStrings.idb}"`);
+    }
     if (spec.rewriteScopes) for (const [from, to] of scopeRewrites) source = replaceAll(source, from, to);
     if (spec.rewritePaths) {
       source = applyRewrites(source, rewrites);
@@ -992,6 +1071,7 @@ async function build() {
         let output = await readFile(filePath, "utf8");
         for (const [from, to] of scopeRewrites) output = replaceAll(output, from, to);
         output = applyRewrites(output, rewrites);
+        output = applyIdentifierRenames(output, identifierRenames);
         references.push({ file: `${basename} (${publicPath})`, source: output });
 
         const terserOnly = TERSER_ONLY.has(basename);
@@ -1070,7 +1150,7 @@ async function build() {
     distJsFiles.push({ file: path.relative(DIST_DIR, file).split(path.sep).join("/"), source: await readFile(file, "utf8"), module: file.endsWith(".mjs") });
   }
 
-  const { checkedReferences } = await verifyBuild({ manifest, specs, emitted, references, distJsFiles, serverRoutes: manifest.analytics ? [manifest.analytics.loader] : [] });
+  const { checkedReferences } = await verifyBuild({ manifest, specs, emitted, references, distJsFiles, serverRoutes: manifest.analytics ? [manifest.analytics.loader] : [], identifierRenames });
   console.log(chalk.green(`  all checks passed (${emitted.size} emitted assets, ${distJsFiles.length} scripts parsed, ${checkedReferences} asset references resolved across ${references.length} files)`));
 
   console.log(chalk.green("\nBuild complete -> dist/"));
