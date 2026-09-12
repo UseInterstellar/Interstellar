@@ -279,15 +279,127 @@ function createScramjetGlobals() {
 
 // Names we own on both sides. Upstream Scramjet reads none of them, and none is reachable
 // from HTML.
-const SCRAMJET_IDENTIFIERS = ["__scramjet$config", "isScramjet", "isScramjetEnabled", "ScramjetServiceWorker", "ScramjetController", "$scramjetLoadWorker", "$scramjetLoadController", "$scramjetLoadClient"];
+// Token-safe renames: every occurrence is a bare identifier, so the word-boundary pass
+// below handles them. encodeProxyUrl is a prefix of encodeProxyUrlSync, which the trailing
+// lookahead keeps apart.
+const RENAMED_IDENTIFIERS = [
+  "__scramjet$config",
+  "isScramjet",
+  "isScramjetEnabled",
+  "ScramjetServiceWorker",
+  "ScramjetController",
+  "$scramjetLoadWorker",
+  "$scramjetLoadController",
+  "$scramjetLoadClient",
+  "isGamesPage",
+  "encodeProxyUrl",
+  "encodeProxyUrlSync",
+  "__uv$config",
+  "UVClient",
+  "UVServiceWorker",
+  "uvHostname",
+  "implementUVMiddleware",
+];
+
+// uv.bundle.js falls back to these when the config omits a script path, and derives the
+// client path from the bundle path by substring. Our config sets all four so the branches
+// are dead, but they carry the names and the derivation would resolve to a 404 if it ever
+// ran. Pointing them at the emitted paths removes the names and makes the fallback correct.
+const UV_DEFAULT_PATH_LITERALS = [
+  ['"/uv.bundle.js"', "uv.bundle"],
+  ['"/uv.handler.js"', "uv.handler"],
+  ['"/uv.client.js"', "uv.client"],
+  ['"/uv.config.js"', "uv.config"],
+  ['"uv.bundle.js"', "uv.bundle"],
+  ['"uv.client.js"', "uv.client"],
+];
+
+function applyUvDefaultPaths(source, specs) {
+  const byId = Object.fromEntries(specs.map(spec => [spec.id, spec.publicPath]));
+  let out = source;
+  for (const [literal, id] of UV_DEFAULT_PATH_LITERALS) {
+    if (!out.includes(literal)) throw new CodecPatchError(`uv.bundle.js: default path ${literal} not found. Upstream changed.`);
+    out = replaceAll(out, literal, JSON.stringify(byId[id]));
+  }
+  return out;
+}
+
+// Message only: the throw is what matters, nothing reads the text.
+const UV_ERROR_MESSAGE = '"Unable to load global UV data"';
+
+function stripUvErrorMessage(source) {
+  if (!source.includes(UV_ERROR_MESSAGE)) throw new CodecPatchError(`uv.handler.js: ${UV_ERROR_MESSAGE} not found. Upstream changed.`);
+  return replaceAll(source, UV_ERROR_MESSAGE, '""');
+}
+
+// UV names everything off one prefix: __uv is the global its rewriter writes into proxied
+// scripts, __uv$ builds __uv$location and friends, and __uv-script tags the scripts it
+// injects. A substring swap keeps all 15 variants coherent, which a token-bounded rename
+// would not: it would skip __uv$storageObj and still rewrite __uv-script. Applied after the
+// token pass so __uv$config is already gone, and kept lowercase because __uv-script is an
+// HTML attribute name.
+const UV_PREFIX = "__uv";
+
+function applyUvPrefixRename(source, name) {
+  if (!source.includes(UV_PREFIX)) throw new CodecPatchError(`${UV_PREFIX} not found. Upstream UV file changed.`);
+  const out = replaceAll(source, UV_PREFIX, name);
+  if (out.includes(UV_PREFIX)) throw new CodecPatchError(`${UV_PREFIX} survived the rename.`);
+  return out;
+}
+
+// Ultraviolet is replaced by exact pattern rather than as a token: the bare word also
+// appears in UV's error page copy and its GitHub URL, which are branding, not contract.
+// "Ultraviolet" in uv.handler.js filterKeys is the list of globals hidden from proxied
+// pages, so it has to move with self.Ultraviolet or the real global stops being hidden.
+const ULTRAVIOLET_PATTERNS = ["self.Ultraviolet", '"Ultraviolet"', "static Ultraviolet="];
+
+// UV's 500 page names the project, links its repo and prints its version. The two
+// textContent assignments go with the spans: they reach those elements through the implicit
+// id globals, so leaving them would throw a ReferenceError once the spans are gone.
+const ULTRAVIOLET_BRANDING = [
+  /[ \t]*<li>Updating Ultraviolet<\/li>\n/,
+  /[ \t]*<li>Troubleshooting the error on the <a href="https:\/\/github\.com\/titaniumnetwork-dev\/Ultraviolet"[^>]*>GitHub repository<\/a><\/li>\n/,
+  /[ \t]*<p><i>Ultraviolet v<span id="uvVersion"><\/span> \(build <span id="uvBuild"><\/span>\)<\/i><\/p>\n/,
+  /[ \t]*uvVersion\.textContent = \$\{JSON\.stringify\("[^"]*"\)\};\n/,
+  /[ \t]*uvBuild\.textContent = \$\{JSON\.stringify\("[^"]*"\)\};\n/,
+];
+
+function stripUltravioletBranding(source) {
+  let out = source;
+  for (const pattern of ULTRAVIOLET_BRANDING) {
+    if (!pattern.test(out)) throw new CodecPatchError(`uv.sw.js branding: ${pattern} no longer matches. Upstream error page changed.`);
+    out = out.replace(pattern, "");
+  }
+  return out;
+}
+
+// Internal to uv.sw.js: both the class that sets it and the one that reads it live there,
+// it never reaches injected page code, and the string never appears as a literal so no
+// computed access can reach it. Matched on the leading dot so the unrelated
+// /assets/ultraviolet/ path segments cannot be hit.
+const UV_PROPERTY = /\.ultraviolet(?![\w$])/g;
+
+function applyUvPropertyRename(source, name) {
+  const found = (source.match(UV_PROPERTY) || []).length;
+  if (!found) throw new CodecPatchError("uv.sw.js: the .ultraviolet property was not found. Upstream file changed.");
+  const out = source.replace(UV_PROPERTY, `.${name}`);
+  if (UV_PROPERTY.test(out)) throw new CodecPatchError("uv.sw.js: .ultraviolet survived the rename.");
+  return out;
+}
+
+function applyUltravioletRename(source, name) {
+  let out = source;
+  for (const pattern of ULTRAVIOLET_PATTERNS) out = replaceAll(out, pattern, pattern.replace("Ultraviolet", name));
+  return out;
+}
 
 // scramjet.all.js strips this with a hardcoded `e.slice(14)`, so the replacement must keep
 // the same length, and stay lowercase because setAttribute lowercases.
 const SCRAMJET_ATTR_PREFIX = "scramjet-attr";
 const SCRAMJET_IDB_NAME = "$scramjet";
 
-function createScramjetIdentifiers() {
-  return new Map(SCRAMJET_IDENTIFIERS.map(name => [name, `_${randomBytes(5).toString("hex")}`]));
+function createIdentifierRenames() {
+  return new Map(RENAMED_IDENTIFIERS.map(name => [name, `_${randomBytes(5).toString("hex")}`]));
 }
 
 function createScramjetStrings() {
@@ -516,22 +628,32 @@ function vendorSpecs() {
   return [
     {
       id: "uv.bundle",
+      renameUvPrefix: true,
+      rewriteUvDefaults: true,
+      renameIdentifiers: true,
+      renameUltraviolet: true,
       src: path.join(uvPath, "uv.bundle.js"),
       old: "/assets/ultraviolet/uv.bundle.js",
       ext: ".js",
       globals: ["Ultraviolet", "__uv$cookies", "__uv$referrer"],
     },
-    { id: "uv.client", src: path.join(uvPath, "uv.client.js"), old: "/assets/ultraviolet/uv.client.js", ext: ".js", globals: ["UVClient"] },
+    { id: "uv.client", renameUvPrefix: true, renameIdentifiers: true, renameUltraviolet: true, src: path.join(uvPath, "uv.client.js"), old: "/assets/ultraviolet/uv.client.js", ext: ".js", globals: ["UVClient"] },
     {
       id: "uv.handler",
+      renameUvPrefix: true,
+      stripUvError: true,
+      renameIdentifiers: true,
+      renameUltraviolet: true,
       src: path.join(uvPath, "uv.handler.js"),
       old: "/assets/ultraviolet/uv.handler.js",
       ext: ".js",
       globals: ["__uvHook", "Ultraviolet", "UVClient", "__uv$config", "__uv$cookies", "__uv"],
     },
-    { id: "uv.sw", src: path.join(uvPath, "uv.sw.js"), old: "/assets/ultraviolet/uv.sw.js", ext: ".js", globals: ["UVServiceWorker", "Ultraviolet", "__uv"] },
+    { id: "uv.sw", renameUvPrefix: true, renameIdentifiers: true, renameUltraviolet: true, stripBranding: true, renameUvProperty: true, src: path.join(uvPath, "uv.sw.js"), old: "/assets/ultraviolet/uv.sw.js", ext: ".js", globals: ["UVServiceWorker", "Ultraviolet", "__uv"] },
     {
       id: "uv.config",
+      renameIdentifiers: true,
+      renameUltraviolet: true,
       src: path.join(SRC_DIR, "assets", "ultraviolet", "uv.config.js"),
       old: "/assets/ultraviolet/uv.config.js",
       ext: ".js",
@@ -963,7 +1085,10 @@ async function build() {
   const NEW_SCRAMJET_SCOPE = `/${uvBase}/${scramjetSub}/`;
   const proxyCodecs = createProxyCodecs();
   const scramjetGlobals = createScramjetGlobals();
-  const identifierRenames = createScramjetIdentifiers();
+  const identifierRenames = createIdentifierRenames();
+  const ultravioletName = `_${randomBytes(5).toString("hex")}`;
+  const uvPropertyName = `_${randomBytes(5).toString("hex")}`;
+  const uvPrefixName = `_${randomBytes(4).toString("hex")}`;
   const scramjetStrings = createScramjetStrings();
   const catalogueKey = createCatalogueKey();
   console.log(`Scramjet identifiers: ${[...identifierRenames].map(([from, to]) => `${from} -> ${to}`).join(", ")}`);
@@ -1072,6 +1197,12 @@ async function build() {
       }
     }
     if (spec.renameIdentifiers) source = applyIdentifierRenames(source, identifierRenames);
+    if (spec.stripBranding) source = stripUltravioletBranding(source);
+    if (spec.renameUltraviolet) source = applyUltravioletRename(source, ultravioletName);
+    if (spec.renameUvProperty) source = applyUvPropertyRename(source, uvPropertyName);
+    if (spec.renameUvPrefix) source = applyUvPrefixRename(source, uvPrefixName);
+    if (spec.rewriteUvDefaults) source = applyUvDefaultPaths(source, specs);
+    if (spec.stripUvError) source = stripUvErrorMessage(source);
     if (spec.rewriteScramjetStrings) {
       for (const [literal, label] of [
         [SCRAMJET_ATTR_PREFIX, "attribute prefix"],
@@ -1191,7 +1322,9 @@ async function build() {
     distJsFiles.push({ file: path.relative(DIST_DIR, file).split(path.sep).join("/"), source: await readFile(file, "utf8"), module: file.endsWith(".mjs") });
   }
 
-  const { checkedReferences } = await verifyBuild({ manifest, specs, emitted, references, distJsFiles, serverRoutes: manifest.analytics ? [manifest.analytics.loader] : [], identifierRenames });
+  const gateRenames = new Map([...identifierRenames, ["Ultraviolet", ultravioletName]]);
+  for (const spec of specs) for (const name of spec.globals ?? []) if (name.startsWith(UV_PREFIX) && !gateRenames.has(name)) gateRenames.set(name, name.replace(UV_PREFIX, uvPrefixName));
+  const { checkedReferences } = await verifyBuild({ manifest, specs, emitted, references, distJsFiles, serverRoutes: manifest.analytics ? [manifest.analytics.loader] : [], identifierRenames: gateRenames });
   console.log(chalk.green(`  all checks passed (${emitted.size} emitted assets, ${distJsFiles.length} scripts parsed, ${checkedReferences} asset references resolved across ${references.length} files)`));
 
   console.log(chalk.green("\nBuild complete -> dist/"));
