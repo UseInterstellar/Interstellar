@@ -9,6 +9,7 @@
   "scripts": {
     "start": "node index.js",
     "build": "node build.js",
+    "build:release": "node build.js --release",
     "format": "pnpm biome format --write .",
     "precommit": "pnpm run format && pnpm biome check --write .",
     "lint": "biome lint --write ."

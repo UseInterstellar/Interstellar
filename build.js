@@ -277,6 +277,161 @@ function createScramjetGlobals() {
   return globals;
 }
 
+// Siblings of the globals table above, in the same default-config literal. Our
+// scramjet.config.js overrides all four so the defaults are dead, but they carry the
+// upstream names and would resolve to a 404 if a branch ever fell through to them.
+const SCRAMJET_DEFAULT_PREFIX = '"/scramjet/"';
+const SCRAMJET_DEFAULT_PATH_LITERALS = [
+  ['"/scramjet.wasm.wasm"', "sj.wasm"],
+  ['"/scramjet.all.js"', "sj.all"],
+  ['"/scramjet.sync.js"', "sj.sync"],
+];
+
+function applyScramjetDefaults(source, specs, scope) {
+  const byId = Object.fromEntries(specs.map(spec => [spec.id, spec.publicPath]));
+  const pairs = [[SCRAMJET_DEFAULT_PREFIX, scope], ...SCRAMJET_DEFAULT_PATH_LITERALS.map(([literal, id]) => [literal, byId[id]])];
+  let out = source;
+  for (const [literal, value] of pairs) {
+    if (!value) throw new CodecPatchError(`scramjet.all.js: no emitted value for the default ${literal}.`);
+    const found = out.split(literal).length - 1;
+    if (found !== 1) throw new CodecPatchError(`scramjet.all.js: expected 1 occurrence of the default ${literal}, found ${found}. Upstream changed.`);
+    out = replaceAll(out, literal, JSON.stringify(value));
+  }
+  for (const [literal] of pairs) {
+    if (out.includes(literal)) throw new CodecPatchError(`scramjet.all.js: the default ${literal} survived the rewrite.`);
+  }
+  return out;
+}
+
+// Scramjet's 500 page, same treatment as the UV one. The version and build spans go with
+// the two textContent assignments: those reach the elements through the implicit id globals
+// and would throw a ReferenceError once the spans are gone.
+const SCRAMJET_BRANDING = [
+  /[ \t]*<li>Updating Scramjet<\/li>\n/,
+  /[ \t]*<li>Troubleshooting the error on the <a href="https:\/\/github\.com\/MercuryWorkshop\/scramjet"[^>]*>GitHub repository<\/a><\/li>\n/,
+  /[ \t]*<p id="version-wrapper"><i>Scramjet v<span id="version"><\/span> \(build <span id="build"><\/span>\)<\/i><\/p>\n/,
+  /[ \t]*version\.textContent = \$\{JSON\.stringify\(globalThis\.\$scramjetVersion\?\.version\|\|"unknown"\)\};\n/,
+  /[ \t]*build\.textContent = \$\{JSON\.stringify\(globalThis\.\$scramjetVersion\?\.build\|\|"unknown"\)\};\n/,
+];
+const SCRAMJET_TITLE = "<title>Scramjet</title>";
+const SCRAMJET_VERSION_LITERAL = /\{build:"[0-9a-f]{7,40}",version:"\d+\.\d+\.\d+"\}/;
+
+function stripScramjetBranding(source) {
+  let out = source;
+  for (const pattern of SCRAMJET_BRANDING) {
+    if (!pattern.test(out)) throw new CodecPatchError(`scramjet.all.js branding: ${pattern} no longer matches. Upstream error page changed.`);
+    out = out.replace(pattern, "");
+  }
+  if (!out.includes(SCRAMJET_TITLE)) throw new CodecPatchError(`scramjet.all.js branding: ${SCRAMJET_TITLE} not found. Upstream error page changed.`);
+  out = replaceAll(out, SCRAMJET_TITLE, "<title></title>");
+  if (!SCRAMJET_VERSION_LITERAL.test(out)) throw new CodecPatchError("scramjet.all.js: the $scramjetVersion value literal no longer matches. Upstream changed.");
+  out = out.replace(SCRAMJET_VERSION_LITERAL, '{build:"unknown",version:"unknown"}');
+  for (const marker of ["<title>Scramjet", "Updating Scramjet", "MercuryWorkshop", 'id="version-wrapper"', "Scramjet v<span", "version.textContent", "build.textContent"]) {
+    if (out.includes(marker)) throw new CodecPatchError(`scramjet.all.js: branding marker ${marker} survived the strip.`);
+  }
+  return out;
+}
+
+// Diagnostics only. Each is a console.error argument, an Error message or an error cause;
+// nothing in any of the five bundles compares against .message or .cause, so the throw is
+// what matters and the text is not.
+const DIAGNOSTIC_STRINGS = [
+  '"attempted to initialize a scramjet client, but one is already loaded - this is very bad"',
+  '"YOU NEED TO USE `new ScramjetFrame()`! DIRECT IFRAMES WILL NOT WORK"',
+  '"ERROR FROM SCRAMJET INTERNALS"',
+  '"bare-mux: failed to get a bare-mux SharedWorker MessagePort as all clients returned an invalid MessagePort."',
+  '"Unable to get bare-mux workerPath from localStorage."',
+  '"there are no bare clients"',
+  '"No BareTransport was set. Try creating a BareMuxConnection and calling `setTransport()` or `setManualTransport()` on it before using BareClient."',
+  '"The BareTransport provided was invalid. Common causes of this are a default export that is not a class that implements BareTransport if you are using `setTransport()`"',
+];
+const DIAGNOSTIC_COUNTS = { "sj.all": 7, "uv.bundle": 2, "uv.client": 2, baremux: 2, "baremux.worker": 3 };
+
+function stripDiagnosticStrings(source, id) {
+  let out = source;
+  let replaced = 0;
+  for (const literal of DIAGNOSTIC_STRINGS) {
+    const found = out.split(literal).length - 1;
+    if (!found) continue;
+    replaced += found;
+    out = replaceAll(out, literal, '""');
+  }
+  if (replaced !== DIAGNOSTIC_COUNTS[id]) throw new CodecPatchError(`${id}: expected ${DIAGNOSTIC_COUNTS[id]} diagnostic strings, replaced ${replaced}. Upstream changed.`);
+  for (const literal of DIAGNOSTIC_STRINGS) {
+    if (out.includes(literal)) throw new CodecPatchError(`${id}: the diagnostic string ${literal.slice(0, 40)}... survived the strip.`);
+  }
+  return out;
+}
+
+// Scramjet's postMessage envelope, randomized per build. Producer and consumer are both
+// scramjet.all.js and every copy of it in a build carries the same table. The one skew window
+// is a page that stays open across a deploy and is adopted by the new service worker while
+// its own realm still runs the old bundle; that page stops proxying until it reloads.
+// Replacements stay valid identifiers because the keys are read as obj.key as well as
+// "key" in obj. Ordered longest first, though the token bounds below already keep the
+// scramjet$ family apart from the $scramjet$ one.
+const SCRAMJET_PROTOCOL_DEFAULTS = ["$scramjet$messagetype", "$scramjet$origin", "$scramjet$data", "$scramjet$type", "scramjet$response", "scramjet$request", "scramjet$token", "scramjet$type", "scramjet$port"];
+const SCRAMJET_PROTOCOL_COUNTS = { $scramjet$messagetype: 2, $scramjet$origin: 3, $scramjet$data: 4, $scramjet$type: 5, scramjet$response: 3, scramjet$request: 2, scramjet$token: 12, scramjet$type: 25, scramjet$port: 2 };
+
+function createScramjetProtocolKeys() {
+  const token = randomBytes(4).toString("hex");
+  return SCRAMJET_PROTOCOL_DEFAULTS.map((name, index) => [name, `_${token}${index.toString(36)}${randomBytes(2).toString("hex")}`]);
+}
+
+function applyScramjetProtocolKeys(source, protocolKeys) {
+  let out = source;
+  for (const [from, to] of protocolKeys) {
+    const pattern = () => new RegExp(`(?<![\\w$])${from.replace(/\$/g, "\\$")}(?![\\w$])`, "g");
+    const found = (out.match(pattern()) || []).length;
+    if (found !== SCRAMJET_PROTOCOL_COUNTS[from]) throw new CodecPatchError(`scramjet.all.js: expected ${SCRAMJET_PROTOCOL_COUNTS[from]} occurrences of the protocol key ${from}, found ${found}. Upstream changed.`);
+    out = out.replace(pattern(), to);
+    if (pattern().test(out)) throw new CodecPatchError(`scramjet.all.js: the protocol key ${from} survived the rewrite.`);
+    if ((out.match(new RegExp(`(?<![\\w$])${to}(?![\\w$])`, "g")) || []).length !== found) throw new CodecPatchError(`scramjet.all.js: ${from} -> ${to} did not keep its producer/consumer count.`);
+  }
+  return out;
+}
+
+// bare-mux rendezvous, shared by five independently emitted copies: the standalone module
+// and worker plus the ones vendored into uv.bundle, uv.client and scramjet.all. Randomized
+// per build, which costs nothing they were not already paying: a SharedWorker is identified
+// by script URL as well as name, and those URLs are randomized already, so two builds never
+// shared a worker regardless. bare-mux-path is a localStorage key, but the page rewrites it
+// on every load before anything reads it. Longest first: bare-mux is a prefix of the rest,
+// and the worker name doubles as the prefix of its own fallback.
+const BAREMUX_STRING_DEFAULTS = ["bare-mux-worker-", "bare-mux-worker", "bare-mux-remote", "bare-mux-path", "bare-mux", "baremuxinit"];
+const BAREMUX_STRING_COUNTS = { "uv.bundle": 14, "uv.client": 17, "uv.handler": 1, "sj.all": 19, baremux: 17, "baremux.worker": 4 };
+
+// The index keeps the five distinct even if the random halves collide.
+function createBaremuxStrings() {
+  const token = randomBytes(4).toString("hex");
+  const name = index => `_${token}${index.toString(36)}${randomBytes(2).toString("hex")}`;
+  const worker = name(0);
+  return [
+    ["bare-mux-worker-", `${worker}-`],
+    ["bare-mux-worker", worker],
+    ["bare-mux-remote", name(1)],
+    ["bare-mux-path", name(2)],
+    ["bare-mux", name(3)],
+    ["baremuxinit", name(4)],
+  ];
+}
+
+function applyBaremuxStrings(source, id, baremuxStrings) {
+  let out = source;
+  let replaced = 0;
+  for (const [from, to] of baremuxStrings) {
+    const found = out.split(from).length - 1;
+    if (!found) continue;
+    replaced += found;
+    out = replaceAll(out, from, to);
+  }
+  if (replaced !== BAREMUX_STRING_COUNTS[id]) throw new CodecPatchError(`${id}: expected ${BAREMUX_STRING_COUNTS[id]} bare-mux strings, replaced ${replaced}. Upstream changed.`);
+  for (const from of BAREMUX_STRING_DEFAULTS) {
+    if (out.includes(from)) throw new CodecPatchError(`${id}: the bare-mux string ${from} survived the rewrite.`);
+  }
+  return out;
+}
+
 // Names we own on both sides. Upstream Scramjet reads none of them, and none is reachable
 // from HTML.
 // Token-safe renames: every occurrence is a bare identifier, so the word-boundary pass
@@ -291,12 +446,17 @@ const RENAMED_IDENTIFIERS = [
   "$scramjetLoadWorker",
   "$scramjetLoadController",
   "$scramjetLoadClient",
+  "$scramjetVersion",
+  "$scramjetRequire",
+  "$scramitize",
   "isGamesPage",
   "encodeProxyUrl",
   "encodeProxyUrlSync",
   "__uv$config",
   "UVClient",
   "UVServiceWorker",
+  "BareMuxConnection",
+  "BareClient",
   "uvHostname",
   "implementUVMiddleware",
 ];
@@ -391,6 +551,143 @@ function applyUltravioletRename(source, name) {
   let out = source;
   for (const pattern of ULTRAVIOLET_PATTERNS) out = replaceAll(out, pattern, pattern.replace("Ultraviolet", name));
   return out;
+}
+
+// The two service worker instances in our own sw.js. File-local, never attached to self and
+// never named across a realm boundary, but javascript-obfuscator leaves top level worker
+// declarations alone under renameGlobals:false. Scoped to sw.js only, because a bare uv
+// token also occurs in uv.bundle.js as the regex flag pair. The lookbehind rejects the dot
+// and slash forms so path literals and property access cannot be hit.
+const SW_LOCAL_COUNTS = { uv: 2, sj: 4 };
+const swLocalPattern = name => new RegExp(`(?<![\\w$./"'\`-])${name}(?![\\w$])`, "g");
+
+function createSwLocalRenames() {
+  return new Map(Object.keys(SW_LOCAL_COUNTS).map(name => [name, `_${randomBytes(5).toString("hex")}`]));
+}
+
+function applySwLocalRenames(source, renames) {
+  let out = source;
+  for (const [from, to] of renames) {
+    const found = (out.match(swLocalPattern(from)) || []).length;
+    if (found !== SW_LOCAL_COUNTS[from]) throw new CodecPatchError(`sw.js: expected ${SW_LOCAL_COUNTS[from]} occurrences of the local ${from}, found ${found}. sw.js changed - update SW_LOCAL_COUNTS.`);
+    out = out.replace(swLocalPattern(from), to);
+    if (swLocalPattern(from).test(out)) throw new CodecPatchError(`sw.js: the local ${from} survived the rename.`);
+  }
+  return out;
+}
+
+// The proxy the user picked is persisted in localStorage under "proxy". The values rotate per
+// release generation rather than per build, and the ledger below carries enough history for a
+// returning user's old value to be recognised and migrated. The key itself stays "proxy":
+// it is an ordinary word that reveals nothing the domain does not already.
+const PROXY_CHOICE_LITERAL = /(["'`])(uv|sj)\1/g;
+const PROXY_CHOICE_COUNTS = { js: 9, html: 2 };
+
+function applyProxyChoiceValues(source, values) {
+  let count = 0;
+  const out = source.replace(PROXY_CHOICE_LITERAL, (match, quote, name) => {
+    count++;
+    return `${quote}${values[name]}${quote}`;
+  });
+  return { source: out, count };
+}
+
+const LEDGER_PATH = path.join(process.cwd(), "build", "obfuscation-ledger.json");
+const LEDGER_SCHEMA_VERSION = 1;
+const LEDGER_FIELDS = ["proxyUv", "proxySj"];
+const LEDGER_VALUE = /^_[0-9a-f]{10}$/;
+
+class LedgerError extends Error {
+  constructor(message) {
+    super(`${LEDGER_PATH}: ${message}`);
+    this.name = "LedgerError";
+  }
+}
+
+async function loadLedger() {
+  let raw;
+  try {
+    raw = await readFile(LEDGER_PATH, "utf8");
+  } catch {
+    throw new LedgerError("ledger is missing. It is committed build metadata and must never be regenerated silently.");
+  }
+  let ledger;
+  try {
+    ledger = JSON.parse(raw);
+  } catch (err) {
+    throw new LedgerError(`ledger is not valid JSON (${err.message}).`);
+  }
+  if (ledger?.schemaVersion !== LEDGER_SCHEMA_VERSION) throw new LedgerError(`unsupported schemaVersion ${JSON.stringify(ledger?.schemaVersion)}, expected ${LEDGER_SCHEMA_VERSION}.`);
+  if (!Number.isInteger(ledger.retain) || ledger.retain < 1) throw new LedgerError(`retain must be a positive integer, got ${JSON.stringify(ledger.retain)}.`);
+  if (!ledger.generations || typeof ledger.generations !== "object") throw new LedgerError("generations must be an object.");
+  if (!Number.isInteger(ledger.current) || !Object.hasOwn(ledger.generations, String(ledger.current))) throw new LedgerError(`current ${JSON.stringify(ledger.current)} does not name an existing generation.`);
+
+  const seen = new Map();
+  for (const [id, generation] of Object.entries(ledger.generations)) {
+    if (!/^[1-9]\d*$/.test(id)) throw new LedgerError(`generation id ${JSON.stringify(id)} must be a positive integer.`);
+    for (const field of LEDGER_FIELDS) {
+      const value = generation?.[field];
+      if (typeof value !== "string" || !LEDGER_VALUE.test(value)) throw new LedgerError(`generation ${id} field ${field} must match ${LEDGER_VALUE}, got ${JSON.stringify(value)}.`);
+      if (seen.has(value)) throw new LedgerError(`value ${value} is used by both generation ${seen.get(value)} and generation ${id}.`);
+      seen.set(value, id);
+    }
+  }
+  return ledger;
+}
+
+function createLedgerGeneration(ledger) {
+  const taken = new Set(Object.values(ledger.generations).flatMap(generation => LEDGER_FIELDS.map(field => generation[field])));
+  const generation = { createdAt: new Date().toISOString() };
+  for (const field of LEDGER_FIELDS) {
+    let value;
+    do {
+      value = `_${randomBytes(5).toString("hex")}`;
+    } while (taken.has(value));
+    taken.add(value);
+    generation[field] = value;
+  }
+  return generation;
+}
+
+// Returns the ledger to build against. In release mode the caller writes `pending` back to
+// disk, but only once the verification gate has passed, so a failed release leaves the
+// committed ledger untouched.
+function resolveLedger(ledger, release) {
+  if (!release) return { ledger, id: ledger.current, generation: ledger.generations[String(ledger.current)], pending: null };
+  const id = ledger.current + 1;
+  const generations = { ...ledger.generations, [id]: createLedgerGeneration(ledger) };
+  for (const stale of Object.keys(generations)
+    .map(Number)
+    .sort((a, b) => b - a)
+    .slice(ledger.retain)) {
+    delete generations[stale];
+  }
+  const pending = { ...ledger, current: id, generations };
+  return { ledger: pending, id, generation: generations[String(id)], pending };
+}
+
+// Flattened one hop: every retained generation maps straight to the current value, so a user
+// who skipped twenty releases still migrates in a single lookup.
+function proxyMigrationMap(ledger, id) {
+  const current = ledger.generations[String(id)];
+  const map = {};
+  for (const [other, generation] of Object.entries(ledger.generations)) {
+    if (Number(other) === id) continue;
+    for (const field of LEDGER_FIELDS) map[generation[field]] = current[field];
+  }
+  return map;
+}
+
+// Prepended to main.js, which is the first script on every page and whose own initProxy() is
+// the first consumer. Carries opaque values only: no field names, no key semantics.
+function proxyMigrationShim(map, current) {
+  return `(() => {
+  const m = ${JSON.stringify(map)};
+  const s = localStorage.getItem("proxy");
+  if (s === null || s === ${JSON.stringify(current.proxyUv)} || s === ${JSON.stringify(current.proxySj)}) return;
+  const t = m[s];
+  localStorage.setItem("proxy", t != null ? t : ${JSON.stringify(current.proxySj)});
+})();\n`;
 }
 
 // scramjet.all.js strips this with a hardcoded `e.slice(14)`, so the replacement must keep
@@ -631,16 +928,19 @@ function vendorSpecs() {
       renameUvPrefix: true,
       rewriteUvDefaults: true,
       renameIdentifiers: true,
+      stripDiagnostics: true,
+      rewriteBaremuxStrings: true,
       renameUltraviolet: true,
       src: path.join(uvPath, "uv.bundle.js"),
       old: "/assets/ultraviolet/uv.bundle.js",
       ext: ".js",
       globals: ["Ultraviolet", "__uv$cookies", "__uv$referrer"],
     },
-    { id: "uv.client", renameUvPrefix: true, renameIdentifiers: true, renameUltraviolet: true, src: path.join(uvPath, "uv.client.js"), old: "/assets/ultraviolet/uv.client.js", ext: ".js", globals: ["UVClient"] },
+    { id: "uv.client", renameUvPrefix: true, renameIdentifiers: true, stripDiagnostics: true, rewriteBaremuxStrings: true, renameUltraviolet: true, src: path.join(uvPath, "uv.client.js"), old: "/assets/ultraviolet/uv.client.js", ext: ".js", globals: ["UVClient"] },
     {
       id: "uv.handler",
       renameUvPrefix: true,
+      rewriteBaremuxStrings: true,
       stripUvError: true,
       renameIdentifiers: true,
       renameUltraviolet: true,
@@ -670,6 +970,10 @@ function vendorSpecs() {
       old: "/assets/scramjet/scramjet.all.js",
       ext: ".js",
       rewriteGlobals: true,
+      stripScramjetBranding: true,
+      stripDiagnostics: true,
+      rewriteBaremuxStrings: true,
+      rewriteProtocolKeys: true,
       renameIdentifiers: true,
       rewriteScramjetStrings: true,
       globals: ["$scramjetLoadWorker", "$scramjetLoadController", "$scramjetLoadClient", "$scramjetRequire", "$scramjetVersion", "COOKIE", "WASM"],
@@ -695,9 +999,12 @@ function vendorSpecs() {
       ext: ".mjs",
       module: true,
       aggressive: true,
+      stripDiagnostics: true,
+      rewriteBaremuxStrings: true,
+      renameIdentifiers: true,
       globals: ["BareMuxConnection", "BareClient", "BareWebSocket", "WebSocketFields", "WorkerConnection", "browserSupportsTransferringStreams", "maxRedirects", "validProtocol"],
     },
-    { id: "baremux.worker", src: path.join(baremuxPath, "worker.js"), old: "/baremux/worker.js", ext: ".js", aggressive: true, globals: ["onconnect"] },
+    { id: "baremux.worker", src: path.join(baremuxPath, "worker.js"), old: "/baremux/worker.js", ext: ".js", aggressive: true, stripDiagnostics: true, rewriteBaremuxStrings: true, globals: ["onconnect"] },
     {
       id: "epoxy",
       src: path.join(epoxyPath, "index.mjs"),
@@ -734,7 +1041,7 @@ function formatKb(bytes) {
   return `${(bytes / 1024).toFixed(1)}kb`;
 }
 
-async function verifyBuild({ manifest, specs, emitted, references, distJsFiles, serverRoutes = [], identifierRenames = new Map() }) {
+async function verifyBuild({ manifest, specs, emitted, references, distJsFiles, serverRoutes = [], identifierRenames = new Map(), swLocalRenames = new Map() }) {
   const failures = [];
   const emittedPaths = new Set([...emitted.keys(), ...serverRoutes]);
 
@@ -781,6 +1088,14 @@ async function verifyBuild({ manifest, specs, emitted, references, distJsFiles, 
       if (after > before * VENDOR_SIZE_TOLERANCE + 256) {
         failures.push(`${spec.id} inflated: ${formatKb(before)} -> ${formatKb(after)} (limit ${(VENDOR_SIZE_TOLERANCE * 100).toFixed(0)}% + 256b)`);
       }
+    }
+  }
+
+  const swSource = await readFile(path.join(DIST_DIR, manifest.sw), "utf8");
+  for (const [from, to] of swLocalRenames) {
+    if (swLocalPattern(from).test(swSource)) failures.push(`the local ${from} is still present in the emitted service worker ${manifest.sw}`);
+    if ((swSource.match(new RegExp(`(?<![\\w$])${to}(?![\\w$])`, "g")) || []).length !== SW_LOCAL_COUNTS[from]) {
+      failures.push(`the renamed local ${from} -> ${to} has the wrong number of references in ${manifest.sw}`);
     }
   }
 
@@ -1086,12 +1401,22 @@ async function build() {
   const proxyCodecs = createProxyCodecs();
   const scramjetGlobals = createScramjetGlobals();
   const identifierRenames = createIdentifierRenames();
+  const protocolKeys = createScramjetProtocolKeys();
+  const baremuxStrings = createBaremuxStrings();
   const ultravioletName = `_${randomBytes(5).toString("hex")}`;
   const uvPropertyName = `_${randomBytes(5).toString("hex")}`;
   const uvPrefixName = `_${randomBytes(4).toString("hex")}`;
   const scramjetStrings = createScramjetStrings();
+  const release = process.argv.includes("--release");
+  const ledgerFile = await loadLedger();
+  const { ledger, id: ledgerGeneration, generation: ledgerCurrent, pending: pendingLedger } = resolveLedger(ledgerFile, release);
+  const proxyChoiceValues = { uv: ledgerCurrent.proxyUv, sj: ledgerCurrent.proxySj };
+  const proxyMigration = proxyMigrationMap(ledger, ledgerGeneration);
   const catalogueKey = createCatalogueKey();
   console.log(`Scramjet identifiers: ${[...identifierRenames].map(([from, to]) => `${from} -> ${to}`).join(", ")}`);
+  console.log(`Proxy selector generation ${ledgerGeneration}${release ? " (new release)" : ""}: uv -> ${proxyChoiceValues.uv}, sj -> ${proxyChoiceValues.sj}, ${Object.keys(proxyMigration).length} migration entries`);
+  console.log(`Scramjet protocol keys: ${protocolKeys.map(([from, to]) => `${from} -> ${to}`).join(", ")}`);
+  console.log(`bare-mux strings: ${baremuxStrings.map(([from, to]) => `${from} -> ${to}`).join(", ")}`);
   console.log(`Scramjet strings: attr ${SCRAMJET_ATTR_PREFIX} -> ${scramjetStrings.attr}, idb ${SCRAMJET_IDB_NAME} -> ${scramjetStrings.idb}`);
 
   const manifest = {
@@ -1195,7 +1520,14 @@ async function build() {
         if (!source.includes(literal)) throw new CodecPatchError(`scramjet.all.js: default global ${name} (${fallback}) not found. Upstream changed - update SCRAMJET_GLOBAL_DEFAULTS.`);
         source = replaceAll(source, literal, `"${scramjetGlobals[name]}"`);
       }
+      source = applyScramjetDefaults(source, specs, NEW_SCRAMJET_SCOPE);
     }
+    // Before the identifier pass, so the branding patterns can match $scramjetVersion.
+    if (spec.stripScramjetBranding) source = stripScramjetBranding(source);
+    if (spec.stripDiagnostics) source = stripDiagnosticStrings(source, spec.id);
+    // After the diagnostic strip, whose literals carry bare-mux occurrences of their own.
+    if (spec.rewriteBaremuxStrings) source = applyBaremuxStrings(source, spec.id, baremuxStrings);
+    if (spec.rewriteProtocolKeys) source = applyScramjetProtocolKeys(source, protocolKeys);
     if (spec.renameIdentifiers) source = applyIdentifierRenames(source, identifierRenames);
     if (spec.stripBranding) source = stripUltravioletBranding(source);
     if (spec.renameUltraviolet) source = applyUltravioletRename(source, ultravioletName);
@@ -1235,6 +1567,8 @@ async function build() {
 
   let failed = 0;
   const codecFailures = [];
+  const swLocalRenames = createSwLocalRenames();
+  let proxyChoiceJs = 0;
 
   await Promise.all(
     [...appPlan.entries()].map(async ([filePath, { basename, publicPath, fullPath }]) => {
@@ -1243,6 +1577,11 @@ async function build() {
         for (const [from, to] of scopeRewrites) output = replaceAll(output, from, to);
         output = applyRewrites(output, rewrites);
         output = applyIdentifierRenames(output, identifierRenames);
+        if (basename === "sw.js") output = applySwLocalRenames(output, swLocalRenames);
+        const proxyChoice = applyProxyChoiceValues(output, proxyChoiceValues);
+        output = proxyChoice.source;
+        proxyChoiceJs += proxyChoice.count;
+        if (basename === "main.js") output = proxyMigrationShim(proxyMigration, ledgerCurrent) + output;
         if (basename === "launcher.js") output = patchOrFail(output, /const CATALOGUE_KEY = \[0\];/, `const CATALOGUE_KEY = ${JSON.stringify(catalogueKey)};`, "launcher.js catalogue key");
         references.push({ file: `${basename} (${publicPath})`, source: output });
 
@@ -1271,6 +1610,7 @@ async function build() {
     process.exit(1);
   }
   if (failed) throw new Error(`${failed} file(s) failed to process`);
+  if (proxyChoiceJs !== PROXY_CHOICE_COUNTS.js) throw new Error(`expected ${PROXY_CHOICE_COUNTS.js} proxy selector literals in application JS, replaced ${proxyChoiceJs}. Update PROXY_CHOICE_COUNTS.`);
 
   await rm(JS_DIR, { recursive: true, force: true });
 
@@ -1283,6 +1623,7 @@ async function build() {
     key: Array.from(randomBytes(8)),
   };
   const analyticsIds = new Set();
+  let proxyChoiceHtml = 0;
   console.log(`\nUpdating ${htmlFiles.length} HTML files${OBFUSCATE_HTML ? " + obfuscating" : ""}...\n`);
 
   await Promise.all(
@@ -1291,6 +1632,10 @@ async function build() {
       let html = await readFile(htmlPath, "utf8");
       for (const [from, to] of scopeRewrites) html = replaceAll(html, from, to);
       html = applyRewrites(html, rewrites);
+
+      const proxyChoice = applyProxyChoiceValues(html, proxyChoiceValues);
+      html = proxyChoice.source;
+      proxyChoiceHtml += proxyChoice.count;
 
       const analytics = replaceAnalytics(html, analyticsPaths.loader);
       html = analytics.html;
@@ -1304,6 +1649,7 @@ async function build() {
     }),
   );
 
+  if (proxyChoiceHtml !== PROXY_CHOICE_COUNTS.html) throw new Error(`expected ${PROXY_CHOICE_COUNTS.html} proxy selector literals in HTML, replaced ${proxyChoiceHtml}. Update PROXY_CHOICE_COUNTS.`);
   if (analyticsIds.size > 1) throw new Error(`HTML pages disagree on the analytics id: ${[...analyticsIds].join(", ")}`);
   if (analyticsIds.size === 1) {
     manifest.analytics = { id: [...analyticsIds][0], ...analyticsPaths };
@@ -1324,15 +1670,25 @@ async function build() {
 
   const gateRenames = new Map([...identifierRenames, ["Ultraviolet", ultravioletName]]);
   for (const spec of specs) for (const name of spec.globals ?? []) if (name.startsWith(UV_PREFIX) && !gateRenames.has(name)) gateRenames.set(name, name.replace(UV_PREFIX, uvPrefixName));
-  const { checkedReferences } = await verifyBuild({ manifest, specs, emitted, references, distJsFiles, serverRoutes: manifest.analytics ? [manifest.analytics.loader] : [], identifierRenames: gateRenames });
+  const { checkedReferences } = await verifyBuild({ manifest, specs, emitted, references, distJsFiles, serverRoutes: manifest.analytics ? [manifest.analytics.loader] : [], identifierRenames: gateRenames, swLocalRenames });
   console.log(chalk.green(`  all checks passed (${emitted.size} emitted assets, ${distJsFiles.length} scripts parsed, ${checkedReferences} asset references resolved across ${references.length} files)`));
+
+  // Only now that the gate has passed, so a failed release leaves the committed ledger as it was.
+  if (pendingLedger) {
+    await writeFile(LEDGER_PATH, `${JSON.stringify(pendingLedger, null, 2)}\n`, "utf8");
+    console.log(chalk.green(`  ledger advanced to generation ${ledgerGeneration} (${Object.keys(pendingLedger.generations).length} retained)`));
+  }
 
   console.log(chalk.green("\nBuild complete -> dist/"));
   console.log(chalk.blue(`\nBuild id: ${manifest.build}  scope: ${NEW_UV_SCOPE}  scramjet: ${NEW_SCRAMJET_SCOPE}  sw: ${manifest.sw}`));
 }
 
 build().catch(err => {
-  if (err instanceof VerificationError) {
+  if (err instanceof LedgerError) {
+    console.error(chalk.red("\nObfuscation ledger is unusable:\n"));
+    console.error(chalk.red(err.message));
+    console.error(chalk.gray("\nThe ledger is committed build metadata. Restore it from git rather than recreating it, or returning users lose their proxy selection.\n"));
+  } else if (err instanceof VerificationError) {
     console.error(chalk.red("\nBuild verification failed:\n"));
     console.error(chalk.red(err.message));
     console.error(chalk.gray("\ndist/ is incomplete and will be rebuilt from static/ on the next run.\n"));
