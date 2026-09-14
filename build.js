@@ -31,7 +31,6 @@ const { libcurlPath } = require("@mercuryworkshop/libcurl-transport");
 const { uvPath } = require("@titaniumnetwork-dev/ultraviolet");
 const { scramjetPath } = require("@mercuryworkshop/scramjet/path");
 
-// Application files to run through Terser instead of the obfuscator.
 const TERSER_ONLY = new Set();
 
 function createCatalogueKey() {
@@ -332,9 +331,8 @@ function stripScramjetBranding(source) {
   return out;
 }
 
-// Diagnostics only. Each is a console.error argument, an Error message or an error cause;
-// nothing in any of the five bundles compares against .message or .cause, so the throw is
-// what matters and the text is not.
+// Diagnostics only. Nothing in the five bundles compares against .message or .cause, so the
+// throw is what matters and the text is not.
 const DIAGNOSTIC_STRINGS = [
   '"attempted to initialize a scramjet client, but one is already loaded - this is very bad"',
   '"YOU NEED TO USE `new ScramjetFrame()`! DIRECT IFRAMES WILL NOT WORK"',
@@ -363,13 +361,10 @@ function stripDiagnosticStrings(source, id) {
   return out;
 }
 
-// Scramjet's postMessage envelope, randomized per build. Producer and consumer are both
-// scramjet.all.js and every copy of it in a build carries the same table. The one skew window
-// is a page that stays open across a deploy and is adopted by the new service worker while
-// its own realm still runs the old bundle; that page stops proxying until it reloads.
-// Replacements stay valid identifiers because the keys are read as obj.key as well as
-// "key" in obj. Ordered longest first, though the token bounds below already keep the
-// scramjet$ family apart from the $scramjet$ one.
+// Producer and consumer are both scramjet.all.js, so per build is safe. The one skew window
+// is a page left open across a deploy and adopted by the new service worker while its own
+// realm still runs the old bundle; it stops proxying until reloaded. Replacements must be
+// valid identifiers, because the keys are read as obj.key as well as "key" in obj.
 const SCRAMJET_PROTOCOL_DEFAULTS = ["$scramjet$messagetype", "$scramjet$origin", "$scramjet$data", "$scramjet$type", "scramjet$response", "scramjet$request", "scramjet$token", "scramjet$type", "scramjet$port"];
 const SCRAMJET_PROTOCOL_COUNTS = { $scramjet$messagetype: 2, $scramjet$origin: 3, $scramjet$data: 4, $scramjet$type: 5, scramjet$response: 3, scramjet$request: 2, scramjet$token: 12, scramjet$type: 25, scramjet$port: 2 };
 
@@ -391,13 +386,10 @@ function applyScramjetProtocolKeys(source, protocolKeys) {
   return out;
 }
 
-// bare-mux rendezvous, shared by five independently emitted copies: the standalone module
-// and worker plus the ones vendored into uv.bundle, uv.client and scramjet.all. Randomized
-// per build, which costs nothing they were not already paying: a SharedWorker is identified
-// by script URL as well as name, and those URLs are randomized already, so two builds never
-// shared a worker regardless. bare-mux-path is a localStorage key, but the page rewrites it
-// on every load before anything reads it. Longest first: bare-mux is a prefix of the rest,
-// and the worker name doubles as the prefix of its own fallback.
+// Five emitted copies find each other by these names. Randomizing per build costs nothing:
+// a SharedWorker is identified by script URL as well as name, and those URLs already rotate.
+// bare-mux-path is a localStorage key, but the page rewrites it before anything reads it.
+// Longest first, since bare-mux prefixes the rest and the worker name prefixes its fallback.
 const BAREMUX_STRING_DEFAULTS = ["bare-mux-worker-", "bare-mux-worker", "bare-mux-remote", "bare-mux-path", "bare-mux", "baremuxinit"];
 const BAREMUX_STRING_COUNTS = { "uv.bundle": 14, "uv.client": 17, "uv.handler": 1, "sj.all": 19, baremux: 17, "baremux.worker": 4 };
 
@@ -432,11 +424,9 @@ function applyBaremuxStrings(source, id, baremuxStrings) {
   return out;
 }
 
-// Names we own on both sides. Upstream Scramjet reads none of them, and none is reachable
-// from HTML.
-// Token-safe renames: every occurrence is a bare identifier, so the word-boundary pass
-// below handles them. encodeProxyUrl is a prefix of encodeProxyUrlSync, which the trailing
-// lookahead keeps apart.
+// Ours on both sides: upstream reads none of them and none is reachable from HTML. Every
+// occurrence is a bare identifier, so the word-boundary pass handles them. encodeProxyUrl
+// prefixes encodeProxyUrlSync, which the trailing lookahead keeps apart.
 const RENAMED_IDENTIFIERS = [
   "__scramjet$config",
   "isScramjet",
@@ -461,10 +451,9 @@ const RENAMED_IDENTIFIERS = [
   "implementUVMiddleware",
 ];
 
-// uv.bundle.js falls back to these when the config omits a script path, and derives the
-// client path from the bundle path by substring. Our config sets all four so the branches
-// are dead, but they carry the names and the derivation would resolve to a 404 if it ever
-// ran. Pointing them at the emitted paths removes the names and makes the fallback correct.
+// Dead branches: our config sets all four. They still carry the upstream names, and the
+// substring derivation of the client path would 404 if one ever ran, so pointing them at the
+// emitted paths removes the names and fixes the fallback at the same time.
 const UV_DEFAULT_PATH_LITERALS = [
   ['"/uv.bundle.js"', "uv.bundle"],
   ['"/uv.handler.js"', "uv.handler"],
@@ -492,12 +481,9 @@ function stripUvErrorMessage(source) {
   return replaceAll(source, UV_ERROR_MESSAGE, '""');
 }
 
-// UV names everything off one prefix: __uv is the global its rewriter writes into proxied
-// scripts, __uv$ builds __uv$location and friends, and __uv-script tags the scripts it
-// injects. A substring swap keeps all 15 variants coherent, which a token-bounded rename
-// would not: it would skip __uv$storageObj and still rewrite __uv-script. Applied after the
-// token pass so __uv$config is already gone, and kept lowercase because __uv-script is an
-// HTML attribute name.
+// A substring swap, not a token rename: that would skip __uv$storageObj and still rewrite
+// __uv-script, leaving the 15 variants incoherent. Runs after the token pass so __uv$config
+// is already gone, and stays lowercase because __uv-script is an HTML attribute name.
 const UV_PREFIX = "__uv";
 
 function applyUvPrefixRename(source, name) {
@@ -533,10 +519,9 @@ function stripUltravioletBranding(source) {
   return out;
 }
 
-// Internal to uv.sw.js: both the class that sets it and the one that reads it live there,
-// it never reaches injected page code, and the string never appears as a literal so no
-// computed access can reach it. Matched on the leading dot so the unrelated
-// /assets/ultraviolet/ path segments cannot be hit.
+// Internal to uv.sw.js: setter and reader both live there, it never reaches injected page
+// code, and it never appears as a string literal so no computed access can reach it. Matched
+// on the leading dot so /assets/ultraviolet/ path segments cannot be hit.
 const UV_PROPERTY = /\.ultraviolet(?![\w$])/g;
 
 function applyUvPropertyRename(source, name) {
@@ -553,11 +538,9 @@ function applyUltravioletRename(source, name) {
   return out;
 }
 
-// The two service worker instances in our own sw.js. File-local, never attached to self and
-// never named across a realm boundary, but javascript-obfuscator leaves top level worker
-// declarations alone under renameGlobals:false. Scoped to sw.js only, because a bare uv
-// token also occurs in uv.bundle.js as the regex flag pair. The lookbehind rejects the dot
-// and slash forms so path literals and property access cannot be hit.
+// File-local, but renameGlobals:false leaves top level worker declarations alone. Scoped to
+// sw.js only, because a bare uv token also occurs in uv.bundle.js as a regex flag pair. The
+// lookbehind rejects the dot and slash forms so paths and property access cannot be hit.
 const SW_LOCAL_COUNTS = { uv: 2, sj: 4 };
 const swLocalPattern = name => new RegExp(`(?<![\\w$./"'\`-])${name}(?![\\w$])`, "g");
 
@@ -576,10 +559,9 @@ function applySwLocalRenames(source, renames) {
   return out;
 }
 
-// The proxy the user picked is persisted in localStorage under "proxy". The values rotate per
-// build. The values live inside the opaque settings blob now, so they never need to rotate.
-// The key itself stays "proxy":
-// it is an ordinary word that reveals nothing the domain does not already.
+// Only to keep "uv" and "sj" out of the emitted JS: javascript-obfuscator leaves strings
+// shorter than three characters inline. The stored value is opaque already, so the pair is
+// fixed rather than per build.
 const PROXY_CHOICE_VALUES = { uv: "k3d", sj: "w9p" };
 const PROXY_CHOICE_LITERAL = /(["'`])(uv|sj)\1/g;
 const PROXY_CHOICE_COUNTS = { js: 9, html: 2 };
