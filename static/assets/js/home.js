@@ -5,8 +5,8 @@ try {
 } catch (e) {
   inFrame = true;
 }
-if (!localStorage.getItem("ab")) localStorage.setItem("ab", true);
-if (!inFrame && !navigator.userAgent.includes("Firefox") && localStorage.getItem("ab") === "true") {
+if (!store.get("ab")) store.set("ab", true);
+if (!inFrame && !navigator.userAgent.includes("Firefox") && store.get("ab") === "true") {
   const popup = open("about:blank", "_blank");
   setTimeout(() => {
     if (!popup || popup.closed) {
@@ -17,8 +17,8 @@ if (!inFrame && !navigator.userAgent.includes("Firefox") && localStorage.getItem
       const style = iframe.style;
       const link = doc.createElement("link");
 
-      const name = localStorage.getItem("name") || "My Drive - Google Drive";
-      const icon = localStorage.getItem("icon") || "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png";
+      const name = store.get("name") || "My Drive - Google Drive";
+      const icon = store.get("icon") || "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png";
 
       doc.title = name;
       link.rel = "icon";
@@ -33,7 +33,7 @@ if (!inFrame && !navigator.userAgent.includes("Firefox") && localStorage.getItem
       doc.head.appendChild(link);
       doc.body.appendChild(iframe);
 
-      const pLink = localStorage.getItem(encodeURI("pLink")) || getRandomUrl();
+      const pLink = store.get("pLink") || getRandomUrl();
       location.replace(pLink);
 
       const script = doc.createElement("script");

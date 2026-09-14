@@ -577,117 +577,20 @@ function applySwLocalRenames(source, renames) {
 }
 
 // The proxy the user picked is persisted in localStorage under "proxy". The values rotate per
-// release generation rather than per build, and the ledger below carries enough history for a
-// returning user's old value to be recognised and migrated. The key itself stays "proxy":
+// build. The values live inside the opaque settings blob now, so they never need to rotate.
+// The key itself stays "proxy":
 // it is an ordinary word that reveals nothing the domain does not already.
+const PROXY_CHOICE_VALUES = { uv: "k3d", sj: "w9p" };
 const PROXY_CHOICE_LITERAL = /(["'`])(uv|sj)\1/g;
 const PROXY_CHOICE_COUNTS = { js: 9, html: 2 };
 
-function applyProxyChoiceValues(source, values) {
+function applyProxyChoiceValues(source) {
   let count = 0;
   const out = source.replace(PROXY_CHOICE_LITERAL, (match, quote, name) => {
     count++;
-    return `${quote}${values[name]}${quote}`;
+    return `${quote}${PROXY_CHOICE_VALUES[name]}${quote}`;
   });
   return { source: out, count };
-}
-
-const LEDGER_PATH = path.join(process.cwd(), "build", "obfuscation-ledger.json");
-const LEDGER_SCHEMA_VERSION = 1;
-const LEDGER_FIELDS = ["proxyUv", "proxySj"];
-const LEDGER_VALUE = /^_[0-9a-f]{10}$/;
-
-class LedgerError extends Error {
-  constructor(message) {
-    super(`${LEDGER_PATH}: ${message}`);
-    this.name = "LedgerError";
-  }
-}
-
-async function loadLedger() {
-  let raw;
-  try {
-    raw = await readFile(LEDGER_PATH, "utf8");
-  } catch {
-    throw new LedgerError("ledger is missing. It is committed build metadata and must never be regenerated silently.");
-  }
-  let ledger;
-  try {
-    ledger = JSON.parse(raw);
-  } catch (err) {
-    throw new LedgerError(`ledger is not valid JSON (${err.message}).`);
-  }
-  if (ledger?.schemaVersion !== LEDGER_SCHEMA_VERSION) throw new LedgerError(`unsupported schemaVersion ${JSON.stringify(ledger?.schemaVersion)}, expected ${LEDGER_SCHEMA_VERSION}.`);
-  if (!Number.isInteger(ledger.retain) || ledger.retain < 1) throw new LedgerError(`retain must be a positive integer, got ${JSON.stringify(ledger.retain)}.`);
-  if (!ledger.generations || typeof ledger.generations !== "object") throw new LedgerError("generations must be an object.");
-  if (!Number.isInteger(ledger.current) || !Object.hasOwn(ledger.generations, String(ledger.current))) throw new LedgerError(`current ${JSON.stringify(ledger.current)} does not name an existing generation.`);
-
-  const seen = new Map();
-  for (const [id, generation] of Object.entries(ledger.generations)) {
-    if (!/^[1-9]\d*$/.test(id)) throw new LedgerError(`generation id ${JSON.stringify(id)} must be a positive integer.`);
-    for (const field of LEDGER_FIELDS) {
-      const value = generation?.[field];
-      if (typeof value !== "string" || !LEDGER_VALUE.test(value)) throw new LedgerError(`generation ${id} field ${field} must match ${LEDGER_VALUE}, got ${JSON.stringify(value)}.`);
-      if (seen.has(value)) throw new LedgerError(`value ${value} is used by both generation ${seen.get(value)} and generation ${id}.`);
-      seen.set(value, id);
-    }
-  }
-  return ledger;
-}
-
-function createLedgerGeneration(ledger) {
-  const taken = new Set(Object.values(ledger.generations).flatMap(generation => LEDGER_FIELDS.map(field => generation[field])));
-  const generation = { createdAt: new Date().toISOString() };
-  for (const field of LEDGER_FIELDS) {
-    let value;
-    do {
-      value = `_${randomBytes(5).toString("hex")}`;
-    } while (taken.has(value));
-    taken.add(value);
-    generation[field] = value;
-  }
-  return generation;
-}
-
-// Returns the ledger to build against. In release mode the caller writes `pending` back to
-// disk, but only once the verification gate has passed, so a failed release leaves the
-// committed ledger untouched.
-function resolveLedger(ledger, release) {
-  if (!release) return { ledger, id: ledger.current, generation: ledger.generations[String(ledger.current)], pending: null };
-  const id = ledger.current + 1;
-  const generations = { ...ledger.generations, [id]: createLedgerGeneration(ledger) };
-  for (const stale of Object.keys(generations)
-    .map(Number)
-    .sort((a, b) => b - a)
-    .slice(ledger.retain)) {
-    delete generations[stale];
-  }
-  const pending = { ...ledger, current: id, generations };
-  return { ledger: pending, id, generation: generations[String(id)], pending };
-}
-
-// Flattened one hop: every retained generation maps straight to the current value, so a user
-// who skipped twenty releases still migrates in a single lookup.
-function proxyMigrationMap(ledger, id) {
-  const current = ledger.generations[String(id)];
-  const map = {};
-  for (const [other, generation] of Object.entries(ledger.generations)) {
-    if (Number(other) === id) continue;
-    for (const field of LEDGER_FIELDS) map[generation[field]] = current[field];
-  }
-  return map;
-}
-
-// Prepended to main.js, which is the first script on every page and whose own initProxy() is
-// the first consumer. Carries opaque values only: no field names, no key semantics.
-function proxyMigrationShim(map, current) {
-  return `(() => {
-  const m = ${JSON.stringify(map)};
-  const s = localStorage.getItem("proxy");
-  if (s === null || s === ${JSON.stringify(current.proxyUv)} || s === ${JSON.stringify(current.proxySj)}) return;
-  const t = m[s];
-  localStorage.setItem("proxy", t != null ? t : ${JSON.stringify(current.proxySj)});
-})();\n`;
 }
 
 // scramjet.all.js strips this with a hardcoded `e.slice(14)`, so the replacement must keep
@@ -1407,14 +1310,9 @@ async function build() {
   const uvPropertyName = `_${randomBytes(5).toString("hex")}`;
   const uvPrefixName = `_${randomBytes(4).toString("hex")}`;
   const scramjetStrings = createScramjetStrings();
-  const release = process.argv.includes("--release");
-  const ledgerFile = await loadLedger();
-  const { ledger, id: ledgerGeneration, generation: ledgerCurrent, pending: pendingLedger } = resolveLedger(ledgerFile, release);
-  const proxyChoiceValues = { uv: ledgerCurrent.proxyUv, sj: ledgerCurrent.proxySj };
-  const proxyMigration = proxyMigrationMap(ledger, ledgerGeneration);
   const catalogueKey = createCatalogueKey();
   console.log(`Scramjet identifiers: ${[...identifierRenames].map(([from, to]) => `${from} -> ${to}`).join(", ")}`);
-  console.log(`Proxy selector generation ${ledgerGeneration}${release ? " (new release)" : ""}: uv -> ${proxyChoiceValues.uv}, sj -> ${proxyChoiceValues.sj}, ${Object.keys(proxyMigration).length} migration entries`);
+  console.log(`Proxy selector values: ${JSON.stringify(PROXY_CHOICE_VALUES)}`);
   console.log(`Scramjet protocol keys: ${protocolKeys.map(([from, to]) => `${from} -> ${to}`).join(", ")}`);
   console.log(`bare-mux strings: ${baremuxStrings.map(([from, to]) => `${from} -> ${to}`).join(", ")}`);
   console.log(`Scramjet strings: attr ${SCRAMJET_ATTR_PREFIX} -> ${scramjetStrings.attr}, idb ${SCRAMJET_IDB_NAME} -> ${scramjetStrings.idb}`);
@@ -1578,10 +1476,9 @@ async function build() {
         output = applyRewrites(output, rewrites);
         output = applyIdentifierRenames(output, identifierRenames);
         if (basename === "sw.js") output = applySwLocalRenames(output, swLocalRenames);
-        const proxyChoice = applyProxyChoiceValues(output, proxyChoiceValues);
+        const proxyChoice = applyProxyChoiceValues(output);
         output = proxyChoice.source;
         proxyChoiceJs += proxyChoice.count;
-        if (basename === "main.js") output = proxyMigrationShim(proxyMigration, ledgerCurrent) + output;
         if (basename === "launcher.js") output = patchOrFail(output, /const CATALOGUE_KEY = \[0\];/, `const CATALOGUE_KEY = ${JSON.stringify(catalogueKey)};`, "launcher.js catalogue key");
         references.push({ file: `${basename} (${publicPath})`, source: output });
 
@@ -1633,7 +1530,7 @@ async function build() {
       for (const [from, to] of scopeRewrites) html = replaceAll(html, from, to);
       html = applyRewrites(html, rewrites);
 
-      const proxyChoice = applyProxyChoiceValues(html, proxyChoiceValues);
+      const proxyChoice = applyProxyChoiceValues(html);
       html = proxyChoice.source;
       proxyChoiceHtml += proxyChoice.count;
 
@@ -1673,22 +1570,12 @@ async function build() {
   const { checkedReferences } = await verifyBuild({ manifest, specs, emitted, references, distJsFiles, serverRoutes: manifest.analytics ? [manifest.analytics.loader] : [], identifierRenames: gateRenames, swLocalRenames });
   console.log(chalk.green(`  all checks passed (${emitted.size} emitted assets, ${distJsFiles.length} scripts parsed, ${checkedReferences} asset references resolved across ${references.length} files)`));
 
-  // Only now that the gate has passed, so a failed release leaves the committed ledger as it was.
-  if (pendingLedger) {
-    await writeFile(LEDGER_PATH, `${JSON.stringify(pendingLedger, null, 2)}\n`, "utf8");
-    console.log(chalk.green(`  ledger advanced to generation ${ledgerGeneration} (${Object.keys(pendingLedger.generations).length} retained)`));
-  }
-
   console.log(chalk.green("\nBuild complete -> dist/"));
   console.log(chalk.blue(`\nBuild id: ${manifest.build}  scope: ${NEW_UV_SCOPE}  scramjet: ${NEW_SCRAMJET_SCOPE}  sw: ${manifest.sw}`));
 }
 
 build().catch(err => {
-  if (err instanceof LedgerError) {
-    console.error(chalk.red("\nObfuscation ledger is unusable:\n"));
-    console.error(chalk.red(err.message));
-    console.error(chalk.gray("\nThe ledger is committed build metadata. Restore it from git rather than recreating it, or returning users lose their proxy selection.\n"));
-  } else if (err instanceof VerificationError) {
+  if (err instanceof VerificationError) {
     console.error(chalk.red("\nBuild verification failed:\n"));
     console.error(chalk.red(err.message));
     console.error(chalk.gray("\ndist/ is incomplete and will be rebuilt from static/ on the next run.\n"));

@@ -1,6 +1,6 @@
 // Theme is applied immediately, to prevent flashing on page load
 (() => {
-  const themeid = localStorage.getItem("theme");
+  const themeid = store.get("theme");
   const themes = {
     catppuccinMocha: "/assets/css/themes/catppuccin/mocha.css",
     catppuccinMacchiato: "/assets/css/themes/catppuccin/macchiato.css",
@@ -29,7 +29,7 @@
     themeLink.href = themes[themeid];
     document.head.appendChild(themeLink);
   } else {
-    const customThemeCss = localStorage.getItem(`theme-${themeid}`);
+    const customThemeCss = store.getRaw(`t${themeid}`);
     if (customThemeCss) {
       const customThemeStyle = document.createElement("style");
       customThemeStyle.textContent = customThemeCss;
@@ -42,15 +42,15 @@
   const DEFAULT = "sj";
 
   function initProxy() {
-    const current = localStorage.getItem(PROXY_KEY);
+    const current = store.get(PROXY_KEY);
     if (current === null) {
-      localStorage.setItem(PROXY_KEY, DEFAULT);
+      store.set(PROXY_KEY, DEFAULT);
       return DEFAULT;
     }
     if (ALLOWED.includes(current)) {
       return current;
     }
-    localStorage.setItem(PROXY_KEY, DEFAULT);
+    store.set(PROXY_KEY, DEFAULT);
     return DEFAULT;
   }
 
@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const nav = document.querySelector(".nav-bar");
 
   if (nav) {
-    const themeId = localStorage.getItem("theme");
+    const themeId = store.get("theme");
     const lightThemes = ["Inverted", "light", "gruvboxLight", "solarizedLight"];
     const LogoUrl = lightThemes.includes(themeId) ? "/assets/media/favicon/main-inverted.png" : "/assets/media/favicon/main.png";
     const html = `
@@ -124,8 +124,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // Favicon and Name Logic
   const icon = document.getElementById("tab-favicon");
   const title = document.getElementById("t");
-  const cloakName = localStorage.getItem("CustomName") || localStorage.getItem("name");
-  const cloakIcon = localStorage.getItem("CustomIcon") || localStorage.getItem("icon");
+  const cloakName = store.get("CustomName") || store.get("name");
+  const cloakIcon = store.get("CustomIcon") || store.get("icon");
   if (cloakName) title.textContent = cloakName;
   if (cloakIcon) {
     const safeIcon = reconstructSafeUrl(cloakIcon);
@@ -133,8 +133,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Event Key Logic
-  const eventKey = JSON.parse(localStorage.getItem("eventKey")) || ["`"];
-  const rawPLink = localStorage.getItem("pLink") || "https://classroom.google.com/";
+  const eventKey = JSON.parse(store.get("eventKey")) || ["`"];
+  const rawPLink = store.get("pLink") || "https://classroom.google.com/";
   const safePLink = reconstructSafeUrl(rawPLink) ?? "https://classroom.google.com/";
 
   const panicAnchor = document.createElement("a");
@@ -153,7 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Background Image Logic
-  const savedBackgroundImage = localStorage.getItem("backgroundImage");
+  const savedBackgroundImage = store.get("backgroundImage");
   if (savedBackgroundImage === "none") {
     document.body.style.backgroundImage = "none";
   } else if (savedBackgroundImage) {
@@ -161,7 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Background Particles
-  if (localStorage.getItem("particles") === "true") {
+  if (store.get("particles") === "true") {
     // CSS Parallax Pixel Stars (based on codepen.io/sarazond/pen/LYGbwj)
     ["stars", "stars2", "stars3"].forEach(id => {
       if (!document.getElementById(id)) {
@@ -174,7 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Pointer Effects — cursor.js is only loaded when an effect is active
   const CURSOR_EFFECTS = ["rainbow-stars", "white-orbs", "rainbow-trail", "blue-orbs", "red-circle", "the-sims", "curly-cursor"];
-  const activePointer = localStorage.getItem("pointer");
+  const activePointer = store.get("pointer");
 
   if (CURSOR_EFFECTS.includes(activePointer)) {
     const cursorScript = document.createElement("script");

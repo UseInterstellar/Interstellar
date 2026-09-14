@@ -97,7 +97,7 @@ if (form && input && !isTabsPage()) {
 }
 
 function isScramjet(proxyOverride) {
-  const choice = proxyOverride ?? localStorage.getItem("proxy");
+  const choice = proxyOverride ?? store.get("proxy");
   return choice === "sj";
 }
 
@@ -119,7 +119,7 @@ async function navigate(value, path, proxyOverride) {
   if (window.waitForProxyBoot) await window.waitForProxyBoot();
 
   let url = value.trim();
-  const engine = localStorage.getItem("engine");
+  const engine = store.get("engine");
   const searchUrl = engine ? engine : "https://search.brave.com/search?q=";
 
   if (!isValidUrl(url)) {
@@ -128,7 +128,7 @@ async function navigate(value, path, proxyOverride) {
     url = `https://${url}`;
   }
 
-  const proxyChoice = proxyOverride ?? localStorage.getItem("proxy");
+  const proxyChoice = proxyOverride ?? store.get("proxy");
   const proxyUrl = await encodeUrl(url, proxyChoice);
   sessionStorage.setItem("GoUrl", proxyUrl);
 
@@ -157,7 +157,7 @@ function isValidUrl(val = "") {
   const vendor = self.__vendor || {};
 
   function getWispUrl() {
-    const custom = localStorage.getItem("wisp-url")?.trim();
+    const custom = store.get("wisp-url")?.trim();
     if (custom && /^wss?:\/\//i.test(custom)) return custom;
     const protocol = location.protocol === "https:" ? "wss" : "ws";
     return `${protocol}://${location.host}/wisp/`;
@@ -169,10 +169,10 @@ function isValidUrl(val = "") {
       current = await connection.getTransport();
     } catch {}
 
-    if (current === transportPath && localStorage.getItem("transport-signature") === signature) return;
+    if (current === transportPath && store.get("transport-signature") === signature) return;
 
     await connection.setTransport(transportPath, options);
-    localStorage.setItem("transport-signature", signature);
+    store.set("transport-signature", signature);
   }
 
   async function init() {
@@ -183,7 +183,7 @@ function isValidUrl(val = "") {
 
     const wisp = getWispUrl();
     const connection = new BareMuxConnection(vendor.baremuxWorker);
-    if (localStorage.getItem("transport") === "libcurl") {
+    if (store.get("transport") === "libcurl") {
       await ensureTransport(connection, vendor.libcurl, [{ websocket: wisp }], `${vendor.libcurl}|${wisp}`);
     } else {
       await ensureTransport(connection, vendor.epoxy, [{ wisp }], `${vendor.epoxy}|${wisp}`);

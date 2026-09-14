@@ -7,7 +7,7 @@ function prependHttps(url) {
 }
 
 function isScramjetEnabled() {
-  return localStorage.getItem("proxy") === "sj";
+  return store.get("proxy") === "sj";
 }
 
 async function encodeProxyUrl(url) {
@@ -42,20 +42,15 @@ function updateAddressBar() {
 
   if (currentUrl.includes("/uv/scramjet/")) {
     if (window.scramjet?.decodeUrl) {
-      const decoded = window.scramjet.decodeUrl(currentUrl);
-      localStorage.setItem("decoded", decoded);
-      input.value = decoded;
+      input.value = window.scramjet.decodeUrl(currentUrl);
     } else {
       input.value = currentUrl;
     }
   } else if (currentUrl.includes("/uv/")) {
     const path = currentUrl.replace(window.location.origin, "").replace("/uv/", "");
-    localStorage.setItem("decoded", path);
     input.value = __uv$config.decodeUrl ? __uv$config.decodeUrl(path) : window.decode.xor(path);
   } else {
-    const path = currentUrl.replace(window.location.origin, "");
-    input.value = path;
-    localStorage.setItem("decoded", path);
+    input.value = currentUrl.replace(window.location.origin, "");
   }
 }
 
@@ -79,8 +74,8 @@ function popoutTab() {
   const newWindow = window.open("about:blank", "_blank");
   if (!newWindow) return;
 
-  const cloakName = localStorage.getItem("name") || "My Drive - Google Drive";
-  const cloakIcon = localStorage.getItem("icon") || "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png";
+  const cloakName = store.get("name") || "My Drive - Google Drive";
+  const cloakIcon = store.get("icon") || "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png";
 
   newWindow.document.title = cloakName;
 
@@ -189,7 +184,7 @@ window.addEventListener("load", () => {
     form.addEventListener("submit", async event => {
       event.preventDefault();
       const formValue = input.value.trim();
-      const engine = localStorage.getItem("engine") || "https://search.brave.com/search?q=";
+      const engine = store.get("engine") || "https://search.brave.com/search?q=";
       const url = isUrl(formValue) ? prependHttps(formValue) : `${engine}${formValue}`;
       await navigateActiveTab(url);
     });

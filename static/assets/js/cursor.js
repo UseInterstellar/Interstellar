@@ -669,7 +669,7 @@ function initTheSims() {
   }
 
   const simsInterval = setInterval(() => {
-    if (localStorage.getItem("pointer") !== "the-sims") {
+    if (store.get("pointer") !== "the-sims") {
       clearInterval(simsInterval);
       return;
     }
@@ -801,7 +801,7 @@ function initSnakeTrail() {
 }
 
 function initCursorEffect() {
-  const pointer = localStorage.getItem("pointer");
+  const pointer = store.get("pointer");
   switch (pointer) {
     case "rainbow-stars":
       initRainbowStars();

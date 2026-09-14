@@ -2,9 +2,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const adTypeElement = document.getElementById("adType");
   if (adTypeElement) {
     adTypeElement.addEventListener("change", function () {
-      localStorage.setItem("ads", this.value === "default" ? "on" : this.value);
+      store.set("ads", this.value === "default" ? "on" : this.value);
     });
-    const storedAd = localStorage.getItem("ads");
+    const storedAd = store.get("ads");
     adTypeElement.value = storedAd === "popups" || storedAd === "off" ? storedAd : "default";
   }
 
@@ -12,32 +12,32 @@ document.addEventListener("DOMContentLoaded", () => {
   const pChangeElement = document.getElementById("pChange");
   if (pChangeElement) {
     pChangeElement.addEventListener("change", function () {
-      localStorage.setItem("proxy", this.value);
+      store.set("proxy", this.value);
       if (transportRow) transportRow.style.display = this.value === "sj" ? "" : "none";
     });
-    pChangeElement.value = localStorage.getItem("proxy") || "sj";
+    pChangeElement.value = store.get("proxy") || "sj";
   }
 
   const transportElement = document.getElementById("transport-dropdown");
   if (transportElement) {
-    transportElement.value = localStorage.getItem("transport") === "libcurl" ? "libcurl" : "epoxy";
+    transportElement.value = store.get("transport") === "libcurl" ? "libcurl" : "epoxy";
     transportElement.addEventListener("change", function () {
-      localStorage.setItem("transport", this.value);
+      store.set("transport", this.value);
       window.location.reload();
     });
-    if (transportRow) transportRow.style.display = (localStorage.getItem("proxy") || "sj") === "sj" ? "" : "none";
+    if (transportRow) transportRow.style.display = (store.get("proxy") || "sj") === "sj" ? "" : "none";
   }
 
   const wispInput = document.getElementById("wisp-input");
   const wispSaveBtn = document.getElementById("wisp-save-btn");
   if (wispInput && wispSaveBtn) {
-    wispInput.value = localStorage.getItem("wisp-url") || "";
+    wispInput.value = store.get("wisp-url") || "";
     wispSaveBtn.addEventListener("click", () => {
       const val = wispInput.value.trim();
       if (val === "") {
-        localStorage.removeItem("wisp-url");
+        store.remove("wisp-url");
       } else if (/^wss?:\/\//i.test(val)) {
-        localStorage.setItem("wisp-url", val);
+        store.set("wisp-url", val);
       } else {
         alert("Enter a valid Wisp URL starting with ws:// or wss://");
         return;
@@ -49,9 +49,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const eventKeyInput = document.getElementById("eventKeyInput");
   const linkInput = document.getElementById("linkInput");
 
-  let eventKey = JSON.parse(localStorage.getItem("eventKey")) || ["`"];
-  const eventKeyRaw = localStorage.getItem("eventKeyRaw") || "`";
-  let pLink = localStorage.getItem("pLink") || "https://classroom.google.com/";
+  let eventKey = JSON.parse(store.get("eventKey")) || ["`"];
+  const eventKeyRaw = store.get("eventKeyRaw") || "`";
+  let pLink = store.get("pLink") || "https://classroom.google.com/";
 
   eventKeyInput.value = eventKeyRaw;
   linkInput.value = pLink;
@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
   while (cloakDropdown.firstChild) cloakDropdown.removeChild(cloakDropdown.firstChild);
   for (const option of sortedOptions) cloakDropdown.appendChild(option);
 
-  cloakDropdown.value = localStorage.getItem("selectedOption") || "Classroom";
+  cloakDropdown.value = store.get("selectedOption") || "Classroom";
   cloakDropdown.addEventListener("change", () => handleDropdownChange(cloakDropdown));
 
   document.getElementById("cloak-save-btn").addEventListener("click", () => {
@@ -81,16 +81,16 @@ document.addEventListener("DOMContentLoaded", () => {
     redirectToMainDomain();
   });
 
-  document.getElementById("custom-cloak-name").value = localStorage.getItem("CustomName") || "";
-  document.getElementById("custom-cloak-icon").value = localStorage.getItem("CustomIcon") || "";
+  document.getElementById("custom-cloak-name").value = store.get("CustomName") || "";
+  document.getElementById("custom-cloak-icon").value = store.get("CustomIcon") || "";
 
-  if (localStorage.getItem("ab") === "true") {
+  if (store.get("ab") === "true") {
     document.getElementById("ab-settings-switch").checked = true;
   }
 
   // Themes
   const themeDropdown = document.getElementById("theme-dropdown");
-  themeDropdown.value = localStorage.getItem("theme") || "d";
+  themeDropdown.value = store.get("theme") || "d";
   themeDropdown.addEventListener("change", function () {
     themeChange(this);
   });
@@ -100,8 +100,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const bgCustomRow = document.getElementById("background-custom-row");
   const bgInput = document.getElementById("background-input");
 
-  const savedBg = localStorage.getItem("backgroundImage");
-  const savedBgMode = localStorage.getItem("backgroundMode") || "default";
+  const savedBg = store.get("backgroundImage");
+  const savedBgMode = store.get("backgroundMode") || "default";
   bgDropdown.value = savedBgMode;
   if (savedBgMode === "custom") {
     bgCustomRow.style.display = "";
@@ -110,15 +110,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   bgDropdown.addEventListener("change", function () {
     const mode = this.value;
-    localStorage.setItem("backgroundMode", mode);
+    store.set("backgroundMode", mode);
     if (mode === "default") {
       bgCustomRow.style.display = "none";
-      localStorage.removeItem("backgroundImage");
+      store.remove("backgroundImage");
       document.body.style.backgroundImage = "";
       window.location.reload();
     } else if (mode === "none") {
       bgCustomRow.style.display = "none";
-      localStorage.setItem("backgroundImage", "none");
+      store.set("backgroundImage", "none");
       document.body.style.backgroundImage = "none";
     } else if (mode === "custom") {
       bgCustomRow.style.display = "";
@@ -128,28 +128,28 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("save-button").addEventListener("click", () => {
     const url = bgInput.value.trim();
     if (url) {
-      localStorage.setItem("backgroundImage", url);
-      localStorage.setItem("backgroundMode", "custom");
+      store.set("backgroundImage", url);
+      store.set("backgroundMode", "custom");
       document.body.style.backgroundImage = `url('${url}')`;
     }
   });
 
   // Background Particles
   const particlesDropdown = document.getElementById("particles-dropdown");
-  particlesDropdown.value = localStorage.getItem("particles") === "true" ? "on" : "off";
+  particlesDropdown.value = store.get("particles") === "true" ? "on" : "off";
   particlesDropdown.addEventListener("change", function () {
-    localStorage.setItem("particles", this.value === "on" ? "true" : "false");
+    store.set("particles", this.value === "on" ? "true" : "false");
   });
 
   // Cursor Effects
   const pointerDropdown = document.getElementById("pointer-dropdown");
-  pointerDropdown.value = localStorage.getItem("pointer") || "default";
+  pointerDropdown.value = store.get("pointer") || "default";
   pointerDropdown.addEventListener("change", function () {
     const val = this.value;
     if (val === "default") {
-      localStorage.removeItem("pointer");
+      store.remove("pointer");
     } else {
-      localStorage.setItem("pointer", val);
+      store.set("pointer", val);
     }
     window.location.reload();
   });
@@ -159,7 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   document.getElementById("engine-save-btn").addEventListener("click", saveCustomEngine);
 
-  const savedEngineName = localStorage.getItem("enginename");
+  const savedEngineName = store.get("enginename");
   if (savedEngineName) document.getElementById("engine").value = savedEngineName;
 });
 
@@ -169,9 +169,9 @@ function saveEventKey() {
   const eventKey = eventKeyInput.value.split(",");
   const eventKeyRaw = eventKeyInput.value;
   const pLink = linkInput.value;
-  localStorage.setItem("eventKey", JSON.stringify(eventKey));
-  localStorage.setItem("eventKeyRaw", eventKeyRaw);
-  localStorage.setItem("pLink", pLink);
+  store.set("eventKey", JSON.stringify(eventKey));
+  store.set("eventKeyRaw", eventKeyRaw);
+  store.set("pLink", pLink);
   // biome-ignore lint: idk
   window.location = window.location;
 }
@@ -238,13 +238,13 @@ function handleDropdownChange(selectElement) {
   const selectedValue = selectElement.value;
   const preset = cloakOptions[selectedValue];
 
-  localStorage.removeItem("CustomName");
-  localStorage.removeItem("CustomIcon");
-  localStorage.setItem("selectedOption", selectedValue);
+  store.remove("CustomName");
+  store.remove("CustomIcon");
+  store.set("selectedOption", selectedValue);
 
   if (preset) {
-    localStorage.setItem("name", preset.name);
-    localStorage.setItem("icon", preset.icon);
+    store.set("name", preset.name);
+    store.set("icon", preset.icon);
     document.getElementById("t").textContent = preset.name;
     document.getElementById("tab-favicon").setAttribute("href", preset.icon);
   }
@@ -256,18 +256,18 @@ function saveCustomCloak() {
   const nameVal = document.getElementById("custom-cloak-name").value.trim();
   const iconVal = document.getElementById("custom-cloak-icon").value.trim();
   if (nameVal) {
-    localStorage.setItem("CustomName", nameVal);
-    localStorage.setItem("name", nameVal);
+    store.set("CustomName", nameVal);
+    store.set("name", nameVal);
   }
   if (iconVal) {
-    localStorage.setItem("CustomIcon", iconVal);
-    localStorage.setItem("icon", iconVal);
+    store.set("CustomIcon", iconVal);
+    store.set("icon", iconVal);
   }
 }
 
 function resetCustomCloak() {
-  localStorage.removeItem("CustomName");
-  localStorage.removeItem("CustomIcon");
+  store.remove("CustomName");
+  store.remove("CustomIcon");
   document.getElementById("custom-cloak-name").value = "";
   document.getElementById("custom-cloak-icon").value = "";
 }
@@ -292,9 +292,9 @@ function redirectToMainDomain() {
 function themeChange(selectElement) {
   const value = selectElement.value;
   if (value === "d") {
-    localStorage.removeItem("theme");
+    store.remove("theme");
   } else {
-    localStorage.setItem("theme", value);
+    store.set("theme", value);
   }
   window.location.reload();
 }
@@ -322,9 +322,9 @@ function AB() {
     return;
   }
 
-  const name = localStorage.getItem("name") || "My Drive - Google Drive";
-  const icon = localStorage.getItem("icon") || "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png";
-  const panicLink = localStorage.getItem("pLink") || getRandomURL();
+  const name = store.get("name") || "My Drive - Google Drive";
+  const icon = store.get("icon") || "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png";
+  const panicLink = store.get("pLink") || getRandomURL();
 
   const doc = popup.document;
   const iframe = doc.createElement("iframe");
@@ -358,8 +358,8 @@ function AB() {
 }
 
 function toggleAB() {
-  const ab = localStorage.getItem("ab");
-  localStorage.setItem("ab", ab === "true" ? "false" : "true");
+  const ab = store.get("ab");
+  store.set("ab", ab === "true" ? "false" : "true");
 }
 
 function changeEngine(dropdown) {
@@ -373,15 +373,15 @@ function changeEngine(dropdown) {
     Ecosia: "https://www.ecosia.org/search?q=",
   };
   const selected = dropdown.value;
-  localStorage.setItem("engine", engineUrls[selected]);
-  localStorage.setItem("enginename", selected);
+  store.set("engine", engineUrls[selected]);
+  store.set("enginename", selected);
 }
 
 function saveCustomEngine() {
   const customEngine = document.getElementById("engine-form").value.trim();
   if (customEngine) {
-    localStorage.setItem("engine", customEngine);
-    localStorage.setItem("enginename", "Custom");
+    store.set("engine", customEngine);
+    store.set("enginename", "Custom");
   } else {
     alert("Please enter a custom search engine value.");
   }
@@ -433,6 +433,7 @@ function importSaveData() {
           Object.entries(data.localStorage).forEach(([key, value]) => {
             localStorage.setItem(key, value);
           });
+          store.reload();
           if (typeof window.resolveProxyChoice === "function") {
             window.resolveProxyChoice();
           }

@@ -7,12 +7,14 @@ function getStorageKey(baseKey) {
   return baseKey;
 }
 
+// Kept out of the settings blob: these grow with whatever the user adds and are only read on
+// the page that owns them.
 function getFromStorage(baseKey) {
-  return localStorage.getItem(getStorageKey(baseKey));
+  return store.getRaw(getStorageKey(baseKey));
 }
 
 function setInStorage(baseKey, value) {
-  localStorage.setItem(getStorageKey(baseKey), value);
+  store.setRaw(getStorageKey(baseKey), value);
 }
 
 function createSpanElements(text) {
