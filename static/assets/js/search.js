@@ -103,11 +103,11 @@ function isScramjet(proxyOverride) {
 
 async function encodeUrl(url, proxyOverride) {
   if (isScramjet(proxyOverride)) {
-    if (window.scramjetReady) {
-      await window.scramjetReady;
+    if (window.__ready) {
+      await window.__ready;
     }
-    if (window.scramjet?.encodeUrl) {
-      return window.scramjet.encodeUrl(url);
+    if (window.__urls?.encodeUrl) {
+      return window.__urls.encodeUrl(url);
     }
   }
 
@@ -116,7 +116,7 @@ async function encodeUrl(url, proxyOverride) {
 
 async function navigate(value, path, proxyOverride) {
   await waitForServiceWorker();
-  if (window.waitForProxyBoot) await window.waitForProxyBoot();
+  if (window.__settled) await window.__settled();
 
   let url = value.trim();
   const engine = store.get("engine");
@@ -154,7 +154,7 @@ function isValidUrl(val = "") {
 
 (() => {
   // Full paths only, never concatenated: the build rewrites whole literals.
-  const vendor = self.__vendor || {};
+  const vendor = self.__deps || {};
 
   function getWispUrl() {
     const custom = store.get("wisp-url")?.trim();
@@ -189,7 +189,7 @@ function isValidUrl(val = "") {
       await ensureTransport(connection, vendor.epoxy, [{ wisp }], `${vendor.epoxy}|${wisp}`);
     }
 
-    window.scramjet = {
+    window.__urls = {
       encodeUrl: url => scramjet.encodeUrl(url),
       decodeUrl: url => scramjet.decodeUrl(url),
     };
@@ -206,10 +206,10 @@ function isValidUrl(val = "") {
 
   const domReady = document.readyState === "loading" ? new Promise(resolve => document.addEventListener("DOMContentLoaded", resolve, { once: true })) : Promise.resolve();
 
-  window.scramjetReady = domReady.then(boot);
+  window.__ready = domReady.then(boot);
 })();
 
-window.waitForProxyBoot = async function waitForProxyBoot(timeout = 8000) {
-  if (!window.scramjetReady) return;
-  await Promise.race([window.scramjetReady.catch(() => {}), new Promise(resolve => setTimeout(resolve, timeout))]);
+window.__settled = async (timeout = 8000) => {
+  if (!window.__ready) return;
+  await Promise.race([window.__ready.catch(() => {}), new Promise(resolve => setTimeout(resolve, timeout))]);
 };

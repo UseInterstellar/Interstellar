@@ -12,18 +12,18 @@ function isScramjetEnabled() {
 
 async function encodeProxyUrl(url) {
   if (isScramjetEnabled()) {
-    if (window.scramjetReady) await window.scramjetReady;
-    if (window.scramjet?.encodeUrl) return window.scramjet.encodeUrl(url);
+    if (window.__ready) await window.__ready;
+    if (window.__urls?.encodeUrl) return window.__urls.encodeUrl(url);
   }
   return `/uv/${__uv$config.encodeUrl ? __uv$config.encodeUrl(url) : window.encode.xor(url)}`;
 }
 
 function encodeProxyUrlSync(url) {
-  if (isScramjetEnabled() && window.scramjet?.encodeUrl) return window.scramjet.encodeUrl(url);
+  if (isScramjetEnabled() && window.__urls?.encodeUrl) return window.__urls.encodeUrl(url);
   return `/uv/${__uv$config.encodeUrl ? __uv$config.encodeUrl(url) : window.encode.xor(url)}`;
 }
 
-window.__encodeProxyUrl = encodeProxyUrlSync;
+window.__mkurl = encodeProxyUrlSync;
 
 function updateAddressBar() {
   const activeIframe = document.querySelector("#frame-container iframe.active");
@@ -41,8 +41,8 @@ function updateAddressBar() {
   if (!input) return;
 
   if (currentUrl.includes("/uv/scramjet/")) {
-    if (window.scramjet?.decodeUrl) {
-      input.value = window.scramjet.decodeUrl(currentUrl);
+    if (window.__urls?.decodeUrl) {
+      input.value = window.__urls.decodeUrl(currentUrl);
     } else {
       input.value = currentUrl;
     }
@@ -191,7 +191,7 @@ window.addEventListener("load", () => {
   }
 
   async function navigateActiveTab(url) {
-    if (window.waitForProxyBoot) await window.waitForProxyBoot();
+    if (window.__settled) await window.__settled();
     const proxyUrl = await encodeProxyUrl(url);
     sessionStorage.setItem("GoUrl", proxyUrl);
     const iframeContainer = document.getElementById("frame-container");
@@ -244,7 +244,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function openInNewTab(destination) {
-    const proxyUrl = destination.startsWith("/") || destination.startsWith(window.location.origin) ? destination : window.__encodeProxyUrl ? window.__encodeProxyUrl(destination) : `/uv/${__uv$config.encodeUrl(destination)}`;
+    const proxyUrl = destination.startsWith("/") || destination.startsWith(window.location.origin) ? destination : window.__mkurl ? window.__mkurl(destination) : `/uv/${__uv$config.encodeUrl(destination)}`;
     sessionStorage.setItem("URL", proxyUrl);
     createNewTab();
   }
@@ -311,7 +311,7 @@ document.addEventListener("DOMContentLoaded", () => {
         tabTitle.textContent = title && title.length > 1 ? title : "Tab";
 
         newIframe.contentWindow.open = url => {
-          const proxyUrl = window.__encodeProxyUrl ? window.__encodeProxyUrl(url) : `/uv/${__uv$config.encodeUrl(url)}`;
+          const proxyUrl = window.__mkurl ? window.__mkurl(url) : `/uv/${__uv$config.encodeUrl(url)}`;
           sessionStorage.setItem("URL", proxyUrl);
           createNewTab();
           return null;
@@ -353,8 +353,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     iframeContainer.appendChild(newIframe);
 
-    if (window.waitForProxyBoot) {
-      window.waitForProxyBoot().then(() => {
+    if (window.__settled) {
+      window.__settled().then(() => {
         newIframe.src = src;
       });
     } else {

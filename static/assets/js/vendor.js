@@ -1,5 +1,5 @@
 // Dev defaults. The build regenerates this file with the randomized paths.
-self.__vendor = {
+self.__deps = {
   baremux: "/baremux/index.mjs",
   baremuxWorker: "/baremux/worker.js",
   epoxy: "/epoxy/index.mjs",

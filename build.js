@@ -919,7 +919,7 @@ function browserVendorModule(manifest) {
     epoxy: manifest.vendor.epoxy,
     libcurl: manifest.vendor.libcurl,
   };
-  return `self.__vendor = ${JSON.stringify(map, null, 2)};\n`;
+  return `self.__deps = ${JSON.stringify(map, null, 2)};\n`;
 }
 
 function formatKb(bytes) {
