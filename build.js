@@ -561,6 +561,110 @@ function applySwLocalRenames(source, renames) {
   return out;
 }
 
+// Inline onkeyup/onchange/onclick handlers call these app-owned globals by name, so the name
+// survives into emitted HTML. Renamed per build in both the JS definition and the handler
+// attribute; the on* attribute names themselves are standard and left untouched.
+// Two shapes: window.X property assignments, and bare function identifiers (def/call/reference).
+const INLINE_HANDLER_WINDOW = { "launcher.js": ["bar", "category"] };
+const INLINE_HANDLER_FUNCS = {
+  "tabs.js": ["goHome", "goBack", "goForward", "reload", "popoutTab", "toggleDevTools", "toggleFullscreen"],
+  "settings.js": ["toggleAB", "changeEngine", "saveEventKey", "exportSaveData", "importSaveData", "AB"],
+  "search.js": ["go"],
+  "launcher.js": ["go"],
+};
+const INLINE_HANDLER_ATTR = /(\son(?:keyup|change|click)\s*=\s*")([A-Za-z_$][\w$]*)(\s*\()/gi;
+// window.bar/category (2) + tabs.js funcs (9) + settings.js funcs (7) + search go (1) + launcher go (1).
+const INLINE_HANDLER_JS_COUNT = 20;
+// onkeyup/onchange (6) + onclick: tabs (7) + settings (4) + 404 go (1).
+const INLINE_HANDLER_HTML_COUNT = 18;
+
+function createHandlerRenames() {
+  const names = [...new Set([...Object.values(INLINE_HANDLER_WINDOW).flat(), ...Object.values(INLINE_HANDLER_FUNCS).flat()])];
+  return new Map(names.map(name => [name, `_${randomBytes(5).toString("hex")}`]));
+}
+
+// Strings and comments become same-length spaces so token matching only ever hits code, never a
+// name that also appears in a string (e.g. "AB" inside an alert) or a property (e.g. .reload).
+function maskJsStrings(source) {
+  const n = source.length;
+  let out = "";
+  let i = 0;
+  while (i < n) {
+    const c = source[i];
+    if (c === "/" && source[i + 1] === "*") {
+      const e = source.indexOf("*/", i + 2);
+      const stop = e < 0 ? n : e + 2;
+      out += " ".repeat(stop - i);
+      i = stop;
+      continue;
+    }
+    if (c === "/" && source[i + 1] === "/") {
+      let j = i;
+      while (j < n && source[j] !== "\n") j++;
+      out += " ".repeat(j - i);
+      i = j;
+      continue;
+    }
+    if (c === '"' || c === "'" || c === "`") {
+      let j = i + 1;
+      while (j < n && source[j] !== c) j += source[j] === "\\" ? 2 : 1;
+      const stop = Math.min(j + 1, n);
+      out += " ".repeat(stop - i);
+      i = stop;
+      continue;
+    }
+    out += c;
+    i++;
+  }
+  return out;
+}
+
+// window.X (bar/category) are targeted exact strings. Function identifiers are renamed only at
+// code positions, excluding method access (the leading dot) and string occurrences (via the mask).
+function applyHandlerDefs(source, basename, renames) {
+  let out = source;
+  let changed = 0;
+  for (const name of INLINE_HANDLER_WINDOW[basename] ?? []) {
+    const from = `window.${name}`;
+    const n = out.split(from).length - 1;
+    out = replaceAll(out, from, `window.${renames.get(name)}`);
+    changed += n;
+  }
+  for (const name of INLINE_HANDLER_FUNCS[basename] ?? []) {
+    const masked = maskJsStrings(out);
+    const re = new RegExp(`(?<![\\w$.])${name}(?![\\w$])`, "g");
+    out = out.replace(re, (match, offset) => {
+      if (masked.slice(offset, offset + name.length) !== name) return match;
+      changed++;
+      return renames.get(name);
+    });
+  }
+  return { source: out, changed };
+}
+
+function applyHandlerAttrs(html, renames) {
+  let count = 0;
+  const out = html.replace(INLINE_HANDLER_ATTR, (match, lead, fn, tail) => {
+    if (!renames.has(fn)) return match;
+    count++;
+    return `${lead}${renames.get(fn)}${tail}`;
+  });
+  return { html: out, count };
+}
+
+// data-tab-id is app-owned and lives only in tabs.js, as dataset.tabId and [data-tab-id='...'].
+// The opaque suffix has no hyphens, so dataset.<suffix> maps cleanly to data-<suffix>.
+function createTabAttr() {
+  return `t${randomBytes(4).toString("hex")}`;
+}
+
+function applyTabAttr(source, attr) {
+  const ds = source.split("dataset.tabId").length - 1;
+  const kb = source.split("data-tab-id").length - 1;
+  if (!ds || !kb) throw new CodecPatchError(`tabs.js: expected dataset.tabId and data-tab-id, found ${ds}/${kb}. Upstream changed.`);
+  return replaceAll(replaceAll(source, "dataset.tabId", `dataset.${attr}`), "data-tab-id", `data-${attr}`);
+}
+
 // Only to keep "uv" and "sj" out of the emitted JS: javascript-obfuscator leaves strings
 // shorter than three characters inline. The stored value is opaque already, so the pair is
 // fixed rather than per build.
@@ -1532,6 +1636,10 @@ async function build() {
   let failed = 0;
   const codecFailures = [];
   const swLocalRenames = createSwLocalRenames();
+  const handlerRenames = createHandlerRenames();
+  const tabAttr = createTabAttr();
+  let handlerJsCount = 0;
+  let handlerHtmlCount = 0;
   let proxyChoiceJs = 0;
 
   await Promise.all(
@@ -1545,6 +1653,10 @@ async function build() {
         const proxyChoice = applyProxyChoiceValues(output);
         output = proxyChoice.source;
         proxyChoiceJs += proxyChoice.count;
+        const handlerDefs = applyHandlerDefs(output, basename, handlerRenames);
+        output = handlerDefs.source;
+        handlerJsCount += handlerDefs.changed;
+        if (basename === "tabs.js") output = applyTabAttr(output, tabAttr);
         if (basename === "launcher.js") output = patchOrFail(output, /const CATALOGUE_KEY = \[0\];/, `const CATALOGUE_KEY = ${JSON.stringify(catalogueKey)};`, "launcher.js catalogue key");
         references.push({ file: `${basename} (${publicPath})`, source: output });
 
@@ -1574,6 +1686,7 @@ async function build() {
   }
   if (failed) throw new Error(`${failed} file(s) failed to process`);
   if (proxyChoiceJs !== PROXY_CHOICE_COUNTS.js) throw new Error(`expected ${PROXY_CHOICE_COUNTS.js} proxy selector literals in application JS, replaced ${proxyChoiceJs}. Update PROXY_CHOICE_COUNTS.`);
+  if (handlerJsCount !== INLINE_HANDLER_JS_COUNT) throw new Error(`expected ${INLINE_HANDLER_JS_COUNT} inline-handler identifier renames in JS, made ${handlerJsCount}. Upstream changed.`);
 
   await rm(JS_DIR, { recursive: true, force: true });
 
@@ -1600,6 +1713,10 @@ async function build() {
       html = proxyChoice.source;
       proxyChoiceHtml += proxyChoice.count;
 
+      const handlerAttrs = applyHandlerAttrs(html, handlerRenames);
+      html = handlerAttrs.html;
+      handlerHtmlCount += handlerAttrs.count;
+
       const analytics = replaceAnalytics(html, analyticsPaths.loader);
       html = analytics.html;
       if (analytics.id) analyticsIds.add(analytics.id);
@@ -1613,6 +1730,7 @@ async function build() {
   );
 
   if (proxyChoiceHtml !== PROXY_CHOICE_COUNTS.html) throw new Error(`expected ${PROXY_CHOICE_COUNTS.html} proxy selector literals in HTML, replaced ${proxyChoiceHtml}. Update PROXY_CHOICE_COUNTS.`);
+  if (handlerHtmlCount !== INLINE_HANDLER_HTML_COUNT) throw new Error(`expected ${INLINE_HANDLER_HTML_COUNT} inline-handler attributes in HTML, rewrote ${handlerHtmlCount}. Upstream changed.`);
   if (analyticsIds.size > 1) throw new Error(`HTML pages disagree on the analytics id: ${[...analyticsIds].join(", ")}`);
   if (analyticsIds.size === 1) {
     manifest.analytics = { id: [...analyticsIds][0], ...analyticsPaths };
