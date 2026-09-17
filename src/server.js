@@ -1,4 +1,4 @@
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import http from "node:http";
 import { createRequire } from "node:module";
 import path from "node:path";
@@ -11,6 +11,7 @@ import rateLimit from "express-rate-limit";
 import config from "../config.js";
 import { mountAds } from "./ads.js";
 import { mountGhGames } from "./games.js";
+import { injectVersionInfo, resolveVersionInfo } from "./version.js";
 
 console.log(chalk.yellow("🚀 Starting server..."));
 
@@ -77,6 +78,18 @@ app.use("/.runtime", (_req, res) => {
 });
 
 if (vendorMap?.analytics) mountAds(app, vendorMap.analytics);
+
+if (!vendorMap) {
+  try {
+    const info = await resolveVersionInfo();
+    const settingsHtml = injectVersionInfo(readFileSync(path.join(SERVE_DIR, "settings.html"), "utf8"), info).html;
+    const sendSettings = (_req, res) => res.type("html").send(settingsHtml);
+    app.get("/settings", generalLimiter, sendSettings);
+    app.get("/settings.html", generalLimiter, sendSettings);
+  } catch (err) {
+    console.warn(chalk.yellow(`Settings version injection skipped, serving placeholders: ${err.message}`));
+  }
+}
 
 app.use(express.static(SERVE_DIR, { ...jsStaticOptions, dotfiles: "ignore" }));
 

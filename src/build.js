@@ -5,6 +5,7 @@ import path from "node:path";
 import chalk from "chalk";
 import JavaScriptObfuscator from "javascript-obfuscator";
 import { minify } from "terser";
+import { injectVersionInfo, resolveVersionInfo, VERSION_TOKEN_COUNT } from "./version.js";
 
 const OBFUSCATOR_PROMO_PATTERN = /\[javascript-obfuscator\]|JavaScript Obfuscator Pro|obfuscator\.io/i;
 
@@ -1861,6 +1862,9 @@ async function build() {
   let proxyChoiceHtml = 0;
   const hardenStats = [];
   const WRAPPER_OPEN = /<(?:span|x-a|x-b|ab-x|s-p)>/g;
+  const versionInfo = await resolveVersionInfo();
+  let versionInjections = 0;
+  console.log(`Settings version card: ${versionInfo.version ? `v${versionInfo.version}` : "-"} / ${versionInfo.updated ?? "-"}`);
   console.log(`\nUpdating ${htmlFiles.length} HTML files${OBFUSCATE_HTML ? " + obfuscating" : ""}...\n`);
 
   await Promise.all(
@@ -1877,6 +1881,12 @@ async function build() {
       const handlerAttrs = applyHandlerAttrs(html, handlerRenames);
       html = handlerAttrs.html;
       handlerHtmlCount += handlerAttrs.count;
+
+      if (name === "settings.html") {
+        const injected = injectVersionInfo(html, versionInfo);
+        html = injected.html;
+        versionInjections += injected.count;
+      }
 
       const beforeHarden = html;
       const hardened = hardenTextNodes(html);
@@ -1903,6 +1913,7 @@ async function build() {
 
   if (proxyChoiceHtml !== PROXY_CHOICE_COUNTS.html) throw new Error(`expected ${PROXY_CHOICE_COUNTS.html} proxy selector literals in HTML, replaced ${proxyChoiceHtml}. Update PROXY_CHOICE_COUNTS.`);
   if (handlerHtmlCount !== INLINE_HANDLER_HTML_COUNT) throw new Error(`expected ${INLINE_HANDLER_HTML_COUNT} inline-handler attributes in HTML, rewrote ${handlerHtmlCount}. Upstream changed.`);
+  if (versionInjections !== VERSION_TOKEN_COUNT) throw new Error(`expected ${VERSION_TOKEN_COUNT} version tokens injected into settings.html, injected ${versionInjections}. Upstream changed.`);
   for (const s of hardenStats.sort((a, b) => a.name.localeCompare(b.name))) console.log(`  text hardening: ${s.name} -> ${s.transformed}/${s.seen} nodes, ${s.wrappersAdded} wrappers`);
   if (analyticsIds.size > 1) throw new Error(`HTML pages disagree on the analytics id: ${[...analyticsIds].join(", ")}`);
   if (analyticsIds.size === 1) {
