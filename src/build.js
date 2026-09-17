@@ -682,6 +682,57 @@ function applyProxyChoiceValues(source) {
   return { source: out, count };
 }
 
+// Per-build opaque page routes. build.js generates one map, writes it to the manifest for the
+// server, and rewrites the clean route literals in the application JS so the navbar and every
+// in-app navigation point at the same opaque paths. "/" (root) and "/play.html" (a compatibility
+// alias for the games page) are deliberately left clean and are not part of this map.
+const PAGE_ROUTES = ["/apps", "/games", "/tabs", "/settings"];
+
+function createPageRoutes(registry) {
+  const map = {};
+  const used = new Set();
+  for (const clean of PAGE_ROUTES) {
+    let token;
+    do {
+      token = `/${randomItem("abcdefghijklmnopqrstuvwxyz".split(""))}${randomBytes(3).toString("hex")}`;
+    } while (used.has(token) || registry.paths.has(token) || registry.topDirs.has(token.slice(1)));
+    used.add(token);
+    registry.paths.add(token);
+    map[clean] = token;
+  }
+  return map;
+}
+
+// Quoted-literal rewrites, so a route token can never match inside an asset path such as
+// "/assets/json/apps.min.json". Both the "/x" form (pathname comparisons, navigate targets) and the
+// navbar "/./x" form are covered; the bare "tabs" in launcher.js is a relative navigation target
+// that must become the absolute, opaque tabs route.
+function routeRewriteTable(routes) {
+  return [
+    [`"/./games"`, `"${routes["/games"]}"`],
+    [`"/./apps"`, `"${routes["/apps"]}"`],
+    [`"/./settings"`, `"${routes["/settings"]}"`],
+    [`"/games"`, `"${routes["/games"]}"`],
+    [`"/apps"`, `"${routes["/apps"]}"`],
+    [`"/tabs"`, `"${routes["/tabs"]}"`],
+    [`"tabs"`, `"${routes["/tabs"]}"`],
+  ];
+}
+const ROUTE_REWRITE_COUNT = 11;
+
+function applyRouteRewrites(source, table) {
+  let count = 0;
+  let out = source;
+  for (const [from, to] of table) {
+    const n = out.split(from).length - 1;
+    if (n) {
+      out = replaceAll(out, from, to);
+      count += n;
+    }
+  }
+  return { source: out, count };
+}
+
 // Build-time hardening of visible HTML text nodes. Ordinary text is rendered identically in the
 // browser, but the emitted raw HTML no longer holds contiguous plaintext: every word is split
 // across inert inline wrappers, with the occasional character numeric-encoded. This defeats
@@ -1610,6 +1661,12 @@ async function build() {
   const uvPrefixName = `_${randomBytes(4).toString("hex")}`;
   const scramjetStrings = createScramjetStrings();
   const catalogueKey = createCatalogueKey();
+  const pageRoutes = createPageRoutes(registry);
+  console.log(
+    `Page routes: ${Object.entries(pageRoutes)
+      .map(([from, to]) => `${from} -> ${to}`)
+      .join(", ")}`,
+  );
   console.log(`Scramjet identifiers: ${[...identifierRenames].map(([from, to]) => `${from} -> ${to}`).join(", ")}`);
   console.log(`Proxy selector values: ${JSON.stringify(PROXY_CHOICE_VALUES)}`);
   console.log(`Scramjet protocol keys: ${protocolKeys.map(([from, to]) => `${from} -> ${to}`).join(", ")}`);
@@ -1620,6 +1677,7 @@ async function build() {
     build: randomBytes(4).toString("hex"),
     scopes: { uv: NEW_UV_SCOPE, scramjet: NEW_SCRAMJET_SCOPE },
     sw: null,
+    routes: pageRoutes,
     vendor: {},
   };
 
@@ -1801,6 +1859,8 @@ async function build() {
   let handlerJsCount = 0;
   let handlerHtmlCount = 0;
   let proxyChoiceJs = 0;
+  let routeRewriteJs = 0;
+  const routeTable = routeRewriteTable(pageRoutes);
 
   await Promise.all(
     [...appPlan.entries()].map(async ([filePath, { basename, publicPath, fullPath }]) => {
@@ -1813,6 +1873,9 @@ async function build() {
         const proxyChoice = applyProxyChoiceValues(output);
         output = proxyChoice.source;
         proxyChoiceJs += proxyChoice.count;
+        const routeChange = applyRouteRewrites(output, routeTable);
+        output = routeChange.source;
+        routeRewriteJs += routeChange.count;
         const handlerDefs = applyHandlerDefs(output, basename, handlerRenames);
         output = handlerDefs.source;
         handlerJsCount += handlerDefs.changed;
@@ -1846,6 +1909,13 @@ async function build() {
   }
   if (failed) throw new Error(`${failed} file(s) failed to process`);
   if (proxyChoiceJs !== PROXY_CHOICE_COUNTS.js) throw new Error(`expected ${PROXY_CHOICE_COUNTS.js} proxy selector literals in application JS, replaced ${proxyChoiceJs}. Update PROXY_CHOICE_COUNTS.`);
+  if (routeRewriteJs !== ROUTE_REWRITE_COUNT) throw new Error(`expected ${ROUTE_REWRITE_COUNT} page-route literals in application JS, rewrote ${routeRewriteJs}. Upstream changed.`);
+  for (const ref of references) {
+    if (!ref.file.includes(".js")) continue;
+    for (const stale of ['"/apps"', '"/games"', '"/tabs"', '"/./apps"', '"/./games"', '"/./settings"']) {
+      if (ref.source.includes(stale)) throw new Error(`stale clean page-route literal ${stale} left in ${ref.file}`);
+    }
+  }
   if (handlerJsCount !== INLINE_HANDLER_JS_COUNT) throw new Error(`expected ${INLINE_HANDLER_JS_COUNT} inline-handler identifier renames in JS, made ${handlerJsCount}. Upstream changed.`);
 
   await rm(JS_DIR, { recursive: true, force: true });

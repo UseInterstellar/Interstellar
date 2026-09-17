@@ -116,8 +116,12 @@ const routes = [
   { path: "/", file: "index.html" },
 ];
 
+// In dist the build randomizes the page routes and records them in the vendor map, so serve each
+// page at its opaque path (build id vendorMap.routes). "/" and "/play.html" have no entry and stay
+// clean. In static/dev vendorMap is null, so the clean routes are used as-is.
 routes.forEach(route => {
-  app.get(route.path, generalLimiter, (_req, res) => {
+  const servePath = vendorMap?.routes?.[route.path] || route.path;
+  app.get(servePath, generalLimiter, (_req, res) => {
     res.sendFile(path.join(SERVE_DIR, route.file));
   });
 });
