@@ -7,8 +7,8 @@
     "node": ">=16.0.0"
   },
   "scripts": {
-    "start": "node index.js",
-    "build": "node build.js",
+    "start": "node src/server.js",
+    "build": "node src/build.js",
     "format": "pnpm biome format --write .",
     "precommit": "pnpm run format && pnpm biome check --write .",
     "lint": "biome lint --write ."
