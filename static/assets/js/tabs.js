@@ -25,6 +25,91 @@ function encodeProxyUrlSync(url) {
 
 window.__mkurl = encodeProxyUrlSync;
 
+const ZERO_WIDTH = ["​", "‌", "‍", "⁠", "﻿"];
+const ZERO_WIDTH_RE = /​|‌|‍|‎|‏|⁠|﻿/g;
+let addressValue = "";
+let addressEditing = false;
+
+function addrInput() {
+  return document.getElementById("input");
+}
+
+function stripZeroWidth(text) {
+  return text.replace(ZERO_WIDTH_RE, "");
+}
+
+function laceZeroWidth(url) {
+  const points = Array.from(url);
+  let out = "";
+  for (let i = 0; i < points.length; i++) {
+    out += points[i];
+    if (i < points.length - 1) out += ZERO_WIDTH[Math.floor(Math.random() * ZERO_WIDTH.length)];
+  }
+  return out;
+}
+
+function renderAddress() {
+  const input = addrInput();
+  if (!input) return;
+  if (!addressValue) input.value = "";
+  else input.value = addressEditing ? addressValue : laceZeroWidth(addressValue);
+}
+
+function setAddress(url) {
+  addressValue = url || "";
+  renderAddress();
+}
+
+function setupAddressBar() {
+  const input = addrInput();
+  if (!input) return;
+  input.addEventListener("focus", () => {
+    addressEditing = true;
+    renderAddress();
+    input.select();
+  });
+  input.addEventListener("blur", () => {
+    addressEditing = false;
+    renderAddress();
+  });
+
+  input.addEventListener("copy", event => {
+    try {
+      const start = input.selectionStart;
+      const end = input.selectionEnd;
+      if (start == null || end == null || start === end) return;
+      const selected = input.value.slice(start, end);
+      const cleaned = stripZeroWidth(selected);
+      if (cleaned === selected) return;
+      if (event.clipboardData && typeof event.clipboardData.setData === "function") {
+        event.clipboardData.setData("text/plain", cleaned);
+        event.preventDefault();
+      }
+    } catch {}
+  });
+  input.addEventListener("paste", event => {
+    try {
+      const pasted = event.clipboardData ? event.clipboardData.getData("text/plain") : null;
+      if (pasted == null) return;
+      const cleaned = stripZeroWidth(pasted);
+      if (cleaned === pasted) return;
+      event.preventDefault();
+      insertCleanText(input, cleaned);
+    } catch {}
+  });
+  renderAddress();
+}
+
+function insertCleanText(input, text) {
+  if (typeof input.setRangeText === "function") {
+    const start = input.selectionStart ?? input.value.length;
+    const end = input.selectionEnd ?? input.value.length;
+    input.setRangeText(text, start, end, "end");
+  } else {
+    input.value += text;
+  }
+}
+
 function updateAddressBar() {
   const activeIframe = document.querySelector("#frame-container iframe.active");
   if (!activeIframe) return;
@@ -42,15 +127,15 @@ function updateAddressBar() {
 
   if (currentUrl.includes("/uv/scramjet/")) {
     if (window.__urls?.decodeUrl) {
-      input.value = window.__urls.decodeUrl(currentUrl);
+      setAddress(window.__urls.decodeUrl(currentUrl));
     } else {
-      input.value = currentUrl;
+      setAddress(currentUrl);
     }
   } else if (currentUrl.includes("/uv/")) {
     const path = currentUrl.replace(window.location.origin, "").replace("/uv/", "");
-    input.value = __uv$config.decodeUrl ? __uv$config.decodeUrl(path) : window.decode.xor(path);
+    setAddress(__uv$config.decodeUrl ? __uv$config.decodeUrl(path) : window.decode.xor(path));
   } else {
-    input.value = currentUrl.replace(window.location.origin, "");
+    setAddress(currentUrl.replace(window.location.origin, ""));
   }
 }
 
@@ -180,13 +265,16 @@ window.addEventListener("load", () => {
   const form = document.getElementById("fv");
   const input = document.getElementById("input");
 
+  setupAddressBar();
+
   if (form && input) {
     form.addEventListener("submit", async event => {
       event.preventDefault();
-      const formValue = input.value.trim();
+      const formValue = stripZeroWidth(input.value).trim();
       const engine = store.get("engine") || "https://search.brave.com/search?q=";
       const url = isUrl(formValue) ? prependHttps(formValue) : `${engine}${formValue}`;
       await navigateActiveTab(url);
+      input.blur();
     });
   }
 
@@ -202,7 +290,7 @@ window.addEventListener("load", () => {
     }
     activeIframe.src = proxyUrl;
     activeIframe.dataset.tabUrl = url;
-    if (input) input.value = url;
+    setAddress(url);
   }
 });
 
@@ -377,8 +465,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const remainingTabs = Array.from(tabList.querySelectorAll("li"));
     if (remainingTabs.length === 0) {
       tabCounter = 0;
-      const input = document.getElementById("input");
-      if (input) input.value = "";
+      setAddress("");
       return;
     }
 
