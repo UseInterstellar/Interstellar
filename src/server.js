@@ -9,7 +9,7 @@ import express from "express";
 import basicAuth from "express-basic-auth";
 import rateLimit from "express-rate-limit";
 import config from "../config.js";
-import { mountAds } from "./ads.js";
+import { mountAnalytics } from "./analytics.js";
 import { mountGhGames } from "./games.js";
 import { injectVersionInfo, resolveVersionInfo } from "./version.js";
 
@@ -77,7 +77,7 @@ app.use("/.runtime", (_req, res) => {
   res.sendStatus(404);
 });
 
-if (vendorMap?.analytics) mountAds(app, vendorMap.analytics);
+if (vendorMap?.analytics) mountAnalytics(app, vendorMap.analytics);
 
 if (!vendorMap) {
   try {

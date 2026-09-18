@@ -1,9 +1,6 @@
 import express from "express";
 
-// Proxies Google Analytics (gtag) through our own origin so the measurement id and the
-// google-analytics.com/g/collect shape never appear in the page or in outbound requests. The
-// loader route serves a rewritten gtag bundle; the sink route relays collect hits upstream.
-export function mountAds(app, analytics) {
+export function mountAnalytics(app, analytics) {
   const { id, loader, transport, sink, param, key } = analytics;
   let cached = null;
 
@@ -12,9 +9,6 @@ export function mountAds(app, analytics) {
     return Buffer.from(raw.map((byte, index) => byte ^ key[index % key.length])).toString("utf8");
   };
 
-  // gtag builds its own URL and always ends it with /g/collect?v=2&tid=G-..., so the
-  // recognizable shape can only be removed after gtag hands the request to the browser.
-  // These wrappers pass everything that is not a collect hit straight through.
   const requestHook = `(function(){var B=location.origin+${JSON.stringify(transport)}+"/g/collect",S=${JSON.stringify(sink)},P=${JSON.stringify(param)},K=${JSON.stringify(key)};
 function pack(s){var o="";for(var i=0;i<s.length;i++)o+=String.fromCharCode(s.charCodeAt(i)^K[i%K.length]);return btoa(o).replace(/\\+/g,"-").replace(/\\//g,"_").replace(/=+$/,"")}
 function re(u){try{u=String(u);if(u.indexOf(B)!==0)return null;var q=u.indexOf("?");return S+"?"+P+"="+pack(q<0?"":u.slice(q+1))}catch(e){return null}}
@@ -28,10 +22,7 @@ var xo=XMLHttpRequest.prototype.open;XMLHttpRequest.prototype.open=function(m,u)
         const upstream = await fetch(`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(id)}`);
         if (!upstream.ok) return res.sendStatus(502);
         const body = await upstream.text();
-        // Bootstrapping here rather than inline in the page is what keeps the measurement
-        // id out of the HTML. transport_url sends hits to our own origin.
         const boot = `\n;window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config",${JSON.stringify(id)},{transport_url:location.origin+${JSON.stringify(transport)}});`;
-        // Hook first: gtag captures its transport references as it initialises.
         cached = { at: Date.now(), body: requestHook + body + boot };
       }
       res.type("text/javascript").set("Cache-Control", "public, max-age=900").send(cached.body);
