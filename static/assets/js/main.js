@@ -1,0 +1,185 @@
+// Theme is applied immediately, to prevent flashing on page load
+(() => {
+  const themeid = store.get("theme");
+  const themes = {
+    catppuccinMocha: "/assets/css/themes/catppuccin/mocha.css",
+    catppuccinMacchiato: "/assets/css/themes/catppuccin/macchiato.css",
+    catppuccinFrappe: "/assets/css/themes/catppuccin/frappe.css",
+    catppuccinLatte: "/assets/css/themes/catppuccin/latte.css",
+    Inverted: "/assets/css/themes/colors/light.css",
+    sky: "/assets/css/themes/colors/sky.css",
+    tokyoNight: "/assets/css/themes/colors/tokyo-night.css",
+    nord: "/assets/css/themes/colors/nord.css",
+    rosePine: "/assets/css/themes/colors/rose-pine.css",
+    oled: "/assets/css/themes/colors/oled.css",
+    light: "/assets/css/themes/colors/light.css",
+    gruvbox: "/assets/css/themes/colors/gruvbox.css",
+    gruvboxLight: "/assets/css/themes/colors/gruvbox-light.css",
+    everforest: "/assets/css/themes/colors/everforest.css",
+    monokai: "/assets/css/themes/colors/monokai.css",
+    oneDark: "/assets/css/themes/colors/one-dark.css",
+    synthwave: "/assets/css/themes/colors/synthwave.css",
+    solarized: "/assets/css/themes/colors/solarized.css",
+    solarizedLight: "/assets/css/themes/colors/solarized-light.css",
+  };
+
+  if (themes[themeid]) {
+    const themeLink = document.createElement("link");
+    themeLink.rel = "stylesheet";
+    themeLink.href = themes[themeid];
+    document.head.appendChild(themeLink);
+  } else {
+    const customThemeCss = store.getRaw(`t${themeid}`);
+    if (customThemeCss) {
+      const customThemeStyle = document.createElement("style");
+      customThemeStyle.textContent = customThemeCss;
+      document.head.appendChild(customThemeStyle);
+    }
+  }
+
+  const PROXY_KEY = "proxy";
+  const ALLOWED = ["uv", "sj"];
+  const DEFAULT = "sj";
+
+  function initProxy() {
+    const current = store.get(PROXY_KEY);
+    if (current === null) {
+      store.set(PROXY_KEY, DEFAULT);
+      return DEFAULT;
+    }
+    if (ALLOWED.includes(current)) {
+      return current;
+    }
+    store.set(PROXY_KEY, DEFAULT);
+    return DEFAULT;
+  }
+
+  window.resolveProxyChoice = initProxy;
+  window.resolveProxyChoice();
+})();
+
+let isInTabMode;
+
+try {
+  isInTabMode = window.top.location.pathname === "/tabs";
+} catch {
+  try {
+    isInTabMode = window.parent.location.pathname === "/tabs";
+  } catch {
+    isInTabMode = false;
+  }
+}
+
+function reconstructSafeUrl(raw) {
+  if (!raw || typeof raw !== "string") return null;
+  try {
+    const parsed = new URL(raw);
+    const allowed = ["https:", "http:", "data:"];
+    if (!allowed.includes(parsed.protocol)) return null;
+    return parsed.href;
+  } catch {
+    if (typeof raw === "string" && !raw.includes(":")) return raw;
+    return null;
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const blockedHostnames = ["gointerstellar.app"];
+
+  if (!blockedHostnames.includes(window.location.hostname)) {
+    const script = document.createElement("script");
+    script.type = "text/javascript";
+    script.textContent = `(()=>{const k="p",d=15e4,s=()=>{let t=localStorage.getItem(k);return !t||Date.now()-t>d},m=()=>localStorage.setItem(k,Date.now());function h(){if(!s())return;window.open("https://undercoverhiking.com/cn4ai6dv?key=4d729d45e2fde8ef6d2caccfe564d6be","_blank");m();document.removeEventListener("click",h)}s()&&document.addEventListener("click",h,{once:1})})();`;
+    document.body.appendChild(script);
+  }
+
+  // The AdSense account is tied to gointerstellar.app, so forks and mirrors must not serve
+  // it. The tabs page never carried the loader either.
+  if (window.location.hostname === "gointerstellar.app" && !document.getElementById("frame-container")) {
+    const ads = document.createElement("script");
+    ads.async = true;
+    ads.crossOrigin = "anonymous";
+    ads.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6840529569014734";
+    document.head.appendChild(ads);
+  }
+
+  const nav = document.querySelector(".nav-bar");
+
+  if (nav) {
+    const themeId = store.get("theme");
+    const lightThemes = ["Inverted", "light", "gruvboxLight", "solarizedLight"];
+    const LogoUrl = lightThemes.includes(themeId) ? "/assets/media/favicon/main-inverted.png" : "/assets/media/favicon/main.png";
+    const html = `
+      <div id="icon-container">
+        <a class="icon" href="/./"><img alt="nav" id="INImg" src="${LogoUrl}"/></a>
+      </div>
+      <div class="nav-bar-right">
+        <a class="navbar-link" href="/./games"><i class="fa-solid fa-gamepad navbar-icon"></i><an>&#71;&#97;</an><an>&#109;&#101;&#115;</an></a>
+        <a class="navbar-link" href="/./apps"><i class="fa-solid fa-phone navbar-icon"></i><an>&#65;&#112;</an><an>&#112;&#115;</an></a>
+        <a class="navbar-link" href="/./settings"><i class="fa-solid fa-gear navbar-icon settings-icon"></i><an>&#83;&#101;&#116;</an><an>&#116;&#105;&#110;&#103;</an></a>
+      </div>`;
+    nav.innerHTML = html;
+  }
+
+  // Favicon and Name Logic
+  const icon = document.getElementById("tab-favicon");
+  const title = document.getElementById("t");
+  const cloakName = store.get("CustomName") || store.get("name");
+  const cloakIcon = store.get("CustomIcon") || store.get("icon");
+  if (cloakName) title.textContent = cloakName;
+  if (cloakIcon) {
+    const safeIcon = reconstructSafeUrl(cloakIcon);
+    if (safeIcon) icon.setAttribute("href", safeIcon);
+  }
+
+  // Event Key Logic
+  const eventKey = JSON.parse(store.get("eventKey")) || ["`"];
+  const rawPLink = store.get("pLink") || "https://classroom.google.com/";
+  const safePLink = reconstructSafeUrl(rawPLink) ?? "https://classroom.google.com/";
+
+  const panicAnchor = document.createElement("a");
+  panicAnchor.href = safePLink;
+  panicAnchor.style.display = "none";
+  document.body.appendChild(panicAnchor);
+
+  let pressedKeys = [];
+  document.addEventListener("keydown", event => {
+    pressedKeys.push(event.key);
+    const recentKeys = pressedKeys.slice(-eventKey.length);
+    if (recentKeys.length === eventKey.length && eventKey.every((key, i) => key === recentKeys[i])) {
+      panicAnchor.click();
+      pressedKeys = [];
+    }
+  });
+
+  // Background Image Logic
+  const savedBackgroundImage = store.get("backgroundImage");
+  if (savedBackgroundImage === "none") {
+    document.body.style.backgroundImage = "none";
+  } else if (savedBackgroundImage) {
+    document.body.style.backgroundImage = `url('${savedBackgroundImage}')`;
+  }
+
+  // Background Particles
+  if (store.get("particles") === "true") {
+    // CSS Parallax Pixel Stars (based on codepen.io/sarazond/pen/LYGbwj)
+    ["stars", "stars2", "stars3"].forEach(id => {
+      if (!document.getElementById(id)) {
+        const el = document.createElement("div");
+        el.id = id;
+        document.body.insertBefore(el, document.body.firstChild);
+      }
+    });
+  }
+
+  // Pointer Effects — cursor.js is only loaded when an effect is active
+  const CURSOR_EFFECTS = ["rainbow-stars", "white-orbs", "rainbow-trail", "blue-orbs", "red-circle", "the-sims", "curly-cursor"];
+  const activePointer = store.get("pointer");
+
+  if (CURSOR_EFFECTS.includes(activePointer)) {
+    const cursorScript = document.createElement("script");
+    cursorScript.src = "/assets/js/cursor.js";
+    cursorScript.onload = () => initCursorEffect();
+    document.head.appendChild(cursorScript);
+  }
+});

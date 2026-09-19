@@ -4,23 +4,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="referrer" content="no-referrer" />
-  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="shortcut icon" id="tab-favicon" href="favicon.png" />
   <title id="t">Home</title>
-  <link rel="stylesheet" id="global" href="/assets/css/global.css?v=6" />
-  <link rel="stylesheet" href="/assets/css/container.css?v=2" />
-  <link rel="stylesheet" href="/assets/css/nav.css?v=01" />
-  <link rel="stylesheet" href="/assets/css/settings.css?v=06" />
+  <link rel="stylesheet" id="global" href="/assets/css/global.css" />
+  <link rel="stylesheet" href="/assets/css/container.css" />
+  <link rel="stylesheet" href="/assets/css/nav.css" />
+  <link rel="stylesheet" href="/assets/css/settings.css" />
+  <script src="/assets/js/storage.js"></script>
+  <script src="/assets/js/main.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6840529569014734"
-    crossorigin="anonymous"></script>
-
 </head>
 
 <body>
-  <div class="f-nav"></div>
+  <div class="nav-bar"></div>
   <div class="main">
     <div class="settings-container">
       <div class="settings-card">
@@ -55,7 +53,7 @@
       <div class="settings-card">
         <h3>&#84;&#97;&#98;&#32;&#67;&#108;&#111;&#97;&#107;&#101;&#114;</h3>
         <p>Change the title and icon of the page.</p>
-        <select id="dropdown" onchange="handleDropdownChange(this)">
+        <select id="cloak-dropdown">
           <option value="Classroom">Default</option>
           <option value="Clever">Clever</option>
           <option value="Canvas">Canvas</option>
@@ -140,26 +138,80 @@
           <option value="Dictionary">Dictionary.com</option>
           <option value="Thesaurus">Thesaurus.com</option>
         </select>
+        <input class="key-form" type="text" id="custom-cloak-name" placeholder="Custom tab name (optional)" />
+        <input class="key-form" type="text" id="custom-cloak-icon" placeholder="Custom icon URL (optional)" />
         <div id="buttonLayer">
-          <button class="key-button" value="Save" onclick="CustomIcon(); CustomName(); redirectToMainDomain();">
-            Save
-          </button>
-          <button class="key-button" value="Reset" onclick="ResetCustomCloak(); redirectToMainDomain();">
-            Reset Cloak
-          </button>
+          <button class="key-button" id="cloak-save-btn">Save</button>
+          <button class="key-button" id="cloak-reset-btn">Reset Cloak</button>
         </div>
       </div>
       <div class="settings-card">
-        <h3>Set Background Image</h3>
-        <p>Change the site's background image.</p>
-        <input class="key-form" type="text" id="background-input" placeholder="Enter image URL" />
-        <button class="key-button" id="save-button">Save</button>
-        <button class="key-button" id="reset-button">Reset</button>
+        <h3>Visual Customization</h3>
+        <p>Customize the look and feel of the site</p>
+
+        <label>Theme</label>
+        <select id="theme-dropdown" class="td">
+          <optgroup label="Our Themes">
+            <option value="d">Default</option>
+            <option value="light">Light</option>
+            <option value="oled">Black</option>
+            <option value="sky">Sky</option>
+            <option value="tokyoNight">Tokyo Night</option>
+            <option value="nord">Nord</option>
+            <option value="rosePine">Ros&eacute; Pine</option>
+          </optgroup>
+          <optgroup label="More Themes">
+            <option value="gruvbox">Gruvbox</option>
+            <option value="gruvboxLight">Gruvbox Light</option>
+            <option value="everforest">Everforest</option>
+            <option value="monokai">Monokai</option>
+            <option value="oneDark">One Dark</option>
+            <option value="solarized">Solarized</option>
+            <option value="solarizedLight">Solarized Light</option>
+            <option value="synthwave">Synthwave '84</option>
+          </optgroup>
+          <optgroup label="Catppuccin Themes">
+            <option value="catppuccinMocha">Mocha</option>
+            <option value="catppuccinMacchiato">Macchiato</option>
+            <option value="catppuccinFrappe">Frappe</option>
+            <option value="catppuccinLatte">Latte</option>
+          </optgroup>
+        </select>
+
+        <label>Background</label>
+        <select id="background-dropdown">
+          <option value="default">Default</option>
+          <option value="none">None</option>
+          <option value="custom">Custom</option>
+        </select>
+        <div id="background-custom-row" style="display:none;">
+          <input class="key-form" type="text" id="background-input" placeholder="Enter image URL" />
+          <button class="key-button" id="save-button">Save</button>
+        </div>
+
+        <label>Background Particles</label>
+        <select id="particles-dropdown">
+          <option value="off">Off</option>
+          <option value="on">Stars</option>
+        </select>
+
+        <label>Cursor Effect</label>
+        <select id="pointer-dropdown">
+          <option value="default">Default</option>
+          <option value="rainbow-trail">Rainbow Trail</option>
+          <option value="rainbow-stars">Rainbow Stars</option>
+          <option value="red-circle">Red Circle</option>
+          <option value="white-orbs">White Orbs</option>
+          <option value="blue-orbs">Blue Orbs</option>
+          <option value="the-sims">The Sims</option>
+          <option value="curly-cursor">Curly Cursor</option>
+        </select>
       </div>
+
       <div class="settings-card">
         <h3>Search Engine</h3>
         <p>Change the search engine when searching.</p>
-        <select title="engine" id="engine" onchange="EngineChange(this)">
+        <select title="engine" id="engine" onchange="changeEngine(this)">
           <option value="Brave">Brave (Default)</option>
           <option value="Google">Google</option>
           <option value="Bing">Bing</option>
@@ -169,9 +221,7 @@
           <option value="Ecosia">Ecosia</option>
         </select>
         <input class="key-form" type="text" id="engine-form" placeholder="Change Search Engine" name="engine" />
-        <button class="key-button" value="Save" onclick="SaveEngine();">
-          Save
-        </button>
+        <button class="key-button" id="engine-save-btn">Save</button>
       </div>
       <div class="settings-card">
         <h3>Choose your <an>Pro</an>xy</h3>
@@ -179,37 +229,21 @@
           Choose the <an>pro</an>xy you want to use.
         </p>
         <select id="pChange">
-          <option value="sj">Scram<an>jet</an> (Default)</option>
-          <option value="uv">Ultra<an>vio</an>let (Legacy)</option>
-          <option value="dy">Dynamic (Doesn't work in about:blank)</option>
+          <option value="sj">Scramjet (Default)</option>
+          <option value="uv">Ultraviolet</option>
         </select>
-      </div>
-      <div class="settings-card">
-        <h3>Particles</h3>
-        <p>
-          Add the particles that are from the previous version to the new
-          site.
-        </p>
-        <label class="switch">
-          <input type="checkbox" class="slider-checkbox" id="2" />
-          <span class="slider-round"></span>
-        </label>
-      </div>
-      <div class="settings-card">
-        <h3>Themes!</h3>
-        <p>Pick from a variety of themes to customize your experience.</p>
-        <select placeholder="Solid Color Themes" id="dropdown" class="td" onchange="themeChange(this)">
-          <option disabled selected>Solid Color Themes</option>
-          <option value="d">Default</option>
-          <option value="Inverted">Inverted</option>
-          <option value="sky">Sky</option>
-          <option disabled selected>Catppuccin Themes</option>
-          <option value="catppuccinMocha">Mocha</option>
-          <option value="catppuccinMacchiato">Macchiato</option>
-          <option value="catppuccinFrappe">Frappe</option>
-          <option value="catppuccinLatte">Latte</option>
-          <option disabled selected>Custom Themes</option>
-        </select>
+
+        <div id="transport-row" style="display:none;">
+          <label>Transport</label>
+          <select id="transport-dropdown">
+            <option value="epoxy">Epoxy (Default)</option>
+            <option value="libcurl">Libcurl</option>
+          </select>
+
+          <label>Wisp Server</label>
+          <input class="key-form" type="text" id="wisp-input" placeholder="wss://your-server/wisp/ (blank = default)" />
+          <button class="key-button" id="wisp-save-btn">Save</button>
+        </div>
       </div>
       <div class="settings-card">
         <h3>Save Data Management</h3>
@@ -223,8 +257,8 @@
       </div>
       <div class="settings-card">
         <h3>Information</h3>
-        <p>Version: v5.2.6</p>
-        <p id="last-updated">Last Updated: October 2nd, 2024</p>
+        <p>Version: <span id="app-version">{{VERSION}}</span></p>
+        <p>Last Updated: <span id="last-updated">{{LAST_UPDATED}}</span></p>
         <p>
           Questions? Join our
           <a href="https://discord.gg/interstellar">Discord community</a>,
@@ -235,18 +269,7 @@
       </div>
     </div>
   </div>
-  <script>
-    window.addEventListener("load", () => {
-      navigator.serviceWorker.register("../sw.js?v=2025-04-15", {
-        scope: "/a/",
-      });
-    });
-  </script>
-  <script src="/assets/languagearts/sj.all.js?v=2025-04-15"></script>
-  <script src="/assets/js/sj-tp.js?v=2025-04-15"></script>
-  <script src="/assets/js/mg-pxy.js"></script>
-  <script src="/assets/js/m1.js"></script>
-  <script src="/assets/js/s1.js"></script>
+  <script src="/assets/js/settings.js"></script>
   <!-- DO NOT REMOVE-->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ"></script>
   <script>

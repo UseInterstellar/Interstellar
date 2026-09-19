@@ -1,0 +1,42 @@
+/* Tokyo Night */
+:root {
+   --background: #1a1b26;
+   --surface: #16161e;
+   --surface-card: #16161e;
+   --surface-tile: #13141c;
+   --surface-raised: #292e42;
+   --surface-overlay: #292e42;
+   --surface-input: #292e42;
+   --surface-button: #292e42;
+   --surface-button-hover: #3b4261;
+   --surface-hover: #3b4261;
+   --surface-active: #3b4261;
+   --surface-nav: rgba(22, 22, 30, 0.5);
+   --surface-nav-active: rgba(41, 46, 66, 0.5);
+
+   --border: rgba(192, 202, 245, 0.08);
+   --border-subtle: rgba(192, 202, 245, 0.04);
+   --border-strong: rgba(192, 202, 245, 0.16);
+
+   --text: #c0caf5;
+   --text-muted: #a9b1d6;
+   --text-faint: #565f89;
+
+   --accent: #7aa2f7;
+   --accent-hover: #7dcfff;
+   --accent-text: #1a1b26;
+
+   --success: #9ece6a;
+   --warning: #e0af68;
+   --danger: #f7768e;
+
+   --toggle-on: var(--success);
+   --toggle-off: #3b4261;
+
+   --tab: #16161e;
+   --tab-active: #292e42;
+   --tab-hover: #292e42;
+   --tab-border: transparent;
+
+   --background-image: var(--background);
+}

@@ -1,0 +1,241 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+body {
+   font-family: "Inter", sans-serif;
+   text-decoration: none;
+   margin: 0;
+   overflow-x: hidden;
+   overflow-y: hidden;
+   background: var(--background);
+   color: var(--text);
+}
+
+.browser {
+   padding: 1rem;
+   transition: transform var(--transition-slow);
+   border-radius: 0 10px 10px 0;
+   transform: translateX(0);
+   width: 100vw;
+   height: 0.5vw;
+   display: flex;
+   align-items: center;
+}
+
+.close-tab {
+   border: none;
+   background: none;
+   font-size: 12px;
+   color: var(--text);
+   cursor: pointer;
+   transition: color var(--transition);
+   width: 20px;
+}
+
+.close-tab:hover {
+   color: var(--text);
+}
+
+.browser-bar {
+   left: 0;
+   right: 0;
+   height: 2.5em;
+   padding: 0 25px;
+   background: var(--background);
+   box-sizing: border-box;
+   transition: var(--transition-slow);
+   z-index: 100;
+   width: 100vw;
+   position: fixed;
+}
+
+.browser-button {
+   border-radius: var(--radius-md);
+   color: var(--text);
+   background: none;
+   height: 3em;
+   border: none;
+   right: 10px;
+   top: auto;
+   box-sizing: border-box;
+   margin-right: 10px;
+   transition: var(--transition);
+   margin-top: 0 auto;
+   margin-bottom: 0 auto;
+}
+
+.browser-button:hover {
+   transform: scale(1.3);
+   cursor: pointer;
+}
+
+.nav-btn-left {
+   float: left;
+}
+
+.browser-button-right {
+   float: right;
+}
+
+.browser-container {
+   min-width: 5vw;
+   min-height: 10vh;
+   display: inline;
+}
+
+.browser-left {
+   position: absolute;
+   top: 50%;
+   transform: translateY(-50%);
+   left: 1%;
+   width: 80%;
+}
+
+.browser-right {
+   position: absolute;
+   top: 50%;
+   transform: translateY(-50%);
+   right: 1%;
+   width: 20%;
+}
+
+.browser-right .nav-btn:hover {
+   text-transform: uppercase;
+   cursor: pointer;
+   font-weight: 800;
+   font-family: "Inter", sans-serif;
+   font-style: normal;
+   font-size: 3vw;
+   transform: translateX(-20%);
+}
+
+.browser-right .nav-btn:hover {
+   text-transform: uppercase;
+   cursor: pointer;
+   font-weight: 800;
+   font-family: "Inter", sans-serif;
+   font-style: normal;
+   font-size: 3vh;
+   transform: translateX(-20%);
+}
+
+.fullscreen .browser-bar {
+   display: none;
+}
+
+.fullscreen #ifra {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+}
+
+.bar {
+   background: none;
+   border: none;
+   color: var(--text);
+   width: 60vw;
+   height: 30px;
+   border-radius: var(--radius-sm);
+   margin: 0 auto;
+   transition: var(--transition);
+}
+
+.bar:focus {
+   background: var(--surface-input);
+   box-shadow: none;
+   outline: none;
+   color: var(--text);
+   transition: var(--transition);
+}
+
+.browser-post {
+   padding: none;
+   float: right;
+   margin-top: 0em;
+   color: var(--text);
+   border-radius: var(--radius-sm);
+}
+
+.overlay {
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   display: none;
+}
+
+h1 {
+   text-align: center;
+   color: var(--text);
+   font-size: 50px;
+   white-space: nowrap;
+}
+
+p {
+   text-align: center;
+   color: var(--text);
+   font-size: 25px;
+}
+
+.frame-container iframe {
+   display: none;
+}
+
+.frame-container iframe.active {
+   display: block;
+}
+
+#add-tab {
+   padding: 0.5rem;
+   cursor: pointer;
+   background-color: var(--tab);
+   color: var(--text);
+   border: 1px solid var(--border);
+   border-radius: var(--radius-md);
+   margin-right: 0.5rem;
+   transition: var(--transition);
+}
+
+#add-tab:hover {
+   background-color: var(--tab-hover);
+   border-color: var(--border-strong);
+}
+
+ul {
+   list-style-type: none;
+   padding: 0;
+   display: flex;
+}
+
+li {
+   padding: 0.4rem;
+   background-color: var(--tab);
+   margin-right: 0.5rem;
+   cursor: pointer;
+   border: 1px solid var(--border);
+   border-radius: var(--radius-md);
+   transition: var(--transition);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+li.active {
+   background-color: var(--tab-active);
+   border-color: var(--border-strong);
+}
+
+li:hover {
+   background-color: var(--tab-hover);
+}
+
+iframe {
+   position: absolute;
+   width: 100%;
+   height: 90%;
+   border: none;
+   left: 0;
+   top: 10%;
+}

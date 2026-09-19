@@ -1,0 +1,42 @@
+/* Nord */
+:root {
+   --background: #242933;
+   --surface: #2e3440;
+   --surface-card: #2e3440;
+   --surface-tile: #2e3440;
+   --surface-raised: #3b4252;
+   --surface-overlay: #3b4252;
+   --surface-input: #3b4252;
+   --surface-button: #3b4252;
+   --surface-button-hover: #434c5e;
+   --surface-hover: #434c5e;
+   --surface-active: #434c5e;
+   --surface-nav: rgba(36, 41, 51, 0.5);
+   --surface-nav-active: rgba(59, 66, 82, 0.5);
+
+   --border: rgba(236, 239, 244, 0.09);
+   --border-subtle: rgba(236, 239, 244, 0.05);
+   --border-strong: rgba(236, 239, 244, 0.18);
+
+   --text: #eceff4;
+   --text-muted: #d8dee9;
+   --text-faint: #7b88a1;
+
+   --accent: #88c0d0;
+   --accent-hover: #8fbcbb;
+   --accent-text: #2e3440;
+
+   --success: #7bc96f;
+   --warning: #ebcb8b;
+   --danger: #bf616a;
+
+   --toggle-on: var(--success);
+   --toggle-off: #4c566a;
+
+   --tab: #2e3440;
+   --tab-active: #434c5e;
+   --tab-hover: #3b4252;
+   --tab-border: transparent;
+
+   --background-image: var(--background);
+}

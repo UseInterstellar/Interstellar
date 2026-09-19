@@ -1,0 +1,42 @@
+/* Monokai */
+:root {
+   --background: #272822;
+   --surface: #22231d;
+   --surface-card: #22231d;
+   --surface-tile: #2e2f28;
+   --surface-raised: #3e3d32;
+   --surface-overlay: #3e3d32;
+   --surface-input: #3e3d32;
+   --surface-button: #3e3d32;
+   --surface-button-hover: #49483e;
+   --surface-hover: #49483e;
+   --surface-active: #49483e;
+   --surface-nav: rgba(34, 35, 29, 0.5);
+   --surface-nav-active: rgba(62, 61, 50, 0.5);
+
+   --border: rgba(248, 248, 242, 0.08);
+   --border-subtle: rgba(248, 248, 242, 0.04);
+   --border-strong: rgba(248, 248, 242, 0.16);
+
+   --text: #f8f8f2;
+   --text-muted: #bcbcae;
+   --text-faint: #75715e;
+
+   --accent: #a6e22e;
+   --accent-hover: #66d9ef;
+   --accent-text: #272822;
+
+   --success: #a6e22e;
+   --warning: #e6db74;
+   --danger: #f92672;
+
+   --toggle-on: var(--success);
+   --toggle-off: #49483e;
+
+   --tab: #22231d;
+   --tab-active: #49483e;
+   --tab-hover: #3e3d32;
+   --tab-border: transparent;
+
+   --background-image: var(--background);
+}

@@ -1,7 +1,7 @@
 body {
    background-color: var(--background-image);
    font-family: "Inter", sans-serif;
-   color: var(--text-primary);
+   color: var(--text);
    margin: 0;
    padding: 0;
    letter-spacing: 0px;
@@ -27,30 +27,50 @@ body {
 }
 
 .settings-card {
-   background-color: var(--background-settings);
-   border-radius: 10px;
+   background-color: var(--surface-card);
+   border: 1px solid var(--border);
+   border-radius: var(--radius-lg);
    padding: 20px;
-   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
    width: 400px;
-   transition: all 0.3s ease;
+   transition: var(--transition);
 }
 
 .settings-card:hover {
    transform: translatey(-5px);
-   box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+   border-color: var(--border-strong);
+   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.26);
 }
 
 .settings-card h3 {
    margin-top: 0;
-   color: var(--text-primary);
+   color: var(--text);
 }
 
 .settings-card p {
-   color: var(--text-placeholder);
+   color: var(--text-muted);
 }
 
 a {
-   color: var(--text-primary);
+   color: var(--text);
+}
+
+input {
+   padding: 15px;
+   border-radius: var(--radius-md);
+   background: var(--surface-input);
+   text-align: center;
+   font-size: 20px;
+   border: 1px solid var(--border);
+   outline: none;
+   color: var(--text);
+   transition: var(--transition);
+}
+
+input:hover,
+input:focus {
+   background: var(--surface-hover);
+   border-color: var(--border-strong);
 }
 
 .switch {
@@ -73,8 +93,8 @@ a {
    left: 0;
    right: 0;
    bottom: 0;
-   background-color: var(--slider-inactive-background);
-   transition: 0.4s;
+   background-color: var(--toggle-off);
+   transition: var(--transition);
    border-radius: 34px;
 }
 
@@ -85,52 +105,42 @@ a {
    width: 26px;
    left: 4px;
    bottom: 4px;
-   background-color: var(--text-primary);
-   transition: 0.4s;
+   background-color: var(--toggle-knob);
+   transition: var(--transition);
    border-radius: 50%;
 }
 
 input:checked + .slider-round {
-   background-color: var(--slider-active-background);
+   background-color: var(--toggle-on);
 }
 
 input:checked + .slider-round:before {
    transform: translateX(26px);
 }
 
-input {
-   padding: 15px;
-   border-radius: 10px;
-   background: var(--background-input);
-   text-align: center;
-   font-size: 20px;
-   border: none;
-   outline: none;
-   color: var(--text-primary);
-}
-
 .key-form {
    padding: 15px;
    width: 92.5%;
-   border-radius: 10px;
-   background: var(--background-buttons);
+   border-radius: var(--radius-md);
+   background: var(--surface-input);
    text-align: center;
    font-size: 20px;
-   border: none;
+   border: 1px solid var(--border);
    outline: none;
-   color: var(--text-primary);
+   color: var(--text);
    margin-top: 10px;
+   transition: var(--transition);
 }
 
 .key-button {
    cursor: pointer;
-   border: 2px;
+   border: 1px solid var(--border);
    font-size: 20px;
-   transition: 0.2s;
+   transition: var(--transition);
    margin-top: 10px;
-   background-color: var(--background-buttons);
-   border-radius: 10px;
-   color: var(--text-primary);
+   background-color: var(--surface-button);
+   border-radius: var(--radius-md);
+   color: var(--text);
    height: 50px;
    width: 50%;
    padding: 10px;
@@ -139,27 +149,46 @@ input {
 
 button {
    cursor: pointer;
-   border: 2px;
-   transition: 0.2s;
+   border: 1px solid var(--border);
+   transition: var(--transition);
    margin-top: 10px;
-   background-color: var(--background-buttons);
-   border-radius: 10px;
-   color: var(--text-primary);
+   background-color: var(--surface-button);
+   border-radius: var(--radius-md);
+   color: var(--text);
    height: 50px;
    width: 35%;
    padding: 10px;
    text-align: center;
 }
 
+.key-button:hover,
+button:hover {
+   background-color: var(--surface-button-hover);
+   border-color: var(--border-strong);
+}
+
 select {
    padding: 15px;
    width: 100%;
-   border-radius: 10px;
-   background: var(--background-buttons);
-   color: var(--text-primary);
+   border-radius: var(--radius-md);
+   background: var(--surface-button);
+   color: var(--text);
    font-size: 20px;
-   border: 0px;
+   border: 1px solid var(--border);
    outline: none;
+   transition: var(--transition);
+}
+
+select:hover {
+   background: var(--surface-button-hover);
+   border-color: var(--border-strong);
+}
+
+.settings-card label:not(.switch) {
+   display: block;
+   margin-top: 10px;
+   margin-bottom: 4px;
+   color: var(--text);
 }
 
 #buttonLayer {
@@ -228,5 +257,5 @@ select {
 }
 
 #warning {
-   color: red;
+   color: var(--danger);
 }

@@ -1,5 +1,5 @@
 .error {
-   color: var(--text-primary);
+   color: var(--text);
    font-family: "Inter", sans-serif;
    font-weight: 900;
    top: 15%;
@@ -28,16 +28,16 @@
    margin-top: 0.5%;
    margin-bottom: 1%;
    font-weight: 900;
-   color: var(--text-dark);
+   color: var(--text-faint);
 }
 
 .error button {
    padding: 15px;
    border-radius: 5px;
-   background: var(--background-buttons);
+   background: var(--surface-button);
    color: inherit;
    font-size: 24px;
-   border: 2px solid var(--background-buttons);
+   border: 2px solid var(--surface-button);
    outline: none;
    margin-bottom: 10px;
    cursor: pointer;

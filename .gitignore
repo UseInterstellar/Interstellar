@@ -1,4 +1,7 @@
 node_modules
+dist
+build
+
 .idea
 .DS_Store
 .hintrc

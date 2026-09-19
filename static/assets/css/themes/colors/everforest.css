@@ -1,0 +1,42 @@
+/* Everforest */
+:root {
+   --background: #2d353b;
+   --surface: #343f44;
+   --surface-card: #343f44;
+   --surface-tile: #3d484d;
+   --surface-raised: #475258;
+   --surface-overlay: #3d484d;
+   --surface-input: #3d484d;
+   --surface-button: #3d484d;
+   --surface-button-hover: #475258;
+   --surface-hover: #475258;
+   --surface-active: #475258;
+   --surface-nav: rgba(45, 53, 59, 0.5);
+   --surface-nav-active: rgba(71, 82, 88, 0.5);
+
+   --border: rgba(211, 198, 170, 0.08);
+   --border-subtle: rgba(211, 198, 170, 0.04);
+   --border-strong: rgba(211, 198, 170, 0.16);
+
+   --text: #d3c6aa;
+   --text-muted: #9da9a0;
+   --text-faint: #7a8478;
+
+   --accent: #a7c080;
+   --accent-hover: #83c092;
+   --accent-text: #2d353b;
+
+   --success: #a7c080;
+   --warning: #dbbc7f;
+   --danger: #e67e80;
+
+   --toggle-on: var(--success);
+   --toggle-off: #475258;
+
+   --tab: #343f44;
+   --tab-active: #475258;
+   --tab-hover: #3d484d;
+   --tab-border: transparent;
+
+   --background-image: var(--background);
+}

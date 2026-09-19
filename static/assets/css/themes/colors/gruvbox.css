@@ -1,0 +1,42 @@
+/* Gruvbox */
+:root {
+   --background: #282828;
+   --surface: #32302f;
+   --surface-card: #32302f;
+   --surface-tile: #3c3836;
+   --surface-raised: #504945;
+   --surface-overlay: #3c3836;
+   --surface-input: #3c3836;
+   --surface-button: #3c3836;
+   --surface-button-hover: #504945;
+   --surface-hover: #504945;
+   --surface-active: #504945;
+   --surface-nav: rgba(29, 32, 33, 0.5);
+   --surface-nav-active: rgba(80, 73, 69, 0.5);
+
+   --border: rgba(235, 219, 178, 0.09);
+   --border-subtle: rgba(235, 219, 178, 0.04);
+   --border-strong: rgba(235, 219, 178, 0.16);
+
+   --text: #ebdbb2;
+   --text-muted: #a89984;
+   --text-faint: #928374;
+
+   --accent: #fe8019;
+   --accent-hover: #fabd2f;
+   --accent-text: #282828;
+
+   --success: #b8bb26;
+   --warning: #fabd2f;
+   --danger: #fb4934;
+
+   --toggle-on: var(--success);
+   --toggle-off: #504945;
+
+   --tab: #32302f;
+   --tab-active: #504945;
+   --tab-hover: #3c3836;
+   --tab-border: transparent;
+
+   --background-image: var(--background);
+}

@@ -1,13 +1,14 @@
 {
   "name": "interstellar",
-  "version": "5.2.5",
+  "version": "6.0.0",
   "type": "module",
   "engines": {
     "npm": ">=7.0.0",
     "node": ">=16.0.0"
   },
   "scripts": {
-    "start": "node index.js",
+    "start": "node src/server.js",
+    "build": "node src/build.js",
     "format": "pnpm biome format --write .",
     "precommit": "pnpm run format && pnpm biome check --write .",
     "lint": "biome lint --write ."
@@ -15,22 +16,36 @@
   "author": "InterstellarNetwork",
   "license": "GPL-3.0-or-later",
   "dependencies": {
-    "@mercuryworkshop/bare-mux": "^2.1.8",
+    "@mercuryworkshop/bare-mux": "^2.1.9",
     "@mercuryworkshop/epoxy-transport": "2.1.28",
-    "@mercuryworkshop/scramjet": "^1.0.2",
+    "@mercuryworkshop/libcurl-transport": "^1.5.2",
+    "@mercuryworkshop/scramjet": "^1.1.0",
     "@mercuryworkshop/wisp-js": "^0.4.1",
-    "@nebula-services/bare-server-node": "^2.0.4",
+    "@titaniumnetwork-dev/ultraviolet": "^3.2.10",
     "chalk": "^5.4.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^17.2.0",
     "express": "^4.21.2",
     "express-basic-auth": "^1.2.1",
+    "express-rate-limit": "^7.5.0",
     "mime": "^4.1.0",
     "node-fetch": "^3.3.2"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.2.2"
+    "@biomejs/biome": "2.2.2",
+    "javascript-obfuscator": "^4.1.1",
+    "terser": "^5.36.0"
   },
-  "packageManager": "pnpm@10.33.0+sha512.10568bb4a6afb58c9eb3630da90cc9516417abebd3fabbe6739f0ae795728da1491e9db5a544c76ad8eb7570f5c4bb3d6c637b2cb41bfdcdb47fa823c8649319"
+  "packageManager": "pnpm@10.33.0+sha512.10568bb4a6afb58c9eb3630da90cc9516417abebd3fabbe6739f0ae795728da1491e9db5a544c76ad8eb7570f5c4bb3d6c637b2cb41bfdcdb47fa823c8649319",
+  "pnpm": {
+    "overrides": {
+      "qs@>=6.7.0 <=6.14.1": ">=6.14.2",
+      "qs@<6.14.1": ">=6.14.1",
+      "uuid@<14.0.0": ">=14.0.0"
+    },
+    "patchedDependencies": {
+      "@mercuryworkshop/bare-mux@2.1.9": "patches/@mercuryworkshop__bare-mux@2.1.9.patch"
+    }
+  }
 }

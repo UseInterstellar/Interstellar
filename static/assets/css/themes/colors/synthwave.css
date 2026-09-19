@@ -1,0 +1,42 @@
+/* Synthwave '84 */
+:root {
+   --background: #241b2f;
+   --surface: #2a2139;
+   --surface-card: #2a2139;
+   --surface-tile: #34294a;
+   --surface-raised: #3b2f52;
+   --surface-overlay: #34294a;
+   --surface-input: #34294a;
+   --surface-button: #34294a;
+   --surface-button-hover: #443860;
+   --surface-hover: #443860;
+   --surface-active: #443860;
+   --surface-nav: rgba(26, 21, 39, 0.5);
+   --surface-nav-active: rgba(59, 47, 82, 0.5);
+
+   --border: rgba(255, 126, 219, 0.12);
+   --border-subtle: rgba(255, 126, 219, 0.06);
+   --border-strong: rgba(255, 126, 219, 0.22);
+
+   --text: #ffffff;
+   --text-muted: #c9b8e0;
+   --text-faint: #7a6b96;
+
+   --accent: #ff7edb;
+   --accent-hover: #36f9f6;
+   --accent-text: #241b2f;
+
+   --success: #72f1b8;
+   --warning: #fede5d;
+   --danger: #fe4450;
+
+   --toggle-on: var(--success);
+   --toggle-off: #443860;
+
+   --tab: #2a2139;
+   --tab-active: #443860;
+   --tab-hover: #34294a;
+   --tab-border: transparent;
+
+   --background-image: var(--background);
+}

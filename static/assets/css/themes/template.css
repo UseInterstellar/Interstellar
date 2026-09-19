@@ -1,19 +1,50 @@
+/* Theme template — copy, rename, set the values. Only override tokens here, no element rules. */
 :root {
-   /* Background Variables */
-   --background-color: #ddd; /* Main Background Color */
-   --background-input: #cccccc; /* Input Field Background Color */
-   --background-column: #cacaca; /* Background for Apps Container */
-   --background-settings: #d5d5d5; /* Settings Card Background */
-   --background-buttons: #ccc; /* Button Background Color */
-   --tab-active-background: #bbb; /* Accent Color for Tabs */
-   --tab-inactive-background: ; /* Background Color for Tabs Not In Use */
-   --slider-active-background: #b3b0af; /* Active Slider Background Color */
-   --slider-inactive-background: #333; /* Slider Background Color */
-   --nav-image: url("/./assets/media/favicon/main-inverted.png"); /* Nav Logo */
-   --save-button: #a6d189; /* Save Button, Normally Green */
-   /* Text Variables */
-   --text-primary: #000; /* Primary Text Color */
-   --text-dark: #aaa; /* Dark Text Color for Error Page, Scrollbar, and Particles */
-   --text-placeholder: #555; /* Placeholder Text Color */
-   /* Other Variables */
+   /* Surfaces */
+   --background: #ddd;
+   --surface: #d5d5d5;
+   --surface-card: #d5d5d5;
+   --surface-tile: #cacaca;
+   --surface-raised: #c2c2c2;
+   --surface-overlay: #cacaca;
+   --surface-input: #cacaca;
+   --surface-button: #cccccc;
+   --surface-button-hover: #bebebe;
+   --surface-hover: #c2c2c2;
+   --surface-active: #bbbbbb;
+   --surface-nav: rgba(0, 0, 0, 0.03);
+   --surface-nav-active: rgba(0, 0, 0, 0.06);
+
+   /* Borders */
+   --border: rgba(0, 0, 0, 0.1);
+   --border-subtle: rgba(0, 0, 0, 0.05);
+   --border-strong: rgba(0, 0, 0, 0.18);
+
+   /* Text */
+   --text: #000;
+   --text-muted: #555;
+   --text-faint: #888;
+
+   /* Accent */
+   --accent: #000;
+   --accent-hover: #333;
+   --accent-text: #fff;
+
+   /* Status */
+   --success: #2e9e4f;
+   --warning: #b8860b;
+   --danger: #c0392b;
+
+   /* Toggle */
+   --toggle-on: var(--success);
+   --toggle-off: #999;
+
+   /* Tabs */
+   --tab: #d5d5d5;
+   --tab-active: #bbb;
+   --tab-hover: #c2c2c2;
+   --tab-border: transparent;
+
+   /* Assets */
+   --background-image: var(--background);
 }

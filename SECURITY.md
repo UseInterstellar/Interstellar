@@ -6,10 +6,10 @@ Only current versions of the site are being updated, if you are using an older v
 
 | Version | Supported |
 | ------- | --------- |
-| V5.2.x  | ✔️        |
-| V5.1.x  | :x:       |
-| V5.0.x  | :x:       |
-| V4.x.x  | :x:       |
+| V5.4.x  | ✔️        |
+| V5.3.x  | :x:       |
+| V5.2.x  | :x:       |
+| < V5.0  | :x:       |
 | < V4.0  | :x:       |
 
 ## Reporting a Vulnerability

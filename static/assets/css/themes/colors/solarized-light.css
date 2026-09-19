@@ -1,0 +1,42 @@
+/* Solarized Light */
+:root {
+   --background: #fdf6e3;
+   --surface: #f7f1de;
+   --surface-card: #f7f1de;
+   --surface-tile: #eee8d5;
+   --surface-raised: #e3ddca;
+   --surface-overlay: #eee8d5;
+   --surface-input: #eee8d5;
+   --surface-button: #eee8d5;
+   --surface-button-hover: #e3ddca;
+   --surface-hover: #e3ddca;
+   --surface-active: #e3ddca;
+   --surface-nav: rgba(0, 43, 54, 0.04);
+   --surface-nav-active: rgba(0, 43, 54, 0.08);
+
+   --border: rgba(88, 110, 117, 0.15);
+   --border-subtle: rgba(88, 110, 117, 0.08);
+   --border-strong: rgba(88, 110, 117, 0.25);
+
+   --text: #586e75;
+   --text-muted: #657b83;
+   --text-faint: #93a1a1;
+
+   --accent: #268bd2;
+   --accent-hover: #2aa198;
+   --accent-text: #fdf6e3;
+
+   --success: #859900;
+   --warning: #b58900;
+   --danger: #dc322f;
+
+   --toggle-on: var(--success);
+   --toggle-off: #c9c0a8;
+
+   --tab: #f7f1de;
+   --tab-active: #e3ddca;
+   --tab-hover: #eee8d5;
+   --tab-border: transparent;
+
+   --background-image: var(--background);
+}

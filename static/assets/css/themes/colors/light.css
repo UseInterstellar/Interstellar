@@ -1,0 +1,42 @@
+/* Light */
+:root {
+   --background: #dddddd;
+   --surface: #d5d5d5;
+   --surface-card: #d5d5d5;
+   --surface-tile: #cacaca;
+   --surface-raised: #c2c2c2;
+   --surface-overlay: #cacaca;
+   --surface-input: #cacaca;
+   --surface-button: #cccccc;
+   --surface-button-hover: #bebebe;
+   --surface-hover: #c2c2c2;
+   --surface-active: #bbbbbb;
+   --surface-nav: rgba(0, 0, 0, 0.03);
+   --surface-nav-active: rgba(0, 0, 0, 0.06);
+
+   --border: rgba(0, 0, 0, 0.1);
+   --border-subtle: rgba(0, 0, 0, 0.05);
+   --border-strong: rgba(0, 0, 0, 0.18);
+
+   --text: #000000;
+   --text-muted: #555555;
+   --text-faint: #888888;
+
+   --accent: #000000;
+   --accent-hover: #333333;
+   --accent-text: #ffffff;
+
+   --success: #2e9e4f;
+   --warning: #b8860b;
+   --danger: #c0392b;
+
+   --toggle-on: var(--success);
+   --toggle-off: #999999;
+
+   --tab: #d5d5d5;
+   --tab-active: #bbbbbb;
+   --tab-hover: #c2c2c2;
+   --tab-border: transparent;
+
+   --background-image: var(--background);
+}

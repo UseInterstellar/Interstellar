@@ -1,17 +1,27 @@
-importScripts("/assets/history/config.js?v=2025-04-15");
-importScripts("/assets/history/worker.js?v=2025-04-15");
-importScripts("/assets/mathematics/bundle.js?v=2025-04-15");
-importScripts("/assets/mathematics/config.js?v=2025-04-15");
-importScripts(__uv$config.sw || "/assets/mathematics/sw.js?v=2025-04-15");
-importScripts("/assets/languagearts/sj.all.js?v=2025-04-15");
+importScripts("/assets/ultraviolet/uv.bundle.js");
+importScripts("/assets/ultraviolet/uv.config.js");
+importScripts(__uv$config.sw || "/assets/ultraviolet/uv.sw.js");
+importScripts("/assets/scramjet/scramjet.all.js");
 const { ScramjetServiceWorker } = $scramjetLoadWorker();
 
 const uv = new UVServiceWorker();
-const dynamic = new Dynamic();
 const sj = new ScramjetServiceWorker();
 
 const userKey = new URL(location).searchParams.get("userkey");
-self.dynamic = dynamic;
+
+self.addEventListener("install", event => {
+  event.waitUntil(self.skipWaiting());
+});
+
+self.addEventListener("activate", event => {
+  event.waitUntil(self.clients.claim());
+});
+
+self.addEventListener("message", event => {
+  if (event.data?.type === "SKIP_WAITING") {
+    self.skipWaiting();
+  }
+});
 
 self.addEventListener("fetch", event => {
   event.respondWith(
@@ -22,11 +32,7 @@ self.addEventListener("fetch", event => {
         return await sj.fetch(event);
       }
 
-      if (await dynamic.route(event)) {
-        return await dynamic.fetch(event);
-      }
-
-      if (event.request.url.startsWith(`${location.origin}/a/`)) {
+      if (event.request.url.startsWith(`${location.origin}/uv/`)) {
         return await uv.fetch(event);
       }
 

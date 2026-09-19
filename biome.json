@@ -1,13 +1,17 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.2.2/schema.json",
   "files": {
-    "includes": ["**", "!**/static/assets/history", "!**/static/assets/mathematics", "!**/static/assets/json/**/*.min.json", "!**/Masqr.js", "!**/node_modules", "!**/package-lock.json", "!**/package.json", "!**/*.md", "!**/bun.lockb", "!**/Failed.html"]
+    "includes": ["**", "!**/static/assets/ultraviolet", "!**/static/assets/json/**/*.min.json", "!**/static/assets/css/global.css", "!**/node_modules", "!**/package-lock.json", "!**/package.json", "!**/*.md", "!**/bun.lockb"]
   },
   "assist": { "actions": { "source": { "organizeImports": "on" } } },
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
+      "recommended": true,
+      "correctness": {
+        "noUnusedVariables": "off",
+        "noUnusedFunctionParameters": "off"
+      }
     },
     "includes": ["**", "!**/pnpm-lock.yaml", "!**/dist/**", "!**/node_modules/**", "!**/assets/bundled/**", "!**/*.min.json", "!**/.astro/**"]
   },

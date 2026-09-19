@@ -6,7 +6,7 @@
       "opsz" 48;
 }
 
-.f-nav #icon-container {
+.nav-bar #icon-container {
    display: flex;
    align-items: center;
 }
@@ -17,13 +17,13 @@ img {
    padding-top: 5px;
 }
 
-.f-nav-container {
+.nav-bar-container {
    min-width: 5vw;
    min-height: 10vh;
    display: inline;
 }
 
-.f-nav {
+.nav-bar {
    top: 0;
    letter-spacing: 2px;
    font-size: 22px;
@@ -32,81 +32,85 @@ img {
    min-height: 10vh;
    padding: 0 25px;
    box-sizing: border-box;
-   background-color: var(--background-nav);
-   box-shadow: 0 0 15px 2px rgba(0, 0, 0, 0.5);
+   background-color: var(--surface-nav);
+   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
    -webkit-backdrop-filter: var(--backdrop-filter);
    backdrop-filter: var(--backdrop-filter);
-   transition: 0.35s ease;
-   border-radius: 15px;
+   transition: var(--transition-slow);
+   border-radius: var(--radius-lg);
    width: fill;
    margin: 15px;
    z-index: 100;
    position: fixed;
 }
 
-.f-nav .icon:hover {
-   transform: translateY(-15%) scale(1.03);
-   font-weight: 800;
+.nav-bar .icon:hover {
+   filter: drop-shadow(0 0 8px var(--accent));
+   transform: translateY(-2px);
 }
 
-.f-nav .icon {
+.nav-bar .icon {
    position: absolute;
    float: left;
    text-transform: uppercase;
    font-size: 30px;
    font-family: "Inter", sans-serif;
    cursor: pointer;
-   color: var(--text-primary);
+   color: var(--text);
    font-weight: 600;
    margin-left: 5px;
    font-style: normal;
    text-decoration: none;
-   transition: all 0.2s ease;
+   transition: var(--transition);
    height: 5vh;
    top: 18%;
 }
 
-.f-nav-right {
+.nav-bar-right {
    position: absolute;
    top: 50%;
    transform: translateY(-50%);
    text-transform: uppercase;
    font-size: 18px;
-   color: var(--text-primary);
+   color: var(--text);
    font-weight: 600;
    right: 2%;
 }
 
-.f-nav-right .navbar-link {
+.navbar-link {
+   margin-right: 5px;
+}
+
+.nav-bar-right .navbar-link {
    margin-left: 10px;
    text-transform: uppercase;
    cursor: pointer;
-   color: var(--text-primary);
+   color: var(--accent);
    font-weight: 800;
    right: 2%;
    font-family: "Inter", sans-serif;
    font-style: normal;
    text-decoration: none;
-   transition: all 0.2s ease;
+   transition: var(--transition);
    transform: translateX(0%);
 }
 
 @media (orientation: portrait) {
-   .f-nav-right .navbar-link {
+   .nav-bar-right .navbar-link {
       margin-left: 10px;
       text-transform: uppercase;
       font-size: 2.5vw;
       cursor: pointer;
-      color: var(--text-primary);
+      color: var(--accent);
       font-weight: 800;
       right: 2%;
       font-family: "Inter", sans-serif;
       font-style: normal;
       text-decoration: none;
-      transition: all 0.2s ease;
+      transition: var(--transition);
       transform: translateX(0%);
    }
-   .f-nav-right .navbar-link:hover {
+   .nav-bar-right .navbar-link:hover {
       text-transform: uppercase;
       cursor: pointer;
       font-weight: 800;
@@ -114,10 +118,11 @@ img {
       font-style: normal;
       font-size: 3vw;
       transform: translateX(-20%);
+      color: var(--accent-hover);
    }
 }
 
-.f-nav-right .navbar-link:hover {
+.nav-bar-right .navbar-link:hover {
    text-transform: uppercase;
    cursor: pointer;
    font-weight: 800;
@@ -125,15 +130,12 @@ img {
    font-style: normal;
    font-size: 3vh;
    transform: translateX(-20%);
+   color: var(--accent-hover);
 }
 
 .navbar-icon {
    margin-right: 5px;
-   transition: all 0.2s ease;
-}
-
-.navbar-link {
-   margin-right: 5px;
+   transition: var(--transition);
 }
 
 .navbar-link:hover > .settings-icon {
@@ -142,13 +144,13 @@ img {
 }
 
 @media (max-width: 768px) {
-   .f-nav-right .navbar-link an {
+   .nav-bar-right .navbar-link a {
       display: none;
    }
-   .f-nav-right .fa-solid {
+   .nav-bar-right .fa-solid {
       display: inline;
    }
-   .f-nav-right .navbar-link {
+   .nav-bar-right .navbar-link {
       font-size: 4.5vw;
    }
 }

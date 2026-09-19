@@ -1,0 +1,94 @@
+.center {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.title {
+   font-size: 10vh;
+   color: var(--text);
+   font-family: "Inter", sans-serif;
+   text-align: center;
+   text-transform: uppercase;
+   border-radius: 0px 0px 5px 5px;
+   margin-top: 30vh;
+   margin-bottom: 3.5vh;
+   line-height: 1.1;
+   transition: var(--transition-slow);
+   text-shadow: 2px 4px 6px rgb(0, 0, 0, 0.2);
+}
+
+.title:hover {
+   transform: translateY(-2px) scale(1.05);
+}
+
+@media (orientation: portrait) {
+   .title {
+      position: relative;
+      top: -10vw;
+      font-size: 10vw;
+      color: var(--text);
+      font-family: "Inter", sans-serif;
+      text-align: center;
+      text-transform: uppercase;
+      border-radius: 0px 0px 5px 5px;
+   }
+}
+
+.search-container {
+   display: flex;
+   width: 100%;
+   text-align: center;
+   justify-content: center;
+   align-items: center;
+}
+
+.truncate {
+   width: 50vw;
+   height: 5vh;
+   font-family: "Poppins", sans-serif;
+   font-size: 16px;
+   box-shadow: 0 0 15px 2px rgba(0, 0, 0, 0.2);
+   background: var(--surface-input);
+   -webkit-backdrop-filter: var(--backdrop-filter);
+   backdrop-filter: var(--backdrop-filter);
+}
+
+input {
+   padding: 20px;
+   width: 550px;
+   border-radius: var(--radius-md);
+   background: var(--surface-input);
+   text-align: center;
+   font-size: 24px;
+   border: 1px solid var(--border);
+   outline: none;
+   color: var(--text);
+   transition: var(--transition);
+}
+
+input:hover,
+input:focus {
+   background: var(--surface-hover);
+   border-color: var(--border-strong);
+}
+
+#splash {
+   color: var(--text-faint);
+   margin-bottom: 1em;
+   margin-top: -2em;
+   padding: 0;
+   font-family: "Poppins", sans-serif;
+   animation: splashSwitch 0.35s ease;
+}
+
+@keyframes splashSwitch {
+   from {
+      opacity: 0;
+      transform: translateY(6px);
+   }
+   to {
+      opacity: 1;
+      transform: translateY(0);
+   }
+}

@@ -21,7 +21,7 @@ Thank you for your interest in contributing to this repository! To ensure a smoo
 
 4. **Minifying JSON**
 
-   - Before finalizing your changes visit https://codebeautify.org/jsonminifier and compress your json and put it in the `.min.json` file. (Ex. If you are editing `a.json` you would put the minified code in `a.min.json`
+   - Before finalizing your changes visit https://codebeautify.org/jsonminifier and compress your json and put it in the `.min.json` file. (Ex. If you are editing `apps.json` you would put the minified code in `apps.min.json`
 
 5. **Test Your Changes:**
 
