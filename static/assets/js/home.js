@@ -61,15 +61,20 @@ const SplashT = [
 let SplashI = Math.floor(Math.random() * SplashT.length);
 const SplashE = document.getElementById("splash");
 
+const laceSplash = window.laceTitle || (s => s);
+function paintSplash() {
+  SplashE.innerText = laceSplash(SplashT[SplashI]);
+}
+
 function US() {
   SplashI = (SplashI + 1) % SplashT.length;
-  SplashE.innerText = SplashT[SplashI];
+  paintSplash();
   SplashE.style.animation = "none";
   void SplashE.offsetWidth;
   SplashE.style.animation = "";
 }
 
-SplashE.innerText = SplashT[SplashI];
+paintSplash();
 SplashE.addEventListener("click", US);
 
 function getRandomUrl() {
