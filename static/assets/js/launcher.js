@@ -17,10 +17,18 @@ function setInStorage(baseKey, value) {
   store.setRaw(getStorageKey(baseKey), value);
 }
 
+const ZERO_WIDTH = ["​", "‌", "‍", "⁠", "﻿"];
+const ZERO_WIDTH_RE = /​|‌|‍|‎|‏|⁠|﻿/g;
+
+function stripZeroWidth(text) {
+  return text.replace(ZERO_WIDTH_RE, "");
+}
+
 function createSpanElements(text) {
-  return text.split("").map(char => {
+  const points = Array.from(text);
+  return points.map((char, index) => {
     const span = document.createElement("span");
-    span.textContent = char;
+    span.textContent = index < points.length - 1 ? char + ZERO_WIDTH[Math.floor(Math.random() * ZERO_WIDTH.length)] : char;
     return span;
   });
 }
@@ -151,8 +159,8 @@ function togglePin(appIndex) {
     const nonPinnedContainer = document.querySelector(".apps");
     if (isCurrentlyPinned) {
       const unpinnedCards = Array.from(nonPinnedContainer.getElementsByClassName("column"));
-      const cardName = card.getElementsByTagName("p")[0].textContent.toLowerCase();
-      const insertBefore = unpinnedCards.find(c => c.getElementsByTagName("p")[0].textContent.toLowerCase() > cardName);
+      const cardName = stripZeroWidth(card.getElementsByTagName("p")[0].textContent).toLowerCase();
+      const insertBefore = unpinnedCards.find(c => stripZeroWidth(c.getElementsByTagName("p")[0].textContent).toLowerCase() > cardName);
       nonPinnedContainer.insertBefore(card, insertBefore ?? null);
     } else {
       pinnedContainer.appendChild(card);
@@ -344,7 +352,7 @@ function applyFilters() {
   const selectedCategories = Array.from(document.querySelectorAll("#category option:checked")).map(option => option.value);
 
   Array.from(document.getElementsByClassName("column")).forEach(card => {
-    const appName = card.getElementsByTagName("p")[0].textContent.toLowerCase();
+    const appName = stripZeroWidth(card.getElementsByTagName("p")[0].textContent).toLowerCase();
     const categories = card.getAttribute("data-category").split(" ");
 
     const matchesSearch = !searchTerm || appName.includes(searchTerm);
