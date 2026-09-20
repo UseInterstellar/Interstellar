@@ -10,7 +10,6 @@ if (!inFrame && !navigator.userAgent.includes("Firefox") && store.get("ab") === 
   const popup = open("about:blank", "_blank");
   setTimeout(() => {
     if (!popup || popup.closed) {
-      alert("Please allow popups for this site. Doing so will allow us to open the site in a about:blank tab and preventing this site from showing up in your history. You can turn this off in the site settings.");
     } else {
       const doc = popup.document;
       const iframe = doc.createElement("iframe");
@@ -49,7 +48,6 @@ if (!inFrame && !navigator.userAgent.includes("Firefox") && store.get("ab") === 
   }, 2000);
 }
 
-// Splash texts
 const SplashT = [
   "Over 8 Million Users since 2023",
   "Fastest growing proxy server",
@@ -69,7 +67,6 @@ const SplashE = document.getElementById("splash");
 function US() {
   SplashI = (SplashI + 1) % SplashT.length;
   SplashE.innerText = SplashT[SplashI];
-  // Re-trigger the switch animation
   SplashE.style.animation = "none";
   void SplashE.offsetWidth;
   SplashE.style.animation = "";
@@ -78,7 +75,6 @@ function US() {
 SplashE.innerText = SplashT[SplashI];
 SplashE.addEventListener("click", US);
 
-// Random URL
 function getRandomUrl() {
   const randomUrls = [
     "https://kahoot.it",
