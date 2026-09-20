@@ -88,14 +88,12 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("ab-settings-switch").checked = true;
   }
 
-  // Themes
   const themeDropdown = document.getElementById("theme-dropdown");
   themeDropdown.value = store.get("theme") || "d";
   themeDropdown.addEventListener("change", function () {
     themeChange(this);
   });
 
-  // Backgrounds
   const bgDropdown = document.getElementById("background-dropdown");
   const bgCustomRow = document.getElementById("background-custom-row");
   const bgInput = document.getElementById("background-input");
@@ -134,14 +132,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Background Particles
   const particlesDropdown = document.getElementById("particles-dropdown");
   particlesDropdown.value = store.get("particles") === "true" ? "on" : "off";
   particlesDropdown.addEventListener("change", function () {
     store.set("particles", this.value === "on" ? "true" : "false");
   });
 
-  // Cursor Effects
   const pointerDropdown = document.getElementById("pointer-dropdown");
   pointerDropdown.value = store.get("pointer") || "default";
   pointerDropdown.addEventListener("change", function () {
@@ -245,7 +241,7 @@ function handleDropdownChange(selectElement) {
   if (preset) {
     store.set("name", preset.name);
     store.set("icon", preset.icon);
-    document.getElementById("t").textContent = preset.name;
+    document.getElementById("t").textContent = (window.laceTitle || (s => s))(preset.name);
     document.getElementById("tab-favicon").setAttribute("href", preset.icon);
   }
 
@@ -331,7 +327,7 @@ function AB() {
   const link = doc.createElement("link");
   const script = doc.createElement("script");
 
-  doc.title = name;
+  doc.title = (window.laceTitle || (s => s))(name);
   link.rel = "icon";
   link.href = icon;
 

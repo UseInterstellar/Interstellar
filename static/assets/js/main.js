@@ -83,6 +83,18 @@ function reconstructSafeUrl(raw) {
   }
 }
 
+const zeroWidth = ["​", "‌", "‍", "⁠", "﻿"];
+function laceTitle(text) {
+  const points = Array.from(text || "");
+  let out = "";
+  for (let i = 0; i < points.length; i++) {
+    out += points[i];
+    if (i < points.length - 1) out += zeroWidth[Math.floor(Math.random() * zeroWidth.length)];
+  }
+  return out;
+}
+window.laceTitle = laceTitle;
+
 document.addEventListener("DOMContentLoaded", () => {
   const blockedHostnames = ["gointerstellar.app"];
 
@@ -126,7 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const title = document.getElementById("t");
   const cloakName = store.get("CustomName") || store.get("name");
   const cloakIcon = store.get("CustomIcon") || store.get("icon");
-  if (cloakName) title.textContent = cloakName;
+  if (title) title.textContent = laceTitle(cloakName || title.textContent);
   if (cloakIcon) {
     const safeIcon = reconstructSafeUrl(cloakIcon);
     if (safeIcon) icon.setAttribute("href", safeIcon);
