@@ -540,14 +540,14 @@ function applySwLocalRenames(source, renames) {
 const INLINE_HANDLER_WINDOW = { "launcher.js": ["bar", "category"] };
 const INLINE_HANDLER_FUNCS = {
   "tabs.js": ["goHome", "goBack", "goForward", "reload", "popoutTab", "toggleDevTools", "toggleFullscreen"],
-  "settings.js": ["toggleAB", "changeEngine", "saveEventKey", "exportSaveData", "importSaveData", "AB"],
-  "search.js": ["go"],
-  "launcher.js": ["go"],
+  "settings.js": ["toggleAB", "changeEngine", "saveEventKey", "exportSaveData", "importSaveData", "openAboutBlank"],
+  "search.js": ["openUrl"],
+  "launcher.js": ["openUrl"],
 };
 const INLINE_HANDLER_ATTR = /(\son(?:keyup|change|click)\s*=\s*")([A-Za-z_$][\w$]*)(\s*\()/gi;
-// window.bar/category (2) + tabs.js funcs (9) + settings.js funcs (7) + search go (1) + launcher go (1).
+// window.bar/category (2) + tabs.js funcs (9) + settings.js funcs (7) + search openUrl (1) + launcher openUrl (1).
 const INLINE_HANDLER_JS_COUNT = 20;
-// onkeyup/onchange (6) + onclick: tabs (7) + settings (4) + 404 go (1).
+// onkeyup/onchange (6) + onclick: tabs (7) + settings (4) + 404 openUrl (1).
 const INLINE_HANDLER_HTML_COUNT = 18;
 
 function createHandlerRenames() {

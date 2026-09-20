@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const LogoUrl = lightThemes.includes(themeId) ? "/assets/media/favicon/main-inverted.png" : "/assets/media/favicon/main.png";
     const html = `
       <div id="icon-container">
-        <a class="icon" href="/./"><img alt="nav" id="INImg" src="${LogoUrl}"/></a>
+        <a class="icon" href="/./"><img alt="nav" id="nav-logo" src="${LogoUrl}"/></a>
       </div>
       <div class="nav-bar-right">
         <a class="navbar-link" href="/./games"><i class="fa-solid fa-gamepad navbar-icon"></i><an>&#71;&#97;</an><an>&#109;&#101;&#115;</an></a>
@@ -135,7 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Favicon and Name Logic
   const icon = document.getElementById("tab-favicon");
-  const title = document.getElementById("t");
+  const title = document.getElementById("page-title");
   const cloakName = store.get("CustomName") || store.get("name");
   const cloakIcon = store.get("CustomIcon") || store.get("icon");
   if (title) title.textContent = laceTitle(cloakName || title.textContent);

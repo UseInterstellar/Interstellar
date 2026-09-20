@@ -65,7 +65,7 @@ function handleAppClick(app) {
   } else if (app.custom) {
     createCustomApp();
   } else {
-    go(selectedUrl, proxy);
+    openUrl(selectedUrl, proxy);
     if (isInTabMode) blank(selectedUrl, proxy);
   }
 

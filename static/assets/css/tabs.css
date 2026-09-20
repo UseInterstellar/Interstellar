@@ -131,7 +131,7 @@ body {
    height: 100%;
 }
 
-.bar {
+.address-bar {
    background: none;
    border: none;
    color: var(--text);
@@ -142,7 +142,7 @@ body {
    transition: var(--transition);
 }
 
-.bar:focus {
+.address-bar:focus {
    background: var(--surface-input);
    box-shadow: none;
    outline: none;

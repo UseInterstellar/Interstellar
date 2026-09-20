@@ -262,7 +262,7 @@ function goForward() {
 window.addEventListener("load", () => {
   navigator.serviceWorker.register("../sw.js", { scope: "/uv/" }).catch(err => console.error("[SW] registration failed:", err));
 
-  const form = document.getElementById("fv");
+  const form = document.getElementById("search-form");
   const input = document.getElementById("input");
 
   setupAddressBar();

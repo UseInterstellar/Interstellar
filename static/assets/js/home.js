@@ -66,7 +66,7 @@ function paintSplash() {
   SplashE.innerText = laceSplash(SplashT[SplashI]);
 }
 
-function US() {
+function cycleSplash() {
   SplashI = (SplashI + 1) % SplashT.length;
   paintSplash();
   SplashE.style.animation = "none";
@@ -75,7 +75,7 @@ function US() {
 }
 
 paintSplash();
-SplashE.addEventListener("click", US);
+SplashE.addEventListener("click", cycleSplash);
 
 function getRandomUrl() {
   const randomUrls = [

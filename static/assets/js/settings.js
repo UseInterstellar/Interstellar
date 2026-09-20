@@ -241,7 +241,7 @@ function handleDropdownChange(selectElement) {
   if (preset) {
     store.set("name", preset.name);
     store.set("icon", preset.icon);
-    document.getElementById("t").textContent = (window.laceTitle || (s => s))(preset.name);
+    document.getElementById("page-title").textContent = (window.laceTitle || (s => s))(preset.name);
     document.getElementById("tab-favicon").setAttribute("href", preset.icon);
   }
 
@@ -295,7 +295,7 @@ function themeChange(selectElement) {
   window.location.reload();
 }
 
-function AB() {
+function openAboutBlank() {
   let inFrame;
   try {
     inFrame = window !== top;
