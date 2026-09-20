@@ -367,7 +367,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     newIframe.sandbox = "allow-same-origin allow-scripts allow-forms allow-pointer-lock allow-modals allow-orientation-lock allow-presentation allow-storage-access-by-user-activation";
 
-    tabTitle.textContent = `New Tab ${tabCounter}`;
+    tabTitle.textContent = laceZeroWidth(`New Tab ${tabCounter}`);
     tabTitle.className = "t";
     newTab.dataset.tabId = tabCounter;
     newTab.addEventListener("click", switchTab);
@@ -391,7 +391,7 @@ document.addEventListener("DOMContentLoaded", () => {
     newIframe.addEventListener("load", () => {
       try {
         const title = newIframe.contentDocument?.title;
-        tabTitle.textContent = title && title.length > 1 ? title : "Tab";
+        tabTitle.textContent = laceZeroWidth(title && title.length > 1 ? title : "Tab");
 
         newIframe.contentWindow.open = url => {
           const proxyUrl = window.__mkurl ? window.__mkurl(url) : `/uv/${__uv$config.encodeUrl(url)}`;
