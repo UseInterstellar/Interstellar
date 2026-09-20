@@ -38,8 +38,6 @@ function createCatalogueKey() {
   return Array.from(randomBytes(16));
 }
 
-// XOR then base64url, wrapped as a JSON string so the asset stays valid JSON. Obfuscation
-// only: the key ships in launcher.js.
 function encodeCatalogue(json, key) {
   const bytes = Buffer.from(json, "utf8");
   const out = Buffer.alloc(bytes.length);
@@ -49,7 +47,6 @@ function encodeCatalogue(json, key) {
 
 const UNUSED_JSON = ["apps.json", "games.json"];
 const RANDOMIZED_JSON = ["apps.min.json", "games.min.json"];
-// themes/template.css is a starting point for user themes; nothing loads it.
 const UNUSED_CSS = ["assets/css/themes/template.css"];
 
 const VENDOR_DROPPED_CONSOLE = ["console.log", "console.debug", "console.info", "console.warn"];
@@ -151,7 +148,6 @@ class PathRegistry {
   }
 }
 
-// Never register a bare "sw.js", it is a substring of "uv.sw.js".
 function pathVariants(publicPath, { bare = true, parent = false } = {}) {
   const relative = publicPath.slice(1);
   const variants = [publicPath, `./${relative}`];
@@ -228,8 +224,6 @@ function createProxyCodecs() {
   };
 }
 
-// Fatal: a half-patched build encodes and decodes with different keys, silently breaking
-// every proxied URL.
 class CodecPatchError extends Error {
   constructor(message) {
     super(message);
@@ -244,7 +238,6 @@ class VerificationError extends Error {
   }
 }
 
-// Optional patches cover patterns that exist in only some files sharing a branch below.
 function patchOrFail(content, pattern, replacement, label, required = true) {
   if (!pattern.test(content)) {
     if (!required) return content;
@@ -254,8 +247,6 @@ function patchOrFail(content, pattern, replacement, label, required = true) {
   return content.replace(pattern, replacement);
 }
 
-// Emitted by the wasm rewriter into every proxied page. wrappropertybase is concatenated
-// with a property name, so each value must be a valid identifier alone and as a prefix.
 const SCRAMJET_GLOBAL_DEFAULTS = {
   wrapfn: "$scramjet$wrap",
   wrappropertybase: "$scramjet__",
@@ -279,9 +270,6 @@ function createScramjetGlobals() {
   return globals;
 }
 
-// Siblings of the globals table above, in the same default-config literal. Our
-// scramjet.config.js overrides all four so the defaults are dead, but they carry the
-// upstream names and would resolve to a 404 if a branch ever fell through to them.
 const SCRAMJET_DEFAULT_PREFIX = '"/scramjet/"';
 const SCRAMJET_DEFAULT_PATH_LITERALS = [
   ['"/scramjet.wasm.wasm"', "sj.wasm"],
@@ -305,9 +293,6 @@ function applyScramjetDefaults(source, specs, scope) {
   return out;
 }
 
-// Scramjet's 500 page, same treatment as the UV one. The version and build spans go with
-// the two textContent assignments: those reach the elements through the implicit id globals
-// and would throw a ReferenceError once the spans are gone.
 const SCRAMJET_BRANDING = [
   /[ \t]*<li>Updating Scramjet<\/li>\n/,
   /[ \t]*<li>Troubleshooting the error on the <a href="https:\/\/github\.com\/MercuryWorkshop\/scramjet"[^>]*>GitHub repository<\/a><\/li>\n/,
@@ -334,8 +319,6 @@ function stripScramjetBranding(source) {
   return out;
 }
 
-// Diagnostics only. Nothing in the five bundles compares against .message or .cause, so the
-// throw is what matters and the text is not.
 const DIAGNOSTIC_STRINGS = [
   '"attempted to initialize a scramjet client, but one is already loaded - this is very bad"',
   '"YOU NEED TO USE `new ScramjetFrame()`! DIRECT IFRAMES WILL NOT WORK"',
@@ -364,10 +347,6 @@ function stripDiagnosticStrings(source, id) {
   return out;
 }
 
-// Producer and consumer are both scramjet.all.js, so per build is safe. The one skew window
-// is a page left open across a deploy and adopted by the new service worker while its own
-// realm still runs the old bundle; it stops proxying until reloaded. Replacements must be
-// valid identifiers, because the keys are read as obj.key as well as "key" in obj.
 const SCRAMJET_PROTOCOL_DEFAULTS = ["$scramjet$messagetype", "$scramjet$origin", "$scramjet$data", "$scramjet$type", "scramjet$response", "scramjet$request", "scramjet$token", "scramjet$type", "scramjet$port"];
 const SCRAMJET_PROTOCOL_COUNTS = { $scramjet$messagetype: 2, $scramjet$origin: 3, $scramjet$data: 4, $scramjet$type: 5, scramjet$response: 3, scramjet$request: 2, scramjet$token: 12, scramjet$type: 25, scramjet$port: 2 };
 
@@ -389,14 +368,9 @@ function applyScramjetProtocolKeys(source, protocolKeys) {
   return out;
 }
 
-// Five emitted copies find each other by these names. Randomizing per build costs nothing:
-// a SharedWorker is identified by script URL as well as name, and those URLs already rotate.
-// bare-mux-path is a localStorage key, but the page rewrites it before anything reads it.
-// Longest first, since bare-mux prefixes the rest and the worker name prefixes its fallback.
 const BAREMUX_STRING_DEFAULTS = ["bare-mux-worker-", "bare-mux-worker", "bare-mux-remote", "bare-mux-path", "bare-mux", "baremuxinit"];
 const BAREMUX_STRING_COUNTS = { "uv.bundle": 14, "uv.client": 17, "uv.handler": 1, "sj.all": 19, baremux: 17, "baremux.worker": 4 };
 
-// The index keeps the five distinct even if the random halves collide.
 function createBaremuxStrings() {
   const token = randomBytes(4).toString("hex");
   const name = index => `_${token}${index.toString(36)}${randomBytes(2).toString("hex")}`;
@@ -427,9 +401,6 @@ function applyBaremuxStrings(source, id, baremuxStrings) {
   return out;
 }
 
-// Ours on both sides: upstream reads none of them and none is reachable from HTML. Every
-// occurrence is a bare identifier, so the word-boundary pass handles them. encodeProxyUrl
-// prefixes encodeProxyUrlSync, which the trailing lookahead keeps apart.
 const RENAMED_IDENTIFIERS = [
   "__scramjet$config",
   "isScramjet",
@@ -847,6 +818,16 @@ function hardenTextRun(text) {
 // would render as literal text (title). Pulled out first so the text-node matcher can stay a flat
 // regex, the same way obfuscateTextNodes relies on obfuscateHtmlMarkup having protected them.
 const HARDEN_SKIP = /<(script|style|pre|code|textarea|template|title|noscript|svg)\b[\s\S]*?<\/\1>|<!--[\s\S]*?-->/gi;
+
+const TITLE_ELEMENT = /(<title\b[^>]*>)[\s\S]*?(<\/title>)/gi;
+function stripTitleText(html) {
+  let count = 0;
+  const out = html.replace(TITLE_ELEMENT, (_match, open, close) => {
+    count += 1;
+    return open + close;
+  });
+  return { html: out, count };
+}
 
 function hardenTextNodes(html) {
   const skipped = [];
@@ -1930,6 +1911,7 @@ async function build() {
   };
   const analyticsIds = new Set();
   let proxyChoiceHtml = 0;
+  let titleStripCount = 0;
   const hardenStats = [];
   const WRAPPER_OPEN = /<(?:span|x-a|x-b|ab-x|s-p)>/g;
   const versionInfo = await resolveVersionInfo();
@@ -1941,6 +1923,9 @@ async function build() {
     htmlFiles.map(async htmlPath => {
       const name = path.relative(DIST_DIR, htmlPath).split(path.sep).join("/");
       let html = await readFile(htmlPath, "utf8");
+      const titleStrip = stripTitleText(html);
+      html = titleStrip.html;
+      titleStripCount += titleStrip.count;
       for (const [from, to] of scopeRewrites) html = replaceAll(html, from, to);
       html = applyRewrites(html, rewrites);
 
@@ -1981,6 +1966,7 @@ async function build() {
     }),
   );
 
+  if (titleStripCount !== htmlFiles.length) throw new Error(`expected one <title> per HTML file (${htmlFiles.length}), stripped ${titleStripCount}. Upstream changed.`);
   if (proxyChoiceHtml !== PROXY_CHOICE_COUNTS.html) throw new Error(`expected ${PROXY_CHOICE_COUNTS.html} proxy selector literals in HTML, replaced ${proxyChoiceHtml}. Update PROXY_CHOICE_COUNTS.`);
   if (handlerHtmlCount !== INLINE_HANDLER_HTML_COUNT) throw new Error(`expected ${INLINE_HANDLER_HTML_COUNT} inline-handler attributes in HTML, rewrote ${handlerHtmlCount}. Upstream changed.`);
   if (versionInjections !== VERSION_TOKEN_COUNT) throw new Error(`expected ${VERSION_TOKEN_COUNT} version tokens injected into settings.html, injected ${versionInjections}. Upstream changed.`);
