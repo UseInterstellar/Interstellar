@@ -1,5 +1,4 @@
 import path from "node:path";
-import rateLimit from "express-rate-limit";
 import mime from "mime";
 
 // Game asset stores mirrored from GitHub. Requests to /gh-games/<n>/... are proxied to the
@@ -12,16 +11,8 @@ const ghGamesBases = {
 };
 const noMimeExts = new Set([".unityweb"]);
 
-const ghGamesLimiter = rateLimit({
-  windowMs: 60 * 1000,
-  max: 50,
-  standardHeaders: true,
-  legacyHeaders: false,
-  message: "Too many requests, please try again later.",
-});
-
 export function mountGhGames(app) {
-  app.get("/gh-games/:path(*)", ghGamesLimiter, async (req, res, next) => {
+  app.get("/gh-games/:path(*)", async (req, res, next) => {
     try {
       const reqPath = "/gh-games/" + req.params.path;
       let reqTarget;
