@@ -11,7 +11,7 @@ overrides:
 
 patchedDependencies:
   '@mercuryworkshop/bare-mux@2.1.9':
-    hash: p2h2pod4rmljbocdwd5lo4pw64
+    hash: 45d83f8c4aa640239d1841ae9cd7d9af438b01465829b1257e3d5e2d0744c367
     path: patches/@mercuryworkshop__bare-mux@2.1.9.patch
 
 importers:
@@ -20,7 +20,7 @@ importers:
     dependencies:
       '@mercuryworkshop/bare-mux':
         specifier: ^2.1.9
-        version: 2.1.9(patch_hash=p2h2pod4rmljbocdwd5lo4pw64)
+        version: 2.1.9(patch_hash=45d83f8c4aa640239d1841ae9cd7d9af438b01465829b1257e3d5e2d0744c367)
       '@mercuryworkshop/epoxy-transport':
         specifier: 2.1.28
         version: 2.1.28
@@ -71,8 +71,8 @@ importers:
         specifier: ^4.1.1
         version: 4.2.2
       terser:
-        specifier: ^5.36.0
-        version: 5.46.2
+        specifier: ^5.51.2
+        version: 5.51.2
 
 packages:
 
@@ -98,24 +98,28 @@ packages:
     engines: {node: '>=14.21.3'}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
 
   '@biomejs/cli-linux-arm64@2.2.2':
     resolution: {integrity: sha512-JfrK3gdmWWTh2J5tq/rcWCOsImVyzUnOS2fkjhiYKCQ+v8PqM+du5cfB7G1kXas+7KQeKSWALv18iQqdtIMvzw==}
     engines: {node: '>=14.21.3'}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
 
   '@biomejs/cli-linux-x64-musl@2.2.2':
     resolution: {integrity: sha512-ZCLXcZvjZKSiRY/cFANKg+z6Fhsf9MHOzj+NrDQcM+LbqYRT97LyCLWy2AS+W2vP+i89RyRM+kbGpUzbRTYWig==}
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
 
   '@biomejs/cli-linux-x64@2.2.2':
     resolution: {integrity: sha512-Ogb+77edO5LEP/xbNicACOWVLt8mgC+E1wmpUakr+O4nKwLt9vXe74YNuT3T1dUBxC/SnrVmlzZFC7kQJEfquQ==}
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
 
   '@biomejs/cli-win32-arm64@2.2.2':
     resolution: {integrity: sha512-wBe2wItayw1zvtXysmHJQoQqXlTzHSpQRyPpJKiNIR21HzH/CrZRDFic1C1jDdp+zAPtqhNExa0owKMbNwW9cQ==}
@@ -158,8 +162,8 @@ packages:
   '@jridgewell/source-map@0.3.11':
     resolution: {integrity: sha512-ZMp1V8ZFcPG5dIWnQLr3NSI1MiCU7UETdS/A0G8V/XWHvJv3ZsFqutJn1Y5RPmAPX6F3BiE397OqveU/9NCuIA==}
 
-  '@jridgewell/sourcemap-codec@1.5.5':
-    resolution: {integrity: sha512-cYQ9310grqxueWbl+WuIUIaiUaDcj7WOq5fVhEljNVgRfOUhY9fy2zTvfoqWsnebh8Sl70VScFbICvJnLKB0Og==}
+  '@jridgewell/sourcemap-codec@1.6.0':
+    resolution: {integrity: sha512-T7jf+5zgsZHwNJ4lvQ7/aezbyk0nNX+zJVWpmHA7VYsEx7a7qr5Rg5IbtJFqkgze5Y2sruq1RUY8Q837Od7iFw==}
 
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
@@ -201,8 +205,8 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
 
-  acorn@8.16.0:
-    resolution: {integrity: sha512-UVJyE9MttOsBQIDKw1skb9nAwQuR5wuGD3+82K6JgJlm/Y+KI92oNsMNGZCYdDsVtRHSak0pcV5Dno5+4jh9sw==}
+  acorn@8.18.0:
+    resolution: {integrity: sha512-lGq+9yr1/GuAWaVYIHRjvvySG5/4VfKIvC8EWxStPdcDh/Ka7FG3twP6v4d5BkravUilhIAsG4Qj83t02LWUPQ==}
     engines: {node: '>=0.4.0'}
     hasBin: true
 
@@ -925,8 +929,8 @@ packages:
     resolution: {integrity: sha512-yEFYrVhod+hdNyx7g5Bnkkb0G6si8HJurOoOEgC8B/O0uXLHlaey/65KRv6cuWBNhBgHKAROVpc7QyYqE5gFng==}
     engines: {node: '>=20'}
 
-  terser@5.46.2:
-    resolution: {integrity: sha512-uxfo9fPcSgLDYob/w1FuL0c99MWiJDnv+5qXSQc5+Ki5NjVNsYi66INnMFBjf6uFz6OnX12piJQPF4IpjJTNTw==}
+  terser@5.51.2:
+    resolution: {integrity: sha512-bWnjSNscmuI+GJze6ZupnHP8G/cTcsJF+bXCeQknk2SHQsgbNJnLrqiH9jZ2W4STPVXH2mDKKRX3iwPhc9Cn/Q==}
     engines: {node: '>=10'}
     hasBin: true
 
@@ -1066,7 +1070,7 @@ snapshots:
 
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:
-      '@jridgewell/sourcemap-codec': 1.5.5
+      '@jridgewell/sourcemap-codec': 1.6.0
       '@jridgewell/trace-mapping': 0.3.31
 
   '@jridgewell/resolve-uri@3.1.2': {}
@@ -1076,14 +1080,14 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.13
       '@jridgewell/trace-mapping': 0.3.31
 
-  '@jridgewell/sourcemap-codec@1.5.5': {}
+  '@jridgewell/sourcemap-codec@1.6.0': {}
 
   '@jridgewell/trace-mapping@0.3.31':
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
-      '@jridgewell/sourcemap-codec': 1.5.5
+      '@jridgewell/sourcemap-codec': 1.6.0
 
-  '@mercuryworkshop/bare-mux@2.1.9(patch_hash=p2h2pod4rmljbocdwd5lo4pw64)': {}
+  '@mercuryworkshop/bare-mux@2.1.9(patch_hash=45d83f8c4aa640239d1841ae9cd7d9af438b01465829b1257e3d5e2d0744c367)': {}
 
   '@mercuryworkshop/epoxy-tls@2.1.18-1': {}
 
@@ -1097,7 +1101,7 @@ snapshots:
 
   '@mercuryworkshop/scramjet@1.1.0':
     dependencies:
-      '@mercuryworkshop/bare-mux': 2.1.9(patch_hash=p2h2pod4rmljbocdwd5lo4pw64)
+      '@mercuryworkshop/bare-mux': 2.1.9(patch_hash=45d83f8c4aa640239d1841ae9cd7d9af438b01465829b1257e3d5e2d0744c367)
       dom-serializer: 2.0.0
       domhandler: 5.0.3
       domutils: 3.2.2
@@ -1117,7 +1121,7 @@ snapshots:
 
   '@titaniumnetwork-dev/ultraviolet@3.2.10':
     dependencies:
-      '@mercuryworkshop/bare-mux': 2.1.9(patch_hash=p2h2pod4rmljbocdwd5lo4pw64)
+      '@mercuryworkshop/bare-mux': 2.1.9(patch_hash=45d83f8c4aa640239d1841ae9cd7d9af438b01465829b1257e3d5e2d0744c367)
       astring: 1.9.0
       events: 3.3.0
       idb: 8.0.3
@@ -1136,7 +1140,7 @@ snapshots:
 
   acorn@8.15.0: {}
 
-  acorn@8.16.0: {}
+  acorn@8.18.0: {}
 
   ajv-formats@3.0.1(ajv@8.20.0):
     optionalDependencies:
@@ -1893,10 +1897,10 @@ snapshots:
 
   tagged-tag@1.0.0: {}
 
-  terser@5.46.2:
+  terser@5.51.2:
     dependencies:
       '@jridgewell/source-map': 0.3.11
-      acorn: 8.16.0
+      acorn: 8.18.0
       commander: 2.20.3
       source-map-support: 0.5.21
 
