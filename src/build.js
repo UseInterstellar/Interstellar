@@ -704,17 +704,9 @@ function applyRouteRewrites(source, table) {
   return { source: out, count };
 }
 
-// Build-time hardening of visible HTML text nodes. Ordinary text is rendered identically in the
-// browser, but the emitted raw HTML no longer holds contiguous plaintext: every word is split
-// across inert inline wrappers, with the occasional character numeric-encoded. This defeats
-// substring and per text-node scans of the source. It does not defeat a classifier that strips
-// tags before matching textContent, which is out of reach for any static transform.
-//
-// The pool is span plus valid custom-element names (each has the required hyphen). Unregistered
-// custom elements render inline with no styling, so text flows contiguously and the visible result
-// is byte identical. The audit in the earlier proxy-label work verified option text keeps its
-// textContent, which is what the one JS reader (the cloak sort's localeCompare) depends on.
+
 const SPLIT_WRAPPERS = ["span", "x-a", "x-b", "ab-x", "s-p"];
+const HARDEN_ZERO_WIDTH = ["​", "‌", "‍", "⁠"];
 
 function fnv1a(str) {
   let h = 2166136261;
@@ -806,12 +798,13 @@ function hardenTextRun(text) {
     for (const part of parts) inners.push(part);
   }
   const entIdx = seed % inners.length;
-  return inners
-    .map((inner, i) => {
-      const w = SPLIT_WRAPPERS[(seed + i) % SPLIT_WRAPPERS.length];
-      return `<${w}>${i === entIdx ? encodeOneChar(inner, seed) : inner}</${w}>`;
-    })
-    .join("");
+  const parts = inners.map((inner, i) => {
+    const w = SPLIT_WRAPPERS[(seed + i) % SPLIT_WRAPPERS.length];
+    return `<${w}>${i === entIdx ? encodeOneChar(inner, seed) : inner}</${w}>`;
+  });
+  let out = parts[0];
+  for (let i = 1; i < parts.length; i++) out += HARDEN_ZERO_WIDTH[(seed + i) % HARDEN_ZERO_WIDTH.length] + parts[i];
+  return out;
 }
 
 // Text that must not be wrapped: executable, presentational-verbatim, or where injected markup
@@ -868,6 +861,7 @@ function visibleText(html) {
     .replace(/<[^>]+>/g, "")
     .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(+d))
     .replace(/&#x([\da-fA-F]+);/g, (_, h) => String.fromCodePoint(parseInt(h, 16)))
+    .replace(/​|‌|‍|⁠|﻿/g, "")
     .replace(/\s+/g, " ")
     .trim();
 }

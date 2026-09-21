@@ -1,3 +1,8 @@
+
+function stripZeroWidth(text) {
+  return text.replace(/​|‌|‍|‎|‏|⁠|﻿/g, "");
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const adTypeElement = document.getElementById("adType");
   if (adTypeElement) {
@@ -65,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const cloakDropdown = document.getElementById("cloak-dropdown");
 
-  const sortedOptions = Array.from(cloakDropdown.getElementsByTagName("option")).sort((a, b) => a.textContent.localeCompare(b.textContent));
+  const sortedOptions = Array.from(cloakDropdown.getElementsByTagName("option")).sort((a, b) => stripZeroWidth(a.textContent).localeCompare(stripZeroWidth(b.textContent)));
   while (cloakDropdown.firstChild) cloakDropdown.removeChild(cloakDropdown.firstChild);
   for (const option of sortedOptions) cloakDropdown.appendChild(option);
 
