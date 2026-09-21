@@ -33,7 +33,7 @@
     "node-fetch": "^3.3.2"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.2.2",
+    "@biomejs/biome": "2.5.14",
     "javascript-obfuscator": "^4.1.1",
     "terser": "^5.36.0"
   },
