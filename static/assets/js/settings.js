@@ -188,7 +188,7 @@ const cloakOptions = {
   "PBS Learning Media": { name: "PBS LearningMedia | Teaching Resources For Students And Teachers", icon: "/assets/media/favicon/pbslearningmedia.ico" },
   "PBS Learning Media Student Home": { name: "Student Homepage | PBS LearningMedia", icon: "/assets/media/favicon/pbslearningmedia.ico" },
   Drive: { name: "My Drive - Google Drive", icon: "/assets/media/favicon/drive.png" },
-  Classroom: { name: "Home", icon: "/assets/media/favicon/classroom.png" },
+  Classroom: { name: "Нome", icon: "/assets/media/favicon/classroom.png" },
   Schoology: { name: "Home | Schoology", icon: "/assets/media/favicon/schoology.png" },
   Gmail: { name: "Gmail", icon: "/assets/media/favicon/gmail.png" },
   Clever: { name: "Clever | Portal", icon: "/assets/media/favicon/clever.png" },

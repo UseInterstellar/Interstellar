@@ -704,7 +704,6 @@ function applyRouteRewrites(source, table) {
   return { source: out, count };
 }
 
-
 const SPLIT_WRAPPERS = ["span", "x-a", "x-b", "ab-x", "s-p"];
 const HARDEN_ZERO_WIDTH = ["​", "‌", "‍", "⁠"];
 
@@ -811,7 +810,7 @@ function hardenTextRun(text) {
 // would render as literal text (title). Pulled out first so the text-node matcher can stay a flat
 // regex, the same way obfuscateTextNodes relies on obfuscateHtmlMarkup having protected them.
 const HARDEN_SKIP = /<(script|style|pre|code|textarea|template|title|noscript|svg)\b[\s\S]*?<\/\1>|<!--[\s\S]*?-->/gi;
-
+/*
 const TITLE_ELEMENT = /(<title\b[^>]*>)[\s\S]*?(<\/title>)/gi;
 function stripTitleText(html) {
   let count = 0;
@@ -831,7 +830,7 @@ function stripTitleAttributes(html) {
   });
   return { html: out, count };
 }
-
+*/
 function hardenTextNodes(html) {
   const skipped = [];
   const guarded = html.replace(HARDEN_SKIP, block => {
@@ -1915,8 +1914,10 @@ async function build() {
   };
   const analyticsIds = new Set();
   let proxyChoiceHtml = 0;
+  /*
   let titleStripCount = 0;
   let titleAttrStripCount = 0;
+  */
   const hardenStats = [];
   const WRAPPER_OPEN = /<(?:span|x-a|x-b|ab-x|s-p)>/g;
   const versionInfo = await resolveVersionInfo();
@@ -1928,6 +1929,7 @@ async function build() {
     htmlFiles.map(async htmlPath => {
       const name = path.relative(DIST_DIR, htmlPath).split(path.sep).join("/");
       let html = await readFile(htmlPath, "utf8");
+      /*
       const titleStrip = stripTitleText(html);
       html = titleStrip.html;
       titleStripCount += titleStrip.count;
@@ -1935,6 +1937,7 @@ async function build() {
       html = titleAttrStrip.html;
       titleAttrStripCount += titleAttrStrip.count;
       if (/\stitle\s*=/i.test(html)) throw new Error(`${name}: title attributes still present after strip. Upstream changed.`);
+      */
       for (const [from, to] of scopeRewrites) html = replaceAll(html, from, to);
       html = applyRewrites(html, rewrites);
 
@@ -1974,9 +1977,10 @@ async function build() {
       console.log(chalk.green(`  + ${name}${OBFUSCATE_HTML ? " (html-obfuscated)" : ""}`));
     }),
   );
-
+  /*
   if (titleStripCount !== htmlFiles.length) throw new Error(`expected one <title> per HTML file (${htmlFiles.length}), stripped ${titleStripCount}. Upstream changed.`);
   console.log(`Stripped ${titleStripCount} <title> texts and ${titleAttrStripCount} title="" attributes`);
+  */
   if (proxyChoiceHtml !== PROXY_CHOICE_COUNTS.html) throw new Error(`expected ${PROXY_CHOICE_COUNTS.html} proxy selector literals in HTML, replaced ${proxyChoiceHtml}. Update PROXY_CHOICE_COUNTS.`);
   if (handlerHtmlCount !== INLINE_HANDLER_HTML_COUNT) throw new Error(`expected ${INLINE_HANDLER_HTML_COUNT} inline-handler attributes in HTML, rewrote ${handlerHtmlCount}. Upstream changed.`);
   if (versionInjections !== VERSION_TOKEN_COUNT) throw new Error(`expected ${VERSION_TOKEN_COUNT} version tokens injected into settings.html, injected ${versionInjections}. Upstream changed.`);
