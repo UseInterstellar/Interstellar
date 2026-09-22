@@ -58,6 +58,10 @@
   window.resolveProxyChoice();
 })();
 
+for (const cloakKey of ["name", "CustomName"]) {
+  if (store.get(cloakKey) === "Home") store.set(cloakKey, "Нome");
+}
+
 let isInTabMode;
 
 try {
