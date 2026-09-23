@@ -99,6 +99,42 @@ function laceTitle(text) {
 }
 window.laceTitle = laceTitle;
 
+const NAV_WRAPPERS = ["span", "x-a", "x-b", "ab-x", "s-p", "n-a", "r-e", "d-l", "q-x"];
+const NAV_ZERO_WIDTH = ["​", "‌", "‍", "⁠"];
+const NAV_HOMOGLYPHS = { a: "а", c: "с", e: "е", i: "і", k: "к", m: "м", o: "о", p: "р", s: "ѕ", t: "т", x: "х", y: "у" };
+
+function navEntities(text) {
+  let out = "";
+  for (const ch of text) out += `&#${ch.codePointAt(0)};`;
+  return out;
+}
+
+function navWrap(inner) {
+  const tag = NAV_WRAPPERS[Math.floor(Math.random() * NAV_WRAPPERS.length)];
+  return `<${tag}>${inner}</${tag}>`;
+}
+
+function obfuscateNav(text) {
+  const points = [...text];
+  let out = "";
+  let first = true;
+  for (let i = 0; i < points.length; ) {
+    const size = 1 + Math.floor(Math.random() * 2);
+    const chunk = points
+      .slice(i, i + size)
+      .map(ch => {
+        const glyph = NAV_HOMOGLYPHS[ch.toLowerCase()];
+        return glyph && Math.random() < 0.6 ? glyph : ch;
+      })
+      .join("");
+    i += size;
+    if (!first) out += navWrap(navEntities(NAV_ZERO_WIDTH[Math.floor(Math.random() * NAV_ZERO_WIDTH.length)]));
+    out += navWrap(navEntities(chunk));
+    first = false;
+  }
+  return out;
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const blockedHostnames = ["gointerstellar.app"];
 
@@ -130,9 +166,9 @@ document.addEventListener("DOMContentLoaded", () => {
         <a class="icon" href="/./"><img alt="nav" id="nav-logo" src="${LogoUrl}"/></a>
       </div>
       <div class="nav-bar-right">
-        <a class="navbar-link" href="/./games"><i class="fa-solid fa-gamepad navbar-icon"></i><an>&#71;&#97;</an><an>&#109;&#101;&#115;</an></a>
-        <a class="navbar-link" href="/./apps"><i class="fa-solid fa-phone navbar-icon"></i><an>&#65;&#112;</an><an>&#112;&#115;</an></a>
-        <a class="navbar-link" href="/./settings"><i class="fa-solid fa-gear navbar-icon settings-icon"></i><an>&#83;&#101;&#116;</an><an>&#116;&#105;&#110;&#103;</an></a>
+        <a class="navbar-link" href="/./games"><i class="fa-solid fa-gamepad navbar-icon"></i>${obfuscateNav("Games")}</a>
+        <a class="navbar-link" href="/./apps"><i class="fa-solid fa-phone navbar-icon"></i>${obfuscateNav("Apps")}</a>
+        <a class="navbar-link" href="/./settings"><i class="fa-solid fa-gear navbar-icon settings-icon"></i>${obfuscateNav("Settings")}</a>
       </div>`;
     nav.innerHTML = html;
   }
