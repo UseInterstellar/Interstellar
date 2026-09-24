@@ -888,6 +888,10 @@ function countHardenableSegments(html) {
 const SCRAMJET_ATTR_PREFIX = "scramjet-attr";
 const SCRAMJET_IDB_NAME = "$scramjet";
 
+
+const SCRAMJET_SYMBOL_KEYS = ["scramjet client global", "scramjet frame handle", "scramjet original onevent function", "scramjet realm pollutant"];
+const SCRAMJET_LOG_STRINGS = ['"initializing scramjet client"'];
+
 function createIdentifierRenames() {
   return new Map(RENAMED_IDENTIFIERS.map(name => [name, `_${randomBytes(5).toString("hex")}`]));
 }
@@ -895,7 +899,11 @@ function createIdentifierRenames() {
 function createScramjetStrings() {
   const attr = randomItem("abcdefghijklmnopqrstuvwxyz".split("")) + randomBytes(6).toString("hex");
   if (attr.length !== SCRAMJET_ATTR_PREFIX.length) throw new Error(`attribute prefix must stay ${SCRAMJET_ATTR_PREFIX.length} chars to keep slice(14) correct, got ${attr.length}`);
-  return { attr, idb: `_${randomBytes(5).toString("hex")}` };
+  return {
+    attr,
+    idb: `_${randomBytes(5).toString("hex")}`,
+    symbols: new Map(SCRAMJET_SYMBOL_KEYS.map(key => [key, randomBytes(8).toString("hex")])),
+  };
 }
 
 // The lookarounds stop isScramjet matching inside isScramjetEnabled.
@@ -1821,6 +1829,15 @@ async function build() {
       }
       source = replaceAll(source, SCRAMJET_ATTR_PREFIX, scramjetStrings.attr);
       source = replaceAll(source, `"${SCRAMJET_IDB_NAME}"`, `"${scramjetStrings.idb}"`);
+      for (const [key, replacement] of scramjetStrings.symbols) {
+        const literal = `"${key}"`;
+        if (!source.includes(literal)) throw new CodecPatchError(`scramjet.all.js: Symbol.for key ${literal} not found. Upstream changed.`);
+        source = replaceAll(source, literal, `"${replacement}"`);
+      }
+      for (const literal of SCRAMJET_LOG_STRINGS) {
+        if (!source.includes(literal)) throw new CodecPatchError(`scramjet.all.js: log string ${literal} not found. Upstream changed.`);
+        source = replaceAll(source, literal, '""');
+      }
     }
     if (spec.rewriteScopes) for (const [from, to] of scopeRewrites) source = replaceAll(source, from, to);
     if (spec.rewritePaths) {
