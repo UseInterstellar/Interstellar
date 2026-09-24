@@ -110,13 +110,18 @@ function replaceAll(content, oldStr, newStr) {
 }
 
 class PathRegistry {
-  constructor() {
+  constructor(bust = "") {
     this.paths = new Set();
     this.topDirs = new Set();
+    this.bust = bust;
   }
 
   reserveTopDir(name) {
     this.topDirs.add(name);
+  }
+
+  bustSuffix() {
+    return this.bust ? `.${this.bust}` : "";
   }
 
   dir() {
@@ -131,7 +136,7 @@ class PathRegistry {
   file(ext, baseDir) {
     for (;;) {
       const dir = baseDir ?? this.dir();
-      const publicPath = `/${dir}/${randomFilename()}${ext}`;
+      const publicPath = `/${dir}/${randomFilename()}${this.bustSuffix()}${ext}`;
       if (this.paths.has(publicPath)) continue;
       this.paths.add(publicPath);
       return publicPath;
@@ -140,7 +145,7 @@ class PathRegistry {
 
   rootFile(ext) {
     for (;;) {
-      const publicPath = `/${randomFilename()}${ext}`;
+      const publicPath = `/${randomFilename()}${this.bustSuffix()}${ext}`;
       if (this.paths.has(publicPath)) continue;
       this.paths.add(publicPath);
       return publicPath;
@@ -1642,7 +1647,8 @@ async function build() {
     process.exit(1);
   }
 
-  const registry = new PathRegistry();
+  const buildId = randomBytes(4).toString("hex");
+  const registry = new PathRegistry(buildId);
 
   const uvBase = randomWord();
   const scramjetSub = randomWord();
@@ -1673,7 +1679,7 @@ async function build() {
   console.log(`Scramjet strings: attr ${SCRAMJET_ATTR_PREFIX} -> ${scramjetStrings.attr}, idb ${SCRAMJET_IDB_NAME} -> ${scramjetStrings.idb}`);
 
   const manifest = {
-    build: randomBytes(4).toString("hex"),
+    build: buildId,
     scopes: { uv: NEW_UV_SCOPE, scramjet: NEW_SCRAMJET_SCOPE },
     sw: null,
     routes: pageRoutes,
