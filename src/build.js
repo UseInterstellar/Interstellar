@@ -423,6 +423,13 @@ const RENAMED_IDENTIFIERS = [
   "BareClient",
   "uvHostname",
   "implementUVMiddleware",
+  "ScramjetServiceWorkerRuntime",
+  "ScramjetClient",
+  "ScramjetFrame",
+  "ScramjetContextEvent",
+  "ScramjetGlobalDownloadEvent",
+  "ScramjetRequestEvent",
+  "ScramjetHandleResponseEvent",
 ];
 
 // Dead branches: our config sets all four. They still carry the upstream names, and the
@@ -1164,7 +1171,7 @@ function vendorSpecs() {
       rewriteScramjetStrings: true,
       globals: ["$scramjetLoadWorker", "$scramjetLoadController", "$scramjetLoadClient", "$scramjetRequire", "$scramjetVersion", "COOKIE", "WASM"],
     },
-    { id: "sj.sync", src: path.join(scramjetPath, "scramjet.sync.js"), old: "/assets/scramjet/scramjet.sync.js", ext: ".js" },
+    { id: "sj.sync", src: path.join(scramjetPath, "scramjet.sync.js"), old: "/assets/scramjet/scramjet.sync.js", ext: ".js", renameIdentifiers: true },
     { id: "sj.wasm", src: path.join(scramjetPath, "scramjet.wasm.wasm"), old: "/assets/scramjet/scramjet.wasm.wasm", ext: ".wasm", binary: true },
     {
       id: "sj.config",
