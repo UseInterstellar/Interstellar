@@ -8,11 +8,41 @@ body {
    overflow-x: hidden;
 }
 
+.settings-heading h1,
+.settings-heading p {
+   margin: 0;
+}
+
+.settings-heading h1 {
+   font-size: clamp(2rem, 4vw, 2.8rem);
+   letter-spacing: -0.04em;
+   line-height: 1.05;
+}
+
+.settings-heading .settings-eyebrow {
+   margin-bottom: 10px;
+   color: var(--text-muted);
+   font-size: 12px;
+   font-weight: 700;
+   letter-spacing: 0.12em;
+   text-transform: uppercase;
+}
+
+.settings-heading .settings-intro {
+   margin-top: 12px;
+   color: var(--text-muted);
+   font-size: 15px;
+}
+
 .settings-shell {
-   width: min(1320px, calc(100% - 32px));
+   width: min(1220px, calc(100% - 32px));
    box-sizing: border-box;
-   padding: 120px 32px 60px 32px;
-   margin: 0 auto 0 0;
+   padding: 116px 32px 72px;
+   margin: 0 auto;
+}
+
+.settings-heading {
+   padding: 0 0 34px 268px;
 }
 
 .settings-header {
@@ -174,29 +204,33 @@ body {
 }
 
 .settings-card {
-   background-color: var(--surface-card);
+   background-color: color-mix(in srgb, var(--surface-card) 92%, transparent);
    border: 1px solid var(--border);
    border-radius: var(--radius-lg);
-   padding: 24px;
-   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+   padding: 26px 28px;
+   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
    width: 100%;
    box-sizing: border-box;
-   transition: var(--transition);
+   transition: border-color 180ms ease, box-shadow 180ms ease;
 }
 
 .settings-card:hover {
-   transform: translatey(-5px);
    border-color: var(--border-strong);
-   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.26);
+   box-shadow: 0 14px 34px rgba(0, 0, 0, 0.2);
 }
 
 .settings-card h3 {
-   margin-top: 0;
+   margin: 0;
    color: var(--text);
+   font-size: 18px;
+   letter-spacing: -0.015em;
 }
 
 .settings-card p {
+   margin: 8px 0 20px;
    color: var(--text-muted);
+   font-size: 14px;
+   line-height: 1.55;
 }
 
 a {
@@ -204,11 +238,11 @@ a {
 }
 
 input {
-   padding: 15px;
+   padding: 13px 14px;
    border-radius: var(--radius-md);
    background: var(--surface-input);
-   text-align: center;
-   font-size: 20px;
+   text-align: left;
+   font-size: 15px;
    border: 1px solid var(--border);
    outline: none;
    color: var(--text);
@@ -362,12 +396,24 @@ select:hover {
    .settings-shell {
       width: 100%;
       margin: 0;
-      padding: 110px 16px 40px 16px;
+      padding: 102px 16px 40px;
+   }
+
+   .settings-heading {
+      padding: 0 0 20px;
    }
 
 
    .settings-nav-toggle {
       display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: auto;
+      height: 40px;
+      margin: 0 0 20px auto;
+      padding: 0 14px;
+      font-size: 13px;
    }
 
    .settings-header {
