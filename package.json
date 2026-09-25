@@ -1,6 +1,6 @@
 {
   "name": "interstellar",
-  "version": "6.0.16",
+  "version": "6.0.21",
   "type": "module",
   "engines": {
     "npm": ">=7.0.0",

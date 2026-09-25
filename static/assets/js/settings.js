@@ -1,4 +1,3 @@
-
 function stripZeroWidth(text) {
   return text.replace(/​|‌|‍|‎|‏|⁠|﻿/g, "");
 }
@@ -162,7 +161,46 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const savedEngineName = store.get("enginename");
   if (savedEngineName) document.getElementById("engine").value = savedEngineName;
+
+  initSettingsNav();
 });
+
+
+function initSettingsNav() {
+  const items = Array.from(document.querySelectorAll(".settings-nav-item"));
+  const panels = Array.from(document.querySelectorAll(".settings-panel"));
+  if (!items.length || !panels.length) return;
+
+  const sidebar = document.querySelector(".settings-sidebar");
+  const toggle = document.querySelector(".settings-nav-toggle");
+  const sections = panels.map(panel => panel.dataset.section);
+
+  function show(section) {
+    const target = sections.includes(section) ? section : sections[0];
+    for (const item of items) item.classList.toggle("active", item.dataset.section === target);
+    for (const panel of panels) panel.classList.toggle("active", panel.dataset.section === target);
+    if (sidebar) sidebar.classList.remove("drawer-open");
+    if (toggle) toggle.setAttribute("aria-expanded", "false");
+  }
+
+  for (const item of items) {
+    item.addEventListener("click", () => {
+      const section = item.dataset.section;
+      if (location.hash.slice(1) === section) show(section);
+      else location.hash = section;
+    });
+  }
+
+  if (toggle && sidebar) {
+    toggle.addEventListener("click", () => {
+      const open = sidebar.classList.toggle("drawer-open");
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+  }
+
+  window.addEventListener("hashchange", () => show(location.hash.slice(1)));
+  show(location.hash.slice(1) || sections[0]);
+}
 
 function saveEventKey() {
   const eventKeyInput = document.getElementById("eventKeyInput");
