@@ -8,87 +8,40 @@ body {
    overflow-x: hidden;
 }
 
-.settings-heading h1,
-.settings-heading p {
-   margin: 0;
-}
-
-.settings-heading h1 {
-   font-size: clamp(2rem, 4vw, 2.8rem);
-   letter-spacing: -0.04em;
-   line-height: 1.05;
-}
-
-.settings-heading .settings-eyebrow {
-   margin-bottom: 10px;
-   color: var(--text-muted);
-   font-size: 12px;
-   font-weight: 700;
-   letter-spacing: 0.12em;
-   text-transform: uppercase;
-}
-
-.settings-heading .settings-intro {
-   margin-top: 12px;
-   color: var(--text-muted);
-   font-size: 15px;
-}
-
 .settings-shell {
-   width: min(1220px, calc(100% - 32px));
+   width: min(1240px, calc(100% - 40px));
    box-sizing: border-box;
-   padding: 116px 32px 72px;
+   padding: 104px 20px 72px;
    margin: 0 auto;
-}
-
-.settings-heading {
-   padding: 0 0 34px 268px;
-}
-
-.settings-header {
-   display: flex;
-   align-items: center;
-   gap: 14px;
-   margin-bottom: 0;
-}
-
-.settings-nav-toggle {
-   display: none;
-   align-items: center;
-   justify-content: center;
-   width: 46px;
-   height: 46px;
-   margin: 0;
-   padding: 0;
-   font-size: 20px;
-   flex: none;
 }
 
 .settings-layout {
    display: grid;
-   grid-template-columns: 240px minmax(0, 1fr);
-   gap: 28px;
+   grid-template-columns: 224px minmax(0, 1fr);
+   gap: 32px;
    align-items: start;
 }
+
 .settings-sidebar {
    position: sticky;
-   top: 120px;
-   align-self: stretch;
-   min-height: calc(100vh - 220px);
+   top: 104px;
+   align-self: start;
 }
 
+.settings-nav-toggle {
+   display: none;
+}
 
 .settings-nav {
    display: flex;
    flex-direction: column;
-   gap: 4px;
-   height: 100%;
+   gap: 3px;
    box-sizing: border-box;
-   background-color: var(--surface-card);
+   padding: 8px;
+   background-color: color-mix(in srgb, var(--surface-card) 96%, transparent);
    border: 1px solid var(--border);
-   border-radius: var(--radius-md);
-   padding: 10px;
-   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+   border-radius: 14px;
+   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.14);
 }
 
 .settings-nav-item {
@@ -98,38 +51,38 @@ body {
    width: 100%;
    height: auto;
    margin: 0;
-   padding: 12px 14px;
-   font-size: 16px;
+   padding: 12px 13px;
+   font-size: 14px;
    font-weight: 600;
    text-align: left;
    color: var(--text-muted);
    background-color: transparent;
    border: 1px solid transparent;
-   border-radius: var(--radius-md);
-   transition: var(--transition);
+   border-radius: 9px;
+   transition: color 160ms ease, background-color 160ms ease, border-color 160ms ease;
 }
 
 .settings-nav-item i {
-   width: 20px;
+   width: 18px;
+   color: var(--text-muted);
    text-align: center;
-   font-size: 17px;
+   font-size: 14px;
 }
 
-.settings-nav-item:hover {
+.settings-nav-item:hover,
+.settings-nav-item.active {
    color: var(--text);
    background-color: var(--surface-hover);
    border-color: var(--border);
 }
 
+.settings-nav-item.active i {
+   color: var(--text);
+}
+
 .settings-nav-item:focus-visible {
    outline: 2px solid var(--border-strong);
    outline-offset: 2px;
-}
-
-.settings-nav-item.active {
-   color: var(--text);
-   background-color: var(--surface-active);
-   border-color: var(--border-strong);
 }
 
 .settings-nav-sep {
@@ -140,28 +93,23 @@ body {
 
 .settings-content {
    min-width: 0;
+   max-width: 820px;
 }
 
 .settings-panel {
    display: none;
    flex-direction: column;
-   gap: 20px;
+   gap: 16px;
 }
 
 .settings-panel.active {
    display: flex;
-   animation: settings-panel-in var(--transition);
+   animation: settings-panel-in 180ms ease both;
 }
 
 @keyframes settings-panel-in {
-   from {
-      opacity: 0;
-      transform: translateY(6px);
-   }
-   to {
-      opacity: 1;
-      transform: translateY(0);
-   }
+   from { opacity: 0; transform: translateY(5px); }
+   to { opacity: 1; transform: translateY(0); }
 }
 
 
@@ -204,33 +152,35 @@ body {
 }
 
 .settings-card {
-   background-color: color-mix(in srgb, var(--surface-card) 92%, transparent);
+   background-color: color-mix(in srgb, var(--surface-card) 96%, transparent);
    border: 1px solid var(--border);
-   border-radius: var(--radius-lg);
-   padding: 26px 28px;
-   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+   border-radius: 12px;
+   padding: 22px 24px;
+   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
    width: 100%;
    box-sizing: border-box;
-   transition: border-color 180ms ease, box-shadow 180ms ease;
+   transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
 }
 
 .settings-card:hover {
    border-color: var(--border-strong);
-   box-shadow: 0 14px 34px rgba(0, 0, 0, 0.2);
+   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
+   transform: translateY(-1px);
 }
 
 .settings-card h3 {
    margin: 0;
    color: var(--text);
-   font-size: 18px;
-   letter-spacing: -0.015em;
+   font-size: 16px;
+   font-weight: 650;
+   letter-spacing: -0.01em;
 }
 
 .settings-card p {
-   margin: 8px 0 20px;
+   margin: 7px 0 18px;
    color: var(--text-muted);
-   font-size: 14px;
-   line-height: 1.55;
+   font-size: 13px;
+   line-height: 1.5;
 }
 
 a {
