@@ -283,7 +283,15 @@ module.exports = class {
     };
     // Websocket Proxy
     ws(server) {
-        new WebSocket.Server({server: server}).on('connection', (cli, req) => {
+        this.handleConnection(new WebSocket.Server({server: server}));
+    };
+    // Websocket proxy for a server shared with other upgrade handlers.
+    upgrade(req, socket, head) {
+        if (!this.wss) this.wss = this.handleConnection(new WebSocket.Server({noServer: true}));
+        this.wss.handleUpgrade(req, socket, head, cli => this.wss.emit('connection', cli, req));
+    };
+    handleConnection(wss) {
+        return wss.on('connection', (cli, req) => {
 
             var queryParams = querystring.parse(req.url.split('?').splice(1).join('?')), proxyURL, options = { 
                 headers: {},

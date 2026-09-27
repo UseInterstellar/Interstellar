@@ -127,6 +127,16 @@ As of January 1st, 2024, Replit is [no longer free](https://blog.replit.com/host
 > [!NOTE]
 > We are committed to making Interstellar easy and personalized however, as of now we need your support in making it ad-free. Consider keeping ads so Interstellar can run freely or contribute by being a supporter.
 
+## Alloy Proxy
+
+This repository also includes the [Alloy](https://github.com/titaniumnetwork-dev/alloy) web proxy in the `alloy/` directory. It runs inside the Interstellar server, so nothing extra has to be started:
+
+- `/alloy/`: Alloy's own search page
+- `/web/`: Alloy's proxy prefix (HTTP and WebSocket), set by `prefix` in `alloy/config.json`
+- `/prox/?url=<base64 url>`: redirects to the proxied page
+
+`alloy/config.json` also sets `localAddresses` and `blockedHostnames`. Its `port` and `ssl` options only apply when Alloy runs by itself with `node alloy/server.js`.
+
 ## Report Issues
 
 If you encounter problems, open an issue on GitHub, and we'll address it promptly.

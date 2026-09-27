@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import http from "node:http";
+import { createRequire } from "node:module";
 import path from "node:path";
 import { createBareServer } from "@nebula-services/bare-server-node";
 import chalk from "chalk";
@@ -14,10 +15,17 @@ import config from "./config.js";
 
 console.log(chalk.yellow("🚀 Starting server..."));
 
+const require = createRequire(import.meta.url);
+const Alloy = require("./alloy/lib/index.js");
+const alloyConfig = require("./alloy/config.json");
 const __dirname = process.cwd();
 const server = http.createServer();
 const app = express();
 const bareServer = createBareServer("/ca/");
+const alloy = new Alloy(alloyConfig.prefix, {
+  localAddress: alloyConfig.localAddresses || false,
+  blacklist: alloyConfig.blockedHostnames || false,
+});
 const PORT = process.env.PORT || 8080;
 const cache = new Map();
 const CACHE_TTL = 30 * 24 * 60 * 60 * 1000; // Cache for 30 Days
@@ -81,6 +89,24 @@ app.get("/e/*", async (req, res, next) => {
   }
 });
 
+// Alloy proxy. Must run before the body parsers so request bodies are streamed upstream untouched.
+app.use(alloy.prefix, (req, res, next) => {
+  req.url = req.originalUrl;
+  // Alloy assigns req.path, which is a read-only getter on Express requests.
+  Object.defineProperty(req, "path", { value: req.path, writable: true, configurable: true });
+  alloy.http(req, res, next);
+});
+
+app.get(["/prox", "/session"], (req, res, next) => {
+  if (typeof req.query.url !== "string") return next();
+  let url = Buffer.from(req.query.url, "base64").toString("utf-8");
+  if (url.startsWith("//")) url = `http:${url}`;
+  else if (!url.startsWith("https://") && !url.startsWith("http://")) url = `http://${url}`;
+  res.redirect(301, alloy.prefix + alloy.proxifyRequestURL(url));
+});
+
+app.use("/alloy", express.static(path.join(__dirname, "alloy", "public")));
+
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -129,6 +155,8 @@ server.on("request", (req, res) => {
 server.on("upgrade", (req, socket, head) => {
   if (bareServer.shouldRoute(req)) {
     bareServer.routeUpgrade(req, socket, head);
+  } else if (req.url.startsWith(alloy.prefix)) {
+    alloy.upgrade(req, socket, head);
   } else {
     socket.end();
   }
