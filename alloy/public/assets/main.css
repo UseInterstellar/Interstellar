@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;1,100;1,300;1,400;1,500&display=swap');
+@import url('/assets/fonts/fa.css');
+
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: #2c2f33;
+    color: #FFF;
+    font-family: Roboto;
+    font-weight: 400;
+    text-align: center;
+}
+
+h1, h2 {
+    font-weight: 400;
+}
+
+
+.wrapper {
+    width: 100%;
+    padding: 50px;
+    position: absolute;
+    display: flex;
+    flex: 1;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+header {
+    display: flex;
+    line-height: 110px;
+    height: 110px;
+    justify-content: space-between;
+    margin: 5px 0px;
+    width: 900px;
+    padding: 0px 25px;
+    background: #23272a;
+    border: solid 1px rgb(255, 255, 255, .2);
+}
+
+
+header #intro {
+    font-size: 35px;
+    height: 50px;
+    display: inline
+}
+
+header #github, header #github:active, header #github:hover  {
+    height: 50px;
+    width: 205px;
+    font-size: 20px;
+    display: block;
+    text-align: center;
+    color: #FFF;
+}
+
+header #github i {
+    margin: 0px 4px; 
+}
+
+.container {
+    width: 900px;
+    background: #23272a;
+    padding: 25px;
+    margin: 5px 0px;
+    text-align: left;
+    display: block;
+    border: solid 1px rgb(255, 255, 255, .2);
+}
+
+.form input {
+    width: calc(100% - 64px);
+    height: 50px;
+    left: 0;
+    color: #FFF;
+    padding: 0px 5px;
+    font-family: "Roboto";
+    background: none;
+    font-size: 14px;
+    border-radius: 2px;
+    border: solid 1px rgb(255, 255, 255, .2);
+}
+
+.form button {
+    width: 60px;
+    height: 50px;
+    color: #FFF;
+    padding: 0px 5px;
+    font-family: "Roboto";
+    font-size: 14px;
+    background: none;
+    border-radius: 2px;
+    border: solid 1px rgb(255, 255, 255, .2);
+}
