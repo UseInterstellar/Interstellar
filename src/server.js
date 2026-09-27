@@ -33,7 +33,28 @@ if (vendorMap) {
 
 const server = http.createServer();
 const app = express();
-const PORT = process.env.PORT || 8080;
+
+function resolvePort() {
+  const args = process.argv.slice(2);
+  let flag = null;
+
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+    if (arg === "--port" || arg === "-p") flag = args[i + 1];
+    else if (arg.startsWith("--port=")) flag = arg.slice("--port=".length);
+    else continue;
+
+    if (!/^\d+$/.test(flag ?? "") || Number(flag) < 1 || Number(flag) > 65535) {
+      console.log(chalk.red(`Invalid port ${JSON.stringify(flag ?? null)}, expected 1-65535.`));
+      process.exit(1);
+    }
+    break;
+  }
+
+  return flag ? Number(flag) : process.env.PORT || 8080;
+}
+
+const PORT = resolvePort();
 
 wisp.options.allow_loopback_ips = true;
 wisp.options.allow_private_ips = true;
