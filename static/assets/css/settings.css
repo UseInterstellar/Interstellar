@@ -76,7 +76,8 @@ body {
 
 #background-custom-row,
 #custom-cloak-row,
-#panic-link-custom-row {
+#panic-link-custom-row,
+#gradient-style-row {
    display: flex;
    flex-direction: column;
    gap: 10px;
@@ -350,7 +351,7 @@ select:hover {
 #ab-settings {
    display: flex;
    align-items: center;
-   justify-content: flex-end;
+   justify-content: center;
 }
 
 #ab-settings-container {

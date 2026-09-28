@@ -139,46 +139,74 @@ document.addEventListener("DOMContentLoaded", () => {
     themeChange(this);
   });
 
+
   const bgDropdown = document.getElementById("background-dropdown");
+  const gradientRow = document.getElementById("gradient-style-row");
+  const gradientDropdown = document.getElementById("gradient-dropdown");
+  const bgImageDropdown = document.getElementById("background-image-dropdown");
   const bgCustomRow = document.getElementById("background-custom-row");
   const bgInput = document.getElementById("background-input");
 
   const savedBg = store.get("backgroundImage");
-  const savedBgMode = store.get("backgroundMode") || "default";
+  const legacyCustom = store.get("backgroundMode") === "custom";
+  const savedBgMode = legacyCustom ? "default" : store.get("backgroundMode") || "default";
+  const savedImageMode = legacyCustom || store.get("backgroundImageMode") === "custom" ? "custom" : "default";
+
   bgDropdown.value = savedBgMode;
-  if (savedBgMode === "custom") {
-    bgCustomRow.style.display = "";
-    bgInput.value = savedBg || "";
-  }
+  gradientDropdown.value = store.get("gradientStyle") || "linear";
+  bgImageDropdown.value = savedImageMode;
+  if (savedImageMode === "custom") bgInput.value = savedBg && savedBg !== "none" ? savedBg : "";
 
+  function applyBackground() {
+    const mode = bgDropdown.value;
+    gradientRow.style.display = mode === "gradient" ? "" : "none";
 
-  bgDropdown.addEventListener("change", function () {
-    const mode = this.value;
-    store.set("backgroundMode", mode);
-    bgCustomRow.style.display = mode === "custom" ? "" : "none";
-
-    if (mode === "custom") return;
-
-    store.remove("backgroundImage");
-    document.body.style.backgroundImage = "";
-    if (mode === "none") {
-      store.set("backgroundImage", "none");
-      document.body.dataset.background = "solid";
-    } else if (mode === "gradient") {
+    if (mode === "gradient") {
       document.body.dataset.background = "gradient";
+      document.body.dataset.gradient = gradientDropdown.value;
+    } else if (mode === "none") {
+      document.body.dataset.background = "solid";
+      delete document.body.dataset.gradient;
     } else {
       delete document.body.dataset.background;
+      delete document.body.dataset.gradient;
     }
+  }
+
+  function applyBackgroundImage() {
+    const custom = bgImageDropdown.value === "custom";
+    bgCustomRow.style.display = custom ? "" : "none";
+    const url = custom ? bgInput.value.trim() : "";
+    document.body.style.backgroundImage = url ? `url('${url}')` : "";
+  }
+
+  bgDropdown.addEventListener("change", () => {
+    store.set("backgroundMode", bgDropdown.value);
+    applyBackground();
+  });
+
+  gradientDropdown.addEventListener("change", () => {
+    store.set("gradientStyle", gradientDropdown.value);
+    applyBackground();
+  });
+
+  bgImageDropdown.addEventListener("change", () => {
+    const custom = bgImageDropdown.value === "custom";
+    store.set("backgroundImageMode", bgImageDropdown.value);
+    if (!custom) store.remove("backgroundImage");
+    applyBackgroundImage();
   });
 
   document.getElementById("save-button").addEventListener("click", () => {
     const url = bgInput.value.trim();
-    if (url) {
-      store.set("backgroundImage", url);
-      store.set("backgroundMode", "custom");
-      document.body.style.backgroundImage = `url('${url}')`;
-    }
+    if (!url) return;
+    store.set("backgroundImage", url);
+    store.set("backgroundImageMode", "custom");
+    applyBackgroundImage();
   });
+
+  applyBackground();
+  applyBackgroundImage();
 
   const particlesDropdown = document.getElementById("particles-dropdown");
   particlesDropdown.value = store.get("particles") === "true" ? "on" : "off";

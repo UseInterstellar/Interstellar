@@ -205,15 +205,21 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const savedBackgroundImage = store.get("backgroundImage");
-  const backgroundMode = store.get("backgroundMode") || (savedBackgroundImage === "none" ? "none" : savedBackgroundImage ? "custom" : "default");
+  const storedMode = store.get("backgroundMode");
+  const legacyCustom = storedMode === "custom" || (!storedMode && savedBackgroundImage && savedBackgroundImage !== "none");
+  const backgroundMode = legacyCustom ? "default" : storedMode || (savedBackgroundImage === "none" ? "none" : "default");
+  const imageMode = legacyCustom || store.get("backgroundImageMode") === "custom" ? "custom" : "default";
 
-  if (backgroundMode === "custom" && savedBackgroundImage && savedBackgroundImage !== "none") {
-    const safeBackground = reconstructSafeUrl(savedBackgroundImage);
-    if (safeBackground) document.body.style.backgroundImage = `url('${safeBackground}')`;
-  } else if (backgroundMode === "gradient") {
+  if (backgroundMode === "gradient") {
     document.body.dataset.background = "gradient";
+    document.body.dataset.gradient = store.get("gradientStyle") || "linear";
   } else if (backgroundMode === "none") {
     document.body.dataset.background = "solid";
+  }
+
+  if (imageMode === "custom" && savedBackgroundImage && savedBackgroundImage !== "none") {
+    const safeBackground = reconstructSafeUrl(savedBackgroundImage);
+    if (safeBackground) document.body.style.backgroundImage = `url('${safeBackground}')`;
   }
 
   // Background Particles

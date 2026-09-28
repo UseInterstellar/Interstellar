@@ -65,8 +65,11 @@
 
 
    --gradient-from: var(--surface-raised);
+   --gradient-mid: var(--surface-overlay);
    --gradient-to: var(--background);
    --background-gradient: linear-gradient(160deg, var(--gradient-from), var(--gradient-to));
+   --background-gradient-radial: radial-gradient(circle at 30% 15%, var(--gradient-from), var(--gradient-to) 70%);
+   --background-gradient-multi: linear-gradient(160deg, var(--gradient-from), var(--gradient-mid) 45%, var(--gradient-to));
 
    /* Legacy aliases */
    --background-color: var(--background);
@@ -125,6 +128,16 @@ body[data-background="solid"] {
 body[data-background="gradient"] {
    background-image: var(--background-gradient);
 }
+
+body[data-background="gradient"][data-gradient="radial"] {
+   background-image: var(--background-gradient-radial);
+}
+
+body[data-background="gradient"][data-gradient="multi"] {
+   background-image: var(--background-gradient-multi);
+}
+
+
 
 ::placeholder {
    color: var(--text-muted);
