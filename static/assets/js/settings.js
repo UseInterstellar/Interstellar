@@ -1,7 +1,3 @@
-function stripZeroWidth(text) {
-  return text.replace(/​|‌|‍|‎|‏|⁠|﻿/g, "");
-}
-
 document.addEventListener("DOMContentLoaded", () => {
   const adTypeElement = document.getElementById("adType");
   if (adTypeElement) {
@@ -12,12 +8,18 @@ document.addEventListener("DOMContentLoaded", () => {
     adTypeElement.value = storedAd === "popups" || storedAd === "off" ? storedAd : "default";
   }
 
-  const transportRow = document.getElementById("transport-row");
+  const sjOnly = Array.from(document.querySelectorAll("[data-sj-only]"));
+  const uvOnly = Array.from(document.querySelectorAll("[data-uv-only]"));
+  function syncProxyCards(proxy) {
+    for (const el of sjOnly) el.style.display = proxy === "sj" ? "" : "none";
+    for (const el of uvOnly) el.style.display = proxy === "sj" ? "none" : "";
+  }
+
   const pChangeElement = document.getElementById("pChange");
   if (pChangeElement) {
     pChangeElement.addEventListener("change", function () {
       store.set("proxy", this.value);
-      if (transportRow) transportRow.style.display = this.value === "sj" ? "" : "none";
+      syncProxyCards(this.value);
     });
     pChangeElement.value = store.get("proxy") || "sj";
   }
@@ -29,8 +31,9 @@ document.addEventListener("DOMContentLoaded", () => {
       store.set("transport", this.value);
       window.location.reload();
     });
-    if (transportRow) transportRow.style.display = (store.get("proxy") || "sj") === "sj" ? "" : "none";
   }
+
+  syncProxyCards(store.get("proxy") || "sj");
 
   const wispInput = document.getElementById("wisp-input");
   const wispSaveBtn = document.getElementById("wisp-save-btn");
@@ -52,41 +55,79 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const eventKeyInput = document.getElementById("eventKeyInput");
   const linkInput = document.getElementById("linkInput");
+  const panicLinkDropdown = document.getElementById("panic-link-dropdown");
+  const panicLinkCustomRow = document.getElementById("panic-link-custom-row");
 
-  let eventKey = JSON.parse(store.get("eventKey")) || ["`"];
-  const eventKeyRaw = store.get("eventKeyRaw") || "`";
-  let pLink = store.get("pLink") || "https://classroom.google.com/";
+  eventKeyInput.value = store.get("eventKeyRaw") || "`";
 
-  eventKeyInput.value = eventKeyRaw;
-  linkInput.value = pLink;
+  function commitOnEnter(input, save) {
+    input.addEventListener("change", save);
+    input.addEventListener("keydown", event => {
+      if (event.key !== "Enter") return;
+      event.preventDefault();
+      save();
+      input.blur();
+    });
+  }
 
-  eventKeyInput.addEventListener("input", () => {
-    eventKey = eventKeyInput.value.split(",");
+  commitOnEnter(eventKeyInput, () => {
+    const raw = eventKeyInput.value;
+    store.set("eventKey", JSON.stringify(raw.split(",")));
+    store.set("eventKeyRaw", raw);
   });
-  linkInput.addEventListener("input", () => {
-    pLink = linkInput.value;
+
+
+  const panicPresets = Array.from(panicLinkDropdown.options)
+    .map(option => option.value)
+    .filter(value => value !== "default" && value !== "custom");
+  const storedPanicLink = store.get("pLink") || "";
+
+  if (!storedPanicLink) panicLinkDropdown.value = "default";
+  else if (panicPresets.includes(storedPanicLink)) panicLinkDropdown.value = storedPanicLink;
+  else {
+    panicLinkDropdown.value = "custom";
+    linkInput.value = storedPanicLink;
+  }
+
+  function syncPanicLinkRow() {
+    panicLinkCustomRow.style.display = panicLinkDropdown.value === "custom" ? "" : "none";
+  }
+
+  panicLinkDropdown.addEventListener("change", () => {
+    const choice = panicLinkDropdown.value;
+    syncPanicLinkRow();
+    if (choice === "default") store.remove("pLink");
+    else if (choice === "custom") savePanicLink();
+    else store.set("pLink", choice);
   });
+
+  function savePanicLink() {
+    const value = linkInput.value.trim();
+    if (value) store.set("pLink", value);
+    else store.remove("pLink");
+  }
+
+  commitOnEnter(linkInput, savePanicLink);
+  syncPanicLinkRow();
+
 
   const cloakDropdown = document.getElementById("cloak-dropdown");
+  const customCloakRow = document.getElementById("custom-cloak-row");
+  const customCloakName = document.getElementById("custom-cloak-name");
+  const customCloakIcon = document.getElementById("custom-cloak-icon");
 
-  const sortedOptions = Array.from(cloakDropdown.getElementsByTagName("option")).sort((a, b) => stripZeroWidth(a.textContent).localeCompare(stripZeroWidth(b.textContent)));
-  while (cloakDropdown.firstChild) cloakDropdown.removeChild(cloakDropdown.firstChild);
-  for (const option of sortedOptions) cloakDropdown.appendChild(option);
+  function syncCustomCloakRow() {
+    customCloakRow.style.display = cloakDropdown.value === "custom" ? "" : "none";
+  }
 
-  cloakDropdown.value = store.get("selectedOption") || "Classroom";
+  cloakDropdown.value = store.get("selectedOption") || "Thesaurus";
   cloakDropdown.addEventListener("change", () => handleDropdownChange(cloakDropdown));
 
-  document.getElementById("cloak-save-btn").addEventListener("click", () => {
-    saveCustomCloak();
-    redirectToMainDomain();
-  });
-  document.getElementById("cloak-reset-btn").addEventListener("click", () => {
-    resetCustomCloak();
-    redirectToMainDomain();
-  });
-
-  document.getElementById("custom-cloak-name").value = store.get("CustomName") || "";
-  document.getElementById("custom-cloak-icon").value = store.get("CustomIcon") || "";
+  customCloakName.value = store.get("CustomName") || "";
+  customCloakIcon.value = store.get("CustomIcon") || "";
+  customCloakName.addEventListener("change", applyCustomCloak);
+  customCloakIcon.addEventListener("change", applyCustomCloak);
+  syncCustomCloakRow();
 
   if (store.get("ab") === "true") {
     document.getElementById("ab-settings-switch").checked = true;
@@ -161,59 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const savedEngineName = store.get("enginename");
   if (savedEngineName) document.getElementById("engine").value = savedEngineName;
-
-  initSettingsNav();
 });
-
-
-function initSettingsNav() {
-  const items = Array.from(document.querySelectorAll(".settings-nav-item"));
-  const panels = Array.from(document.querySelectorAll(".settings-panel"));
-  if (!items.length || !panels.length) return;
-
-  const sidebar = document.querySelector(".settings-sidebar");
-  const toggle = document.querySelector(".settings-nav-toggle");
-  const sections = panels.map(panel => panel.dataset.section);
-
-  function show(section) {
-    const target = sections.includes(section) ? section : sections[0];
-    for (const item of items) item.classList.toggle("active", item.dataset.section === target);
-    for (const panel of panels) panel.classList.toggle("active", panel.dataset.section === target);
-    if (sidebar) sidebar.classList.remove("drawer-open");
-    if (toggle) toggle.setAttribute("aria-expanded", "false");
-  }
-
-  for (const item of items) {
-    item.addEventListener("click", () => {
-      const section = item.dataset.section;
-      if (location.hash.slice(1) === section) show(section);
-      else location.hash = section;
-    });
-  }
-
-  if (toggle && sidebar) {
-    toggle.addEventListener("click", () => {
-      const open = sidebar.classList.toggle("drawer-open");
-      toggle.setAttribute("aria-expanded", open ? "true" : "false");
-    });
-  }
-
-  window.addEventListener("hashchange", () => show(location.hash.slice(1)));
-  show(location.hash.slice(1) || sections[0]);
-}
-
-function saveEventKey() {
-  const eventKeyInput = document.getElementById("eventKeyInput");
-  const linkInput = document.getElementById("linkInput");
-  const eventKey = eventKeyInput.value.split(",");
-  const eventKeyRaw = eventKeyInput.value;
-  const pLink = linkInput.value;
-  store.set("eventKey", JSON.stringify(eventKey));
-  store.set("eventKeyRaw", eventKeyRaw);
-  store.set("pLink", pLink);
-  // biome-ignore lint: idk
-  window.location = window.location;
-}
 
 const cloakOptions = {
   Google: { name: "Google", icon: "/assets/media/favicon/google.png" },
@@ -275,11 +264,22 @@ const cloakOptions = {
 
 function handleDropdownChange(selectElement) {
   const selectedValue = selectElement.value;
+  const customRow = document.getElementById("custom-cloak-row");
+
+
+  if (selectedValue === "custom") {
+    store.set("selectedOption", "custom");
+    customRow.style.display = "";
+    applyCustomCloak();
+    return;
+  }
+
   const preset = cloakOptions[selectedValue];
 
   store.remove("CustomName");
   store.remove("CustomIcon");
   store.set("selectedOption", selectedValue);
+  customRow.style.display = "none";
 
   if (preset) {
     store.set("name", preset.name);
@@ -288,27 +288,37 @@ function handleDropdownChange(selectElement) {
     document.getElementById("tab-favicon").setAttribute("href", preset.icon);
   }
 
-  redirectToMainDomain();
+  if (window !== top) redirectToMainDomain();
 }
 
-function saveCustomCloak() {
+
+function safeCloakIcon(raw) {
+  try {
+    const parsed = new URL(raw);
+    return ["https:", "http:", "data:"].includes(parsed.protocol) ? parsed.href : null;
+  } catch {
+    return raw.includes(":") ? null : raw;
+  }
+}
+
+function applyCustomCloak() {
   const nameVal = document.getElementById("custom-cloak-name").value.trim();
   const iconVal = document.getElementById("custom-cloak-icon").value.trim();
+
   if (nameVal) {
     store.set("CustomName", nameVal);
-    store.set("name", nameVal);
+    document.getElementById("page-title").textContent = (window.laceTitle || (s => s))(nameVal);
+  } else {
+    store.remove("CustomName");
   }
-  if (iconVal) {
-    store.set("CustomIcon", iconVal);
-    store.set("icon", iconVal);
-  }
-}
 
-function resetCustomCloak() {
-  store.remove("CustomName");
-  store.remove("CustomIcon");
-  document.getElementById("custom-cloak-name").value = "";
-  document.getElementById("custom-cloak-icon").value = "";
+  const safeIcon = iconVal ? safeCloakIcon(iconVal) : null;
+  if (safeIcon) {
+    store.set("CustomIcon", iconVal);
+    document.getElementById("tab-favicon").setAttribute("href", safeIcon);
+  } else if (!iconVal) {
+    store.remove("CustomIcon");
+  }
 }
 
 function redirectToMainDomain() {
