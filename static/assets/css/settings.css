@@ -1,5 +1,4 @@
 body {
-   background-color: var(--background-image);
    font-family: "Inter", sans-serif;
    color: var(--text);
    margin: 0;
@@ -347,9 +346,11 @@ select:hover {
    margin-top: -3%;
 }
 
+
 #ab-settings {
    display: flex;
    align-items: center;
+   justify-content: flex-end;
 }
 
 #ab-settings-container {

@@ -38,5 +38,5 @@
    --tab-hover: #3d484d;
    --tab-border: transparent;
 
-   --background-image: var(--background);
+   --background-image: none;
 }

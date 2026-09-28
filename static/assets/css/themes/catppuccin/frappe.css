@@ -33,5 +33,5 @@
    --tab-hover: var(--ctp-frappe-surface0);
    --tab-border: transparent;
 
-   --background-image: var(--ctp-frappe-base);
+   --background-image: none;
 }

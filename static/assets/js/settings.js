@@ -151,20 +151,23 @@ document.addEventListener("DOMContentLoaded", () => {
     bgInput.value = savedBg || "";
   }
 
+
   bgDropdown.addEventListener("change", function () {
     const mode = this.value;
     store.set("backgroundMode", mode);
-    if (mode === "default") {
-      bgCustomRow.style.display = "none";
-      store.remove("backgroundImage");
-      document.body.style.backgroundImage = "";
-      window.location.reload();
-    } else if (mode === "none") {
-      bgCustomRow.style.display = "none";
+    bgCustomRow.style.display = mode === "custom" ? "" : "none";
+
+    if (mode === "custom") return;
+
+    store.remove("backgroundImage");
+    document.body.style.backgroundImage = "";
+    if (mode === "none") {
       store.set("backgroundImage", "none");
-      document.body.style.backgroundImage = "none";
-    } else if (mode === "custom") {
-      bgCustomRow.style.display = "";
+      document.body.dataset.background = "solid";
+    } else if (mode === "gradient") {
+      document.body.dataset.background = "gradient";
+    } else {
+      delete document.body.dataset.background;
     }
   });
 

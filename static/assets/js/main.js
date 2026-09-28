@@ -204,12 +204,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Background Image Logic
   const savedBackgroundImage = store.get("backgroundImage");
-  if (savedBackgroundImage === "none") {
-    document.body.style.backgroundImage = "none";
-  } else if (savedBackgroundImage) {
-    document.body.style.backgroundImage = `url('${savedBackgroundImage}')`;
+  const backgroundMode = store.get("backgroundMode") || (savedBackgroundImage === "none" ? "none" : savedBackgroundImage ? "custom" : "default");
+
+  if (backgroundMode === "custom" && savedBackgroundImage && savedBackgroundImage !== "none") {
+    const safeBackground = reconstructSafeUrl(savedBackgroundImage);
+    if (safeBackground) document.body.style.backgroundImage = `url('${safeBackground}')`;
+  } else if (backgroundMode === "gradient") {
+    document.body.dataset.background = "gradient";
+  } else if (backgroundMode === "none") {
+    document.body.dataset.background = "solid";
   }
 
   // Background Particles

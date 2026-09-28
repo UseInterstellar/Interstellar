@@ -33,5 +33,5 @@
    --tab-hover: var(--ctp-macchiato-surface0);
    --tab-border: transparent;
 
-   --background-image: var(--ctp-macchiato-base);
+   --background-image: none;
 }

@@ -44,7 +44,5 @@
    --tab-active: #bbb;
    --tab-hover: #c2c2c2;
    --tab-border: transparent;
-
-   /* Assets */
-   --background-image: var(--background);
+   --background-image: none;
 }

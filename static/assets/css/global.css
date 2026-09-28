@@ -63,6 +63,11 @@
    --backdrop-filter: blur(10px);
    --nav-image: url("/./assets/media/favicon/main.png");
 
+
+   --gradient-from: var(--surface-raised);
+   --gradient-to: var(--background);
+   --background-gradient: linear-gradient(160deg, var(--gradient-from), var(--gradient-to));
+
    /* Legacy aliases */
    --background-color: var(--background);
    --background-column: var(--surface-tile);
@@ -99,15 +104,26 @@
    background-color: var(--text-faint);
 }
 
+
 body {
    font-family: "Inter", sans-serif;
    text-decoration: none;
-   background: var(--background-image);
+   background-color: var(--background);
+   background-image: var(--background-image);
    height: 100%;
    background-position: center;
    background-repeat: no-repeat;
    background-size: cover;
    background-attachment: fixed;
+}
+
+
+body[data-background="solid"] {
+   background-image: none;
+}
+
+body[data-background="gradient"] {
+   background-image: var(--background-gradient);
 }
 
 ::placeholder {
