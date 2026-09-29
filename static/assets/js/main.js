@@ -231,7 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  if (store.get("particles") !== "false") {
+  if (!isInTabMode && store.get("particles") !== "false") {
     // CSS Parallax Pixel Stars (based on codepen.io/sarazond/pen/LYGbwj)
     ["stars", "stars2", "stars3"].forEach(id => {
       if (!document.getElementById(id)) {
