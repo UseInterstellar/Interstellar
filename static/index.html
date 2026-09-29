@@ -1,52 +1,130 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="referrer" content="no-referrer" />
-  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="shortcut icon" id="tab-favicon" href="favicon.png" />
-  <title id="t">Home</title>
-  <link rel="stylesheet" href="/assets/css/global.css?v=6" />
-  <link rel="stylesheet" href="/assets/css/h.css?v=01" />
-  <link rel="stylesheet" href="/assets/css/nav.css?v=01" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6840529569014734"
-    crossorigin="anonymous"></script>
+    <meta charset="UTF-8" />
+    <meta name="referrer" content="no-referrer" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" id="tab-favicon" href="favicon.png" />
+    <title>Interstellar - Private Proxy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/modern.css" />
+    <script src="/assets/js/particles.js"></script>
 </head>
+<body class="dark-mode">
+    <div class="animated-bg"></div>
+    <div class="stars"></div>
+    
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-rocket"></i>
+                <span>Interstellar</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/" class="active">Home</a></li>
+                <li><a href="/a">Games</a></li>
+                <li><a href="/b">Apps</a></li>
+                <li><a href="/c">Settings</a></li>
+                <li><a href="/stats" class="btn-stats"><i class="fas fa-chart-line"></i> Stats</a></li>
+            </ul>
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
 
-<body class="center" onload="SplashT">
-  <div class="f-nav"></div>
-  <div id="particles-js">
-    <script rel="preload" src="https://cdn.jsdelivr.net/particles.js/2.0.0/"></script>
-    <div class="main">
-      <h1 class="title">&#73;&#110;&#116;&#101;&#114;&#115;&#116;&#101;&#108;&#108;&#97;&#114;</h1>
-      <p id="splash"></p>
-      <div class="search-container">
-        <form id="fv" method="POST">
-          <input id="input" class="truncate" placeholder="Search or enter a URL" type="text" />
-        </form>
-      </div>
+    <div class="container">
+        <div class="hero">
+            <h1 class="hero-title">Welcome to Interstellar</h1>
+            <p class="hero-subtitle">Your private, blazingly fast web proxy</p>
+            
+            <div class="search-box">
+                <div class="search-input-wrapper">
+                    <input 
+                        type="text" 
+                        id="urlInput" 
+                        class="search-input" 
+                        placeholder="🔍 Enter URL or search..."
+                        onkeypress="handleKeyPress(event)"
+                    />
+                    <button class="search-btn" onclick="navigateToUrl()">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="search-suggestions" id="suggestions"></div>
+            </div>
+
+            <div class="quick-stats">
+                <div class="stat-card">
+                    <i class="fas fa-zap"></i>
+                    <span>Lightning Fast</span>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Secure</span>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-lock"></i>
+                    <span>Private</span>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-infinity"></i>
+                    <span>No Limits</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="features-section">
+            <h2>Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-globe"></i></div>
+                    <h3>Browse Freely</h3>
+                    <p>Access any website with complete privacy</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-gamepad"></i></div>
+                    <h3>Play Games</h3>
+                    <p>Hundreds of games at your fingertips</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-cogs"></i></div>
+                    <h3>Customizable</h3>
+                    <p>Personalize your experience with themes</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-tachometer-alt"></i></div>
+                    <h3>Super Fast</h3>
+                    <p>Optimized routing for maximum speed</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-history"></i></div>
+                    <h3>History</h3>
+                    <p>Local history saved in your browser</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h3>Responsive</h3>
+                    <p>Works perfectly on all devices</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="recent-section">
+            <h2>Recent Visits</h2>
+            <div class="recent-list" id="recentList">
+                <p class="empty-message">No recent visits yet</p>
+            </div>
+        </div>
     </div>
-  </div>
-  <script src="assets/js/index-3.js"></script>
-  <script src="/assets/js/h1.js"></script>
-  <script src="./assets/mathematics/bundle.js?v=2025-04-15"></script>
-  <script src="./assets/mathematics/config.js?v=2025-04-15"></script>
-  <script src="/assets/js/m1.js"></script>
-  <!-- DO NOT REMOVE-->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ"></script>
-  <script>
-    window.dataLayer = window.dataLayer || []
-    function gtag() {
-      dataLayer.push(arguments)
-    }
-    gtag("js", new Date())
 
-    gtag("config", "G-WKJQ5QHQTJ")
-  </script>
-  <!-- DO NOT REMOVE-->
+    <footer class="footer">
+        <p>&copy; 2025 Interstellar Private Proxy | Secure. Private. Fast.</p>
+    </footer>
+
+    <script src="/assets/js/modern.js"></script>
+    <script src="./assets/mathematics/bundle.js?v=2025-04-15"></script>
+    <script src="./assets/mathematics/config.js?v=2025-04-15"></script>
 </body>
-
 </html>
