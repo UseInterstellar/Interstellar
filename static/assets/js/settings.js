@@ -76,7 +76,6 @@ document.addEventListener("DOMContentLoaded", () => {
     store.set("eventKeyRaw", raw);
   });
 
-
   const panicPresets = Array.from(panicLinkDropdown.options)
     .map(option => option.value)
     .filter(value => value !== "default" && value !== "custom");
@@ -110,7 +109,6 @@ document.addEventListener("DOMContentLoaded", () => {
   commitOnEnter(linkInput, savePanicLink);
   syncPanicLinkRow();
 
-
   const cloakDropdown = document.getElementById("cloak-dropdown");
   const customCloakRow = document.getElementById("custom-cloak-row");
   const customCloakName = document.getElementById("custom-cloak-name");
@@ -138,7 +136,6 @@ document.addEventListener("DOMContentLoaded", () => {
   themeDropdown.addEventListener("change", function () {
     themeChange(this);
   });
-
 
   const bgDropdown = document.getElementById("background-dropdown");
   const gradientRow = document.getElementById("gradient-style-row");
@@ -297,7 +294,6 @@ function handleDropdownChange(selectElement) {
   const selectedValue = selectElement.value;
   const customRow = document.getElementById("custom-cloak-row");
 
-
   if (selectedValue === "custom") {
     store.set("selectedOption", "custom");
     customRow.style.display = "";
@@ -321,7 +317,6 @@ function handleDropdownChange(selectElement) {
 
   if (window !== top) redirectToMainDomain();
 }
-
 
 function safeCloakIcon(raw) {
   try {

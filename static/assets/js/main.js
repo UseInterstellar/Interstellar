@@ -1,6 +1,5 @@
 // Theme is applied immediately, to prevent flashing on page load
 (() => {
-
   const themes = {
     black: "/assets/css/themes/dark/black.css",
     midnight: "/assets/css/themes/dark/midnight.css",
@@ -37,7 +36,6 @@
     frappe: "/assets/css/themes/catppuccin/frappe.css",
     latte: "/assets/css/themes/catppuccin/latte.css",
   };
-
 
   const legacyThemes = {
     d: "default",
@@ -292,7 +290,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const safeBackground = reconstructSafeUrl(savedBackgroundImage);
     if (safeBackground) document.body.style.backgroundImage = `url('${safeBackground}')`;
   }
-
 
   if (!isInTabMode && store.get("particles") !== "false") {
     // CSS Parallax Pixel Stars (based on codepen.io/sarazond/pen/LYGbwj)

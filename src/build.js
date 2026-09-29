@@ -894,7 +894,6 @@ function countHardenableSegments(html) {
 const SCRAMJET_ATTR_PREFIX = "scramjet-attr";
 const SCRAMJET_IDB_NAME = "$scramjet";
 
-
 const SCRAMJET_SYMBOL_KEYS = ["scramjet client global", "scramjet frame handle", "scramjet original onevent function", "scramjet realm pollutant"];
 const SCRAMJET_LOG_STRINGS = ['"initializing scramjet client"'];
 
