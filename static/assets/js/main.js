@@ -192,21 +192,41 @@ document.addEventListener("DOMContentLoaded", () => {
     if (safeIcon) icon.setAttribute("href", safeIcon);
   }
 
-  // Event Key Logic
-  const eventKey = JSON.parse(store.get("eventKey")) || ["`"];
-  const rawPLink = store.get("pLink") || "https://classroom.google.com/";
-  const safePLink = reconstructSafeUrl(rawPLink) ?? "https://classroom.google.com/";
+  const DEFAULT_PANIC_KEYS = ["`"];
+  const DEFAULT_PANIC_LINK = "https://classroom.google.com/";
+
+  let panicKeysRaw;
+  let panicKeys = DEFAULT_PANIC_KEYS;
+  function currentPanicKeys() {
+    const raw = store.get("eventKey");
+    if (raw !== panicKeysRaw) {
+      panicKeysRaw = raw;
+      let parsed = null;
+      try {
+        parsed = JSON.parse(raw);
+      } catch {
+        parsed = null;
+      }
+      panicKeys = Array.isArray(parsed) && parsed.length ? parsed : DEFAULT_PANIC_KEYS;
+    }
+    return panicKeys;
+  }
+
+  function currentPanicLink() {
+    return reconstructSafeUrl(store.get("pLink") || DEFAULT_PANIC_LINK) ?? DEFAULT_PANIC_LINK;
+  }
 
   const panicAnchor = document.createElement("a");
-  panicAnchor.href = safePLink;
   panicAnchor.style.display = "none";
   document.body.appendChild(panicAnchor);
 
   let pressedKeys = [];
   document.addEventListener("keydown", event => {
+    const keys = currentPanicKeys();
     pressedKeys.push(event.key);
-    const recentKeys = pressedKeys.slice(-eventKey.length);
-    if (recentKeys.length === eventKey.length && eventKey.every((key, i) => key === recentKeys[i])) {
+    if (pressedKeys.length > keys.length) pressedKeys = pressedKeys.slice(-keys.length);
+    if (pressedKeys.length === keys.length && keys.every((key, i) => key === pressedKeys[i])) {
+      panicAnchor.href = currentPanicLink();
       panicAnchor.click();
       pressedKeys = [];
     }
