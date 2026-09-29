@@ -1,35 +1,77 @@
 // Theme is applied immediately, to prevent flashing on page load
 (() => {
-  const themeid = store.get("theme");
+
   const themes = {
-    catppuccinMocha: "/assets/css/themes/catppuccin/mocha.css",
-    catppuccinMacchiato: "/assets/css/themes/catppuccin/macchiato.css",
-    catppuccinFrappe: "/assets/css/themes/catppuccin/frappe.css",
-    catppuccinLatte: "/assets/css/themes/catppuccin/latte.css",
-    Inverted: "/assets/css/themes/colors/light.css",
-    sky: "/assets/css/themes/colors/sky.css",
-    tokyoNight: "/assets/css/themes/colors/tokyo-night.css",
-    nord: "/assets/css/themes/colors/nord.css",
-    rosePine: "/assets/css/themes/colors/rose-pine.css",
-    oled: "/assets/css/themes/colors/oled.css",
-    light: "/assets/css/themes/colors/light.css",
-    gruvbox: "/assets/css/themes/colors/gruvbox.css",
-    gruvboxLight: "/assets/css/themes/colors/gruvbox-light.css",
-    everforest: "/assets/css/themes/colors/everforest.css",
-    monokai: "/assets/css/themes/colors/monokai.css",
-    oneDark: "/assets/css/themes/colors/one-dark.css",
-    synthwave: "/assets/css/themes/colors/synthwave.css",
-    solarized: "/assets/css/themes/colors/solarized.css",
-    solarizedLight: "/assets/css/themes/colors/solarized-light.css",
-    colorRed: "/assets/css/themes/colors/red.css",
-    colorOrange: "/assets/css/themes/colors/orange.css",
-    colorYellow: "/assets/css/themes/colors/yellow.css",
-    colorGreen: "/assets/css/themes/colors/green.css",
-    colorTurquoise: "/assets/css/themes/colors/turquoise.css",
-    colorBlue: "/assets/css/themes/colors/blue.css",
-    colorPurple: "/assets/css/themes/colors/purple.css",
-    colorPink: "/assets/css/themes/colors/pink.css",
+    black: "/assets/css/themes/dark/black.css",
+    midnight: "/assets/css/themes/dark/midnight.css",
+    tokyo: "/assets/css/themes/dark/tokyo-night.css",
+    sky: "/assets/css/themes/dark/sky.css",
+    arctic: "/assets/css/themes/dark/arctic.css",
+    forest: "/assets/css/themes/dark/forest.css",
+    rose: "/assets/css/themes/dark/rose.css",
+    retro: "/assets/css/themes/dark/retro.css",
+    neon: "/assets/css/themes/dark/neon.css",
+    ocean: "/assets/css/themes/dark/deep-ocean.css",
+    synthwave: "/assets/css/themes/dark/synthwave.css",
+    light: "/assets/css/themes/light/light.css",
+    cream: "/assets/css/themes/light/cream.css",
+    parchment: "/assets/css/themes/light/parchment.css",
+    red: "/assets/css/themes/color/red.css",
+    orange: "/assets/css/themes/color/orange.css",
+    yellow: "/assets/css/themes/color/yellow.css",
+    green: "/assets/css/themes/color/green.css",
+    turquoise: "/assets/css/themes/color/turquoise.css",
+    blue: "/assets/css/themes/color/blue.css",
+    purple: "/assets/css/themes/color/purple.css",
+    pink: "/assets/css/themes/color/pink.css",
+    pastelRed: "/assets/css/themes/pastel/red.css",
+    pastelOrange: "/assets/css/themes/pastel/orange.css",
+    pastelYellow: "/assets/css/themes/pastel/yellow.css",
+    pastelGreen: "/assets/css/themes/pastel/green.css",
+    pastelTurquoise: "/assets/css/themes/pastel/turquoise.css",
+    pastelBlue: "/assets/css/themes/pastel/blue.css",
+    pastelPurple: "/assets/css/themes/pastel/purple.css",
+    pastelPink: "/assets/css/themes/pastel/pink.css",
+    mocha: "/assets/css/themes/catppuccin/mocha.css",
+    macchiato: "/assets/css/themes/catppuccin/macchiato.css",
+    frappe: "/assets/css/themes/catppuccin/frappe.css",
+    latte: "/assets/css/themes/catppuccin/latte.css",
   };
+
+
+  const legacyThemes = {
+    d: "default",
+    oled: "black",
+    oneDark: "midnight",
+    tokyoNight: "tokyo",
+    nord: "arctic",
+    everforest: "forest",
+    rosePine: "rose",
+    gruvbox: "retro",
+    monokai: "neon",
+    solarized: "ocean",
+    Inverted: "light",
+    gruvboxLight: "cream",
+    solarizedLight: "parchment",
+    colorRed: "red",
+    colorOrange: "orange",
+    colorYellow: "yellow",
+    colorGreen: "green",
+    colorTurquoise: "turquoise",
+    colorBlue: "blue",
+    colorPurple: "purple",
+    colorPink: "pink",
+    catppuccinMocha: "mocha",
+    catppuccinMacchiato: "macchiato",
+    catppuccinFrappe: "frappe",
+    catppuccinLatte: "latte",
+  };
+
+  let themeid = store.get("theme");
+  if (Object.hasOwn(legacyThemes, themeid)) {
+    themeid = legacyThemes[themeid];
+    store.set("theme", themeid);
+  }
 
   if (themes[themeid]) {
     const themeLink = document.createElement("link");
@@ -167,8 +209,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (nav) {
     const themeId = store.get("theme");
-    const lightThemes = ["Inverted", "light", "gruvboxLight", "solarizedLight"];
-    const LogoUrl = lightThemes.includes(themeId) ? "/assets/media/favicon/main-inverted.png" : "/assets/media/favicon/main.png";
+    const lightThemes = ["light", "cream", "parchment", "latte"];
+    const isLightTheme = lightThemes.includes(themeId) || String(themeId).startsWith("pastel");
+    const LogoUrl = isLightTheme ? "/assets/media/favicon/main-inverted.png" : "/assets/media/favicon/main.png";
     const html = `
       <div id="icon-container">
         <a class="icon" href="/./"><img alt="nav" id="nav-logo" src="${LogoUrl}"/></a>

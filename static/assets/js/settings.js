@@ -134,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const themeDropdown = document.getElementById("theme-dropdown");
-  themeDropdown.value = store.get("theme") || "d";
+  themeDropdown.value = store.get("theme") || "default";
   themeDropdown.addEventListener("change", function () {
     themeChange(this);
   });
@@ -371,7 +371,7 @@ function redirectToMainDomain() {
 
 function themeChange(selectElement) {
   const value = selectElement.value;
-  if (value === "d") {
+  if (value === "default") {
     store.remove("theme");
   } else {
     store.set("theme", value);
