@@ -207,12 +207,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const savedBackgroundImage = store.get("backgroundImage");
   const storedMode = store.get("backgroundMode");
   const legacyCustom = storedMode === "custom" || (!storedMode && savedBackgroundImage && savedBackgroundImage !== "none");
-  const backgroundMode = legacyCustom ? "default" : storedMode || (savedBackgroundImage === "none" ? "none" : "default");
+  const backgroundMode = legacyCustom ? "default" : storedMode || (savedBackgroundImage === "none" ? "none" : "gradient");
   const imageMode = legacyCustom || store.get("backgroundImageMode") === "custom" ? "custom" : "default";
 
   if (backgroundMode === "gradient") {
     document.body.dataset.background = "gradient";
-    document.body.dataset.gradient = store.get("gradientStyle") || "linear";
+    document.body.dataset.gradient = store.get("gradientStyle") || "multi";
   } else if (backgroundMode === "none") {
     document.body.dataset.background = "solid";
   }
@@ -222,8 +222,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (safeBackground) document.body.style.backgroundImage = `url('${safeBackground}')`;
   }
 
-  // Background Particles
-  if (store.get("particles") === "true") {
+
+  if (store.get("particles") !== "false") {
     // CSS Parallax Pixel Stars (based on codepen.io/sarazond/pen/LYGbwj)
     ["stars", "stars2", "stars3"].forEach(id => {
       if (!document.getElementById(id)) {

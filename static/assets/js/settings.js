@@ -149,11 +149,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const savedBg = store.get("backgroundImage");
   const legacyCustom = store.get("backgroundMode") === "custom";
-  const savedBgMode = legacyCustom ? "default" : store.get("backgroundMode") || "default";
+  const savedBgMode = legacyCustom ? "default" : store.get("backgroundMode") || "gradient";
   const savedImageMode = legacyCustom || store.get("backgroundImageMode") === "custom" ? "custom" : "default";
 
   bgDropdown.value = savedBgMode;
-  gradientDropdown.value = store.get("gradientStyle") || "linear";
+  gradientDropdown.value = store.get("gradientStyle") || "multi";
   bgImageDropdown.value = savedImageMode;
   if (savedImageMode === "custom") bgInput.value = savedBg && savedBg !== "none" ? savedBg : "";
 
@@ -209,7 +209,7 @@ document.addEventListener("DOMContentLoaded", () => {
   applyBackgroundImage();
 
   const particlesDropdown = document.getElementById("particles-dropdown");
-  particlesDropdown.value = store.get("particles") === "true" ? "on" : "off";
+  particlesDropdown.value = store.get("particles") === "false" ? "off" : "on";
   particlesDropdown.addEventListener("change", function () {
     store.set("particles", this.value === "on" ? "true" : "false");
   });
