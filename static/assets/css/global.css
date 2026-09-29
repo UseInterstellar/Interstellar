@@ -65,11 +65,16 @@
 
 
    --gradient-from: var(--surface-raised);
-   --gradient-mid: var(--surface-overlay);
    --gradient-to: var(--background);
+
+
+   --gradient-multi-from: color-mix(in srgb, var(--background) 94%, var(--accent) 6%);
+   --gradient-multi-mid: color-mix(in srgb, var(--background) 87%, var(--accent) 13%);
+   --gradient-multi-to: var(--background);
+
    --background-gradient: linear-gradient(160deg, var(--gradient-from), var(--gradient-to));
    --background-gradient-radial: radial-gradient(circle at 30% 15%, var(--gradient-from), var(--gradient-to) 70%);
-   --background-gradient-multi: linear-gradient(160deg, var(--gradient-from), var(--gradient-mid) 45%, var(--gradient-to));
+   --background-gradient-multi: linear-gradient(160deg, var(--gradient-multi-from), var(--gradient-multi-mid) 40%, var(--gradient-multi-to) 85%);
 
    /* Legacy aliases */
    --background-color: var(--background);
