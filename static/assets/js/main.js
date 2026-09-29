@@ -21,6 +21,14 @@
     synthwave: "/assets/css/themes/colors/synthwave.css",
     solarized: "/assets/css/themes/colors/solarized.css",
     solarizedLight: "/assets/css/themes/colors/solarized-light.css",
+    colorRed: "/assets/css/themes/colors/red.css",
+    colorOrange: "/assets/css/themes/colors/orange.css",
+    colorYellow: "/assets/css/themes/colors/yellow.css",
+    colorGreen: "/assets/css/themes/colors/green.css",
+    colorTurquoise: "/assets/css/themes/colors/turquoise.css",
+    colorBlue: "/assets/css/themes/colors/blue.css",
+    colorPurple: "/assets/css/themes/colors/purple.css",
+    colorPink: "/assets/css/themes/colors/pink.css",
   };
 
   if (themes[themeid]) {
