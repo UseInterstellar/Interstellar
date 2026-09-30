@@ -208,8 +208,9 @@ document.addEventListener("DOMContentLoaded", () => {
   if (nav) {
     const themeId = store.get("theme");
     const lightThemes = ["light", "cream", "parchment", "latte"];
-    const isLightTheme = lightThemes.includes(themeId) || String(themeId).startsWith("pastel");
-    const LogoUrl = isLightTheme ? "/assets/media/favicon/main-inverted.png" : "/assets/media/favicon/main.png";
+    const isPastelTheme = String(themeId).startsWith("pastel");
+    const isLightTheme = lightThemes.includes(themeId);
+    const LogoUrl = isPastelTheme ? "/assets/media/favicon/main.png" : isLightTheme ? "/assets/media/favicon/main-inverted.png" : "/assets/media/favicon/main.png";
     const html = `
       <div id="icon-container">
         <a class="icon" href="/./"><img alt="nav" id="nav-logo" src="${LogoUrl}"/></a>

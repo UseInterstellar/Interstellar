@@ -13,8 +13,9 @@
    --surface-button-hover: #e8e0c9;
    --surface-hover: #eae2cd;
    --surface-active: #e0d7bd;
-   --surface-nav: rgba(0, 0, 0, 0.03);
-   --surface-nav-active: rgba(0, 0, 0, 0.06);
+   --surface-nav: rgba(0, 0, 0, 0.12);
+   --surface-nav-active: rgba(0, 0, 0, 0.16);
+   --brand-text: #ffffff;
 
    /* Borders */
    --border: rgba(0, 0, 0, 0.1);

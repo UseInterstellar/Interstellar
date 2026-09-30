@@ -6,7 +6,7 @@
 
 .title {
    font-size: 10vh;
-   color: var(--text);
+   color: var(--brand-text, var(--text));
    font-family: "Inter", sans-serif;
    text-align: center;
    text-transform: uppercase;
@@ -31,7 +31,7 @@
       position: relative;
       top: -10vw;
       font-size: 10vw;
-      color: var(--text);
+      color: var(--brand-text, var(--text));
       font-family: "Inter", sans-serif;
       text-align: center;
       text-transform: uppercase;

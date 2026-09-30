@@ -56,8 +56,9 @@ img {
    font-size: 30px;
    font-family: "Inter", sans-serif;
    cursor: pointer;
-   color: var(--text);
+   color: var(--brand-text, var(--text));
    font-weight: 600;
+   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
    margin-left: 5px;
    font-style: normal;
    text-decoration: none;
@@ -72,7 +73,7 @@ img {
    transform: translateY(-50%);
    text-transform: uppercase;
    font-size: 18px;
-   color: var(--text);
+   color: var(--brand-text, var(--text));
    font-weight: 600;
    right: 2%;
 }
@@ -85,7 +86,7 @@ img {
    margin-left: 10px;
    text-transform: uppercase;
    cursor: pointer;
-   color: var(--text);
+   color: var(--brand-text, var(--text));
    font-weight: 800;
    right: 2%;
    font-family: "Inter", sans-serif;
@@ -101,7 +102,7 @@ img {
       text-transform: uppercase;
       font-size: 2.5vw;
       cursor: pointer;
-      color: var(--text);
+      color: var(--brand-text, var(--text));
       font-weight: 800;
       right: 2%;
       font-family: "Inter", sans-serif;
