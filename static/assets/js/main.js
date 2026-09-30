@@ -280,6 +280,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const backgroundMode = legacyCustom ? "default" : storedMode || (savedBackgroundImage === "none" ? "none" : "gradient");
   const storedImageMode = store.get("backgroundImageMode");
   const imageMode = legacyCustom || storedImageMode === "custom" ? "custom" : storedImageMode === "all" ? "all" : "none";
+  const backgroundBlur = Math.max(0, Math.min(100, Number(store.get("backgroundBlur")) || 0));
+  document.body.style.setProperty("--background-blur", backgroundBlur);
 
   if (backgroundMode === "gradient") {
     document.body.dataset.background = "gradient";
@@ -290,7 +292,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if ((imageMode === "custom" || imageMode === "all") && savedBackgroundImage && savedBackgroundImage !== "none") {
     const safeBackground = reconstructSafeUrl(savedBackgroundImage);
-    if (safeBackground) document.body.style.backgroundImage = `url('${safeBackground}')`;
+    if (safeBackground) {
+      document.body.dataset.customBackground = "true";
+      document.body.style.setProperty("--custom-background-image", `url('${safeBackground}')`);
+    }
   }
 
   if (!isInTabMode && store.get("particles") !== "false") {

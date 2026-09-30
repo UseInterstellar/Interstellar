@@ -146,6 +146,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const bgCustomToggle = document.getElementById("background-custom-toggle");
   const bgRemoveButton = document.getElementById("background-remove-button");
   const bgLoadMore = document.getElementById("background-load-more");
+  const bgBlur = document.getElementById("background-blur");
+  const bgBlurValue = document.getElementById("background-blur-value");
 
   const backgroundOptions = [
     { label: "V5 Wallpaper", url: "/assets/media/background/v5-wallpaper.png" },
@@ -216,16 +218,26 @@ document.addEventListener("DOMContentLoaded", () => {
   const savedBgMode = legacyCustom ? "default" : store.get("backgroundMode") || "gradient";
   const storedImageMode = store.get("backgroundImageMode");
   const savedImageMode = legacyCustom || storedImageMode === "custom" ? "custom" : storedImageMode === "all" ? "all" : "none";
+  const savedBlur = Math.max(0, Math.min(100, Number(store.get("backgroundBlur")) || 0));
 
   bgDropdown.value = savedBgMode;
   gradientDropdown.value = store.get("gradientStyle") || "multi";
+  bgBlur.value = savedBlur;
+  bgBlurValue.value = `${savedBlur}%`;
+  bgBlurValue.textContent = `${savedBlur}%`;
   if (savedImageMode === "custom") bgInput.value = savedBg && savedBg !== "none" ? savedBg : "";
 
   function applyBackgroundImage() {
     const mode = store.get("backgroundImageMode");
     const url = mode === "custom" ? bgInput.value.trim() : mode === "all" ? store.get("backgroundImage") || "" : "";
     bgCustomRow.style.display = mode === "custom" || bgCustomRow.dataset.open === "true" ? "" : "none";
-    document.body.style.backgroundImage = url ? `url('${url}')` : "";
+    if (url) {
+      document.body.dataset.customBackground = "true";
+      document.body.style.setProperty("--custom-background-image", `url('${url}')`);
+    } else {
+      delete document.body.dataset.customBackground;
+      document.body.style.removeProperty("--custom-background-image");
+    }
     for (const option of bgGallery.querySelectorAll(".bg-option")) {
       option.classList.toggle("active", mode === "all" && option.dataset.url === store.get("backgroundImage"));
     }
@@ -306,6 +318,13 @@ document.addEventListener("DOMContentLoaded", () => {
     applyBackgroundImage();
   });
 
+  bgBlur.addEventListener("input", () => {
+    store.set("backgroundBlur", bgBlur.value);
+    bgBlurValue.value = `${bgBlur.value}%`;
+    bgBlurValue.textContent = `${bgBlur.value}%`;
+    document.body.style.setProperty("--background-blur", bgBlur.value);
+  });
+
   document.getElementById("save-button").addEventListener("click", () => {
     const url = bgInput.value.trim();
     if (!url) return;
@@ -316,6 +335,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   bgLoadMore.addEventListener("click", renderBackgroundOptions);
   renderBackgroundOptions();
+  document.body.style.setProperty("--background-blur", savedBlur);
   applyBackground();
   applyBackgroundImage();
 

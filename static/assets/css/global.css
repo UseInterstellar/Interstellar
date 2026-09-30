@@ -116,6 +116,8 @@
 body {
    font-family: "Inter", sans-serif;
    text-decoration: none;
+   position: relative;
+   isolation: isolate;
    background-color: var(--background);
    background-image: var(--background-image);
    height: 100%;
@@ -123,6 +125,19 @@ body {
    background-repeat: no-repeat;
    background-size: cover;
    background-attachment: fixed;
+}
+
+body::before {
+   content: "";
+   position: fixed;
+   inset: -32px;
+   z-index: -1;
+   pointer-events: none;
+   background-image: var(--custom-background-image, none);
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: cover;
+   filter: blur(calc(var(--background-blur, 0) * 0.24px));
 }
 
 
@@ -140,6 +155,10 @@ body[data-background="gradient"][data-gradient="radial"] {
 
 body[data-background="gradient"][data-gradient="multi"] {
    background-image: var(--background-gradient-multi);
+}
+
+body[data-custom-background] {
+   background-image: none;
 }
 
 
