@@ -135,18 +135,6 @@ for (const cloakKey of ["name", "CustomName"]) {
   if (store.get(cloakKey) === "Home") store.set(cloakKey, "Нome");
 }
 
-let isInTabMode;
-
-try {
-  isInTabMode = window.top.location.pathname === "/tabs";
-} catch {
-  try {
-    isInTabMode = window.parent.location.pathname === "/tabs";
-  } catch {
-    isInTabMode = false;
-  }
-}
-
 function reconstructSafeUrl(raw) {
   if (!raw || typeof raw !== "string") return null;
   try {
@@ -323,15 +311,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  if (!isInTabMode && store.get("particles") !== "false") {
-    // CSS Parallax Pixel Stars (based on codepen.io/sarazond/pen/LYGbwj)
-    ["stars", "stars2", "stars3"].forEach(id => {
-      if (!document.getElementById(id)) {
-        const el = document.createElement("div");
-        el.id = id;
-        document.body.insertBefore(el, document.body.firstChild);
-      }
-    });
+  if (!document.querySelector('script[src="/assets/js/particles.js"]')) {
+    const particleScript = document.createElement("script");
+    particleScript.src = "/assets/js/particles.js";
+    document.head.appendChild(particleScript);
   }
 
   // Pointer Effects — cursor.js is only loaded when an effect is active

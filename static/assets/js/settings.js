@@ -345,9 +345,10 @@ document.addEventListener("DOMContentLoaded", () => {
   applyBackgroundImage();
 
   const particlesDropdown = document.getElementById("particles-dropdown");
-  particlesDropdown.value = store.get("particles") === "false" ? "off" : "on";
+  const savedParticles = store.get("particles");
+  particlesDropdown.value = savedParticles === "false" ? "off" : savedParticles === "smoke" ? "smoke" : "on";
   particlesDropdown.addEventListener("change", function () {
-    store.set("particles", this.value === "on" ? "true" : "false");
+    store.set("particles", this.value === "off" ? "false" : this.value);
   });
 
   const pointerDropdown = document.getElementById("pointer-dropdown");
