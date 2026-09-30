@@ -256,7 +256,47 @@
                   <option value="on">Stars</option>
                   <option value="smoke">Smoke</option>
                   <option value="aurora">Aurora</option>
+                  <option value="grid">Grid</option>
+                  <option value="wiggle">Wiggle</option>
+                  <option value="wiggle-grid">Wiggle Grid</option>
+                  <option value="starfield">Starfield</option>
+                  <option value="twist">Twist</option>
+                  <option value="displace">Displace</option>
+                  <option value="shimmer">Shimmer</option>
+                  <option value="organic">Organic</option>
+                  <option value="shimmer-aurora">Aurora Dots</option>
+                  <option value="morph">Morph</option>
+                  <option value="meteors">Meteors</option>
                 </select>
+                <button class="key-button" id="particles-custom-toggle" type="button">Custom particle settings</button>
+                <div id="particles-custom-panel" style="display:none;">
+                  <label for="shimmer-pattern">Pattern</label>
+                  <select id="shimmer-pattern">
+                    <option value="grid">Grid</option>
+                    <option value="wiggle">Wiggle</option>
+                    <option value="wiggle-grid">Wiggle Grid</option>
+                    <option value="starfield">Starfield</option>
+                    <option value="twist">Twist</option>
+                    <option value="displace">Displace</option>
+                    <option value="shimmer">Shimmer</option>
+                    <option value="organic">Organic</option>
+                    <option value="shimmer-aurora">Aurora Dots</option>
+                    <option value="morph">Morph</option>
+                    <option value="meteors">Meteors</option>
+                  </select>
+                  <label for="shimmer-speed">Speed <output id="shimmer-speed-value">1</output></label>
+                  <input id="shimmer-speed" type="range" min="0" max="3" step="0.05" value="1" />
+                  <label for="shimmer-brightness">Brightness <output id="shimmer-brightness-value">1</output></label>
+                  <input id="shimmer-brightness" type="range" min="0" max="2" step="0.05" value="1" />
+                  <label for="shimmer-dot-size">Dot size <output id="shimmer-dot-size-value">2</output></label>
+                  <input id="shimmer-dot-size" type="range" min="0.5" max="6" step="0.5" value="2" />
+                  <label for="shimmer-density">Density <output id="shimmer-density-value">1</output></label>
+                  <input id="shimmer-density" type="range" min="0.5" max="2" step="0.05" value="1" />
+                  <label for="shimmer-scale">Scale <output id="shimmer-scale-value">1</output></label>
+                  <input id="shimmer-scale" type="range" min="0.5" max="3" step="0.05" value="1" />
+                  <label for="shimmer-vignette">Vignette <output id="shimmer-vignette-value">1</output></label>
+                  <input id="shimmer-vignette" type="range" min="0" max="2" step="0.05" value="1" />
+                </div>
               </div>
             </div>
             <div class="settings-item">

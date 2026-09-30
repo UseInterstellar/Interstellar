@@ -141,12 +141,14 @@ body::before {
 }
 
 #smoke-particles,
-#aurora-particles {
+#aurora-particles,
+#shimmering-dots-particles,
+#shimmering-dots-source-particles {
    position: fixed;
    inset: 0;
    z-index: -1;
-   width: 100vw;
-   height: 100vh;
+   width: 100%;
+   height: 100%;
    pointer-events: none;
 }
 

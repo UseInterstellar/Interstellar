@@ -346,9 +346,59 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const particlesDropdown = document.getElementById("particles-dropdown");
   const savedParticles = store.get("particles");
-  particlesDropdown.value = savedParticles === "false" ? "off" : savedParticles === "smoke" ? "smoke" : savedParticles === "aurora" ? "aurora" : "on";
+  const shimmerPatterns = ["grid", "wiggle", "wiggle-grid", "starfield", "twist", "displace", "shimmer", "organic", "shimmer-aurora", "morph", "meteors"];
+  const savedParticleMode = savedParticles;
+  const particlesCustomToggle = document.getElementById("particles-custom-toggle");
+  const particlesCustomPanel = document.getElementById("particles-custom-panel");
+  const shimmerPattern = document.getElementById("shimmer-pattern");
+  particlesDropdown.value = savedParticleMode === "false" ? "off" : ["smoke", ...shimmerPatterns].includes(savedParticleMode) ? savedParticleMode : "on";
   particlesDropdown.addEventListener("change", function () {
-    store.set("particles", this.value === "off" ? "false" : this.value);
+    const mode = this.value === "off" ? "false" : this.value;
+    store.set("particles", mode);
+    if (shimmerPatterns.includes(mode)) {
+      store.set("shimmerPattern", mode);
+      shimmerPattern.value = mode;
+    } else {
+      particlesCustomPanel.style.display = "none";
+    }
+  });
+
+  const shimmerDefaults = {
+    pattern: "grid",
+    speed: 1,
+    brightness: 1,
+    dotSize: 2,
+    density: 1,
+    scale: 1,
+    vignette: 1,
+  };
+  const shimmerFields = ["speed", "brightness", "dotSize", "density", "scale", "vignette"];
+  const shimmerValues = {};
+  shimmerPattern.value = store.get("shimmerPattern") || (shimmerPatterns.includes(savedParticleMode) ? savedParticleMode : shimmerDefaults.pattern);
+  for (const field of shimmerFields) {
+    const input = document.getElementById("shimmer-" + field.replace(/[A-Z]/g, match => "-" + match.toLowerCase()));
+    const value = Number(store.get(`shimmer${field[0].toUpperCase()}${field.slice(1)}`));
+    shimmerValues[field] = Number.isFinite(value) ? value : shimmerDefaults[field];
+    input.value = shimmerValues[field];
+    document.getElementById(`${input.id}-value`).textContent = shimmerValues[field];
+    input.addEventListener("input", () => {
+      shimmerValues[field] = Number(input.value);
+      document.getElementById(`${input.id}-value`).textContent = input.value;
+      store.set(`shimmer${field[0].toUpperCase()}${field.slice(1)}`, input.value);
+      window.updateShimmeringDots?.({ [field]: shimmerValues[field] });
+    });
+  }
+  shimmerPattern.addEventListener("change", event => {
+    store.set("shimmerPattern", event.target.value);
+    store.set("particles", event.target.value);
+    particlesDropdown.value = event.target.value;
+    window.updateShimmeringDots?.({ pattern: event.target.value });
+  });
+  particlesCustomPanel.style.display = shimmerPatterns.includes(savedParticleMode) && store.get("shimmerControlsOpen") === "true" ? "" : "none";
+  particlesCustomToggle.addEventListener("click", () => {
+    const open = particlesCustomPanel.style.display !== "none";
+    particlesCustomPanel.style.display = open ? "none" : "";
+    store.set("shimmerControlsOpen", open ? "false" : "true");
   });
 
   const pointerDropdown = document.getElementById("pointer-dropdown");
