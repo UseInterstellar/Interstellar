@@ -71,19 +71,44 @@
     store.set("theme", themeid);
   }
 
-  if (themes[themeid]) {
-    const themeLink = document.createElement("link");
-    themeLink.rel = "stylesheet";
-    themeLink.href = themes[themeid];
-    document.head.appendChild(themeLink);
-  } else {
-    const customThemeCss = store.getRaw(`t${themeid}`);
-    if (customThemeCss) {
-      const customThemeStyle = document.createElement("style");
-      customThemeStyle.textContent = customThemeCss;
-      document.head.appendChild(customThemeStyle);
+  function applyTheme(themeId) {
+    let themeLink = document.getElementById("active-theme");
+    let customThemeStyle = document.getElementById("active-custom-theme");
+
+    if (themes[themeId]) {
+      if (!themeLink) {
+        themeLink = document.createElement("link");
+        themeLink.id = "active-theme";
+        themeLink.rel = "stylesheet";
+        document.head.appendChild(themeLink);
+      }
+      themeLink.href = themes[themeId];
+      customThemeStyle?.remove();
+    } else {
+      themeLink?.remove();
+      const customThemeCss = store.getRaw(`t${themeId}`);
+      if (customThemeCss) {
+        if (!customThemeStyle) {
+          customThemeStyle = document.createElement("style");
+          customThemeStyle.id = "active-custom-theme";
+          document.head.appendChild(customThemeStyle);
+        }
+        customThemeStyle.textContent = customThemeCss;
+      } else {
+        customThemeStyle?.remove();
+      }
+    }
+
+    const isPastelTheme = String(themeId).startsWith("pastel");
+    const isLightTheme = ["light", "cream", "parchment", "latte"].includes(themeId);
+    const navLogo = document.getElementById("nav-logo");
+    if (navLogo) {
+      navLogo.src = isPastelTheme || !isLightTheme ? "/assets/media/favicon/main.png" : "/assets/media/favicon/main-inverted.png";
     }
   }
+
+  window.applyTheme = applyTheme;
+  applyTheme(themeid);
 
   const PROXY_KEY = "proxy";
   const ALLOWED = ["uv", "sj"];

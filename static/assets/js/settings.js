@@ -505,7 +505,7 @@ function themeChange(selectElement) {
   } else {
     store.set("theme", value);
   }
-  window.location.reload();
+  window.applyTheme?.(value);
 }
 
 function openAboutBlank() {
