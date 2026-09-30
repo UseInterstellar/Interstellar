@@ -83,13 +83,28 @@ body {
    gap: 10px;
 }
 
+#background-image-actions {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 10px;
+}
+
+#background-image-actions .key-button {
+   flex: 1 1 180px;
+}
+
 .bg-gallery {
    display: grid;
-   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+   grid-template-columns: repeat(3, minmax(0, 1fr));
    gap: 16px;
 }
 
 .bg-option {
+   width: 100%;
+   height: auto;
+   margin: 0;
+   padding: 0;
+   text-align: left;
    background-color: var(--surface-tile);
    border: 1px solid var(--border);
    border-radius: var(--radius-md);
@@ -110,15 +125,22 @@ body {
 }
 
 .bg-option-preview {
+   display: block;
+   width: 100%;
    aspect-ratio: 16 / 10;
-   background-size: cover;
-   background-position: center;
+   object-fit: cover;
 }
 
 .bg-option-label {
+   display: block;
    padding: 10px 12px;
    font-weight: 600;
    color: var(--text);
+}
+
+#background-load-more {
+   width: 100%;
+   margin-top: 0;
 }
 
 .settings-card {
@@ -312,6 +334,10 @@ select:hover {
    .settings-shell {
       width: 100%;
       padding: calc(10vh + 40px) 16px 40px 16px;
+   }
+
+   .bg-gallery {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
    }
 
    .settings-content {

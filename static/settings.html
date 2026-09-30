@@ -226,17 +226,19 @@
             <div class="settings-item">
               <div class="settings-item-info">
                 <h3>Background Image</h3>
-                <p>Overlay your own image. Overrides the background above.</p>
+                <p>Choose a theme, add your own image, or remove the current background.</p>
               </div>
               <div class="settings-item-control">
-                <select id="background-image-dropdown">
-                  <option value="default">Default</option>
-                  <option value="custom">Custom</option>
-                </select>
+                <div id="background-image-actions">
+                  <button class="key-button" id="background-custom-toggle" type="button">Custom background</button>
+                  <button class="key-button" id="background-remove-button" type="button">Remove background</button>
+                </div>
                 <div id="background-custom-row" style="display:none;">
                   <input class="key-form" type="text" id="background-input" placeholder="Enter image URL" />
                   <button class="key-button" id="save-button">Save</button>
                 </div>
+                <div id="background-gallery" class="bg-gallery" aria-label="Background image gallery"></div>
+                <button class="key-button" id="background-load-more" type="button">Load more themes</button>
               </div>
             </div>
             <div class="settings-item">

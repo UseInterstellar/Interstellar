@@ -277,7 +277,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const storedMode = store.get("backgroundMode");
   const legacyCustom = storedMode === "custom" || (!storedMode && savedBackgroundImage && savedBackgroundImage !== "none");
   const backgroundMode = legacyCustom ? "default" : storedMode || (savedBackgroundImage === "none" ? "none" : "gradient");
-  const imageMode = legacyCustom || store.get("backgroundImageMode") === "custom" ? "custom" : "default";
+  const storedImageMode = store.get("backgroundImageMode");
+  const imageMode = legacyCustom || storedImageMode === "custom" ? "custom" : storedImageMode === "all" ? "all" : "none";
 
   if (backgroundMode === "gradient") {
     document.body.dataset.background = "gradient";
@@ -286,7 +287,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.dataset.background = "solid";
   }
 
-  if (imageMode === "custom" && savedBackgroundImage && savedBackgroundImage !== "none") {
+  if ((imageMode === "custom" || imageMode === "all") && savedBackgroundImage && savedBackgroundImage !== "none") {
     const safeBackground = reconstructSafeUrl(savedBackgroundImage);
     if (safeBackground) document.body.style.backgroundImage = `url('${safeBackground}')`;
   }

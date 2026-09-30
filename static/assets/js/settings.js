@@ -140,19 +140,132 @@ document.addEventListener("DOMContentLoaded", () => {
   const bgDropdown = document.getElementById("background-dropdown");
   const gradientRow = document.getElementById("gradient-style-row");
   const gradientDropdown = document.getElementById("gradient-dropdown");
-  const bgImageDropdown = document.getElementById("background-image-dropdown");
   const bgCustomRow = document.getElementById("background-custom-row");
   const bgInput = document.getElementById("background-input");
+  const bgGallery = document.getElementById("background-gallery");
+  const bgCustomToggle = document.getElementById("background-custom-toggle");
+  const bgRemoveButton = document.getElementById("background-remove-button");
+  const bgLoadMore = document.getElementById("background-load-more");
+
+  const backgroundOptions = [
+    { label: "V5 Wallpaper", url: "/assets/media/background/v5-wallpaper.png" },
+    { label: "V5 Inverted", url: "/assets/media/background/v5-inverted.png" },
+    { label: "Aesthetic", url: "/assets/media/background/minecraft-aesthetic.jpg" },
+    { label: "Ancient City", url: "/assets/media/background/minecraft-ancient-city.png" },
+    { label: "Bees", url: "/assets/media/background/minecraft-bees.png" },
+    { label: "Birch with Rainbow", url: "/assets/media/background/minecraft-birch-with-rainbow.png" },
+    { label: "Blue Night", url: "/assets/media/background/minecraft-blue-night.jpg" },
+    { label: "Cathedral", url: "/assets/media/background/minecraft-cathedral.png" },
+    { label: "Cave Flowers", url: "/assets/media/background/minecraft-cave-flowers.png" },
+    { label: "Cave V2", url: "/assets/media/background/minecraft-cave-v2.png" },
+    { label: "Cave", url: "/assets/media/background/minecraft-cave.png" },
+    { label: "Cherry Blossom Sunrise", url: "/assets/media/background/minecraft-cherry-blossom-sunrise.jpeg" },
+    { label: "Cherry with Sheep", url: "/assets/media/background/minecraft-cherry-with-sheep.png" },
+    { label: "Dappled Forest", url: "/assets/media/background/minecraft-dappled-forest.jpg" },
+    { label: "Desert Fog", url: "/assets/media/background/minecraft-desert-fog.jpeg" },
+    { label: "Desert", url: "/assets/media/background/minecraft-desert.png" },
+    { label: "Dock", url: "/assets/media/background/minecraft-dock.jpg" },
+    { label: "The End", url: "/assets/media/background/minecraft-end.png" },
+    { label: "Firefly Bush", url: "/assets/media/background/minecraft-firefly-bush.png" },
+    { label: "Frozen Ocean", url: "/assets/media/background/minecraft-frozen-ocean.png" },
+    { label: "Gloomy", url: "/assets/media/background/minecraft-gloomy.png" },
+    { label: "Golden Hour", url: "/assets/media/background/minecraft-golden-hour.png" },
+    { label: "House", url: "/assets/media/background/minecraft-house.jpeg" },
+    { label: "Ice Spikes Sunset", url: "/assets/media/background/minecraft-ice-spikes-sunset.png" },
+    { label: "Jungle", url: "/assets/media/background/minecraft-jungle.jpeg" },
+    { label: "Lukewarm Ocean", url: "/assets/media/background/minecraft-lukewarm-ocean.png" },
+    { label: "Lush Cave V2", url: "/assets/media/background/minecraft-lush-cave-v2.png" },
+    { label: "Lush Cave V3", url: "/assets/media/background/minecraft-lush-cave-v3.png" },
+    { label: "Lush Cave", url: "/assets/media/background/minecraft-lush-cave.jpg" },
+    { label: "Mangrove Swamp", url: "/assets/media/background/minecraft-mangrove-swamp.png" },
+    { label: "Nether Crimson Forest", url: "/assets/media/background/minecraft-nether-crimson-forest.png" },
+    { label: "Nether Warped Forest", url: "/assets/media/background/minecraft-nether-warped-forest.png" },
+    { label: "Night Desert Village", url: "/assets/media/background/minecraft-night-desert-village.jpeg" },
+    { label: "Night Mountain", url: "/assets/media/background/minecraft-night-mountain.png" },
+    { label: "Night Scary", url: "/assets/media/background/minecraft-night-scary.png" },
+    { label: "Night", url: "/assets/media/background/minecraft-night.jpeg" },
+    { label: "Pale Garden", url: "/assets/media/background/minecraft-pale-garden.jpeg" },
+    { label: "Plains Lake", url: "/assets/media/background/minecraft-plains-lake.jpeg" },
+    { label: "Plains", url: "/assets/media/background/minecraft-plains.jpg" },
+    { label: "Rainy Plains", url: "/assets/media/background/minecraft-rainy-plains.jpeg" },
+    { label: "Realistic", url: "/assets/media/background/minecraft-realistic.png" },
+    { label: "Savannah Shores", url: "/assets/media/background/minecraft-savannah-shores.png" },
+    { label: "Savannah", url: "/assets/media/background/minecraft-savannah.png" },
+    { label: "Ships", url: "/assets/media/background/minecraft-ships.png" },
+    { label: "Snowy Mountain Cloudy", url: "/assets/media/background/minecraft-snowy-mountain-cloudy.png" },
+    { label: "Snowy Mountains", url: "/assets/media/background/minecraft-snowy-mountains.jpg" },
+    { label: "Spruce Forest", url: "/assets/media/background/minecraft-spruce-forest.png" },
+    { label: "Realistic Spruce", url: "/assets/media/background/minecraft-spruce-realistic.png" },
+    { label: "Swamp Green Fog", url: "/assets/media/background/minecraft-swamp-green-fog.png" },
+    { label: "Swamp Sunrise", url: "/assets/media/background/minecraft-swamp-sunrise.jpg" },
+    { label: "Swamp Sunset", url: "/assets/media/background/minecraft-swamp-sunset.jpeg" },
+    { label: "Swamp", url: "/assets/media/background/minecraft-swamp.jpeg" },
+    { label: "Town V2", url: "/assets/media/background/minecraft-town-v2.png" },
+    { label: "Town", url: "/assets/media/background/minecraft-town.png" },
+    { label: "Underwater Foggy", url: "/assets/media/background/minecraft-underwater-foggy.jpeg" },
+    { label: "Underwater V2", url: "/assets/media/background/minecraft-underwater-v2.png" },
+    { label: "Underwater", url: "/assets/media/background/minecraft-underwater.jpeg" },
+    { label: "Village", url: "/assets/media/background/minecraft-village.png" },
+    { label: "Wheat Mountain", url: "/assets/media/background/minecraft-wheat-mountain.png" },
+  ];
+  const initialBackgroundCount = 9;
+  let renderedBackgroundCount = 0;
 
   const savedBg = store.get("backgroundImage");
   const legacyCustom = store.get("backgroundMode") === "custom";
   const savedBgMode = legacyCustom ? "default" : store.get("backgroundMode") || "gradient";
-  const savedImageMode = legacyCustom || store.get("backgroundImageMode") === "custom" ? "custom" : "default";
+  const storedImageMode = store.get("backgroundImageMode");
+  const savedImageMode = legacyCustom || storedImageMode === "custom" ? "custom" : storedImageMode === "all" ? "all" : "none";
 
   bgDropdown.value = savedBgMode;
   gradientDropdown.value = store.get("gradientStyle") || "multi";
-  bgImageDropdown.value = savedImageMode;
   if (savedImageMode === "custom") bgInput.value = savedBg && savedBg !== "none" ? savedBg : "";
+
+  function applyBackgroundImage() {
+    const mode = store.get("backgroundImageMode");
+    const url = mode === "custom" ? bgInput.value.trim() : mode === "all" ? store.get("backgroundImage") || "" : "";
+    bgCustomRow.style.display = mode === "custom" || bgCustomRow.dataset.open === "true" ? "" : "none";
+    document.body.style.backgroundImage = url ? `url('${url}')` : "";
+    for (const option of bgGallery.querySelectorAll(".bg-option")) {
+      option.classList.toggle("active", mode === "all" && option.dataset.url === store.get("backgroundImage"));
+    }
+  }
+
+  function renderBackgroundOptions() {
+    const nextCount = Math.min(renderedBackgroundCount + initialBackgroundCount, backgroundOptions.length);
+    for (const option of backgroundOptions.slice(renderedBackgroundCount, nextCount)) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "bg-option";
+      button.dataset.url = option.url;
+      button.setAttribute("aria-label", `Use ${option.label} background`);
+
+      const preview = document.createElement("img");
+      preview.className = "bg-option-preview";
+      preview.src = option.url;
+      preview.loading = "lazy";
+      preview.alt = "";
+
+      const label = document.createElement("span");
+      label.className = "bg-option-label";
+      label.textContent = option.label;
+
+      button.append(preview, label);
+      button.addEventListener("click", () => {
+        if (store.get("backgroundImageMode") === "all" && store.get("backgroundImage") === option.url) {
+          store.remove("backgroundImage");
+          store.set("backgroundImageMode", "none");
+        } else {
+          store.set("backgroundImage", option.url);
+          store.set("backgroundImageMode", "all");
+        }
+        applyBackgroundImage();
+      });
+      bgGallery.appendChild(button);
+    }
+    renderedBackgroundCount = nextCount;
+    bgLoadMore.style.display = renderedBackgroundCount < backgroundOptions.length ? "" : "none";
+  }
 
   function applyBackground() {
     const mode = bgDropdown.value;
@@ -170,13 +283,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function applyBackgroundImage() {
-    const custom = bgImageDropdown.value === "custom";
-    bgCustomRow.style.display = custom ? "" : "none";
-    const url = custom ? bgInput.value.trim() : "";
-    document.body.style.backgroundImage = url ? `url('${url}')` : "";
-  }
-
   bgDropdown.addEventListener("change", () => {
     store.set("backgroundMode", bgDropdown.value);
     applyBackground();
@@ -187,10 +293,16 @@ document.addEventListener("DOMContentLoaded", () => {
     applyBackground();
   });
 
-  bgImageDropdown.addEventListener("change", () => {
-    const custom = bgImageDropdown.value === "custom";
-    store.set("backgroundImageMode", bgImageDropdown.value);
-    if (!custom) store.remove("backgroundImage");
+  bgCustomToggle.addEventListener("click", () => {
+    bgCustomRow.dataset.open = "true";
+    bgCustomRow.style.display = "";
+    bgInput.focus();
+  });
+
+  bgRemoveButton.addEventListener("click", () => {
+    store.remove("backgroundImage");
+    store.set("backgroundImageMode", "none");
+    bgInput.value = "";
     applyBackgroundImage();
   });
 
@@ -202,6 +314,8 @@ document.addEventListener("DOMContentLoaded", () => {
     applyBackgroundImage();
   });
 
+  bgLoadMore.addEventListener("click", renderBackgroundOptions);
+  renderBackgroundOptions();
   applyBackground();
   applyBackgroundImage();
 
