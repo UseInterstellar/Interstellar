@@ -225,12 +225,13 @@ document.addEventListener("DOMContentLoaded", () => {
   bgBlur.value = savedBlur;
   bgBlurValue.value = `${savedBlur}%`;
   bgBlurValue.textContent = `${savedBlur}%`;
+  bgCustomRow.dataset.open = savedImageMode === "custom" ? "true" : "false";
   if (savedImageMode === "custom") bgInput.value = savedBg && savedBg !== "none" ? savedBg : "";
 
   function applyBackgroundImage() {
     const mode = store.get("backgroundImageMode");
     const url = mode === "custom" ? bgInput.value.trim() : mode === "all" ? store.get("backgroundImage") || "" : "";
-    bgCustomRow.style.display = mode === "custom" || bgCustomRow.dataset.open === "true" ? "" : "none";
+    bgCustomRow.style.display = bgCustomRow.dataset.open === "true" ? "" : "none";
     if (url) {
       document.body.dataset.customBackground = "true";
       document.body.style.setProperty("--custom-background-image", `url('${url}')`);
@@ -264,6 +265,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       button.append(preview, label);
       button.addEventListener("click", () => {
+        bgCustomRow.dataset.open = "false";
         if (store.get("backgroundImageMode") === "all" && store.get("backgroundImage") === option.url) {
           store.remove("backgroundImage");
           store.set("backgroundImageMode", "none");
@@ -306,12 +308,14 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   bgCustomToggle.addEventListener("click", () => {
-    bgCustomRow.dataset.open = "true";
-    bgCustomRow.style.display = "";
-    bgInput.focus();
+    const open = bgCustomRow.dataset.open === "true";
+    bgCustomRow.dataset.open = open ? "false" : "true";
+    bgCustomRow.style.display = open ? "none" : "";
+    if (!open) bgInput.focus();
   });
 
   bgRemoveButton.addEventListener("click", () => {
+    bgCustomRow.dataset.open = "false";
     store.remove("backgroundImage");
     store.set("backgroundImageMode", "none");
     bgInput.value = "";
@@ -330,6 +334,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!url) return;
     store.set("backgroundImage", url);
     store.set("backgroundImageMode", "custom");
+    bgCustomRow.dataset.open = "false";
     applyBackgroundImage();
   });
 
