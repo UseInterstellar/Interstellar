@@ -208,7 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
     { label: "Village", url: "/assets/media/background/minecraft-village.png" },
     { label: "Wheat Mountain", url: "/assets/media/background/minecraft-wheat-mountain.png" },
   ];
-  const initialBackgroundCount = 9;
+  const initialBackgroundCount = 15;
   let renderedBackgroundCount = 0;
 
   const savedBg = store.get("backgroundImage");

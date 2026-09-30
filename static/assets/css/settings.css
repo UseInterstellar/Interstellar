@@ -51,6 +51,10 @@ body {
    display: block;
 }
 
+.settings-item.background-image-settings {
+   grid-template-columns: minmax(0, 1fr);
+}
+
 .settings-item + .settings-item {
    border-top: 1px solid var(--border);
 }
@@ -95,7 +99,7 @@ body {
 
 .bg-gallery {
    display: grid;
-   grid-template-columns: repeat(3, minmax(0, 1fr));
+   grid-template-columns: repeat(5, minmax(0, 1fr));
    gap: 16px;
 }
 
@@ -127,7 +131,7 @@ body {
 .bg-option-preview {
    display: block;
    width: 100%;
-   aspect-ratio: 16 / 10;
+   aspect-ratio: 16 / 9;
    object-fit: cover;
 }
 
