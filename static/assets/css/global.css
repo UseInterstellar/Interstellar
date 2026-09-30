@@ -140,7 +140,8 @@ body::before {
    filter: blur(calc(var(--background-blur, 0) * 0.24px));
 }
 
-#smoke-particles {
+#smoke-particles,
+#aurora-particles {
    position: fixed;
    inset: 0;
    z-index: -1;

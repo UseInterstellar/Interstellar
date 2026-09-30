@@ -101,6 +101,111 @@ function initStarParticles() {
   });
 }
 
+function initAuroraParticles() {
+  if (document.getElementById("aurora-particles")) return;
+
+  const canvas = document.createElement("canvas");
+  canvas.id = "aurora-particles";
+  canvas.setAttribute("aria-hidden", "true");
+  document.body.insertBefore(canvas, document.body.firstChild);
+  const gl = canvas.getContext("webgl", { alpha: true }) || canvas.getContext("experimental-webgl");
+  if (!gl) return;
+
+  const vertexSource = `
+    precision mediump float;
+    attribute vec2 a_position;
+    varying vec2 v_uv;
+    void main() {
+      v_uv = 0.5 * (a_position + 1.0);
+      gl_Position = vec4(a_position, 0.0, 1.0);
+    }
+  `;
+  const fragmentSource = `
+    precision mediump float;
+    varying vec2 v_uv;
+    uniform float u_time;
+    uniform float u_ratio;
+    uniform vec3 u_color;
+
+    vec2 rotate(vec2 uv, float angle) {
+      return mat2(cos(angle), sin(angle), -sin(angle), cos(angle)) * uv;
+    }
+
+    float neuro_shape(vec2 uv, float time) {
+      vec2 sine_acc = vec2(0.0);
+      vec2 result = vec2(0.0);
+      float scale = 8.0;
+      for (int layer = 0; layer < 15; layer++) {
+        uv = rotate(uv, 1.0);
+        sine_acc = rotate(sine_acc, 1.0);
+        vec2 current = uv * scale + float(layer) + sine_acc - time;
+        sine_acc += sin(current) + 0.28;
+        result += (0.5 + 0.5 * cos(current)) / scale;
+        scale *= 1.2;
+      }
+      return result.x + result.y;
+    }
+
+    void main() {
+      vec2 uv = 0.5 * v_uv;
+      uv.x *= u_ratio;
+      float noise = neuro_shape(uv, 0.0008 * u_time);
+      noise = 1.2 * pow(noise, 3.0);
+      noise += pow(noise, 10.0);
+      noise = max(0.0, noise - 0.5);
+      noise *= 1.0 - length(v_uv - 0.5);
+      gl_FragColor = vec4(u_color * noise, noise * 0.9);
+    }
+  `;
+
+  function compileShader(type, source) {
+    const shader = gl.createShader(type);
+    gl.shaderSource(shader, source);
+    gl.compileShader(shader);
+    return shader;
+  }
+
+  const program = gl.createProgram();
+  gl.attachShader(program, compileShader(gl.VERTEX_SHADER, vertexSource));
+  gl.attachShader(program, compileShader(gl.FRAGMENT_SHADER, fragmentSource));
+  gl.linkProgram(program);
+  gl.useProgram(program);
+
+  const buffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+  const position = gl.getAttribLocation(program, "a_position");
+  gl.enableVertexAttribArray(position);
+  gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
+
+  const time = gl.getUniformLocation(program, "u_time");
+  const ratio = gl.getUniformLocation(program, "u_ratio");
+  const color = gl.getUniformLocation(program, "u_color");
+  const resize = () => {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = window.innerWidth * dpr;
+    canvas.height = window.innerHeight * dpr;
+    canvas.style.width = "100vw";
+    canvas.style.height = "100vh";
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.uniform1f(ratio, canvas.width / canvas.height);
+  };
+  const themeColor = getComputedStyle(document.documentElement).getPropertyValue("--accent").trim().replace("#", "");
+  const rgb = /^[0-9a-f]{6}$/i.test(themeColor)
+    ? [0, 2, 4].map(index => Number.parseInt(themeColor.slice(index, index + 2), 16) / 255)
+    : [0.4, 0.8, 1.0];
+
+  resize();
+  gl.uniform3f(color, rgb[0], rgb[1], rgb[2]);
+  window.addEventListener("resize", resize);
+  const render = now => {
+    gl.uniform1f(time, now);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    requestAnimationFrame(render);
+  };
+  requestAnimationFrame(render);
+}
+
 function isTabsPage() {
   try {
     return window.top.location.pathname === "/tabs";
@@ -117,6 +222,8 @@ if (!isTabsPage()) {
   const particleMode = store.get("particles");
   if (particleMode === "smoke") {
     initSmokeParticles();
+  } else if (particleMode === "aurora") {
+    initAuroraParticles();
   } else if (particleMode !== "false") {
     initStarParticles();
   }

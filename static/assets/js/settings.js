@@ -346,7 +346,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const particlesDropdown = document.getElementById("particles-dropdown");
   const savedParticles = store.get("particles");
-  particlesDropdown.value = savedParticles === "false" ? "off" : savedParticles === "smoke" ? "smoke" : "on";
+  particlesDropdown.value = savedParticles === "false" ? "off" : savedParticles === "smoke" ? "smoke" : savedParticles === "aurora" ? "aurora" : "on";
   particlesDropdown.addEventListener("change", function () {
     store.set("particles", this.value === "off" ? "false" : this.value);
   });
