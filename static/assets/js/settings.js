@@ -350,50 +350,141 @@ document.addEventListener("DOMContentLoaded", () => {
   const savedParticleMode = savedParticles;
   const particlesCustomToggle = document.getElementById("particles-custom-toggle");
   const particlesCustomPanel = document.getElementById("particles-custom-panel");
-  const shimmerPattern = document.getElementById("shimmer-pattern");
+  const particlesCustomFields = document.getElementById("particles-custom-fields");
+  const particleControlSets = {
+    grid: [
+      ["gap", "Gap", 4, 80, 1, 32],
+      ["size", "Size", 0.5, 8, 0.1, 3.5],
+      ["speed", "Speed", 0, 100, 1, 49],
+      ["opacity", "Opacity", 0, 1, 0.05, 1],
+    ],
+    wiggle: [
+      ["count", "Count", 50, 800, 1, 400],
+      ["sizeRange", "Size range", 0.1, 4, 0.1, 0.85],
+      ["speed", "Speed", 0.05, 3, 0.05, 0.6],
+      ["twinkle", "Twinkle", 0.1, 8, 0.1, 3.45],
+      ["drift", "Drift", 0, 60, 1, 28],
+      ["opacity", "Opacity", 0, 1, 0.05, 1],
+    ],
+    starfield: [
+      ["count", "Count", 50, 800, 1, 300],
+      ["seed", "Seed", 0, 99999, 1, 12345],
+      ["size", "Size", 0.1, 4, 0.1, 1],
+      ["duration", "Duration", 100, 10000, 50, 4200],
+      ["faded", "Faded", 0, 1, 0.05, 0.03],
+      ["opacity", "Opacity", 0, 1, 0.05, 1],
+    ],
+    twist: [
+      ["gap", "Gap", 4, 50, 1, 13],
+      ["size", "Size", 0.2, 5, 0.1, 1.5],
+      ["peak", "Peak", 0, 2, 0.05, 1],
+      ["zoom", "Zoom", 1, 120, 1, 60],
+      ["twist", "Twist", 0.25, 5, 0.05, 1.5],
+      ["arms", "Arms", 1, 8, 1, 2],
+      ["spin", "Spin", 0, 2, 0.05, 0.42],
+      ["drift", "Drift", 0, 500, 5, 270],
+      ["width", "Width", 0.5, 12, 0.5, 6],
+      ["floor", "Floor", 0, 1, 0.05, 0],
+      ["opacity", "Opacity", 0, 1, 0.05, 1],
+    ],
+    displace: [
+      ["count", "Count", 50, 600, 1, 260],
+      ["emission", "Emission", 1, 60, 1, 20],
+      ["size", "Size", 0.1, 8, 0.1, 3.3],
+      ["speed", "Speed", 1, 120, 1, 50],
+      ["lifetime", "Lifetime", 1, 30, 0.5, 11],
+      ["drift", "Drift", 0, 40, 1, 10],
+      ["forceRadius", "Force radius", 20, 300, 5, 120],
+      ["force", "Force", 0, 1000, 10, 470],
+      ["friction", "Friction", 0.5, 0.99, 0.01, 0.92],
+      ["opacity", "Opacity", 0, 1, 0.05, 1],
+    ],
+    shimmer: [
+      ["spacing", "Spacing", 4, 60, 1, 22],
+      ["size", "Size", 0.5, 8, 0.1, 3.5],
+      ["speed", "Speed", 0, 6, 0.05, 2.6],
+      ["waveX", "Wave X", 0, 1, 0.01, 0.25],
+      ["waveY", "Wave Y", 0, 1, 0.01, 0.21],
+      ["base", "Base", 0, 1, 0.01, 0.2],
+      ["intensity", "Intensity", 0, 6, 0.05, 3.4],
+      ["opacity", "Opacity", 0, 1, 0.05, 1],
+    ],
+    organic: null,
+    "shimmer-aurora": null,
+    morph: null,
+    meteors: [
+      ["count", "Count", 1, 12, 1, 3],
+      ["angle", "Angle", -180, 180, 1, 20],
+      ["speed", "Speed", 50, 1200, 10, 500],
+      ["lifespan", "Lifespan", 0.05, 1, 0.05, 0.7],
+      ["fadeSpeed", "Fade out speed", 0.02, 1, 0.02, 0.2],
+      ["length", "Length", 20, 500, 5, 240],
+      ["width", "Width", 0.5, 8, 0.5, 2],
+      ["delay", "Delay", 0, 20, 0.5, 5],
+    ],
+  };
+  const fieldControls = [
+    ["speed", "Speed", 0, 3, 0.05, 1],
+    ["brightness", "Brightness", 0, 2, 0.05, 1],
+    ["dotSize", "Dot size", 0.1, 4, 0.05, 1],
+    ["density", "Density", 0.25, 3, 0.05, 1],
+    ["scale", "Scale", 0.25, 4, 0.05, 1],
+    ["vignette", "Vignette", 0, 2, 0.05, 1],
+    ["opacity", "Opacity", 0, 1, 0.05, 1],
+  ];
+  particleControlSets.organic = fieldControls;
+  particleControlSets["shimmer-aurora"] = fieldControls;
+  particleControlSets.morph = fieldControls;
   particlesDropdown.value = savedParticleMode === "false" ? "off" : ["smoke", ...shimmerPatterns].includes(savedParticleMode) ? savedParticleMode : "on";
   particlesDropdown.addEventListener("change", function () {
     const mode = this.value === "off" ? "false" : this.value;
     store.set("particles", mode);
     if (shimmerPatterns.includes(mode)) {
       store.set("shimmerPattern", mode);
-      shimmerPattern.value = mode;
+      renderParticleControls(mode);
     } else {
       particlesCustomPanel.style.display = "none";
     }
   });
-
-  const shimmerDefaults = {
-    pattern: "grid",
-    speed: 1,
-    brightness: 1,
-    dotSize: 2,
-    density: 1,
-    scale: 1,
-    vignette: 1,
-  };
-  const shimmerFields = ["speed", "brightness", "dotSize", "density", "scale", "vignette"];
-  const shimmerValues = {};
-  shimmerPattern.value = store.get("shimmerPattern") || (shimmerPatterns.includes(savedParticleMode) ? savedParticleMode : shimmerDefaults.pattern);
-  for (const field of shimmerFields) {
-    const input = document.getElementById("shimmer-" + field.replace(/[A-Z]/g, match => "-" + match.toLowerCase()));
-    const value = Number(store.get(`shimmer${field[0].toUpperCase()}${field.slice(1)}`));
-    shimmerValues[field] = Number.isFinite(value) ? value : shimmerDefaults[field];
-    input.value = shimmerValues[field];
-    document.getElementById(`${input.id}-value`).textContent = shimmerValues[field];
-    input.addEventListener("input", () => {
-      shimmerValues[field] = Number(input.value);
-      document.getElementById(`${input.id}-value`).textContent = input.value;
-      store.set(`shimmer${field[0].toUpperCase()}${field.slice(1)}`, input.value);
-      window.updateShimmeringDots?.({ [field]: shimmerValues[field] });
-    });
+  function renderParticleControls(mode) {
+    particlesCustomFields.replaceChildren();
+    const controls = particleControlSets[mode];
+    if (!controls) {
+      particlesCustomPanel.style.display = "none";
+      return;
+    }
+    for (const [key, label, min, max, step, fallback] of controls) {
+      const id = `particle-${mode}-${key}`.replace(/[^a-z0-9-]/gi, "-");
+      const storageKey = `particle_${mode}_${key}`;
+      const rawValue = store.get(storageKey);
+      const storedValue = Number(rawValue);
+      const value = rawValue !== undefined && rawValue !== null && rawValue !== "" && Number.isFinite(storedValue) ? storedValue : fallback;
+      const labelElement = document.createElement("label");
+      labelElement.htmlFor = id;
+      labelElement.textContent = label + " ";
+      const output = document.createElement("output");
+      output.id = `${id}-value`;
+      output.textContent = value;
+      labelElement.appendChild(output);
+      const input = document.createElement("input");
+      input.id = id;
+      input.type = "range";
+      input.min = min;
+      input.max = max;
+      input.step = step;
+      input.value = value;
+      input.addEventListener("input", () => {
+        const nextValue = Number(input.value);
+        output.textContent = input.value;
+        store.set(storageKey, input.value);
+        window.updateShimmeringDots?.({ [key]: nextValue });
+      });
+      particlesCustomFields.append(labelElement, input);
+    }
+    particlesCustomPanel.style.display = "";
   }
-  shimmerPattern.addEventListener("change", event => {
-    store.set("shimmerPattern", event.target.value);
-    store.set("particles", event.target.value);
-    particlesDropdown.value = event.target.value;
-    window.updateShimmeringDots?.({ pattern: event.target.value });
-  });
+  const initialParticleMode = shimmerPatterns.includes(savedParticleMode) ? savedParticleMode : "grid";
+  renderParticleControls(initialParticleMode);
   particlesCustomPanel.style.display = shimmerPatterns.includes(savedParticleMode) && store.get("shimmerControlsOpen") === "true" ? "" : "none";
   particlesCustomToggle.addEventListener("click", () => {
     const open = particlesCustomPanel.style.display !== "none";

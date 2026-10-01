@@ -191,9 +191,7 @@ function initAuroraParticles() {
     gl.uniform1f(ratio, canvas.width / canvas.height);
   };
   const themeColor = getComputedStyle(document.documentElement).getPropertyValue("--accent").trim().replace("#", "");
-  const rgb = /^[0-9a-f]{6}$/i.test(themeColor)
-    ? [0, 2, 4].map(index => Number.parseInt(themeColor.slice(index, index + 2), 16) / 255)
-    : [0.4, 0.8, 1.0];
+  const rgb = /^[0-9a-f]{6}$/i.test(themeColor) ? [0, 2, 4].map(index => Number.parseInt(themeColor.slice(index, index + 2), 16) / 255) : [0.4, 0.8, 1.0];
 
   resize();
   gl.uniform3f(color, rgb[0], rgb[1], rgb[2]);
@@ -252,7 +250,7 @@ function initShimmeringDots() {
       const driftRate = 0.5 + Math.random();
       const twinkleRate = 0.5 + Math.random();
       const driftDuration = (1200 + Math.random() * 2400) / (speed * driftRate);
-      const twinkleDuration = (600 + Math.random() * 1600) / (speed * 3.45 * twinkleRate);
+      const twinkleDuration = (600 + Math.random() * 1600) / (speed * settings.twinkle * twinkleRate);
       const opacity = Math.random();
       const scale = 0.1 + Math.random() * 1.9;
       return {
@@ -309,7 +307,7 @@ function initShimmeringDots() {
         if (particle.driftElapsed >= particle.driftDuration) {
           particle.driftState = "waiting";
           particle.driftElapsed = 0;
-          particle.driftDuration = (1200 + Math.random() * 2400) / (Math.max(0.05, settings.speed) * particle.driftRate) * 0.5;
+          particle.driftDuration = ((1200 + Math.random() * 2400) / (Math.max(0.05, settings.speed) * particle.driftRate)) * 0.5;
         }
       }
 
@@ -322,7 +320,7 @@ function initShimmeringDots() {
           particle.fromScale = particle.scale;
           particle.targetOpacity = Math.random();
           particle.targetScale = 0.1 + Math.random() * 1.9;
-          particle.twinkleDuration = (600 + Math.random() * 1600) / (Math.max(0.05, settings.speed) * 3.45 * particle.twinkleRate);
+          particle.twinkleDuration = (600 + Math.random() * 1600) / (Math.max(0.05, settings.speed) * settings.twinkle * particle.twinkleRate);
         }
       } else {
         const twinkleProgress = easeInOut(Math.min(1, particle.twinkleElapsed / particle.twinkleDuration));
@@ -331,7 +329,7 @@ function initShimmeringDots() {
         if (particle.twinkleElapsed >= particle.twinkleDuration) {
           particle.twinkleState = "waiting";
           particle.twinkleElapsed = 0;
-          particle.twinkleDuration = (600 + Math.random() * 1600) / (Math.max(0.05, settings.speed) * 3.45 * particle.twinkleRate) * 0.4;
+          particle.twinkleDuration = ((600 + Math.random() * 1600) / (Math.max(0.05, settings.speed) * 3.45 * particle.twinkleRate)) * 0.4;
         }
       }
       const alpha = Math.min(1, particle.opacity * settings.brightness);
@@ -463,14 +461,51 @@ function initShimmeringDotsSource() {
   const patterns = ["grid", "wiggle", "wiggle-grid", "starfield", "twist", "displace", "shimmer", "organic", "shimmer-aurora", "morph", "meteors"];
   const storedPattern = store.get("shimmerPattern");
   const particleMode = store.get("particles");
+  const activePattern = patterns.includes(storedPattern) ? storedPattern : patterns.includes(particleMode) ? particleMode : "grid";
+  const readModeSetting = (key, fallback) => {
+    const rawValue = store.get(`particle_${activePattern}_${key}`);
+    const value = Number(rawValue);
+    return rawValue !== undefined && rawValue !== null && rawValue !== "" && Number.isFinite(value) ? value : fallback;
+  };
   const settings = {
-    pattern: patterns.includes(storedPattern) ? storedPattern : patterns.includes(particleMode) ? particleMode : "grid",
-    speed: Number(store.get("shimmerSpeed")) || 1,
-    brightness: Number(store.get("shimmerBrightness")) || 1,
-    dotSize: Number(store.get("shimmerDotSize")) || 2,
-    density: Number(store.get("shimmerDensity")) || 1,
-    scale: Number(store.get("shimmerScale")) || 1,
-    vignette: Number(store.get("shimmerVignette")) || 1,
+    pattern: activePattern,
+    speed: readModeSetting("speed", activePattern === "wiggle" ? 0.6 : activePattern === "displace" || activePattern === "meteors" ? (activePattern === "meteors" ? 500 : 50) : Number(store.get("shimmerSpeed")) || 1),
+    brightness: readModeSetting("brightness", Number(store.get("shimmerBrightness")) || 1),
+    dotSize: readModeSetting("dotSize", Number(store.get("shimmerDotSize")) || 2),
+    density: readModeSetting("density", Number(store.get("shimmerDensity")) || 1),
+    scale: readModeSetting("scale", Number(store.get("shimmerScale")) || 1),
+    vignette: readModeSetting("vignette", Number(store.get("shimmerVignette")) || 1),
+    opacity: readModeSetting("opacity", 1),
+    gap: readModeSetting("gap", activePattern === "grid" ? 32 : 25),
+    size: readModeSetting("size", 3.5),
+    count: readModeSetting("count", activePattern === "meteors" ? 2 : 340),
+    sizeRange: readModeSetting("sizeRange", 0.7),
+    twinkle: readModeSetting("twinkle", 3.45),
+    drift: readModeSetting("drift", 20),
+    faded: readModeSetting("faded", 0.03),
+    duration: readModeSetting("duration", 4200),
+    spacing: readModeSetting("spacing", 15),
+    waveX: readModeSetting("waveX", 0.25),
+    waveY: readModeSetting("waveY", 0.21),
+    base: readModeSetting("base", 0.2),
+    intensity: readModeSetting("intensity", 3),
+    emission: readModeSetting("emission", 20),
+    lifetime: readModeSetting("lifetime", 11),
+    forceRadius: readModeSetting("forceRadius", 120),
+    force: readModeSetting("force", 470),
+    friction: readModeSetting("friction", 0.92),
+    peak: readModeSetting("peak", 1),
+    twist: readModeSetting("twist", 1.5),
+    arms: readModeSetting("arms", 2),
+    spin: readModeSetting("spin", 0.42),
+    floor: readModeSetting("floor", 0),
+    zoom: readModeSetting("zoom", 60),
+    angle: readModeSetting("angle", 20),
+    lifespan: readModeSetting("lifespan", 0.7),
+    fadeSpeed: readModeSetting("fadeSpeed", 0.2),
+    length: readModeSetting("length", 240),
+    width: readModeSetting("width", 2),
+    delay: readModeSetting("delay", 5),
   };
   let width = 0;
   let height = 0;
@@ -500,11 +535,21 @@ function initShimmeringDotsSource() {
 
   function colorWithAlpha(alpha) {
     const raw = getComputedStyle(document.documentElement).getPropertyValue("--accent").trim().replace("#", "");
-    if (!/^[0-9a-f]{6}$/i.test(raw)) return `rgba(255,255,255,${alpha})`;
+    if (!/^[0-9a-f]{6}$/i.test(raw)) return `rgba(255,255,255,${alpha * settings.opacity})`;
     const red = Number.parseInt(raw.slice(0, 2), 16);
     const green = Number.parseInt(raw.slice(2, 4), 16);
     const blue = Number.parseInt(raw.slice(4, 6), 16);
-    return `rgba(${red},${green},${blue},${alpha})`;
+    return `rgba(${red},${green},${blue},${alpha * settings.opacity})`;
+  }
+
+  function morphColorWithAlpha(alpha, intensity) {
+    const raw = getComputedStyle(document.documentElement).getPropertyValue("--accent").trim().replace("#", "");
+    if (!/^[0-9a-f]{6}$/i.test(raw)) return `rgba(255,255,255,${alpha * settings.opacity})`;
+    const blend = clamp01(intensity * 0.7);
+    const red = Math.round(Number.parseInt(raw.slice(0, 2), 16) + (255 - Number.parseInt(raw.slice(0, 2), 16)) * blend);
+    const green = Math.round(Number.parseInt(raw.slice(2, 4), 16) + (255 - Number.parseInt(raw.slice(2, 4), 16)) * blend);
+    const blue = Math.round(Number.parseInt(raw.slice(4, 6), 16) + (255 - Number.parseInt(raw.slice(4, 6), 16)) * blend);
+    return `rgba(${red},${green},${blue},${alpha * settings.opacity})`;
   }
 
   function makeFieldCells(pitch) {
@@ -540,24 +585,36 @@ function initShimmeringDotsSource() {
   }
 
   function rebuildWiggle() {
-    const count = Math.max(0, Math.floor(340 * settings.density));
+    const count = Math.max(0, Math.floor(settings.count * settings.density));
     wiggleParticles = Array.from({ length: count }, () => {
       const baseX = Math.random() * width;
       const baseY = Math.random() * height;
       const driftRate = 0.5 + Math.random();
       const twinkleRate = 0.5 + Math.random();
-      const size = 0.5 + Math.random() * 0.7;
+      const size = 0.5 + Math.random() * Math.max(0.1, settings.sizeRange);
       const scale = 0.1 + Math.random() * 1.9;
       return {
-        baseX, baseY, x: baseX, y: baseY,
-        fromX: baseX, fromY: baseY,
-        toX: baseX + (Math.random() * 2 - 1) * 20,
-        toY: baseY + (Math.random() * 2 - 1) * 20,
-        driftRate, twinkleRate, size, scale,
-        fromOpacity: Math.random(), opacity: Math.random(), targetOpacity: Math.random(),
-        fromScale: scale, targetScale: 0.1 + Math.random() * 1.9,
-        driftElapsed: Math.random() * 2000, driftDuration: 1200 + Math.random() * 2400,
-        twinkleElapsed: Math.random() * 1200, twinkleDuration: 600 + Math.random() * 1600,
+        baseX,
+        baseY,
+        x: baseX,
+        y: baseY,
+        fromX: baseX,
+        fromY: baseY,
+        toX: baseX + (Math.random() * 2 - 1) * settings.drift,
+        toY: baseY + (Math.random() * 2 - 1) * settings.drift,
+        driftRate,
+        twinkleRate,
+        size,
+        scale,
+        fromOpacity: Math.random(),
+        opacity: Math.random(),
+        targetOpacity: Math.random(),
+        fromScale: scale,
+        targetScale: 0.1 + Math.random() * 1.9,
+        driftElapsed: Math.random() * 2000,
+        driftDuration: 1200 + Math.random() * 2400,
+        twinkleElapsed: Math.random() * 1200,
+        twinkleDuration: 600 + Math.random() * 1600,
         driftState: Math.random() < 0.75 ? "animating" : "waiting",
         twinkleState: Math.random() < 0.75 ? "animating" : "waiting",
       };
@@ -569,95 +626,157 @@ function initShimmeringDotsSource() {
     return {
       x: Math.random() * width,
       y: height * (0.3 + Math.random() * 0.75),
-      size: Math.random(), speed: Math.random(), drift: Math.random() * 2 - 1,
-      vx: 0, vy: 0, birth: now - ageOffset,
-      lifetime: Math.max(0.5, 11 * jitter), peak: 0.9,
+      size: Math.random(),
+      speed: Math.random(),
+      drift: Math.random() * 2 - 1,
+      phase: Math.random() * tau,
+      vx: 0,
+      vy: 0,
+      birth: now - ageOffset,
+      lifetime: Math.max(0.5, settings.lifetime * jitter),
+      peak: 0.9,
     };
   }
 
   function spawnMeteor() {
-    const angle = 20 * Math.PI / 180;
-    const dx = Math.cos(angle); const dy = Math.sin(angle);
-    const px = -dy; const py = dx;
-    const corners = [[0, 0], [width, 0], [0, height], [width, height]];
+    const angle = ((settings.angle + (Math.random() * 2 - 1) * 12) * Math.PI) / 180;
+    const dx = Math.cos(angle);
+    const dy = Math.sin(angle);
+    const px = -dy;
+    const py = dx;
+    const corners = [
+      [0, 0],
+      [width, 0],
+      [0, height],
+      [width, height],
+    ];
     const along = corners.map(point => point[0] * dx + point[1] * dy);
     const across = corners.map(point => point[0] * px + point[1] * py);
-    const minAlong = Math.min(...along); const maxAlong = Math.max(...along);
-    const minAcross = Math.min(...across); const maxAcross = Math.max(...across);
-    const reach = 0.3 + Math.random() * 0.4;
-    return { dx, dy, px, py, minAlong, length: Math.max(1, maxAlong - minAlong), cross: minAcross + Math.random() * (maxAcross - minAcross), reach, fadeStart: reach * (0.3 + Math.random() * 0.5), progress: -0.05, speed: 500 * (0.5 + Math.random()), state: "active", timer: 0 };
+    const minAlong = Math.min(...along);
+    const maxAlong = Math.max(...along);
+    const minAcross = Math.min(...across);
+    const maxAcross = Math.max(...across);
+    const reach = Math.max(0.05, Math.min(0.95, settings.lifespan * (0.35 + Math.random() * 1.3)));
+    const spawnDelay = Math.random() < 0.1 ? 0.02 : 0.4 + Math.random() * 0.6;
+    const fadeFraction = Math.min(0.98, Math.max(0.02, settings.fadeSpeed * (0.25 + Math.random() * 1.5)));
+    const trailLength = settings.length * (0.65 + Math.random() * 0.7);
+    return {
+      dx,
+      dy,
+      px,
+      py,
+      minAlong,
+      length: Math.max(1, maxAlong - minAlong),
+      cross: minAcross + Math.random() * (maxAcross - minAcross),
+      reach,
+      fadeStart: reach * fadeFraction,
+      trailLength,
+      opacityScale: 0.65 + Math.random() * 0.35,
+      progress: -spawnDelay,
+      speed: settings.speed * (0.3 + Math.random() * 1.4),
+      state: "active",
+      timer: 0,
+    };
   }
 
   function rebuild() {
-    const spacing = Math.max(8, (settings.pattern === "twist" ? 13 : settings.pattern === "wiggle-grid" ? 28 * settings.scale : 32) / settings.density);
+    const spacing = Math.max(4, (settings.pattern === "twist" ? settings.gap : settings.pattern === "grid" ? settings.gap : settings.pattern === "wiggle-grid" ? 28 * settings.scale : 32) / settings.density);
     cells = [];
     for (let x = spacing / 2; x < width; x += spacing) for (let y = spacing / 2; y < height; y += spacing) cells.push({ x, y });
     const diagonal = Math.hypot(width, height);
     gridPixels = [];
-    for (let x = 0; x < width; x += spacing) for (let y = 0; y < height; y += spacing) gridPixels.push({
-      x, y, size: 0, minimum: 0.35, maximum: Math.max(0.7, settings.dotSize * 0.65),
-      sizeStep: Math.random() * 0.4, speed: Math.max(0.001, settings.speed * 0.001),
-      delay: Math.random() * diagonal * 0.8, counter: 0,
-      counterStep: Math.random() * 4 + (width + height) * 0.01,
-      reverse: false, shimmering: false,
-    });
+    for (let x = 0; x < width; x += spacing)
+      for (let y = 0; y < height; y += spacing)
+        gridPixels.push({
+          x,
+          y,
+          size: 0,
+          minimum: 0.35,
+          maximum: Math.max(0.7, (settings.pattern === "grid" ? settings.size : settings.dotSize) * (0.55 + Math.random() * 0.45)),
+          sizeStep: Math.random() * 0.4,
+          speed: Math.max(0.001, settings.speed * 0.001 * (0.55 + Math.random() * 0.9)),
+          delay: Math.random() * diagonal * 2,
+          counter: Math.random() * diagonal * 1.5,
+          counterStep: Math.random() * 4 + (width + height) * 0.01,
+          reverse: false,
+          shimmering: false,
+        });
     fieldCells = makeFieldCells((settings.pattern === "organic" ? 0.02 : 0.018) / Math.max(0.01, settings.density));
     shimmerCells = [];
-    const shimmerSpacing = Math.max(4, 18 / settings.density);
+    const shimmerSpacing = Math.max(4, settings.spacing / settings.density);
     const cols = Math.floor(width / shimmerSpacing) + 2;
     const rows = Math.floor(height / shimmerSpacing) + 2;
-    for (let row = 0; row <= rows; row++) for (let col = 0; col <= cols; col++) {
-      const hash = (Math.imul(row, 73856093) ^ Math.imul(col, 19349663)) >>> 0;
-      shimmerCells.push({ x: col * shimmerSpacing, y: row * shimmerSpacing, col, row, phase: (hash & 255) / 255 * tau, frequency: 0.7 + ((hash >>> 8) & 255) / 255 });
-    }
+    for (let row = 0; row <= rows; row++)
+      for (let col = 0; col <= cols; col++) {
+        const hash = (Math.imul(row, 73856093) ^ Math.imul(col, 19349663)) >>> 0;
+        shimmerCells.push({ x: col * shimmerSpacing, y: row * shimmerSpacing, col, row, phase: ((hash & 255) / 255) * tau, frequency: 0.7 + ((hash >>> 8) & 255) / 255 });
+      }
     rebuildWiggle();
-    buildStars(550 * settings.density, 12345);
+    buildStars((settings.pattern === "starfield" ? settings.count : settings.pattern === "meteors" ? 800 : 550) * settings.density, Number(store.get(`particle_${activePattern}_seed`)) || 12345);
     const now = performance.now() / 1000;
-    floaters = Array.from({ length: 260 }, (_, index) => {
+    floaters = Array.from({ length: activePattern === "displace" ? Math.floor(settings.count) : 260 }, (_, index) => {
       const floater = spawnFloater(now, Math.random() * 2);
-      floater.x = ((index % 32) + Math.random() * 0.8) / 32 * width;
-      floater.y = height * (0.05 + ((index * 37) % 260) / 260 * 0.95);
+      floater.x = (((index % 32) + Math.random() * 0.8) / 32) * width;
+      floater.y = height * (0.05 + (((index * 37) % 260) / 260) * 0.95);
       floater.birth = now - Math.random() * 7;
       return floater;
     });
-    meteors = Array.from({ length: 2 }, spawnMeteor);
+    meteors = Array.from({ length: Math.min(3, Math.max(1, Math.floor(settings.count))) }, spawnMeteor);
   }
 
   function drawWiggle(dt) {
-    const speed = Math.max(0.05, settings.speed * 0.3);
+    const speed = Math.max(0.05, settings.speed) * 1.35;
     const ease = value => value * value * (3 - 2 * value);
     for (const particle of wiggleParticles) {
       particle.driftElapsed += dt * speed;
       if (particle.driftState === "waiting") {
         if (particle.driftElapsed >= particle.driftDuration) {
-          particle.driftState = "animating"; particle.driftElapsed = 0;
-          particle.fromX = particle.x; particle.fromY = particle.y;
-          particle.toX = particle.baseX + (Math.random() * 2 - 1) * 20;
-          particle.toY = particle.baseY + (Math.random() * 2 - 1) * 20;
+          particle.driftState = "animating";
+          particle.driftElapsed = 0;
+          particle.fromX = particle.x;
+          particle.fromY = particle.y;
+          particle.toX = particle.baseX + (Math.random() * 2 - 1) * settings.drift;
+          particle.toY = particle.baseY + (Math.random() * 2 - 1) * settings.drift;
           particle.driftDuration = (1200 + Math.random() * 2400) / (speed * particle.driftRate);
         }
       } else {
         const progress = ease(Math.min(1, particle.driftElapsed / particle.driftDuration));
         particle.x = particle.fromX + (particle.toX - particle.fromX) * progress;
         particle.y = particle.fromY + (particle.toY - particle.fromY) * progress;
-        if (particle.driftElapsed >= particle.driftDuration) { particle.driftState = "waiting"; particle.driftElapsed = 0; particle.driftDuration *= 0.5; }
+        if (particle.driftElapsed >= particle.driftDuration) {
+          particle.driftState = "waiting";
+          particle.driftElapsed = 0;
+          particle.driftDuration *= 0.5;
+        }
       }
       particle.twinkleElapsed += dt * speed;
       if (particle.twinkleState === "waiting") {
         if (particle.twinkleElapsed >= particle.twinkleDuration) {
-          particle.twinkleState = "animating"; particle.twinkleElapsed = 0;
-          particle.fromOpacity = particle.opacity; particle.fromScale = particle.scale;
-          particle.targetOpacity = Math.random(); particle.targetScale = 0.1 + Math.random() * 1.9;
+          particle.twinkleState = "animating";
+          particle.twinkleElapsed = 0;
+          particle.fromOpacity = particle.opacity;
+          particle.fromScale = particle.scale;
+          particle.targetOpacity = Math.random();
+          particle.targetScale = 0.1 + Math.random() * 1.9;
           particle.twinkleDuration = (600 + Math.random() * 1600) / (speed * 3.45 * particle.twinkleRate);
         }
       } else {
         const progress = ease(Math.min(1, particle.twinkleElapsed / particle.twinkleDuration));
         particle.opacity = particle.fromOpacity + (particle.targetOpacity - particle.fromOpacity) * progress;
         particle.scale = particle.fromScale + (particle.targetScale - particle.fromScale) * progress;
-        if (particle.twinkleElapsed >= particle.twinkleDuration) { particle.twinkleState = "waiting"; particle.twinkleElapsed = 0; particle.twinkleDuration *= 0.4; }
+        if (particle.twinkleElapsed >= particle.twinkleDuration) {
+          particle.twinkleState = "waiting";
+          particle.twinkleElapsed = 0;
+          particle.twinkleDuration *= 0.4;
+        }
       }
       const alpha = Math.min(1, particle.opacity * settings.brightness * 0.85);
-      if (alpha > 0.005) { context.fillStyle = colorWithAlpha(alpha); context.beginPath(); context.arc(particle.x, particle.y, particle.size * particle.scale * settings.dotSize * 0.35, 0, tau); context.fill(); }
+      if (alpha > 0.005) {
+        context.fillStyle = colorWithAlpha(alpha);
+        context.beginPath();
+        context.arc(particle.x, particle.y, particle.size * particle.scale * settings.dotSize * 0.35, 0, tau);
+        context.fill();
+      }
     }
   }
 
@@ -665,58 +784,116 @@ function initShimmeringDotsSource() {
     const time = now / 1000;
     const dt = Math.min(64, previousFrame ? now - previousFrame : 16);
     previousFrame = now;
-    if (settings.pattern !== lastPattern) { lastPattern = settings.pattern; rebuild(); }
+    if (settings.pattern !== lastPattern) {
+      lastPattern = settings.pattern;
+      rebuild();
+    }
     context.clearRect(0, 0, width, height);
     const pattern = settings.pattern;
     if (pattern === "wiggle") drawWiggle(dt);
     else if (pattern === "starfield") {
-      for (const star of stars) { const opacity = 0.1 + 0.9 * (Math.cos(tau * 1000 * time / (1000 + star.duration * 5000) + star.phase) * 0.5 + 0.5); context.fillStyle = colorWithAlpha(opacity * settings.brightness); context.beginPath(); context.arc(star.x * width, star.y * height, Math.max(0.08, (0.2 + star.size * 1.3) * settings.dotSize * 0.25), 0, tau); context.fill(); }
+      for (const star of stars) {
+        const cycle = Math.cos((tau * 1000 * time) / Math.max(50, settings.duration) + star.phase) * 0.5 + 0.5;
+        const opacity = settings.faded * 0.35 + (1 - settings.faded * 0.35) * cycle;
+        const opacityScale = 0.35 + star.size * 0.65;
+        context.fillStyle = colorWithAlpha(opacity * opacityScale * settings.brightness);
+        context.beginPath();
+        context.arc(star.x * width, star.y * height, Math.max(0.08, (0.2 + star.size * settings.size) * 0.5), 0, tau);
+        context.fill();
+      }
     } else if (pattern === "twist") {
       const reference = Math.min(width, height) * 0.5;
-    const zoom = 30 * settings.scale;
+      const zoom = Math.max(0.3, settings.zoom);
       const spread = reference * 0.056 * zoom;
-      const pitch = spread / 1.5;
-      const centerX = width / 2 + 270 * (0.62 * Math.sin(time * 0.11) + 0.38 * Math.sin(time * 0.041 + 2.1));
-      const centerY = height / 2 + 270 * (0.62 * Math.sin(time * 0.09 + 1.7) + 0.38 * Math.sin(time * 0.034 + 0.5));
-      const spin = time * 0.42;
+      const pitch = spread / Math.max(0.5, settings.twist);
+      const centerX = width / 2 + settings.drift * (0.62 * Math.sin(time * 0.11) + 0.38 * Math.sin(time * 0.041 + 2.1));
+      const centerY = height / 2 + settings.drift * (0.62 * Math.sin(time * 0.09 + 1.7) + 0.38 * Math.sin(time * 0.034 + 0.5));
+      const spin = time * settings.spin;
       const coreRadius = pitch * 0.35;
-      for (let cellIndex = 0; cellIndex < cells.length; cellIndex += 2) {
+      for (let cellIndex = 0; cellIndex < cells.length; cellIndex++) {
         const cell = cells[cellIndex];
-        const dx = cell.x - centerX; const dy = cell.y - centerY;
-        const radius = Math.hypot(dx, dy); const angle = Math.atan2(dy, dx);
-        const wave = Math.cos(tau * radius / pitch - 2 * angle - spin);
-        const crest = Math.pow(Math.max(0, wave), 6);
+        const dx = cell.x - centerX;
+        const dy = cell.y - centerY;
+        const radius = Math.hypot(dx, dy);
+        const angle = Math.atan2(dy, dx);
+        const wave = Math.cos((tau * radius) / pitch - Math.max(1, Math.round(settings.arms)) * angle - spin);
+        const crest = Math.pow(Math.max(0, wave), Math.max(0.3, settings.width));
         const coreFade = Math.pow(Math.min(1, radius / coreRadius), 2) * (3 - 2 * Math.min(1, radius / coreRadius));
         const envelope = Math.exp(-Math.pow(radius / spread, 2)) * coreFade;
-        const alpha = crest * envelope * settings.brightness;
-        if (alpha > 0.01) { context.fillStyle = colorWithAlpha(alpha); context.beginPath(); context.arc(cell.x, cell.y, Math.max(0.35, settings.dotSize * 0.35), 0, tau); context.fill(); }
+        const alpha = (settings.floor + (settings.peak - settings.floor) * crest * envelope) * settings.brightness;
+        if (alpha > 0.01) {
+          context.fillStyle = colorWithAlpha(alpha);
+          context.beginPath();
+          context.arc(cell.x, cell.y, Math.max(0.35, settings.size * 0.5), 0, tau);
+          context.fill();
+        }
       }
     } else if (pattern === "shimmer") {
-      for (const cell of shimmerCells) { const wave = Math.sin(time * 0.45 + cell.col * 0.25) + Math.cos(time * 0.31 + cell.row * 0.21); const pulse = Math.sin(time * 1.6 * cell.frequency + cell.phase); const alpha = (0.2 + 1.4 * Math.abs((pulse + wave) / 4)) * settings.brightness; if (alpha > 0.01) { context.fillStyle = colorWithAlpha(Math.min(1, alpha)); context.beginPath(); context.arc(cell.x, cell.y, Math.max(0.25, settings.dotSize * 0.28), 0, tau); context.fill(); } }
+      const shimmerZoom = 1.35;
+      for (const cell of shimmerCells) {
+        const wave = Math.sin(time * 0.6 + cell.col * settings.waveX) + Math.cos(time * 0.4 + cell.row * settings.waveY);
+        const pulse = Math.sin(time * settings.speed * cell.frequency + cell.phase);
+        const alpha = (settings.base + settings.intensity * Math.abs((pulse + wave) / 4)) * settings.brightness;
+        if (alpha > 0.01) {
+          context.fillStyle = colorWithAlpha(Math.min(1, alpha * 0.78));
+          context.beginPath();
+          context.arc((cell.x - width / 2) * shimmerZoom + width / 2, (cell.y - height / 2) * shimmerZoom + height / 2, Math.max(0.35, settings.size * 0.34), 0, tau);
+          context.fill();
+        }
+      }
     } else if (pattern === "organic" || pattern === "shimmer-aurora" || pattern === "morph") {
-      const scale = pattern === "organic" || pattern === "shimmer-aurora" ? settings.scale * 0.75 : pattern === "morph" ? settings.scale * 0.65 : settings.scale;
-      const fieldTime = pattern === "morph" ? time * 0.72 : pattern === "shimmer-aurora" ? time * 0.75 : time;
+      const scale = pattern === "organic" ? settings.scale * 1.15 : settings.scale;
+      const fieldTime = pattern === "morph" ? time * 0.72 * settings.speed : pattern === "shimmer-aurora" ? time * 0.75 * settings.speed : time * settings.speed;
       for (const cell of fieldCells) {
         let intensity;
-        if (pattern === "organic") { const n = Math.sin(cell.u * 3 * scale + fieldTime * 0.4) * Math.cos(cell.v * 3 * scale - fieldTime * 0.35) + 0.5 * Math.sin(cell.u * 7 * scale - fieldTime * 0.6) * Math.sin(cell.v * 7 * scale + fieldTime * 0.55); intensity = (0.1 + Math.pow(Math.max(0, Math.sin(n * 6 + cell.length * 8 * scale - fieldTime * 1.8)), 1.8)) * clamp01(1 - cell.distance * 0.85 * settings.vignette); }
-        else if (pattern === "shimmer-aurora") { let value = Math.sin(cell.u * 8 * scale + fieldTime * 1.3) + Math.sin(cell.v * 8 * scale + fieldTime * 1.1) + Math.sin((cell.u + cell.v) * 6 * scale + fieldTime * 1.5) + Math.sin(cell.length * 10 * scale - fieldTime * 1.8); intensity = Math.pow(clamp01(0.5 + 0.125 * value), 2.5) * clamp01(1 - cell.distance * 0.9 * settings.vignette); }
-        else { const angle = Math.sin(cell.u * 4 * scale + fieldTime * 0.6) * 1.2 + Math.cos(cell.v * 4 * scale - fieldTime * 0.5) * 1.2 + Math.sin((cell.u + cell.v) * 3 * scale + fieldTime * 0.9); const phase = (cell.u * Math.cos(angle) + cell.v * Math.sin(angle)) * 12 * scale - fieldTime * 4; const bright = Math.pow(0.5 + 0.5 * Math.sin(phase), 4); intensity = (0.1 + 1.1 * bright) * clamp01(1 - cell.distance * 0.7 * settings.vignette); }
-        if (intensity > 0.01) { context.fillStyle = colorWithAlpha(Math.min(1, intensity * settings.brightness)); context.beginPath(); context.arc(cell.x, cell.y, Math.max(0.22, settings.dotSize * 0.28), 0, tau); context.fill(); }
+        if (pattern === "organic") {
+          const n = Math.sin(cell.u * 3 * scale + fieldTime * 0.4) * Math.cos(cell.v * 3 * scale - fieldTime * 0.35) + 0.5 * Math.sin(cell.u * 7 * scale - fieldTime * 0.6) * Math.sin(cell.v * 7 * scale + fieldTime * 0.55);
+          intensity = (0.1 + Math.pow(Math.max(0, Math.sin(n * 6 + cell.length * 8 * scale - fieldTime * 1.8)), 1.8)) * clamp01(1 - cell.distance * 0.85 * settings.vignette);
+        } else if (pattern === "shimmer-aurora") {
+          let value = Math.sin(cell.u * 8 * scale + fieldTime * 1.3) + Math.sin(cell.v * 8 * scale + fieldTime * 1.1) + Math.sin((cell.u + cell.v) * 6 * scale + fieldTime * 1.5) + Math.sin(cell.length * 10 * scale - fieldTime * 1.8);
+          intensity = Math.pow(clamp01(0.5 + 0.125 * value), 2.5) * clamp01(1 - cell.distance * 0.9 * settings.vignette);
+        } else {
+          const angle = Math.sin(cell.u * 4 * scale + fieldTime * 0.6) * 1.2 + Math.cos(cell.v * 4 * scale - fieldTime * 0.5) * 1.2 + Math.sin((cell.u + cell.v) * 3 * scale + fieldTime * 0.9);
+          const phase = (cell.u * Math.cos(angle) + cell.v * Math.sin(angle)) * 12 * scale - fieldTime * 4;
+          const bright = Math.pow(0.5 + 0.5 * Math.sin(phase), 4);
+          intensity = (0.1 + 1.1 * bright) * clamp01(1 - cell.distance * 0.7 * settings.vignette);
+        }
+        if (intensity > 0.01) {
+          const morphBrightness = pattern === "morph" ? 0.75 + intensity * 0.35 : 1;
+          const alpha = Math.min(1, intensity * settings.brightness * morphBrightness);
+          context.fillStyle = pattern === "morph" ? morphColorWithAlpha(alpha, intensity) : colorWithAlpha(alpha);
+          context.beginPath();
+          context.arc(cell.x, cell.y, Math.max(0.22, settings.dotSize * (pattern === "organic" ? 0.55 : pattern === "shimmer-aurora" ? 0.8 : 0.45)), 0, tau);
+          context.fill();
+        }
       }
     } else if (pattern === "displace") {
-      const nowSeconds = now / 1000; let write = 0;
+      const nowSeconds = now / 1000;
+      let write = 0;
       for (let floaterIndex = 0; floaterIndex < floaters.length; floaterIndex++) {
         const floater = floaters[floaterIndex];
         for (const force of pointerForces) {
-          const dx = floater.x - force.x; const dy = floater.y - force.y; const distance = Math.hypot(dx, dy);
-          if (distance > 0 && distance < 120) { const strength = 470 * Math.pow(1 - distance / 120, 2); floater.vx += dx / distance * strength * dt / 1000; floater.vy += dy / distance * strength * dt / 1000; }
+          const dx = floater.x - force.x;
+          const dy = floater.y - force.y;
+          const distance = Math.hypot(dx, dy);
+          if (distance > 0 && distance < 120) {
+            const strength = 470 * Math.pow(1 - distance / 120, 2);
+            floater.vx += ((dx / distance) * strength * dt) / 1000;
+            floater.vy += ((dy / distance) * strength * dt) / 1000;
+          }
         }
-        floater.vx *= Math.pow(0.92, dt / 16); floater.vy *= Math.pow(0.92, dt / 16);
-        floater.x += floater.vx * dt / 1000; floater.y += floater.vy * dt / 1000;
-        floater.y -= (35 + floater.speed * 30) * settings.speed * 0.35 * dt / 1000; floater.x += floater.drift * 10 * settings.speed * 0.35 * dt / 1000;
+        floater.vx *= Math.pow(0.92, dt / 16);
+        floater.vy *= Math.pow(0.92, dt / 16);
+        floater.x += (floater.vx * dt) / 1000;
+        floater.y += (floater.vy * dt) / 1000;
+        const wander = dt / 1000;
+        floater.x += Math.sin(nowSeconds * 0.9 + floater.phase) * 18 * wander;
+        floater.y += Math.cos(nowSeconds * 0.7 + floater.phase * 1.7) * 14 * wander;
+        floater.y -= ((35 + floater.speed * 30) * (settings.speed / 50) * 0.81 * dt) / 1000;
+        floater.x += (floater.drift * 10 * (settings.speed / 50) * 0.81 * dt) / 1000;
         const age = nowSeconds - floater.birth;
-        if (age > floater.lifetime || floater.y <= -10) {
-          floater.x = ((floaterIndex % 32) + Math.random() * 0.8) / 32 * width;
+        if (age > floater.lifetime || floater.y <= -10 || floater.y > height + 10) {
+          floater.x = (((floaterIndex % 32) + Math.random() * 0.8) / 32) * width;
           floater.y = height * (0.84 + Math.random() * 0.16);
           floater.birth = nowSeconds;
           floater.vx = 0;
@@ -726,18 +903,53 @@ function initShimmeringDotsSource() {
       }
       floaters.length = write;
       pointerForces = pointerForces.filter(force => nowSeconds - force.time < 0.3);
-      while (floaters.length < Math.floor(260 * settings.density)) {
+      while (floaters.length < Math.floor(settings.count * settings.density)) {
         const floater = spawnFloater(nowSeconds);
         floater.y = height * (0.82 + Math.random() * 0.25);
         floaters.push(floater);
       }
-      for (const floater of floaters) { const age = nowSeconds - floater.birth; const fade = age < 0.5 ? age / 0.5 : age > floater.lifetime - 1 ? Math.max(0, floater.lifetime - age) : 0.9; context.fillStyle = colorWithAlpha(fade * settings.brightness); context.beginPath(); context.arc(floater.x, floater.y, (1 + floater.size * 2) * settings.dotSize * 0.22, 0, tau); context.fill(); }
+      for (const floater of floaters) {
+        const age = nowSeconds - floater.birth;
+        const fade = age < 0.5 ? age / 0.5 : age > floater.lifetime - 1 ? Math.max(0, floater.lifetime - age) : 0.9;
+        context.fillStyle = colorWithAlpha(fade * settings.brightness);
+        context.beginPath();
+        context.arc(floater.x, floater.y, (1 + floater.size * 2) * settings.dotSize * 0.22, 0, tau);
+        context.fill();
+      }
     } else if (pattern === "meteors") {
-      for (const star of stars) { const opacity = 0.1 + 0.9 * (Math.cos(tau * 1000 * time / (1000 + star.duration * 3000) + star.phase) * 0.5 + 0.5); context.fillStyle = colorWithAlpha(Math.min(1, opacity * settings.brightness * 0.55)); context.beginPath(); context.arc(star.x * width, star.y * height, Math.max(0.08, (0.2 + star.size * 1.3) * settings.dotSize * 0.2), 0, tau); context.fill(); }
-      for (const meteor of meteors) { meteor.progress += meteor.speed * 0.45 * dt / 1000 / meteor.length; if (meteor.progress >= meteor.reach) Object.assign(meteor, spawnMeteor()); const head = meteor.minAlong + meteor.progress * meteor.length; const tail = head - 240; const hx = head * meteor.dx + meteor.cross * meteor.px; const hy = head * meteor.dy + meteor.cross * meteor.py; const tx = tail * meteor.dx + meteor.cross * meteor.px; const ty = tail * meteor.dy + meteor.cross * meteor.py; const opacity = Math.max(0, Math.min(1, meteor.progress / (0.12 * meteor.reach), (meteor.reach - meteor.progress) / Math.max(0.01, meteor.reach - meteor.fadeStart))); const gradient = context.createLinearGradient(hx, hy, tx, ty); gradient.addColorStop(0, colorWithAlpha(Math.min(1, opacity * 1.35))); gradient.addColorStop(1, colorWithAlpha(0)); context.strokeStyle = gradient; context.lineWidth = Math.max(0.3, settings.dotSize * 0.45); context.beginPath(); context.moveTo(hx, hy); context.lineTo(tx, ty); context.stroke(); }
+      for (const star of stars) {
+        const opacity = 0.12 + 0.88 * (Math.cos((tau * 1000 * time) / (1000 + star.duration * 3000) + star.phase) * 0.5 + 0.5);
+        context.fillStyle = colorWithAlpha(Math.min(1, opacity * settings.brightness * 0.7));
+        context.beginPath();
+        context.arc(star.x * width, star.y * height, Math.max(0.1, (0.2 + star.size * 1.3) * settings.dotSize * 0.3), 0, tau);
+        context.fill();
+      }
+      for (const meteor of meteors) {
+        meteor.progress += (meteor.speed * 0.45 * dt) / 1000 / meteor.length;
+        if (meteor.progress >= meteor.reach) Object.assign(meteor, spawnMeteor());
+        const head = meteor.minAlong + meteor.progress * meteor.length;
+        const tail = head - meteor.trailLength;
+        const hx = head * meteor.dx + meteor.cross * meteor.px;
+        const hy = head * meteor.dy + meteor.cross * meteor.py;
+        const tx = tail * meteor.dx + meteor.cross * meteor.px;
+        const ty = tail * meteor.dy + meteor.cross * meteor.py;
+        const opacity = Math.max(0, Math.min(1, meteor.progress / (0.12 * meteor.reach), (meteor.reach - meteor.progress) / Math.max(0.01, meteor.reach - meteor.fadeStart))) * meteor.opacityScale;
+        const gradient = context.createLinearGradient(hx, hy, tx, ty);
+        gradient.addColorStop(0, colorWithAlpha(Math.min(1, opacity * 1.35)));
+        gradient.addColorStop(1, colorWithAlpha(0));
+        context.strokeStyle = gradient;
+        context.lineWidth = Math.max(0.3, settings.width * 0.35);
+        context.beginPath();
+        context.moveTo(hx, hy);
+        context.lineTo(tx, ty);
+        context.stroke();
+      }
     } else if (pattern === "grid") {
       for (const pixel of gridPixels) {
-        if (pixel.counter <= pixel.delay) { pixel.counter += pixel.counterStep; continue; }
+        if (pixel.counter <= pixel.delay) {
+          pixel.counter += pixel.counterStep;
+          continue;
+        }
         if (pixel.size >= pixel.maximum) pixel.shimmering = true;
         if (pixel.shimmering) {
           if (pixel.size >= pixel.maximum) pixel.reverse = true;
@@ -753,7 +965,9 @@ function initShimmeringDotsSource() {
         const offsetY = Math.cos(time * 0.28 + cell.y * 0.03) * 5;
         const intensity = 0.25 + 0.75 * (0.5 + 0.5 * Math.sin(time * 1.2 + cell.x * 0.025 + cell.y * 0.018));
         context.fillStyle = colorWithAlpha(intensity * settings.brightness * 0.65);
-        context.beginPath(); context.arc(cell.x + offsetX, cell.y + offsetY, Math.max(0.35, settings.dotSize * 0.45), 0, tau); context.fill();
+        context.beginPath();
+        context.arc(cell.x + offsetX, cell.y + offsetY, Math.max(0.35, settings.dotSize * 0.55), 0, tau);
+        context.fill();
       }
     }
     requestAnimationFrame(draw);
@@ -761,14 +975,20 @@ function initShimmeringDotsSource() {
 
   function resize() {
     const ratio = Math.min(window.devicePixelRatio || 1, 2);
-    width = window.innerWidth; height = window.innerHeight;
-    canvas.width = width * ratio; canvas.height = height * ratio;
-    canvas.style.width = "100%"; canvas.style.height = "100%";
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = width * ratio;
+    canvas.height = height * ratio;
+    canvas.style.width = "100%";
+    canvas.style.height = "100%";
     context.setTransform(ratio, 0, 0, ratio, 0, 0);
     rebuild();
   }
 
-  window.updateShimmeringDots = values => { Object.assign(settings, values); if (values.density || values.scale) rebuild(); };
+  window.updateShimmeringDots = values => {
+    Object.assign(settings, values);
+    if (values.density || values.scale || values.gap || values.size || values.count || values.spacing || values.seed) rebuild();
+  };
   resize();
   window.addEventListener("resize", resize);
   window.addEventListener("pointermove", event => {
