@@ -9,6 +9,7 @@ function initSmokeParticles() {
   const smokeTexture = new Image();
   smokeTexture.src = "/assets/media/background/smoke-element.png";
   const particles = [];
+  const sessionStateKey = "particles";
   const textureCanvas = document.createElement("canvas");
   const textureContext = textureCanvas.getContext("2d");
   let width = 0;
@@ -52,6 +53,22 @@ function initSmokeParticles() {
     particle.opacity = 0.09 + Math.random() * 0.12;
   }
 
+  function saveParticleState() {
+    try {
+      sessionStorage.setItem(sessionStateKey, JSON.stringify({ mode: "smoke", savedAt: Date.now(), particles }));
+    } catch {}
+  }
+
+  function restoreParticleState() {
+    try {
+      const state = JSON.parse(sessionStorage.getItem(sessionStateKey) || "null");
+      if (state?.mode === "smoke" && Array.isArray(state.particles)) {
+        particles.length = 0;
+        particles.push(...state.particles);
+      }
+    } catch {}
+  }
+
   function animate() {
     const color = getComputedStyle(document.documentElement).getPropertyValue("--accent").trim() || "#ffffff";
     tintTexture(color);
@@ -87,7 +104,10 @@ function initSmokeParticles() {
     resetParticle(particle, true);
     particles.push(particle);
   }
+  restoreParticleState();
   window.addEventListener("resize", resize);
+  window.addEventListener("pagehide", saveParticleState);
+  window.setInterval(saveParticleState, 3000);
   animate();
 }
 
@@ -181,6 +201,8 @@ function initAuroraParticles() {
   const time = gl.getUniformLocation(program, "u_time");
   const ratio = gl.getUniformLocation(program, "u_ratio");
   const color = gl.getUniformLocation(program, "u_color");
+  const sessionStateKey = "interstellar-particle-session";
+  let timeOffset = 0;
   const resize = () => {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     canvas.width = window.innerWidth * dpr;
@@ -195,9 +217,20 @@ function initAuroraParticles() {
 
   resize();
   gl.uniform3f(color, rgb[0], rgb[1], rgb[2]);
+  try {
+    const state = JSON.parse(sessionStorage.getItem(sessionStateKey) || "null");
+    if (state?.mode === "aurora" && Number.isFinite(state.time)) timeOffset = state.time + Math.max(0, Date.now() - Number(state.savedAt));
+  } catch {}
+  const saveAuroraState = () => {
+    try {
+      sessionStorage.setItem(sessionStateKey, JSON.stringify({ mode: "aurora", savedAt: Date.now(), time: performance.now() + timeOffset }));
+    } catch {}
+  };
   window.addEventListener("resize", resize);
+  window.addEventListener("pagehide", saveAuroraState);
+  window.setInterval(saveAuroraState, 3000);
   const render = now => {
-    gl.uniform1f(time, now);
+    gl.uniform1f(time, now + timeOffset);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     requestAnimationFrame(render);
   };
@@ -519,9 +552,53 @@ function initShimmeringDotsSource() {
   let meteors = [];
   let pointerForces = [];
   let previousFrame = 0;
+  let animationTime = 0;
+  let lastStateSave = 0;
   let lastPattern = settings.pattern;
   const tau = Math.PI * 2;
   const clamp01 = value => Math.max(0, Math.min(1, value));
+  const sessionStateKey = "interstellar-particle-session";
+
+  function saveParticleState() {
+    try {
+      const now = performance.now() / 1000;
+      sessionStorage.setItem(
+        sessionStateKey,
+        JSON.stringify({
+          pattern: settings.pattern,
+          savedAt: Date.now(),
+          animationTime,
+          width,
+          height,
+          stars,
+          gridPixels,
+          wiggleParticles,
+          floaters: floaters.map(floater => ({ ...floater, age: now - floater.birth })),
+          meteors,
+        }),
+      );
+      lastStateSave = now;
+    } catch {}
+  }
+
+  function restoreParticleState() {
+    try {
+      const rawState = sessionStorage.getItem(sessionStateKey);
+      if (!rawState) return;
+      const state = JSON.parse(rawState);
+      if (!state || state.pattern !== settings.pattern) return;
+      const now = performance.now() / 1000;
+      const elapsedSinceSave = Math.max(0, (Date.now() - Number(state.savedAt)) / 1000);
+      if (Number.isFinite(state.animationTime)) animationTime = state.animationTime + elapsedSinceSave;
+      if (Array.isArray(state.stars)) stars = state.stars;
+      if (Array.isArray(state.gridPixels)) gridPixels = state.gridPixels;
+      if (Array.isArray(state.wiggleParticles)) wiggleParticles = state.wiggleParticles;
+      if (Array.isArray(state.floaters)) {
+        floaters = state.floaters.map(({ age, ...floater }) => ({ ...floater, birth: now - Math.max(0, Number(age) || 0) }));
+      }
+      if (Array.isArray(state.meteors)) meteors = state.meteors.slice(0, 3);
+    } catch {}
+  }
 
   function seededRandom(seed) {
     let value = seed | 0;
@@ -781,9 +858,10 @@ function initShimmeringDotsSource() {
   }
 
   function draw(now) {
-    const time = now / 1000;
     const dt = Math.min(64, previousFrame ? now - previousFrame : 16);
     previousFrame = now;
+    animationTime += dt / 1000;
+    const time = animationTime;
     if (settings.pattern !== lastPattern) {
       lastPattern = settings.pattern;
       rebuild();
@@ -990,10 +1068,16 @@ function initShimmeringDotsSource() {
     if (values.density || values.scale || values.gap || values.size || values.count || values.spacing || values.seed) rebuild();
   };
   resize();
+  restoreParticleState();
   window.addEventListener("resize", resize);
   window.addEventListener("pointermove", event => {
     if (settings.pattern === "displace") pointerForces.push({ x: event.clientX, y: event.clientY, time: performance.now() / 1000 });
   });
+  window.addEventListener("pagehide", saveParticleState);
+  window.setInterval(() => {
+    const now = performance.now() / 1000;
+    if (now - lastStateSave >= 3) saveParticleState();
+  }, 3000);
   requestAnimationFrame(draw);
 }
 
