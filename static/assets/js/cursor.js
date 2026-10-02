@@ -47,6 +47,10 @@ function createFullscreenCanvas(id) {
   return canvas;
 }
 
+function cursorClickEffectIs(effect) {
+  return store.get("pointerClickEffect") === effect;
+}
+
 // Based on codepen.io/tommyho/pen/ZEmjWGY
 function initRainbowStars() {
   if (document.getElementById("pointer-canvas")) return;
@@ -139,10 +143,11 @@ function initRainbowStars() {
 }
 
 // Based on codepen.io/gabezink17-cmd/pen/WbGmeyR
-function initWhiteOrbs() {
-  if (document.getElementById("pointer-canvas")) return;
+function initWhiteOrbs(clickOnly = false) {
+  const canvasId = clickOnly ? "pointer-click-canvas" : "pointer-canvas";
+  if (document.getElementById(canvasId)) return;
 
-  const canvas = createFullscreenCanvas("pointer-canvas");
+  const canvas = createFullscreenCanvas(canvasId);
   const ctx = canvas.getContext("2d");
   const mouse = { x: innerWidth / 2, y: innerHeight / 2 };
   const particles = [];
@@ -182,12 +187,16 @@ function initWhiteOrbs() {
   function onMove(x, y) {
     mouse.x = x;
     mouse.y = y;
+    if (clickOnly) return;
     spawn(x, y, 1);
   }
 
   window.addEventListener("mousemove", e => onMove(e.clientX, e.clientY));
-  window.addEventListener("click", e => spawn(e.clientX, e.clientY, 40));
+  window.addEventListener("click", e => {
+    if (cursorClickEffectIs("white-orbs")) spawn(e.clientX, e.clientY, 40);
+  });
   window.addEventListener("mousedown", () => {
+    if (!cursorClickEffectIs("white-orbs")) return;
     for (let i = 0; i < 50; i++) spawn(mouse.x, mouse.y, 1);
   });
   setupIframeTracking(onMove, () => {});
@@ -205,16 +214,17 @@ function initWhiteOrbs() {
 }
 
 // Based on codepen.io/Jiironimo/pen/vEXbVNP
-function initRainbowTrail() {
-  if (document.getElementById("pointer-canvas")) return;
+function initRainbowTrail(clickOnly = false) {
+  const canvasId = clickOnly ? "pointer-click-canvas" : "pointer-canvas";
+  if (document.getElementById(canvasId)) return;
 
   const cursorDot = document.createElement("div");
   cursorDot.id = "rainbow-trail-cursor";
   cursorDot.style.visibility = "hidden";
   document.body.appendChild(cursorDot);
-  document.body.classList.add("rainbow-trail-cursor");
+  if (!clickOnly) document.body.classList.add("rainbow-trail-cursor");
 
-  const canvas = createFullscreenCanvas("pointer-canvas");
+  const canvas = createFullscreenCanvas(canvasId);
   const ctx = canvas.getContext("2d");
   let W = canvas.width,
     H = canvas.height;
@@ -291,6 +301,7 @@ function initRainbowTrail() {
   function showAt(x, y) {
     mx = x;
     my = y;
+    if (clickOnly) return;
     cursorDot.style.left = `${x}px`;
     cursorDot.style.top = `${y}px`;
     cursorDot.style.visibility = "visible";
@@ -305,18 +316,28 @@ function initRainbowTrail() {
   window.addEventListener("mousemove", e => showAt(e.clientX, e.clientY));
   document.addEventListener("mouseleave", hide);
   window.addEventListener("mousedown", () => {
-    clicking = true;
+    clicking = cursorClickEffectIs("rainbow-trail");
   });
   window.addEventListener("mouseup", () => {
     clicking = false;
   });
+  if (clickOnly) {
+    window.addEventListener("click", e => {
+      mx = e.clientX;
+      my = e.clientY;
+      clicking = true;
+      setTimeout(() => {
+        clicking = false;
+      }, 160);
+    });
+  }
   setupIframeTracking(showAt, hide);
 
   (function loop() {
     requestAnimationFrame(loop);
     ctx.clearRect(0, 0, W, H);
     hue = (hue + 0.8) % 360;
-    if (mx !== null && my !== null) {
+    if (mx !== null && my !== null && (!clickOnly || clicking)) {
       const count = clicking ? 6 : 2;
       for (let i = 0; i < count; i++) particles.push(new RainbowTrailParticle(mx, my, clicking));
     }
@@ -329,26 +350,10 @@ function initRainbowTrail() {
 }
 
 // Based on codepen.io/perror12/pen/JoRwZwg
-function initBlueOrbs() {
-  if (document.getElementById("blue-orbs-glow")) return;
-
-  document.body.classList.add("blue-orbs-cursor");
-
-  const glow = document.createElement("div");
-  glow.id = "blue-orbs-glow";
-  glow.className = "cursor-glow";
-  document.body.appendChild(glow);
-
-  const core = document.createElement("div");
-  core.id = "blue-orbs-core";
-  core.className = "cursor-core";
-  document.body.appendChild(core);
-
-  let mouseX = null,
-    mouseY = null;
-  let glowX = 0,
-    glowY = 0,
-    lastX = 0,
+function initBlueOrbsTrail() {
+  if (document.body.classList.contains("blue-orbs-trail")) return;
+  document.body.classList.add("blue-orbs-trail");
+  let lastX = 0,
     lastY = 0;
 
   function createTrail(x, y, speed) {
@@ -372,21 +377,9 @@ function initBlueOrbs() {
   }
 
   function onMove(x, y) {
-    mouseX = x;
-    mouseY = y;
-    if (core.style.visibility !== "visible") {
-      core.style.visibility = "visible";
-      glow.style.visibility = "visible";
-      glowX = x;
-      glowY = y;
-      lastX = x;
-      lastY = y;
-    }
-    const dx = x - lastX,
-      dy = y - lastY;
+    const dx = x - lastX;
+    const dy = y - lastY;
     const speed = Math.sqrt(dx * dx + dy * dy);
-    core.style.left = `${x}px`;
-    core.style.top = `${y}px`;
     createTrail(x, y, speed);
     if (speed > 25) {
       createSpark(x, y);
@@ -394,6 +387,43 @@ function initBlueOrbs() {
     }
     lastX = x;
     lastY = y;
+  }
+
+  window.addEventListener("mousemove", e => onMove(e.clientX, e.clientY));
+  setupIframeTracking(onMove, () => {});
+}
+
+function initBlueOrbsCursor(clickOnly = false) {
+  if (document.getElementById("blue-orbs-glow")) return;
+  document.body.classList.add(clickOnly ? "blue-orbs-click-effect" : "blue-orbs-cursor");
+
+  const glow = document.createElement("div");
+  glow.id = "blue-orbs-glow";
+  glow.className = "cursor-glow";
+  document.body.appendChild(glow);
+
+  const core = document.createElement("div");
+  core.id = "blue-orbs-core";
+  core.className = "cursor-core";
+  document.body.appendChild(core);
+
+  let mouseX = null,
+    mouseY = null;
+  let glowX = 0,
+    glowY = 0;
+
+  function onMove(x, y) {
+    mouseX = x;
+    mouseY = y;
+    if (clickOnly) return;
+    if (core.style.visibility !== "visible") {
+      core.style.visibility = "visible";
+      glow.style.visibility = "visible";
+      glowX = x;
+      glowY = y;
+    }
+    core.style.left = `${x}px`;
+    core.style.top = `${y}px`;
   }
 
   function hide() {
@@ -406,13 +436,34 @@ function initBlueOrbs() {
   window.addEventListener("mousemove", e => onMove(e.clientX, e.clientY));
   document.addEventListener("mouseleave", hide);
   window.addEventListener("mousedown", () => {
+    if (!cursorClickEffectIs("blue-orbs-cursor")) return;
     core.style.transform = "translate(-50%, -50%) scale(1.8)";
     glow.style.transform = "translate(-50%, -50%) scale(1.2)";
   });
   window.addEventListener("mouseup", () => {
+    if (!cursorClickEffectIs("blue-orbs-cursor")) return;
     core.style.transform = "translate(-50%, -50%) scale(1)";
     glow.style.transform = "translate(-50%, -50%) scale(1)";
   });
+  if (clickOnly) {
+    window.addEventListener("click", e => {
+      onMove(e.clientX, e.clientY);
+      core.style.left = `${e.clientX}px`;
+      core.style.top = `${e.clientY}px`;
+      glowX = e.clientX;
+      glowY = e.clientY;
+      core.style.visibility = "visible";
+      glow.style.visibility = "visible";
+      core.style.transform = "translate(-50%, -50%) scale(1.8)";
+      glow.style.transform = "translate(-50%, -50%) scale(1.2)";
+      setTimeout(() => {
+        core.style.transform = "translate(-50%, -50%) scale(1)";
+        glow.style.transform = "translate(-50%, -50%) scale(1)";
+        core.style.visibility = "hidden";
+        glow.style.visibility = "hidden";
+      }, 180);
+    });
+  }
   setupIframeTracking(onMove, hide);
 
   (function animateGlow() {
@@ -515,10 +566,10 @@ function initRedCircle() {
 }
 
 // Based on codepen.io/Margarita-the-solid/pen/LERbOMR
-function initTheSims() {
+function initTheSims(clickOnly = false) {
   if (document.getElementById("the-sims-cursor")) return;
 
-  document.body.classList.add("the-sims-cursor");
+  if (!clickOnly) document.body.classList.add("the-sims-cursor");
 
   const NS = "http://www.w3.org/2000/svg";
   const cursorSvg = document.createElementNS(NS, "svg");
@@ -669,7 +720,7 @@ function initTheSims() {
   }
 
   const simsInterval = setInterval(() => {
-    if (store.get("pointer") !== "the-sims") {
+    if (clickOnly || store.get("pointerCustom") !== "the-sims") {
       clearInterval(simsInterval);
       return;
     }
@@ -679,6 +730,7 @@ function initTheSims() {
   }, 420);
 
   document.addEventListener("click", e => {
+    if (!cursorClickEffectIs("the-sims")) return;
     for (let i = 0; i < 12; i++) {
       const ang = (i / 12) * Math.PI * 2,
         r = 20 + Math.random() * 50;
@@ -689,6 +741,7 @@ function initTheSims() {
   function showAt(x, y) {
     simsMouseX = x;
     simsMouseY = y;
+    if (clickOnly) return;
     cursorSvg.style.left = `${x}px`;
     cursorSvg.style.top = `${y}px`;
     cursorSvg.style.visibility = "visible";
@@ -703,6 +756,7 @@ function initTheSims() {
   function hide() {
     simsMouseX = null;
     simsMouseY = null;
+    if (clickOnly) return;
     cursorSvg.style.visibility = "hidden";
     halo1.style.visibility = "hidden";
     halo2.style.visibility = "hidden";
@@ -720,7 +774,7 @@ function initTheSims() {
 // Based on codepen.io/Jiironimo/pen/vEXbVNP
 function initBlueOrbsDom() {
   if (document.getElementById("blue-orbs-glow")) return;
-  initBlueOrbs();
+  initBlueOrbsCursor();
 }
 
 // Based on codepen.io/ksenia-k/pen/rNoBgbV
@@ -800,9 +854,109 @@ function initSnakeTrail() {
   requestAnimationFrame(update);
 }
 
+function setupIdleCursorMotion() {
+  if (store.get("pointerIdleMotion") !== "true") return;
+
+  let x = window.innerWidth / 2;
+  let y = window.innerHeight / 2;
+  let visualX = x;
+  let visualY = y;
+  let idle = false;
+  let idleStarted = performance.now();
+  let snapFrame = 0;
+  let synthetic = false;
+
+  function emit(clientX, clientY) {
+    synthetic = true;
+    window.dispatchEvent(new MouseEvent("mousemove", { clientX, clientY }));
+    document.dispatchEvent(new MouseEvent("mousemove", { clientX, clientY }));
+    synthetic = false;
+  }
+
+  function stopIdle() {
+    idle = false;
+  }
+
+  window.addEventListener(
+    "mousemove",
+    event => {
+      if (synthetic) return;
+      const nextX = event.clientX;
+      const nextY = event.clientY;
+      const wasIdle = idle;
+      stopIdle();
+
+      if (!wasIdle) {
+        x = nextX;
+        y = nextY;
+        visualX = nextX;
+        visualY = nextY;
+        return;
+      }
+
+      event.stopImmediatePropagation();
+      cancelAnimationFrame(snapFrame);
+      const startX = visualX;
+      const startY = visualY;
+      const started = performance.now();
+      const duration = 180;
+
+      function snap(now) {
+        const progress = Math.min(1, (now - started) / duration);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        visualX = startX + (nextX - startX) * eased;
+        visualY = startY + (nextY - startY) * eased;
+        emit(visualX, visualY);
+        if (progress < 1) snapFrame = requestAnimationFrame(snap);
+      }
+      snapFrame = requestAnimationFrame(snap);
+    },
+    true,
+  );
+
+  document.addEventListener("mouseleave", () => {
+    idle = true;
+    idleStarted = performance.now();
+  });
+  document.addEventListener("mouseenter", event => {
+    stopIdle();
+    x = event.clientX;
+    y = event.clientY;
+    visualX = x;
+    visualY = y;
+    emit(x, y);
+  });
+
+  window.addEventListener("blur", () => {
+    idle = true;
+    idleStarted = performance.now();
+  });
+
+  function animateIdle(now) {
+    if (idle) {
+      const elapsed = (now - idleStarted) * 0.001;
+      const orbitX = x + Math.cos(elapsed * 1.4) * 18;
+      const orbitY = y + Math.sin(elapsed * 1.1) * 14;
+      visualX = orbitX;
+      visualY = orbitY;
+      emit(orbitX, orbitY);
+    }
+    requestAnimationFrame(animateIdle);
+  }
+
+  requestAnimationFrame(animateIdle);
+}
+
 function initCursorEffect() {
-  const pointer = store.get("pointer");
-  switch (pointer) {
+  const legacyPointer = store.get("pointer");
+  const trailPointers = ["rainbow-stars", "white-orbs", "rainbow-trail", "blue-orbs-trail", "curly-cursor"];
+  const customPointers = ["blue-orbs-cursor", "the-sims"];
+  const legacyBlueOrbs = legacyPointer === "blue-orbs";
+  const trail = store.get("pointerTrail") || (legacyBlueOrbs || store.get("pointerCustom") === "blue-orbs" ? "blue-orbs-trail" : trailPointers.includes(legacyPointer) ? legacyPointer : "default");
+  const custom = store.get("pointerCustom") || (legacyBlueOrbs ? "blue-orbs-cursor" : customPointers.includes(legacyPointer) ? legacyPointer : "default");
+  const clickEffect = store.get("pointerClickEffect") || "none";
+
+  switch (trail) {
     case "rainbow-stars":
       initRainbowStars();
       break;
@@ -812,17 +966,30 @@ function initCursorEffect() {
     case "rainbow-trail":
       initRainbowTrail();
       break;
-    case "blue-orbs":
-      initBlueOrbs();
-      break;
-    case "red-circle":
-      initRedCircle();
-      break;
-    case "the-sims":
-      initTheSims();
+    case "blue-orbs-trail":
+      initBlueOrbsTrail();
       break;
     case "curly-cursor":
       initSnakeTrail();
       break;
   }
+
+  switch (custom) {
+    case "blue-orbs-cursor":
+      initBlueOrbsCursor();
+      break;
+    case "the-sims":
+      initTheSims();
+      break;
+  }
+
+  if (clickEffect === "rainbow-trail" && trail !== "rainbow-trail") initRainbowTrail(true);
+  if (clickEffect === "white-orbs" && trail !== "white-orbs") initWhiteOrbs(true);
+  if (clickEffect === "blue-orbs-cursor" && custom !== "blue-orbs-cursor") initBlueOrbsCursor(true);
+
+  if (clickEffect === "the-sims" && custom !== "the-sims") {
+    initTheSims(true);
+  }
+
+  setupIdleCursorMotion();
 }

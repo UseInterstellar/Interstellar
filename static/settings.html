@@ -276,20 +276,58 @@
             </div>
             <div class="settings-item">
               <div class="settings-item-info">
-                <h3>Cursor</h3>
-                <p>Choose an animated cursor effect.</p>
+                <h3>Cursor Trail</h3>
+                <p>Choose a trail that follows your cursor.</p>
               </div>
               <div class="settings-item-control">
-                <select id="pointer-dropdown">
+                <select id="pointer-trail-dropdown">
                   <option value="default">Default</option>
                   <option value="rainbow-trail">Rainbow Trail</option>
                   <option value="rainbow-stars">Rainbow Stars</option>
-                  <option value="red-circle">Red Circle</option>
                   <option value="white-orbs">White Orbs</option>
-                  <option value="blue-orbs">Blue Orbs</option>
-                  <option value="the-sims">The Sims</option>
+                  <option value="blue-orbs-trail">Blue Orbs Trail</option>
                   <option value="curly-cursor">Curly Cursor</option>
                 </select>
+              </div>
+            </div>
+            <div class="settings-item">
+              <div class="settings-item-info">
+                <h3>Custom Cursor</h3>
+                <p>Choose the cursor that appears above the trail.</p>
+              </div>
+              <div class="settings-item-control">
+                <select id="pointer-custom-dropdown">
+                  <option value="default">Default</option>
+                  <option value="blue-orbs-cursor">Blue Orbs Cursor</option>
+                  <option value="the-sims">The Sims</option>
+                </select>
+              </div>
+            </div>
+            <div class="settings-item">
+              <div class="settings-item-info">
+                <h3>Cursor Click Effect</h3>
+                <p>Choose what happens when you click.</p>
+              </div>
+              <div class="settings-item-control">
+                <select id="pointer-click-effect-dropdown">
+                  <option value="none">None</option>
+                  <option value="rainbow-trail">Rainbow Trail</option>
+                  <option value="white-orbs">White Orbs</option>
+                  <option value="blue-orbs-cursor">Blue Orbs Cursor</option>
+                  <option value="the-sims">The Sims</option>
+                </select>
+              </div>
+            </div>
+            <div class="settings-item">
+              <div class="settings-item-info">
+                <h3>Idle Cursor Motion</h3>
+                <p>Let the cursor move gently while you are away.</p>
+              </div>
+              <div class="settings-item-control">
+                <label class="switch">
+                  <input type="checkbox" id="pointer-idle-motion" class="slider-checkbox" />
+                  <span class="slider-round"></span>
+                </label>
               </div>
             </div>
         </section>

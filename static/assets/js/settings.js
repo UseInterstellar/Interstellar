@@ -492,16 +492,55 @@ document.addEventListener("DOMContentLoaded", () => {
     store.set("shimmerControlsOpen", open ? "false" : "true");
   });
 
-  const pointerDropdown = document.getElementById("pointer-dropdown");
-  pointerDropdown.value = store.get("pointer") || "default";
-  pointerDropdown.addEventListener("change", function () {
-    const val = this.value;
-    if (val === "default") {
-      store.remove("pointer");
+  const pointerTrailDropdown = document.getElementById("pointer-trail-dropdown");
+  const pointerCustomDropdown = document.getElementById("pointer-custom-dropdown");
+  const pointerIdleMotion = document.getElementById("pointer-idle-motion");
+  const pointerClickEffectDropdown = document.getElementById("pointer-click-effect-dropdown");
+  const legacyPointer = store.get("pointer");
+  const trailPointers = ["rainbow-trail", "rainbow-stars", "white-orbs", "blue-orbs-trail", "curly-cursor"];
+  const customPointers = ["blue-orbs-cursor", "the-sims"];
+  const savedTrail = store.get("pointerTrail");
+  const savedCustom = store.get("pointerCustom");
+  const trailValue = trailPointers.includes(savedTrail) ? savedTrail : savedCustom === "blue-orbs" ? "blue-orbs-trail" : trailPointers.includes(legacyPointer) ? legacyPointer : "default";
+  const customValue = customPointers.includes(savedCustom) ? savedCustom : savedCustom === "blue-orbs" ? "blue-orbs-cursor" : customPointers.includes(legacyPointer) ? legacyPointer : "default";
+
+  pointerTrailDropdown.value = trailValue;
+  pointerCustomDropdown.value = customValue;
+  pointerIdleMotion.checked = store.get("pointerIdleMotion") === "true";
+
+  const clickEffectByPointer = {
+    "rainbow-trail": "rainbow-trail",
+    "white-orbs": "white-orbs",
+    "blue-orbs-cursor": "blue-orbs-cursor",
+    "the-sims": "the-sims",
+  };
+  pointerClickEffectDropdown.value = store.get("pointerClickEffect") || clickEffectByPointer[customValue] || clickEffectByPointer[trailValue] || "none";
+
+  function savePointerSetting(key, value) {
+    if ((value === "default" || value === "false") && key !== "pointerClickEffect") {
+      store.remove(key);
     } else {
-      store.set("pointer", val);
+      store.set(key, value);
     }
+    store.remove("pointer");
     window.location.reload();
+  }
+
+  pointerTrailDropdown.addEventListener("change", function () {
+    const effect = clickEffectByPointer[this.value] || clickEffectByPointer[store.get("pointerCustom")] || "none";
+    store.set("pointerClickEffect", effect);
+    savePointerSetting("pointerTrail", this.value);
+  });
+  pointerCustomDropdown.addEventListener("change", function () {
+    const effect = clickEffectByPointer[this.value] || clickEffectByPointer[store.get("pointerTrail")] || "none";
+    store.set("pointerClickEffect", effect);
+    savePointerSetting("pointerCustom", this.value);
+  });
+  pointerIdleMotion.addEventListener("change", function () {
+    savePointerSetting("pointerIdleMotion", this.checked ? "true" : "false");
+  });
+  pointerClickEffectDropdown.addEventListener("change", function () {
+    savePointerSetting("pointerClickEffect", this.value);
   });
 
   document.getElementById("engine").addEventListener("change", function () {

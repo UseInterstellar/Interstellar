@@ -194,7 +194,8 @@ body[data-custom-background] {
 }
 
 /* Pointer Effects Canvas */
-#pointer-canvas {
+#pointer-canvas,
+#pointer-click-canvas {
    position: fixed;
    top: 0;
    left: 0;
@@ -294,14 +295,17 @@ body.rainbow-trail-cursor:active #rainbow-trail-cursor {
 }
 
 /* Blue Orbs Cursor */
-body.blue-orbs-cursor {
+body.blue-orbs-cursor,
+body.blue-orbs-click-effect {
   cursor: none;
 }
 
 .blue-orbs-cursor .cursor-glow,
+.blue-orbs-click-effect .cursor-glow,
 .blue-orbs-cursor .cursor-core,
-.blue-orbs-cursor .orb-trail,
-.blue-orbs-cursor .orb-spark {
+.blue-orbs-click-effect .cursor-core,
+.blue-orbs-trail .orb-trail,
+.blue-orbs-trail .orb-spark {
   position: fixed;
   pointer-events: none;
   border-radius: 50%;
@@ -330,7 +334,29 @@ body.blue-orbs-cursor {
   visibility: hidden;
 }
 
-.blue-orbs-cursor .orb-trail {
+.blue-orbs-click-effect .cursor-glow {
+  width: 140px;
+  height: 140px;
+  background: radial-gradient(circle, rgba(255,255,255,0.28), rgba(0,200,255,0.12), transparent 70%);
+  filter: blur(10px);
+  mix-blend-mode: screen;
+  z-index: 9998;
+  visibility: hidden;
+}
+
+.blue-orbs-click-effect .cursor-core {
+  width: 16px;
+  height: 16px;
+  background: radial-gradient(circle, #ffffff 0%, #7dd3fc 45%, #22d3ee 100%);
+  box-shadow:
+    0 0 10px rgba(255,255,255,0.8),
+    0 0 20px rgba(34,211,238,0.8),
+    0 0 40px rgba(34,211,238,0.4);
+  z-index: 9999;
+  visibility: hidden;
+}
+
+.blue-orbs-trail .orb-trail {
   mix-blend-mode: screen;
   background: radial-gradient(circle, rgba(255,255,255,0.9), rgba(56,189,248,0.45), rgba(168,85,247,0.15), transparent 72%);
   filter: blur(2px);
@@ -339,7 +365,7 @@ body.blue-orbs-cursor {
   animation: orbFadeTrail linear forwards;
 }
 
-.blue-orbs-cursor .orb-spark {
+.blue-orbs-trail .orb-spark {
   width: 6px;
   height: 6px;
   background: radial-gradient(circle, #fff, #67e8f9 60%, transparent 75%);

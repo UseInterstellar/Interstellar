@@ -318,10 +318,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Pointer Effects — cursor.js is only loaded when an effect is active
-  const CURSOR_EFFECTS = ["rainbow-stars", "white-orbs", "rainbow-trail", "blue-orbs", "red-circle", "the-sims", "curly-cursor"];
+  const CURSOR_EFFECTS = ["rainbow-stars", "white-orbs", "rainbow-trail", "blue-orbs-trail", "blue-orbs-cursor", "the-sims", "curly-cursor"];
   const activePointer = store.get("pointer");
+  const activeTrail = store.get("pointerTrail") || (activePointer === "blue-orbs" || store.get("pointerCustom") === "blue-orbs" ? "blue-orbs-trail" : CURSOR_EFFECTS.includes(activePointer) ? activePointer : "default");
+  const activeCustom = store.get("pointerCustom") || "default";
+  const activeClickEffect = store.get("pointerClickEffect") || "none";
+  const idlePointerMotion = store.get("pointerIdleMotion") === "true";
 
-  if (CURSOR_EFFECTS.includes(activePointer)) {
+  if (CURSOR_EFFECTS.includes(activeTrail) || CURSOR_EFFECTS.includes(activeCustom) || CURSOR_EFFECTS.includes(activeClickEffect) || idlePointerMotion) {
     const cursorScript = document.createElement("script");
     cursorScript.src = "/assets/js/cursor.js";
     cursorScript.onload = () => initCursorEffect();
