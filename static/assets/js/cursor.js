@@ -1297,6 +1297,80 @@ function initSnowflakeTrail() {
   })();
 }
 
+
+function initSmoothFollower() {
+  if (document.getElementById("smooth-follower-dot")) return;
+
+  cursorBodyClass("smooth-follower-cursor");
+
+  const INTERACTIVE = "a, button, img, input, textarea, select, summary, [role='button'], [contenteditable='true']";
+  const DOT_EASE = 0.2;
+  const RING_EASE = 0.1;
+
+  const dot = document.createElement("div");
+  dot.id = "smooth-follower-dot";
+  document.body.appendChild(dot);
+  cursorNode(dot);
+
+  const ring = document.createElement("div");
+  ring.id = "smooth-follower-ring";
+  document.body.appendChild(ring);
+  cursorNode(ring);
+
+  let pointerX = null;
+  let pointerY = null;
+  let dotX = 0;
+  let dotY = 0;
+  let ringX = 0;
+  let ringY = 0;
+  let placed = false;
+
+  function place(element, x, y) {
+    element.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
+  }
+
+  function show(x, y) {
+    if (!placed) {
+      dotX = x;
+      dotY = y;
+      ringX = x;
+      ringY = y;
+      placed = true;
+    }
+    pointerX = x;
+    pointerY = y;
+    dot.style.visibility = "visible";
+    ring.style.visibility = "visible";
+  }
+
+  function hide() {
+    pointerX = null;
+    pointerY = null;
+    dot.style.visibility = "hidden";
+    ring.style.visibility = "hidden";
+    ring.classList.remove("hovering");
+  }
+
+  cursorOn(window, "mousemove", event => {
+    show(event.clientX, event.clientY);
+    const target = event.target;
+    ring.classList.toggle("hovering", target instanceof Element && target.closest(INTERACTIVE) !== null);
+  });
+  cursorOn(document, "mouseleave", hide);
+  setupIframeTracking(show, hide);
+
+  (function follow() {
+    cursorFrame(follow);
+    if (pointerX === null) return;
+    dotX += (pointerX - dotX) * DOT_EASE;
+    dotY += (pointerY - dotY) * DOT_EASE;
+    ringX += (pointerX - ringX) * RING_EASE;
+    ringY += (pointerY - ringY) * RING_EASE;
+    place(dot, dotX, dotY);
+    place(ring, ringX, ringY);
+  })();
+}
+
 function setupIdleCursorMotion() {
   if (store.get("pointerIdleMotion") !== "true") return;
 
@@ -1395,7 +1469,7 @@ function setupIdleCursorMotion() {
 function initCursorEffect() {
   const legacyPointer = store.get("pointer");
   const trailPointers = ["rainbow-stars", "white-orbs", "rainbow-trail", "blue-orbs-trail", "curly-cursor", "rainbow-ribbon", "fairy-dust", "echo-trail", "chasing-cursors", "dot-trail", "bubble-trail", "snowflake-trail"];
-  const customPointers = ["blue-orbs-cursor", "the-sims"];
+  const customPointers = ["blue-orbs-cursor", "the-sims", "smooth-follower"];
   const legacyBlueOrbs = legacyPointer === "blue-orbs";
   const trail = store.get("pointerTrail") || (legacyBlueOrbs || store.get("pointerCustom") === "blue-orbs" ? "blue-orbs-trail" : trailPointers.includes(legacyPointer) ? legacyPointer : "default");
   const custom = store.get("pointerCustom") || (legacyBlueOrbs ? "blue-orbs-cursor" : customPointers.includes(legacyPointer) ? legacyPointer : "default");
@@ -1446,6 +1520,9 @@ function initCursorEffect() {
       break;
     case "the-sims":
       initTheSims();
+      break;
+    case "smooth-follower":
+      initSmoothFollower();
       break;
   }
 

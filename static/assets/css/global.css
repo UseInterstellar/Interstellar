@@ -428,6 +428,41 @@ body.the-sims-cursor {
   50%       { opacity: 0.1; transform: translate(-50%, -50%) scale(1.12); }
 }
 
+body.smooth-follower-cursor {
+  cursor: none;
+}
+
+#smooth-follower-dot,
+#smooth-follower-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  visibility: hidden;
+  will-change: transform;
+}
+
+#smooth-follower-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--text-primary, #ffffff);
+  z-index: 9999;
+}
+
+#smooth-follower-ring {
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--text-primary, #ffffff);
+  z-index: 9998;
+  transition: width 0.3s ease, height 0.3s ease;
+}
+
+#smooth-follower-ring.hovering {
+  width: 44px;
+  height: 44px;
+}
+
 /* Red Circle cursor (Based on codepen.io/RoshitShrestha/pen/KwgVGwB) */
 body.red-circle-cursor,
 body.red-circle-cursor *:hover {

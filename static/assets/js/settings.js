@@ -498,7 +498,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const pointerClickEffectDropdown = document.getElementById("pointer-click-effect-dropdown");
   const legacyPointer = store.get("pointer");
   const trailPointers = ["rainbow-trail", "rainbow-stars", "white-orbs", "blue-orbs-trail", "curly-cursor", "rainbow-ribbon", "fairy-dust", "echo-trail", "chasing-cursors", "dot-trail", "bubble-trail", "snowflake-trail"];
-  const customPointers = ["blue-orbs-cursor", "the-sims"];
+  const customPointers = ["blue-orbs-cursor", "the-sims", "smooth-follower"];
   const savedTrail = store.get("pointerTrail");
   const savedCustom = store.get("pointerCustom");
   const trailValue = trailPointers.includes(savedTrail) ? savedTrail : savedCustom === "blue-orbs" ? "blue-orbs-trail" : trailPointers.includes(legacyPointer) ? legacyPointer : "default";
