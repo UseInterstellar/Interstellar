@@ -36,10 +36,11 @@ document.addEventListener("DOMContentLoaded", () => {
   syncProxyCards(store.get("proxy") || "sj");
 
   const wispInput = document.getElementById("wisp-input");
-  const wispSaveBtn = document.getElementById("wisp-save-btn");
-  if (wispInput && wispSaveBtn) {
+  if (wispInput) {
     wispInput.value = store.get("wisp-url") || "";
-    wispSaveBtn.addEventListener("click", () => {
+    wispInput.addEventListener("keydown", event => {
+      if (event.key !== "Enter") return;
+      event.preventDefault();
       const val = wispInput.value.trim();
       if (val === "") {
         store.remove("wisp-url");
