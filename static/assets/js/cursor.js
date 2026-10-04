@@ -1297,7 +1297,6 @@ function initSnowflakeTrail() {
   })();
 }
 
-
 function initSmoothFollower() {
   if (document.getElementById("smooth-follower-dot")) return;
 
@@ -1386,7 +1385,6 @@ function initAfterglow(clickOnly = false) {
   let lastX = null;
   let lastY = null;
 
-
   function potential(x, y) {
     return Math.sin(x * 0.005 + time * 1.1) + Math.cos(y * 0.0045 - time * 0.9) + Math.sin((x - y) * 0.0026 + time * 0.6) * 0.7;
   }
@@ -1452,7 +1450,6 @@ function initAfterglow(clickOnly = false) {
     time += elapsed * 0.24;
     hue = (hue + elapsed * 4) % 360;
 
-  
     ctx.globalCompositeOperation = "destination-out";
     ctx.fillStyle = "rgba(0, 0, 0, 0.09)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -1789,6 +1786,787 @@ function initFallingStars(clickOnly = false) {
   })(0);
 }
 
+function initTubesTrail() {
+  if (document.getElementById("pointer-canvas")) return;
+
+  const canvas = createFullscreenCanvas("pointer-canvas");
+  const ctx = canvas.getContext("2d");
+
+  const TUBES = 4;
+  const MAX_POINTS = 70;
+  const points = [];
+  let hues = [];
+  let wave = 0;
+  let x = null;
+  let y = null;
+
+  function reshuffle() {
+    const base = Math.random() * 360;
+    hues = Array.from({ length: TUBES }, (_, i) => (base + i * (40 + Math.random() * 40)) % 360);
+  }
+  reshuffle();
+
+  trackCursorPosition(
+    (nextX, nextY) => {
+      x = nextX;
+      y = nextY;
+    },
+    () => {
+      x = null;
+      y = null;
+    },
+  );
+  cursorOn(window, "mousedown", reshuffle);
+
+  (function loop() {
+    cursorFrame(loop);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (x === null) {
+      points.length = 0;
+      return;
+    }
+
+    wave += 0.08;
+    points.unshift({ x, y });
+    if (points.length > MAX_POINTS) points.pop();
+    if (points.length < 4) return;
+
+    ctx.globalCompositeOperation = "lighter";
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+
+    for (let tube = 0; tube < TUBES; tube++) {
+      const hue = hues[tube];
+      const phase = (tube / TUBES) * Math.PI * 2;
+
+      const path = points.map((point, index) => {
+        const next = points[Math.min(index + 1, points.length - 1)];
+        const length = Math.hypot(next.x - point.x, next.y - point.y) || 1;
+        const sway = Math.sin(index * 0.22 + wave + phase) * 16 * (1 - index / points.length);
+        return {
+          x: point.x + (-(next.y - point.y) / length) * sway,
+          y: point.y + ((next.x - point.x) / length) * sway,
+        };
+      });
+
+      for (const [width, alpha, light] of [
+        [15, 0.2, 45],
+        [7, 0.4, 60],
+        [2.5, 0.75, 85],
+      ]) {
+        ctx.beginPath();
+        ctx.moveTo(path[0].x, path[0].y);
+        for (let i = 1; i < path.length - 1; i++) {
+          const midX = (path[i].x + path[i + 1].x) / 2;
+          const midY = (path[i].y + path[i + 1].y) / 2;
+          ctx.quadraticCurveTo(path[i].x, path[i].y, midX, midY);
+        }
+        ctx.globalAlpha = alpha;
+        ctx.strokeStyle = `hsl(${hue}, 95%, ${light}%)`;
+        ctx.lineWidth = width;
+        ctx.stroke();
+      }
+    }
+
+    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = "source-over";
+  })();
+}
+
+function initPixelCursorTrail() {
+  if (document.getElementById("pointer-canvas")) return;
+
+  const canvas = createFullscreenCanvas("pointer-canvas");
+  const ctx = canvas.getContext("2d");
+
+  const CELL = 6;
+  const MAX_BLOCKS = 260;
+  const blocks = [];
+  let hue = 0;
+
+  trackCursorPosition(
+    spawnOnMovement(4, (x, y) => {
+      const col = Math.floor(x / CELL);
+      const row = Math.floor(y / CELL);
+      for (let i = 0; i < 3; i++) {
+        blocks.push({
+          col: col + Math.round((Math.random() - 0.5) * 3),
+          row: row + Math.round((Math.random() - 0.5) * 3),
+          hue: (hue + Math.random() * 40) % 360,
+          life: 1,
+          decay: 0.014 + Math.random() * 0.016,
+        });
+      }
+      if (blocks.length > MAX_BLOCKS) blocks.splice(0, blocks.length - MAX_BLOCKS);
+    }),
+  );
+
+  (function loop() {
+    cursorFrame(loop);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    hue = (hue + 1.4) % 360;
+
+    for (let i = blocks.length - 1; i >= 0; i--) {
+      const block = blocks[i];
+      block.life -= block.decay;
+      if (block.life <= 0) {
+        blocks.splice(i, 1);
+        continue;
+      }
+      ctx.globalAlpha = Math.ceil(block.life * 5) / 5;
+      ctx.fillStyle = `hsl(${block.hue}, 95%, 65%)`;
+      ctx.fillRect(block.col * CELL, block.row * CELL, CELL, CELL);
+    }
+    ctx.globalAlpha = 1;
+  })();
+}
+
+function initPixelGridTrail() {
+  if (document.getElementById("pointer-canvas")) return;
+
+  const canvas = createFullscreenCanvas("pointer-canvas");
+  const ctx = canvas.getContext("2d");
+
+  const CELL = 26;
+
+  const lit = new Map();
+
+  function light(x, y) {
+    const col = Math.floor(x / CELL);
+    const row = Math.floor(y / CELL);
+    for (let dc = -1; dc <= 1; dc++) {
+      for (let dr = -1; dr <= 1; dr++) {
+        const strength = dc === 0 && dr === 0 ? 1 : 0.35;
+        const key = `${col + dc},${row + dr}`;
+        const current = lit.get(key);
+        if (!current || current.life < strength) lit.set(key, { col: col + dc, row: row + dr, life: strength });
+      }
+    }
+  }
+
+  trackCursorPosition(light);
+
+  (function loop() {
+    cursorFrame(loop);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const color = themeCursorColor();
+
+    lit.forEach((cell, key) => {
+      cell.life -= 0.022;
+      if (cell.life <= 0) {
+        lit.delete(key);
+        return;
+      }
+      ctx.globalAlpha = cell.life * 0.8;
+      ctx.fillStyle = color;
+      ctx.fillRect(cell.col * CELL + 1, cell.row * CELL + 1, CELL - 2, CELL - 2);
+    });
+    ctx.globalAlpha = 1;
+  })();
+}
+
+function initPixelReveal() {
+  if (document.getElementById("pointer-canvas")) return;
+
+  const canvas = createFullscreenCanvas("pointer-canvas");
+  const ctx = canvas.getContext("2d");
+
+  const CELL = 20;
+  const MAX_FRAGMENTS = 420;
+  const fragments = [];
+
+  function hueAt(col, row) {
+    return (Math.sin(col * 0.18) * 60 + Math.cos(row * 0.16) * 60 + col * 2 + row * 1.4 + 200) % 360;
+  }
+
+  trackCursorPosition(
+    spawnOnMovement(9, (x, y) => {
+      const col = Math.floor(x / CELL);
+      const row = Math.floor(y / CELL);
+      const spread = 3;
+      for (let i = 0; i < 7; i++) {
+        const c = col + Math.round((Math.random() - 0.5) * spread * 2);
+        const r = row + Math.round((Math.random() - 0.5) * spread * 2);
+        fragments.push({ col: c, row: r, hue: hueAt(c, r), life: 1, decay: 0.007 + Math.random() * 0.008 });
+      }
+      if (fragments.length > MAX_FRAGMENTS) fragments.splice(0, fragments.length - MAX_FRAGMENTS);
+    }),
+  );
+
+  (function loop() {
+    cursorFrame(loop);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let i = fragments.length - 1; i >= 0; i--) {
+      const piece = fragments[i];
+      piece.life -= piece.decay;
+      if (piece.life <= 0) {
+        fragments.splice(i, 1);
+        continue;
+      }
+      ctx.globalAlpha = Math.min(1, piece.life * 1.3);
+      ctx.fillStyle = `hsl(${piece.hue}, 70%, 58%)`;
+      ctx.fillRect(piece.col * CELL, piece.row * CELL, CELL, CELL);
+    }
+    ctx.globalAlpha = 1;
+  })();
+}
+
+function initDrawingTrail() {
+  if (document.getElementById("pointer-canvas")) return;
+
+  const canvas = createFullscreenCanvas("pointer-canvas");
+  const ctx = canvas.getContext("2d");
+
+  const MAX_POINTS = 90;
+  const points = [];
+  let lastX = null;
+  let lastY = null;
+
+  trackCursorPosition(
+    (x, y) => {
+      const speed = lastX === null ? 0 : Math.hypot(x - lastX, y - lastY);
+      lastX = x;
+      lastY = y;
+      points.push({ x, y, width: Math.max(1.5, 11 - speed * 0.22), life: 1 });
+      if (points.length > MAX_POINTS) points.shift();
+    },
+    () => {
+      lastX = null;
+      lastY = null;
+    },
+  );
+
+  (function loop() {
+    cursorFrame(loop);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const color = themeCursorColor();
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.strokeStyle = color;
+
+    for (let i = points.length - 1; i >= 0; i--) {
+      points[i].life -= 0.012;
+      if (points[i].life <= 0) {
+        points.splice(i, 1);
+      }
+    }
+
+    for (let i = 1; i < points.length; i++) {
+      const from = points[i - 1];
+      const to = points[i];
+      const taper = i / points.length;
+      ctx.globalAlpha = Math.max(0, to.life) * 0.9;
+      ctx.lineWidth = to.width * taper;
+      ctx.beginPath();
+      ctx.moveTo(from.x, from.y);
+      ctx.lineTo(to.x, to.y);
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+  })();
+}
+
+function initTidalTrail() {
+  if (document.getElementById("pointer-canvas")) return;
+
+  const canvas = createFullscreenCanvas("pointer-canvas");
+  const ctx = canvas.getContext("2d");
+  const ripples = [];
+
+  trackCursorPosition(
+    spawnOnMovement(26, (x, y) => {
+      ripples.push({ x, y, radius: 6, maxRadius: 70 + Math.random() * 50, life: 1, hue: 185 + Math.random() * 35, wobble: Math.random() * Math.PI * 2 });
+    }),
+  );
+
+  (function loop() {
+    cursorFrame(loop);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.globalCompositeOperation = "lighter";
+
+    for (let i = ripples.length - 1; i >= 0; i--) {
+      const ripple = ripples[i];
+      ripple.radius += (ripple.maxRadius - ripple.radius) * 0.04;
+      ripple.wobble += 0.09;
+      ripple.life -= 0.011;
+      if (ripple.life <= 0) {
+        ripples.splice(i, 1);
+        continue;
+      }
+
+      for (const [scale, width, fade] of [
+        [1, 2.2, 0.9],
+        [0.82, 1.2, 0.5],
+      ]) {
+        ctx.globalAlpha = Math.max(0, ripple.life) * fade;
+        ctx.strokeStyle = `hsl(${ripple.hue}, 90%, 65%)`;
+        ctx.lineWidth = width;
+        ctx.beginPath();
+        ctx.ellipse(ripple.x, ripple.y, ripple.radius * scale, ripple.radius * scale * (0.86 + Math.sin(ripple.wobble) * 0.1), 0, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+    }
+
+    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = "source-over";
+  })();
+}
+
+function initFluidTrail() {
+  if (document.getElementById("pointer-canvas")) return;
+
+  const canvas = createFullscreenCanvas("pointer-canvas");
+  const ctx = canvas.getContext("2d");
+
+  const COLOR = [139, 92, 246];
+  const particles = [];
+  let pointerX = null;
+  let pointerY = null;
+  let lastX = null;
+  let lastY = null;
+
+  trackCursorPosition(
+    (x, y) => {
+      const pushX = lastX === null ? 0 : x - lastX;
+      const pushY = lastY === null ? 0 : y - lastY;
+      lastX = x;
+      lastY = y;
+      pointerX = x;
+      pointerY = y;
+      for (let i = 0; i < 4; i++) {
+        particles.push({
+          x,
+          y,
+          vx: pushX * 0.18 + (Math.random() - 0.5) * 2,
+          vy: pushY * 0.18 + (Math.random() - 0.5) * 2,
+          size: 5 + Math.random() * 13,
+          life: 1,
+          decay: 0.012 + Math.random() * 0.012,
+        });
+      }
+    },
+    () => {
+      pointerX = null;
+      pointerY = null;
+      lastX = null;
+      lastY = null;
+    },
+  );
+
+  (function loop() {
+    cursorFrame(loop);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.globalCompositeOperation = "lighter";
+
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const drop = particles[i];
+      if (pointerX !== null) {
+        drop.vx += (pointerX - drop.x) * 0.002;
+        drop.vy += (pointerY - drop.y) * 0.002;
+      }
+      drop.x += drop.vx;
+      drop.y += drop.vy;
+      drop.vx *= 0.93;
+      drop.vy *= 0.93;
+      drop.life -= drop.decay;
+      if (drop.life <= 0) {
+        particles.splice(i, 1);
+        continue;
+      }
+
+      const radius = drop.size * drop.life;
+      const gradient = ctx.createRadialGradient(drop.x, drop.y, 0, drop.x, drop.y, radius);
+      gradient.addColorStop(0, `rgba(${COLOR[0]}, ${COLOR[1]}, ${COLOR[2]}, ${drop.life * 0.55})`);
+      gradient.addColorStop(1, `rgba(${COLOR[0]}, ${COLOR[1]}, ${COLOR[2]}, 0)`);
+      ctx.fillStyle = gradient;
+      ctx.beginPath();
+      ctx.arc(drop.x, drop.y, radius, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    ctx.globalCompositeOperation = "source-over";
+  })();
+}
+
+function initParticleDots() {
+  if (document.getElementById("pointer-canvas")) return;
+
+  const canvas = createFullscreenCanvas("pointer-canvas");
+  const ctx = canvas.getContext("2d");
+
+  const COUNT = 7;
+  const dots = Array.from({ length: COUNT }, () => ({ x: window.innerWidth / 2, y: window.innerHeight / 2 }));
+  let pointerX = null;
+  let pointerY = null;
+  let placed = false;
+
+  trackCursorPosition(
+    (x, y) => {
+      if (!placed) {
+        dots.forEach(dot => {
+          dot.x = x;
+          dot.y = y;
+        });
+        placed = true;
+      }
+      pointerX = x;
+      pointerY = y;
+    },
+    () => {
+      pointerX = null;
+      pointerY = null;
+    },
+  );
+
+  (function loop() {
+    cursorFrame(loop);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (pointerX === null) return;
+
+    dots.forEach((dot, index) => {
+      const target = index === 0 ? { x: pointerX, y: pointerY } : dots[index - 1];
+      dot.x += (target.x - dot.x) * 0.3;
+      dot.y += (target.y - dot.y) * 0.3;
+      ctx.globalAlpha = 1 - index / (COUNT + 1);
+      ctx.fillStyle = "#3b82f6";
+      ctx.beginPath();
+      ctx.arc(dot.x, dot.y, 10 * (1 - index / (COUNT + 1.2)), 0, Math.PI * 2);
+      ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+  })();
+}
+
+function initInkReveal() {
+  if (document.getElementById("pointer-canvas")) return;
+
+  const canvas = createFullscreenCanvas("pointer-canvas");
+  const ctx = canvas.getContext("2d");
+
+  const MASK = "rgba(10, 12, 24, 0.92)";
+  const MAX_STAMPS = 150;
+  const stamps = [];
+
+  trackCursorPosition(
+    spawnOnMovement(12, (x, y) => {
+      stamps.push({ x, y, radius: 34 + Math.random() * 26, wobble: Math.random() * Math.PI * 2, life: 1, decay: 0.0024 + Math.random() * 0.002 });
+      if (stamps.length > MAX_STAMPS) stamps.shift();
+    }),
+  );
+
+  (function loop() {
+    cursorFrame(loop);
+    ctx.globalCompositeOperation = "source-over";
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = MASK;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.globalCompositeOperation = "destination-out";
+    for (let i = stamps.length - 1; i >= 0; i--) {
+      const stamp = stamps[i];
+      stamp.life -= stamp.decay;
+      stamp.wobble += 0.02;
+      if (stamp.life <= 0) {
+        stamps.splice(i, 1);
+        continue;
+      }
+
+      ctx.globalAlpha = Math.min(1, stamp.life * 1.6);
+      ctx.beginPath();
+      for (let step = 0; step <= 18; step++) {
+        const angle = (step / 18) * Math.PI * 2;
+        const wobble = 1 + Math.sin(angle * 3 + stamp.wobble) * 0.12 + Math.cos(angle * 5 - stamp.wobble) * 0.07;
+        const radius = stamp.radius * wobble;
+        const px = stamp.x + Math.cos(angle) * radius;
+        const py = stamp.y + Math.sin(angle) * radius;
+        step === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+      }
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = "source-over";
+  })();
+}
+
+const CURSOR_TARGETS = "a, button, img, input, textarea, select, summary, [role='button'], [contenteditable='true']";
+
+function initMagnetSnap() {
+  if (document.getElementById("magnet-snap")) return;
+
+  cursorBodyClass("magnet-snap-cursor");
+
+  const blob = document.createElement("div");
+  blob.id = "magnet-snap";
+  document.body.appendChild(blob);
+  cursorNode(blob);
+
+  const STIFFNESS = 0.16;
+  const DAMPING = 0.72;
+  let pointerX = null;
+  let pointerY = null;
+  let blobX = 0;
+  let blobY = 0;
+  let velocityX = 0;
+  let velocityY = 0;
+  let target = null;
+  let placed = false;
+
+  function show(x, y) {
+    if (!placed) {
+      blobX = x;
+      blobY = y;
+      placed = true;
+    }
+    pointerX = x;
+    pointerY = y;
+    blob.style.visibility = "visible";
+  }
+
+  function hide() {
+    pointerX = null;
+    pointerY = null;
+    target = null;
+    blob.style.visibility = "hidden";
+  }
+
+  cursorOn(window, "mousemove", event => {
+    show(event.clientX, event.clientY);
+    target = event.target instanceof Element ? event.target.closest(CURSOR_TARGETS) : null;
+  });
+  cursorOn(document, "mouseleave", hide);
+  setupIframeTracking(show, hide);
+
+  (function spring() {
+    cursorFrame(spring);
+    if (pointerX === null) return;
+
+    let goalX = pointerX;
+    let goalY = pointerY;
+    let width = 40;
+    let height = 40;
+    let radius = 20;
+
+    if (target) {
+      const box = target.getBoundingClientRect();
+      if (box.width && box.height) {
+        goalX = box.left + box.width / 2;
+        goalY = box.top + box.height / 2;
+        width = box.width + 14;
+        height = box.height + 10;
+        radius = Math.min(width, height) / 2;
+      }
+    }
+
+    velocityX = (velocityX + (goalX - blobX) * STIFFNESS) * DAMPING;
+    velocityY = (velocityY + (goalY - blobY) * STIFFNESS) * DAMPING;
+    blobX += velocityX;
+    blobY += velocityY;
+
+    blob.style.width = `${width}px`;
+    blob.style.height = `${height}px`;
+    blob.style.borderRadius = `${radius}px`;
+    blob.style.transform = `translate3d(${blobX}px, ${blobY}px, 0) translate(-50%, -50%)`;
+  })();
+}
+
+function initSpringCursor() {
+  if (document.getElementById("spring-cursor-ring")) return;
+
+  cursorBodyClass("spring-cursor");
+
+  const dot = document.createElement("div");
+  dot.id = "spring-cursor-dot";
+  document.body.appendChild(dot);
+  cursorNode(dot);
+
+  const ring = document.createElement("div");
+  ring.id = "spring-cursor-ring";
+  document.body.appendChild(ring);
+  cursorNode(ring);
+
+  const STIFFNESS = 0.14;
+  const DAMPING = 0.74;
+  let pointerX = null;
+  let pointerY = null;
+  let ringX = 0;
+  let ringY = 0;
+  let velocityX = 0;
+  let velocityY = 0;
+  let placed = false;
+
+  function show(x, y) {
+    if (!placed) {
+      ringX = x;
+      ringY = y;
+      placed = true;
+    }
+    pointerX = x;
+    pointerY = y;
+    dot.style.visibility = "visible";
+    ring.style.visibility = "visible";
+  }
+
+  function hide() {
+    pointerX = null;
+    pointerY = null;
+    dot.style.visibility = "hidden";
+    ring.style.visibility = "hidden";
+    ring.classList.remove("over-target");
+  }
+
+  cursorOn(window, "mousemove", event => {
+    show(event.clientX, event.clientY);
+    ring.classList.toggle("over-target", event.target instanceof Element && event.target.closest(CURSOR_TARGETS) !== null);
+  });
+  cursorOn(document, "mouseleave", hide);
+  setupIframeTracking(show, hide);
+
+  (function spring() {
+    cursorFrame(spring);
+    if (pointerX === null) return;
+    velocityX = (velocityX + (pointerX - ringX) * STIFFNESS) * DAMPING;
+    velocityY = (velocityY + (pointerY - ringY) * STIFFNESS) * DAMPING;
+    ringX += velocityX;
+    ringY += velocityY;
+    dot.style.transform = `translate3d(${pointerX}px, ${pointerY}px, 0) translate(-50%, -50%)`;
+    ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+  })();
+}
+
+function initInvertedCursor() {
+  if (document.getElementById("inverted-cursor")) return;
+
+  cursorBodyClass("inverted-cursor-active");
+
+  const disc = document.createElement("div");
+  disc.id = "inverted-cursor";
+  document.body.appendChild(disc);
+  cursorNode(disc);
+
+  let pointerX = null;
+  let pointerY = null;
+  let discX = 0;
+  let discY = 0;
+  let placed = false;
+
+  function show(x, y) {
+    if (!placed) {
+      discX = x;
+      discY = y;
+      placed = true;
+    }
+    pointerX = x;
+    pointerY = y;
+    disc.style.visibility = "visible";
+  }
+
+  function hide() {
+    pointerX = null;
+    pointerY = null;
+    disc.style.visibility = "hidden";
+  }
+
+  trackCursorPosition(show, hide);
+
+  (function follow() {
+    cursorFrame(follow);
+    if (pointerX === null) return;
+    discX += (pointerX - discX) * 0.25;
+    discY += (pointerY - discY) * 0.25;
+    disc.style.transform = `translate3d(${discX}px, ${discY}px, 0) translate(-50%, -50%)`;
+  })();
+}
+
+function initSpotlightCursor() {
+  if (document.getElementById("spotlight-cursor")) return;
+
+  const spotlight = document.createElement("div");
+  spotlight.id = "spotlight-cursor";
+  document.body.appendChild(spotlight);
+  cursorNode(spotlight);
+
+  let pointerX = window.innerWidth / 2;
+  let pointerY = window.innerHeight / 2;
+  let lightX = pointerX;
+  let lightY = pointerY;
+
+  trackCursorPosition(
+    (x, y) => {
+      pointerX = x;
+      pointerY = y;
+      spotlight.style.opacity = "1";
+    },
+    () => {
+      spotlight.style.opacity = "0";
+    },
+  );
+
+  (function follow() {
+    cursorFrame(follow);
+    lightX += (pointerX - lightX) * 0.2;
+    lightY += (pointerY - lightY) * 0.2;
+    spotlight.style.background = `radial-gradient(circle 150px at ${lightX}px ${lightY}px, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.3) 55%, rgba(0, 0, 0, 0.78) 100%)`;
+  })();
+}
+
+function initSpringSquash() {
+  if (document.getElementById("spring-squash")) return;
+
+  cursorBodyClass("spring-squash-cursor");
+
+  const blob = document.createElement("div");
+  blob.id = "spring-squash";
+  document.body.appendChild(blob);
+  cursorNode(blob);
+
+  const STIFFNESS = 0.13;
+  const DAMPING = 0.76;
+  let pointerX = null;
+  let pointerY = null;
+  let blobX = 0;
+  let blobY = 0;
+  let velocityX = 0;
+  let velocityY = 0;
+  let placed = false;
+
+  function show(x, y) {
+    if (!placed) {
+      blobX = x;
+      blobY = y;
+      placed = true;
+    }
+    pointerX = x;
+    pointerY = y;
+    blob.style.visibility = "visible";
+  }
+
+  function hide() {
+    pointerX = null;
+    pointerY = null;
+    blob.style.visibility = "hidden";
+  }
+
+  trackCursorPosition(show, hide);
+
+  (function spring() {
+    cursorFrame(spring);
+    if (pointerX === null) return;
+    velocityX = (velocityX + (pointerX - blobX) * STIFFNESS) * DAMPING;
+    velocityY = (velocityY + (pointerY - blobY) * STIFFNESS) * DAMPING;
+    blobX += velocityX;
+    blobY += velocityY;
+
+    const speed = Math.min(26, Math.hypot(velocityX, velocityY));
+    const stretch = 1 + speed * 0.022;
+    const squash = 1 - speed * 0.014;
+    const angle = (Math.atan2(velocityY, velocityX) * 180) / Math.PI;
+    blob.style.transform = `translate3d(${blobX}px, ${blobY}px, 0) translate(-50%, -50%) rotate(${angle}deg) scale(${stretch}, ${squash})`;
+  })();
+}
+
 function setupIdleCursorMotion() {
   if (store.get("pointerIdleMotion") !== "true") return;
 
@@ -1886,8 +2664,34 @@ function setupIdleCursorMotion() {
 
 function initCursorEffect() {
   const legacyPointer = store.get("pointer");
-  const trailPointers = ["rainbow-stars", "white-orbs", "rainbow-trail", "blue-orbs-trail", "curly-cursor", "rainbow-ribbon", "fairy-dust", "echo-trail", "chasing-cursors", "dot-trail", "bubble-trail", "snowflake-trail", "afterglow", "magnetic-trail", "color-trail", "falling-stars"];
-  const customPointers = ["blue-orbs-cursor", "the-sims", "smooth-follower", "magnetic-cursor"];
+  const trailPointers = [
+    "rainbow-stars",
+    "white-orbs",
+    "rainbow-trail",
+    "blue-orbs-trail",
+    "curly-cursor",
+    "rainbow-ribbon",
+    "fairy-dust",
+    "echo-trail",
+    "chasing-cursors",
+    "dot-trail",
+    "bubble-trail",
+    "snowflake-trail",
+    "afterglow",
+    "magnetic-trail",
+    "color-trail",
+    "falling-stars",
+    "tubes-trail",
+    "pixel-cursor",
+    "pixel-trail",
+    "pixel-reveal",
+    "drawing-trail",
+    "tidal-trail",
+    "fluid-trail",
+    "particle-dots",
+    "ink-reveal",
+  ];
+  const customPointers = ["blue-orbs-cursor", "the-sims", "smooth-follower", "magnetic-cursor", "magnet-snap", "spring-cursor", "inverted-cursor", "spotlight-cursor", "spring-squash"];
   const legacyBlueOrbs = legacyPointer === "blue-orbs";
   const trail = store.get("pointerTrail") || (legacyBlueOrbs || store.get("pointerCustom") === "blue-orbs" ? "blue-orbs-trail" : trailPointers.includes(legacyPointer) ? legacyPointer : "default");
   const custom = store.get("pointerCustom") || (legacyBlueOrbs ? "blue-orbs-cursor" : customPointers.includes(legacyPointer) ? legacyPointer : "default");
@@ -1942,6 +2746,33 @@ function initCursorEffect() {
     case "falling-stars":
       initFallingStars();
       break;
+    case "tubes-trail":
+      initTubesTrail();
+      break;
+    case "pixel-cursor":
+      initPixelCursorTrail();
+      break;
+    case "pixel-trail":
+      initPixelGridTrail();
+      break;
+    case "pixel-reveal":
+      initPixelReveal();
+      break;
+    case "drawing-trail":
+      initDrawingTrail();
+      break;
+    case "tidal-trail":
+      initTidalTrail();
+      break;
+    case "fluid-trail":
+      initFluidTrail();
+      break;
+    case "particle-dots":
+      initParticleDots();
+      break;
+    case "ink-reveal":
+      initInkReveal();
+      break;
   }
 
   switch (custom) {
@@ -1956,6 +2787,21 @@ function initCursorEffect() {
       break;
     case "magnetic-cursor":
       initMagneticCursor();
+      break;
+    case "magnet-snap":
+      initMagnetSnap();
+      break;
+    case "spring-cursor":
+      initSpringCursor();
+      break;
+    case "inverted-cursor":
+      initInvertedCursor();
+      break;
+    case "spotlight-cursor":
+      initSpotlightCursor();
+      break;
+    case "spring-squash":
+      initSpringSquash();
       break;
   }
 

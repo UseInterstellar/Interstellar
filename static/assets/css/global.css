@@ -490,6 +490,100 @@ body.magnetic-cursor {
   height: 34px;
 }
 
+body.magnet-snap-cursor,
+body.spring-cursor,
+body.inverted-cursor-active,
+body.spring-squash-cursor {
+  cursor: none;
+}
+
+#magnet-snap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  background: #ffffff;
+  mix-blend-mode: exclusion;
+  pointer-events: none;
+  visibility: hidden;
+  z-index: 9999;
+  transition: width 0.25s ease, height 0.25s ease, border-radius 0.25s ease;
+  will-change: transform;
+}
+
+#spring-cursor-dot,
+#spring-cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  visibility: hidden;
+  will-change: transform;
+}
+
+#spring-cursor-dot {
+  width: 7px;
+  height: 7px;
+  background: var(--text-primary, #ffffff);
+  z-index: 9999;
+}
+
+#spring-cursor-ring {
+  width: 34px;
+  height: 34px;
+  border: 1.5px solid var(--text-primary, #ffffff);
+  opacity: 0.7;
+  z-index: 9998;
+  transition: width 0.25s ease, height 0.25s ease, opacity 0.25s ease;
+}
+
+#spring-cursor-ring.over-target {
+  width: 56px;
+  height: 56px;
+  opacity: 1;
+}
+
+#inverted-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #ffffff;
+  mix-blend-mode: difference;
+  pointer-events: none;
+  visibility: hidden;
+  z-index: 9999;
+  will-change: transform;
+}
+
+#spotlight-cursor {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 9990;
+  transition: opacity 0.3s ease;
+}
+
+#spring-squash {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--text-primary, #ffffff);
+  pointer-events: none;
+  visibility: hidden;
+  z-index: 9999;
+  will-change: transform;
+}
+
 /* Red Circle cursor (Based on codepen.io/RoshitShrestha/pen/KwgVGwB) */
 body.red-circle-cursor,
 body.red-circle-cursor *:hover {

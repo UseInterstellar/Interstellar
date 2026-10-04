@@ -497,8 +497,34 @@ document.addEventListener("DOMContentLoaded", () => {
   const pointerIdleMotion = document.getElementById("pointer-idle-motion");
   const pointerClickEffectDropdown = document.getElementById("pointer-click-effect-dropdown");
   const legacyPointer = store.get("pointer");
-  const trailPointers = ["rainbow-trail", "rainbow-stars", "white-orbs", "blue-orbs-trail", "curly-cursor", "rainbow-ribbon", "fairy-dust", "echo-trail", "chasing-cursors", "dot-trail", "bubble-trail", "snowflake-trail", "afterglow", "magnetic-trail", "color-trail", "falling-stars"];
-  const customPointers = ["blue-orbs-cursor", "the-sims", "smooth-follower", "magnetic-cursor"];
+  const trailPointers = [
+    "rainbow-trail",
+    "rainbow-stars",
+    "white-orbs",
+    "blue-orbs-trail",
+    "curly-cursor",
+    "rainbow-ribbon",
+    "fairy-dust",
+    "echo-trail",
+    "chasing-cursors",
+    "dot-trail",
+    "bubble-trail",
+    "snowflake-trail",
+    "afterglow",
+    "magnetic-trail",
+    "color-trail",
+    "falling-stars",
+    "tubes-trail",
+    "pixel-cursor",
+    "pixel-trail",
+    "pixel-reveal",
+    "drawing-trail",
+    "tidal-trail",
+    "fluid-trail",
+    "particle-dots",
+    "ink-reveal",
+  ];
+  const customPointers = ["blue-orbs-cursor", "the-sims", "smooth-follower", "magnetic-cursor", "magnet-snap", "spring-cursor", "inverted-cursor", "spotlight-cursor", "spring-squash"];
   const savedTrail = store.get("pointerTrail");
   const savedCustom = store.get("pointerCustom");
   const trailValue = trailPointers.includes(savedTrail) ? savedTrail : savedCustom === "blue-orbs" ? "blue-orbs-trail" : trailPointers.includes(legacyPointer) ? legacyPointer : "default";
