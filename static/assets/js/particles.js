@@ -7,7 +7,7 @@ function initSmokeParticles() {
   document.body.appendChild(canvas);
   const context = canvas.getContext("2d");
   const smokeTexture = new Image();
-  smokeTexture.src = "/assets/media/background/smoke-element.png";
+  smokeTexture.src = "/assets/media/background/smoke-element.webp";
   const particles = [];
   const sessionStateKey = "particles";
   const textureCanvas = document.createElement("canvas");
