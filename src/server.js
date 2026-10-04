@@ -10,6 +10,7 @@ import basicAuth from "express-basic-auth";
 import config from "../config.js";
 import { mountAnalytics } from "./analytics.js";
 import { mountGhGames } from "./games.js";
+import { mountMasqr } from "./Masqr.js";
 import { injectVersionInfo, resolveVersionInfo } from "./version.js";
 
 console.log(chalk.yellow("🚀 Starting server..."));
@@ -65,6 +66,17 @@ if (config.challenge !== false) {
     console.log(chalk.blue(`Username: ${username}, Password: ${password}`));
   });
   app.use(basicAuth({ users: config.users, challenge: true }));
+}
+
+let masqr = null;
+if (config.masqr?.enabled) {
+  masqr = mountMasqr(app, {
+    decoyRoot: path.join(STATIC_DIR, "decoy"),
+    decoy: config.masqr.decoy,
+    secureCookie: config.masqr.secureCookie !== false,
+    sessionMs: (config.masqr.sessionDays ?? 30) * 24 * 60 * 60 * 1000,
+  });
+  console.log(chalk.green("🔑 Masqr gate is enabled"));
 }
 
 mountGhGames(app);
@@ -152,6 +164,7 @@ server.on("request", (req, res) => {
 });
 
 server.on("upgrade", (req, socket, head) => {
+  if (masqr && !masqr.isAuthorized(req)) return socket.destroy();
   wisp.routeRequest(req, socket, head);
 });
 

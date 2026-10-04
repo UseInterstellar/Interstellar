@@ -1,6 +1,8 @@
 node_modules
 dist
 build
+data/ 
+decoy/
 
 .idea
 .DS_Store
