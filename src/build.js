@@ -1726,6 +1726,15 @@ async function build() {
   }
   const palettePublic = cssByOldPublic.get("/assets/css/themes/catppuccin/palette.css");
 
+  const mediaMoves = new Map();
+  for (const source of await collectFiles(path.join(DIST_DIR, "assets", "media"), () => true)) mediaMoves.set(source, registry.file(path.extname(source)));
+  for (const name of ["favicon.ico", "favicon.png"]) {
+    const source = path.join(DIST_DIR, name);
+    if (await exists(source)) mediaMoves.set(source, registry.file(path.extname(name)));
+  }
+  const mediaByOldPublic = new Map();
+  for (const [source, publicPath] of mediaMoves) mediaByOldPublic.set(`/${path.relative(DIST_DIR, source).split(path.sep).join("/")}`, publicPath);
+
   const rewriteMap = new Map();
   for (const spec of specs) {
     for (const variant of pathVariants(spec.old)) rewriteMap.set(variant, spec.publicPath);
@@ -1735,6 +1744,10 @@ async function build() {
   }
   for (const [oldPublic, newPublic] of cssByOldPublic) {
     for (const variant of pathVariants(oldPublic)) rewriteMap.set(variant, newPublic);
+  }
+  for (const [oldPublic, newPublic] of mediaByOldPublic) {
+    for (const variant of pathVariants(oldPublic)) rewriteMap.set(variant, newPublic);
+    rewriteMap.set(`/.${oldPublic}`, newPublic);
   }
   for (const [filePath, entry] of appPlan) {
     if (filePath === swSource) {
@@ -1764,7 +1777,7 @@ async function build() {
   for (const [source, publicPath] of jsonMoves) {
     const destination = path.join(DIST_DIR, publicPath);
     await mkdir(path.dirname(destination), { recursive: true });
-    await writeFile(destination, encodeCatalogue(await readFile(source, "utf8"), catalogueKey), "utf8");
+    await writeFile(destination, encodeCatalogue(applyRewrites(await readFile(source, "utf8"), rewrites), catalogueKey), "utf8");
     await rm(source);
     emitted.set(publicPath, destination);
     console.log(chalk.green(`  + ${path.basename(source)} -> ${publicPath}`));
@@ -1779,6 +1792,7 @@ async function build() {
     cssIn += css.length;
     // The catppuccin themes @import palette.css by relative path; repoint it at the moved file.
     if (palettePublic) css = css.replace(/@import\s+url\(\s*(["']?)palette\.css\1\s*\)/g, `@import url("${palettePublic}")`);
+    css = applyRewrites(css, rewrites);
     css = minifyCss(css);
     cssOut += css.length;
     await writeFile(destination, css, "utf8");
@@ -1787,6 +1801,16 @@ async function build() {
   }
   await rm(path.join(DIST_DIR, "assets", "css"), { recursive: true, force: true });
   console.log(`\nCSS: ${cssMoves.size} files -> randomized paths, minified ${formatKb(cssIn)} -> ${formatKb(cssOut)}`);
+
+  for (const [source, publicPath] of mediaMoves) {
+    const destination = path.join(DIST_DIR, publicPath);
+    await mkdir(path.dirname(destination), { recursive: true });
+    await cp(source, destination);
+    await rm(source);
+    emitted.set(publicPath, destination);
+  }
+  await rm(path.join(DIST_DIR, "assets", "media"), { recursive: true, force: true });
+  console.log(`Media: ${mediaMoves.size} images and favicons -> randomized paths`);
 
   console.log(`\nVendor assets:\n`);
   for (const spec of specs) {
