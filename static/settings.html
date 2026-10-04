@@ -373,6 +373,7 @@
               <div class="settings-item-control">
                 <select title="engine" id="engine" onchange="changeEngine(this)">
                   <option value="Brave">Brave (Default)</option>
+                  <option value="Custom">Custom</option>
                   <option value="Google">Google</option>
                   <option value="Bing">Bing</option>
                   <option value="Qwant">Qwant</option>
@@ -380,8 +381,9 @@
                   <option value="SearchEncrypt">SearchEncrypt</option>
                   <option value="Ecosia">Ecosia</option>
                 </select>
-                <input class="key-form" type="text" id="engine-form" placeholder="Change Search Engine" name="engine" />
-                <button class="key-button" id="engine-save-btn">Save</button>
+                <div id="engine-custom-row" style="display:none;">
+                  <input class="key-form" type="text" id="engine-form" placeholder="Custom search URL" name="engine" />
+                </div>
               </div>
             </div>
             <div class="settings-item">

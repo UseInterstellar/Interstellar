@@ -576,10 +576,17 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("engine").addEventListener("change", function () {
     changeEngine(this);
   });
-  document.getElementById("engine-save-btn").addEventListener("click", saveCustomEngine);
+  const engineForm = document.getElementById("engine-form");
+  engineForm.addEventListener("keydown", event => {
+    if (event.key !== "Enter") return;
+    event.preventDefault();
+    saveCustomEngine();
+  });
 
   const savedEngineName = store.get("enginename");
   if (savedEngineName) document.getElementById("engine").value = savedEngineName;
+  if (savedEngineName === "Custom") engineForm.value = store.get("engine") || "";
+  document.getElementById("engine-custom-row").style.display = document.getElementById("engine").value === "Custom" ? "" : "none";
 });
 
 const cloakOptions = {
@@ -798,6 +805,11 @@ function changeEngine(dropdown) {
     Ecosia: "https://www.ecosia.org/search?q=",
   };
   const selected = dropdown.value;
+  document.getElementById("engine-custom-row").style.display = selected === "Custom" ? "" : "none";
+  if (selected === "Custom") {
+    store.set("enginename", "Custom");
+    return;
+  }
   store.set("engine", engineUrls[selected]);
   store.set("enginename", selected);
 }
