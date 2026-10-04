@@ -319,16 +319,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Pointer Effects — cursor.js is only loaded when an effect is active
   const CURSOR_EFFECTS = ["rainbow-stars", "white-orbs", "rainbow-trail", "blue-orbs-trail", "blue-orbs-cursor", "the-sims", "curly-cursor"];
-  const activePointer = store.get("pointer");
-  const activeTrail = store.get("pointerTrail") || (activePointer === "blue-orbs" || store.get("pointerCustom") === "blue-orbs" ? "blue-orbs-trail" : CURSOR_EFFECTS.includes(activePointer) ? activePointer : "default");
-  const activeCustom = store.get("pointerCustom") || "default";
-  const activeClickEffect = store.get("pointerClickEffect") || "none";
-  const idlePointerMotion = store.get("pointerIdleMotion") === "true";
 
-  if (CURSOR_EFFECTS.includes(activeTrail) || CURSOR_EFFECTS.includes(activeCustom) || CURSOR_EFFECTS.includes(activeClickEffect) || idlePointerMotion) {
-    const cursorScript = document.createElement("script");
-    cursorScript.src = "/assets/js/cursor.js";
-    cursorScript.onload = () => initCursorEffect();
-    document.head.appendChild(cursorScript);
+  function anyCursorEffectActive() {
+    const activePointer = store.get("pointer");
+    const activeTrail = store.get("pointerTrail") || (activePointer === "blue-orbs" || store.get("pointerCustom") === "blue-orbs" ? "blue-orbs-trail" : CURSOR_EFFECTS.includes(activePointer) ? activePointer : "default");
+    const activeCustom = store.get("pointerCustom") || "default";
+    const activeClickEffect = store.get("pointerClickEffect") || "none";
+    const idlePointerMotion = store.get("pointerIdleMotion") === "true";
+    return CURSOR_EFFECTS.includes(activeTrail) || CURSOR_EFFECTS.includes(activeCustom) || CURSOR_EFFECTS.includes(activeClickEffect) || idlePointerMotion;
   }
+
+  let cursorScriptLoad = null;
+  function loadCursorScript() {
+    if (!cursorScriptLoad) {
+      cursorScriptLoad = new Promise((resolve, reject) => {
+        const cursorScript = document.createElement("script");
+        cursorScript.src = "/assets/js/cursor.js";
+        cursorScript.onload = resolve;
+        cursorScript.onerror = reject;
+        document.head.appendChild(cursorScript);
+      });
+    }
+    return cursorScriptLoad;
+  }
+
+  window.applyCursorEffects = () => {
+    if (!anyCursorEffectActive()) {
+      window.destroyCursorEffects?.();
+      return Promise.resolve();
+    }
+    return loadCursorScript()
+      .then(() => window.refreshCursorEffects())
+      .catch(() => {});
+  };
+
+  window.applyCursorEffects();
 });

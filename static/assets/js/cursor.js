@@ -1,37 +1,87 @@
 // Loaded dynamically by main.js only when a cursor effect is active.
+
+let cursorGeneration = 0;
+const cursorCleanups = [];
+const CURSOR_TRANSIENT_SELECTOR = ".orb-trail, .orb-spark, .sims-pt";
+
+function cursorOn(target, type, handler, options) {
+  target.addEventListener(type, handler, options);
+  cursorCleanups.push(() => target.removeEventListener(type, handler, options));
+}
+
+function cursorFrame(callback) {
+  const generation = cursorGeneration;
+  return requestAnimationFrame(timestamp => {
+    if (generation !== cursorGeneration) return;
+    callback(timestamp);
+  });
+}
+
+function cursorInterval(callback, delay) {
+  const id = setInterval(callback, delay);
+  cursorCleanups.push(() => clearInterval(id));
+  return id;
+}
+
+function cursorNode(element) {
+  cursorCleanups.push(() => element.remove());
+  return element;
+}
+
+function cursorBodyClass(name) {
+  document.body.classList.add(name);
+  cursorCleanups.push(() => document.body.classList.remove(name));
+}
+
+function destroyCursorEffects() {
+  cursorGeneration++;
+  while (cursorCleanups.length) {
+    try {
+      cursorCleanups.pop()();
+    } catch (_) {}
+  }
+  document.querySelectorAll(CURSOR_TRANSIENT_SELECTOR).forEach(node => {
+    node.remove();
+  });
+}
+
 function setupIframeTracking(moveCallback, hideCallback) {
+  const tracked = new WeakSet();
+
   function attachToIframe(iframe) {
-    if (iframe.dataset.cursorTracked) return;
-    iframe.dataset.cursorTracked = "1";
+    if (tracked.has(iframe)) return;
+    tracked.add(iframe);
 
     function tryAttach() {
       try {
         const iwin = iframe.contentWindow;
         if (!iwin) return;
-        iwin.addEventListener("mousemove", e => {
+        cursorOn(iwin, "mousemove", e => {
           const rect = iframe.getBoundingClientRect();
           moveCallback(rect.left + e.clientX, rect.top + e.clientY);
         });
-        iwin.addEventListener("mouseleave", () => hideCallback());
+        cursorOn(iwin, "mouseleave", () => hideCallback());
       } catch (_) {}
     }
 
     if (iframe.contentDocument && iframe.contentDocument.readyState === "complete") {
       tryAttach();
     } else {
-      iframe.addEventListener("load", tryAttach);
+      cursorOn(iframe, "load", tryAttach);
     }
   }
 
   document.querySelectorAll("iframe").forEach(attachToIframe);
-  new MutationObserver(mutations => {
+  const observer = new MutationObserver(mutations => {
     mutations.forEach(m => {
       m.addedNodes.forEach(n => {
         if (n.tagName === "IFRAME") attachToIframe(n);
         else if (n.querySelectorAll) n.querySelectorAll("iframe").forEach(attachToIframe);
       });
     });
-  }).observe(document.body, { childList: true, subtree: true });
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
+  cursorCleanups.push(() => observer.disconnect());
 }
 
 function createFullscreenCanvas(id) {
@@ -40,7 +90,8 @@ function createFullscreenCanvas(id) {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   document.body.appendChild(canvas);
-  window.addEventListener("resize", () => {
+  cursorNode(canvas);
+  cursorOn(window, "resize", () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
   });
@@ -109,7 +160,7 @@ function initRainbowStars() {
     for (let i = 0; i < bNum; i++) spots.push(new Particle());
   }
 
-  window.addEventListener("mousemove", e => onMove(e.clientX, e.clientY));
+  cursorOn(window, "mousemove", e => onMove(e.clientX, e.clientY));
   setupIframeTracking(onMove, () => {
     mouse.x = undefined;
     mouse.y = undefined;
@@ -138,7 +189,7 @@ function initRainbowStars() {
       }
     }
     hue++;
-    requestAnimationFrame(animate);
+    cursorFrame(animate);
   })();
 }
 
@@ -191,11 +242,11 @@ function initWhiteOrbs(clickOnly = false) {
     spawn(x, y, 1);
   }
 
-  window.addEventListener("mousemove", e => onMove(e.clientX, e.clientY));
-  window.addEventListener("click", e => {
+  cursorOn(window, "mousemove", e => onMove(e.clientX, e.clientY));
+  cursorOn(window, "click", e => {
     if (cursorClickEffectIs("white-orbs")) spawn(e.clientX, e.clientY, 40);
   });
-  window.addEventListener("mousedown", () => {
+  cursorOn(window, "mousedown", () => {
     if (!cursorClickEffectIs("white-orbs")) return;
     for (let i = 0; i < 50; i++) spawn(mouse.x, mouse.y, 1);
   });
@@ -209,7 +260,7 @@ function initWhiteOrbs(clickOnly = false) {
       p.draw();
       if (p.life <= 0) particles.splice(i, 1);
     });
-    requestAnimationFrame(animate);
+    cursorFrame(animate);
   })();
 }
 
@@ -222,7 +273,8 @@ function initRainbowTrail(clickOnly = false) {
   cursorDot.id = "rainbow-trail-cursor";
   cursorDot.style.visibility = "hidden";
   document.body.appendChild(cursorDot);
-  if (!clickOnly) document.body.classList.add("rainbow-trail-cursor");
+  cursorNode(cursorDot);
+  if (!clickOnly) cursorBodyClass("rainbow-trail-cursor");
 
   const canvas = createFullscreenCanvas(canvasId);
   const ctx = canvas.getContext("2d");
@@ -234,7 +286,7 @@ function initRainbowTrail(clickOnly = false) {
     hue = 0;
   const particles = [];
 
-  window.addEventListener("resize", () => {
+  cursorOn(window, "resize", () => {
     W = canvas.width;
     H = canvas.height;
   });
@@ -313,16 +365,16 @@ function initRainbowTrail(clickOnly = false) {
     cursorDot.style.visibility = "hidden";
   }
 
-  window.addEventListener("mousemove", e => showAt(e.clientX, e.clientY));
-  document.addEventListener("mouseleave", hide);
-  window.addEventListener("mousedown", () => {
+  cursorOn(window, "mousemove", e => showAt(e.clientX, e.clientY));
+  cursorOn(document, "mouseleave", hide);
+  cursorOn(window, "mousedown", () => {
     clicking = cursorClickEffectIs("rainbow-trail");
   });
-  window.addEventListener("mouseup", () => {
+  cursorOn(window, "mouseup", () => {
     clicking = false;
   });
   if (clickOnly) {
-    window.addEventListener("click", e => {
+    cursorOn(window, "click", e => {
       mx = e.clientX;
       my = e.clientY;
       clicking = true;
@@ -334,7 +386,7 @@ function initRainbowTrail(clickOnly = false) {
   setupIframeTracking(showAt, hide);
 
   (function loop() {
-    requestAnimationFrame(loop);
+    cursorFrame(loop);
     ctx.clearRect(0, 0, W, H);
     hue = (hue + 0.8) % 360;
     if (mx !== null && my !== null && (!clickOnly || clicking)) {
@@ -352,7 +404,7 @@ function initRainbowTrail(clickOnly = false) {
 // Based on codepen.io/perror12/pen/JoRwZwg
 function initBlueOrbsTrail() {
   if (document.body.classList.contains("blue-orbs-trail")) return;
-  document.body.classList.add("blue-orbs-trail");
+  cursorBodyClass("blue-orbs-trail");
   let lastX = 0,
     lastY = 0;
 
@@ -389,23 +441,25 @@ function initBlueOrbsTrail() {
     lastY = y;
   }
 
-  window.addEventListener("mousemove", e => onMove(e.clientX, e.clientY));
+  cursorOn(window, "mousemove", e => onMove(e.clientX, e.clientY));
   setupIframeTracking(onMove, () => {});
 }
 
 function initBlueOrbsCursor(clickOnly = false) {
   if (document.getElementById("blue-orbs-glow")) return;
-  document.body.classList.add(clickOnly ? "blue-orbs-click-effect" : "blue-orbs-cursor");
+  cursorBodyClass(clickOnly ? "blue-orbs-click-effect" : "blue-orbs-cursor");
 
   const glow = document.createElement("div");
   glow.id = "blue-orbs-glow";
   glow.className = "cursor-glow";
   document.body.appendChild(glow);
+  cursorNode(glow);
 
   const core = document.createElement("div");
   core.id = "blue-orbs-core";
   core.className = "cursor-core";
   document.body.appendChild(core);
+  cursorNode(core);
 
   let mouseX = null,
     mouseY = null;
@@ -433,20 +487,20 @@ function initBlueOrbsCursor(clickOnly = false) {
     glow.style.visibility = "hidden";
   }
 
-  window.addEventListener("mousemove", e => onMove(e.clientX, e.clientY));
-  document.addEventListener("mouseleave", hide);
-  window.addEventListener("mousedown", () => {
+  cursorOn(window, "mousemove", e => onMove(e.clientX, e.clientY));
+  cursorOn(document, "mouseleave", hide);
+  cursorOn(window, "mousedown", () => {
     if (!cursorClickEffectIs("blue-orbs-cursor")) return;
     core.style.transform = "translate(-50%, -50%) scale(1.8)";
     glow.style.transform = "translate(-50%, -50%) scale(1.2)";
   });
-  window.addEventListener("mouseup", () => {
+  cursorOn(window, "mouseup", () => {
     if (!cursorClickEffectIs("blue-orbs-cursor")) return;
     core.style.transform = "translate(-50%, -50%) scale(1)";
     glow.style.transform = "translate(-50%, -50%) scale(1)";
   });
   if (clickOnly) {
-    window.addEventListener("click", e => {
+    cursorOn(window, "click", e => {
       onMove(e.clientX, e.clientY);
       core.style.left = `${e.clientX}px`;
       core.style.top = `${e.clientY}px`;
@@ -473,7 +527,7 @@ function initBlueOrbsCursor(clickOnly = false) {
       glow.style.left = `${glowX}px`;
       glow.style.top = `${glowY}px`;
     }
-    requestAnimationFrame(animateGlow);
+    cursorFrame(animateGlow);
   })();
 }
 
@@ -481,7 +535,7 @@ function initBlueOrbsCursor(clickOnly = false) {
 function initRedCircle() {
   if (document.getElementById("red-circle-cursor")) return;
 
-  document.body.classList.add("red-circle-cursor");
+  cursorBodyClass("red-circle-cursor");
 
   const cursorEl = document.createElement("div");
   cursorEl.id = "red-circle-cursor";
@@ -497,6 +551,8 @@ function initRedCircle() {
     </svg>
   `;
   document.body.appendChild(cursorEl);
+  cursorNode(cursorEl);
+  const generation = cursorGeneration;
 
   function loadScript(src, onload) {
     const s = document.createElement("script");
@@ -506,6 +562,7 @@ function initRedCircle() {
   }
 
   function setupRedCircle() {
+    if (generation !== cursorGeneration) return;
     gsap.registerPlugin(MorphSVGPlugin);
 
     let rcTargetX = null,
@@ -529,8 +586,8 @@ function initRedCircle() {
       cursorEl.style.visibility = "hidden";
     }
 
-    window.addEventListener("mousemove", e => rcMoveTo(e.clientX, e.clientY));
-    document.addEventListener("mouseleave", rcHide);
+    cursorOn(window, "mousemove", e => rcMoveTo(e.clientX, e.clientY));
+    cursorOn(document, "mouseleave", rcHide);
     setupIframeTracking(rcMoveTo, rcHide);
 
     (function rcFollow() {
@@ -540,17 +597,18 @@ function initRedCircle() {
         cursorEl.style.left = `${rcCurX}px`;
         cursorEl.style.top = `${rcCurY}px`;
       }
-      requestAnimationFrame(rcFollow);
+      cursorFrame(rcFollow);
     })();
 
     const cursorTl = gsap.timeline({ paused: true });
     cursorTl.to("#rc-cursorDot", { morphSVG: "#rc-iBeamPath", duration: 0.3, ease: "power2.inOut" });
+    cursorCleanups.push(() => cursorTl.kill());
 
     document.querySelectorAll("[data-text-hover]").forEach(el => {
-      el.addEventListener("mouseenter", () => cursorTl.play());
-      el.addEventListener("mouseleave", () => cursorTl.reverse());
-      el.addEventListener("mousedown", () => gsap.to("#rc-cursorDot", { morphSVG: "#rc-iBeamHold", duration: 0.4, ease: "back.out(3)" }));
-      el.addEventListener("mouseup", () => gsap.to("#rc-cursorDot", { morphSVG: "#rc-iBeamPath", duration: 0.4, ease: "back.out(3)" }));
+      cursorOn(el, "mouseenter", () => cursorTl.play());
+      cursorOn(el, "mouseleave", () => cursorTl.reverse());
+      cursorOn(el, "mousedown", () => gsap.to("#rc-cursorDot", { morphSVG: "#rc-iBeamHold", duration: 0.4, ease: "back.out(3)" }));
+      cursorOn(el, "mouseup", () => gsap.to("#rc-cursorDot", { morphSVG: "#rc-iBeamPath", duration: 0.4, ease: "back.out(3)" }));
     });
   }
 
@@ -569,7 +627,7 @@ function initRedCircle() {
 function initTheSims(clickOnly = false) {
   if (document.getElementById("the-sims-cursor")) return;
 
-  if (!clickOnly) document.body.classList.add("the-sims-cursor");
+  if (!clickOnly) cursorBodyClass("the-sims-cursor");
 
   const NS = "http://www.w3.org/2000/svg";
   const cursorSvg = document.createElementNS(NS, "svg");
@@ -579,16 +637,19 @@ function initTheSims(clickOnly = false) {
   cursorSvg.setAttribute("height", "62");
   cursorSvg.setAttribute("overflow", "visible");
   document.body.appendChild(cursorSvg);
+  cursorNode(cursorSvg);
 
   const halo1 = document.createElement("div");
   halo1.className = "sims-halo";
   halo1.style.cssText = "width:40px;height:40px;border:1.5px solid hsla(110,100%,60%,0.26);";
   document.body.appendChild(halo1);
+  cursorNode(halo1);
 
   const halo2 = document.createElement("div");
   halo2.className = "sims-halo";
   halo2.style.cssText = "width:56px;height:56px;border:1px solid hsla(110,100%,60%,0.1);animation-delay:0.7s;";
   document.body.appendChild(halo2);
+  cursorNode(halo2);
 
   const SCL = 98;
   const V = [
@@ -697,9 +758,9 @@ function initTheSims(clickOnly = false) {
       h.style.border = `${i === 0 ? 1.5 : 1}px solid hsla(${glowHue},100%,60%,${i === 0 ? 0.26 : 0.1})`;
     });
 
-    requestAnimationFrame(renderPlumbob);
+    cursorFrame(renderPlumbob);
   }
-  requestAnimationFrame(renderPlumbob);
+  cursorFrame(renderPlumbob);
 
   const COLS = ["#39FF14", "#a8ff78", "#00D4FF", "#FFE600", "#9B5DE5"];
   let simsMouseX = null,
@@ -719,7 +780,7 @@ function initTheSims(clickOnly = false) {
     setTimeout(() => el.remove(), (d + 0.2) * 1000);
   }
 
-  const simsInterval = setInterval(() => {
+  const simsInterval = cursorInterval(() => {
     if (clickOnly || store.get("pointerCustom") !== "the-sims") {
       clearInterval(simsInterval);
       return;
@@ -729,7 +790,7 @@ function initTheSims(clickOnly = false) {
     spawnSimsPt(simsMouseX + (Math.random() - 0.5) * spread, simsMouseY + (Math.random() - 0.5) * spread, 0.6 + Math.random() * 0.5);
   }, 420);
 
-  document.addEventListener("click", e => {
+  cursorOn(document, "click", e => {
     if (!cursorClickEffectIs("the-sims")) return;
     for (let i = 0; i < 12; i++) {
       const ang = (i / 12) * Math.PI * 2,
@@ -762,9 +823,9 @@ function initTheSims(clickOnly = false) {
     halo2.style.visibility = "hidden";
   }
 
-  document.addEventListener("mousemove", e => showAt(e.clientX, e.clientY));
-  document.addEventListener("mouseleave", hide);
-  document.addEventListener("mouseenter", () => {
+  cursorOn(document, "mousemove", e => showAt(e.clientX, e.clientY));
+  cursorOn(document, "mouseleave", hide);
+  cursorOn(document, "mouseenter", () => {
     halo1.style.visibility = "visible";
     halo2.style.visibility = "visible";
   });
@@ -804,9 +865,9 @@ function initSnakeTrail() {
     pointer.y = y;
   }
 
-  window.addEventListener("mousemove", e => onMove(e.clientX, e.clientY));
-  window.addEventListener("touchmove", e => onMove(e.targetTouches[0].pageX, e.targetTouches[0].pageY));
-  document.addEventListener("mouseleave", () => {
+  cursorOn(window, "mousemove", e => onMove(e.clientX, e.clientY));
+  cursorOn(window, "touchmove", e => onMove(e.targetTouches[0].pageX, e.targetTouches[0].pageY));
+  cursorOn(document, "mouseleave", () => {
     pointer.x = null;
     pointer.y = null;
   });
@@ -818,7 +879,7 @@ function initSnakeTrail() {
   function update(t) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (pointer.x === null) {
-      requestAnimationFrame(update);
+      cursorFrame(update);
       return;
     }
 
@@ -848,10 +909,10 @@ function initSnakeTrail() {
     ctx.lineTo(trail[trail.length - 1].x, trail[trail.length - 1].y);
     ctx.stroke();
 
-    requestAnimationFrame(update);
+    cursorFrame(update);
   }
 
-  requestAnimationFrame(update);
+  cursorFrame(update);
 }
 
 function setupIdleCursorMotion() {
@@ -877,7 +938,8 @@ function setupIdleCursorMotion() {
     idle = false;
   }
 
-  window.addEventListener(
+  cursorOn(
+    window,
     "mousemove",
     event => {
       if (synthetic) return;
@@ -907,18 +969,18 @@ function setupIdleCursorMotion() {
         visualX = startX + (nextX - startX) * eased;
         visualY = startY + (nextY - startY) * eased;
         emit(visualX, visualY);
-        if (progress < 1) snapFrame = requestAnimationFrame(snap);
+        if (progress < 1) snapFrame = cursorFrame(snap);
       }
-      snapFrame = requestAnimationFrame(snap);
+      snapFrame = cursorFrame(snap);
     },
     true,
   );
 
-  document.addEventListener("mouseleave", () => {
+  cursorOn(document, "mouseleave", () => {
     idle = true;
     idleStarted = performance.now();
   });
-  document.addEventListener("mouseenter", event => {
+  cursorOn(document, "mouseenter", event => {
     stopIdle();
     x = event.clientX;
     y = event.clientY;
@@ -927,10 +989,11 @@ function setupIdleCursorMotion() {
     emit(x, y);
   });
 
-  window.addEventListener("blur", () => {
+  cursorOn(window, "blur", () => {
     idle = true;
     idleStarted = performance.now();
   });
+  cursorCleanups.push(() => cancelAnimationFrame(snapFrame));
 
   function animateIdle(now) {
     if (idle) {
@@ -941,10 +1004,10 @@ function setupIdleCursorMotion() {
       visualY = orbitY;
       emit(orbitX, orbitY);
     }
-    requestAnimationFrame(animateIdle);
+    cursorFrame(animateIdle);
   }
 
-  requestAnimationFrame(animateIdle);
+  cursorFrame(animateIdle);
 }
 
 function initCursorEffect() {
@@ -993,3 +1056,9 @@ function initCursorEffect() {
 
   setupIdleCursorMotion();
 }
+
+window.refreshCursorEffects = () => {
+  destroyCursorEffects();
+  initCursorEffect();
+};
+window.destroyCursorEffects = destroyCursorEffects;

@@ -523,7 +523,7 @@ document.addEventListener("DOMContentLoaded", () => {
       store.set(key, value);
     }
     store.remove("pointer");
-    window.location.reload();
+    window.applyCursorEffects?.();
   }
 
   pointerTrailDropdown.addEventListener("change", function () {
