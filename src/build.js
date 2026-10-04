@@ -1553,7 +1553,7 @@ function findStaleSelectorsInCss(css, maps) {
   return stale;
 }
 
-const GTAG_LOADER = /[ \t]*<script async src="https:\/\/www\.googletagmanager\.com\/gtag\/js\?id=(G-[A-Z0-9]+)"><\/script>\r?\n/;
+const GTAG_LOADER = /[ \t]*<script async src="https:\/\/www\.googletagmanager\.com\/gtag\/js\?id=((?:GT|G)-[A-Z0-9]+)"><\/script>\r?\n/;
 const GTAG_BOOTSTRAP = /[ \t]*<script>\s*window\.dataLayer[\s\S]*?gtag\("config",[\s\S]*?<\/script>\r?\n/;
 const GTAG_MARKER = /[ \t]*<!--\s*DO NOT REMOVE\s*-->\r?\n/g;
 
