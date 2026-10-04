@@ -1,0 +1,50 @@
+:root {
+   /* Surfaces */
+   --background: #0e141b;
+   --surface: #151c23;
+   --surface-card: #151c23;
+   --surface-tile: #1d262f;
+   --surface-raised: #26303b;
+   --surface-overlay: #1b232c;
+   --surface-input: #1d262f;
+   --surface-button: #1b232c;
+   --surface-button-hover: #28323e;
+   --surface-hover: #26303b;
+   --surface-active: #333f4d;
+   --surface-nav: rgba(255, 255, 255, 0.03);
+   --surface-nav-active: rgba(255, 255, 255, 0.07);
+
+   /* Borders */
+   --border: rgba(255, 255, 255, 0.09);
+   --border-subtle: rgba(255, 255, 255, 0.05);
+   --border-strong: rgba(255, 255, 255, 0.18);
+
+   /* Text */
+   --text: #f2f5f7;
+   --text-muted: #aeb7c2;
+   --text-faint: #6c7989;
+
+   /* Accent */
+   --accent: #5899e4;
+   --accent-hover: #7a91eb;
+   --accent-text: #0b141e;
+
+   /* Status */
+   --success: #4caf50;
+   --warning: #ff9800;
+   --danger: #f44336;
+
+   /* Toggle */
+   --toggle-on: var(--success);
+   --toggle-off: #57606b;
+   --toggle-knob: #ffffff;
+
+   /* Tabs */
+   --tab: #151c23;
+   --tab-active: #333f4d;
+   --tab-hover: #26303b;
+   --tab-border: transparent;
+
+   /* Assets */
+   --background-image: none;
+}

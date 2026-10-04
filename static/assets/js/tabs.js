@@ -162,7 +162,7 @@ function popoutTab() {
   const cloakName = store.get("name") || "My Drive - Google Drive";
   const cloakIcon = store.get("icon") || "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png";
 
-  newWindow.document.title = cloakName;
+  newWindow.document.title = laceZeroWidth(cloakName);
 
   const link = newWindow.document.createElement("link");
   link.rel = "icon";
@@ -262,7 +262,7 @@ function goForward() {
 window.addEventListener("load", () => {
   navigator.serviceWorker.register("../sw.js", { scope: "/uv/" }).catch(err => console.error("[SW] registration failed:", err));
 
-  const form = document.getElementById("fv");
+  const form = document.getElementById("search-form");
   const input = document.getElementById("input");
 
   setupAddressBar();
@@ -304,10 +304,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const activeIframe = document.querySelector("#frame-container iframe.active");
     if (!activeIframe) return;
 
-    const hiding = tabSideNav.style.display !== "none";
+    const hiding = !document.body.classList.contains("tabs-collapsed");
+    document.body.classList.toggle("tabs-collapsed", hiding);
     tabSideNav.style.display = hiding ? "none" : "";
-    activeIframe.style.top = hiding ? "5%" : "10%";
-    activeIframe.style.height = hiding ? "95%" : "90%";
+    activeIframe.style.top = "";
+    activeIframe.style.height = "";
 
     const icon = tabToggleBtn.querySelector("i");
     icon.classList.toggle("fa-magnifying-glass-minus", !hiding);
@@ -337,8 +338,6 @@ document.addEventListener("DOMContentLoaded", () => {
     createNewTab();
   }
 
-  // The sandbox has no allow-top-navigation, so "_top" from inside a tab is dead on arrival.
-  // Grab it here and open the destination in a new tab; leave every other target alone.
   function handleTopNavigation(event) {
     const isSubmit = event.type === "submit";
     const source = isSubmit ? event.target : event.target?.closest?.("a[target], area[target]");
@@ -346,8 +345,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let destination;
     if (isSubmit) {
-      // Can't fold a POST body into a URL, so just let POST forms submit in place.
-      // (A scripted form.submit() fires no submit event, the shim in createNewTab handles it.)
       if ((source.method || "get").toLowerCase() !== "get") {
         source.target = "_self";
         return;
@@ -370,9 +367,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const newIframe = document.createElement("iframe");
 
     newIframe.sandbox = "allow-same-origin allow-scripts allow-forms allow-pointer-lock allow-modals allow-orientation-lock allow-presentation allow-storage-access-by-user-activation";
-    // When Top Navigation is not allowed links with the "top" value will be entirely blocked, if we allow Top Navigation it will overwrite the tab, which is obviously not wanted.
 
-    tabTitle.textContent = `New Tab ${tabCounter}`;
+    tabTitle.textContent = laceZeroWidth(`New Tab ${tabCounter}`);
     tabTitle.className = "t";
     newTab.dataset.tabId = tabCounter;
     newTab.addEventListener("click", switchTab);
@@ -396,7 +392,7 @@ document.addEventListener("DOMContentLoaded", () => {
     newIframe.addEventListener("load", () => {
       try {
         const title = newIframe.contentDocument?.title;
-        tabTitle.textContent = title && title.length > 1 ? title : "Tab";
+        tabTitle.textContent = laceZeroWidth(title && title.length > 1 ? title : "Tab");
 
         newIframe.contentWindow.open = url => {
           const proxyUrl = window.__mkurl ? window.__mkurl(url) : `/uv/${__uv$config.encodeUrl(url)}`;
@@ -405,9 +401,6 @@ document.addEventListener("DOMContentLoaded", () => {
           return null;
         };
 
-        // Some logins frame-bust by scripting form.submit() to _top. That fires no submit
-        // event for handleTopNavigation to catch, so retarget it here and let the POST run
-        // in this tab.
         const formProto = newIframe.contentWindow.HTMLFormElement.prototype;
         for (const method of ["submit", "requestSubmit"]) {
           const original = formProto[method];

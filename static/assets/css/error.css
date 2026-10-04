@@ -43,19 +43,19 @@
    cursor: pointer;
 }
 
-.error .one:hover {
+.error .error-btn-home:hover {
    color: #ef6e78;
    border: 2px solid #ef6e78;
    background: transparent;
 }
 
-.error .two:hover {
+.error .error-btn-discord:hover {
    color: #ef996e;
    border: 2px solid #ef996e;
    background: transparent;
 }
 
-.error .three:hover {
+.error .error-btn-discord-proxied:hover {
    color: #ef6ee4;
    border: 2px solid #ef6ee4;
    background: transparent;

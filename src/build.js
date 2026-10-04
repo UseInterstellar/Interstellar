@@ -38,8 +38,6 @@ function createCatalogueKey() {
   return Array.from(randomBytes(16));
 }
 
-// XOR then base64url, wrapped as a JSON string so the asset stays valid JSON. Obfuscation
-// only: the key ships in launcher.js.
 function encodeCatalogue(json, key) {
   const bytes = Buffer.from(json, "utf8");
   const out = Buffer.alloc(bytes.length);
@@ -49,7 +47,6 @@ function encodeCatalogue(json, key) {
 
 const UNUSED_JSON = ["apps.json", "games.json"];
 const RANDOMIZED_JSON = ["apps.min.json", "games.min.json"];
-// themes/template.css is a starting point for user themes; nothing loads it.
 const UNUSED_CSS = ["assets/css/themes/template.css"];
 
 const VENDOR_DROPPED_CONSOLE = ["console.log", "console.debug", "console.info", "console.warn"];
@@ -113,13 +110,18 @@ function replaceAll(content, oldStr, newStr) {
 }
 
 class PathRegistry {
-  constructor() {
+  constructor(bust = "") {
     this.paths = new Set();
     this.topDirs = new Set();
+    this.bust = bust;
   }
 
   reserveTopDir(name) {
     this.topDirs.add(name);
+  }
+
+  bustSuffix() {
+    return this.bust ? `.${this.bust}` : "";
   }
 
   dir() {
@@ -134,7 +136,7 @@ class PathRegistry {
   file(ext, baseDir) {
     for (;;) {
       const dir = baseDir ?? this.dir();
-      const publicPath = `/${dir}/${randomFilename()}${ext}`;
+      const publicPath = `/${dir}/${randomFilename()}${this.bustSuffix()}${ext}`;
       if (this.paths.has(publicPath)) continue;
       this.paths.add(publicPath);
       return publicPath;
@@ -143,7 +145,7 @@ class PathRegistry {
 
   rootFile(ext) {
     for (;;) {
-      const publicPath = `/${randomFilename()}${ext}`;
+      const publicPath = `/${randomFilename()}${this.bustSuffix()}${ext}`;
       if (this.paths.has(publicPath)) continue;
       this.paths.add(publicPath);
       return publicPath;
@@ -151,7 +153,6 @@ class PathRegistry {
   }
 }
 
-// Never register a bare "sw.js", it is a substring of "uv.sw.js".
 function pathVariants(publicPath, { bare = true, parent = false } = {}) {
   const relative = publicPath.slice(1);
   const variants = [publicPath, `./${relative}`];
@@ -228,8 +229,6 @@ function createProxyCodecs() {
   };
 }
 
-// Fatal: a half-patched build encodes and decodes with different keys, silently breaking
-// every proxied URL.
 class CodecPatchError extends Error {
   constructor(message) {
     super(message);
@@ -244,7 +243,6 @@ class VerificationError extends Error {
   }
 }
 
-// Optional patches cover patterns that exist in only some files sharing a branch below.
 function patchOrFail(content, pattern, replacement, label, required = true) {
   if (!pattern.test(content)) {
     if (!required) return content;
@@ -254,8 +252,6 @@ function patchOrFail(content, pattern, replacement, label, required = true) {
   return content.replace(pattern, replacement);
 }
 
-// Emitted by the wasm rewriter into every proxied page. wrappropertybase is concatenated
-// with a property name, so each value must be a valid identifier alone and as a prefix.
 const SCRAMJET_GLOBAL_DEFAULTS = {
   wrapfn: "$scramjet$wrap",
   wrappropertybase: "$scramjet__",
@@ -279,9 +275,6 @@ function createScramjetGlobals() {
   return globals;
 }
 
-// Siblings of the globals table above, in the same default-config literal. Our
-// scramjet.config.js overrides all four so the defaults are dead, but they carry the
-// upstream names and would resolve to a 404 if a branch ever fell through to them.
 const SCRAMJET_DEFAULT_PREFIX = '"/scramjet/"';
 const SCRAMJET_DEFAULT_PATH_LITERALS = [
   ['"/scramjet.wasm.wasm"', "sj.wasm"],
@@ -305,9 +298,6 @@ function applyScramjetDefaults(source, specs, scope) {
   return out;
 }
 
-// Scramjet's 500 page, same treatment as the UV one. The version and build spans go with
-// the two textContent assignments: those reach the elements through the implicit id globals
-// and would throw a ReferenceError once the spans are gone.
 const SCRAMJET_BRANDING = [
   /[ \t]*<li>Updating Scramjet<\/li>\n/,
   /[ \t]*<li>Troubleshooting the error on the <a href="https:\/\/github\.com\/MercuryWorkshop\/scramjet"[^>]*>GitHub repository<\/a><\/li>\n/,
@@ -334,8 +324,6 @@ function stripScramjetBranding(source) {
   return out;
 }
 
-// Diagnostics only. Nothing in the five bundles compares against .message or .cause, so the
-// throw is what matters and the text is not.
 const DIAGNOSTIC_STRINGS = [
   '"attempted to initialize a scramjet client, but one is already loaded - this is very bad"',
   '"YOU NEED TO USE `new ScramjetFrame()`! DIRECT IFRAMES WILL NOT WORK"',
@@ -364,10 +352,6 @@ function stripDiagnosticStrings(source, id) {
   return out;
 }
 
-// Producer and consumer are both scramjet.all.js, so per build is safe. The one skew window
-// is a page left open across a deploy and adopted by the new service worker while its own
-// realm still runs the old bundle; it stops proxying until reloaded. Replacements must be
-// valid identifiers, because the keys are read as obj.key as well as "key" in obj.
 const SCRAMJET_PROTOCOL_DEFAULTS = ["$scramjet$messagetype", "$scramjet$origin", "$scramjet$data", "$scramjet$type", "scramjet$response", "scramjet$request", "scramjet$token", "scramjet$type", "scramjet$port"];
 const SCRAMJET_PROTOCOL_COUNTS = { $scramjet$messagetype: 2, $scramjet$origin: 3, $scramjet$data: 4, $scramjet$type: 5, scramjet$response: 3, scramjet$request: 2, scramjet$token: 12, scramjet$type: 25, scramjet$port: 2 };
 
@@ -389,14 +373,9 @@ function applyScramjetProtocolKeys(source, protocolKeys) {
   return out;
 }
 
-// Five emitted copies find each other by these names. Randomizing per build costs nothing:
-// a SharedWorker is identified by script URL as well as name, and those URLs already rotate.
-// bare-mux-path is a localStorage key, but the page rewrites it before anything reads it.
-// Longest first, since bare-mux prefixes the rest and the worker name prefixes its fallback.
 const BAREMUX_STRING_DEFAULTS = ["bare-mux-worker-", "bare-mux-worker", "bare-mux-remote", "bare-mux-path", "bare-mux", "baremuxinit"];
 const BAREMUX_STRING_COUNTS = { "uv.bundle": 14, "uv.client": 17, "uv.handler": 1, "sj.all": 19, baremux: 17, "baremux.worker": 4 };
 
-// The index keeps the five distinct even if the random halves collide.
 function createBaremuxStrings() {
   const token = randomBytes(4).toString("hex");
   const name = index => `_${token}${index.toString(36)}${randomBytes(2).toString("hex")}`;
@@ -427,9 +406,6 @@ function applyBaremuxStrings(source, id, baremuxStrings) {
   return out;
 }
 
-// Ours on both sides: upstream reads none of them and none is reachable from HTML. Every
-// occurrence is a bare identifier, so the word-boundary pass handles them. encodeProxyUrl
-// prefixes encodeProxyUrlSync, which the trailing lookahead keeps apart.
 const RENAMED_IDENTIFIERS = [
   "__scramjet$config",
   "isScramjet",
@@ -452,6 +428,13 @@ const RENAMED_IDENTIFIERS = [
   "BareClient",
   "uvHostname",
   "implementUVMiddleware",
+  "ScramjetServiceWorkerRuntime",
+  "ScramjetClient",
+  "ScramjetFrame",
+  "ScramjetContextEvent",
+  "ScramjetGlobalDownloadEvent",
+  "ScramjetRequestEvent",
+  "ScramjetHandleResponseEvent",
 ];
 
 // Dead branches: our config sets all four. They still carry the upstream names, and the
@@ -569,15 +552,16 @@ function applySwLocalRenames(source, renames) {
 const INLINE_HANDLER_WINDOW = { "launcher.js": ["bar", "category"] };
 const INLINE_HANDLER_FUNCS = {
   "tabs.js": ["goHome", "goBack", "goForward", "reload", "popoutTab", "toggleDevTools", "toggleFullscreen"],
-  "settings.js": ["toggleAB", "changeEngine", "saveEventKey", "exportSaveData", "importSaveData", "AB"],
-  "search.js": ["go"],
-  "launcher.js": ["go"],
+  "settings.js": ["toggleAB", "changeEngine", "exportSaveData", "importSaveData", "openAboutBlank"],
+  "search.js": ["openUrl"],
+  "launcher.js": ["openUrl"],
 };
 const INLINE_HANDLER_ATTR = /(\son(?:keyup|change|click)\s*=\s*")([A-Za-z_$][\w$]*)(\s*\()/gi;
-// window.bar/category (2) + tabs.js funcs (9) + settings.js funcs (7) + search go (1) + launcher go (1).
-const INLINE_HANDLER_JS_COUNT = 20;
-// onkeyup/onchange (6) + onclick: tabs (7) + settings (4) + 404 go (1).
-const INLINE_HANDLER_HTML_COUNT = 18;
+// window.bar/category (2) + tabs.js funcs (9) + settings.js funcs (6) + search openUrl (1) + launcher openUrl (1).
+const INLINE_HANDLER_JS_COUNT = 19;
+// onkeyup/onchange (6) + onclick: tabs (7) + settings (2) + 404 openUrl (1).
+// openAboutBlank stays in settings.js but no longer has an inline caller in HTML.
+const INLINE_HANDLER_HTML_COUNT = 16;
 
 function createHandlerRenames() {
   const names = [...new Set([...Object.values(INLINE_HANDLER_WINDOW).flat(), ...Object.values(INLINE_HANDLER_FUNCS).flat()])];
@@ -733,17 +717,8 @@ function applyRouteRewrites(source, table) {
   return { source: out, count };
 }
 
-// Build-time hardening of visible HTML text nodes. Ordinary text is rendered identically in the
-// browser, but the emitted raw HTML no longer holds contiguous plaintext: every word is split
-// across inert inline wrappers, with the occasional character numeric-encoded. This defeats
-// substring and per text-node scans of the source. It does not defeat a classifier that strips
-// tags before matching textContent, which is out of reach for any static transform.
-//
-// The pool is span plus valid custom-element names (each has the required hyphen). Unregistered
-// custom elements render inline with no styling, so text flows contiguously and the visible result
-// is byte identical. The audit in the earlier proxy-label work verified option text keeps its
-// textContent, which is what the one JS reader (the cloak sort's localeCompare) depends on.
 const SPLIT_WRAPPERS = ["span", "x-a", "x-b", "ab-x", "s-p"];
+const HARDEN_ZERO_WIDTH = ["​", "‌", "‍", "⁠"];
 
 function fnv1a(str) {
   let h = 2166136261;
@@ -835,19 +810,40 @@ function hardenTextRun(text) {
     for (const part of parts) inners.push(part);
   }
   const entIdx = seed % inners.length;
-  return inners
-    .map((inner, i) => {
-      const w = SPLIT_WRAPPERS[(seed + i) % SPLIT_WRAPPERS.length];
-      return `<${w}>${i === entIdx ? encodeOneChar(inner, seed) : inner}</${w}>`;
-    })
-    .join("");
+  const parts = inners.map((inner, i) => {
+    const w = SPLIT_WRAPPERS[(seed + i) % SPLIT_WRAPPERS.length];
+    return `<${w}>${i === entIdx ? encodeOneChar(inner, seed) : inner}</${w}>`;
+  });
+  let out = parts[0];
+  for (let i = 1; i < parts.length; i++) out += HARDEN_ZERO_WIDTH[(seed + i) % HARDEN_ZERO_WIDTH.length] + parts[i];
+  return out;
 }
 
 // Text that must not be wrapped: executable, presentational-verbatim, or where injected markup
 // would render as literal text (title). Pulled out first so the text-node matcher can stay a flat
 // regex, the same way obfuscateTextNodes relies on obfuscateHtmlMarkup having protected them.
 const HARDEN_SKIP = /<(script|style|pre|code|textarea|template|title|noscript|svg)\b[\s\S]*?<\/\1>|<!--[\s\S]*?-->/gi;
+/*
+const TITLE_ELEMENT = /(<title\b[^>]*>)[\s\S]*?(<\/title>)/gi;
+function stripTitleText(html) {
+  let count = 0;
+  const out = html.replace(TITLE_ELEMENT, (_match, open, close) => {
+    count += 1;
+    return open + close;
+  });
+  return { html: out, count };
+}
 
+const TITLE_ATTR = /\stitle\s*=\s*("[^"]*"|'[^']*')/gi;
+function stripTitleAttributes(html) {
+  let count = 0;
+  const out = html.replace(TITLE_ATTR, () => {
+    count += 1;
+    return "";
+  });
+  return { html: out, count };
+}
+*/
 function hardenTextNodes(html) {
   const skipped = [];
   const guarded = html.replace(HARDEN_SKIP, block => {
@@ -877,6 +873,7 @@ function visibleText(html) {
     .replace(/<[^>]+>/g, "")
     .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(+d))
     .replace(/&#x([\da-fA-F]+);/g, (_, h) => String.fromCodePoint(parseInt(h, 16)))
+    .replace(/​|‌|‍|⁠|﻿/g, "")
     .replace(/\s+/g, " ")
     .trim();
 }
@@ -897,6 +894,9 @@ function countHardenableSegments(html) {
 const SCRAMJET_ATTR_PREFIX = "scramjet-attr";
 const SCRAMJET_IDB_NAME = "$scramjet";
 
+const SCRAMJET_SYMBOL_KEYS = ["scramjet client global", "scramjet frame handle", "scramjet original onevent function", "scramjet realm pollutant"];
+const SCRAMJET_LOG_STRINGS = ['"initializing scramjet client"'];
+
 function createIdentifierRenames() {
   return new Map(RENAMED_IDENTIFIERS.map(name => [name, `_${randomBytes(5).toString("hex")}`]));
 }
@@ -904,7 +904,11 @@ function createIdentifierRenames() {
 function createScramjetStrings() {
   const attr = randomItem("abcdefghijklmnopqrstuvwxyz".split("")) + randomBytes(6).toString("hex");
   if (attr.length !== SCRAMJET_ATTR_PREFIX.length) throw new Error(`attribute prefix must stay ${SCRAMJET_ATTR_PREFIX.length} chars to keep slice(14) correct, got ${attr.length}`);
-  return { attr, idb: `_${randomBytes(5).toString("hex")}` };
+  return {
+    attr,
+    idb: `_${randomBytes(5).toString("hex")}`,
+    symbols: new Map(SCRAMJET_SYMBOL_KEYS.map(key => [key, randomBytes(8).toString("hex")])),
+  };
 }
 
 // The lookarounds stop isScramjet matching inside isScramjetEnabled.
@@ -1180,7 +1184,7 @@ function vendorSpecs() {
       rewriteScramjetStrings: true,
       globals: ["$scramjetLoadWorker", "$scramjetLoadController", "$scramjetLoadClient", "$scramjetRequire", "$scramjetVersion", "COOKIE", "WASM"],
     },
-    { id: "sj.sync", src: path.join(scramjetPath, "scramjet.sync.js"), old: "/assets/scramjet/scramjet.sync.js", ext: ".js" },
+    { id: "sj.sync", src: path.join(scramjetPath, "scramjet.sync.js"), old: "/assets/scramjet/scramjet.sync.js", ext: ".js", renameIdentifiers: true },
     { id: "sj.wasm", src: path.join(scramjetPath, "scramjet.wasm.wasm"), old: "/assets/scramjet/scramjet.wasm.wasm", ext: ".wasm", binary: true },
     {
       id: "sj.config",
@@ -1549,7 +1553,7 @@ function findStaleSelectorsInCss(css, maps) {
   return stale;
 }
 
-const GTAG_LOADER = /[ \t]*<script async src="https:\/\/www\.googletagmanager\.com\/gtag\/js\?id=(G-[A-Z0-9]+)"><\/script>\r?\n/;
+const GTAG_LOADER = /[ \t]*<script async src="https:\/\/www\.googletagmanager\.com\/gtag\/js\?id=((?:GT|G)-[A-Z0-9]+)"><\/script>\r?\n/;
 const GTAG_BOOTSTRAP = /[ \t]*<script>\s*window\.dataLayer[\s\S]*?gtag\("config",[\s\S]*?<\/script>\r?\n/;
 const GTAG_MARKER = /[ \t]*<!--\s*DO NOT REMOVE\s*-->\r?\n/g;
 
@@ -1643,7 +1647,8 @@ async function build() {
     process.exit(1);
   }
 
-  const registry = new PathRegistry();
+  const buildId = randomBytes(4).toString("hex");
+  const registry = new PathRegistry(buildId);
 
   const uvBase = randomWord();
   const scramjetSub = randomWord();
@@ -1674,7 +1679,7 @@ async function build() {
   console.log(`Scramjet strings: attr ${SCRAMJET_ATTR_PREFIX} -> ${scramjetStrings.attr}, idb ${SCRAMJET_IDB_NAME} -> ${scramjetStrings.idb}`);
 
   const manifest = {
-    build: randomBytes(4).toString("hex"),
+    build: buildId,
     scopes: { uv: NEW_UV_SCOPE, scramjet: NEW_SCRAMJET_SCOPE },
     sw: null,
     routes: pageRoutes,
@@ -1721,6 +1726,15 @@ async function build() {
   }
   const palettePublic = cssByOldPublic.get("/assets/css/themes/catppuccin/palette.css");
 
+  const mediaMoves = new Map();
+  for (const source of await collectFiles(path.join(DIST_DIR, "assets", "media"), () => true)) mediaMoves.set(source, registry.file(path.extname(source)));
+  for (const name of ["favicon.ico", "favicon.png"]) {
+    const source = path.join(DIST_DIR, name);
+    if (await exists(source)) mediaMoves.set(source, registry.file(path.extname(name)));
+  }
+  const mediaByOldPublic = new Map();
+  for (const [source, publicPath] of mediaMoves) mediaByOldPublic.set(`/${path.relative(DIST_DIR, source).split(path.sep).join("/")}`, publicPath);
+
   const rewriteMap = new Map();
   for (const spec of specs) {
     for (const variant of pathVariants(spec.old)) rewriteMap.set(variant, spec.publicPath);
@@ -1730,6 +1744,10 @@ async function build() {
   }
   for (const [oldPublic, newPublic] of cssByOldPublic) {
     for (const variant of pathVariants(oldPublic)) rewriteMap.set(variant, newPublic);
+  }
+  for (const [oldPublic, newPublic] of mediaByOldPublic) {
+    for (const variant of pathVariants(oldPublic)) rewriteMap.set(variant, newPublic);
+    rewriteMap.set(`/.${oldPublic}`, newPublic);
   }
   for (const [filePath, entry] of appPlan) {
     if (filePath === swSource) {
@@ -1759,7 +1777,7 @@ async function build() {
   for (const [source, publicPath] of jsonMoves) {
     const destination = path.join(DIST_DIR, publicPath);
     await mkdir(path.dirname(destination), { recursive: true });
-    await writeFile(destination, encodeCatalogue(await readFile(source, "utf8"), catalogueKey), "utf8");
+    await writeFile(destination, encodeCatalogue(applyRewrites(await readFile(source, "utf8"), rewrites), catalogueKey), "utf8");
     await rm(source);
     emitted.set(publicPath, destination);
     console.log(chalk.green(`  + ${path.basename(source)} -> ${publicPath}`));
@@ -1774,6 +1792,7 @@ async function build() {
     cssIn += css.length;
     // The catppuccin themes @import palette.css by relative path; repoint it at the moved file.
     if (palettePublic) css = css.replace(/@import\s+url\(\s*(["']?)palette\.css\1\s*\)/g, `@import url("${palettePublic}")`);
+    css = applyRewrites(css, rewrites);
     css = minifyCss(css);
     cssOut += css.length;
     await writeFile(destination, css, "utf8");
@@ -1782,6 +1801,16 @@ async function build() {
   }
   await rm(path.join(DIST_DIR, "assets", "css"), { recursive: true, force: true });
   console.log(`\nCSS: ${cssMoves.size} files -> randomized paths, minified ${formatKb(cssIn)} -> ${formatKb(cssOut)}`);
+
+  for (const [source, publicPath] of mediaMoves) {
+    const destination = path.join(DIST_DIR, publicPath);
+    await mkdir(path.dirname(destination), { recursive: true });
+    await cp(source, destination);
+    await rm(source);
+    emitted.set(publicPath, destination);
+  }
+  await rm(path.join(DIST_DIR, "assets", "media"), { recursive: true, force: true });
+  console.log(`Media: ${mediaMoves.size} images and favicons -> randomized paths`);
 
   console.log(`\nVendor assets:\n`);
   for (const spec of specs) {
@@ -1830,6 +1859,15 @@ async function build() {
       }
       source = replaceAll(source, SCRAMJET_ATTR_PREFIX, scramjetStrings.attr);
       source = replaceAll(source, `"${SCRAMJET_IDB_NAME}"`, `"${scramjetStrings.idb}"`);
+      for (const [key, replacement] of scramjetStrings.symbols) {
+        const literal = `"${key}"`;
+        if (!source.includes(literal)) throw new CodecPatchError(`scramjet.all.js: Symbol.for key ${literal} not found. Upstream changed.`);
+        source = replaceAll(source, literal, `"${replacement}"`);
+      }
+      for (const literal of SCRAMJET_LOG_STRINGS) {
+        if (!source.includes(literal)) throw new CodecPatchError(`scramjet.all.js: log string ${literal} not found. Upstream changed.`);
+        source = replaceAll(source, literal, '""');
+      }
     }
     if (spec.rewriteScopes) for (const [from, to] of scopeRewrites) source = replaceAll(source, from, to);
     if (spec.rewritePaths) {
@@ -1930,6 +1968,10 @@ async function build() {
   };
   const analyticsIds = new Set();
   let proxyChoiceHtml = 0;
+  /*
+  let titleStripCount = 0;
+  let titleAttrStripCount = 0;
+  */
   const hardenStats = [];
   const WRAPPER_OPEN = /<(?:span|x-a|x-b|ab-x|s-p)>/g;
   const versionInfo = await resolveVersionInfo();
@@ -1941,6 +1983,15 @@ async function build() {
     htmlFiles.map(async htmlPath => {
       const name = path.relative(DIST_DIR, htmlPath).split(path.sep).join("/");
       let html = await readFile(htmlPath, "utf8");
+      /*
+      const titleStrip = stripTitleText(html);
+      html = titleStrip.html;
+      titleStripCount += titleStrip.count;
+      const titleAttrStrip = stripTitleAttributes(html);
+      html = titleAttrStrip.html;
+      titleAttrStripCount += titleAttrStrip.count;
+      if (/\stitle\s*=/i.test(html)) throw new Error(`${name}: title attributes still present after strip. Upstream changed.`);
+      */
       for (const [from, to] of scopeRewrites) html = replaceAll(html, from, to);
       html = applyRewrites(html, rewrites);
 
@@ -1980,7 +2031,10 @@ async function build() {
       console.log(chalk.green(`  + ${name}${OBFUSCATE_HTML ? " (html-obfuscated)" : ""}`));
     }),
   );
-
+  /*
+  if (titleStripCount !== htmlFiles.length) throw new Error(`expected one <title> per HTML file (${htmlFiles.length}), stripped ${titleStripCount}. Upstream changed.`);
+  console.log(`Stripped ${titleStripCount} <title> texts and ${titleAttrStripCount} title="" attributes`);
+  */
   if (proxyChoiceHtml !== PROXY_CHOICE_COUNTS.html) throw new Error(`expected ${PROXY_CHOICE_COUNTS.html} proxy selector literals in HTML, replaced ${proxyChoiceHtml}. Update PROXY_CHOICE_COUNTS.`);
   if (handlerHtmlCount !== INLINE_HANDLER_HTML_COUNT) throw new Error(`expected ${INLINE_HANDLER_HTML_COUNT} inline-handler attributes in HTML, rewrote ${handlerHtmlCount}. Upstream changed.`);
   if (versionInjections !== VERSION_TOKEN_COUNT) throw new Error(`expected ${VERSION_TOKEN_COUNT} version tokens injected into settings.html, injected ${versionInjections}. Upstream changed.`);

@@ -1,0 +1,50 @@
+:root {
+   /* Surfaces */
+   --background: #0e1b11;
+   --surface: #152318;
+   --surface-card: #152318;
+   --surface-tile: #1d2f21;
+   --surface-raised: #263b2b;
+   --surface-overlay: #1b2c1f;
+   --surface-input: #1d2f21;
+   --surface-button: #1b2c1f;
+   --surface-button-hover: #283e2d;
+   --surface-hover: #263b2b;
+   --surface-active: #334d39;
+   --surface-nav: rgba(255, 255, 255, 0.03);
+   --surface-nav-active: rgba(255, 255, 255, 0.07);
+
+   /* Borders */
+   --border: rgba(255, 255, 255, 0.09);
+   --border-subtle: rgba(255, 255, 255, 0.05);
+   --border-strong: rgba(255, 255, 255, 0.18);
+
+   /* Text */
+   --text: #f2f7f3;
+   --text-muted: #aec2b2;
+   --text-faint: #6c8973;
+
+   /* Accent */
+   --accent: #58e479;
+   --accent-hover: #7aebb3;
+   --accent-text: #0b1e10;
+
+   /* Status */
+   --success: #4caf50;
+   --warning: #ff9800;
+   --danger: #f44336;
+
+   /* Toggle */
+   --toggle-on: var(--success);
+   --toggle-off: #576b5c;
+   --toggle-knob: #ffffff;
+
+   /* Tabs */
+   --tab: #152318;
+   --tab-active: #334d39;
+   --tab-hover: #263b2b;
+   --tab-border: transparent;
+
+   /* Assets */
+   --background-image: none;
+}

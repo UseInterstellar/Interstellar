@@ -37,5 +37,5 @@
    --tab-hover: var(--ctp-latte-surface0);
    --tab-border: transparent;
 
-   --background-image: var(--ctp-latte-base);
+   --background-image: none;
 }

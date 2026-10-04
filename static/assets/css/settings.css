@@ -1,5 +1,4 @@
 body {
-   background-color: var(--background-image);
    font-family: "Inter", sans-serif;
    color: var(--text);
    margin: 0;
@@ -8,31 +7,215 @@ body {
    overflow-x: hidden;
 }
 
-.settings-container {
-   display: flex;
-   flex-wrap: wrap;
-   justify-content: center;
-   gap: 20px;
-   padding: 20% 20px 20px 20px;
+.settings-shell {
+   width: min(1320px, calc(100% - 32px));
+   box-sizing: border-box;
+   padding: calc(10vh + 48px) 32px 60px 32px;
+   margin: 0 auto;
 }
 
-.settings-title {
+.settings-content {
+   min-width: 0;
+   display: flex;
+   flex-direction: column;
+   gap: 28px;
+}
+
+.settings-card.settings-group {
+   display: flex;
+   flex-direction: column;
+   padding: 0;
+}
+
+.settings-card.settings-group:hover {
+   transform: none;
+}
+
+.settings-group-title {
+   margin: 0;
+   padding: 22px 24px;
+   font-size: 26px;
+   font-weight: 800;
+   color: var(--text);
+}
+
+.settings-item {
+   display: grid;
+   grid-template-columns: minmax(0, 42fr) minmax(0, 58fr);
+   column-gap: 32px;
+   align-items: start;
+   padding: 22px 24px;
+}
+
+.settings-item-plain {
    display: block;
-   font-size: 70px;
-   margin-block-start: 0.67em;
-   margin-block-end: 0.67em;
-   margin-inline-start: 0px;
-   margin-inline-end: 0px;
-   font-weight: bold;
+}
+
+.settings-item.background-image-settings {
+   grid-template-columns: minmax(0, 1fr);
+}
+
+.settings-item + .settings-item {
+   border-top: 1px solid var(--border);
+}
+
+.settings-item-info h3 {
+   margin: 0 0 6px 0;
+}
+
+.settings-item-info p {
+   margin: 0;
+}
+
+.settings-item-info p + p {
+   margin-top: 8px;
+}
+
+.settings-item-control {
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+   min-width: 0;
+}
+
+#background-custom-row,
+#custom-cloak-row,
+#panic-link-custom-row,
+#gradient-style-row {
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+}
+
+#background-image-actions {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 10px;
+}
+
+#background-image-actions .key-button {
+   flex: 1 1 180px;
+}
+
+#background-blur-control {
+   display: flex;
+   flex-direction: column;
+   gap: 8px;
+}
+
+#background-blur-control label {
+   display: flex;
+   justify-content: space-between;
+   gap: 12px;
+   color: var(--text-muted);
+   font-size: 14px;
+}
+
+.background-blur-label-text {
+   min-width: 0;
+   white-space: nowrap;
+}
+
+#background-blur-control output {
+   flex: 0 0 auto;
+   color: var(--text);
+   font-variant-numeric: tabular-nums;
+}
+
+#background-blur-control input[type="range"] {
+   width: 100%;
+   height: 24px;
+   padding: 0;
+   accent-color: var(--accent);
+}
+
+#particles-custom-panel {
+   display: flex;
+   flex-direction: column;
+   gap: 8px;
+   padding: 14px;
+   border: 1px solid var(--border);
+   border-radius: var(--radius-md);
+   background: var(--surface-input);
+}
+
+#particles-custom-panel label {
+   display: flex;
+   justify-content: space-between;
+   color: var(--text-muted);
+   font-size: 14px;
+}
+
+#particles-custom-panel output {
+   color: var(--text);
+   font-variant-numeric: tabular-nums;
+}
+
+#particles-custom-panel input[type="range"] {
+   width: 100%;
+   height: 24px;
+   padding: 0;
+   accent-color: var(--accent);
+}
+
+.bg-gallery {
+   display: grid;
+   grid-template-columns: repeat(5, minmax(0, 1fr));
+   gap: 16px;
+}
+
+.bg-option {
+   width: 100%;
+   height: auto;
+   margin: 0;
+   padding: 0;
+   text-align: left;
+   background-color: var(--surface-tile);
+   border: 1px solid var(--border);
+   border-radius: var(--radius-md);
+   overflow: hidden;
+   cursor: pointer;
+   transition: var(--transition);
+}
+
+.bg-option:hover {
+   transform: translateY(-4px);
+   border-color: var(--border-strong);
+   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.26);
+}
+
+.bg-option.active {
+   border-color: var(--border-strong);
+   box-shadow: 0 0 0 2px var(--border-strong);
+}
+
+.bg-option-preview {
+   display: block;
+   width: 100%;
+   aspect-ratio: 16 / 9;
+   object-fit: cover;
+}
+
+.bg-option-label {
+   display: block;
+   padding: 10px 12px;
+   font-weight: 600;
+   color: var(--text);
+}
+
+#background-load-more {
+   width: 100%;
+   margin-top: 0;
 }
 
 .settings-card {
    background-color: var(--surface-card);
    border: 1px solid var(--border);
    border-radius: var(--radius-lg);
-   padding: 20px;
+   padding: 24px;
    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
-   width: 400px;
+   width: 100%;
+   box-sizing: border-box;
    transition: var(--transition);
 }
 
@@ -191,53 +374,63 @@ select:hover {
    color: var(--text);
 }
 
-#buttonLayer {
-   width: 400px;
-   display: flex;
-   justify-content: center;
-   gap: 10px;
+#transport-note {
+   color: var(--text-muted);
+   font-size: 15px;
 }
 
-#buttonLayer > .key-button {
-   flex-grow: 1;
-   padding: 10px;
+.settings-item-control > select,
+.settings-item-control > input,
+.settings-item-control > button,
+#background-custom-row > .key-form,
+#background-custom-row > .key-button,
+#custom-cloak-row > .key-form,
+#panic-link-custom-row > .key-form {
+   width: 100%;
    box-sizing: border-box;
+   margin-top: 0;
+}
+
+.settings-item-control > label:not(.switch) {
+   margin: 0;
 }
 
 @media screen and (max-width: 768px) {
-   .settings-container {
-      padding: 25% 20px 20px 20px;
-   }
-   .settings-card {
+   .settings-shell {
       width: 100%;
-      max-width: 400px;
+      padding: calc(10vh + 40px) 16px 40px 16px;
    }
 
-   .settings-title {
-      font-size: 40px;
+   .bg-gallery {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
    }
 
-   input,
-   .key-form {
-      width: 90%;
+   .settings-content {
+      gap: 20px;
+   }
+
+   .settings-group-title {
+      padding: 18px 16px;
+      font-size: 22px;
+   }
+
+   .settings-item {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: 14px;
+      padding: 18px 16px;
    }
 
    button,
    .key-button {
       width: 100%;
-      max-width: 200px;
+      max-width: 220px;
    }
 }
 
-@media screen and (max-width: 500px) {
-   .settings-container {
-      padding-top: 35%;
-   }
-}
-
-@media screen and (min-width: 1000px) {
-   .settings-container {
-      padding-top: 10%;
+@media screen and (prefers-reduced-motion: reduce) {
+   .settings-card,
+   .bg-option {
+      transition: none;
    }
 }
 
@@ -248,12 +441,11 @@ select:hover {
 #ab-settings {
    display: flex;
    align-items: center;
-   gap: 5vw;
+   justify-content: flex-start;
 }
 
 #ab-settings-container {
-   margin-top: 13px;
-   margin-left: 20px;
+   margin: 0;
 }
 
 #warning {

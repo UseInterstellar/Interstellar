@@ -96,7 +96,7 @@ select:hover {
    border-color: var(--border-strong);
 }
 
-.input-c {
+.input-container {
    position: relative;
    margin-top: 150px;
    display: flex;

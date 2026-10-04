@@ -80,7 +80,7 @@ async function waitForServiceWorker() {
   await Promise.race([swReadyPromise, new Promise(resolve => setTimeout(resolve, 4000))]);
 }
 
-const form = document.getElementById("fv");
+const form = document.getElementById("search-form");
 const input = document.getElementById("input");
 
 if (form && input && !isTabsPage()) {
@@ -139,7 +139,7 @@ async function navigate(value, path, proxyOverride) {
   }
 }
 
-function go(value, proxyOverride) {
+function openUrl(value, proxyOverride) {
   navigate(value, "/tabs", proxyOverride);
 }
 

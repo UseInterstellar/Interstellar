@@ -33,5 +33,5 @@
    --tab-hover: var(--ctp-mocha-surface0);
    --tab-border: transparent;
 
-   --background-image: var(--ctp-mocha-base);
+   --background-image: none;
 }

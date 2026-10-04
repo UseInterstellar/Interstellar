@@ -59,9 +59,22 @@
    --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
 
    /* Assets */
-   --background-image: url("/./assets/media/background/full-main.png");
+   --background-image: none;
    --backdrop-filter: blur(10px);
    --nav-image: url("/./assets/media/favicon/main.png");
+
+
+   --gradient-from: var(--surface-raised);
+   --gradient-to: var(--background);
+
+
+   --gradient-multi-from: color-mix(in srgb, var(--background) 94%, var(--accent) 6%);
+   --gradient-multi-mid: color-mix(in srgb, var(--background) 87%, var(--accent) 13%);
+   --gradient-multi-to: var(--background);
+
+   --background-gradient: linear-gradient(160deg, var(--gradient-from), var(--gradient-to));
+   --background-gradient-radial: radial-gradient(circle at 30% 15%, var(--gradient-from), var(--gradient-to) 70%);
+   --background-gradient-multi: linear-gradient(160deg, var(--gradient-multi-from), var(--gradient-multi-mid) 40%, var(--gradient-multi-to) 85%);
 
    /* Legacy aliases */
    --background-color: var(--background);
@@ -99,16 +112,68 @@
    background-color: var(--text-faint);
 }
 
+
 body {
    font-family: "Inter", sans-serif;
    text-decoration: none;
-   background: var(--background-image);
+   position: relative;
+   isolation: isolate;
+   background-color: var(--background);
+   background-image: var(--background-image);
    height: 100%;
    background-position: center;
    background-repeat: no-repeat;
    background-size: cover;
    background-attachment: fixed;
 }
+
+body::before {
+   content: "";
+   position: fixed;
+   inset: -32px;
+   z-index: -2;
+   pointer-events: none;
+   background-image: var(--custom-background-image, none);
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: cover;
+   filter: blur(calc(var(--background-blur, 0) * 0.24px));
+}
+
+#smoke-particles,
+#aurora-particles,
+#shimmering-dots-particles,
+#shimmering-dots-source-particles {
+   position: fixed;
+   inset: 0;
+   z-index: -1;
+   width: 100%;
+   height: 100%;
+   pointer-events: none;
+}
+
+
+body[data-background="solid"] {
+   background-image: none;
+}
+
+body[data-background="gradient"] {
+   background-image: var(--background-gradient);
+}
+
+body[data-background="gradient"][data-gradient="radial"] {
+   background-image: var(--background-gradient-radial);
+}
+
+body[data-background="gradient"][data-gradient="multi"] {
+   background-image: var(--background-gradient-multi);
+}
+
+body[data-custom-background] {
+   background-image: none;
+}
+
+
 
 ::placeholder {
    color: var(--text-muted);
@@ -129,7 +194,8 @@ body {
 }
 
 /* Pointer Effects Canvas */
-#pointer-canvas {
+#pointer-canvas,
+#pointer-click-canvas {
    position: fixed;
    top: 0;
    left: 0;
@@ -137,6 +203,22 @@ body {
    height: 100%;
    pointer-events: none;
    z-index: 9999;
+}
+
+
+#pointer-tubes {
+   position: fixed;
+   inset: 0;
+   pointer-events: none;
+   z-index: 9999;
+   mix-blend-mode: screen;
+}
+
+#pointer-canvas.tubes-canvas {
+   position: absolute;
+   inset: 0;
+   width: 100%;
+   height: 100%;
 }
 
 /* CSS Parallax Pixel Stars (based on codepen.io/sarazond/pen/LYGbwj) */
@@ -229,14 +311,17 @@ body.rainbow-trail-cursor:active #rainbow-trail-cursor {
 }
 
 /* Blue Orbs Cursor */
-body.blue-orbs-cursor {
+body.blue-orbs-cursor,
+body.blue-orbs-click-effect {
   cursor: none;
 }
 
 .blue-orbs-cursor .cursor-glow,
+.blue-orbs-click-effect .cursor-glow,
 .blue-orbs-cursor .cursor-core,
-.blue-orbs-cursor .orb-trail,
-.blue-orbs-cursor .orb-spark {
+.blue-orbs-click-effect .cursor-core,
+.blue-orbs-trail .orb-trail,
+.blue-orbs-trail .orb-spark {
   position: fixed;
   pointer-events: none;
   border-radius: 50%;
@@ -265,7 +350,29 @@ body.blue-orbs-cursor {
   visibility: hidden;
 }
 
-.blue-orbs-cursor .orb-trail {
+.blue-orbs-click-effect .cursor-glow {
+  width: 140px;
+  height: 140px;
+  background: radial-gradient(circle, rgba(255,255,255,0.28), rgba(0,200,255,0.12), transparent 70%);
+  filter: blur(10px);
+  mix-blend-mode: screen;
+  z-index: 9998;
+  visibility: hidden;
+}
+
+.blue-orbs-click-effect .cursor-core {
+  width: 16px;
+  height: 16px;
+  background: radial-gradient(circle, #ffffff 0%, #7dd3fc 45%, #22d3ee 100%);
+  box-shadow:
+    0 0 10px rgba(255,255,255,0.8),
+    0 0 20px rgba(34,211,238,0.8),
+    0 0 40px rgba(34,211,238,0.4);
+  z-index: 9999;
+  visibility: hidden;
+}
+
+.blue-orbs-trail .orb-trail {
   mix-blend-mode: screen;
   background: radial-gradient(circle, rgba(255,255,255,0.9), rgba(56,189,248,0.45), rgba(168,85,247,0.15), transparent 72%);
   filter: blur(2px);
@@ -274,7 +381,7 @@ body.blue-orbs-cursor {
   animation: orbFadeTrail linear forwards;
 }
 
-.blue-orbs-cursor .orb-spark {
+.blue-orbs-trail .orb-spark {
   width: 6px;
   height: 6px;
   background: radial-gradient(circle, #fff, #67e8f9 60%, transparent 75%);
@@ -335,6 +442,111 @@ body.the-sims-cursor {
 @keyframes simsHalo {
   0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
   50%       { opacity: 0.1; transform: translate(-50%, -50%) scale(1.12); }
+}
+
+body.magnetic-cursor {
+  cursor: none;
+}
+
+#magnetic-cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--text-primary, #ffffff);
+  box-shadow:
+    0 0 20px var(--text-primary, #ffffff),
+    0 0 40px var(--text-primary, #ffffff);
+  pointer-events: none;
+  visibility: hidden;
+  z-index: 9999;
+  transition: width 0.2s ease, height 0.2s ease;
+  will-change: transform;
+}
+
+#magnetic-cursor-dot.expand {
+  width: 34px;
+  height: 34px;
+}
+
+body.spring-cursor,
+body.inverted-cursor-active,
+body.spring-squash-cursor {
+  cursor: none;
+}
+
+#spring-cursor-dot,
+#spring-cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  visibility: hidden;
+  will-change: transform;
+}
+
+#spring-cursor-dot {
+  width: 7px;
+  height: 7px;
+  background: var(--text-primary, #ffffff);
+  z-index: 9999;
+}
+
+#spring-cursor-ring {
+  width: 34px;
+  height: 34px;
+  border: 1.5px solid var(--text-primary, #ffffff);
+  opacity: 0.7;
+  z-index: 9998;
+  transition: width 0.25s ease, height 0.25s ease, opacity 0.25s ease;
+}
+
+#spring-cursor-ring.over-target {
+  width: 56px;
+  height: 56px;
+  opacity: 1;
+}
+
+#inverted-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #ffffff;
+  mix-blend-mode: difference;
+  pointer-events: none;
+  visibility: hidden;
+  z-index: 9999;
+  will-change: transform;
+}
+
+#spotlight-cursor {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 9990;
+  mix-blend-mode: screen;
+  transition: opacity 0.3s ease;
+}
+
+#spring-squash {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--text-primary, #ffffff);
+  pointer-events: none;
+  visibility: hidden;
+  z-index: 9999;
+  will-change: transform;
 }
 
 /* Red Circle cursor (Based on codepen.io/RoshitShrestha/pen/KwgVGwB) */

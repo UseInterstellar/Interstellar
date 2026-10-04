@@ -1,37 +1,86 @@
 // Loaded dynamically by main.js only when a cursor effect is active.
+
+let cursorGeneration = 0;
+const cursorCleanups = [];
+
+function cursorOn(target, type, handler, options) {
+  target.addEventListener(type, handler, options);
+  cursorCleanups.push(() => target.removeEventListener(type, handler, options));
+}
+
+function cursorFrame(callback) {
+  const generation = cursorGeneration;
+  return requestAnimationFrame(timestamp => {
+    if (generation !== cursorGeneration) return;
+    callback(timestamp);
+  });
+}
+
+function cursorInterval(callback, delay) {
+  const id = setInterval(callback, delay);
+  cursorCleanups.push(() => clearInterval(id));
+  return id;
+}
+
+function cursorNode(element) {
+  cursorCleanups.push(() => element.remove());
+  return element;
+}
+
+function cursorBodyClass(name) {
+  document.body.classList.add(name);
+  cursorCleanups.push(() => document.body.classList.remove(name));
+}
+
+function destroyCursorEffects() {
+  cursorGeneration++;
+  while (cursorCleanups.length) {
+    try {
+      cursorCleanups.pop()();
+    } catch (_) {}
+  }
+  document.querySelectorAll(".orb-trail, .orb-spark, .sims-pt").forEach(node => {
+    node.remove();
+  });
+}
+
 function setupIframeTracking(moveCallback, hideCallback) {
+  const tracked = new WeakSet();
+
   function attachToIframe(iframe) {
-    if (iframe.dataset.cursorTracked) return;
-    iframe.dataset.cursorTracked = "1";
+    if (tracked.has(iframe)) return;
+    tracked.add(iframe);
 
     function tryAttach() {
       try {
         const iwin = iframe.contentWindow;
         if (!iwin) return;
-        iwin.addEventListener("mousemove", e => {
+        cursorOn(iwin, "mousemove", e => {
           const rect = iframe.getBoundingClientRect();
           moveCallback(rect.left + e.clientX, rect.top + e.clientY);
         });
-        iwin.addEventListener("mouseleave", () => hideCallback());
+        cursorOn(iwin, "mouseleave", () => hideCallback());
       } catch (_) {}
     }
 
     if (iframe.contentDocument && iframe.contentDocument.readyState === "complete") {
       tryAttach();
     } else {
-      iframe.addEventListener("load", tryAttach);
+      cursorOn(iframe, "load", tryAttach);
     }
   }
 
   document.querySelectorAll("iframe").forEach(attachToIframe);
-  new MutationObserver(mutations => {
+  const observer = new MutationObserver(mutations => {
     mutations.forEach(m => {
       m.addedNodes.forEach(n => {
         if (n.tagName === "IFRAME") attachToIframe(n);
         else if (n.querySelectorAll) n.querySelectorAll("iframe").forEach(attachToIframe);
       });
     });
-  }).observe(document.body, { childList: true, subtree: true });
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
+  cursorCleanups.push(() => observer.disconnect());
 }
 
 function createFullscreenCanvas(id) {
@@ -40,11 +89,16 @@ function createFullscreenCanvas(id) {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   document.body.appendChild(canvas);
-  window.addEventListener("resize", () => {
+  cursorNode(canvas);
+  cursorOn(window, "resize", () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
   });
   return canvas;
+}
+
+function cursorClickEffectIs(effect) {
+  return store.get("pointerClickEffect") === effect;
 }
 
 // Based on codepen.io/tommyho/pen/ZEmjWGY
@@ -105,7 +159,7 @@ function initRainbowStars() {
     for (let i = 0; i < bNum; i++) spots.push(new Particle());
   }
 
-  window.addEventListener("mousemove", e => onMove(e.clientX, e.clientY));
+  cursorOn(window, "mousemove", e => onMove(e.clientX, e.clientY));
   setupIframeTracking(onMove, () => {
     mouse.x = undefined;
     mouse.y = undefined;
@@ -134,15 +188,16 @@ function initRainbowStars() {
       }
     }
     hue++;
-    requestAnimationFrame(animate);
+    cursorFrame(animate);
   })();
 }
 
 // Based on codepen.io/gabezink17-cmd/pen/WbGmeyR
-function initWhiteOrbs() {
-  if (document.getElementById("pointer-canvas")) return;
+function initWhiteOrbs(clickOnly = false) {
+  const canvasId = clickOnly ? "pointer-click-canvas" : "pointer-canvas";
+  if (document.getElementById(canvasId)) return;
 
-  const canvas = createFullscreenCanvas("pointer-canvas");
+  const canvas = createFullscreenCanvas(canvasId);
   const ctx = canvas.getContext("2d");
   const mouse = { x: innerWidth / 2, y: innerHeight / 2 };
   const particles = [];
@@ -182,12 +237,16 @@ function initWhiteOrbs() {
   function onMove(x, y) {
     mouse.x = x;
     mouse.y = y;
+    if (clickOnly) return;
     spawn(x, y, 1);
   }
 
-  window.addEventListener("mousemove", e => onMove(e.clientX, e.clientY));
-  window.addEventListener("click", e => spawn(e.clientX, e.clientY, 40));
-  window.addEventListener("mousedown", () => {
+  cursorOn(window, "mousemove", e => onMove(e.clientX, e.clientY));
+  cursorOn(window, "click", e => {
+    if (cursorClickEffectIs("white-orbs")) spawn(e.clientX, e.clientY, 40);
+  });
+  cursorOn(window, "mousedown", () => {
+    if (!cursorClickEffectIs("white-orbs")) return;
     for (let i = 0; i < 50; i++) spawn(mouse.x, mouse.y, 1);
   });
   setupIframeTracking(onMove, () => {});
@@ -200,21 +259,23 @@ function initWhiteOrbs() {
       p.draw();
       if (p.life <= 0) particles.splice(i, 1);
     });
-    requestAnimationFrame(animate);
+    cursorFrame(animate);
   })();
 }
 
 // Based on codepen.io/Jiironimo/pen/vEXbVNP
-function initRainbowTrail() {
-  if (document.getElementById("pointer-canvas")) return;
+function initRainbowTrail(clickOnly = false) {
+  const canvasId = clickOnly ? "pointer-click-canvas" : "pointer-canvas";
+  if (document.getElementById(canvasId)) return;
 
   const cursorDot = document.createElement("div");
   cursorDot.id = "rainbow-trail-cursor";
   cursorDot.style.visibility = "hidden";
   document.body.appendChild(cursorDot);
-  document.body.classList.add("rainbow-trail-cursor");
+  cursorNode(cursorDot);
+  if (!clickOnly) cursorBodyClass("rainbow-trail-cursor");
 
-  const canvas = createFullscreenCanvas("pointer-canvas");
+  const canvas = createFullscreenCanvas(canvasId);
   const ctx = canvas.getContext("2d");
   let W = canvas.width,
     H = canvas.height;
@@ -224,7 +285,7 @@ function initRainbowTrail() {
     hue = 0;
   const particles = [];
 
-  window.addEventListener("resize", () => {
+  cursorOn(window, "resize", () => {
     W = canvas.width;
     H = canvas.height;
   });
@@ -291,6 +352,7 @@ function initRainbowTrail() {
   function showAt(x, y) {
     mx = x;
     my = y;
+    if (clickOnly) return;
     cursorDot.style.left = `${x}px`;
     cursorDot.style.top = `${y}px`;
     cursorDot.style.visibility = "visible";
@@ -302,21 +364,31 @@ function initRainbowTrail() {
     cursorDot.style.visibility = "hidden";
   }
 
-  window.addEventListener("mousemove", e => showAt(e.clientX, e.clientY));
-  document.addEventListener("mouseleave", hide);
-  window.addEventListener("mousedown", () => {
-    clicking = true;
+  cursorOn(window, "mousemove", e => showAt(e.clientX, e.clientY));
+  cursorOn(document, "mouseleave", hide);
+  cursorOn(window, "mousedown", () => {
+    clicking = cursorClickEffectIs("rainbow-trail");
   });
-  window.addEventListener("mouseup", () => {
+  cursorOn(window, "mouseup", () => {
     clicking = false;
   });
+  if (clickOnly) {
+    cursorOn(window, "click", e => {
+      mx = e.clientX;
+      my = e.clientY;
+      clicking = true;
+      setTimeout(() => {
+        clicking = false;
+      }, 160);
+    });
+  }
   setupIframeTracking(showAt, hide);
 
   (function loop() {
-    requestAnimationFrame(loop);
+    cursorFrame(loop);
     ctx.clearRect(0, 0, W, H);
     hue = (hue + 0.8) % 360;
-    if (mx !== null && my !== null) {
+    if (mx !== null && my !== null && (!clickOnly || clicking)) {
       const count = clicking ? 6 : 2;
       for (let i = 0; i < count; i++) particles.push(new RainbowTrailParticle(mx, my, clicking));
     }
@@ -329,26 +401,10 @@ function initRainbowTrail() {
 }
 
 // Based on codepen.io/perror12/pen/JoRwZwg
-function initBlueOrbs() {
-  if (document.getElementById("blue-orbs-glow")) return;
-
-  document.body.classList.add("blue-orbs-cursor");
-
-  const glow = document.createElement("div");
-  glow.id = "blue-orbs-glow";
-  glow.className = "cursor-glow";
-  document.body.appendChild(glow);
-
-  const core = document.createElement("div");
-  core.id = "blue-orbs-core";
-  core.className = "cursor-core";
-  document.body.appendChild(core);
-
-  let mouseX = null,
-    mouseY = null;
-  let glowX = 0,
-    glowY = 0,
-    lastX = 0,
+function initBlueOrbsTrail() {
+  if (document.body.classList.contains("blue-orbs-trail")) return;
+  cursorBodyClass("blue-orbs-trail");
+  let lastX = 0,
     lastY = 0;
 
   function createTrail(x, y, speed) {
@@ -372,21 +428,9 @@ function initBlueOrbs() {
   }
 
   function onMove(x, y) {
-    mouseX = x;
-    mouseY = y;
-    if (core.style.visibility !== "visible") {
-      core.style.visibility = "visible";
-      glow.style.visibility = "visible";
-      glowX = x;
-      glowY = y;
-      lastX = x;
-      lastY = y;
-    }
-    const dx = x - lastX,
-      dy = y - lastY;
+    const dx = x - lastX;
+    const dy = y - lastY;
     const speed = Math.sqrt(dx * dx + dy * dy);
-    core.style.left = `${x}px`;
-    core.style.top = `${y}px`;
     createTrail(x, y, speed);
     if (speed > 25) {
       createSpark(x, y);
@@ -396,6 +440,45 @@ function initBlueOrbs() {
     lastY = y;
   }
 
+  cursorOn(window, "mousemove", e => onMove(e.clientX, e.clientY));
+  setupIframeTracking(onMove, () => {});
+}
+
+function initBlueOrbsCursor(clickOnly = false) {
+  if (document.getElementById("blue-orbs-glow")) return;
+  cursorBodyClass(clickOnly ? "blue-orbs-click-effect" : "blue-orbs-cursor");
+
+  const glow = document.createElement("div");
+  glow.id = "blue-orbs-glow";
+  glow.className = "cursor-glow";
+  document.body.appendChild(glow);
+  cursorNode(glow);
+
+  const core = document.createElement("div");
+  core.id = "blue-orbs-core";
+  core.className = "cursor-core";
+  document.body.appendChild(core);
+  cursorNode(core);
+
+  let mouseX = null,
+    mouseY = null;
+  let glowX = 0,
+    glowY = 0;
+
+  function onMove(x, y) {
+    mouseX = x;
+    mouseY = y;
+    if (clickOnly) return;
+    if (core.style.visibility !== "visible") {
+      core.style.visibility = "visible";
+      glow.style.visibility = "visible";
+      glowX = x;
+      glowY = y;
+    }
+    core.style.left = `${x}px`;
+    core.style.top = `${y}px`;
+  }
+
   function hide() {
     mouseX = null;
     mouseY = null;
@@ -403,16 +486,37 @@ function initBlueOrbs() {
     glow.style.visibility = "hidden";
   }
 
-  window.addEventListener("mousemove", e => onMove(e.clientX, e.clientY));
-  document.addEventListener("mouseleave", hide);
-  window.addEventListener("mousedown", () => {
+  cursorOn(window, "mousemove", e => onMove(e.clientX, e.clientY));
+  cursorOn(document, "mouseleave", hide);
+  cursorOn(window, "mousedown", () => {
+    if (!cursorClickEffectIs("blue-orbs-cursor")) return;
     core.style.transform = "translate(-50%, -50%) scale(1.8)";
     glow.style.transform = "translate(-50%, -50%) scale(1.2)";
   });
-  window.addEventListener("mouseup", () => {
+  cursorOn(window, "mouseup", () => {
+    if (!cursorClickEffectIs("blue-orbs-cursor")) return;
     core.style.transform = "translate(-50%, -50%) scale(1)";
     glow.style.transform = "translate(-50%, -50%) scale(1)";
   });
+  if (clickOnly) {
+    cursorOn(window, "click", e => {
+      onMove(e.clientX, e.clientY);
+      core.style.left = `${e.clientX}px`;
+      core.style.top = `${e.clientY}px`;
+      glowX = e.clientX;
+      glowY = e.clientY;
+      core.style.visibility = "visible";
+      glow.style.visibility = "visible";
+      core.style.transform = "translate(-50%, -50%) scale(1.8)";
+      glow.style.transform = "translate(-50%, -50%) scale(1.2)";
+      setTimeout(() => {
+        core.style.transform = "translate(-50%, -50%) scale(1)";
+        glow.style.transform = "translate(-50%, -50%) scale(1)";
+        core.style.visibility = "hidden";
+        glow.style.visibility = "hidden";
+      }, 180);
+    });
+  }
   setupIframeTracking(onMove, hide);
 
   (function animateGlow() {
@@ -422,7 +526,7 @@ function initBlueOrbs() {
       glow.style.left = `${glowX}px`;
       glow.style.top = `${glowY}px`;
     }
-    requestAnimationFrame(animateGlow);
+    cursorFrame(animateGlow);
   })();
 }
 
@@ -430,7 +534,7 @@ function initBlueOrbs() {
 function initRedCircle() {
   if (document.getElementById("red-circle-cursor")) return;
 
-  document.body.classList.add("red-circle-cursor");
+  cursorBodyClass("red-circle-cursor");
 
   const cursorEl = document.createElement("div");
   cursorEl.id = "red-circle-cursor";
@@ -446,6 +550,8 @@ function initRedCircle() {
     </svg>
   `;
   document.body.appendChild(cursorEl);
+  cursorNode(cursorEl);
+  const generation = cursorGeneration;
 
   function loadScript(src, onload) {
     const s = document.createElement("script");
@@ -455,6 +561,7 @@ function initRedCircle() {
   }
 
   function setupRedCircle() {
+    if (generation !== cursorGeneration) return;
     gsap.registerPlugin(MorphSVGPlugin);
 
     let rcTargetX = null,
@@ -478,8 +585,8 @@ function initRedCircle() {
       cursorEl.style.visibility = "hidden";
     }
 
-    window.addEventListener("mousemove", e => rcMoveTo(e.clientX, e.clientY));
-    document.addEventListener("mouseleave", rcHide);
+    cursorOn(window, "mousemove", e => rcMoveTo(e.clientX, e.clientY));
+    cursorOn(document, "mouseleave", rcHide);
     setupIframeTracking(rcMoveTo, rcHide);
 
     (function rcFollow() {
@@ -489,17 +596,18 @@ function initRedCircle() {
         cursorEl.style.left = `${rcCurX}px`;
         cursorEl.style.top = `${rcCurY}px`;
       }
-      requestAnimationFrame(rcFollow);
+      cursorFrame(rcFollow);
     })();
 
     const cursorTl = gsap.timeline({ paused: true });
     cursorTl.to("#rc-cursorDot", { morphSVG: "#rc-iBeamPath", duration: 0.3, ease: "power2.inOut" });
+    cursorCleanups.push(() => cursorTl.kill());
 
     document.querySelectorAll("[data-text-hover]").forEach(el => {
-      el.addEventListener("mouseenter", () => cursorTl.play());
-      el.addEventListener("mouseleave", () => cursorTl.reverse());
-      el.addEventListener("mousedown", () => gsap.to("#rc-cursorDot", { morphSVG: "#rc-iBeamHold", duration: 0.4, ease: "back.out(3)" }));
-      el.addEventListener("mouseup", () => gsap.to("#rc-cursorDot", { morphSVG: "#rc-iBeamPath", duration: 0.4, ease: "back.out(3)" }));
+      cursorOn(el, "mouseenter", () => cursorTl.play());
+      cursorOn(el, "mouseleave", () => cursorTl.reverse());
+      cursorOn(el, "mousedown", () => gsap.to("#rc-cursorDot", { morphSVG: "#rc-iBeamHold", duration: 0.4, ease: "back.out(3)" }));
+      cursorOn(el, "mouseup", () => gsap.to("#rc-cursorDot", { morphSVG: "#rc-iBeamPath", duration: 0.4, ease: "back.out(3)" }));
     });
   }
 
@@ -515,10 +623,10 @@ function initRedCircle() {
 }
 
 // Based on codepen.io/Margarita-the-solid/pen/LERbOMR
-function initTheSims() {
+function initTheSims(clickOnly = false) {
   if (document.getElementById("the-sims-cursor")) return;
 
-  document.body.classList.add("the-sims-cursor");
+  if (!clickOnly) cursorBodyClass("the-sims-cursor");
 
   const NS = "http://www.w3.org/2000/svg";
   const cursorSvg = document.createElementNS(NS, "svg");
@@ -528,16 +636,19 @@ function initTheSims() {
   cursorSvg.setAttribute("height", "62");
   cursorSvg.setAttribute("overflow", "visible");
   document.body.appendChild(cursorSvg);
+  cursorNode(cursorSvg);
 
   const halo1 = document.createElement("div");
   halo1.className = "sims-halo";
   halo1.style.cssText = "width:40px;height:40px;border:1.5px solid hsla(110,100%,60%,0.26);";
   document.body.appendChild(halo1);
+  cursorNode(halo1);
 
   const halo2 = document.createElement("div");
   halo2.className = "sims-halo";
   halo2.style.cssText = "width:56px;height:56px;border:1px solid hsla(110,100%,60%,0.1);animation-delay:0.7s;";
   document.body.appendChild(halo2);
+  cursorNode(halo2);
 
   const SCL = 98;
   const V = [
@@ -646,9 +757,9 @@ function initTheSims() {
       h.style.border = `${i === 0 ? 1.5 : 1}px solid hsla(${glowHue},100%,60%,${i === 0 ? 0.26 : 0.1})`;
     });
 
-    requestAnimationFrame(renderPlumbob);
+    cursorFrame(renderPlumbob);
   }
-  requestAnimationFrame(renderPlumbob);
+  cursorFrame(renderPlumbob);
 
   const COLS = ["#39FF14", "#a8ff78", "#00D4FF", "#FFE600", "#9B5DE5"];
   let simsMouseX = null,
@@ -668,8 +779,8 @@ function initTheSims() {
     setTimeout(() => el.remove(), (d + 0.2) * 1000);
   }
 
-  const simsInterval = setInterval(() => {
-    if (store.get("pointer") !== "the-sims") {
+  const simsInterval = cursorInterval(() => {
+    if (clickOnly || store.get("pointerCustom") !== "the-sims") {
       clearInterval(simsInterval);
       return;
     }
@@ -678,7 +789,8 @@ function initTheSims() {
     spawnSimsPt(simsMouseX + (Math.random() - 0.5) * spread, simsMouseY + (Math.random() - 0.5) * spread, 0.6 + Math.random() * 0.5);
   }, 420);
 
-  document.addEventListener("click", e => {
+  cursorOn(document, "click", e => {
+    if (!cursorClickEffectIs("the-sims")) return;
     for (let i = 0; i < 12; i++) {
       const ang = (i / 12) * Math.PI * 2,
         r = 20 + Math.random() * 50;
@@ -689,6 +801,7 @@ function initTheSims() {
   function showAt(x, y) {
     simsMouseX = x;
     simsMouseY = y;
+    if (clickOnly) return;
     cursorSvg.style.left = `${x}px`;
     cursorSvg.style.top = `${y}px`;
     cursorSvg.style.visibility = "visible";
@@ -703,14 +816,15 @@ function initTheSims() {
   function hide() {
     simsMouseX = null;
     simsMouseY = null;
+    if (clickOnly) return;
     cursorSvg.style.visibility = "hidden";
     halo1.style.visibility = "hidden";
     halo2.style.visibility = "hidden";
   }
 
-  document.addEventListener("mousemove", e => showAt(e.clientX, e.clientY));
-  document.addEventListener("mouseleave", hide);
-  document.addEventListener("mouseenter", () => {
+  cursorOn(document, "mousemove", e => showAt(e.clientX, e.clientY));
+  cursorOn(document, "mouseleave", hide);
+  cursorOn(document, "mouseenter", () => {
     halo1.style.visibility = "visible";
     halo2.style.visibility = "visible";
   });
@@ -720,7 +834,7 @@ function initTheSims() {
 // Based on codepen.io/Jiironimo/pen/vEXbVNP
 function initBlueOrbsDom() {
   if (document.getElementById("blue-orbs-glow")) return;
-  initBlueOrbs();
+  initBlueOrbsCursor();
 }
 
 // Based on codepen.io/ksenia-k/pen/rNoBgbV
@@ -750,9 +864,9 @@ function initSnakeTrail() {
     pointer.y = y;
   }
 
-  window.addEventListener("mousemove", e => onMove(e.clientX, e.clientY));
-  window.addEventListener("touchmove", e => onMove(e.targetTouches[0].pageX, e.targetTouches[0].pageY));
-  document.addEventListener("mouseleave", () => {
+  cursorOn(window, "mousemove", e => onMove(e.clientX, e.clientY));
+  cursorOn(window, "touchmove", e => onMove(e.targetTouches[0].pageX, e.targetTouches[0].pageY));
+  cursorOn(document, "mouseleave", () => {
     pointer.x = null;
     pointer.y = null;
   });
@@ -764,7 +878,7 @@ function initSnakeTrail() {
   function update(t) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (pointer.x === null) {
-      requestAnimationFrame(update);
+      cursorFrame(update);
       return;
     }
 
@@ -794,15 +908,1598 @@ function initSnakeTrail() {
     ctx.lineTo(trail[trail.length - 1].x, trail[trail.length - 1].y);
     ctx.stroke();
 
-    requestAnimationFrame(update);
+    cursorFrame(update);
   }
 
-  requestAnimationFrame(update);
+  cursorFrame(update);
+}
+
+function trackCursorPosition(onMove, onLeave = () => {}) {
+  cursorOn(window, "mousemove", e => onMove(e.clientX, e.clientY));
+  cursorOn(window, "touchmove", e => {
+    const touch = e.targetTouches[0];
+    if (touch) onMove(touch.clientX, touch.clientY);
+  });
+  cursorOn(document, "mouseleave", onLeave);
+  setupIframeTracking(onMove, onLeave);
+}
+
+function themeCursorColor() {
+  return getComputedStyle(document.body).getPropertyValue("--text-primary").trim() || "#ffffff";
+}
+
+function spawnOnMovement(minDistance, spawn) {
+  let lastX = null;
+  let lastY = null;
+  return (x, y) => {
+    if (lastX !== null && Math.hypot(x - lastX, y - lastY) < minDistance) return;
+    lastX = x;
+    lastY = y;
+    spawn(x, y);
+  };
+}
+
+function drawPointerArrow(ctx, x, y, scale, alpha, color) {
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.translate(x, y);
+  ctx.scale(scale, scale);
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.lineTo(0, 17);
+  ctx.lineTo(4.2, 13.2);
+  ctx.lineTo(7.2, 19.6);
+  ctx.lineTo(10.4, 18);
+  ctx.lineTo(7.4, 11.9);
+  ctx.lineTo(12.6, 11.6);
+  ctx.closePath();
+  ctx.fillStyle = color;
+  ctx.fill();
+  ctx.lineWidth = 1;
+  ctx.strokeStyle = "rgba(0, 0, 0, 0.35)";
+  ctx.stroke();
+  ctx.restore();
+}
+
+function initRainbowRibbon() {
+  if (document.getElementById("pointer-canvas")) return;
+
+  const canvas = createFullscreenCanvas("pointer-canvas");
+  const ctx = canvas.getContext("2d");
+
+  const STRIPES = ["#fb3b3b", "#fb8b24", "#f9d423", "#2ecc71", "#2ec4f1", "#4f6cf5", "#9b5de5"];
+  const STRIPE_WIDTH = 3.4;
+  const MAX_POINTS = 34;
+  const points = [];
+  let x = null;
+  let y = null;
+
+  trackCursorPosition(
+    (nextX, nextY) => {
+      x = nextX;
+      y = nextY;
+    },
+    () => {
+      x = null;
+      y = null;
+    },
+  );
+
+  (function loop() {
+    cursorFrame(loop);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (x === null) {
+      points.length = 0;
+      return;
+    }
+
+    points.unshift({ x, y });
+    if (points.length > MAX_POINTS) points.pop();
+    if (points.length < 3) return;
+
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.lineWidth = STRIPE_WIDTH;
+
+    STRIPES.forEach((color, index) => {
+      const offset = (index - (STRIPES.length - 1) / 2) * STRIPE_WIDTH;
+      ctx.beginPath();
+      ctx.strokeStyle = color;
+      for (let i = 0; i < points.length - 1; i++) {
+        const current = points[i];
+        const next = points[i + 1];
+        const length = Math.hypot(next.x - current.x, next.y - current.y) || 1;
+
+        const nx = (-(next.y - current.y) / length) * offset;
+        const ny = ((next.x - current.x) / length) * offset;
+        if (i === 0) ctx.moveTo(current.x + nx, current.y + ny);
+        ctx.lineTo(next.x + nx, next.y + ny);
+      }
+      ctx.stroke();
+    });
+  })();
+}
+
+function initFairyDustTrail() {
+  if (document.getElementById("pointer-canvas")) return;
+
+  const canvas = createFullscreenCanvas("pointer-canvas");
+  const ctx = canvas.getContext("2d");
+
+  const COLORS = ["#ff7eb9", "#ff65a3", "#7afcff", "#feff9c", "#fff27a", "#c5a3ff"];
+  const GLYPHS = ["✦", "✧", "✶", "·"];
+  const specks = [];
+
+  trackCursorPosition(
+    spawnOnMovement(7, (x, y) => {
+      specks.push({
+        x,
+        y,
+        vx: (Math.random() - 0.5) * 1.6,
+        vy: -0.3 - Math.random() * 0.5,
+        life: 1,
+        decay: 0.012 + Math.random() * 0.012,
+        size: 10 + Math.random() * 11,
+        glyph: GLYPHS[Math.floor(Math.random() * GLYPHS.length)],
+        color: COLORS[Math.floor(Math.random() * COLORS.length)],
+      });
+    }),
+  );
+
+  (function loop() {
+    cursorFrame(loop);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    for (let i = specks.length - 1; i >= 0; i--) {
+      const speck = specks[i];
+      speck.vy += 0.055;
+      speck.x += speck.vx;
+      speck.y += speck.vy;
+      speck.life -= speck.decay;
+      if (speck.life <= 0) {
+        specks.splice(i, 1);
+        continue;
+      }
+      ctx.globalAlpha = Math.max(0, speck.life);
+      ctx.fillStyle = speck.color;
+      ctx.shadowColor = speck.color;
+      ctx.shadowBlur = speck.size * 0.7;
+      ctx.font = `${speck.size}px sans-serif`;
+      ctx.fillText(speck.glyph, speck.x, speck.y);
+    }
+    ctx.globalAlpha = 1;
+    ctx.shadowBlur = 0;
+  })();
+}
+
+function initEchoTrail() {
+  if (document.getElementById("pointer-canvas")) return;
+
+  const canvas = createFullscreenCanvas("pointer-canvas");
+  const ctx = canvas.getContext("2d");
+  const MAX_ECHOES = 26;
+  const echoes = [];
+
+  trackCursorPosition(
+    spawnOnMovement(9, (x, y) => {
+      echoes.push({ x, y, life: 1 });
+      if (echoes.length > MAX_ECHOES) echoes.shift();
+    }),
+  );
+
+  (function loop() {
+    cursorFrame(loop);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const color = themeCursorColor();
+
+    for (let i = echoes.length - 1; i >= 0; i--) {
+      const echo = echoes[i];
+      echo.life -= 0.016;
+      if (echo.life <= 0) {
+        echoes.splice(i, 1);
+        continue;
+      }
+      drawPointerArrow(ctx, echo.x, echo.y, 0.6 + echo.life * 0.4, echo.life * 0.65, color);
+    }
+  })();
+}
+
+function initChasingCursors() {
+  if (document.getElementById("pointer-canvas")) return;
+
+  const canvas = createFullscreenCanvas("pointer-canvas");
+  const ctx = canvas.getContext("2d");
+  const COUNT = 8;
+  const followers = Array.from({ length: COUNT }, () => ({ x: window.innerWidth / 2, y: window.innerHeight / 2 }));
+  let x = null;
+  let y = null;
+
+  trackCursorPosition(
+    (nextX, nextY) => {
+      x = nextX;
+      y = nextY;
+    },
+    () => {
+      x = null;
+      y = null;
+    },
+  );
+
+  (function loop() {
+    cursorFrame(loop);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (x === null) return;
+
+    const color = themeCursorColor();
+    followers.forEach((follower, index) => {
+      const target = index === 0 ? { x, y } : followers[index - 1];
+      follower.x += (target.x - follower.x) * 0.32;
+      follower.y += (target.y - follower.y) * 0.32;
+      drawPointerArrow(ctx, follower.x, follower.y, 1 - index * 0.07, 1 - index * 0.1, color);
+    });
+  })();
+}
+
+function initDotTrail() {
+  if (document.getElementById("pointer-canvas")) return;
+
+  const canvas = createFullscreenCanvas("pointer-canvas");
+  const ctx = canvas.getContext("2d");
+  let x = null;
+  let y = null;
+  let dotX = window.innerWidth / 2;
+  let dotY = window.innerHeight / 2;
+  let settled = false;
+
+  trackCursorPosition(
+    (nextX, nextY) => {
+      if (!settled) {
+        dotX = nextX;
+        dotY = nextY;
+        settled = true;
+      }
+      x = nextX;
+      y = nextY;
+    },
+    () => {
+      x = null;
+      y = null;
+    },
+  );
+
+  (function loop() {
+    cursorFrame(loop);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (x === null) return;
+
+    dotX += (x - dotX) * 0.18;
+    dotY += (y - dotY) * 0.18;
+
+    ctx.fillStyle = themeCursorColor();
+    ctx.beginPath();
+    ctx.arc(dotX, dotY, 9, 0, Math.PI * 2);
+    ctx.fill();
+  })();
+}
+
+function initBubbleTrail() {
+  if (document.getElementById("pointer-canvas")) return;
+
+  const canvas = createFullscreenCanvas("pointer-canvas");
+  const ctx = canvas.getContext("2d");
+  const bubbles = [];
+
+  trackCursorPosition(
+    spawnOnMovement(14, (x, y) => {
+      bubbles.push({
+        x,
+        y,
+        radius: 5 + Math.random() * 13,
+        vy: -(0.4 + Math.random() * 0.9),
+        drift: (Math.random() - 0.5) * 0.6,
+        phase: Math.random() * Math.PI * 2,
+        life: 1,
+        decay: 0.006 + Math.random() * 0.007,
+      });
+    }),
+  );
+
+  (function loop() {
+    cursorFrame(loop);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let i = bubbles.length - 1; i >= 0; i--) {
+      const bubble = bubbles[i];
+      bubble.phase += 0.07;
+      bubble.y += bubble.vy;
+      bubble.x += bubble.drift + Math.sin(bubble.phase) * 0.6;
+      bubble.life -= bubble.decay;
+      if (bubble.life <= 0 || bubble.y + bubble.radius < 0) {
+        bubbles.splice(i, 1);
+        continue;
+      }
+
+      const alpha = Math.min(1, bubble.life * 1.4);
+      ctx.globalAlpha = alpha;
+      ctx.beginPath();
+      ctx.arc(bubble.x, bubble.y, bubble.radius, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(190, 230, 255, 0.12)";
+      ctx.fill();
+      ctx.lineWidth = 1.4;
+      ctx.strokeStyle = "rgba(225, 245, 255, 0.75)";
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(bubble.x - bubble.radius * 0.32, bubble.y - bubble.radius * 0.34, bubble.radius * 0.22, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  })();
+}
+
+function initSnowflakeTrail() {
+  if (document.getElementById("pointer-canvas")) return;
+
+  const canvas = createFullscreenCanvas("pointer-canvas");
+  const ctx = canvas.getContext("2d");
+  const flakes = [];
+
+  trackCursorPosition(
+    spawnOnMovement(11, (x, y) => {
+      flakes.push({
+        x,
+        y,
+        size: 11 + Math.random() * 13,
+        vy: 0.4 + Math.random() * 0.9,
+        drift: (Math.random() - 0.5) * 0.8,
+        phase: Math.random() * Math.PI * 2,
+        rotation: Math.random() * Math.PI * 2,
+        spin: (Math.random() - 0.5) * 0.06,
+        life: 1,
+        decay: 0.005 + Math.random() * 0.006,
+      });
+    }),
+  );
+
+  (function loop() {
+    cursorFrame(loop);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    for (let i = flakes.length - 1; i >= 0; i--) {
+      const flake = flakes[i];
+      flake.phase += 0.04;
+      flake.y += flake.vy;
+      flake.x += flake.drift + Math.sin(flake.phase) * 0.7;
+      flake.rotation += flake.spin;
+      flake.life -= flake.decay;
+      if (flake.life <= 0 || flake.y - flake.size > canvas.height) {
+        flakes.splice(i, 1);
+        continue;
+      }
+
+      ctx.save();
+      ctx.globalAlpha = Math.min(1, flake.life * 1.3);
+      ctx.translate(flake.x, flake.y);
+      ctx.rotate(flake.rotation);
+      ctx.fillStyle = "#eaf6ff";
+      ctx.shadowColor = "rgba(180, 220, 255, 0.9)";
+      ctx.shadowBlur = flake.size * 0.5;
+      ctx.font = `${flake.size}px sans-serif`;
+      ctx.fillText("❄", 0, 0);
+      ctx.restore();
+    }
+  })();
+}
+
+function initAfterglow(clickOnly = false) {
+  const canvasId = clickOnly ? "pointer-click-canvas" : "pointer-canvas";
+  if (document.getElementById(canvasId)) return;
+
+  const canvas = createFullscreenCanvas(canvasId);
+  const ctx = canvas.getContext("2d");
+
+  const MAX_PARTICLES = 1300;
+  const particles = [];
+  let hue = 196;
+  let time = 0;
+  let lastFrame = 0;
+  let lastX = null;
+  let lastY = null;
+
+  function potential(x, y) {
+    return Math.sin(x * 0.005 + time * 1.1) + Math.cos(y * 0.0045 - time * 0.9) + Math.sin((x - y) * 0.0026 + time * 0.6) * 0.7;
+  }
+
+  function flowAt(x, y) {
+    const step = 1;
+    const gradientX = (potential(x + step, y) - potential(x - step, y)) / (2 * step);
+    const gradientY = (potential(x, y + step) - potential(x, y - step)) / (2 * step);
+    return { vx: gradientY, vy: -gradientX };
+  }
+
+  function emit(x, y, vx, vy, speed) {
+    if (particles.length >= MAX_PARTICLES) return;
+    particles.push({
+      x,
+      y,
+      prevX: x,
+      prevY: y,
+      vx: vx * 0.08 + (Math.random() - 0.5) * 0.7,
+      vy: vy * 0.08 + (Math.random() - 0.5) * 0.7,
+      hue: hue + (Math.random() - 0.5) * 34,
+      width: 1.3 + Math.random() * 2.2,
+      life: 1,
+      decay: 0.008 + Math.random() * 0.008,
+      glow: speed,
+    });
+  }
+
+  function streak(fromX, fromY, toX, toY) {
+    const dx = toX - fromX;
+    const dy = toY - fromY;
+    const count = Math.min(6, Math.max(1, Math.round(Math.hypot(dx, dy) / 4)));
+    for (let i = 0; i < count; i++) {
+      const along = i / count;
+      emit(fromX + dx * along, fromY + dy * along, dx, dy, 1);
+    }
+  }
+
+  function burst(x, y) {
+    for (let i = 0; i < 46; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = 1.6 + Math.random() * 3.6;
+      emit(x, y, Math.cos(angle) * speed * 12, Math.sin(angle) * speed * 12, 1.4);
+    }
+  }
+
+  function move(x, y) {
+    if (!clickOnly && lastX !== null) streak(lastX, lastY, x, y);
+    lastX = x;
+    lastY = y;
+  }
+
+  trackCursorPosition(move, () => {
+    lastX = null;
+    lastY = null;
+  });
+  cursorOn(window, "mousedown", event => burst(event.clientX, event.clientY));
+
+  (function loop(timestamp) {
+    cursorFrame(loop);
+    const elapsed = lastFrame ? Math.min(0.05, (timestamp - lastFrame) / 1000) : 0;
+    lastFrame = timestamp;
+    time += elapsed * 0.24;
+    hue = (hue + elapsed * 4) % 360;
+
+    ctx.globalCompositeOperation = "destination-out";
+    ctx.fillStyle = "rgba(0, 0, 0, 0.09)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.globalCompositeOperation = "lighter";
+    ctx.lineCap = "round";
+
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const particle = particles[i];
+      const flow = flowAt(particle.x, particle.y);
+      particle.vx = (particle.vx + flow.vx * 1.5) * 0.96;
+      particle.vy = (particle.vy + flow.vy * 1.5) * 0.96;
+      particle.prevX = particle.x;
+      particle.prevY = particle.y;
+      particle.x += particle.vx;
+      particle.y += particle.vy;
+      particle.life -= particle.decay;
+      if (particle.life <= 0) {
+        particles.splice(i, 1);
+        continue;
+      }
+
+      ctx.globalAlpha = Math.max(0, particle.life * particle.life) * 0.85;
+      ctx.strokeStyle = `hsl(${particle.hue}, 92%, ${58 + particle.glow * 8}%)`;
+      ctx.lineWidth = particle.width * particle.life;
+      ctx.beginPath();
+      ctx.moveTo(particle.prevX, particle.prevY);
+      ctx.lineTo(particle.x, particle.y);
+      ctx.stroke();
+    }
+
+    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = "source-over";
+  })(0);
+}
+
+// Based on codepen.io/Deva-Kumar-the-bold/pen/RNWJKWZ
+function initMagneticTrail(clickOnly = false) {
+  const canvasId = clickOnly ? "pointer-click-canvas" : "pointer-canvas";
+  if (document.getElementById(canvasId)) return;
+
+  const canvas = createFullscreenCanvas(canvasId);
+  const ctx = canvas.getContext("2d");
+
+  const NODES = 16;
+  // Each link reels itself in at its own rate, which is what makes the
+  // chain lag into a tail instead of moving as one rigid line.
+  const chain = Array.from({ length: NODES }, () => ({
+    x: window.innerWidth / 2,
+    y: window.innerHeight / 2,
+    size: 4 + Math.random() * 4,
+    ease: 0.11 + Math.random() * 0.1,
+  }));
+  const sparks = [];
+  let pointerX = null;
+  let pointerY = null;
+  let placed = false;
+
+  trackCursorPosition(
+    (x, y) => {
+      if (!placed) {
+        chain.forEach(node => {
+          node.x = x;
+          node.y = y;
+        });
+        placed = true;
+      }
+      pointerX = x;
+      pointerY = y;
+    },
+    () => {
+      pointerX = null;
+      pointerY = null;
+    },
+  );
+
+  cursorOn(window, "mousedown", event => {
+    if (!cursorClickEffectIs("magnetic-trail")) return;
+    for (let i = 0; i < 26; i++) {
+      const angle = (i / 26) * Math.PI * 2 + Math.random() * 0.3;
+      const speed = 2 + Math.random() * 4;
+      sparks.push({
+        x: event.clientX,
+        y: event.clientY,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        size: 3 + Math.random() * 4,
+        life: 1,
+        decay: 0.018 + Math.random() * 0.016,
+      });
+    }
+  });
+
+  function glowDot(x, y, size, alpha, color) {
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle = color;
+    ctx.shadowColor = color;
+    ctx.shadowBlur = size * 2.6;
+    ctx.beginPath();
+    ctx.arc(x, y, size, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  (function loop() {
+    cursorFrame(loop);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const color = themeCursorColor();
+
+    if (!clickOnly && pointerX !== null) {
+      chain.forEach((node, index) => {
+        const target = index === 0 ? { x: pointerX, y: pointerY } : chain[index - 1];
+        node.x += (target.x - node.x) * node.ease;
+        node.y += (target.y - node.y) * node.ease;
+        glowDot(node.x, node.y, node.size * (1 - index / (NODES * 1.6)), 1 - index / NODES, color);
+      });
+    }
+
+    for (let i = sparks.length - 1; i >= 0; i--) {
+      const spark = sparks[i];
+      spark.x += spark.vx;
+      spark.y += spark.vy;
+      spark.vx *= 0.94;
+      spark.vy *= 0.94;
+      spark.life -= spark.decay;
+      if (spark.life <= 0) {
+        sparks.splice(i, 1);
+        continue;
+      }
+      glowDot(spark.x, spark.y, spark.size * spark.life, spark.life, color);
+    }
+
+    ctx.globalAlpha = 1;
+    ctx.shadowBlur = 0;
+  })();
+}
+
+// The cursor head from the same pen, as a standalone pointer.
+function initMagneticCursor(clickOnly = false) {
+  if (document.getElementById("magnetic-cursor-dot")) return;
+
+  cursorBodyClass(clickOnly ? "magnetic-click-effect" : "magnetic-cursor");
+
+  const dot = document.createElement("div");
+  dot.id = "magnetic-cursor-dot";
+  document.body.appendChild(dot);
+  cursorNode(dot);
+
+  let pointerX = null;
+  let pointerY = null;
+  let dotX = window.innerWidth / 2;
+  let dotY = window.innerHeight / 2;
+  let placed = false;
+  let releaseTimer = 0;
+
+  function show(x, y) {
+    if (!placed) {
+      dotX = x;
+      dotY = y;
+      placed = true;
+    }
+    pointerX = x;
+    pointerY = y;
+    if (!clickOnly) dot.style.visibility = "visible";
+  }
+
+  function hide() {
+    pointerX = null;
+    pointerY = null;
+    dot.style.visibility = "hidden";
+    dot.classList.remove("expand");
+  }
+
+  trackCursorPosition(show, hide);
+
+  cursorOn(window, "mousedown", event => {
+    if (clickOnly && !cursorClickEffectIs("magnetic-cursor")) return;
+    show(event.clientX, event.clientY);
+    if (clickOnly) {
+      dotX = event.clientX;
+      dotY = event.clientY;
+      dot.style.visibility = "visible";
+    }
+    dot.classList.add("expand");
+  });
+  cursorOn(window, "mouseup", () => {
+    dot.classList.remove("expand");
+    if (!clickOnly) return;
+    clearTimeout(releaseTimer);
+    releaseTimer = setTimeout(() => {
+      dot.style.visibility = "hidden";
+    }, 220);
+  });
+  cursorCleanups.push(() => clearTimeout(releaseTimer));
+
+  (function follow() {
+    cursorFrame(follow);
+    if (pointerX === null) return;
+    dotX += (pointerX - dotX) * 0.2;
+    dotY += (pointerY - dotY) * 0.2;
+    dot.style.transform = `translate3d(${dotX}px, ${dotY}px, 0) translate(-50%, -50%)`;
+  })();
+}
+
+// Based on codepen.io/jieajjhf-the-bashful/pen/pvoxXdW
+function initColorTrail(clickOnly = false) {
+  const canvasId = clickOnly ? "pointer-click-canvas" : "pointer-canvas";
+  if (document.getElementById(canvasId)) return;
+
+  const canvas = createFullscreenCanvas(canvasId);
+  const ctx = canvas.getContext("2d");
+  const blooms = [];
+
+  function bloom(x, y, size) {
+    blooms.push({
+      x,
+      y,
+      radius: 5,
+      maxRadius: size,
+      hue: Math.random() * 360,
+      life: 1,
+      decay: 0.009 + Math.random() * 0.005,
+    });
+  }
+
+  if (!clickOnly) {
+    trackCursorPosition(spawnOnMovement(6, (x, y) => bloom(x, y, 22 + Math.random() * 10)));
+  }
+  cursorOn(window, "click", event => {
+    if (!cursorClickEffectIs("color-trail")) return;
+    for (let i = 0; i < 14; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const distance = Math.random() * 40;
+      bloom(event.clientX + Math.cos(angle) * distance, event.clientY + Math.sin(angle) * distance, 26 + Math.random() * 16);
+    }
+  });
+
+  (function loop() {
+    cursorFrame(loop);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let i = blooms.length - 1; i >= 0; i--) {
+      const spot = blooms[i];
+      spot.radius += (spot.maxRadius - spot.radius) * 0.045;
+      spot.life -= spot.decay;
+      if (spot.life <= 0) {
+        blooms.splice(i, 1);
+        continue;
+      }
+      ctx.fillStyle = `hsla(${spot.hue}, 100%, 75%, ${Math.max(0, spot.life)})`;
+      ctx.beginPath();
+      ctx.arc(spot.x, spot.y, spot.radius, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  })();
+}
+
+// Based on codepen.io/Kuutti-Siitonen/pen/KKJeOoQ
+function initFallingStars(clickOnly = false) {
+  const canvasId = clickOnly ? "pointer-click-canvas" : "pointer-canvas";
+  if (document.getElementById(canvasId)) return;
+
+  const canvas = createFullscreenCanvas(canvasId);
+  const ctx = canvas.getContext("2d");
+  const stars = [];
+  let lastX = null;
+  let lastY = null;
+
+  function drop(x, y, pushX, pushY) {
+    const finalSize = 0.6 + Math.random() * 2;
+    stars.push({
+      x,
+      y,
+      size: finalSize * 2.2,
+      finalSize,
+      vx: pushX * 0.05 + (Math.random() - 0.5) * 2.4,
+      vy: 1 + Math.random() + pushY * 0.04,
+      alpha: 1,
+      age: 0,
+    });
+  }
+
+  function move(x, y) {
+    // The flick of the pointer is thrown into the stars, so fast movement
+    // scatters them sideways before gravity takes over.
+    const pushX = lastX === null ? 0 : x - lastX;
+    const pushY = lastY === null ? 0 : y - lastY;
+    lastX = x;
+    lastY = y;
+    if (!clickOnly) drop(x, y, pushX, pushY);
+  }
+
+  trackCursorPosition(move, () => {
+    lastX = null;
+    lastY = null;
+  });
+
+  cursorOn(window, "click", event => {
+    if (!cursorClickEffectIs("falling-stars")) return;
+    for (let i = 0; i < 30; i++) drop(event.clientX, event.clientY, (Math.random() - 0.5) * 120, (Math.random() - 0.5) * 60);
+  });
+
+  (function loop(timestamp) {
+    cursorFrame(loop);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let i = stars.length - 1; i >= 0; i--) {
+      const star = stars[i];
+      star.age += 16;
+      star.x += star.vx + (Math.random() - 0.5) * 0.5;
+      star.vx *= 0.96;
+      star.y += star.vy;
+      star.vy += 0.03;
+      star.alpha -= 0.006;
+      // Stars settle to their real size over the first stretch of the fall.
+      const settle = Math.min(1, star.age / 1600);
+      star.size = star.finalSize * (2.2 - 1.2 * settle);
+
+      if (star.alpha <= 0 || star.y - star.size > canvas.height) {
+        stars.splice(i, 1);
+        continue;
+      }
+
+      ctx.globalAlpha = Math.max(0, star.alpha);
+      ctx.fillStyle = "#ffffff";
+      ctx.shadowColor = "rgba(190, 220, 255, 0.9)";
+      ctx.shadowBlur = star.size * 3;
+      ctx.beginPath();
+      ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    ctx.globalAlpha = 1;
+    ctx.shadowBlur = 0;
+  })(0);
+}
+
+function initTubesTrail() {
+  if (document.getElementById("pointer-canvas")) return;
+
+  const TUBE_COLORS = ["#5e72e4", "#8965e0", "#f5365c"];
+  const LIGHT_COLORS = ["#21d4fd", "#b721ff", "#f4d03f", "#11cdef"];
+
+  const stage = document.createElement("div");
+  stage.id = "pointer-tubes";
+  document.body.appendChild(stage);
+  cursorNode(stage);
+
+  const canvas = document.createElement("canvas");
+  canvas.id = "pointer-canvas";
+  canvas.className = "tubes-canvas";
+  stage.appendChild(canvas);
+
+  const generation = cursorGeneration;
+  let scene = null;
+
+  function randomColors(count) {
+    return Array.from(
+      { length: count },
+      () =>
+        `#${Math.floor(Math.random() * 16777215)
+          .toString(16)
+          .padStart(6, "0")}`,
+    );
+  }
+
+  function start() {
+    import("https://cdn.jsdelivr.net/npm/threejs-components@0.0.19/build/cursors/tubes1.min.js")
+      .then(module => {
+        if (generation !== cursorGeneration) return;
+        const idleMotion = store.get("pointerIdleMotion") === "true";
+        scene = module.default(canvas, {
+          sleepRadiusX: idleMotion ? 300 : 0,
+          sleepRadiusY: idleMotion ? 150 : 0,
+          tubes: {
+            colors: TUBE_COLORS,
+            lights: { intensity: 200, colors: LIGHT_COLORS },
+          },
+        });
+        cursorCleanups.push(() => scene?.dispose?.());
+      })
+      .catch(() => {});
+  }
+
+  cursorOn(
+    window,
+    "pointermove",
+    event => {
+      if (!event.isTrusted) return;
+      document.body.dispatchEvent(
+        new PointerEvent("pointermove", {
+          clientX: event.clientX,
+          clientY: event.clientY,
+          pointerId: event.pointerId,
+          pointerType: event.pointerType,
+          bubbles: false,
+        }),
+      );
+    },
+    true,
+  );
+
+  cursorOn(document, "mouseleave", () => {
+    if (store.get("pointerIdleMotion") !== "true") return;
+    document.body.dispatchEvent(new PointerEvent("pointerleave", { bubbles: false }));
+  });
+
+  let waited = 0;
+  function startWhenSized() {
+    if (generation !== cursorGeneration) return;
+    if ((!stage.clientWidth || !stage.clientHeight) && waited < 2000) {
+      waited += 50;
+      const timer = setTimeout(startWhenSized, 50);
+      cursorCleanups.push(() => clearTimeout(timer));
+      return;
+    }
+    start();
+  }
+  startWhenSized();
+
+  cursorOn(window, "mousedown", () => {
+    if (!scene?.tubes) return;
+    scene.tubes.setColors(randomColors(3));
+    scene.tubes.setLightsColors(randomColors(4));
+  });
+}
+
+function initPixelCursorTrail() {
+  if (document.getElementById("pointer-canvas")) return;
+
+  const canvas = createFullscreenCanvas("pointer-canvas");
+  const ctx = canvas.getContext("2d");
+
+  const CELL = 6;
+  const MAX_BLOCKS = 260;
+  const blocks = [];
+  let hue = 0;
+
+  trackCursorPosition(
+    spawnOnMovement(4, (x, y) => {
+      const col = Math.floor(x / CELL);
+      const row = Math.floor(y / CELL);
+      for (let i = 0; i < 3; i++) {
+        blocks.push({
+          col: col + Math.round((Math.random() - 0.5) * 3),
+          row: row + Math.round((Math.random() - 0.5) * 3),
+          hue: (hue + Math.random() * 40) % 360,
+          life: 1,
+          decay: 0.014 + Math.random() * 0.016,
+        });
+      }
+      if (blocks.length > MAX_BLOCKS) blocks.splice(0, blocks.length - MAX_BLOCKS);
+    }),
+  );
+
+  (function loop() {
+    cursorFrame(loop);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    hue = (hue + 1.4) % 360;
+
+    for (let i = blocks.length - 1; i >= 0; i--) {
+      const block = blocks[i];
+      block.life -= block.decay;
+      if (block.life <= 0) {
+        blocks.splice(i, 1);
+        continue;
+      }
+      ctx.globalAlpha = Math.ceil(block.life * 5) / 5;
+      ctx.fillStyle = `hsl(${block.hue}, 95%, 65%)`;
+      ctx.fillRect(block.col * CELL, block.row * CELL, CELL, CELL);
+    }
+    ctx.globalAlpha = 1;
+  })();
+}
+
+function initPixelGridTrail() {
+  if (document.getElementById("pointer-canvas")) return;
+
+  const canvas = createFullscreenCanvas("pointer-canvas");
+  const ctx = canvas.getContext("2d");
+
+  const CELL = 26;
+
+  const lit = new Map();
+
+  function light(x, y) {
+    const col = Math.floor(x / CELL);
+    const row = Math.floor(y / CELL);
+    for (let dc = -1; dc <= 1; dc++) {
+      for (let dr = -1; dr <= 1; dr++) {
+        const strength = dc === 0 && dr === 0 ? 1 : 0.35;
+        const key = `${col + dc},${row + dr}`;
+        const current = lit.get(key);
+        if (!current || current.life < strength) lit.set(key, { col: col + dc, row: row + dr, life: strength });
+      }
+    }
+  }
+
+  trackCursorPosition(light);
+
+  (function loop() {
+    cursorFrame(loop);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const color = themeCursorColor();
+
+    lit.forEach((cell, key) => {
+      cell.life -= 0.022;
+      if (cell.life <= 0) {
+        lit.delete(key);
+        return;
+      }
+      ctx.globalAlpha = cell.life * 0.8;
+      ctx.fillStyle = color;
+      ctx.fillRect(cell.col * CELL + 1, cell.row * CELL + 1, CELL - 2, CELL - 2);
+    });
+    ctx.globalAlpha = 1;
+  })();
+}
+
+function initPixelReveal() {
+  if (document.getElementById("pointer-canvas")) return;
+
+  const canvas = createFullscreenCanvas("pointer-canvas");
+  const ctx = canvas.getContext("2d");
+
+  const CELL = 20;
+  const MAX_FRAGMENTS = 420;
+  const fragments = [];
+
+  function hueAt(col, row) {
+    return (Math.sin(col * 0.18) * 60 + Math.cos(row * 0.16) * 60 + col * 2 + row * 1.4 + 200) % 360;
+  }
+
+  trackCursorPosition(
+    spawnOnMovement(9, (x, y) => {
+      const col = Math.floor(x / CELL);
+      const row = Math.floor(y / CELL);
+      const spread = 3;
+      for (let i = 0; i < 7; i++) {
+        const c = col + Math.round((Math.random() - 0.5) * spread * 2);
+        const r = row + Math.round((Math.random() - 0.5) * spread * 2);
+        fragments.push({ col: c, row: r, hue: hueAt(c, r), life: 1, decay: 0.007 + Math.random() * 0.008 });
+      }
+      if (fragments.length > MAX_FRAGMENTS) fragments.splice(0, fragments.length - MAX_FRAGMENTS);
+    }),
+  );
+
+  (function loop() {
+    cursorFrame(loop);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let i = fragments.length - 1; i >= 0; i--) {
+      const piece = fragments[i];
+      piece.life -= piece.decay;
+      if (piece.life <= 0) {
+        fragments.splice(i, 1);
+        continue;
+      }
+      ctx.globalAlpha = Math.min(1, piece.life * 1.3);
+      ctx.fillStyle = `hsl(${piece.hue}, 70%, 58%)`;
+      ctx.fillRect(piece.col * CELL, piece.row * CELL, CELL, CELL);
+    }
+    ctx.globalAlpha = 1;
+  })();
+}
+
+function initDrawingTrail() {
+  if (document.getElementById("pointer-canvas")) return;
+
+  const canvas = createFullscreenCanvas("pointer-canvas");
+  const ctx = canvas.getContext("2d");
+
+  const COLOR = "#6366f1";
+  const DECAY = 1300;
+  const LINE_WIDTH = 5;
+  const MIN_WIDTH_FACTOR = 0.35;
+  const SPEED_TO_WIDTH = 0.12;
+  const STROKE_BREAK = 120;
+  const MAX_POINTS = 600;
+  let points = [];
+  let lastX = null;
+  let lastY = null;
+  let lastTime = 0;
+
+  trackCursorPosition(
+    (x, y) => {
+      const now = performance.now();
+      if (now - lastTime > STROKE_BREAK) {
+        lastX = null;
+        lastY = null;
+      }
+      const speed = lastX === null ? 0 : Math.hypot(x - lastX, y - lastY);
+      const width = LINE_WIDTH * Math.min(1, Math.max(MIN_WIDTH_FACTOR, 1 - speed * SPEED_TO_WIDTH));
+      points.push({ x, y, width, time: now, start: lastX === null });
+      if (points.length > MAX_POINTS) points.shift();
+      lastX = x;
+      lastY = y;
+      lastTime = now;
+    },
+    () => {
+      points = [];
+      lastX = null;
+      lastY = null;
+    },
+  );
+
+  (function loop() {
+    cursorFrame(loop);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const now = performance.now();
+    points = points.filter(point => now - point.time < DECAY);
+    if (points.length < 2) return;
+
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.strokeStyle = COLOR;
+
+    for (let i = 1; i < points.length; i++) {
+      const from = points[i - 1];
+      const to = points[i];
+      if (to.start) continue;
+      const age = (now - to.time) / DECAY;
+      ctx.globalAlpha = Math.max(0, 1 - age);
+      ctx.lineWidth = to.width * (1 - age * 0.5);
+      ctx.beginPath();
+      ctx.moveTo(from.x, from.y);
+
+      ctx.quadraticCurveTo(from.x, from.y, (from.x + to.x) / 2, (from.y + to.y) / 2);
+      ctx.lineTo(to.x, to.y);
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+  })();
+}
+
+function initTidalTrail() {
+  if (document.getElementById("pointer-canvas")) return;
+
+  const canvas = createFullscreenCanvas("pointer-canvas");
+  const ctx = canvas.getContext("2d");
+  const ripples = [];
+
+  const MAX_RIPPLES = 600;
+
+  trackCursorPosition((x, y) => {
+    ripples.push({ x, y, radius: 0, alpha: 0.8 });
+    if (ripples.length > MAX_RIPPLES) ripples.shift();
+  });
+
+  (function loop() {
+    cursorFrame(loop);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = window.matchMedia("(prefers-color-scheme: light)").matches ? "#0080ff" : "#00ffff";
+
+    for (let i = ripples.length - 1; i >= 0; i--) {
+      const ripple = ripples[i];
+
+      ripple.radius += 1.5;
+      ripple.alpha -= 0.01;
+      if (ripple.alpha <= 0) {
+        ripples.splice(i, 1);
+        continue;
+      }
+      ctx.globalAlpha = ripple.alpha;
+      ctx.beginPath();
+      ctx.arc(ripple.x, ripple.y, ripple.radius, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+  })();
+}
+
+function initFluidTrail() {
+  if (document.getElementById("pointer-canvas")) return;
+
+  const canvas = createFullscreenCanvas("pointer-canvas");
+  const ctx = canvas.getContext("2d");
+
+  const COLOR = [139, 92, 246];
+  const particles = [];
+  let pointerX = null;
+  let pointerY = null;
+  let lastX = null;
+  let lastY = null;
+
+  trackCursorPosition(
+    (x, y) => {
+      const pushX = lastX === null ? 0 : x - lastX;
+      const pushY = lastY === null ? 0 : y - lastY;
+      lastX = x;
+      lastY = y;
+      pointerX = x;
+      pointerY = y;
+      for (let i = 0; i < 4; i++) {
+        particles.push({
+          x,
+          y,
+          vx: pushX * 0.18 + (Math.random() - 0.5) * 2,
+          vy: pushY * 0.18 + (Math.random() - 0.5) * 2,
+          size: 5 + Math.random() * 13,
+          life: 1,
+          decay: 0.012 + Math.random() * 0.012,
+        });
+      }
+    },
+    () => {
+      pointerX = null;
+      pointerY = null;
+      lastX = null;
+      lastY = null;
+    },
+  );
+
+  (function loop() {
+    cursorFrame(loop);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.globalCompositeOperation = "lighter";
+
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const drop = particles[i];
+      if (pointerX !== null) {
+        drop.vx += (pointerX - drop.x) * 0.002;
+        drop.vy += (pointerY - drop.y) * 0.002;
+      }
+      drop.x += drop.vx;
+      drop.y += drop.vy;
+      drop.vx *= 0.93;
+      drop.vy *= 0.93;
+      drop.life -= drop.decay;
+      if (drop.life <= 0) {
+        particles.splice(i, 1);
+        continue;
+      }
+
+      const radius = drop.size * drop.life;
+      const gradient = ctx.createRadialGradient(drop.x, drop.y, 0, drop.x, drop.y, radius);
+      gradient.addColorStop(0, `rgba(${COLOR[0]}, ${COLOR[1]}, ${COLOR[2]}, ${drop.life * 0.55})`);
+      gradient.addColorStop(1, `rgba(${COLOR[0]}, ${COLOR[1]}, ${COLOR[2]}, 0)`);
+      ctx.fillStyle = gradient;
+      ctx.beginPath();
+      ctx.arc(drop.x, drop.y, radius, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    ctx.globalCompositeOperation = "source-over";
+  })();
+}
+
+function initParticleDots() {
+  if (document.getElementById("pointer-canvas")) return;
+
+  const canvas = createFullscreenCanvas("pointer-canvas");
+  const ctx = canvas.getContext("2d");
+
+  const COUNT = 7;
+  const dots = Array.from({ length: COUNT }, () => ({ x: window.innerWidth / 2, y: window.innerHeight / 2 }));
+  let pointerX = null;
+  let pointerY = null;
+  let placed = false;
+
+  trackCursorPosition(
+    (x, y) => {
+      if (!placed) {
+        dots.forEach(dot => {
+          dot.x = x;
+          dot.y = y;
+        });
+        placed = true;
+      }
+      pointerX = x;
+      pointerY = y;
+    },
+    () => {
+      pointerX = null;
+      pointerY = null;
+    },
+  );
+
+  (function loop() {
+    cursorFrame(loop);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (pointerX === null) return;
+
+    dots.forEach((dot, index) => {
+      const target = index === 0 ? { x: pointerX, y: pointerY } : dots[index - 1];
+      dot.x += (target.x - dot.x) * 0.3;
+      dot.y += (target.y - dot.y) * 0.3;
+      ctx.globalAlpha = 1 - index / (COUNT + 1);
+      ctx.fillStyle = "#3b82f6";
+      ctx.beginPath();
+      ctx.arc(dot.x, dot.y, 10 * (1 - index / (COUNT + 1.2)), 0, Math.PI * 2);
+      ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+  })();
+}
+
+const CURSOR_TARGETS = "a, button, img, input, textarea, select, summary, [role='button'], [contenteditable='true']";
+
+function initSpringCursor() {
+  if (document.getElementById("spring-cursor-ring")) return;
+
+  cursorBodyClass("spring-cursor");
+
+  const dot = document.createElement("div");
+  dot.id = "spring-cursor-dot";
+  document.body.appendChild(dot);
+  cursorNode(dot);
+
+  const ring = document.createElement("div");
+  ring.id = "spring-cursor-ring";
+  document.body.appendChild(ring);
+  cursorNode(ring);
+
+  const STIFFNESS = 0.14;
+  const DAMPING = 0.74;
+  let pointerX = null;
+  let pointerY = null;
+  let ringX = 0;
+  let ringY = 0;
+  let velocityX = 0;
+  let velocityY = 0;
+  let placed = false;
+
+  function show(x, y) {
+    if (!placed) {
+      ringX = x;
+      ringY = y;
+      placed = true;
+    }
+    pointerX = x;
+    pointerY = y;
+    dot.style.visibility = "visible";
+    ring.style.visibility = "visible";
+  }
+
+  function hide() {
+    pointerX = null;
+    pointerY = null;
+    dot.style.visibility = "hidden";
+    ring.style.visibility = "hidden";
+    ring.classList.remove("over-target");
+  }
+
+  cursorOn(window, "mousemove", event => {
+    show(event.clientX, event.clientY);
+    ring.classList.toggle("over-target", event.target instanceof Element && event.target.closest(CURSOR_TARGETS) !== null);
+  });
+  cursorOn(document, "mouseleave", hide);
+  setupIframeTracking(show, hide);
+
+  (function spring() {
+    cursorFrame(spring);
+    if (pointerX === null) return;
+    velocityX = (velocityX + (pointerX - ringX) * STIFFNESS) * DAMPING;
+    velocityY = (velocityY + (pointerY - ringY) * STIFFNESS) * DAMPING;
+    ringX += velocityX;
+    ringY += velocityY;
+    dot.style.transform = `translate3d(${pointerX}px, ${pointerY}px, 0) translate(-50%, -50%)`;
+    ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+  })();
+}
+
+function initInvertedCursor() {
+  if (document.getElementById("inverted-cursor")) return;
+
+  cursorBodyClass("inverted-cursor-active");
+
+  const disc = document.createElement("div");
+  disc.id = "inverted-cursor";
+  document.body.appendChild(disc);
+  cursorNode(disc);
+
+  let pointerX = null;
+  let pointerY = null;
+  let discX = 0;
+  let discY = 0;
+  let placed = false;
+
+  function show(x, y) {
+    if (!placed) {
+      discX = x;
+      discY = y;
+      placed = true;
+    }
+    pointerX = x;
+    pointerY = y;
+    disc.style.visibility = "visible";
+  }
+
+  function hide() {
+    pointerX = null;
+    pointerY = null;
+    disc.style.visibility = "hidden";
+  }
+
+  trackCursorPosition(show, hide);
+
+  (function follow() {
+    cursorFrame(follow);
+    if (pointerX === null) return;
+    discX += (pointerX - discX) * 0.25;
+    discY += (pointerY - discY) * 0.25;
+    disc.style.transform = `translate3d(${discX}px, ${discY}px, 0) translate(-50%, -50%)`;
+  })();
+}
+
+function initSpotlightCursor() {
+  if (document.getElementById("spotlight-cursor")) return;
+
+  const spotlight = document.createElement("div");
+  spotlight.id = "spotlight-cursor";
+  document.body.appendChild(spotlight);
+  cursorNode(spotlight);
+
+  let pointerX = window.innerWidth / 2;
+  let pointerY = window.innerHeight / 2;
+  let lightX = pointerX;
+  let lightY = pointerY;
+
+  trackCursorPosition(
+    (x, y) => {
+      pointerX = x;
+      pointerY = y;
+      spotlight.style.opacity = "1";
+    },
+    () => {
+      spotlight.style.opacity = "0";
+    },
+  );
+
+  (function follow() {
+    cursorFrame(follow);
+    lightX += (pointerX - lightX) * 0.2;
+    lightY += (pointerY - lightY) * 0.2;
+    spotlight.style.background = `radial-gradient(circle 165px at ${lightX}px ${lightY}px, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.055) 38%, rgba(255, 255, 255, 0.016) 62%, rgba(255, 255, 255, 0) 78%)`;
+  })();
+}
+
+function initSpringSquash() {
+  if (document.getElementById("spring-squash")) return;
+
+  cursorBodyClass("spring-squash-cursor");
+
+  const blob = document.createElement("div");
+  blob.id = "spring-squash";
+  document.body.appendChild(blob);
+  cursorNode(blob);
+
+  const STIFFNESS = 0.13;
+  const DAMPING = 0.76;
+  let pointerX = null;
+  let pointerY = null;
+  let blobX = 0;
+  let blobY = 0;
+  let velocityX = 0;
+  let velocityY = 0;
+  let placed = false;
+
+  function show(x, y) {
+    if (!placed) {
+      blobX = x;
+      blobY = y;
+      placed = true;
+    }
+    pointerX = x;
+    pointerY = y;
+    blob.style.visibility = "visible";
+  }
+
+  function hide() {
+    pointerX = null;
+    pointerY = null;
+    blob.style.visibility = "hidden";
+  }
+
+  trackCursorPosition(show, hide);
+
+  (function spring() {
+    cursorFrame(spring);
+    if (pointerX === null) return;
+    velocityX = (velocityX + (pointerX - blobX) * STIFFNESS) * DAMPING;
+    velocityY = (velocityY + (pointerY - blobY) * STIFFNESS) * DAMPING;
+    blobX += velocityX;
+    blobY += velocityY;
+
+    const speed = Math.min(26, Math.hypot(velocityX, velocityY));
+    const stretch = 1 + speed * 0.022;
+    const squash = 1 - speed * 0.014;
+    const angle = (Math.atan2(velocityY, velocityX) * 180) / Math.PI;
+    blob.style.transform = `translate3d(${blobX}px, ${blobY}px, 0) translate(-50%, -50%) rotate(${angle}deg) scale(${stretch}, ${squash})`;
+  })();
+}
+
+function setupIdleCursorMotion() {
+  if (store.get("pointerIdleMotion") !== "true") return;
+
+  let x = window.innerWidth / 2;
+  let y = window.innerHeight / 2;
+  let visualX = x;
+  let visualY = y;
+  let idle = false;
+  let idleStarted = performance.now();
+  let snapFrame = 0;
+  let synthetic = false;
+
+  function emit(clientX, clientY) {
+    synthetic = true;
+    window.dispatchEvent(new MouseEvent("mousemove", { clientX, clientY }));
+    document.dispatchEvent(new MouseEvent("mousemove", { clientX, clientY }));
+    synthetic = false;
+  }
+
+  function stopIdle() {
+    idle = false;
+  }
+
+  cursorOn(
+    window,
+    "mousemove",
+    event => {
+      if (synthetic) return;
+      const nextX = event.clientX;
+      const nextY = event.clientY;
+      const wasIdle = idle;
+      stopIdle();
+
+      if (!wasIdle) {
+        x = nextX;
+        y = nextY;
+        visualX = nextX;
+        visualY = nextY;
+        return;
+      }
+
+      event.stopImmediatePropagation();
+      cancelAnimationFrame(snapFrame);
+      const startX = visualX;
+      const startY = visualY;
+      const started = performance.now();
+      const duration = 180;
+
+      function snap(now) {
+        const progress = Math.min(1, (now - started) / duration);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        visualX = startX + (nextX - startX) * eased;
+        visualY = startY + (nextY - startY) * eased;
+        emit(visualX, visualY);
+        if (progress < 1) snapFrame = cursorFrame(snap);
+      }
+      snapFrame = cursorFrame(snap);
+    },
+    true,
+  );
+
+  cursorOn(document, "mouseleave", () => {
+    idle = true;
+    idleStarted = performance.now();
+  });
+  cursorOn(document, "mouseenter", event => {
+    stopIdle();
+    x = event.clientX;
+    y = event.clientY;
+    visualX = x;
+    visualY = y;
+    emit(x, y);
+  });
+
+  cursorOn(window, "blur", () => {
+    idle = true;
+    idleStarted = performance.now();
+  });
+  cursorCleanups.push(() => cancelAnimationFrame(snapFrame));
+
+  function animateIdle(now) {
+    if (idle) {
+      const elapsed = (now - idleStarted) * 0.001;
+      const orbitX = x + Math.cos(elapsed * 1.4) * 18;
+      const orbitY = y + Math.sin(elapsed * 1.1) * 14;
+      visualX = orbitX;
+      visualY = orbitY;
+      emit(orbitX, orbitY);
+    }
+    cursorFrame(animateIdle);
+  }
+
+  cursorFrame(animateIdle);
 }
 
 function initCursorEffect() {
-  const pointer = store.get("pointer");
-  switch (pointer) {
+  const legacyPointer = store.get("pointer");
+  const trailPointers = [
+    "rainbow-stars",
+    "white-orbs",
+    "rainbow-trail",
+    "blue-orbs-trail",
+    "curly-cursor",
+    "rainbow-ribbon",
+    "fairy-dust",
+    "echo-trail",
+    "chasing-cursors",
+    "dot-trail",
+    "bubble-trail",
+    "snowflake-trail",
+    "afterglow",
+    "magnetic-trail",
+    "color-trail",
+    "falling-stars",
+    "tubes-trail",
+    "pixel-cursor",
+    "pixel-trail",
+    "pixel-reveal",
+    "drawing-trail",
+    "tidal-trail",
+    "fluid-trail",
+    "particle-dots",
+  ];
+  const customPointers = ["blue-orbs-cursor", "the-sims", "magnetic-cursor", "spring-cursor", "inverted-cursor", "spotlight-cursor", "spring-squash"];
+  const legacyBlueOrbs = legacyPointer === "blue-orbs";
+  const trail = store.get("pointerTrail") || (legacyBlueOrbs || store.get("pointerCustom") === "blue-orbs" ? "blue-orbs-trail" : trailPointers.includes(legacyPointer) ? legacyPointer : "default");
+  const custom = store.get("pointerCustom") || (legacyBlueOrbs ? "blue-orbs-cursor" : customPointers.includes(legacyPointer) ? legacyPointer : "default");
+  const clickEffect = store.get("pointerClickEffect") || "none";
+
+  switch (trail) {
     case "rainbow-stars":
       initRainbowStars();
       break;
@@ -812,17 +2509,113 @@ function initCursorEffect() {
     case "rainbow-trail":
       initRainbowTrail();
       break;
-    case "blue-orbs":
-      initBlueOrbs();
-      break;
-    case "red-circle":
-      initRedCircle();
-      break;
-    case "the-sims":
-      initTheSims();
+    case "blue-orbs-trail":
+      initBlueOrbsTrail();
       break;
     case "curly-cursor":
       initSnakeTrail();
       break;
+    case "rainbow-ribbon":
+      initRainbowRibbon();
+      break;
+    case "fairy-dust":
+      initFairyDustTrail();
+      break;
+    case "echo-trail":
+      initEchoTrail();
+      break;
+    case "chasing-cursors":
+      initChasingCursors();
+      break;
+    case "dot-trail":
+      initDotTrail();
+      break;
+    case "bubble-trail":
+      initBubbleTrail();
+      break;
+    case "snowflake-trail":
+      initSnowflakeTrail();
+      break;
+    case "afterglow":
+      initAfterglow();
+      break;
+    case "magnetic-trail":
+      initMagneticTrail();
+      break;
+    case "color-trail":
+      initColorTrail();
+      break;
+    case "falling-stars":
+      initFallingStars();
+      break;
+    case "tubes-trail":
+      initTubesTrail();
+      break;
+    case "pixel-cursor":
+      initPixelCursorTrail();
+      break;
+    case "pixel-trail":
+      initPixelGridTrail();
+      break;
+    case "pixel-reveal":
+      initPixelReveal();
+      break;
+    case "drawing-trail":
+      initDrawingTrail();
+      break;
+    case "tidal-trail":
+      initTidalTrail();
+      break;
+    case "fluid-trail":
+      initFluidTrail();
+      break;
+    case "particle-dots":
+      initParticleDots();
+      break;
   }
+
+  switch (custom) {
+    case "blue-orbs-cursor":
+      initBlueOrbsCursor();
+      break;
+    case "the-sims":
+      initTheSims();
+      break;
+    case "magnetic-cursor":
+      initMagneticCursor();
+      break;
+    case "spring-cursor":
+      initSpringCursor();
+      break;
+    case "inverted-cursor":
+      initInvertedCursor();
+      break;
+    case "spotlight-cursor":
+      initSpotlightCursor();
+      break;
+    case "spring-squash":
+      initSpringSquash();
+      break;
+  }
+
+  if (clickEffect === "rainbow-trail" && trail !== "rainbow-trail") initRainbowTrail(true);
+  if (clickEffect === "white-orbs" && trail !== "white-orbs") initWhiteOrbs(true);
+  if (clickEffect === "blue-orbs-cursor" && custom !== "blue-orbs-cursor") initBlueOrbsCursor(true);
+  if (clickEffect === "afterglow" && trail !== "afterglow") initAfterglow(true);
+  if (clickEffect === "magnetic-trail" && trail !== "magnetic-trail") initMagneticTrail(true);
+  if (clickEffect === "magnetic-cursor" && custom !== "magnetic-cursor") initMagneticCursor(true);
+  if (clickEffect === "color-trail" && trail !== "color-trail") initColorTrail(true);
+  if (clickEffect === "falling-stars" && trail !== "falling-stars") initFallingStars(true);
+
+  if (clickEffect === "the-sims" && custom !== "the-sims") {
+    initTheSims(true);
+  }
+
+  setupIdleCursorMotion();
 }
+
+window.refreshCursorEffects = () => {
+  destroyCursorEffects();
+  initCursorEffect();
+};
+window.destroyCursorEffects = destroyCursorEffects;

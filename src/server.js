@@ -7,7 +7,6 @@ import chalk from "chalk";
 import cookieParser from "cookie-parser";
 import express from "express";
 import basicAuth from "express-basic-auth";
-import rateLimit from "express-rate-limit";
 import config from "../config.js";
 import { mountAnalytics } from "./analytics.js";
 import { mountGhGames } from "./games.js";
@@ -34,18 +33,31 @@ if (vendorMap) {
 
 const server = http.createServer();
 const app = express();
-const PORT = process.env.PORT || 8080;
+
+function resolvePort() {
+  const args = process.argv.slice(2);
+  let flag = null;
+
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+    if (arg === "--port" || arg === "-p") flag = args[i + 1];
+    else if (arg.startsWith("--port=")) flag = arg.slice("--port=".length);
+    else continue;
+
+    if (!/^\d+$/.test(flag ?? "") || Number(flag) < 1 || Number(flag) > 65535) {
+      console.log(chalk.red(`Invalid port ${JSON.stringify(flag ?? null)}, expected 1-65535.`));
+      process.exit(1);
+    }
+    break;
+  }
+
+  return flag ? Number(flag) : process.env.PORT || 8080;
+}
+
+const PORT = resolvePort();
 
 wisp.options.allow_loopback_ips = true;
 wisp.options.allow_private_ips = true;
-
-const generalLimiter = rateLimit({
-  windowMs: 60 * 1000,
-  max: 100,
-  standardHeaders: true,
-  legacyHeaders: false,
-  message: "Too many requests, please try again later.",
-});
 
 if (config.challenge !== false) {
   console.log(chalk.green("🔒 Password protection is enabled! Listing logins below"));
@@ -84,8 +96,8 @@ if (!vendorMap) {
     const info = await resolveVersionInfo();
     const settingsHtml = injectVersionInfo(readFileSync(path.join(SERVE_DIR, "settings.html"), "utf8"), info).html;
     const sendSettings = (_req, res) => res.type("html").send(settingsHtml);
-    app.get("/settings", generalLimiter, sendSettings);
-    app.get("/settings.html", generalLimiter, sendSettings);
+    app.get("/settings", sendSettings);
+    app.get("/settings.html", sendSettings);
   } catch (err) {
     console.warn(chalk.yellow(`Settings version injection skipped, serving placeholders: ${err.message}`));
   }
@@ -121,16 +133,16 @@ const routes = [
 // clean. In static/dev vendorMap is null, so the clean routes are used as-is.
 routes.forEach(route => {
   const servePath = vendorMap?.routes?.[route.path] || route.path;
-  app.get(servePath, generalLimiter, (_req, res) => {
+  app.get(servePath, (_req, res) => {
     res.sendFile(path.join(SERVE_DIR, route.file));
   });
 });
 
-app.use(generalLimiter, (_req, res) => {
+app.use((_req, res) => {
   res.status(404).sendFile(path.join(SERVE_DIR, "404.html"));
 });
 
-app.use(generalLimiter, (err, _req, res, _next) => {
+app.use((err, _req, res, _next) => {
   console.error(err.stack);
   res.status(500).sendFile(path.join(SERVE_DIR, "404.html"));
 });

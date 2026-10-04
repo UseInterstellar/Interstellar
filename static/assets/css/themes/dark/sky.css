@@ -1,0 +1,42 @@
+/* Sky */
+:root {
+   --background: #0b1d33;
+   --surface: #14314f;
+   --surface-card: #14314f;
+   --surface-tile: #14314f;
+   --surface-raised: #1c3d63;
+   --surface-overlay: #1c3d63;
+   --surface-input: #1c3d63;
+   --surface-button: #1c3d63;
+   --surface-button-hover: #244a75;
+   --surface-hover: #244a75;
+   --surface-active: #244a75;
+   --surface-nav: rgba(11, 29, 51, 0.5);
+   --surface-nav-active: rgba(28, 61, 99, 0.5);
+
+   --border: rgba(120, 180, 240, 0.1);
+   --border-subtle: rgba(120, 180, 240, 0.05);
+   --border-strong: rgba(120, 180, 240, 0.18);
+
+   --text: #eaf2ff;
+   --text-muted: #8fb4dd;
+   --text-faint: #4f6d90;
+
+   --accent: #38bdf8;
+   --accent-hover: #7dd3fc;
+   --accent-text: #0b1d33;
+
+   --success: #4caf50;
+   --warning: #ffb020;
+   --danger: #ff5d6c;
+
+   --toggle-on: var(--success);
+   --toggle-off: #244a75;
+
+   --tab: #14314f;
+   --tab-active: #1c3d63;
+   --tab-hover: #244a75;
+   --tab-border: transparent;
+
+   --background-image: none;
+}

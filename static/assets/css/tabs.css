@@ -1,25 +1,44 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
+html,
 body {
+   height: 100%;
+}
+
+body {
+   --tab-strip-height: 3.25rem;
+   --browser-bar-height: 2.5em;
+   --custom-background-image: none;
+
    font-family: "Inter", sans-serif;
    text-decoration: none;
    margin: 0;
-   overflow-x: hidden;
-   overflow-y: hidden;
+   overflow: hidden;
    background: var(--background);
+   background-image: none;
    color: var(--text);
 }
 
+body::before {
+   content: none;
+}
+
 .browser {
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
    padding: 1rem;
    transition: transform var(--transition-slow);
    border-radius: 0 10px 10px 0;
    transform: translateX(0);
-   width: 100vw;
-   height: 0.5vw;
+   width: 100%;
+   height: var(--tab-strip-height);
+   box-sizing: border-box;
    display: flex;
    align-items: center;
+   z-index: 101;
 }
 
 .close-tab {
@@ -37,16 +56,17 @@ body {
 }
 
 .browser-bar {
+   position: fixed;
+   top: var(--tab-strip-height);
    left: 0;
    right: 0;
-   height: 2.5em;
+   height: var(--browser-bar-height);
    padding: 0 25px;
    background: var(--background);
    box-sizing: border-box;
    transition: var(--transition-slow);
    z-index: 100;
-   width: 100vw;
-   position: fixed;
+   width: 100%;
 }
 
 .browser-button {
@@ -131,7 +151,7 @@ body {
    height: 100%;
 }
 
-.bar {
+.address-bar {
    background: none;
    border: none;
    color: var(--text);
@@ -142,7 +162,7 @@ body {
    transition: var(--transition);
 }
 
-.bar:focus {
+.address-bar:focus {
    background: var(--surface-input);
    box-shadow: none;
    outline: none;
@@ -185,6 +205,27 @@ p {
 
 .frame-container iframe.active {
    display: block;
+}
+
+.frame-container {
+   position: fixed;
+   top: calc(var(--tab-strip-height) + var(--browser-bar-height));
+   right: 0;
+   bottom: 0;
+   left: 0;
+   overflow: hidden;
+}
+
+body.tabs-collapsed .browser {
+   display: none;
+}
+
+body.tabs-collapsed .browser-bar {
+   top: 0;
+}
+
+body.tabs-collapsed .frame-container {
+   top: var(--browser-bar-height);
 }
 
 #add-tab {
@@ -233,9 +274,8 @@ li:hover {
 
 iframe {
    position: absolute;
+   inset: 0;
    width: 100%;
-   height: 90%;
+   height: 100%;
    border: none;
-   left: 0;
-   top: 10%;
 }

@@ -8,48 +8,43 @@ try {
 if (!store.get("ab")) store.set("ab", true);
 if (!inFrame && !navigator.userAgent.includes("Firefox") && store.get("ab") === "true") {
   const popup = open("about:blank", "_blank");
-  setTimeout(() => {
-    if (!popup || popup.closed) {
-      alert("Please allow popups for this site. Doing so will allow us to open the site in a about:blank tab and preventing this site from showing up in your history. You can turn this off in the site settings.");
-    } else {
-      const doc = popup.document;
-      const iframe = doc.createElement("iframe");
-      const style = iframe.style;
-      const link = doc.createElement("link");
+  if (popup && !popup.closed) {
+    const doc = popup.document;
+    const iframe = doc.createElement("iframe");
+    const style = iframe.style;
+    const link = doc.createElement("link");
+    const script = doc.createElement("script");
 
-      const name = store.get("name") || "My Drive - Google Drive";
-      const icon = store.get("icon") || "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png";
+    const name = store.get("name") || "My Drive - Google Drive";
+    const icon = store.get("icon") || "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png";
 
-      doc.title = name;
-      link.rel = "icon";
-      link.href = icon;
+    doc.title = (window.laceTitle || (s => s))(name);
+    link.rel = "icon";
+    link.href = icon;
 
-      iframe.src = location.href;
-      style.position = "fixed";
-      style.top = style.bottom = style.left = style.right = 0;
-      style.border = style.outline = "none";
-      style.width = style.height = "100%";
+    iframe.src = location.href;
+    style.position = "fixed";
+    style.top = style.bottom = style.left = style.right = 0;
+    style.border = style.outline = "none";
+    style.width = style.height = "100%";
 
-      doc.head.appendChild(link);
-      doc.body.appendChild(iframe);
-
-      const pLink = store.get("pLink") || getRandomUrl();
-      location.replace(pLink);
-
-      const script = doc.createElement("script");
-      script.textContent = `
+    script.textContent = `
       window.onbeforeunload = function (event) {
         const confirmationMessage = 'Leave Site?';
         (event || window.event).returnValue = confirmationMessage;
         return confirmationMessage;
       };
     `;
-      doc.head.appendChild(script);
-    }
-  }, 2000);
+
+    doc.head.appendChild(link);
+    doc.head.appendChild(script);
+    doc.body.appendChild(iframe);
+
+    const pLink = store.get("pLink") || getRandomUrl();
+    location.replace(pLink);
+  }
 }
 
-// Splash texts
 const SplashT = [
   "Over 8 Million Users since 2023",
   "Fastest growing proxy server",
@@ -66,19 +61,22 @@ const SplashT = [
 let SplashI = Math.floor(Math.random() * SplashT.length);
 const SplashE = document.getElementById("splash");
 
-function US() {
+const laceSplash = window.laceTitle || (s => s);
+function paintSplash() {
+  SplashE.innerText = laceSplash(SplashT[SplashI]);
+}
+
+function cycleSplash() {
   SplashI = (SplashI + 1) % SplashT.length;
-  SplashE.innerText = SplashT[SplashI];
-  // Re-trigger the switch animation
+  paintSplash();
   SplashE.style.animation = "none";
   void SplashE.offsetWidth;
   SplashE.style.animation = "";
 }
 
-SplashE.innerText = SplashT[SplashI];
-SplashE.addEventListener("click", US);
+paintSplash();
+SplashE.addEventListener("click", cycleSplash);
 
-// Random URL
 function getRandomUrl() {
   const randomUrls = [
     "https://kahoot.it",

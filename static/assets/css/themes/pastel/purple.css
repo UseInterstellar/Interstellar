@@ -1,0 +1,53 @@
+/* Purple Pastel — soft light theme from the Pastel family.
+   Generated from one HSL recipe (hue 266); only the hue changes between them. */
+:root {
+   /* Surfaces */
+   --background: #f4effa;
+   --surface: #ece5f6;
+   --surface-card: #ece5f6;
+   --surface-tile: #e1d7ef;
+   --surface-raised: #d9cdea;
+   --surface-overlay: #e7def2;
+   --surface-input: #e7def2;
+   --surface-button: #e4dbf0;
+   --surface-button-hover: #d7c9e8;
+   --surface-hover: #d9cdea;
+   --surface-active: #ccbde0;
+   --surface-nav: rgba(0, 0, 0, 0.12);
+   --surface-nav-active: rgba(0, 0, 0, 0.16);
+   --brand-text: #ffffff;
+
+   /* Borders */
+   --border: rgba(0, 0, 0, 0.1);
+   --border-subtle: rgba(0, 0, 0, 0.05);
+   --border-strong: rgba(0, 0, 0, 0.18);
+
+   /* Text */
+   --text: #271c36;
+   --text-muted: #5f4f72;
+   --text-faint: #8d7f9f;
+
+   /* Accent */
+   --accent: #7b3ecc;
+   --accent-hover: #8d2fbc;
+   --accent-text: #ffffff;
+
+   /* Status */
+   --success: #2e9e4f;
+   --warning: #b8860b;
+   --danger: #c0392b;
+
+   /* Toggle */
+   --toggle-on: var(--success);
+   --toggle-off: #b6a9c6;
+   --toggle-knob: #ffffff;
+
+   /* Tabs */
+   --tab: #ece5f6;
+   --tab-active: #ccbde0;
+   --tab-hover: #d9cdea;
+   --tab-border: transparent;
+
+   /* Assets */
+   --background-image: none;
+}

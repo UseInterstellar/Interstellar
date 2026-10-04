@@ -6,7 +6,7 @@
 
 .title {
    font-size: 10vh;
-   color: var(--text);
+   color: var(--brand-text, var(--text));
    font-family: "Inter", sans-serif;
    text-align: center;
    text-transform: uppercase;
@@ -22,12 +22,16 @@
    transform: translateY(-2px) scale(1.05);
 }
 
+.title::after {
+   content: "\49\6e\74\65\72\73\74\65\6c\6c\61\72";
+}
+
 @media (orientation: portrait) {
    .title {
       position: relative;
       top: -10vw;
       font-size: 10vw;
-      color: var(--text);
+      color: var(--brand-text, var(--text));
       font-family: "Inter", sans-serif;
       text-align: center;
       text-transform: uppercase;

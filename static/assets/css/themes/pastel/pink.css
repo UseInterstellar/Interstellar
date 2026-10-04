@@ -1,0 +1,53 @@
+/* Pink Pastel — soft light theme from the Pastel family.
+   Generated from one HSL recipe (hue 324); only the hue changes between them. */
+:root {
+   /* Surfaces */
+   --background: #faeff6;
+   --surface: #f6e5ef;
+   --surface-card: #f6e5ef;
+   --surface-tile: #efd7e5;
+   --surface-raised: #eacdde;
+   --surface-overlay: #f2deea;
+   --surface-input: #f2deea;
+   --surface-button: #f0dbe8;
+   --surface-button-hover: #e8c9dc;
+   --surface-hover: #eacdde;
+   --surface-active: #e0bdd2;
+   --surface-nav: rgba(0, 0, 0, 0.12);
+   --surface-nav-active: rgba(0, 0, 0, 0.16);
+   --brand-text: #ffffff;
+
+   /* Borders */
+   --border: rgba(0, 0, 0, 0.1);
+   --border-subtle: rgba(0, 0, 0, 0.05);
+   --border-strong: rgba(0, 0, 0, 0.18);
+
+   /* Text */
+   --text: #361c2b;
+   --text-muted: #724f64;
+   --text-faint: #9f7f92;
+
+   /* Accent */
+   --accent: #cb3a91;
+   --accent-hover: #b82e60;
+   --accent-text: #ffffff;
+
+   /* Status */
+   --success: #2e9e4f;
+   --warning: #b8860b;
+   --danger: #c0392b;
+
+   /* Toggle */
+   --toggle-on: var(--success);
+   --toggle-off: #c6a9ba;
+   --toggle-knob: #ffffff;
+
+   /* Tabs */
+   --tab: #f6e5ef;
+   --tab-active: #e0bdd2;
+   --tab-hover: #eacdde;
+   --tab-border: transparent;
+
+   /* Assets */
+   --background-image: none;
+}
