@@ -463,6 +463,33 @@ body.smooth-follower-cursor {
   height: 44px;
 }
 
+body.magnetic-cursor {
+  cursor: none;
+}
+
+#magnetic-cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--text-primary, #ffffff);
+  box-shadow:
+    0 0 20px var(--text-primary, #ffffff),
+    0 0 40px var(--text-primary, #ffffff);
+  pointer-events: none;
+  visibility: hidden;
+  z-index: 9999;
+  transition: width 0.2s ease, height 0.2s ease;
+  will-change: transform;
+}
+
+#magnetic-cursor-dot.expand {
+  width: 34px;
+  height: 34px;
+}
+
 /* Red Circle cursor (Based on codepen.io/RoshitShrestha/pen/KwgVGwB) */
 body.red-circle-cursor,
 body.red-circle-cursor *:hover {

@@ -318,7 +318,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Pointer Effects — cursor.js is only loaded when an effect is active
-  const CURSOR_EFFECTS = ["rainbow-stars", "white-orbs", "rainbow-trail", "blue-orbs-trail", "blue-orbs-cursor", "the-sims", "smooth-follower", "curly-cursor", "rainbow-ribbon", "fairy-dust", "echo-trail", "chasing-cursors", "dot-trail", "bubble-trail", "snowflake-trail"];
+  const CURSOR_EFFECTS = ["rainbow-stars", "white-orbs", "rainbow-trail", "blue-orbs-trail", "blue-orbs-cursor", "the-sims", "smooth-follower", "curly-cursor", "rainbow-ribbon", "fairy-dust", "echo-trail", "chasing-cursors", "dot-trail", "bubble-trail", "snowflake-trail", "afterglow", "magnetic-trail", "magnetic-cursor", "color-trail", "falling-stars"];
 
   function anyCursorEffectActive() {
     const activePointer = store.get("pointer");
