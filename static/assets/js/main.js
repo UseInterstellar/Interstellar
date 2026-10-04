@@ -353,6 +353,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const savedBackgroundImage = store.get("backgroundImage");
+  const isTabsPage = Boolean(document.getElementById("frame-container"));
   const storedMode = store.get("backgroundMode");
   const legacyCustom = storedMode === "custom" || (!storedMode && savedBackgroundImage && savedBackgroundImage !== "none");
   const backgroundMode = legacyCustom ? "default" : storedMode || (savedBackgroundImage === "none" ? "none" : "gradient");
@@ -369,7 +370,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const libraryBackground = imageMode === "all" ? backgroundUrlFor(store.get("backgroundKey")) : "";
-  if ((imageMode === "custom" && savedBackgroundImage && savedBackgroundImage !== "none") || libraryBackground) {
+  if (!isTabsPage && ((imageMode === "custom" && savedBackgroundImage && savedBackgroundImage !== "none") || libraryBackground)) {
     const safeBackground = libraryBackground || reconstructSafeUrl(savedBackgroundImage);
     if (safeBackground) {
       document.body.dataset.customBackground = "true";

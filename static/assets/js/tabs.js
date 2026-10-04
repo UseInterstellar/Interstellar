@@ -304,10 +304,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const activeIframe = document.querySelector("#frame-container iframe.active");
     if (!activeIframe) return;
 
-    const hiding = tabSideNav.style.display !== "none";
+    const hiding = !document.body.classList.contains("tabs-collapsed");
+    document.body.classList.toggle("tabs-collapsed", hiding);
     tabSideNav.style.display = hiding ? "none" : "";
-    activeIframe.style.top = hiding ? "5%" : "10%";
-    activeIframe.style.height = hiding ? "95%" : "90%";
+    activeIframe.style.top = "";
+    activeIframe.style.height = "";
 
     const icon = tabToggleBtn.querySelector("i");
     icon.classList.toggle("fa-magnifying-glass-minus", !hiding);
