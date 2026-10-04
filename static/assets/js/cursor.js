@@ -2,7 +2,6 @@
 
 let cursorGeneration = 0;
 const cursorCleanups = [];
-const CURSOR_TRANSIENT_SELECTOR = ".orb-trail, .orb-spark, .sims-pt";
 
 function cursorOn(target, type, handler, options) {
   target.addEventListener(type, handler, options);
@@ -40,7 +39,7 @@ function destroyCursorEffects() {
       cursorCleanups.pop()();
     } catch (_) {}
   }
-  document.querySelectorAll(CURSOR_TRANSIENT_SELECTOR).forEach(node => {
+  document.querySelectorAll(".orb-trail, .orb-spark, .sims-pt").forEach(node => {
     node.remove();
   });
 }

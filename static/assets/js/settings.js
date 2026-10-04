@@ -252,7 +252,7 @@ document.addEventListener("DOMContentLoaded", () => {
       button.type = "button";
       button.className = "bg-option";
       button.dataset.url = option.url;
-      button.setAttribute("aria-label", `Use ${option.label} background`);
+      button.setAttribute("aria-label", "Use " + option.label + " background");
 
       const preview = document.createElement("img");
       preview.className = "bg-option-preview";
