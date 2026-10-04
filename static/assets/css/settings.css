@@ -106,11 +106,18 @@ body {
 #background-blur-control label {
    display: flex;
    justify-content: space-between;
+   gap: 12px;
    color: var(--text-muted);
    font-size: 14px;
 }
 
+.background-blur-label-text {
+   min-width: 0;
+   white-space: nowrap;
+}
+
 #background-blur-control output {
+   flex: 0 0 auto;
    color: var(--text);
    font-variant-numeric: tabular-nums;
 }
