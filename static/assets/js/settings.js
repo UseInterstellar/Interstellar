@@ -522,9 +522,8 @@ document.addEventListener("DOMContentLoaded", () => {
     "tidal-trail",
     "fluid-trail",
     "particle-dots",
-    "ink-reveal",
   ];
-  const customPointers = ["blue-orbs-cursor", "the-sims", "smooth-follower", "magnetic-cursor", "magnet-snap", "spring-cursor", "inverted-cursor", "spotlight-cursor", "spring-squash"];
+  const customPointers = ["blue-orbs-cursor", "the-sims", "magnetic-cursor", "spring-cursor", "inverted-cursor", "spotlight-cursor", "spring-squash"];
   const savedTrail = store.get("pointerTrail");
   const savedCustom = store.get("pointerCustom");
   const trailValue = trailPointers.includes(savedTrail) ? savedTrail : savedCustom === "blue-orbs" ? "blue-orbs-trail" : trailPointers.includes(legacyPointer) ? legacyPointer : "default";

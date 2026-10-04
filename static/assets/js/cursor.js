@@ -1297,79 +1297,6 @@ function initSnowflakeTrail() {
   })();
 }
 
-function initSmoothFollower() {
-  if (document.getElementById("smooth-follower-dot")) return;
-
-  cursorBodyClass("smooth-follower-cursor");
-
-  const INTERACTIVE = "a, button, img, input, textarea, select, summary, [role='button'], [contenteditable='true']";
-  const DOT_EASE = 0.2;
-  const RING_EASE = 0.1;
-
-  const dot = document.createElement("div");
-  dot.id = "smooth-follower-dot";
-  document.body.appendChild(dot);
-  cursorNode(dot);
-
-  const ring = document.createElement("div");
-  ring.id = "smooth-follower-ring";
-  document.body.appendChild(ring);
-  cursorNode(ring);
-
-  let pointerX = null;
-  let pointerY = null;
-  let dotX = 0;
-  let dotY = 0;
-  let ringX = 0;
-  let ringY = 0;
-  let placed = false;
-
-  function place(element, x, y) {
-    element.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
-  }
-
-  function show(x, y) {
-    if (!placed) {
-      dotX = x;
-      dotY = y;
-      ringX = x;
-      ringY = y;
-      placed = true;
-    }
-    pointerX = x;
-    pointerY = y;
-    dot.style.visibility = "visible";
-    ring.style.visibility = "visible";
-  }
-
-  function hide() {
-    pointerX = null;
-    pointerY = null;
-    dot.style.visibility = "hidden";
-    ring.style.visibility = "hidden";
-    ring.classList.remove("hovering");
-  }
-
-  cursorOn(window, "mousemove", event => {
-    show(event.clientX, event.clientY);
-    const target = event.target;
-    ring.classList.toggle("hovering", target instanceof Element && target.closest(INTERACTIVE) !== null);
-  });
-  cursorOn(document, "mouseleave", hide);
-  setupIframeTracking(show, hide);
-
-  (function follow() {
-    cursorFrame(follow);
-    if (pointerX === null) return;
-    dotX += (pointerX - dotX) * DOT_EASE;
-    dotY += (pointerY - dotY) * DOT_EASE;
-    ringX += (pointerX - ringX) * RING_EASE;
-    ringY += (pointerY - ringY) * RING_EASE;
-    place(dot, dotX, dotY);
-    place(ring, ringX, ringY);
-  })();
-}
-
 function initAfterglow(clickOnly = false) {
   const canvasId = clickOnly ? "pointer-click-canvas" : "pointer-canvas";
   if (document.getElementById(canvasId)) return;
@@ -1789,88 +1716,91 @@ function initFallingStars(clickOnly = false) {
 function initTubesTrail() {
   if (document.getElementById("pointer-canvas")) return;
 
-  const canvas = createFullscreenCanvas("pointer-canvas");
-  const ctx = canvas.getContext("2d");
+  const TUBE_COLORS = ["#5e72e4", "#8965e0", "#f5365c"];
+  const LIGHT_COLORS = ["#21d4fd", "#b721ff", "#f4d03f", "#11cdef"];
 
-  const TUBES = 4;
-  const MAX_POINTS = 70;
-  const points = [];
-  let hues = [];
-  let wave = 0;
-  let x = null;
-  let y = null;
+  const stage = document.createElement("div");
+  stage.id = "pointer-tubes";
+  document.body.appendChild(stage);
+  cursorNode(stage);
 
-  function reshuffle() {
-    const base = Math.random() * 360;
-    hues = Array.from({ length: TUBES }, (_, i) => (base + i * (40 + Math.random() * 40)) % 360);
+  const canvas = document.createElement("canvas");
+  canvas.id = "pointer-canvas";
+  canvas.className = "tubes-canvas";
+  stage.appendChild(canvas);
+
+  const generation = cursorGeneration;
+  let scene = null;
+
+  function randomColors(count) {
+    return Array.from(
+      { length: count },
+      () =>
+        `#${Math.floor(Math.random() * 16777215)
+          .toString(16)
+          .padStart(6, "0")}`,
+    );
   }
-  reshuffle();
 
-  trackCursorPosition(
-    (nextX, nextY) => {
-      x = nextX;
-      y = nextY;
+  function start() {
+    import("https://cdn.jsdelivr.net/npm/threejs-components@0.0.19/build/cursors/tubes1.min.js")
+      .then(module => {
+        if (generation !== cursorGeneration) return;
+        const idleMotion = store.get("pointerIdleMotion") === "true";
+        scene = module.default(canvas, {
+          sleepRadiusX: idleMotion ? 300 : 0,
+          sleepRadiusY: idleMotion ? 150 : 0,
+          tubes: {
+            colors: TUBE_COLORS,
+            lights: { intensity: 200, colors: LIGHT_COLORS },
+          },
+        });
+        cursorCleanups.push(() => scene?.dispose?.());
+      })
+      .catch(() => {});
+  }
+
+  cursorOn(
+    window,
+    "pointermove",
+    event => {
+      if (!event.isTrusted) return;
+      document.body.dispatchEvent(
+        new PointerEvent("pointermove", {
+          clientX: event.clientX,
+          clientY: event.clientY,
+          pointerId: event.pointerId,
+          pointerType: event.pointerType,
+          bubbles: false,
+        }),
+      );
     },
-    () => {
-      x = null;
-      y = null;
-    },
+    true,
   );
-  cursorOn(window, "mousedown", reshuffle);
 
-  (function loop() {
-    cursorFrame(loop);
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    if (x === null) {
-      points.length = 0;
+  cursorOn(document, "mouseleave", () => {
+    if (store.get("pointerIdleMotion") !== "true") return;
+    document.body.dispatchEvent(new PointerEvent("pointerleave", { bubbles: false }));
+  });
+
+  let waited = 0;
+  function startWhenSized() {
+    if (generation !== cursorGeneration) return;
+    if ((!stage.clientWidth || !stage.clientHeight) && waited < 2000) {
+      waited += 50;
+      const timer = setTimeout(startWhenSized, 50);
+      cursorCleanups.push(() => clearTimeout(timer));
       return;
     }
+    start();
+  }
+  startWhenSized();
 
-    wave += 0.08;
-    points.unshift({ x, y });
-    if (points.length > MAX_POINTS) points.pop();
-    if (points.length < 4) return;
-
-    ctx.globalCompositeOperation = "lighter";
-    ctx.lineCap = "round";
-    ctx.lineJoin = "round";
-
-    for (let tube = 0; tube < TUBES; tube++) {
-      const hue = hues[tube];
-      const phase = (tube / TUBES) * Math.PI * 2;
-
-      const path = points.map((point, index) => {
-        const next = points[Math.min(index + 1, points.length - 1)];
-        const length = Math.hypot(next.x - point.x, next.y - point.y) || 1;
-        const sway = Math.sin(index * 0.22 + wave + phase) * 16 * (1 - index / points.length);
-        return {
-          x: point.x + (-(next.y - point.y) / length) * sway,
-          y: point.y + ((next.x - point.x) / length) * sway,
-        };
-      });
-
-      for (const [width, alpha, light] of [
-        [15, 0.2, 45],
-        [7, 0.4, 60],
-        [2.5, 0.75, 85],
-      ]) {
-        ctx.beginPath();
-        ctx.moveTo(path[0].x, path[0].y);
-        for (let i = 1; i < path.length - 1; i++) {
-          const midX = (path[i].x + path[i + 1].x) / 2;
-          const midY = (path[i].y + path[i + 1].y) / 2;
-          ctx.quadraticCurveTo(path[i].x, path[i].y, midX, midY);
-        }
-        ctx.globalAlpha = alpha;
-        ctx.strokeStyle = `hsl(${hue}, 95%, ${light}%)`;
-        ctx.lineWidth = width;
-        ctx.stroke();
-      }
-    }
-
-    ctx.globalAlpha = 1;
-    ctx.globalCompositeOperation = "source-over";
-  })();
+  cursorOn(window, "mousedown", () => {
+    if (!scene?.tubes) return;
+    scene.tubes.setColors(randomColors(3));
+    scene.tubes.setLightsColors(randomColors(4));
+  });
 }
 
 function initPixelCursorTrail() {
@@ -2018,20 +1948,35 @@ function initDrawingTrail() {
   const canvas = createFullscreenCanvas("pointer-canvas");
   const ctx = canvas.getContext("2d");
 
-  const MAX_POINTS = 90;
-  const points = [];
+  const COLOR = "#6366f1";
+  const DECAY = 1300;
+  const LINE_WIDTH = 5;
+  const MIN_WIDTH_FACTOR = 0.35;
+  const SPEED_TO_WIDTH = 0.12;
+  const STROKE_BREAK = 120;
+  const MAX_POINTS = 600;
+  let points = [];
   let lastX = null;
   let lastY = null;
+  let lastTime = 0;
 
   trackCursorPosition(
     (x, y) => {
+      const now = performance.now();
+      if (now - lastTime > STROKE_BREAK) {
+        lastX = null;
+        lastY = null;
+      }
       const speed = lastX === null ? 0 : Math.hypot(x - lastX, y - lastY);
+      const width = LINE_WIDTH * Math.min(1, Math.max(MIN_WIDTH_FACTOR, 1 - speed * SPEED_TO_WIDTH));
+      points.push({ x, y, width, time: now, start: lastX === null });
+      if (points.length > MAX_POINTS) points.shift();
       lastX = x;
       lastY = y;
-      points.push({ x, y, width: Math.max(1.5, 11 - speed * 0.22), life: 1 });
-      if (points.length > MAX_POINTS) points.shift();
+      lastTime = now;
     },
     () => {
+      points = [];
       lastX = null;
       lastY = null;
     },
@@ -2040,26 +1985,25 @@ function initDrawingTrail() {
   (function loop() {
     cursorFrame(loop);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    const color = themeCursorColor();
+    const now = performance.now();
+    points = points.filter(point => now - point.time < DECAY);
+    if (points.length < 2) return;
+
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
-    ctx.strokeStyle = color;
-
-    for (let i = points.length - 1; i >= 0; i--) {
-      points[i].life -= 0.012;
-      if (points[i].life <= 0) {
-        points.splice(i, 1);
-      }
-    }
+    ctx.strokeStyle = COLOR;
 
     for (let i = 1; i < points.length; i++) {
       const from = points[i - 1];
       const to = points[i];
-      const taper = i / points.length;
-      ctx.globalAlpha = Math.max(0, to.life) * 0.9;
-      ctx.lineWidth = to.width * taper;
+      if (to.start) continue;
+      const age = (now - to.time) / DECAY;
+      ctx.globalAlpha = Math.max(0, 1 - age);
+      ctx.lineWidth = to.width * (1 - age * 0.5);
       ctx.beginPath();
       ctx.moveTo(from.x, from.y);
+
+      ctx.quadraticCurveTo(from.x, from.y, (from.x + to.x) / 2, (from.y + to.y) / 2);
       ctx.lineTo(to.x, to.y);
       ctx.stroke();
     }
@@ -2074,42 +2018,34 @@ function initTidalTrail() {
   const ctx = canvas.getContext("2d");
   const ripples = [];
 
-  trackCursorPosition(
-    spawnOnMovement(26, (x, y) => {
-      ripples.push({ x, y, radius: 6, maxRadius: 70 + Math.random() * 50, life: 1, hue: 185 + Math.random() * 35, wobble: Math.random() * Math.PI * 2 });
-    }),
-  );
+  const MAX_RIPPLES = 600;
+
+  trackCursorPosition((x, y) => {
+    ripples.push({ x, y, radius: 0, alpha: 0.8 });
+    if (ripples.length > MAX_RIPPLES) ripples.shift();
+  });
 
   (function loop() {
     cursorFrame(loop);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.globalCompositeOperation = "lighter";
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = window.matchMedia("(prefers-color-scheme: light)").matches ? "#0080ff" : "#00ffff";
 
     for (let i = ripples.length - 1; i >= 0; i--) {
       const ripple = ripples[i];
-      ripple.radius += (ripple.maxRadius - ripple.radius) * 0.04;
-      ripple.wobble += 0.09;
-      ripple.life -= 0.011;
-      if (ripple.life <= 0) {
+
+      ripple.radius += 1.5;
+      ripple.alpha -= 0.01;
+      if (ripple.alpha <= 0) {
         ripples.splice(i, 1);
         continue;
       }
-
-      for (const [scale, width, fade] of [
-        [1, 2.2, 0.9],
-        [0.82, 1.2, 0.5],
-      ]) {
-        ctx.globalAlpha = Math.max(0, ripple.life) * fade;
-        ctx.strokeStyle = `hsl(${ripple.hue}, 90%, 65%)`;
-        ctx.lineWidth = width;
-        ctx.beginPath();
-        ctx.ellipse(ripple.x, ripple.y, ripple.radius * scale, ripple.radius * scale * (0.86 + Math.sin(ripple.wobble) * 0.1), 0, 0, Math.PI * 2);
-        ctx.stroke();
-      }
+      ctx.globalAlpha = ripple.alpha;
+      ctx.beginPath();
+      ctx.arc(ripple.x, ripple.y, ripple.radius, 0, Math.PI * 2);
+      ctx.stroke();
     }
-
     ctx.globalAlpha = 1;
-    ctx.globalCompositeOperation = "source-over";
   })();
 }
 
@@ -2238,139 +2174,7 @@ function initParticleDots() {
   })();
 }
 
-function initInkReveal() {
-  if (document.getElementById("pointer-canvas")) return;
-
-  const canvas = createFullscreenCanvas("pointer-canvas");
-  const ctx = canvas.getContext("2d");
-
-  const MASK = "rgba(10, 12, 24, 0.92)";
-  const MAX_STAMPS = 150;
-  const stamps = [];
-
-  trackCursorPosition(
-    spawnOnMovement(12, (x, y) => {
-      stamps.push({ x, y, radius: 34 + Math.random() * 26, wobble: Math.random() * Math.PI * 2, life: 1, decay: 0.0024 + Math.random() * 0.002 });
-      if (stamps.length > MAX_STAMPS) stamps.shift();
-    }),
-  );
-
-  (function loop() {
-    cursorFrame(loop);
-    ctx.globalCompositeOperation = "source-over";
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = MASK;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    ctx.globalCompositeOperation = "destination-out";
-    for (let i = stamps.length - 1; i >= 0; i--) {
-      const stamp = stamps[i];
-      stamp.life -= stamp.decay;
-      stamp.wobble += 0.02;
-      if (stamp.life <= 0) {
-        stamps.splice(i, 1);
-        continue;
-      }
-
-      ctx.globalAlpha = Math.min(1, stamp.life * 1.6);
-      ctx.beginPath();
-      for (let step = 0; step <= 18; step++) {
-        const angle = (step / 18) * Math.PI * 2;
-        const wobble = 1 + Math.sin(angle * 3 + stamp.wobble) * 0.12 + Math.cos(angle * 5 - stamp.wobble) * 0.07;
-        const radius = stamp.radius * wobble;
-        const px = stamp.x + Math.cos(angle) * radius;
-        const py = stamp.y + Math.sin(angle) * radius;
-        step === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
-      }
-      ctx.closePath();
-      ctx.fill();
-    }
-
-    ctx.globalAlpha = 1;
-    ctx.globalCompositeOperation = "source-over";
-  })();
-}
-
 const CURSOR_TARGETS = "a, button, img, input, textarea, select, summary, [role='button'], [contenteditable='true']";
-
-function initMagnetSnap() {
-  if (document.getElementById("magnet-snap")) return;
-
-  cursorBodyClass("magnet-snap-cursor");
-
-  const blob = document.createElement("div");
-  blob.id = "magnet-snap";
-  document.body.appendChild(blob);
-  cursorNode(blob);
-
-  const STIFFNESS = 0.16;
-  const DAMPING = 0.72;
-  let pointerX = null;
-  let pointerY = null;
-  let blobX = 0;
-  let blobY = 0;
-  let velocityX = 0;
-  let velocityY = 0;
-  let target = null;
-  let placed = false;
-
-  function show(x, y) {
-    if (!placed) {
-      blobX = x;
-      blobY = y;
-      placed = true;
-    }
-    pointerX = x;
-    pointerY = y;
-    blob.style.visibility = "visible";
-  }
-
-  function hide() {
-    pointerX = null;
-    pointerY = null;
-    target = null;
-    blob.style.visibility = "hidden";
-  }
-
-  cursorOn(window, "mousemove", event => {
-    show(event.clientX, event.clientY);
-    target = event.target instanceof Element ? event.target.closest(CURSOR_TARGETS) : null;
-  });
-  cursorOn(document, "mouseleave", hide);
-  setupIframeTracking(show, hide);
-
-  (function spring() {
-    cursorFrame(spring);
-    if (pointerX === null) return;
-
-    let goalX = pointerX;
-    let goalY = pointerY;
-    let width = 40;
-    let height = 40;
-    let radius = 20;
-
-    if (target) {
-      const box = target.getBoundingClientRect();
-      if (box.width && box.height) {
-        goalX = box.left + box.width / 2;
-        goalY = box.top + box.height / 2;
-        width = box.width + 14;
-        height = box.height + 10;
-        radius = Math.min(width, height) / 2;
-      }
-    }
-
-    velocityX = (velocityX + (goalX - blobX) * STIFFNESS) * DAMPING;
-    velocityY = (velocityY + (goalY - blobY) * STIFFNESS) * DAMPING;
-    blobX += velocityX;
-    blobY += velocityY;
-
-    blob.style.width = `${width}px`;
-    blob.style.height = `${height}px`;
-    blob.style.borderRadius = `${radius}px`;
-    blob.style.transform = `translate3d(${blobX}px, ${blobY}px, 0) translate(-50%, -50%)`;
-  })();
-}
 
 function initSpringCursor() {
   if (document.getElementById("spring-cursor-ring")) return;
@@ -2508,7 +2312,7 @@ function initSpotlightCursor() {
     cursorFrame(follow);
     lightX += (pointerX - lightX) * 0.2;
     lightY += (pointerY - lightY) * 0.2;
-    spotlight.style.background = `radial-gradient(circle 150px at ${lightX}px ${lightY}px, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.3) 55%, rgba(0, 0, 0, 0.78) 100%)`;
+    spotlight.style.background = `radial-gradient(circle 165px at ${lightX}px ${lightY}px, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.055) 38%, rgba(255, 255, 255, 0.016) 62%, rgba(255, 255, 255, 0) 78%)`;
   })();
 }
 
@@ -2689,9 +2493,8 @@ function initCursorEffect() {
     "tidal-trail",
     "fluid-trail",
     "particle-dots",
-    "ink-reveal",
   ];
-  const customPointers = ["blue-orbs-cursor", "the-sims", "smooth-follower", "magnetic-cursor", "magnet-snap", "spring-cursor", "inverted-cursor", "spotlight-cursor", "spring-squash"];
+  const customPointers = ["blue-orbs-cursor", "the-sims", "magnetic-cursor", "spring-cursor", "inverted-cursor", "spotlight-cursor", "spring-squash"];
   const legacyBlueOrbs = legacyPointer === "blue-orbs";
   const trail = store.get("pointerTrail") || (legacyBlueOrbs || store.get("pointerCustom") === "blue-orbs" ? "blue-orbs-trail" : trailPointers.includes(legacyPointer) ? legacyPointer : "default");
   const custom = store.get("pointerCustom") || (legacyBlueOrbs ? "blue-orbs-cursor" : customPointers.includes(legacyPointer) ? legacyPointer : "default");
@@ -2770,9 +2573,6 @@ function initCursorEffect() {
     case "particle-dots":
       initParticleDots();
       break;
-    case "ink-reveal":
-      initInkReveal();
-      break;
   }
 
   switch (custom) {
@@ -2782,14 +2582,8 @@ function initCursorEffect() {
     case "the-sims":
       initTheSims();
       break;
-    case "smooth-follower":
-      initSmoothFollower();
-      break;
     case "magnetic-cursor":
       initMagneticCursor();
-      break;
-    case "magnet-snap":
-      initMagnetSnap();
       break;
     case "spring-cursor":
       initSpringCursor();

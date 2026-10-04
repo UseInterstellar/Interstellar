@@ -205,6 +205,22 @@ body[data-custom-background] {
    z-index: 9999;
 }
 
+
+#pointer-tubes {
+   position: fixed;
+   inset: 0;
+   pointer-events: none;
+   z-index: 9999;
+   mix-blend-mode: screen;
+}
+
+#pointer-canvas.tubes-canvas {
+   position: absolute;
+   inset: 0;
+   width: 100%;
+   height: 100%;
+}
+
 /* CSS Parallax Pixel Stars (based on codepen.io/sarazond/pen/LYGbwj) */
 #stars,
 #stars2,
@@ -428,41 +444,6 @@ body.the-sims-cursor {
   50%       { opacity: 0.1; transform: translate(-50%, -50%) scale(1.12); }
 }
 
-body.smooth-follower-cursor {
-  cursor: none;
-}
-
-#smooth-follower-dot,
-#smooth-follower-ring {
-  position: fixed;
-  top: 0;
-  left: 0;
-  border-radius: 50%;
-  pointer-events: none;
-  visibility: hidden;
-  will-change: transform;
-}
-
-#smooth-follower-dot {
-  width: 8px;
-  height: 8px;
-  background: var(--text-primary, #ffffff);
-  z-index: 9999;
-}
-
-#smooth-follower-ring {
-  width: 28px;
-  height: 28px;
-  border: 1px solid var(--text-primary, #ffffff);
-  z-index: 9998;
-  transition: width 0.3s ease, height 0.3s ease;
-}
-
-#smooth-follower-ring.hovering {
-  width: 44px;
-  height: 44px;
-}
-
 body.magnetic-cursor {
   cursor: none;
 }
@@ -490,27 +471,10 @@ body.magnetic-cursor {
   height: 34px;
 }
 
-body.magnet-snap-cursor,
 body.spring-cursor,
 body.inverted-cursor-active,
 body.spring-squash-cursor {
   cursor: none;
-}
-
-#magnet-snap {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 40px;
-  height: 40px;
-  border-radius: 20px;
-  background: #ffffff;
-  mix-blend-mode: exclusion;
-  pointer-events: none;
-  visibility: hidden;
-  z-index: 9999;
-  transition: width 0.25s ease, height 0.25s ease, border-radius 0.25s ease;
-  will-change: transform;
 }
 
 #spring-cursor-dot,
@@ -567,6 +531,7 @@ body.spring-squash-cursor {
   pointer-events: none;
   opacity: 0;
   z-index: 9990;
+  mix-blend-mode: screen;
   transition: opacity 0.3s ease;
 }
 
