@@ -915,6 +915,388 @@ function initSnakeTrail() {
   cursorFrame(update);
 }
 
+function trackCursorPosition(onMove, onLeave = () => {}) {
+  cursorOn(window, "mousemove", e => onMove(e.clientX, e.clientY));
+  cursorOn(window, "touchmove", e => {
+    const touch = e.targetTouches[0];
+    if (touch) onMove(touch.clientX, touch.clientY);
+  });
+  cursorOn(document, "mouseleave", onLeave);
+  setupIframeTracking(onMove, onLeave);
+}
+
+function themeCursorColor() {
+  return getComputedStyle(document.body).getPropertyValue("--text-primary").trim() || "#ffffff";
+}
+
+function spawnOnMovement(minDistance, spawn) {
+  let lastX = null;
+  let lastY = null;
+  return (x, y) => {
+    if (lastX !== null && Math.hypot(x - lastX, y - lastY) < minDistance) return;
+    lastX = x;
+    lastY = y;
+    spawn(x, y);
+  };
+}
+
+function drawPointerArrow(ctx, x, y, scale, alpha, color) {
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.translate(x, y);
+  ctx.scale(scale, scale);
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.lineTo(0, 17);
+  ctx.lineTo(4.2, 13.2);
+  ctx.lineTo(7.2, 19.6);
+  ctx.lineTo(10.4, 18);
+  ctx.lineTo(7.4, 11.9);
+  ctx.lineTo(12.6, 11.6);
+  ctx.closePath();
+  ctx.fillStyle = color;
+  ctx.fill();
+  ctx.lineWidth = 1;
+  ctx.strokeStyle = "rgba(0, 0, 0, 0.35)";
+  ctx.stroke();
+  ctx.restore();
+}
+
+function initRainbowRibbon() {
+  if (document.getElementById("pointer-canvas")) return;
+
+  const canvas = createFullscreenCanvas("pointer-canvas");
+  const ctx = canvas.getContext("2d");
+
+  const STRIPES = ["#fb3b3b", "#fb8b24", "#f9d423", "#2ecc71", "#2ec4f1", "#4f6cf5", "#9b5de5"];
+  const STRIPE_WIDTH = 3.4;
+  const MAX_POINTS = 34;
+  const points = [];
+  let x = null;
+  let y = null;
+
+  trackCursorPosition(
+    (nextX, nextY) => {
+      x = nextX;
+      y = nextY;
+    },
+    () => {
+      x = null;
+      y = null;
+    },
+  );
+
+  (function loop() {
+    cursorFrame(loop);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (x === null) {
+      points.length = 0;
+      return;
+    }
+
+    points.unshift({ x, y });
+    if (points.length > MAX_POINTS) points.pop();
+    if (points.length < 3) return;
+
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.lineWidth = STRIPE_WIDTH;
+
+    STRIPES.forEach((color, index) => {
+      const offset = (index - (STRIPES.length - 1) / 2) * STRIPE_WIDTH;
+      ctx.beginPath();
+      ctx.strokeStyle = color;
+      for (let i = 0; i < points.length - 1; i++) {
+        const current = points[i];
+        const next = points[i + 1];
+        const length = Math.hypot(next.x - current.x, next.y - current.y) || 1;
+
+        const nx = (-(next.y - current.y) / length) * offset;
+        const ny = ((next.x - current.x) / length) * offset;
+        if (i === 0) ctx.moveTo(current.x + nx, current.y + ny);
+        ctx.lineTo(next.x + nx, next.y + ny);
+      }
+      ctx.stroke();
+    });
+  })();
+}
+
+function initFairyDustTrail() {
+  if (document.getElementById("pointer-canvas")) return;
+
+  const canvas = createFullscreenCanvas("pointer-canvas");
+  const ctx = canvas.getContext("2d");
+
+  const COLORS = ["#ff7eb9", "#ff65a3", "#7afcff", "#feff9c", "#fff27a", "#c5a3ff"];
+  const GLYPHS = ["✦", "✧", "✶", "·"];
+  const specks = [];
+
+  trackCursorPosition(
+    spawnOnMovement(7, (x, y) => {
+      specks.push({
+        x,
+        y,
+        vx: (Math.random() - 0.5) * 1.6,
+        vy: -0.3 - Math.random() * 0.5,
+        life: 1,
+        decay: 0.012 + Math.random() * 0.012,
+        size: 10 + Math.random() * 11,
+        glyph: GLYPHS[Math.floor(Math.random() * GLYPHS.length)],
+        color: COLORS[Math.floor(Math.random() * COLORS.length)],
+      });
+    }),
+  );
+
+  (function loop() {
+    cursorFrame(loop);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    for (let i = specks.length - 1; i >= 0; i--) {
+      const speck = specks[i];
+      speck.vy += 0.055;
+      speck.x += speck.vx;
+      speck.y += speck.vy;
+      speck.life -= speck.decay;
+      if (speck.life <= 0) {
+        specks.splice(i, 1);
+        continue;
+      }
+      ctx.globalAlpha = Math.max(0, speck.life);
+      ctx.fillStyle = speck.color;
+      ctx.shadowColor = speck.color;
+      ctx.shadowBlur = speck.size * 0.7;
+      ctx.font = `${speck.size}px sans-serif`;
+      ctx.fillText(speck.glyph, speck.x, speck.y);
+    }
+    ctx.globalAlpha = 1;
+    ctx.shadowBlur = 0;
+  })();
+}
+
+function initEchoTrail() {
+  if (document.getElementById("pointer-canvas")) return;
+
+  const canvas = createFullscreenCanvas("pointer-canvas");
+  const ctx = canvas.getContext("2d");
+  const MAX_ECHOES = 26;
+  const echoes = [];
+
+  trackCursorPosition(
+    spawnOnMovement(9, (x, y) => {
+      echoes.push({ x, y, life: 1 });
+      if (echoes.length > MAX_ECHOES) echoes.shift();
+    }),
+  );
+
+  (function loop() {
+    cursorFrame(loop);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const color = themeCursorColor();
+
+    for (let i = echoes.length - 1; i >= 0; i--) {
+      const echo = echoes[i];
+      echo.life -= 0.016;
+      if (echo.life <= 0) {
+        echoes.splice(i, 1);
+        continue;
+      }
+      drawPointerArrow(ctx, echo.x, echo.y, 0.6 + echo.life * 0.4, echo.life * 0.65, color);
+    }
+  })();
+}
+
+function initChasingCursors() {
+  if (document.getElementById("pointer-canvas")) return;
+
+  const canvas = createFullscreenCanvas("pointer-canvas");
+  const ctx = canvas.getContext("2d");
+  const COUNT = 8;
+  const followers = Array.from({ length: COUNT }, () => ({ x: window.innerWidth / 2, y: window.innerHeight / 2 }));
+  let x = null;
+  let y = null;
+
+  trackCursorPosition(
+    (nextX, nextY) => {
+      x = nextX;
+      y = nextY;
+    },
+    () => {
+      x = null;
+      y = null;
+    },
+  );
+
+  (function loop() {
+    cursorFrame(loop);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (x === null) return;
+
+    const color = themeCursorColor();
+    followers.forEach((follower, index) => {
+      const target = index === 0 ? { x, y } : followers[index - 1];
+      follower.x += (target.x - follower.x) * 0.32;
+      follower.y += (target.y - follower.y) * 0.32;
+      drawPointerArrow(ctx, follower.x, follower.y, 1 - index * 0.07, 1 - index * 0.1, color);
+    });
+  })();
+}
+
+function initDotTrail() {
+  if (document.getElementById("pointer-canvas")) return;
+
+  const canvas = createFullscreenCanvas("pointer-canvas");
+  const ctx = canvas.getContext("2d");
+  let x = null;
+  let y = null;
+  let dotX = window.innerWidth / 2;
+  let dotY = window.innerHeight / 2;
+  let settled = false;
+
+  trackCursorPosition(
+    (nextX, nextY) => {
+      if (!settled) {
+        dotX = nextX;
+        dotY = nextY;
+        settled = true;
+      }
+      x = nextX;
+      y = nextY;
+    },
+    () => {
+      x = null;
+      y = null;
+    },
+  );
+
+  (function loop() {
+    cursorFrame(loop);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (x === null) return;
+
+    dotX += (x - dotX) * 0.18;
+    dotY += (y - dotY) * 0.18;
+
+    ctx.fillStyle = themeCursorColor();
+    ctx.beginPath();
+    ctx.arc(dotX, dotY, 9, 0, Math.PI * 2);
+    ctx.fill();
+  })();
+}
+
+function initBubbleTrail() {
+  if (document.getElementById("pointer-canvas")) return;
+
+  const canvas = createFullscreenCanvas("pointer-canvas");
+  const ctx = canvas.getContext("2d");
+  const bubbles = [];
+
+  trackCursorPosition(
+    spawnOnMovement(14, (x, y) => {
+      bubbles.push({
+        x,
+        y,
+        radius: 5 + Math.random() * 13,
+        vy: -(0.4 + Math.random() * 0.9),
+        drift: (Math.random() - 0.5) * 0.6,
+        phase: Math.random() * Math.PI * 2,
+        life: 1,
+        decay: 0.006 + Math.random() * 0.007,
+      });
+    }),
+  );
+
+  (function loop() {
+    cursorFrame(loop);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let i = bubbles.length - 1; i >= 0; i--) {
+      const bubble = bubbles[i];
+      bubble.phase += 0.07;
+      bubble.y += bubble.vy;
+      bubble.x += bubble.drift + Math.sin(bubble.phase) * 0.6;
+      bubble.life -= bubble.decay;
+      if (bubble.life <= 0 || bubble.y + bubble.radius < 0) {
+        bubbles.splice(i, 1);
+        continue;
+      }
+
+      const alpha = Math.min(1, bubble.life * 1.4);
+      ctx.globalAlpha = alpha;
+      ctx.beginPath();
+      ctx.arc(bubble.x, bubble.y, bubble.radius, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(190, 230, 255, 0.12)";
+      ctx.fill();
+      ctx.lineWidth = 1.4;
+      ctx.strokeStyle = "rgba(225, 245, 255, 0.75)";
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(bubble.x - bubble.radius * 0.32, bubble.y - bubble.radius * 0.34, bubble.radius * 0.22, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  })();
+}
+
+function initSnowflakeTrail() {
+  if (document.getElementById("pointer-canvas")) return;
+
+  const canvas = createFullscreenCanvas("pointer-canvas");
+  const ctx = canvas.getContext("2d");
+  const flakes = [];
+
+  trackCursorPosition(
+    spawnOnMovement(11, (x, y) => {
+      flakes.push({
+        x,
+        y,
+        size: 11 + Math.random() * 13,
+        vy: 0.4 + Math.random() * 0.9,
+        drift: (Math.random() - 0.5) * 0.8,
+        phase: Math.random() * Math.PI * 2,
+        rotation: Math.random() * Math.PI * 2,
+        spin: (Math.random() - 0.5) * 0.06,
+        life: 1,
+        decay: 0.005 + Math.random() * 0.006,
+      });
+    }),
+  );
+
+  (function loop() {
+    cursorFrame(loop);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    for (let i = flakes.length - 1; i >= 0; i--) {
+      const flake = flakes[i];
+      flake.phase += 0.04;
+      flake.y += flake.vy;
+      flake.x += flake.drift + Math.sin(flake.phase) * 0.7;
+      flake.rotation += flake.spin;
+      flake.life -= flake.decay;
+      if (flake.life <= 0 || flake.y - flake.size > canvas.height) {
+        flakes.splice(i, 1);
+        continue;
+      }
+
+      ctx.save();
+      ctx.globalAlpha = Math.min(1, flake.life * 1.3);
+      ctx.translate(flake.x, flake.y);
+      ctx.rotate(flake.rotation);
+      ctx.fillStyle = "#eaf6ff";
+      ctx.shadowColor = "rgba(180, 220, 255, 0.9)";
+      ctx.shadowBlur = flake.size * 0.5;
+      ctx.font = `${flake.size}px sans-serif`;
+      ctx.fillText("❄", 0, 0);
+      ctx.restore();
+    }
+  })();
+}
+
 function setupIdleCursorMotion() {
   if (store.get("pointerIdleMotion") !== "true") return;
 
@@ -1012,7 +1394,7 @@ function setupIdleCursorMotion() {
 
 function initCursorEffect() {
   const legacyPointer = store.get("pointer");
-  const trailPointers = ["rainbow-stars", "white-orbs", "rainbow-trail", "blue-orbs-trail", "curly-cursor"];
+  const trailPointers = ["rainbow-stars", "white-orbs", "rainbow-trail", "blue-orbs-trail", "curly-cursor", "rainbow-ribbon", "fairy-dust", "echo-trail", "chasing-cursors", "dot-trail", "bubble-trail", "snowflake-trail"];
   const customPointers = ["blue-orbs-cursor", "the-sims"];
   const legacyBlueOrbs = legacyPointer === "blue-orbs";
   const trail = store.get("pointerTrail") || (legacyBlueOrbs || store.get("pointerCustom") === "blue-orbs" ? "blue-orbs-trail" : trailPointers.includes(legacyPointer) ? legacyPointer : "default");
@@ -1034,6 +1416,27 @@ function initCursorEffect() {
       break;
     case "curly-cursor":
       initSnakeTrail();
+      break;
+    case "rainbow-ribbon":
+      initRainbowRibbon();
+      break;
+    case "fairy-dust":
+      initFairyDustTrail();
+      break;
+    case "echo-trail":
+      initEchoTrail();
+      break;
+    case "chasing-cursors":
+      initChasingCursors();
+      break;
+    case "dot-trail":
+      initDotTrail();
+      break;
+    case "bubble-trail":
+      initBubbleTrail();
+      break;
+    case "snowflake-trail":
+      initSnowflakeTrail();
       break;
   }
 
