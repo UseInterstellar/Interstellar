@@ -150,67 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const bgBlur = document.getElementById("background-blur");
   const bgBlurValue = document.getElementById("background-blur-value");
 
-  const backgroundOptions = [
-    { label: "V5 Wallpaper", url: "/assets/media/background/v5-wallpaper.webp" },
-    { label: "V5 Inverted", url: "/assets/media/background/v5-inverted.webp" },
-    { label: "Aesthetic", url: "/assets/media/background/minecraft-aesthetic.webp" },
-    { label: "Ancient City", url: "/assets/media/background/minecraft-ancient-city.webp" },
-    { label: "Bees", url: "/assets/media/background/minecraft-bees.webp" },
-    { label: "Birch with Rainbow", url: "/assets/media/background/minecraft-birch-with-rainbow.webp" },
-    { label: "Blue Night", url: "/assets/media/background/minecraft-blue-night.webp" },
-    { label: "Cathedral", url: "/assets/media/background/minecraft-cathedral.webp" },
-    { label: "Cave Flowers", url: "/assets/media/background/minecraft-cave-flowers.webp" },
-    { label: "Cave V2", url: "/assets/media/background/minecraft-cave-v2.webp" },
-    { label: "Cave", url: "/assets/media/background/minecraft-cave.webp" },
-    { label: "Cherry Blossom Sunrise", url: "/assets/media/background/minecraft-cherry-blossom-sunrise.webp" },
-    { label: "Cherry with Sheep", url: "/assets/media/background/minecraft-cherry-with-sheep.webp" },
-    { label: "Dappled Forest", url: "/assets/media/background/minecraft-dappled-forest.webp" },
-    { label: "Desert Fog", url: "/assets/media/background/minecraft-desert-fog.webp" },
-    { label: "Desert", url: "/assets/media/background/minecraft-desert.webp" },
-    { label: "Dock", url: "/assets/media/background/minecraft-dock.webp" },
-    { label: "The End", url: "/assets/media/background/minecraft-end.webp" },
-    { label: "Firefly Bush", url: "/assets/media/background/minecraft-firefly-bush.webp" },
-    { label: "Frozen Ocean", url: "/assets/media/background/minecraft-frozen-ocean.webp" },
-    { label: "Gloomy", url: "/assets/media/background/minecraft-gloomy.webp" },
-    { label: "Golden Hour", url: "/assets/media/background/minecraft-golden-hour.webp" },
-    { label: "House", url: "/assets/media/background/minecraft-house.webp" },
-    { label: "Ice Spikes Sunset", url: "/assets/media/background/minecraft-ice-spikes-sunset.webp" },
-    { label: "Jungle", url: "/assets/media/background/minecraft-jungle.webp" },
-    { label: "Lukewarm Ocean", url: "/assets/media/background/minecraft-lukewarm-ocean.webp" },
-    { label: "Lush Cave V2", url: "/assets/media/background/minecraft-lush-cave-v2.webp" },
-    { label: "Lush Cave V3", url: "/assets/media/background/minecraft-lush-cave-v3.webp" },
-    { label: "Lush Cave", url: "/assets/media/background/minecraft-lush-cave.webp" },
-    { label: "Mangrove Swamp", url: "/assets/media/background/minecraft-mangrove-swamp.webp" },
-    { label: "Nether Crimson Forest", url: "/assets/media/background/minecraft-nether-crimson-forest.webp" },
-    { label: "Nether Warped Forest", url: "/assets/media/background/minecraft-nether-warped-forest.webp" },
-    { label: "Night Desert Village", url: "/assets/media/background/minecraft-night-desert-village.webp" },
-    { label: "Night Mountain", url: "/assets/media/background/minecraft-night-mountain.webp" },
-    { label: "Night Scary", url: "/assets/media/background/minecraft-night-scary.webp" },
-    { label: "Night", url: "/assets/media/background/minecraft-night.webp" },
-    { label: "Pale Garden", url: "/assets/media/background/minecraft-pale-garden.webp" },
-    { label: "Plains Lake", url: "/assets/media/background/minecraft-plains-lake.webp" },
-    { label: "Plains", url: "/assets/media/background/minecraft-plains.webp" },
-    { label: "Rainy Plains", url: "/assets/media/background/minecraft-rainy-plains.webp" },
-    { label: "Realistic", url: "/assets/media/background/minecraft-realistic.webp" },
-    { label: "Savannah Shores", url: "/assets/media/background/minecraft-savannah-shores.webp" },
-    { label: "Savannah", url: "/assets/media/background/minecraft-savannah.webp" },
-    { label: "Ships", url: "/assets/media/background/minecraft-ships.webp" },
-    { label: "Snowy Mountain Cloudy", url: "/assets/media/background/minecraft-snowy-mountain-cloudy.webp" },
-    { label: "Snowy Mountains", url: "/assets/media/background/minecraft-snowy-mountains.webp" },
-    { label: "Spruce Forest", url: "/assets/media/background/minecraft-spruce-forest.webp" },
-    { label: "Realistic Spruce", url: "/assets/media/background/minecraft-spruce-realistic.webp" },
-    { label: "Swamp Green Fog", url: "/assets/media/background/minecraft-swamp-green-fog.webp" },
-    { label: "Swamp Sunrise", url: "/assets/media/background/minecraft-swamp-sunrise.webp" },
-    { label: "Swamp Sunset", url: "/assets/media/background/minecraft-swamp-sunset.webp" },
-    { label: "Swamp", url: "/assets/media/background/minecraft-swamp.webp" },
-    { label: "Town V2", url: "/assets/media/background/minecraft-town-v2.webp" },
-    { label: "Town", url: "/assets/media/background/minecraft-town.webp" },
-    { label: "Underwater Foggy", url: "/assets/media/background/minecraft-underwater-foggy.webp" },
-    { label: "Underwater V2", url: "/assets/media/background/minecraft-underwater-v2.webp" },
-    { label: "Underwater", url: "/assets/media/background/minecraft-underwater.webp" },
-    { label: "Village", url: "/assets/media/background/minecraft-village.webp" },
-    { label: "Wheat Mountain", url: "/assets/media/background/minecraft-wheat-mountain.webp" },
-  ];
+  const backgroundOptions = Object.entries(window.BACKGROUND_LIBRARY).map(([key, option]) => ({ key, ...option }));
   const initialBackgroundCount = 15;
   let renderedBackgroundCount = 0;
 
@@ -231,7 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function applyBackgroundImage() {
     const mode = store.get("backgroundImageMode");
-    const url = mode === "custom" ? bgInput.value.trim() : mode === "all" ? store.get("backgroundImage") || "" : "";
+    const url = mode === "custom" ? bgInput.value.trim() : mode === "all" ? backgroundUrlFor(store.get("backgroundKey")) : "";
     bgCustomRow.style.display = bgCustomRow.dataset.open === "true" ? "" : "none";
     if (url) {
       document.body.dataset.customBackground = "true";
@@ -241,7 +181,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.body.style.removeProperty("--custom-background-image");
     }
     for (const option of bgGallery.querySelectorAll(".bg-option")) {
-      option.classList.toggle("active", mode === "all" && option.dataset.url === store.get("backgroundImage"));
+      option.classList.toggle("active", mode === "all" && option.dataset.key === store.get("backgroundKey"));
     }
   }
 
@@ -251,7 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const button = document.createElement("button");
       button.type = "button";
       button.className = "bg-option";
-      button.dataset.url = option.url;
+      button.dataset.key = option.key;
       button.setAttribute("aria-label", "Use " + option.label + " background");
 
       const preview = document.createElement("img");
@@ -267,11 +207,11 @@ document.addEventListener("DOMContentLoaded", () => {
       button.append(preview, label);
       button.addEventListener("click", () => {
         bgCustomRow.dataset.open = "false";
-        if (store.get("backgroundImageMode") === "all" && store.get("backgroundImage") === option.url) {
-          store.remove("backgroundImage");
+        if (store.get("backgroundImageMode") === "all" && store.get("backgroundKey") === option.key) {
+          store.remove("backgroundKey");
           store.set("backgroundImageMode", "none");
         } else {
-          store.set("backgroundImage", option.url);
+          store.set("backgroundKey", option.key);
           store.set("backgroundImageMode", "all");
         }
         applyBackgroundImage();
@@ -318,6 +258,7 @@ document.addEventListener("DOMContentLoaded", () => {
   bgRemoveButton.addEventListener("click", () => {
     bgCustomRow.dataset.open = "false";
     store.remove("backgroundImage");
+    store.remove("backgroundKey");
     store.set("backgroundImageMode", "none");
     bgInput.value = "";
     applyBackgroundImage();
