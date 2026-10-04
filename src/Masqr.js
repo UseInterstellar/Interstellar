@@ -1,14 +1,15 @@
 import { createHash, createHmac, randomBytes, timingSafeEqual } from "node:crypto";
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, realpathSync, statSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import express from "express";
 
 const COOKIE_NAME = "masqr_session";
 const UNLOCK_PATH = "/masqr/unlock";
-const DECOY_MOUNT = "/decoy";
 const TOKEN_PATTERN = /^u:([A-Za-z0-9_-]{32,128})@/;
 const STORE_PATH = path.join(process.cwd(), "data", "masqr.json");
 const DAY_MS = 24 * 60 * 60 * 1000;
+const HOST_PATTERN = /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)*[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/;
+const BLOCKED_DECOY_FILES = new Set(["domains.json"]);
 
 function readStore() {
   if (!existsSync(STORE_PATH)) {
@@ -43,7 +44,7 @@ function consumeToken(token, host) {
   const store = readStore();
   const entry = store.tokens[sha256(token)];
   if (!entry || entry.used || entry.expires < Date.now()) return false;
-  if (entry.host && entry.host !== host) return false;
+  if (entry.host && normaliseHost(entry.host) !== host) return false;
   entry.used = true;
   writeStore(store);
   return true;
@@ -69,23 +70,86 @@ function sessionIsValid(secret, value) {
   return Number(expires) > Date.now();
 }
 
-function normaliseHost(value) {
-  return String(value ?? "")
-    .toLowerCase()
-    .replace(/:\d+$/, "")
-    .replace(/^www\./, "");
+export function normaliseHost(value) {
+  const raw = String(value ?? "")
+    .trim()
+    .toLowerCase();
+  if (!raw || /[\s/@\\]/.test(raw)) return null;
+
+  let hostname = raw;
+  if (hostname.startsWith("[")) {
+    const close = hostname.indexOf("]");
+    if (close < 0) return null;
+    hostname = hostname.slice(1, close);
+  } else {
+    const colon = hostname.lastIndexOf(":");
+    if (colon >= 0) {
+      const port = hostname.slice(colon + 1);
+      if (!/^\d+$/.test(port)) return null;
+      hostname = hostname.slice(0, colon);
+    }
+  }
+
+  if (hostname.endsWith(".")) hostname = hostname.slice(0, -1);
+  if (hostname.startsWith("www.")) hostname = hostname.slice(4);
+  if (!hostname || hostname.length > 253 || !HOST_PATTERN.test(hostname)) return null;
+  return hostname;
+}
+
+function registerHost(map, rawHost, folder, source) {
+  const host = normaliseHost(rawHost);
+  if (!host) throw new Error(`Masqr decoy ${folder}: invalid hostname ${JSON.stringify(rawHost)} in ${source}`);
+
+  const existing = map.get(host);
+  if (existing && existing !== folder) {
+    throw new Error(`Masqr hostname conflict for "${host}": ${existing} and ${folder}`);
+  }
+  map.set(host, folder);
 }
 
 function loadDecoyMap(decoyRoot) {
   const map = new Map();
   for (const entry of readdirSync(decoyRoot, { withFileTypes: true })) {
     if (!entry.isDirectory() || !existsSync(path.join(decoyRoot, entry.name, "index.html"))) continue;
-    map.set(normaliseHost(entry.name), entry.name);
+    registerHost(map, entry.name, entry.name, "directory name");
+
     const aliasFile = path.join(decoyRoot, entry.name, "domains.json");
     if (!existsSync(aliasFile)) continue;
-    for (const host of JSON.parse(readFileSync(aliasFile, "utf8"))) map.set(normaliseHost(host), entry.name);
+    let aliases;
+    try {
+      aliases = JSON.parse(readFileSync(aliasFile, "utf8"));
+    } catch (error) {
+      throw new Error(`Masqr decoy ${entry.name}: domains.json is invalid JSON (${error.message})`);
+    }
+    if (!Array.isArray(aliases) || !aliases.every(alias => typeof alias === "string")) {
+      throw new Error(`Masqr decoy ${entry.name}: domains.json must be a JSON array of hostnames`);
+    }
+    for (const host of aliases) registerHost(map, host, entry.name, "domains.json");
   }
   return map;
+}
+
+function safeDecoyFile(decoyRoot, folder, requestPath) {
+  const relative = requestPath === "/" ? "index.html" : decodeURIComponent(requestPath).replace(/^\/+/, "");
+  const parts = relative.split(/[\\/]+/).filter(Boolean);
+  if (!parts.length || parts.some(part => part === "." || part === "..")) return null;
+  if (BLOCKED_DECOY_FILES.has(parts.at(-1).toLowerCase())) return null;
+
+  const root = realpathSync(path.join(decoyRoot, folder));
+  const candidate = path.join(root, ...parts);
+  let resolved;
+  try {
+    resolved = realpathSync(candidate);
+  } catch {
+    return null;
+  }
+  if (resolved !== root && !resolved.startsWith(`${root}${path.sep}`)) return null;
+  try {
+    if (!statSync(resolved).isFile()) return null;
+  } catch {
+    return null;
+  }
+  return resolved;
 }
 
 export function mountMasqr(app, { decoyRoot, decoy = "default", secureCookie = true, sessionMs = 30 * DAY_MS }) {
@@ -96,12 +160,11 @@ export function mountMasqr(app, { decoyRoot, decoy = "default", secureCookie = t
   const { secret } = readStore();
   const isAuthorized = req => sessionIsValid(secret, parseCookies(req.headers.cookie)[COOKIE_NAME]);
 
-  app.use(DECOY_MOUNT, express.static(decoyRoot, { dotfiles: "ignore" }));
-
   app.post(UNLOCK_PATH, express.urlencoded({ extended: false, limit: "1kb" }), (req, res) => {
     res.setHeader("Cache-Control", "no-store");
     const match = TOKEN_PATTERN.exec(String(req.body?.key ?? ""));
-    if (match && consumeToken(match[1], req.headers.host)) {
+    const host = normaliseHost(req.headers.host);
+    if (host && match && consumeToken(match[1], host)) {
       const payload = `${Date.now() + sessionMs}.${randomBytes(12).toString("base64url")}`;
       res.cookie(COOKIE_NAME, `${payload}.${sign(secret, payload)}`, {
         httpOnly: true,
@@ -116,11 +179,17 @@ export function mountMasqr(app, { decoyRoot, decoy = "default", secureCookie = t
 
   app.use((req, res, next) => {
     if (isAuthorized(req)) return next();
-    if ((req.method === "GET" || req.method === "HEAD") && req.path === "/") {
-      return res.sendFile(path.join(decoyRoot, decoyFolderFor(req), "index.html"));
+    if (req.method === "GET" || req.method === "HEAD") {
+      let file = null;
+      try {
+        file = safeDecoyFile(decoyRoot, decoyFolderFor(req), req.path);
+      } catch {
+        file = null;
+      }
+      if (file) return res.sendFile(file, { dotfiles: "deny" });
     }
     res.status(404).type("text/plain").send("Not Found");
   });
 
-  return { isAuthorized };
+  return { isAuthorized, normaliseHost, decoyFolderFor };
 }
