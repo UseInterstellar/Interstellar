@@ -614,7 +614,7 @@ function handleDropdownChange(selectElement) {
     document.getElementById("tab-favicon").setAttribute("href", preset.icon);
   }
 
-  if (window !== top) redirectToMainDomain();
+  if (window !== top && !isOwnShell()) redirectToMainDomain();
 }
 
 function safeCloakIcon(raw) {
@@ -643,6 +643,14 @@ function applyCustomCloak() {
     document.getElementById("tab-favicon").setAttribute("href", safeIcon);
   } else if (!iconVal) {
     store.remove("CustomIcon");
+  }
+}
+
+function isOwnShell() {
+  try {
+    return top.document.body?.dataset.shell === "true";
+  } catch {
+    return false;
   }
 }
 
@@ -728,7 +736,7 @@ function openAboutBlank() {
   doc.head.appendChild(script);
   doc.body.appendChild(iframe);
 
-  location.replace(panicLink);
+  (window.top ?? window).location.replace(panicLink);
 }
 
 function toggleAB() {

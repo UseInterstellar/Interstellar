@@ -137,6 +137,7 @@ const routes = [
   { path: "/play.html", file: "games.html" },
   { path: "/settings", file: "settings.html" },
   { path: "/tabs", file: "tabs.html" },
+  { path: "/home", file: "home.html" },
   { path: "/", file: "index.html" },
 ];
 

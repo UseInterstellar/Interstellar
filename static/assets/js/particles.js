@@ -1082,15 +1082,7 @@ function initShimmeringDotsSource() {
 }
 
 function isTabsPage() {
-  try {
-    return window.top.location.pathname === "/tabs";
-  } catch {
-    try {
-      return window.parent.location.pathname === "/tabs";
-    } catch {
-      return false;
-    }
-  }
+  return window.location.pathname === "/tabs";
 }
 
 if (!isTabsPage()) {

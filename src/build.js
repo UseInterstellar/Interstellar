@@ -670,7 +670,7 @@ function applyProxyChoiceValues(source) {
 // server, and rewrites the clean route literals in the application JS so the navbar and every
 // in-app navigation point at the same opaque paths. "/" (root) and "/play.html" (a compatibility
 // alias for the games page) are deliberately left clean and are not part of this map.
-const PAGE_ROUTES = ["/apps", "/games", "/tabs", "/settings"];
+const PAGE_ROUTES = ["/apps", "/games", "/tabs", "/settings", "/home"];
 
 function createPageRoutes(registry) {
   const map = {};
@@ -699,10 +699,11 @@ function routeRewriteTable(routes) {
     [`"/games"`, `"${routes["/games"]}"`],
     [`"/apps"`, `"${routes["/apps"]}"`],
     [`"/tabs"`, `"${routes["/tabs"]}"`],
+    [`"/home"`, `"${routes["/home"]}"`],
     [`"tabs"`, `"${routes["/tabs"]}"`],
   ];
 }
-const ROUTE_REWRITE_COUNT = 11;
+const ROUTE_REWRITE_COUNT = 12;
 
 function applyRouteRewrites(source, table) {
   let count = 0;
@@ -1994,6 +1995,7 @@ async function build() {
       */
       for (const [from, to] of scopeRewrites) html = replaceAll(html, from, to);
       html = applyRewrites(html, rewrites);
+      html = replaceAll(html, 'src="/home"', `src="${pageRoutes["/home"]}"`);
 
       const proxyChoice = applyProxyChoiceValues(html);
       html = proxyChoice.source;
