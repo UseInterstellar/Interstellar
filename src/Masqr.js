@@ -3,7 +3,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, realpathSync, statSyn
 import path from "node:path";
 import express from "express";
 
-const COOKIE_NAME = "masqr_session";
+const COOKIE_NAME = "m";
 const SEARCH_PATH = "/search";
 const STORE_PATH = path.join(process.cwd(), "data", "masqr.json");
 const DAY_MS = 24 * 60 * 60 * 1000;
