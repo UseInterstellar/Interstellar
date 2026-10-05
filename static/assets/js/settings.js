@@ -434,6 +434,10 @@ document.addEventListener("DOMContentLoaded", () => {
     store.set("shimmerControlsOpen", open ? "false" : "true");
   });
 
+  const tabsLayoutDropdown = document.getElementById("tabs-layout-dropdown");
+  tabsLayoutDropdown.value = store.get("tabsLayout") === "vertical" ? "vertical" : "horizontal";
+  tabsLayoutDropdown.addEventListener("change", () => store.set("tabsLayout", tabsLayoutDropdown.value));
+
   const pointerTrailDropdown = document.getElementById("pointer-trail-dropdown");
   const pointerCustomDropdown = document.getElementById("pointer-custom-dropdown");
   const pointerIdleMotion = document.getElementById("pointer-idle-motion");

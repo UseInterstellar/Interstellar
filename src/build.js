@@ -703,7 +703,7 @@ function routeRewriteTable(routes) {
     [`"tabs"`, `"${routes["/tabs"]}"`],
   ];
 }
-const ROUTE_REWRITE_COUNT = 12;
+const ROUTE_REWRITE_COUNT = 14;
 
 function applyRouteRewrites(source, table) {
   let count = 0;

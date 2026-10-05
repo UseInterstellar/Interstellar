@@ -21,13 +21,14 @@
 <body id="tab-view">
   <nav class="browser" id="right-side-nav">
     <ul id="tab-list"></ul>
-    <button title="add-tab" id="add-tab">
-      <i class="fa-solid fa-plus"></i>
+    <button title="New tab" id="add-tab">
+      <i class="fa-solid fa-plus"></i><span class="new-tab-label">New Tab</span>
     </button>
   </nav>
   <div class="browser-bar">
     <div class="browser-container">
       <div class="browser-left">
+        <img id="nav-logo" class="browser-logo" alt="Interstellar" src="/assets/media/favicon/main.png" />
         <button title="Home Page" id="home-page" class="browser-button" onclick="goHome()">
           <i class="fa-solid fa-house"></i>
         </button>
@@ -56,8 +57,11 @@
         <button title="Inspect" class="browser-button browser-button-right" onclick="toggleDevTools()">
           <i class="fa-solid fa-code"></i>
         </button>
-        <button title="Tabs" id="tabs-button" class="browser-button browser-button-right">
-          <i class="fa-solid fa-magnifying-glass-minus"></i>
+        <button title="Use vertical tabs" id="layout-button" class="browser-button browser-button-right">
+          <i class="fa-solid fa-table-columns"></i>
+        </button>
+        <button title="Hide tabs" id="tabs-button" class="browser-button browser-button-right">
+          <i class="fa-solid fa-chevron-up"></i>
         </button>
       </div>
     </div>

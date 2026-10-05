@@ -86,8 +86,8 @@ const input = document.getElementById("input");
 if (form && input && !isTabsPage()) {
   form.addEventListener("submit", async event => {
     event.preventDefault();
+    if (askOwningTabs(input.value)) return;
     try {
-      // isInTabMode is declared in main.js
       if (isInTabMode) await navigate(input.value, "");
       else await navigate(input.value, "/tabs");
     } catch {
@@ -213,3 +213,19 @@ window.__settled = async (timeout = 8000) => {
   if (!window.__ready) return;
   await Promise.race([window.__ready.catch(() => {}), new Promise(resolve => setTimeout(resolve, timeout))]);
 };
+
+function owningTabsWindow() {
+  try {
+    const tabs = window.parent?.document?.getElementById("frame-container");
+    return window.frameElement && tabs && window.frameElement.parentElement === tabs ? window.parent : null;
+  } catch {
+    return null;
+  }
+}
+
+function askOwningTabs(value) {
+  const tabs = owningTabsWindow();
+  if (!tabs) return false;
+  tabs.postMessage({ type: "interstellar:tabs-navigate", value }, location.origin);
+  return true;
+}
