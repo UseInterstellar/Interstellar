@@ -71,8 +71,8 @@ if (config.challenge !== false) {
 let masqr = null;
 if (config.masqr?.enabled) {
   masqr = mountMasqr(app, {
-    decoyRoot: path.join(STATIC_DIR, "decoy"),
-    decoy: config.masqr.decoy,
+    decoyRoot: path.join(STATIC_DIR, "decoy", config.masqr.decoy ?? "default"),
+    searchTrigger: process.env.MASQR_SEARCH_TRIGGER ?? config.masqr.searchTrigger ?? null,
     secureCookie: config.masqr.secureCookie !== false,
     sessionMs: (config.masqr.sessionDays ?? 30) * 24 * 60 * 60 * 1000,
   });

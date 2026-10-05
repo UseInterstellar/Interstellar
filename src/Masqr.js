@@ -4,8 +4,7 @@ import path from "node:path";
 import express from "express";
 
 const COOKIE_NAME = "masqr_session";
-const UNLOCK_PATH = "/masqr/unlock";
-const TOKEN_PATTERN = /^u:([A-Za-z0-9_-]{32,128})@/;
+const SEARCH_PATH = "/search";
 const STORE_PATH = path.join(process.cwd(), "data", "masqr.json");
 const DAY_MS = 24 * 60 * 60 * 1000;
 const HOST_PATTERN = /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)*[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/;
@@ -152,29 +151,53 @@ function safeDecoyFile(decoyRoot, folder, requestPath) {
   return resolved;
 }
 
-export function mountMasqr(app, { decoyRoot, decoy = "default", secureCookie = true, sessionMs = 30 * DAY_MS }) {
-  if (!existsSync(path.join(decoyRoot, decoy, "index.html"))) throw new Error(`Masqr default decoy "${decoy}" has no index.html in ${decoyRoot}`);
+function triggerMatches(value, trigger) {
+  if (!trigger) return false;
+  return timingSafeEqual(Buffer.from(sha256(String(value).trim())), Buffer.from(sha256(trigger)));
+}
+
+function loadSearchRedirect(folder) {
+  const file = path.join(folder, "search.json");
+  if (!existsSync(file)) return null;
+  const { redirect } = JSON.parse(readFileSync(file, "utf8"));
+  if (typeof redirect !== "string" || !redirect.startsWith("https://")) throw new Error(`Masqr: ${file} needs an https "redirect" URL`);
+  return redirect;
+}
+
+export function mountMasqr(app, { decoyRoot, secureCookie = true, sessionMs = 30 * DAY_MS, searchTrigger = null }) {
+  if (!existsSync(path.join(decoyRoot, "index.html"))) throw new Error(`Masqr decoy set ${decoyRoot} has no index.html`);
   const decoyMap = loadDecoyMap(decoyRoot);
-  const decoyFolderFor = req => decoyMap.get(normaliseHost(req.headers.host)) ?? decoy;
+  const decoyFolderFor = req => decoyMap.get(normaliseHost(req.headers.host)) ?? "";
+
+  const searchRedirects = new Map([["", loadSearchRedirect(decoyRoot)]]);
+  for (const folder of new Set(decoyMap.values())) searchRedirects.set(folder, loadSearchRedirect(path.join(decoyRoot, folder)));
+  const searchRedirectFor = req => searchRedirects.get(decoyFolderFor(req)) ?? searchRedirects.get("");
 
   const { secret } = readStore();
   const isAuthorized = req => sessionIsValid(secret, parseCookies(req.headers.cookie)[COOKIE_NAME]);
 
-  app.post(UNLOCK_PATH, express.urlencoded({ extended: false, limit: "1kb" }), (req, res) => {
+  const setSession = res => {
+    const payload = `${Date.now() + sessionMs}.${randomBytes(12).toString("base64url")}`;
+    res.cookie(COOKIE_NAME, `${payload}.${sign(secret, payload)}`, {
+      httpOnly: true,
+      secure: secureCookie,
+      sameSite: "lax",
+      path: "/",
+      maxAge: sessionMs,
+    });
+  };
+
+  app.post(SEARCH_PATH, express.urlencoded({ extended: false, limit: "1kb" }), (req, res) => {
     res.setHeader("Cache-Control", "no-store");
-    const match = TOKEN_PATTERN.exec(String(req.body?.key ?? ""));
-    const host = normaliseHost(req.headers.host);
-    if (host && match && consumeToken(match[1], host)) {
-      const payload = `${Date.now() + sessionMs}.${randomBytes(12).toString("base64url")}`;
-      res.cookie(COOKIE_NAME, `${payload}.${sign(secret, payload)}`, {
-        httpOnly: true,
-        secure: secureCookie,
-        sameSite: "lax",
-        path: "/",
-        maxAge: sessionMs,
-      });
+    const query = String(req.body?.q ?? "");
+    if (triggerMatches(query, searchTrigger)) {
+      consumeToken(issueToken({ days: 1 }), null);
+      setSession(res);
+      return res.redirect(303, "/");
     }
-    res.redirect(303, "/");
+    const target = searchRedirectFor(req);
+    if (!query || !target) return res.redirect(303, "/");
+    return res.redirect(303, `${target}${encodeURIComponent(query)}`);
   });
 
   app.use((req, res, next) => {

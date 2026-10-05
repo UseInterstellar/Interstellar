@@ -1634,7 +1634,7 @@ async function build() {
   await rm(DIST_DIR, { recursive: true, force: true });
 
   console.log("Copying static/ -> dist/...");
-  await cp(SRC_DIR, DIST_DIR, { recursive: true });
+  await cp(SRC_DIR, DIST_DIR, { recursive: true, filter: source => path.relative(SRC_DIR, source) !== path.join("decoy") });
 
   console.log(OBFUSCATE ? chalk.yellow("Obfuscation: ON") : chalk.yellow("Obfuscation: OFF (rename + rewrite only)"));
 
