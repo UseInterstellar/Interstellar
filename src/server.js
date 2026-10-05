@@ -2,6 +2,7 @@ import { existsSync, readFileSync } from "node:fs";
 import http from "node:http";
 import { createRequire } from "node:module";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { server as wisp } from "@mercuryworkshop/wisp-js/server";
 import chalk from "chalk";
 import cookieParser from "cookie-parser";
@@ -16,7 +17,7 @@ import { injectVersionInfo, resolveVersionInfo } from "./version.js";
 console.log(chalk.yellow("🚀 Starting server..."));
 
 const require = createRequire(import.meta.url);
-const __dirname = process.cwd();
+const __dirname = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 const DIST_DIR = path.join(__dirname, "dist");
 const STATIC_DIR = path.join(__dirname, "static");
