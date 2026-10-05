@@ -1,9 +1,13 @@
 {
   "version": 2,
+  "buildCommand": "pnpm build",
   "builds": [
     {
       "src": "src/server.js",
-      "use": "@vercel/node"
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": ["dist/**", "static/decoy/**"]
+      }
     }
   ],
   "routes": [
