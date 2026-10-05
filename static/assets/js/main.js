@@ -200,6 +200,8 @@ window.BACKGROUND_LIBRARY = {
 
 window.backgroundUrlFor = key => (key && window.BACKGROUND_LIBRARY[key]?.url) || "";
 
+Object.defineProperty(window, "isInTabMode", { get: () => Boolean(document.getElementById("frame-container")) });
+
 function inShell() {
   return document.body?.dataset.shell === "true";
 }
