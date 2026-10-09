@@ -9,7 +9,7 @@ import cookieParser from "cookie-parser";
 import express from "express";
 import basicAuth from "express-basic-auth";
 import config from "../config.js";
-import { mountAnalytics } from "./analytics.js";
+// import { mountAnalytics } from "./analytics.js";
 import { mountGhGames } from "./games.js";
 import { mountMasqr } from "./Masqr.js";
 import { injectVersionInfo, resolveVersionInfo } from "./version.js";
@@ -102,7 +102,7 @@ app.use("/.runtime", (_req, res) => {
   res.sendStatus(404);
 });
 
-if (vendorMap?.analytics) mountAnalytics(app, vendorMap.analytics);
+// if (vendorMap?.analytics) mountAnalytics(app, vendorMap.analytics);
 
 if (!vendorMap) {
   try {

@@ -1555,20 +1555,20 @@ function findStaleSelectorsInCss(css, maps) {
   return stale;
 }
 
-const GTAG_LOADER = /[ \t]*<script async src="https:\/\/www\.googletagmanager\.com\/gtag\/js\?id=((?:GT|G)-[A-Z0-9]+)"><\/script>\r?\n/;
-const GTAG_BOOTSTRAP = /[ \t]*<script>\s*window\.dataLayer[\s\S]*?gtag\("config",[\s\S]*?<\/script>\r?\n/;
-const GTAG_MARKER = /[ \t]*<!--\s*DO NOT REMOVE\s*-->\r?\n/g;
-
-// Keeps the measurement id out of the served HTML. It still travels in the proxied script
-// body, so this hides the tag from source, not from the network.
-function replaceAnalytics(html, loaderPath) {
-  const loader = html.match(GTAG_LOADER);
-  if (!loader) return { html, id: null };
-  return {
-    id: loader[1],
-    html: html.replace(GTAG_LOADER, `  <script async src="${loaderPath}"></script>\n`).replace(GTAG_BOOTSTRAP, "").replace(GTAG_MARKER, ""),
-  };
-}
+// const GTAG_LOADER = /[ \t]*<script async src="https:\/\/www\.googletagmanager\.com\/gtag\/js\?id=((?:GT|G)-[A-Z0-9]+)"><\/script>\r?\n/;
+// const GTAG_BOOTSTRAP = /[ \t]*<script>\s*window\.dataLayer[\s\S]*?gtag\("config",[\s\S]*?<\/script>\r?\n/;
+// const GTAG_MARKER = /[ \t]*<!--\s*DO NOT REMOVE\s*-->\r?\n/g;
+//
+// // Keeps the measurement id out of the served HTML. It still travels in the proxied script
+// // body, so this hides the tag from source, not from the network.
+// function replaceAnalytics(html, loaderPath) {
+//   const loader = html.match(GTAG_LOADER);
+//   if (!loader) return { html, id: null };
+//   return {
+//     id: loader[1],
+//     html: html.replace(GTAG_LOADER, `  <script async src="${loaderPath}"></script>\n`).replace(GTAG_BOOTSTRAP, "").replace(GTAG_MARKER, ""),
+//   };
+// }
 
 async function obfuscateSelectors() {
   const cssFiles = await collectFiles(DIST_DIR, name => name.endsWith(".css"));
@@ -1961,14 +1961,15 @@ async function build() {
   await rm(JS_DIR, { recursive: true, force: true });
 
   const htmlFiles = await getHtmlFiles(DIST_DIR);
-  const analyticsPaths = {
-    loader: registry.file(".js"),
-    transport: `/${registry.dir()}`,
-    sink: registry.file(""),
-    param: randomItem(FILENAMES).slice(0, 2),
-    key: Array.from(randomBytes(8)),
-  };
-  const analyticsIds = new Set();
+// const analyticsPaths = {
+//   loader: registry.file(".js"),
+//   transport: `/${registry.dir()}`,
+//   sink: registry.file(""),
+//   param: randomItem(FILENAMES).slice(0, 2),
+//   key: Array.from(randomBytes(8)),
+// };
+// const analyticsIds = new Set();
+
   let proxyChoiceHtml = 0;
   /*
   let titleStripCount = 0;
@@ -2023,9 +2024,9 @@ async function build() {
       if (wrappersAdded < segments) throw new Error(`${name}: text hardening under-covered, ${wrappersAdded} wrappers for ${segments} text segments. Upstream changed.`);
       hardenStats.push({ name, seen: hardened.seen, transformed: hardened.transformed, segments, wrappersAdded });
 
-      const analytics = replaceAnalytics(html, analyticsPaths.loader);
-      html = analytics.html;
-      if (analytics.id) analyticsIds.add(analytics.id);
+//       const analytics = replaceAnalytics(html, analyticsPaths.loader);
+//       html = analytics.html;
+//       if (analytics.id) analyticsIds.add(analytics.id);
 
       references.push({ file: name, source: html });
 
@@ -2042,13 +2043,14 @@ async function build() {
   if (handlerHtmlCount !== INLINE_HANDLER_HTML_COUNT) throw new Error(`expected ${INLINE_HANDLER_HTML_COUNT} inline-handler attributes in HTML, rewrote ${handlerHtmlCount}. Upstream changed.`);
   if (versionInjections !== VERSION_TOKEN_COUNT) throw new Error(`expected ${VERSION_TOKEN_COUNT} version tokens injected into settings.html, injected ${versionInjections}. Upstream changed.`);
   for (const s of hardenStats.sort((a, b) => a.name.localeCompare(b.name))) console.log(`  text hardening: ${s.name} -> ${s.transformed}/${s.seen} nodes, ${s.wrappersAdded} wrappers`);
-  if (analyticsIds.size > 1) throw new Error(`HTML pages disagree on the analytics id: ${[...analyticsIds].join(", ")}`);
-  if (analyticsIds.size === 1) {
-    manifest.analytics = { id: [...analyticsIds][0], ...analyticsPaths };
-    console.log(`\nAnalytics: proxied via ${analyticsPaths.loader}, hits to ${analyticsPaths.transport}/g/collect`);
-  } else {
-    console.log(chalk.yellow("\nAnalytics: no gtag block found in any page, nothing proxied"));
-  }
+
+//   if (analyticsIds.size > 1) throw new Error(`HTML pages disagree on the analytics id: ${[...analyticsIds].join(", ")}`);
+//   if (analyticsIds.size === 1) {
+//     manifest.analytics = { id: [...analyticsIds][0], ...analyticsPaths };
+//     console.log(`\nAnalytics: proxied via ${analyticsPaths.loader}, hits to ${analyticsPaths.transport}/g/collect`);
+//   } else {
+//     console.log(chalk.yellow("\nAnalytics: no gtag block found in any page, nothing proxied"));
+//   }
 
   await mkdir(RUNTIME_DIR, { recursive: true });
   await writeFile(path.join(RUNTIME_DIR, "vendor-map.cjs"), `"use strict";\n// Generated by build.js on every build. Do not edit; do not serve.\nmodule.exports = ${JSON.stringify(manifest, null, 2)};\n`, "utf8");
@@ -2062,7 +2064,7 @@ async function build() {
 
   const gateRenames = new Map([...identifierRenames, ["Ultraviolet", ultravioletName]]);
   for (const spec of specs) for (const name of spec.globals ?? []) if (name.startsWith(UV_PREFIX) && !gateRenames.has(name)) gateRenames.set(name, name.replace(UV_PREFIX, uvPrefixName));
-  const { checkedReferences } = await verifyBuild({ manifest, specs, emitted, references, distJsFiles, serverRoutes: manifest.analytics ? [manifest.analytics.loader] : [], identifierRenames: gateRenames, swLocalRenames });
+  const { checkedReferences } = await verifyBuild({ manifest, specs, emitted, references, distJsFiles, /* serverRoutes: manifest.analytics ? [manifest.analytics.loader] : [], */ identifierRenames: gateRenames, swLocalRenames });
   console.log(chalk.green(`  all checks passed (${emitted.size} emitted assets, ${distJsFiles.length} scripts parsed, ${checkedReferences} asset references resolved across ${references.length} files)`));
 
   console.log(chalk.green("\nBuild complete -> dist/"));
