@@ -698,12 +698,13 @@ function routeRewriteTable(routes) {
     [`"/./settings"`, `"${routes["/settings"]}"`],
     [`"/games"`, `"${routes["/games"]}"`],
     [`"/apps"`, `"${routes["/apps"]}"`],
+    [`"/settings"`, `"${routes["/settings"]}"`],
     [`"/tabs"`, `"${routes["/tabs"]}"`],
     [`"/home"`, `"${routes["/home"]}"`],
     [`"tabs"`, `"${routes["/tabs"]}"`],
   ];
 }
-const ROUTE_REWRITE_COUNT = 14;
+const ROUTE_REWRITE_COUNT = 15;
 
 function applyRouteRewrites(source, table) {
   let count = 0;

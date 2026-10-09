@@ -327,9 +327,10 @@ li {
    display: flex;
    align-items: center;
    gap: 0.3rem;
-   height: 2.1rem;
+   height: 1.95rem;
+   margin-bottom: 0.15rem;
    box-sizing: border-box;
-   min-width: 6rem;
+   min-width: 9rem;
    max-width: 12.5rem;
    flex: 0 1 12.5rem;
    padding: 0 0.3rem 0 0.7rem;
@@ -345,14 +346,19 @@ li {
 }
 
 li.active {
-   background-color: var(--surface);
+   background-color: color-mix(in srgb, var(--accent) 16%, var(--surface));
    color: var(--text);
-   box-shadow: none;
+   border-radius: 8px;
+   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 35%, transparent);
 }
 
 li:hover {
    background-color: var(--surface-hover);
    color: var(--text);
+}
+
+li.active:hover {
+   background-color: color-mix(in srgb, var(--accent) 22%, var(--surface));
 }
 
 iframe {
@@ -467,10 +473,6 @@ body.tabs-vertical li::after {
    display: none;
 }
 
-body.tabs-vertical li.active {
-   box-shadow: inset 2px 0 0 var(--text);
-}
-
 body.tabs-vertical #add-tab {
    align-self: flex-start;
    margin: 0.3rem 0 0 0.1rem;
@@ -508,7 +510,7 @@ body.tabs-vertical.tabs-collapsed li::before {
 }
 
 body.tabs-vertical.tabs-collapsed li.active::before {
-   background: var(--text);
+   background: var(--accent);
 }
 
 body.tabs-vertical.tabs-collapsed #add-tab {
