@@ -61,7 +61,7 @@ const SplashT = [
 let SplashI = Math.floor(Math.random() * SplashT.length);
 const SplashE = document.getElementById("splash");
 
-const laceSplash = window.laceTitle || (s => s);
+const laceSplash = window.laceTitle ? s => window.laceTitle(s, false) : s => s;
 function paintSplash() {
   SplashE.innerText = laceSplash(SplashT[SplashI]);
 }

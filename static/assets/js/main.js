@@ -220,12 +220,21 @@ function reconstructSafeUrl(raw) {
 }
 
 const zeroWidth = ["​", "‌", "‍", "⁠", "﻿"];
-function laceTitle(text) {
+const titleHomoglyphs = {
+  a: "а", c: "с", e: "е", i: "і", j: "ј", o: "о", p: "р", s: "ѕ", x: "х", y: "у",
+  A: "А", B: "В", C: "С", E: "Е", H: "Н", I: "І", J: "Ј", K: "К", M: "М", O: "О", P: "Р", S: "Ѕ", T: "Т", X: "Х", Y: "Ү",
+};
+function laceTitle(text, homoglyphs = true) {
   const points = Array.from(text || "");
+  const pick = () => zeroWidth[Math.floor(Math.random() * zeroWidth.length)];
   let out = "";
   for (let i = 0; i < points.length; i++) {
-    out += points[i];
-    if (i < points.length - 1) out += zeroWidth[Math.floor(Math.random() * zeroWidth.length)];
+    const swap = homoglyphs && titleHomoglyphs[points[i]] && Math.random() < 0.3;
+    out += swap ? titleHomoglyphs[points[i]] : points[i];
+    if (i < points.length - 1) {
+      out += pick();
+      if (Math.random() < 0.35) out += pick();
+    }
   }
   return out;
 }

@@ -217,7 +217,7 @@ function popoutTab() {
   const cloakName = store.get("name") || "My Drive - Google Drive";
   const cloakIcon = store.get("icon") || "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png";
 
-  newWindow.document.title = addressBar.laceZeroWidth(cloakName);
+  newWindow.document.title = (window.laceTitle || addressBar.laceZeroWidth)(cloakName);
 
   const link = newWindow.document.createElement("link");
   link.rel = "icon";
