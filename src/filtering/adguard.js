@@ -1,5 +1,3 @@
-
-
 export const ADGUARD_DNS_FILTER_URL = "https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt";
 
 const REFRESH_MS = 12 * 60 * 60 * 1000;
@@ -81,7 +79,7 @@ async function defaultFetchText(url) {
 export class AdguardFilter {
   constructor({ url = ADGUARD_DNS_FILTER_URL, categories, refreshMs = REFRESH_MS, fetchText = defaultFetchText, log = console.log, warn = console.warn }) {
     this.url = url;
-    this.categories = categories; 
+    this.categories = categories;
     this.refreshMs = refreshMs;
     this.fetchText = fetchText;
     this.log = log;

@@ -6,7 +6,6 @@ import { LookupError, isPublicAddress, normalizeHostname, systemLookup } from ".
 
 const reportingClasses = new WeakSet();
 
-
 export function createHostnamePolicy({ adguard = null, families = false, resolve = resolveFamilies, lookup = systemLookup } = {}) {
   return async function checkHostname(rawHost) {
     const host = normalizeHostname(rawHost);
@@ -44,8 +43,6 @@ export function createHostnamePolicy({ adguard = null, families = false, resolve
   };
 }
 
-
-
 const CLOSE_REASON_BY_CODE = {
   BLOCKED: packet.close_reasons.HostBlocked,
   NXDOMAIN: packet.close_reasons.UnreachableHost,
@@ -66,7 +63,6 @@ export function reportPolicyBlocks(ServerStream) {
   };
   reportingClasses.add(ServerStream);
 }
-
 
 export async function setupFiltering({ wisp, filtering, log = console.log, warn = console.warn }) {
   const enabled = filtering?.enabled === true;

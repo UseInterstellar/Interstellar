@@ -114,7 +114,6 @@ async function encodeUrl(url, proxyOverride) {
   return `/uv/${__uv$config.encodeUrl ? __uv$config.encodeUrl(url) : window.encode.xor(url)}`;
 }
 
-
 async function checkBlocked(url) {
   let host;
   try {
@@ -204,7 +203,6 @@ function isValidUrl(val = "") {
     const protocol = location.protocol === "https:" ? "wss" : "ws";
     return `${protocol}://${location.host}/wisp/`;
   }
-
 
   function blockAwareEpoxy(transportPath) {
     return `

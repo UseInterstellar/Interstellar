@@ -194,7 +194,6 @@ const addressBar = (() => {
   };
 })();
 
-
 function reload() {
   const activeIframe = document.querySelector("#frame-container iframe.active");
   if (activeIframe) {

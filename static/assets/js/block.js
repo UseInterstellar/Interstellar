@@ -1,4 +1,3 @@
-
 (function () {
   const REASONS = {
     families: "Cloudflare Families blocks this site for malware or adult content.",

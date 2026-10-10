@@ -1,6 +1,5 @@
 import { LookupError } from "./network.js";
 
-
 export const FAMILIES_DOH_URL = "https://family.cloudflare-dns.com/dns-query";
 
 const TYPE_A = 1;
@@ -26,7 +25,6 @@ async function queryType(host, type, { fetch, timeoutMs }) {
   const filtered = (body.Comment ?? []).some(comment => EDE_POLICY.test(String(comment)));
   return { filtered, nxdomain: body.Status === RCODE_NXDOMAIN, addresses: answers.map(answer => answer.data) };
 }
-
 
 export async function resolveFamilies(host, { fetch = globalThis.fetch, timeoutMs = TIMEOUT_MS } = {}) {
   const options = { fetch, timeoutMs };

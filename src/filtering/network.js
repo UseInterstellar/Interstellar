@@ -1,8 +1,6 @@
 import dns from "node:dns/promises";
 import net from "node:net";
 
-
-
 export class LookupError extends Error {
   constructor(message, code, source = null) {
     super(message);
@@ -38,7 +36,6 @@ for (const [address, prefix] of [
   PRIVATE_RANGES.addSubnet(address, prefix, "ipv6");
 }
 
-
 export function isPublicAddress(address) {
   const family = net.isIP(address);
   if (family === 0) return false;
@@ -50,7 +47,6 @@ export function isPublicAddress(address) {
 }
 
 const HOSTNAME = /^(?=.{1,253}$)([a-z0-9-]{1,63}\.)+[a-z0-9-]{2,63}$/;
-
 
 export function normalizeHostname(raw) {
   const host = String(raw).trim().toLowerCase().replace(/\.$/, "");
