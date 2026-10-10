@@ -3,6 +3,7 @@ dist
 build
 data/ 
 decoy/
+test/
 
 .idea
 .DS_Store
