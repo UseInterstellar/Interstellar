@@ -527,7 +527,7 @@ function applyUltravioletRename(source, name) {
 // File-local, but renameGlobals:false leaves top level worker declarations alone. Scoped to
 // sw.js only, because a bare uv token also occurs in uv.bundle.js as a regex flag pair. The
 // lookbehind rejects the dot and slash forms so paths and property access cannot be hit.
-const SW_LOCAL_COUNTS = { uv: 2, sj: 4 };
+const SW_LOCAL_COUNTS = { uv: 2, sj: 5 };
 const swLocalPattern = name => new RegExp(`(?<![\\w$./"'\`-])${name}(?![\\w$])`, "g");
 
 function createSwLocalRenames() {
@@ -704,7 +704,7 @@ function routeRewriteTable(routes) {
     [`"tabs"`, `"${routes["/tabs"]}"`],
   ];
 }
-const ROUTE_REWRITE_COUNT = 15;
+const ROUTE_REWRITE_COUNT = 16;
 
 function applyRouteRewrites(source, table) {
   let count = 0;

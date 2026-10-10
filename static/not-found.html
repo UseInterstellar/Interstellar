@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Website Not Found</title>
+  <style>
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; font-family: "Inter", system-ui, sans-serif; background: #222; color: #eee; }
+    main { max-width: 32rem; padding: 2rem; text-align: center; }
+    h1 { font-size: 1.5rem; margin: 0 0 1rem; }
+    p { line-height: 1.5; color: #bbb; margin: 0.5rem 0; }
+    @media (prefers-color-scheme: light) { body { background: #ddd; color: #111; } p { color: #444; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Website Not Found</h1>
+    <p></p>
+    <p></p>
+  </main>
+  <script>
+    (function () {
+      const hash = decodeURIComponent(location.hash.slice(1));
+      let host = hash.slice(hash.indexOf("|") + 1);
+      try {
+        host = new URL(host).hostname || host;
+      } catch {}
+      const paragraphs = document.querySelectorAll("main p");
+      if (paragraphs.length < 2) return;
+      paragraphs[0].textContent = `${host || "This address"} could not be found.`;
+      paragraphs[1].textContent = "The domain does not exist. Check the address for typos.";
+    })();
+  </script>
+</body>
+</html>

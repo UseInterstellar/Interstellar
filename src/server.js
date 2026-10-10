@@ -11,6 +11,7 @@ import basicAuth from "express-basic-auth";
 import config from "../config.js";
 // import { mountAnalytics } from "./analytics.js";
 import { mountGhGames } from "./games.js";
+import { createBlockVerdict, setupFiltering } from "./filtering/index.js";
 import { mountMasqr } from "./Masqr.js";
 import { injectVersionInfo, resolveVersionInfo } from "./version.js";
 
@@ -61,6 +62,13 @@ const PORT = resolvePort();
 wisp.options.allow_loopback_ips = true;
 wisp.options.allow_private_ips = true;
 
+const escapeRegExp = text => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+const blockedSiteMatchers = config.blockedSites.map(host => new RegExp(`(^|\\.)${escapeRegExp(host.trim().toLowerCase())}$`, "i"));
+wisp.options.hostname_blacklist = blockedSiteMatchers.length ? blockedSiteMatchers : null;
+
+const filteringState = await setupFiltering({ wisp, filtering: config.filtering });
+const blockVerdict = createBlockVerdict({ blocklist: blockedSiteMatchers, policy: filteringState.policy });
+
 if (config.challenge !== false) {
   console.log(chalk.green("🔒 Password protection is enabled! Listing logins below"));
   Object.entries(config.users).forEach(([username, password]) => {
@@ -100,6 +108,11 @@ const jsStaticOptions = {
 
 app.use("/.runtime", (_req, res) => {
   res.sendStatus(404);
+});
+
+app.post("/filter/verdict", async (req, res) => {
+  const host = typeof req.body?.host === "string" ? req.body.host.slice(0, 254) : "";
+  res.set("Cache-Control", "no-store").json(await blockVerdict(host));
 });
 
 // if (vendorMap?.analytics) mountAnalytics(app, vendorMap.analytics);

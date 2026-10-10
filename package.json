@@ -17,7 +17,7 @@
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "@mercuryworkshop/bare-mux": "^2.1.9",
-    "@mercuryworkshop/epoxy-transport": "2.1.28",
+    "@mercuryworkshop/epoxy-transport": "file:vendor/mercuryworkshop-epoxy-transport-2.1.28-epx.e5f13bb.tgz",
     "@mercuryworkshop/libcurl-transport": "^1.5.2",
     "@mercuryworkshop/scramjet": "^1.1.0",
     "@mercuryworkshop/wisp-js": "^0.4.1",
@@ -42,7 +42,8 @@
     "overrides": {
       "qs@>=6.7.0 <=6.14.1": ">=6.14.2",
       "qs@<6.14.1": ">=6.14.1",
-      "uuid@<14.0.0": ">=14.0.0"
+      "uuid@<14.0.0": ">=14.0.0",
+      "@mercuryworkshop/epoxy-tls": "file:vendor/mercuryworkshop-epoxy-tls-2.1.19-1-e5f13bb.tgz"
     },
     "patchedDependencies": {
       "@mercuryworkshop/bare-mux@2.1.9": "patches/@mercuryworkshop__bare-mux@2.1.9.patch"

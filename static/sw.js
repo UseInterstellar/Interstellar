@@ -7,6 +7,21 @@ const { ScramjetServiceWorker } = $scramjetLoadWorker();
 const uv = new UVServiceWorker();
 const sj = new ScramjetServiceWorker();
 
+sj.addEventListener("handleResponse", event => {
+  const kind = event.rawResponse.rawHeaders?.["x-interstellar-block"];
+  if (!kind) return;
+  if (["document", "iframe"].includes(event.destination)) {
+    const page = kind === "not-found" ? "/not-found.html" : "/block.html";
+    event.status = 302;
+    event.responseHeaders = { location: `${page}#${encodeURIComponent(`|${event.url.href}`)}` };
+  } else {
+    event.status = 500;
+    event.responseHeaders = {};
+  }
+  event.statusText = "";
+  event.responseBody = null;
+});
+
 const userKey = new URL(location).searchParams.get("userkey");
 
 self.addEventListener("install", event => {

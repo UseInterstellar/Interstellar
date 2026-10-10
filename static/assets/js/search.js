@@ -114,6 +114,36 @@ async function encodeUrl(url, proxyOverride) {
   return `/uv/${__uv$config.encodeUrl ? __uv$config.encodeUrl(url) : window.encode.xor(url)}`;
 }
 
+
+async function checkBlocked(url) {
+  let host;
+  try {
+    const parsed = new URL(url, window.location.origin);
+    if (parsed.protocol !== "http:" && parsed.protocol !== "https:") return null;
+    host = parsed.hostname;
+  } catch {
+    return null;
+  }
+  try {
+    const response = await fetch("/filter/verdict", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ host }),
+    });
+    if (!response.ok) return null;
+    const verdict = await response.json();
+    return verdict.blocked ? verdict : null;
+  } catch {
+    return null;
+  }
+}
+
+function blockPageUrl(url, verdict) {
+  return `/block.html#${encodeURIComponent(`${verdict.source}|${url}`)}`;
+}
+
+window.blockPages = { check: checkBlocked, pageUrl: blockPageUrl };
+
 async function navigate(value, path, proxyOverride) {
   await waitForServiceWorker();
   if (window.__settled) await window.__settled();
@@ -128,12 +158,24 @@ async function navigate(value, path, proxyOverride) {
     url = `https://${url}`;
   }
 
+  const verdict = await checkBlocked(url);
+  if (verdict) {
+    const blockedPage = blockPageUrl(url, verdict);
+    if (path) {
+      sessionStorage.setItem("GoUrl", blockedPage);
+      location.href = path;
+    } else {
+      location.href = blockedPage;
+    }
+    return;
+  }
+
   const proxyChoice = proxyOverride ?? store.get("proxy");
   const proxyUrl = await encodeUrl(url, proxyChoice);
   sessionStorage.setItem("GoUrl", proxyUrl);
 
-  if (path) {
-    location.href = path;
+  if (path || !owningTabsWindow()) {
+    location.href = path || "/tabs";
   } else {
     window.location.href = proxyUrl;
   }
@@ -163,7 +205,28 @@ function isValidUrl(val = "") {
     return `${protocol}://${location.host}/wisp/`;
   }
 
-  async function ensureTransport(connection, transportPath, options, signature) {
+
+  function blockAwareEpoxy(transportPath) {
+    return `
+      const { default: EpoxyTransport } = await import(${JSON.stringify(transportPath)});
+      class BlockAwareEpoxy extends EpoxyTransport {
+        async request(...args) {
+          try {
+            return await super.request(...args);
+          } catch (error) {
+            const message = String(error?.message ?? error);
+            const kind = message.includes("WispCloseReason(ServerStreamBlockedAddress") ? "blocked"
+              : message.includes("WispCloseReason(ServerStreamUnreachable") ? "not-found" : null;
+            if (!kind) throw error;
+            return { status: 451, statusText: "Unavailable For Legal Reasons", headers: { "x-interstellar-block": kind }, body: null };
+          }
+        }
+      }
+      return [BlockAwareEpoxy, ${JSON.stringify(transportPath)}];
+    `;
+  }
+
+  async function ensureTransport(connection, transportPath, options, signature, manualCode) {
     let current = "";
     try {
       current = await connection.getTransport();
@@ -171,7 +234,8 @@ function isValidUrl(val = "") {
 
     if (current === transportPath && store.get("transport-signature") === signature) return;
 
-    await connection.setTransport(transportPath, options);
+    if (manualCode) await connection.setManualTransport(manualCode, options);
+    else await connection.setTransport(transportPath, options);
     store.set("transport-signature", signature);
   }
 
@@ -186,7 +250,7 @@ function isValidUrl(val = "") {
     if (store.get("transport") === "libcurl") {
       await ensureTransport(connection, vendor.libcurl, [{ websocket: wisp }], `${vendor.libcurl}|${wisp}`);
     } else {
-      await ensureTransport(connection, vendor.epoxy, [{ wisp }], `${vendor.epoxy}|${wisp}`);
+      await ensureTransport(connection, vendor.epoxy, [{ wisp }], `${vendor.epoxy}|${wisp}|block-aware`, blockAwareEpoxy(vendor.epoxy));
     }
 
     window.__urls = {

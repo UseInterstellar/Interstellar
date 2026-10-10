@@ -140,6 +140,10 @@ const addressBar = (() => {
   function updateAddressBar() {
     const activeIframe = document.querySelector("#frame-container iframe.active");
     if (!activeIframe) return;
+    if (activeIframe.dataset.blockedUrl) {
+      addressBar.setAddress(activeIframe.dataset.blockedUrl);
+      return;
+    }
 
     let currentUrl;
     try {
@@ -151,6 +155,12 @@ const addressBar = (() => {
 
     const input = document.getElementById("input");
     if (!input) return;
+
+    const blockedFrom = new URL(currentUrl).pathname === "/block.html" ? decodeURIComponent(new URL(currentUrl).hash.slice(1)) : "";
+    if (blockedFrom.includes("|")) {
+      addressBar.setAddress(blockedFrom.slice(blockedFrom.indexOf("|") + 1));
+      return;
+    }
 
     const page = internalPageOf(activeIframe);
     if (page) {
@@ -183,6 +193,7 @@ const addressBar = (() => {
     laceZeroWidth,
   };
 })();
+
 
 function reload() {
   const activeIframe = document.querySelector("#frame-container iframe.active");
@@ -322,7 +333,16 @@ window.addEventListener("load", () => {
 
   async function navigateFrame(frame, url) {
     if (window.__settled) await window.__settled();
+    const verdict = await window.blockPages.check(url);
+    if (verdict) {
+      frame.dataset.blockedUrl = url;
+      frame.src = window.blockPages.pageUrl(url, verdict);
+      frame.dataset.tabUrl = url;
+      if (frame.classList.contains("active")) addressBar.setAddress(url);
+      return;
+    }
     const proxyUrl = await encodeProxyUrl(url);
+    delete frame.dataset.blockedUrl;
     frame.src = proxyUrl;
     frame.dataset.tabUrl = url;
     if (frame.classList.contains("active")) addressBar.setAddress(url);
@@ -401,7 +421,12 @@ document.addEventListener("DOMContentLoaded", () => {
     for (const frame of iframeContainer.querySelectorAll("iframe")) frame.classList.remove("active");
   }
 
-  function openInNewTab(destination) {
+  async function openInNewTab(destination) {
+    const verdict = await window.blockPages.check(destination);
+    if (verdict) {
+      createNewTab(window.blockPages.pageUrl(destination, verdict)).dataset.blockedUrl = destination;
+      return;
+    }
     const proxyUrl = destination.startsWith("/") || destination.startsWith(window.location.origin) ? destination : window.__mkurl ? window.__mkurl(destination) : `/uv/${__uv$config.encodeUrl(destination)}`;
     createNewTab(proxyUrl);
   }
@@ -500,6 +525,7 @@ document.addEventListener("DOMContentLoaded", () => {
       newIframe.src = src;
     }
     tabCounter += 1;
+    return newIframe;
   }
 
   function closeTab(event) {
