@@ -1335,11 +1335,8 @@ async function verifyBuild({ manifest, specs, emitted, references, distJsFiles, 
 // CDN stylesheets own the fa/material names; rc- ids reach gsap.to(), not a selector call.
 const SELECTOR_KEEP = [/^fa$|^fas$|^far$|^fab$|^fa-/, /^material-symbols/, /^adsbygoogle$/, /^rc-/];
 
-// Applied from a bare array literal, so renaming means guessing at ordinary strings.
-const SELECTOR_KEEP_DYNAMIC = new Set(["stars", "stars2", "stars3"]);
-
 function isKeptSelector(name) {
-  return SELECTOR_KEEP.some(pattern => pattern.test(name)) || SELECTOR_KEEP_DYNAMIC.has(name);
+  return SELECTOR_KEEP.some(pattern => pattern.test(name));
 }
 
 const CSS_NESTING_AT_RULES = /^@(media|supports|document|layer|container|scope|keyframes)\b/i;

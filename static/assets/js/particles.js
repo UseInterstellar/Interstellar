@@ -112,13 +112,21 @@ function initSmokeParticles() {
 }
 
 function initStarParticles() {
-  ["stars", "stars2", "stars3"].forEach(id => {
-    if (!document.getElementById(id)) {
-      const el = document.createElement("div");
-      el.id = id;
-      document.body.insertBefore(el, document.body.firstChild);
-    }
-  });
+  if (!document.getElementById("stars")) {
+    const el = document.createElement("div");
+    el.id = "stars";
+    document.body.insertBefore(el, document.body.firstChild);
+  }
+  if (!document.getElementById("stars2")) {
+    const el = document.createElement("div");
+    el.id = "stars2";
+    document.body.insertBefore(el, document.body.firstChild);
+  }
+  if (!document.getElementById("stars3")) {
+    const el = document.createElement("div");
+    el.id = "stars3";
+    document.body.insertBefore(el, document.body.firstChild);
+  }
 }
 
 function initAuroraParticles() {
