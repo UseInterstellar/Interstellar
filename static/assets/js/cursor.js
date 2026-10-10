@@ -83,9 +83,15 @@ function setupIframeTracking(moveCallback, hideCallback) {
   cursorCleanups.push(() => observer.disconnect());
 }
 
-function createFullscreenCanvas(id) {
+function pointerCanvasExists(clickOnly) {
+  if (clickOnly) return !!document.getElementById("pointer-click-canvas");
+  return !!document.getElementById("pointer-canvas");
+}
+
+function createFullscreenCanvas(clickOnly = false) {
   const canvas = document.createElement("canvas");
-  canvas.id = id;
+  if (clickOnly) canvas.id = "pointer-click-canvas";
+  else canvas.id = "pointer-canvas";
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   document.body.appendChild(canvas);
@@ -105,7 +111,7 @@ function cursorClickEffectIs(effect) {
 function initRainbowStars() {
   if (document.getElementById("pointer-canvas")) return;
 
-  const canvas = createFullscreenCanvas("pointer-canvas");
+  const canvas = createFullscreenCanvas();
   const ctx = canvas.getContext("2d");
 
   const bNum = 3,
@@ -194,10 +200,9 @@ function initRainbowStars() {
 
 // Based on codepen.io/gabezink17-cmd/pen/WbGmeyR
 function initWhiteOrbs(clickOnly = false) {
-  const canvasId = clickOnly ? "pointer-click-canvas" : "pointer-canvas";
-  if (document.getElementById(canvasId)) return;
+  if (pointerCanvasExists(clickOnly)) return;
 
-  const canvas = createFullscreenCanvas(canvasId);
+  const canvas = createFullscreenCanvas(clickOnly);
   const ctx = canvas.getContext("2d");
   const mouse = { x: innerWidth / 2, y: innerHeight / 2 };
   const particles = [];
@@ -265,8 +270,7 @@ function initWhiteOrbs(clickOnly = false) {
 
 // Based on codepen.io/Jiironimo/pen/vEXbVNP
 function initRainbowTrail(clickOnly = false) {
-  const canvasId = clickOnly ? "pointer-click-canvas" : "pointer-canvas";
-  if (document.getElementById(canvasId)) return;
+  if (pointerCanvasExists(clickOnly)) return;
 
   const cursorDot = document.createElement("div");
   cursorDot.id = "rainbow-trail-cursor";
@@ -275,7 +279,7 @@ function initRainbowTrail(clickOnly = false) {
   cursorNode(cursorDot);
   if (!clickOnly) cursorBodyClass("rainbow-trail-cursor");
 
-  const canvas = createFullscreenCanvas(canvasId);
+  const canvas = createFullscreenCanvas(clickOnly);
   const ctx = canvas.getContext("2d");
   let W = canvas.width,
     H = canvas.height;
@@ -841,7 +845,7 @@ function initBlueOrbsDom() {
 function initSnakeTrail() {
   if (document.getElementById("pointer-canvas")) return;
 
-  const canvas = createFullscreenCanvas("pointer-canvas");
+  const canvas = createFullscreenCanvas();
   const ctx = canvas.getContext("2d");
 
   const pointer = { x: null, y: null };
@@ -964,7 +968,7 @@ function drawPointerArrow(ctx, x, y, scale, alpha, color) {
 function initRainbowRibbon() {
   if (document.getElementById("pointer-canvas")) return;
 
-  const canvas = createFullscreenCanvas("pointer-canvas");
+  const canvas = createFullscreenCanvas();
   const ctx = canvas.getContext("2d");
 
   const STRIPES = ["#fb3b3b", "#fb8b24", "#f9d423", "#2ecc71", "#2ec4f1", "#4f6cf5", "#9b5de5"];
@@ -1023,7 +1027,7 @@ function initRainbowRibbon() {
 function initFairyDustTrail() {
   if (document.getElementById("pointer-canvas")) return;
 
-  const canvas = createFullscreenCanvas("pointer-canvas");
+  const canvas = createFullscreenCanvas();
   const ctx = canvas.getContext("2d");
 
   const COLORS = ["#ff7eb9", "#ff65a3", "#7afcff", "#feff9c", "#fff27a", "#c5a3ff"];
@@ -1077,7 +1081,7 @@ function initFairyDustTrail() {
 function initEchoTrail() {
   if (document.getElementById("pointer-canvas")) return;
 
-  const canvas = createFullscreenCanvas("pointer-canvas");
+  const canvas = createFullscreenCanvas();
   const ctx = canvas.getContext("2d");
   const MAX_ECHOES = 26;
   const echoes = [];
@@ -1109,7 +1113,7 @@ function initEchoTrail() {
 function initChasingCursors() {
   if (document.getElementById("pointer-canvas")) return;
 
-  const canvas = createFullscreenCanvas("pointer-canvas");
+  const canvas = createFullscreenCanvas();
   const ctx = canvas.getContext("2d");
   const COUNT = 8;
   const followers = Array.from({ length: COUNT }, () => ({ x: window.innerWidth / 2, y: window.innerHeight / 2 }));
@@ -1145,7 +1149,7 @@ function initChasingCursors() {
 function initDotTrail() {
   if (document.getElementById("pointer-canvas")) return;
 
-  const canvas = createFullscreenCanvas("pointer-canvas");
+  const canvas = createFullscreenCanvas();
   const ctx = canvas.getContext("2d");
   let x = null;
   let y = null;
@@ -1187,7 +1191,7 @@ function initDotTrail() {
 function initBubbleTrail() {
   if (document.getElementById("pointer-canvas")) return;
 
-  const canvas = createFullscreenCanvas("pointer-canvas");
+  const canvas = createFullscreenCanvas();
   const ctx = canvas.getContext("2d");
   const bubbles = [];
 
@@ -1243,7 +1247,7 @@ function initBubbleTrail() {
 function initSnowflakeTrail() {
   if (document.getElementById("pointer-canvas")) return;
 
-  const canvas = createFullscreenCanvas("pointer-canvas");
+  const canvas = createFullscreenCanvas();
   const ctx = canvas.getContext("2d");
   const flakes = [];
 
@@ -1297,10 +1301,9 @@ function initSnowflakeTrail() {
 }
 
 function initAfterglow(clickOnly = false) {
-  const canvasId = clickOnly ? "pointer-click-canvas" : "pointer-canvas";
-  if (document.getElementById(canvasId)) return;
+  if (pointerCanvasExists(clickOnly)) return;
 
-  const canvas = createFullscreenCanvas(canvasId);
+  const canvas = createFullscreenCanvas(clickOnly);
   const ctx = canvas.getContext("2d");
 
   const MAX_PARTICLES = 1300;
@@ -1414,10 +1417,9 @@ function initAfterglow(clickOnly = false) {
 
 // Based on codepen.io/Deva-Kumar-the-bold/pen/RNWJKWZ
 function initMagneticTrail(clickOnly = false) {
-  const canvasId = clickOnly ? "pointer-click-canvas" : "pointer-canvas";
-  if (document.getElementById(canvasId)) return;
+  if (pointerCanvasExists(clickOnly)) return;
 
-  const canvas = createFullscreenCanvas(canvasId);
+  const canvas = createFullscreenCanvas(clickOnly);
   const ctx = canvas.getContext("2d");
 
   const NODES = 16;
@@ -1581,10 +1583,9 @@ function initMagneticCursor(clickOnly = false) {
 
 // Based on codepen.io/jieajjhf-the-bashful/pen/pvoxXdW
 function initColorTrail(clickOnly = false) {
-  const canvasId = clickOnly ? "pointer-click-canvas" : "pointer-canvas";
-  if (document.getElementById(canvasId)) return;
+  if (pointerCanvasExists(clickOnly)) return;
 
-  const canvas = createFullscreenCanvas(canvasId);
+  const canvas = createFullscreenCanvas(clickOnly);
   const ctx = canvas.getContext("2d");
   const blooms = [];
 
@@ -1634,10 +1635,9 @@ function initColorTrail(clickOnly = false) {
 
 // Based on codepen.io/Kuutti-Siitonen/pen/KKJeOoQ
 function initFallingStars(clickOnly = false) {
-  const canvasId = clickOnly ? "pointer-click-canvas" : "pointer-canvas";
-  if (document.getElementById(canvasId)) return;
+  if (pointerCanvasExists(clickOnly)) return;
 
-  const canvas = createFullscreenCanvas(canvasId);
+  const canvas = createFullscreenCanvas(clickOnly);
   const ctx = canvas.getContext("2d");
   const stars = [];
   let lastX = null;
@@ -1805,7 +1805,7 @@ function initTubesTrail() {
 function initPixelCursorTrail() {
   if (document.getElementById("pointer-canvas")) return;
 
-  const canvas = createFullscreenCanvas("pointer-canvas");
+  const canvas = createFullscreenCanvas();
   const ctx = canvas.getContext("2d");
 
   const CELL = 6;
@@ -1853,7 +1853,7 @@ function initPixelCursorTrail() {
 function initPixelGridTrail() {
   if (document.getElementById("pointer-canvas")) return;
 
-  const canvas = createFullscreenCanvas("pointer-canvas");
+  const canvas = createFullscreenCanvas();
   const ctx = canvas.getContext("2d");
 
   const CELL = 26;
@@ -1897,7 +1897,7 @@ function initPixelGridTrail() {
 function initPixelReveal() {
   if (document.getElementById("pointer-canvas")) return;
 
-  const canvas = createFullscreenCanvas("pointer-canvas");
+  const canvas = createFullscreenCanvas();
   const ctx = canvas.getContext("2d");
 
   const CELL = 20;
@@ -1944,7 +1944,7 @@ function initPixelReveal() {
 function initDrawingTrail() {
   if (document.getElementById("pointer-canvas")) return;
 
-  const canvas = createFullscreenCanvas("pointer-canvas");
+  const canvas = createFullscreenCanvas();
   const ctx = canvas.getContext("2d");
 
   const COLOR = "#6366f1";
@@ -2013,7 +2013,7 @@ function initDrawingTrail() {
 function initTidalTrail() {
   if (document.getElementById("pointer-canvas")) return;
 
-  const canvas = createFullscreenCanvas("pointer-canvas");
+  const canvas = createFullscreenCanvas();
   const ctx = canvas.getContext("2d");
   const ripples = [];
 
@@ -2051,7 +2051,7 @@ function initTidalTrail() {
 function initFluidTrail() {
   if (document.getElementById("pointer-canvas")) return;
 
-  const canvas = createFullscreenCanvas("pointer-canvas");
+  const canvas = createFullscreenCanvas();
   const ctx = canvas.getContext("2d");
 
   const COLOR = [139, 92, 246];
@@ -2127,7 +2127,7 @@ function initFluidTrail() {
 function initParticleDots() {
   if (document.getElementById("pointer-canvas")) return;
 
-  const canvas = createFullscreenCanvas("pointer-canvas");
+  const canvas = createFullscreenCanvas();
   const ctx = canvas.getContext("2d");
 
   const COUNT = 7;
