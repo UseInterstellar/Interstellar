@@ -731,7 +731,7 @@ function themeChange(selectElement) {
 function openAboutBlank() {
   let inFrame;
   try {
-    inFrame = window !== top;
+    inFrame = window !== top && !isOwnShell();
   } catch {
     inFrame = true;
   }
@@ -753,7 +753,7 @@ function openAboutBlank() {
 
   const name = store.get("name") || "My Drive - Google Drive";
   const icon = store.get("icon") || "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png";
-  const panicLink = store.get("pLink") || getRandomURL();
+  const panicLink = reconstructNavigationUrl(store.get("pLink")) ?? getRandomURL();
 
   const doc = popup.document;
   const iframe = doc.createElement("iframe");
@@ -762,9 +762,9 @@ function openAboutBlank() {
 
   doc.title = (window.laceTitle || (s => s))(name);
   link.rel = "icon";
-  link.href = icon;
+  link.href = absoluteUrl(icon);
 
-  iframe.src = location.href;
+  iframe.src = isOwnShell() ? top.location.href : location.href;
   const style = iframe.style;
   style.position = "fixed";
   style.top = style.bottom = style.left = style.right = 0;

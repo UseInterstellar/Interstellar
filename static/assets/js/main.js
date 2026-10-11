@@ -219,6 +219,26 @@ function reconstructSafeUrl(raw) {
   }
 }
 
+function reconstructNavigationUrl(raw) {
+  const text = typeof raw === "string" ? raw.trim() : "";
+  if (!text) return null;
+  if (text.startsWith("/") && !text.startsWith("//")) return text;
+  try {
+    const parsed = new URL(/^[a-z][a-z0-9+.-]*:/i.test(text) ? text : `https://${text}`);
+    return parsed.protocol === "https:" || parsed.protocol === "http:" ? parsed.href : null;
+  } catch {
+    return null;
+  }
+}
+
+function absoluteUrl(raw) {
+  try {
+    return new URL(raw, location.href).href;
+  } catch {
+    return raw;
+  }
+}
+
 const zeroWidth = ["​", "‌", "‍", "⁠", "﻿"];
 const titleHomoglyphs = {
   a: "а", c: "с", e: "е", i: "і", j: "ј", o: "о", p: "р", s: "ѕ", x: "х", y: "у",
@@ -352,7 +372,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function currentPanicLink() {
-    return reconstructSafeUrl(store.get("pLink") || DEFAULT_PANIC_LINK) ?? DEFAULT_PANIC_LINK;
+    return reconstructNavigationUrl(store.get("pLink")) ?? DEFAULT_PANIC_LINK;
   }
 
   const panicAnchor = document.createElement("a");

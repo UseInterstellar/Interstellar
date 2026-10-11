@@ -221,7 +221,7 @@ function popoutTab() {
 
   const link = newWindow.document.createElement("link");
   link.rel = "icon";
-  link.href = encodeURI(cloakIcon);
+  link.href = absoluteUrl(encodeURI(cloakIcon));
   newWindow.document.head.appendChild(link);
 
   const newIframe = newWindow.document.createElement("iframe");

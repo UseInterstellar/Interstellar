@@ -1,7 +1,17 @@
+
+function shellTop() {
+  try {
+    return top.document.body?.dataset.shell === "true" ? top : null;
+  } catch {
+    return null;
+  }
+}
+const cloakHost = shellTop() ?? window;
+
 let inFrame;
 
 try {
-  inFrame = window !== top;
+  inFrame = window !== top && !shellTop();
 } catch (e) {
   inFrame = true;
 }
@@ -20,9 +30,9 @@ if (!inFrame && !navigator.userAgent.includes("Firefox") && store.get("ab") === 
 
     doc.title = (window.laceTitle || (s => s))(name);
     link.rel = "icon";
-    link.href = icon;
+    link.href = absoluteUrl(icon);
 
-    iframe.src = location.href;
+    iframe.src = cloakHost.location.href;
     style.position = "fixed";
     style.top = style.bottom = style.left = style.right = 0;
     style.border = style.outline = "none";
@@ -40,8 +50,8 @@ if (!inFrame && !navigator.userAgent.includes("Firefox") && store.get("ab") === 
     doc.head.appendChild(script);
     doc.body.appendChild(iframe);
 
-    const pLink = store.get("pLink") || getRandomUrl();
-    location.replace(pLink);
+    const pLink = reconstructNavigationUrl(store.get("pLink")) ?? getRandomUrl();
+    cloakHost.location.replace(pLink);
   }
 }
 

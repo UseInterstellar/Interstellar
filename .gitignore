@@ -4,6 +4,7 @@ build
 data/ 
 decoy/
 test/
+tests/
 
 .idea
 .DS_Store
