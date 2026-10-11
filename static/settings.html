@@ -22,7 +22,7 @@
   <div class="main">
     <div class="settings-shell">
       <div class="settings-content">
-        <section class="settings-card settings-group" data-section="cloaking">
+        <section class="settings-card settings-group">
           <h2 class="settings-group-title">Cloaking</h2>
             <div class="settings-item">
               <div class="settings-item-info">
@@ -146,7 +146,7 @@
             </div>
         </section>
 
-        <section class="settings-card settings-group" data-section="customization">
+        <section class="settings-card settings-group">
           <h2 class="settings-group-title">Customization</h2>
             <div class="settings-item">
               <div class="settings-item-info">
@@ -363,8 +363,20 @@
             </div>
         </section>
 
-        <section class="settings-card settings-group" data-section="proxy">
+        <section class="settings-card settings-group">
           <h2 class="settings-group-title"><an>Pro</an>xy</h2>
+            <div class="settings-item">
+              <div class="settings-item-info">
+                <h3>Tabs Layout</h3>
+                <p>Show tabs across the top, or in a sidebar on the left.</p>
+              </div>
+              <div class="settings-item-control">
+                <select id="tabs-layout-dropdown">
+                  <option value="horizontal">Horizontal</option>
+                  <option value="vertical">Vertical</option>
+                </select>
+              </div>
+            </div>
             <div class="settings-item">
               <div class="settings-item-info">
                 <h3>Search Engine</h3>
@@ -429,7 +441,7 @@
             </div>
         </section>
 
-        <section class="settings-card settings-group" data-section="information">
+        <section class="settings-card settings-group">
           <h2 class="settings-group-title">Information</h2>
             <div class="settings-item">
               <div class="settings-item-info">
@@ -470,17 +482,7 @@
     </div>
   </div>
   <script src="/assets/js/settings.js"></script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=GT-K46PHV4"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-
-  function gtag() {
-    dataLayer.push(arguments);
-  }
-
-  gtag("js", new Date());
-  gtag("config", "GT-K46PHV4");
-</script>
+<script src="/assets/js/analytics.js"></script>
 </body>
 
 </html>

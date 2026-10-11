@@ -1,4 +1,47 @@
+
+function scrambleDropdowns() {
+  const nativeValue = Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, "value");
+  const alphabet = "abcdefghijklmnopqrstuvwxyz0123456789";
+  const used = new Set();
+  const makeToken = () => {
+    let token;
+    do {
+      token = "";
+      for (let i = 0; i < 10; i++) token += alphabet[Math.floor(Math.random() * alphabet.length)];
+    } while (used.has(token));
+    used.add(token);
+    return token;
+  };
+  const lace = window.laceTitle || (text => text);
+
+  for (const select of document.querySelectorAll("select")) {
+    const toToken = new Map();
+    const toReal = new Map();
+    for (const option of select.options) {
+      const real = option.hasAttribute("value") ? option.getAttribute("value") : option.textContent;
+      const token = makeToken();
+      toToken.set(real, token);
+      toReal.set(token, real);
+      option.setAttribute("value", token);
+      option.textContent = lace(option.textContent);
+      Object.defineProperty(option, "value", { get: () => real, configurable: true });
+    }
+    Object.defineProperty(select, "value", {
+      get() {
+        const token = nativeValue.get.call(this);
+        return toReal.has(token) ? toReal.get(token) : token;
+      },
+      set(next) {
+        const key = String(next);
+        nativeValue.set.call(this, toToken.has(key) ? toToken.get(key) : key);
+      },
+      configurable: true,
+    });
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+  scrambleDropdowns();
   const adTypeElement = document.getElementById("adType");
   if (adTypeElement) {
     adTypeElement.addEventListener("change", function () {
@@ -434,6 +477,10 @@ document.addEventListener("DOMContentLoaded", () => {
     store.set("shimmerControlsOpen", open ? "false" : "true");
   });
 
+  const tabsLayoutDropdown = document.getElementById("tabs-layout-dropdown");
+  tabsLayoutDropdown.value = store.get("tabsLayout") === "vertical" ? "vertical" : "horizontal";
+  tabsLayoutDropdown.addEventListener("change", () => store.set("tabsLayout", tabsLayoutDropdown.value));
+
   const pointerTrailDropdown = document.getElementById("pointer-trail-dropdown");
   const pointerCustomDropdown = document.getElementById("pointer-custom-dropdown");
   const pointerIdleMotion = document.getElementById("pointer-idle-motion");
@@ -614,7 +661,7 @@ function handleDropdownChange(selectElement) {
     document.getElementById("tab-favicon").setAttribute("href", preset.icon);
   }
 
-  if (window !== top) redirectToMainDomain();
+  if (window !== top && !isOwnShell()) redirectToMainDomain();
 }
 
 function safeCloakIcon(raw) {
@@ -643,6 +690,14 @@ function applyCustomCloak() {
     document.getElementById("tab-favicon").setAttribute("href", safeIcon);
   } else if (!iconVal) {
     store.remove("CustomIcon");
+  }
+}
+
+function isOwnShell() {
+  try {
+    return top.document.body?.dataset.shell === "true";
+  } catch {
+    return false;
   }
 }
 
@@ -728,7 +783,7 @@ function openAboutBlank() {
   doc.head.appendChild(script);
   doc.body.appendChild(iframe);
 
-  location.replace(panicLink);
+  (window.top ?? window).location.replace(panicLink);
 }
 
 function toggleAB() {

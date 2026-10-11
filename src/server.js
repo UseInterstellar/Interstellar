@@ -2,20 +2,23 @@ import { existsSync, readFileSync } from "node:fs";
 import http from "node:http";
 import { createRequire } from "node:module";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { server as wisp } from "@mercuryworkshop/wisp-js/server";
 import chalk from "chalk";
 import cookieParser from "cookie-parser";
 import express from "express";
 import basicAuth from "express-basic-auth";
 import config from "../config.js";
-import { mountAnalytics } from "./analytics.js";
+// import { mountAnalytics } from "./analytics.js";
 import { mountGhGames } from "./games.js";
+import { createBlockVerdict, setupFiltering } from "./filtering/index.js";
+import { mountMasqr } from "./Masqr.js";
 import { injectVersionInfo, resolveVersionInfo } from "./version.js";
 
 console.log(chalk.yellow("🚀 Starting server..."));
 
 const require = createRequire(import.meta.url);
-const __dirname = process.cwd();
+const __dirname = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 const DIST_DIR = path.join(__dirname, "dist");
 const STATIC_DIR = path.join(__dirname, "static");
@@ -59,12 +62,30 @@ const PORT = resolvePort();
 wisp.options.allow_loopback_ips = true;
 wisp.options.allow_private_ips = true;
 
+const escapeRegExp = text => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+const blockedSiteMatchers = config.blockedSites.map(host => new RegExp(`(^|\\.)${escapeRegExp(host.trim().toLowerCase())}$`, "i"));
+wisp.options.hostname_blacklist = blockedSiteMatchers.length ? blockedSiteMatchers : null;
+
+const filteringState = await setupFiltering({ wisp, filtering: config.filtering });
+const blockVerdict = createBlockVerdict({ blocklist: blockedSiteMatchers, policy: filteringState.policy });
+
 if (config.challenge !== false) {
   console.log(chalk.green("🔒 Password protection is enabled! Listing logins below"));
   Object.entries(config.users).forEach(([username, password]) => {
     console.log(chalk.blue(`Username: ${username}, Password: ${password}`));
   });
   app.use(basicAuth({ users: config.users, challenge: true }));
+}
+
+let masqr = null;
+if (config.masqr?.enabled) {
+  masqr = mountMasqr(app, {
+    decoyRoot: path.join(STATIC_DIR, "decoy", config.masqr.decoy ?? "default"),
+    searchTrigger: process.env.MASQR_SEARCH_TRIGGER ?? config.masqr.searchTrigger ?? null,
+    secureCookie: config.masqr.secureCookie !== false,
+    sessionMs: (config.masqr.sessionDays ?? 30) * 24 * 60 * 60 * 1000,
+  });
+  console.log(chalk.green("🔑 Masqr gate is enabled"));
 }
 
 mountGhGames(app);
@@ -89,7 +110,12 @@ app.use("/.runtime", (_req, res) => {
   res.sendStatus(404);
 });
 
-if (vendorMap?.analytics) mountAnalytics(app, vendorMap.analytics);
+app.post("/filter/verdict", async (req, res) => {
+  const host = typeof req.body?.host === "string" ? req.body.host.slice(0, 254) : "";
+  res.set("Cache-Control", "no-store").json(await blockVerdict(host));
+});
+
+// if (vendorMap?.analytics) mountAnalytics(app, vendorMap.analytics);
 
 if (!vendorMap) {
   try {
@@ -125,6 +151,7 @@ const routes = [
   { path: "/play.html", file: "games.html" },
   { path: "/settings", file: "settings.html" },
   { path: "/tabs", file: "tabs.html" },
+  { path: "/home", file: "home.html" },
   { path: "/", file: "index.html" },
 ];
 
@@ -152,6 +179,7 @@ server.on("request", (req, res) => {
 });
 
 server.on("upgrade", (req, socket, head) => {
+  if (masqr && !masqr.isAuthorized(req)) return socket.destroy();
   wisp.routeRequest(req, socket, head);
 });
 

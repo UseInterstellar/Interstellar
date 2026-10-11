@@ -1,6 +1,7 @@
 import { execFileSync } from "node:child_process";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { inflateSync } from "node:zlib";
 
 const VERSION_TOKENS = [
@@ -74,7 +75,7 @@ function formatCommitDate(ms) {
 }
 
 export async function resolveVersionInfo() {
-  const root = process.cwd();
+  const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
   let version = null;
   try {
     version = JSON.parse(await readFile(path.join(root, "package.json"), "utf8")).version || null;

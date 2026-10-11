@@ -25,125 +25,180 @@ function encodeProxyUrlSync(url) {
 
 window.__mkurl = encodeProxyUrlSync;
 
-const ZERO_WIDTH = ["​", "‌", "‍", "⁠", "﻿"];
-const ZERO_WIDTH_RE = /​|‌|‍|‎|‏|⁠|﻿/g;
-let addressValue = "";
-let addressEditing = false;
+const addressBar = (() => {
+  const ZERO_WIDTH = ["​", "‌", "‍", "⁠", "﻿"];
+  const ZERO_WIDTH_RE = /​|‌|‍|‎|‏|⁠|﻿/g;
+  let addressValue = "";
+  let addressEditing = false;
 
-function addrInput() {
-  return document.getElementById("input");
-}
+  const INTERNAL_PAGES = {
+    home: { route: "/home", title: "New Tab", displayUrl: "interstellar://newtab" },
+    apps: { route: "/apps", title: "Apps", displayUrl: "interstellar://apps" },
+    games: { route: "/games", title: "Games", displayUrl: "interstellar://games" },
+    settings: { route: "/settings", title: "Settings", displayUrl: "interstellar://settings" },
+  };
 
-function stripZeroWidth(text) {
-  return text.replace(ZERO_WIDTH_RE, "");
-}
-
-function laceZeroWidth(url) {
-  const points = Array.from(url);
-  let out = "";
-  for (let i = 0; i < points.length; i++) {
-    out += points[i];
-    if (i < points.length - 1) out += ZERO_WIDTH[Math.floor(Math.random() * ZERO_WIDTH.length)];
-  }
-  return out;
-}
-
-function renderAddress() {
-  const input = addrInput();
-  if (!input) return;
-  if (!addressValue) input.value = "";
-  else input.value = addressEditing ? addressValue : laceZeroWidth(addressValue);
-}
-
-function setAddress(url) {
-  addressValue = url || "";
-  renderAddress();
-}
-
-function setupAddressBar() {
-  const input = addrInput();
-  if (!input) return;
-  input.addEventListener("focus", () => {
-    addressEditing = true;
-    renderAddress();
-    input.select();
-  });
-  input.addEventListener("blur", () => {
-    addressEditing = false;
-    renderAddress();
-  });
-
-  input.addEventListener("copy", event => {
+  function internalPageForUrl(href) {
+    let url;
     try {
-      const start = input.selectionStart;
-      const end = input.selectionEnd;
-      if (start == null || end == null || start === end) return;
-      const selected = input.value.slice(start, end);
-      const cleaned = stripZeroWidth(selected);
-      if (cleaned === selected) return;
-      if (event.clipboardData && typeof event.clipboardData.setData === "function") {
-        event.clipboardData.setData("text/plain", cleaned);
-        event.preventDefault();
-      }
-    } catch {}
-  });
-  input.addEventListener("paste", event => {
-    try {
-      const pasted = event.clipboardData ? event.clipboardData.getData("text/plain") : null;
-      if (pasted == null) return;
-      const cleaned = stripZeroWidth(pasted);
-      if (cleaned === pasted) return;
-      event.preventDefault();
-      insertCleanText(input, cleaned);
-    } catch {}
-  });
-  renderAddress();
-}
-
-function insertCleanText(input, text) {
-  if (typeof input.setRangeText === "function") {
-    const start = input.selectionStart ?? input.value.length;
-    const end = input.selectionEnd ?? input.value.length;
-    input.setRangeText(text, start, end, "end");
-  } else {
-    input.value += text;
-  }
-}
-
-function updateAddressBar() {
-  const activeIframe = document.querySelector("#frame-container iframe.active");
-  if (!activeIframe) return;
-
-  let currentUrl;
-  try {
-    if (activeIframe.contentWindow.document.readyState !== "complete") return;
-    currentUrl = activeIframe.contentWindow.document.location.href;
-  } catch {
-    return;
-  }
-
-  const input = document.getElementById("input");
-  if (!input) return;
-
-  if (currentUrl.includes("/uv/scramjet/")) {
-    if (window.__urls?.decodeUrl) {
-      setAddress(window.__urls.decodeUrl(currentUrl));
-    } else {
-      setAddress(currentUrl);
+      url = new URL(href, window.location.origin);
+    } catch {
+      return null;
     }
-  } else if (currentUrl.includes("/uv/")) {
-    const path = currentUrl.replace(window.location.origin, "").replace("/uv/", "");
-    setAddress(__uv$config.decodeUrl ? __uv$config.decodeUrl(path) : window.decode.xor(path));
-  } else {
-    setAddress(currentUrl.replace(window.location.origin, ""));
+    if (url.origin !== window.location.origin) return null;
+    return Object.values(INTERNAL_PAGES).find(page => new URL(page.route, window.location.origin).pathname === url.pathname) ?? null;
   }
-}
+
+  function internalPageOf(frame) {
+    try {
+      return internalPageForUrl(frame.contentWindow.location.href);
+    } catch {
+      return null;
+    }
+  }
+
+  function addrInput() {
+    return document.getElementById("input");
+  }
+
+  function stripZeroWidth(text) {
+    return text.replace(ZERO_WIDTH_RE, "");
+  }
+
+  function laceZeroWidth(url) {
+    const points = Array.from(url);
+    let out = "";
+    for (let i = 0; i < points.length; i++) {
+      out += points[i];
+      if (i < points.length - 1) out += ZERO_WIDTH[Math.floor(Math.random() * ZERO_WIDTH.length)];
+    }
+    return out;
+  }
+
+  function renderAddress() {
+    const input = addrInput();
+    if (!input) return;
+    if (!addressValue) input.value = "";
+    else input.value = addressEditing ? addressValue : laceZeroWidth(addressValue);
+  }
+
+  function setAddress(url) {
+    addressValue = url || "";
+    renderAddress();
+  }
+
+  function setupAddressBar() {
+    const input = addrInput();
+    if (!input) return;
+    input.addEventListener("focus", () => {
+      addressEditing = true;
+      renderAddress();
+      input.select();
+    });
+    input.addEventListener("blur", () => {
+      addressEditing = false;
+      renderAddress();
+    });
+
+    input.addEventListener("copy", event => {
+      try {
+        const start = input.selectionStart;
+        const end = input.selectionEnd;
+        if (start == null || end == null || start === end) return;
+        const selected = input.value.slice(start, end);
+        const cleaned = stripZeroWidth(selected);
+        if (cleaned === selected) return;
+        if (event.clipboardData && typeof event.clipboardData.setData === "function") {
+          event.clipboardData.setData("text/plain", cleaned);
+          event.preventDefault();
+        }
+      } catch {}
+    });
+    input.addEventListener("paste", event => {
+      try {
+        const pasted = event.clipboardData ? event.clipboardData.getData("text/plain") : null;
+        if (pasted == null) return;
+        const cleaned = stripZeroWidth(pasted);
+        if (cleaned === pasted) return;
+        event.preventDefault();
+        insertCleanText(input, cleaned);
+      } catch {}
+    });
+    renderAddress();
+  }
+
+  function insertCleanText(input, text) {
+    if (typeof input.setRangeText === "function") {
+      const start = input.selectionStart ?? input.value.length;
+      const end = input.selectionEnd ?? input.value.length;
+      input.setRangeText(text, start, end, "end");
+    } else {
+      input.value += text;
+    }
+  }
+
+  function updateAddressBar() {
+    const activeIframe = document.querySelector("#frame-container iframe.active");
+    if (!activeIframe) return;
+    if (activeIframe.dataset.blockedUrl) {
+      addressBar.setAddress(activeIframe.dataset.blockedUrl);
+      return;
+    }
+
+    let currentUrl;
+    try {
+      if (activeIframe.contentWindow.document.readyState !== "complete") return;
+      currentUrl = activeIframe.contentWindow.document.location.href;
+    } catch {
+      return;
+    }
+
+    const input = document.getElementById("input");
+    if (!input) return;
+
+    const blockedFrom = new URL(currentUrl).pathname === "/block.html" ? decodeURIComponent(new URL(currentUrl).hash.slice(1)) : "";
+    if (blockedFrom.includes("|")) {
+      addressBar.setAddress(blockedFrom.slice(blockedFrom.indexOf("|") + 1));
+      return;
+    }
+
+    const page = internalPageOf(activeIframe);
+    if (page) {
+      setAddress(page.displayUrl);
+      return;
+    }
+
+    if (currentUrl.includes("/uv/scramjet/")) {
+      if (window.__urls?.decodeUrl) {
+        setAddress(window.__urls.decodeUrl(currentUrl));
+      } else {
+        setAddress(currentUrl);
+      }
+    } else if (currentUrl.includes("/uv/")) {
+      const path = currentUrl.replace(window.location.origin, "").replace("/uv/", "");
+      setAddress(__uv$config.decodeUrl ? __uv$config.decodeUrl(path) : window.decode.xor(path));
+    } else {
+      setAddress(currentUrl.replace(window.location.origin, ""));
+    }
+  }
+
+  return {
+    INTERNAL_PAGES,
+    internalPageForUrl,
+    internalPageOf,
+    setAddress,
+    updateAddressBar,
+    setupAddressBar,
+    stripZeroWidth,
+    laceZeroWidth,
+  };
+})();
 
 function reload() {
   const activeIframe = document.querySelector("#frame-container iframe.active");
   if (activeIframe) {
     activeIframe.contentWindow.location.reload();
-    updateAddressBar();
+    addressBar.updateAddressBar();
   } else {
     console.error("No active iframe found");
   }
@@ -162,7 +217,7 @@ function popoutTab() {
   const cloakName = store.get("name") || "My Drive - Google Drive";
   const cloakIcon = store.get("icon") || "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png";
 
-  newWindow.document.title = laceZeroWidth(cloakName);
+  newWindow.document.title = (window.laceTitle || addressBar.laceZeroWidth)(cloakName);
 
   const link = newWindow.document.createElement("link");
   link.rel = "icon";
@@ -236,14 +291,14 @@ function toggleFullscreen() {
 }
 
 function goHome() {
-  window.location.href = "./";
+  window.location.href = addressBar.INTERNAL_PAGES.home.route;
 }
 
 function goBack() {
   const activeIframe = document.querySelector("#frame-container iframe.active");
   if (activeIframe) {
     activeIframe.contentWindow.history.back();
-    updateAddressBar();
+    addressBar.updateAddressBar();
   } else {
     console.error("No active iframe found");
   }
@@ -253,7 +308,7 @@ function goForward() {
   const activeIframe = document.querySelector("#frame-container iframe.active");
   if (activeIframe) {
     activeIframe.contentWindow.history.forward();
-    updateAddressBar();
+    addressBar.updateAddressBar();
   } else {
     console.error("No active iframe found");
   }
@@ -265,33 +320,55 @@ window.addEventListener("load", () => {
   const form = document.getElementById("search-form");
   const input = document.getElementById("input");
 
-  setupAddressBar();
+  addressBar.setupAddressBar();
 
   if (form && input) {
     form.addEventListener("submit", async event => {
       event.preventDefault();
-      const formValue = stripZeroWidth(input.value).trim();
-      const engine = store.get("engine") || "https://search.brave.com/search?q=";
-      const url = isUrl(formValue) ? prependHttps(formValue) : `${engine}${formValue}`;
-      await navigateActiveTab(url);
+      await navigateActiveTab(toTargetUrl(input.value));
       input.blur();
     });
   }
 
-  async function navigateActiveTab(url) {
+  async function navigateFrame(frame, url) {
     if (window.__settled) await window.__settled();
+    const verdict = await window.blockPages.check(url);
+    if (verdict) {
+      frame.dataset.blockedUrl = url;
+      frame.src = window.blockPages.pageUrl(url, verdict);
+      frame.dataset.tabUrl = url;
+      if (frame.classList.contains("active")) addressBar.setAddress(url);
+      return;
+    }
     const proxyUrl = await encodeProxyUrl(url);
-    sessionStorage.setItem("GoUrl", proxyUrl);
-    const iframeContainer = document.getElementById("frame-container");
-    const activeIframe = Array.from(iframeContainer.querySelectorAll("iframe")).find(f => f.classList.contains("active"));
+    delete frame.dataset.blockedUrl;
+    frame.src = proxyUrl;
+    frame.dataset.tabUrl = url;
+    if (frame.classList.contains("active")) addressBar.setAddress(url);
+  }
+
+  async function navigateActiveTab(url) {
+    const activeIframe = Array.from(document.getElementById("frame-container").querySelectorAll("iframe")).find(f => f.classList.contains("active"));
     if (!activeIframe) {
       console.error("No active iframe found");
       return;
     }
-    activeIframe.src = proxyUrl;
-    activeIframe.dataset.tabUrl = url;
-    setAddress(url);
+    await navigateFrame(activeIframe, url);
   }
+
+  function toTargetUrl(raw) {
+    const formValue = addressBar.stripZeroWidth(String(raw)).trim();
+    const engine = store.get("engine") || "https://search.brave.com/search?q=";
+    return isUrl(formValue) ? prependHttps(formValue) : `${engine}${formValue}`;
+  }
+
+  window.addEventListener("message", event => {
+    const data = event.data;
+    if (event.origin !== location.origin || !data || data.type !== "interstellar:tabs-navigate") return;
+    const frame = Array.from(document.querySelectorAll("#frame-container iframe")).find(f => f.contentWindow === event.source);
+    if (!frame || !addressBar.stripZeroWidth(String(data.value ?? "")).trim()) return;
+    navigateFrame(frame, toTargetUrl(data.value));
+  });
 });
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -299,32 +376,43 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("home-page")?.addEventListener("click", goHome);
 
   const tabToggleBtn = document.getElementById("tabs-button");
-  const tabSideNav = document.getElementById("right-side-nav");
-  tabToggleBtn?.addEventListener("click", () => {
-    const activeIframe = document.querySelector("#frame-container iframe.active");
-    if (!activeIframe) return;
-
-    const hiding = !document.body.classList.contains("tabs-collapsed");
-    document.body.classList.toggle("tabs-collapsed", hiding);
-    tabSideNav.style.display = hiding ? "none" : "";
-    activeIframe.style.top = "";
-    activeIframe.style.height = "";
-
-    const icon = tabToggleBtn.querySelector("i");
-    icon.classList.toggle("fa-magnifying-glass-minus", !hiding);
-    icon.classList.toggle("fa-magnifying-glass-plus", hiding);
+  function syncToggleIcon() {
+    tabToggleBtn.title = document.body.classList.contains("tabs-collapsed") ? "Show tabs" : "Hide tabs";
+  }
+  function applyTabsLayout() {
+    const vertical = window.store.get("tabsLayout") === "vertical";
+    document.body.classList.toggle("tabs-vertical", vertical);
+    document.getElementById("layout-button").title = vertical ? "Use horizontal tabs" : "Use vertical tabs";
+    syncToggleIcon();
+  }
+  document.getElementById("layout-button")?.addEventListener("click", () => {
+    const next = window.store.get("tabsLayout") === "vertical" ? "horizontal" : "vertical";
+    window.store.set("tabsLayout", next);
+    applyTabsLayout();
   });
+  tabToggleBtn?.addEventListener("click", () => {
+    document.body.classList.toggle("tabs-collapsed");
+    syncToggleIcon();
+  });
+  applyTabsLayout();
+  window.addEventListener("storage", applyTabsLayout);
 
   const addTabButton = document.getElementById("add-tab");
   const tabList = document.getElementById("tab-list");
   const iframeContainer = document.getElementById("frame-container");
   let tabCounter = 1;
 
-  addTabButton.addEventListener("click", createNewTab);
+  addTabButton.addEventListener("click", () => createNewTab(addressBar.INTERNAL_PAGES.home.route));
 
   function resolveStoredUrl(value) {
     if (!value) return null;
     return value.startsWith("/") ? window.location.origin + value : value;
+  }
+
+  function takeHandoffUrl() {
+    const url = sessionStorage.getItem("GoUrl");
+    sessionStorage.removeItem("GoUrl");
+    return url;
   }
 
   function setAllInactive() {
@@ -332,10 +420,14 @@ document.addEventListener("DOMContentLoaded", () => {
     for (const frame of iframeContainer.querySelectorAll("iframe")) frame.classList.remove("active");
   }
 
-  function openInNewTab(destination) {
+  async function openInNewTab(destination) {
+    const verdict = await window.blockPages.check(destination);
+    if (verdict) {
+      createNewTab(window.blockPages.pageUrl(destination, verdict)).dataset.blockedUrl = destination;
+      return;
+    }
     const proxyUrl = destination.startsWith("/") || destination.startsWith(window.location.origin) ? destination : window.__mkurl ? window.__mkurl(destination) : `/uv/${__uv$config.encodeUrl(destination)}`;
-    sessionStorage.setItem("URL", proxyUrl);
-    createNewTab();
+    createNewTab(proxyUrl);
   }
 
   function handleTopNavigation(event) {
@@ -361,14 +453,17 @@ document.addEventListener("DOMContentLoaded", () => {
     openInNewTab(destination);
   }
 
-  function createNewTab() {
+  function createNewTab(startUrl = null) {
     const newTab = document.createElement("li");
     const tabTitle = document.createElement("span");
     const newIframe = document.createElement("iframe");
 
     newIframe.sandbox = "allow-same-origin allow-scripts allow-forms allow-pointer-lock allow-modals allow-orientation-lock allow-presentation allow-storage-access-by-user-activation";
 
-    tabTitle.textContent = laceZeroWidth(`New Tab ${tabCounter}`);
+    const src = (startUrl && resolveStoredUrl(startUrl)) || window.location.origin + addressBar.INTERNAL_PAGES.home.route;
+    const startPage = addressBar.internalPageForUrl(src);
+
+    tabTitle.textContent = addressBar.laceZeroWidth(startPage ? startPage.title : `New Tab ${tabCounter}`);
     tabTitle.className = "t";
     newTab.dataset.tabId = tabCounter;
     newTab.addEventListener("click", switchTab);
@@ -388,16 +483,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     newIframe.dataset.tabId = tabCounter;
     newIframe.classList.add("active");
+    if (startPage) addressBar.setAddress(startPage.displayUrl);
 
     newIframe.addEventListener("load", () => {
+      const page = addressBar.internalPageOf(newIframe);
       try {
         const title = newIframe.contentDocument?.title;
-        tabTitle.textContent = laceZeroWidth(title && title.length > 1 ? title : "Tab");
+        tabTitle.textContent = addressBar.laceZeroWidth(page ? page.title : title && title.length > 1 ? title : "New Tab");
 
         newIframe.contentWindow.open = url => {
-          const proxyUrl = window.__mkurl ? window.__mkurl(url) : `/uv/${__uv$config.encodeUrl(url)}`;
-          sessionStorage.setItem("URL", proxyUrl);
-          createNewTab();
+          const blank = !url || url === "about:blank";
+          const proxyUrl = blank ? null : window.__mkurl ? window.__mkurl(url) : `/uv/${__uv$config.encodeUrl(url)}`;
+          createNewTab(proxyUrl);
           return null;
         };
 
@@ -414,23 +511,8 @@ document.addEventListener("DOMContentLoaded", () => {
         doc.addEventListener("click", handleTopNavigation, true);
         doc.addEventListener("submit", handleTopNavigation, true);
       } catch {}
-      updateAddressBar();
+      addressBar.updateAddressBar();
     });
-
-    const goUrl = sessionStorage.getItem("GoUrl");
-    const storedUrl = sessionStorage.getItem("URL");
-
-    let src;
-    if (tabCounter === 1) {
-      src = goUrl ? (goUrl.includes("/gh-games/") ? window.location.origin + goUrl : resolveStoredUrl(goUrl)) : "/";
-    } else if (storedUrl) {
-      src = resolveStoredUrl(storedUrl);
-      sessionStorage.removeItem("URL");
-    } else if (goUrl) {
-      src = goUrl.includes("/gh-games/") ? window.location.origin + goUrl : resolveStoredUrl(goUrl);
-    } else {
-      src = "/";
-    }
 
     iframeContainer.appendChild(newIframe);
 
@@ -442,6 +524,7 @@ document.addEventListener("DOMContentLoaded", () => {
       newIframe.src = src;
     }
     tabCounter += 1;
+    return newIframe;
   }
 
   function closeTab(event) {
@@ -458,7 +541,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const remainingTabs = Array.from(tabList.querySelectorAll("li"));
     if (remainingTabs.length === 0) {
       tabCounter = 0;
-      setAddress("");
+      addressBar.setAddress("");
       return;
     }
 
@@ -484,7 +567,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (selectedIframe) {
       selectedIframe.classList.add("active");
-      updateAddressBar();
+      addressBar.updateAddressBar();
     } else {
       console.error("No selected iframe found with ID:", tabId);
     }
@@ -509,7 +592,7 @@ document.addEventListener("DOMContentLoaded", () => {
     dragTab = null;
   });
 
-  createNewTab();
+  createNewTab(takeHandoffUrl());
 });
 
 if (navigator.userAgent.includes("Chrome")) {

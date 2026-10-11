@@ -200,6 +200,12 @@ window.BACKGROUND_LIBRARY = {
 
 window.backgroundUrlFor = key => (key && window.BACKGROUND_LIBRARY[key]?.url) || "";
 
+Object.defineProperty(window, "isInTabMode", { get: () => Boolean(document.getElementById("frame-container")) });
+
+function inShell() {
+  return document.body?.dataset.shell === "true";
+}
+
 function reconstructSafeUrl(raw) {
   if (!raw || typeof raw !== "string") return null;
   try {
@@ -214,12 +220,21 @@ function reconstructSafeUrl(raw) {
 }
 
 const zeroWidth = ["​", "‌", "‍", "⁠", "﻿"];
-function laceTitle(text) {
+const titleHomoglyphs = {
+  a: "а", c: "с", e: "е", i: "і", j: "ј", o: "о", p: "р", s: "ѕ", x: "х", y: "у",
+  A: "А", B: "В", C: "С", E: "Е", H: "Н", I: "І", J: "Ј", K: "К", M: "М", O: "О", P: "Р", S: "Ѕ", T: "Т", X: "Х", Y: "Ү",
+};
+function laceTitle(text, homoglyphs = true) {
   const points = Array.from(text || "");
+  const pick = () => zeroWidth[Math.floor(Math.random() * zeroWidth.length)];
   let out = "";
   for (let i = 0; i < points.length; i++) {
-    out += points[i];
-    if (i < points.length - 1) out += zeroWidth[Math.floor(Math.random() * zeroWidth.length)];
+    const swap = homoglyphs && titleHomoglyphs[points[i]] && Math.random() < 0.3;
+    out += swap ? titleHomoglyphs[points[i]] : points[i];
+    if (i < points.length - 1) {
+      out += pick();
+      if (Math.random() < 0.35) out += pick();
+    }
   }
   return out;
 }
@@ -291,7 +306,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const LogoUrl = isPastelTheme ? "/assets/media/favicon/main.png" : isLightTheme ? "/assets/media/favicon/main-inverted.png" : "/assets/media/favicon/main.png";
     const html = `
       <div id="icon-container">
-        <a class="icon" href="/./"><img alt="nav" id="nav-logo" src="${LogoUrl}"/></a>
+        <a class="icon" href="/home"><img alt="nav" id="nav-logo" src="${LogoUrl}"/></a>
       </div>
       <div class="nav-bar-right">
         <a class="navbar-link" href="/./games"><i class="fa-solid fa-gamepad navbar-icon"></i>${obfuscateNav("Games")}</a>
@@ -301,16 +316,20 @@ document.addEventListener("DOMContentLoaded", () => {
     nav.innerHTML = html;
   }
 
-  // Favicon and Name Logic
+  // Favicon and Name Logic.
   const icon = document.getElementById("tab-favicon");
   const title = document.getElementById("page-title");
-  const cloakName = store.get("CustomName") || store.get("name");
-  const cloakIcon = store.get("CustomIcon") || store.get("icon");
-  if (title) title.textContent = laceTitle(cloakName || title.textContent);
-  if (cloakIcon) {
-    const safeIcon = reconstructSafeUrl(cloakIcon);
-    if (safeIcon) icon.setAttribute("href", safeIcon);
+  const defaultTitle = title?.textContent ?? "";
+  const defaultIcon = icon?.getAttribute("href") ?? "";
+  function applyCloak() {
+    const cloakName = store.get("CustomName") || store.get("name");
+    const cloakIcon = store.get("CustomIcon") || store.get("icon");
+    if (title) title.textContent = laceTitle(cloakName || defaultTitle);
+    const safeIcon = cloakIcon ? reconstructSafeUrl(cloakIcon) : null;
+    if (icon) icon.setAttribute("href", safeIcon || defaultIcon);
   }
+  applyCloak();
+  if (inShell()) window.addEventListener("storage", applyCloak);
 
   const DEFAULT_PANIC_KEYS = ["`"];
   const DEFAULT_PANIC_LINK = "https://classroom.google.com/";
@@ -347,6 +366,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (pressedKeys.length > keys.length) pressedKeys = pressedKeys.slice(-keys.length);
     if (pressedKeys.length === keys.length && keys.every((key, i) => key === pressedKeys[i])) {
       panicAnchor.href = currentPanicLink();
+      panicAnchor.target = "_top";
       panicAnchor.click();
       pressedKeys = [];
     }
@@ -378,7 +398,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  if (!document.querySelector('script[src="/assets/js/particles.js"]')) {
+  if (!inShell() && !document.querySelector('script[src="/assets/js/particles.js"]')) {
     const particleScript = document.createElement("script");
     particleScript.src = "/assets/js/particles.js";
     document.head.appendChild(particleScript);
@@ -430,6 +450,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let cursorScriptLoad = null;
   function loadCursorScript() {
+    if (inShell()) return Promise.resolve();
     if (!cursorScriptLoad) {
       cursorScriptLoad = new Promise((resolve, reject) => {
         const cursorScript = document.createElement("script");
