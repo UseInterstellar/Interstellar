@@ -136,7 +136,7 @@ if (!vendorMap) {
   const { baremuxPath } = require("@mercuryworkshop/bare-mux/node");
   const { libcurlPath } = require("@mercuryworkshop/libcurl-transport");
   const { uvPath } = require("@titaniumnetwork-dev/ultraviolet");
-  const { scramjetPath } = require("@mercuryworkshop/scramjet/path");
+  const { scramjetPath } = require("@useinterstellar/scramjet/path");
 
   app.use("/epoxy/", express.static(epoxyPath));
   app.use("/libcurl/", express.static(libcurlPath));

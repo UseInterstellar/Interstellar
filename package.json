@@ -19,7 +19,7 @@
     "@mercuryworkshop/bare-mux": "^2.1.9",
     "@mercuryworkshop/epoxy-transport": "file:vendor/mercuryworkshop-epoxy-transport-2.1.28-epx.e5f13bb.tgz",
     "@mercuryworkshop/libcurl-transport": "^1.5.2",
-    "@mercuryworkshop/scramjet": "^1.1.0",
+    "@useinterstellar/scramjet": "^1.1.0-fixed",
     "@mercuryworkshop/wisp-js": "^0.4.1",
     "@titaniumnetwork-dev/ultraviolet": "^3.2.10",
     "chalk": "^5.4.1",

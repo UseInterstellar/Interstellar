@@ -28,15 +28,15 @@ importers:
       '@mercuryworkshop/libcurl-transport':
         specifier: ^1.5.2
         version: 1.5.2
-      '@mercuryworkshop/scramjet':
-        specifier: ^1.1.0
-        version: 1.1.0
       '@mercuryworkshop/wisp-js':
         specifier: ^0.4.1
         version: 0.4.1
       '@titaniumnetwork-dev/ultraviolet':
         specifier: ^3.2.10
         version: 3.2.10
+      '@useinterstellar/scramjet':
+        specifier: ^1.1.0-fixed
+        version: 1.1.0-fixed
       chalk:
         specifier: ^5.4.1
         version: 5.4.1
@@ -348,9 +348,6 @@ packages:
   '@mercuryworkshop/libcurl-transport@1.5.2':
     resolution: {integrity: sha512-E0tD/3W6HE99ypc7CStpchU6xs+TP5u2vms/9q/46BShblB2pbRCNeXHBlvXqdz97nh2Xh4A68DryDt5CM29Dg==}
 
-  '@mercuryworkshop/scramjet@1.1.0':
-    resolution: {integrity: sha512-T/9GZqAQX42eYr/t6VGR2m9J4BtIuncRkANo8hBVTGskrr522yuhaADhSu+65DYlhUyQnLUjDikuNYzlgv0Ejw==}
-
   '@mercuryworkshop/wisp-js@0.4.1':
     resolution: {integrity: sha512-104LwiXiuhti/e32gmv0Da0u0yuLFDHX8JawCzleTPWJ5t5qTX4EYi4E7/ucbjBPN9wwVPWHE5g5yGqzl/NzQA==}
     hasBin: true
@@ -363,6 +360,9 @@ packages:
 
   '@types/validator@13.15.10':
     resolution: {integrity: sha512-T8L6i7wCuyoK8A/ZeLYt1+q0ty3Zb9+qbSSvrIVitzT3YjZqkTZ40IbRsPanlB4h1QB3JVL1SYCdR6ngtFYcuA==}
+
+  '@useinterstellar/scramjet@1.1.0-fixed':
+    resolution: {integrity: sha512-9XQLTUkz15pjWheAALjkqlP4fUhnd9nNSEul8FprWpODFn2ha7DpkdEe/Q06KpbGGchB+BqxkgqkIZwGw87EEg==}
 
   accepts@1.3.8:
     resolution: {integrity: sha512-PYAthTa2m2VKxuvSD3DPC/Gy+U+sOA1LAuT8mkmRuvw+NACSaeXEQ+NHcVF7rONl6qcaxV3Uuemwawk+7+SJLw==}
@@ -1390,17 +1390,6 @@ snapshots:
     dependencies:
       libcurl.js: 0.7.4
 
-  '@mercuryworkshop/scramjet@1.1.0':
-    dependencies:
-      '@mercuryworkshop/bare-mux': 2.1.9(patch_hash=45d83f8c4aa640239d1841ae9cd7d9af438b01465829b1257e3d5e2d0744c367)
-      dom-serializer: 2.0.0
-      domhandler: 5.0.3
-      domutils: 3.2.2
-      htmlparser2: 10.0.0
-      idb: 8.0.3
-      parse-domain: 8.3.0
-      set-cookie-parser: 2.7.2
-
   '@mercuryworkshop/wisp-js@0.4.1':
     dependencies:
       bufferutil: 4.1.0
@@ -1423,6 +1412,17 @@ snapshots:
   '@types/minimatch@3.0.5': {}
 
   '@types/validator@13.15.10': {}
+
+  '@useinterstellar/scramjet@1.1.0-fixed':
+    dependencies:
+      '@mercuryworkshop/bare-mux': 2.1.9(patch_hash=45d83f8c4aa640239d1841ae9cd7d9af438b01465829b1257e3d5e2d0744c367)
+      dom-serializer: 2.0.0
+      domhandler: 5.0.3
+      domutils: 3.2.2
+      htmlparser2: 10.0.0
+      idb: 8.0.3
+      parse-domain: 8.3.0
+      set-cookie-parser: 2.7.2
 
   accepts@1.3.8:
     dependencies:

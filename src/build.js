@@ -1,5 +1,5 @@
 import { createHash, randomBytes } from "node:crypto";
-import { existsSync, readFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { access, cp, mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import path from "node:path";
@@ -31,7 +31,7 @@ const { epoxyPath } = require("@mercuryworkshop/epoxy-transport");
 const { baremuxPath } = require("@mercuryworkshop/bare-mux/node");
 const { libcurlPath } = require("@mercuryworkshop/libcurl-transport");
 const { uvPath } = require("@titaniumnetwork-dev/ultraviolet");
-const { scramjetPath } = require("@mercuryworkshop/scramjet/path");
+const { scramjetPath } = require("@useinterstellar/scramjet/path");
 
 const TERSER_ONLY = new Set();
 
@@ -307,7 +307,7 @@ const SCRAMJET_BRANDING = [
   /[ \t]*build\.textContent = \$\{JSON\.stringify\(globalThis\.\$scramjetVersion\?\.build\|\|"unknown"\)\};\n/,
 ];
 const SCRAMJET_TITLE = "<title>Scramjet</title>";
-const SCRAMJET_VERSION_LITERAL = /\{build:"[0-9a-f]{7,40}",version:"\d+\.\d+\.\d+"\}/;
+const SCRAMJET_VERSION_LITERAL = /\{build:"[0-9a-f]{7,40}",version:"\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?"\}/;
 
 function stripScramjetBranding(source) {
   let out = source;
@@ -1202,31 +1202,17 @@ function applyScramjetDebug(source) {
 }
 
 
-const SCRAMJET_REWRITER_VERSION = "1.1.0";
-const SCRAMJET_REWRITER_VENDOR = path.join(process.cwd(), "vendor", "scramjet-rewriter", "scramjet.wasm.wasm");
-let scramjetWasmChoice = null;
 
-function wasmSignature(buffer) {
-  const module = new WebAssembly.Module(buffer);
-  const names = list => list.map(entry => `${entry.module ?? ""}.${entry.name}:${entry.kind}`).sort();
-  return JSON.stringify([names(WebAssembly.Module.imports(module)), names(WebAssembly.Module.exports(module))]);
-}
+const SCRAMJET_FORK_VERSION = /^1\.1\.0-fixed(\.\d+)?$/;
+let scramjetChecked = false;
 
 function scramjetWasmPath() {
-  if (scramjetWasmChoice) return scramjetWasmChoice;
-  const upstream = path.join(scramjetPath, "scramjet.wasm.wasm");
-  if (process.env.SJ_UPSTREAM_WASM === "1") {
-    console.log(chalk.yellow("  ! SJ_UPSTREAM_WASM=1: shipping the stock scramjet rewriter (for...of / for...in bodies are NOT rewritten)"));
-    scramjetWasmChoice = upstream;
-    return scramjetWasmChoice;
+  if (!scramjetChecked) {
+    const meta = JSON.parse(readFileSync(path.join(scramjetPath, "..", "package.json"), "utf8"));
+    if (!SCRAMJET_FORK_VERSION.test(meta.version)) throw new CodecPatchError(`@useinterstellar/scramjet is ${meta.version}; the patches in this file were written against 1.1.0-fixed. Review them before bumping.`);
+    scramjetChecked = true;
   }
-  const version = JSON.parse(readFileSync(path.join(scramjetPath, "..", "package.json"), "utf8")).version;
-  if (version !== SCRAMJET_REWRITER_VERSION) throw new CodecPatchError(`scramjet is ${version}, but vendor/scramjet-rewriter was built for ${SCRAMJET_REWRITER_VERSION}. Rebuild it (see its README) or check whether upstream fixed handle_for_of_in.`);
-  if (!existsSync(SCRAMJET_REWRITER_VENDOR)) throw new CodecPatchError(`${SCRAMJET_REWRITER_VENDOR} is missing. Restore it, or build with SJ_UPSTREAM_WASM=1 to use the stock rewriter.`);
-  if (wasmSignature(readFileSync(SCRAMJET_REWRITER_VENDOR)) !== wasmSignature(readFileSync(upstream))) throw new CodecPatchError("vendor/scramjet-rewriter does not expose the same imports and exports as the installed scramjet.wasm.wasm. Rebuild it against the installed version.");
-  console.log(chalk.green("  + scramjet rewriter: vendor/scramjet-rewriter (for...of / for...in body fix)"));
-  scramjetWasmChoice = SCRAMJET_REWRITER_VENDOR;
-  return scramjetWasmChoice;
+  return path.join(scramjetPath, "scramjet.wasm.wasm");
 }
 
 function vendorSpecs() {
@@ -1976,9 +1962,6 @@ async function build() {
       if (source.split(selfCheck).length - 1 !== 1) throw new CodecPatchError(`scramjet.all.js: expected exactly one ${selfCheck}. Upstream changed.`);
       source = replaceAll(source, selfCheck, "");
       if (source.includes('includes("scramjet")')) throw new CodecPatchError('scramjet.all.js: includes("scramjet") survived the strip.');
-      const frameWalk = 'let t=e[n.pX].descriptors.get("window.frameElement",e);if(!t)return null;if(t&&t[n.zr])return t[n.zr];e=e.parent.window';
-      if (source.split(frameWalk).length - 1 !== 1) throw new CodecPatchError("scramjet.all.js: expected exactly one frame ancestor walk. Upstream changed.");
-      source = replaceAll(source, frameWalk, frameWalk.replace("e[n.pX].descriptors", "e[n.pX]?.descriptors"));
       if (SJ_DEBUG) {
         source = applyScramjetDebug(source);
         console.log(chalk.yellow("  ! Scramjet diagnostics are ON in this build ([Scramjet Debug] console lines)"));
