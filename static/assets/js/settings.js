@@ -1,4 +1,47 @@
+
+function scrambleDropdowns() {
+  const nativeValue = Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, "value");
+  const alphabet = "abcdefghijklmnopqrstuvwxyz0123456789";
+  const used = new Set();
+  const makeToken = () => {
+    let token;
+    do {
+      token = "";
+      for (let i = 0; i < 10; i++) token += alphabet[Math.floor(Math.random() * alphabet.length)];
+    } while (used.has(token));
+    used.add(token);
+    return token;
+  };
+  const lace = window.laceTitle || (text => text);
+
+  for (const select of document.querySelectorAll("select")) {
+    const toToken = new Map();
+    const toReal = new Map();
+    for (const option of select.options) {
+      const real = option.hasAttribute("value") ? option.getAttribute("value") : option.textContent;
+      const token = makeToken();
+      toToken.set(real, token);
+      toReal.set(token, real);
+      option.setAttribute("value", token);
+      option.textContent = lace(option.textContent);
+      Object.defineProperty(option, "value", { get: () => real, configurable: true });
+    }
+    Object.defineProperty(select, "value", {
+      get() {
+        const token = nativeValue.get.call(this);
+        return toReal.has(token) ? toReal.get(token) : token;
+      },
+      set(next) {
+        const key = String(next);
+        nativeValue.set.call(this, toToken.has(key) ? toToken.get(key) : key);
+      },
+      configurable: true,
+    });
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+  scrambleDropdowns();
   const adTypeElement = document.getElementById("adType");
   if (adTypeElement) {
     adTypeElement.addEventListener("change", function () {
