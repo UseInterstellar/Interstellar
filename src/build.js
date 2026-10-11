@@ -1,4 +1,5 @@
 import { createHash, randomBytes } from "node:crypto";
+import { existsSync, readFileSync } from "node:fs";
 import { access, cp, mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import path from "node:path";
@@ -1129,6 +1130,105 @@ async function exists(filePath) {
   }
 }
 
+
+const SCRAMJET_SHARED_NAMES = [
+  { from: "scramitize", js: 1, config: 1, wasm: 2 },
+  { from: "$scramerr", js: 1, config: 0, wasm: 1 },
+  { from: "scramtag", js: 5, config: 0, wasm: 3 },
+  { from: "$scramdbg", js: 1, config: 0, wasm: 0 },
+];
+
+function createScramjetSharedNames() {
+  if (process.env.SJ_KEEP_NAMES === "1") return [];
+  return SCRAMJET_SHARED_NAMES.map(entry => {
+    const lead = entry.from.startsWith("$") ? "$" : "_";
+    return { ...entry, to: lead + randomBytes(Math.ceil(entry.from.length / 2)).toString("hex").slice(0, entry.from.length - 1) };
+  });
+}
+
+function applyScramjetSharedNames(source, names, kind, id) {
+  let out = source;
+  for (const entry of names) {
+    const found = out.split(entry.from).length - 1;
+    if (found !== entry[kind]) throw new CodecPatchError(`${id}: expected ${entry[kind]} occurrences of ${entry.from}, found ${found}. Upstream changed.`);
+    out = replaceAll(out, entry.from, entry.to);
+    if (out.includes(entry.from)) throw new CodecPatchError(`${id}: ${entry.from} survived the rewrite.`);
+  }
+  return out;
+}
+
+function patchScramjetWasm(buffer, names, id) {
+  const patched = Buffer.from(applyScramjetSharedNames(buffer.toString("latin1"), names, "wasm", id), "latin1");
+  if (patched.length !== buffer.length) throw new CodecPatchError(`${id}: the wasm changed size (${buffer.length} -> ${patched.length}).`);
+  return patched;
+}
+
+
+const SCRAMJET_DEBUG_PRELUDE = `;(function(){var P="[Scramjet Debug]",seen={},budget=12;
+function emit(k,l,d){if(seen[k]||budget<=0)return;seen[k]=1;budget--;try{console.error(P+" ("+(typeof document==="undefined"?"service-worker":"page")+") "+l+" "+JSON.stringify(d))}catch(e){}}
+function trim(s){return String(s||"").split(String.fromCharCode(10)).slice(0,9)}
+function real(u){try{return new URL(u).origin===location.origin}catch(e){return false}}
+function under(u,pre){return String(u).indexOf(location.origin+pre)===0}
+globalThis.__sjdbg={
+client:function(c){try{var depth=0,w=self;while(w.parent&&w.parent!==w){depth++;w=w.parent}var fe=null;try{fe=self.frameElement?{tag:self.frameElement.tagName,sandbox:!!self.frameElement.getAttribute("sandbox"),name:self.frameElement.name||""}:null}catch(e){}
+emit("client:"+location.href,"client up",{realHref:location.href.slice(0,150),decodedUrl:String(c.url).slice(0,150),frameDepth:depth,frameElement:fe})}catch(e){emit("client-err","client probe failed",String(e))}},
+rw:function(input,base,resolved,pre){try{if(resolved.origin===location.origin&&!under(resolved.href,pre)){emit("rw:"+input,"URL resolved against the REAL origin",{input:String(input).slice(0,200),base:String(base).slice(0,200),resolved:resolved.href.slice(0,200),stack:trim(new Error().stack)})}else if(real(base)&&!under(base,pre)){emit("rwb:"+base,"rewriteUrl base is the REAL origin",{input:String(input).slice(0,200),base:String(base).slice(0,200),stack:trim(new Error().stack)})}}catch(e){}},
+meta:function(m,orig){try{var r=m.url;if(real(orig)){emit("meta-bad:"+orig,"import.meta rewritten with a REAL-origin URL",{realUrl:String(r).slice(0,200),original:String(orig).slice(0,200)})}emit("meta-first","import.meta.url mapping (first module)",{realUrl:String(r).slice(0,200),original:String(orig).slice(0,200)})}catch(e){}},
+metaFail:function(m,orig){emit("meta-fail","import.meta.url could not be overridden",{wanted:String(orig).slice(0,200),got:String(m.url).slice(0,200)})},
+imp:function(base,spec,resolved){try{if(real(resolved)||real(base)){emit("imp:"+resolved,"dynamic import resolved against the REAL origin",{base:String(base).slice(0,200),specifier:String(spec).slice(0,200),resolved:String(resolved).slice(0,200),stack:trim(new Error().stack)})}}catch(e){}},
+rwok:function(url,mod,errs,out){try{var n=errs&&errs.length||0;var txt=typeof out==="string"?out:(out&&out.length<3000000?new TextDecoder().decode(out):"");var raw=txt.split("import.meta.url").length-1;if(n||raw){emit("rwok:"+url,"rewrite finished with problems",{url:String(url).slice(0,200),module:!!mod,parseErrors:n,firstErrors:(errs||[]).slice(0,2).map(String),rawImportMetaUrl:raw,outputBytes:out&&out.length})}}catch(e){}},
+rwfail:function(url,mod,err,src){try{emit("rwfail:"+url,"rewriteJs THREW; source passed through UNREWRITTEN",{url:String(url).slice(0,200),module:!!mod,message:String(err&&err.message||err).slice(0,300),sourceBytes:src&&src.length})}catch(e){}},
+sw:function(req,client,decoded,dec){try{var rd="";try{rd=req.referrer?dec(req.referrer):""}catch(e){rd="(decode failed)"}emit("sw","service worker blocked a same-origin fetch",{request:req.url.slice(0,220),destination:req.destination,mode:req.mode,referrer:String(req.referrer).slice(0,220),referrerDecoded:String(rd).slice(0,220),clientUrl:client?String(client.url).slice(0,220):null,decodedTarget:String(decoded).slice(0,220)})}catch(e){}}
+}})();
+`;
+
+const SJ_DEBUG = process.env.SJ_DEBUG === "1" || process.argv.includes("--debug");
+
+function applyScramjetDebug(source) {
+  const sites = [
+    ['if((0,n.U5)("rewriterLogs",r.base))for(let e of s.errors)console.error("oxc parse error",e);return l}catch(a){if(console.warn(', 'globalThis.__sjdbg&&__sjdbg.rwok(t,o,s.errors,l);if((0,n.U5)("rewriterLogs",r.base))for(let e of s.errors)console.error("oxc parse error",e);return l}catch(a){globalThis.__sjdbg&&__sjdbg.rwfail(t,o,a,e);if(console.warn(', "rewriteJs"],
+    ["let i=a(e,r);if(!i)return e;", "let i=a(e,r);if(!i)return e;globalThis.__sjdbg&&__sjdbg.rw(e,r,i,n.$W.prefix);", "rewriteUrl"],
+    ["{value:function(t,n){let a=new URL(n,t).href;return n.includes(\":\")", "{value:function(t,n){let a=new URL(n,t).href;globalThis.__sjdbg&&__sjdbg.imp(t,n,a);return n.includes(\":\")", "dynamic import"],
+    ["{value:function(e,t){return e.url=t,e.resolve=function(e){return new URL(e,t).href},e}", "{value:function(e,t){return globalThis.__sjdbg&&__sjdbg.meta(e,t),e.url=t,globalThis.__sjdbg&&e.url!==t&&__sjdbg.metaFail(e,t),e.resolve=function(e){return new URL(e,t).href},e}", "import.meta"],
+    ['if(h.origin===new URL(e.url).origin)throw Error("attempted to fetch from same origin - this means the site has obtained a reference to the real origin, aborting");', 'if(h.origin===new URL(e.url).origin){globalThis.__sjdbg&&__sjdbg.sw(e,t,h,s.v2);throw Error("attempted to fetch from same origin - this means the site has obtained a reference to the real origin, aborting")}', "service worker"],
+    ["this.locationProxy=(0,a.createLocationProxy)(this,e),e[n.pX]=this}get frame(){", "this.locationProxy=(0,a.createLocationProxy)(this,e),e[n.pX]=this,globalThis.__sjdbg&&__sjdbg.client(this)}get frame(){", "client"],
+  ];
+  let out = source;
+  for (const [from, to, label] of sites) {
+    if (out.split(from).length - 1 !== 1) throw new CodecPatchError(`scramjet.all.js debug: expected exactly one ${label} site. Upstream changed.`);
+    out = replaceAll(out, from, to);
+  }
+  return SCRAMJET_DEBUG_PRELUDE + out;
+}
+
+
+const SCRAMJET_REWRITER_VERSION = "1.1.0";
+const SCRAMJET_REWRITER_VENDOR = path.join(process.cwd(), "vendor", "scramjet-rewriter", "scramjet.wasm.wasm");
+let scramjetWasmChoice = null;
+
+function wasmSignature(buffer) {
+  const module = new WebAssembly.Module(buffer);
+  const names = list => list.map(entry => `${entry.module ?? ""}.${entry.name}:${entry.kind}`).sort();
+  return JSON.stringify([names(WebAssembly.Module.imports(module)), names(WebAssembly.Module.exports(module))]);
+}
+
+function scramjetWasmPath() {
+  if (scramjetWasmChoice) return scramjetWasmChoice;
+  const upstream = path.join(scramjetPath, "scramjet.wasm.wasm");
+  if (process.env.SJ_UPSTREAM_WASM === "1") {
+    console.log(chalk.yellow("  ! SJ_UPSTREAM_WASM=1: shipping the stock scramjet rewriter (for...of / for...in bodies are NOT rewritten)"));
+    scramjetWasmChoice = upstream;
+    return scramjetWasmChoice;
+  }
+  const version = JSON.parse(readFileSync(path.join(scramjetPath, "..", "package.json"), "utf8")).version;
+  if (version !== SCRAMJET_REWRITER_VERSION) throw new CodecPatchError(`scramjet is ${version}, but vendor/scramjet-rewriter was built for ${SCRAMJET_REWRITER_VERSION}. Rebuild it (see its README) or check whether upstream fixed handle_for_of_in.`);
+  if (!existsSync(SCRAMJET_REWRITER_VENDOR)) throw new CodecPatchError(`${SCRAMJET_REWRITER_VENDOR} is missing. Restore it, or build with SJ_UPSTREAM_WASM=1 to use the stock rewriter.`);
+  if (wasmSignature(readFileSync(SCRAMJET_REWRITER_VENDOR)) !== wasmSignature(readFileSync(upstream))) throw new CodecPatchError("vendor/scramjet-rewriter does not expose the same imports and exports as the installed scramjet.wasm.wasm. Rebuild it against the installed version.");
+  console.log(chalk.green("  + scramjet rewriter: vendor/scramjet-rewriter (for...of / for...in body fix)"));
+  scramjetWasmChoice = SCRAMJET_REWRITER_VENDOR;
+  return scramjetWasmChoice;
+}
+
 function vendorSpecs() {
   return [
     {
@@ -1184,10 +1284,11 @@ function vendorSpecs() {
       rewriteProtocolKeys: true,
       renameIdentifiers: true,
       rewriteScramjetStrings: true,
+      sharedNames: "js",
       globals: ["$scramjetLoadWorker", "$scramjetLoadController", "$scramjetLoadClient", "$scramjetRequire", "$scramjetVersion", "COOKIE", "WASM"],
     },
     { id: "sj.sync", src: path.join(scramjetPath, "scramjet.sync.js"), old: "/assets/scramjet/scramjet.sync.js", ext: ".js", renameIdentifiers: true },
-    { id: "sj.wasm", src: path.join(scramjetPath, "scramjet.wasm.wasm"), old: "/assets/scramjet/scramjet.wasm.wasm", ext: ".wasm", binary: true },
+    { id: "sj.wasm", src: scramjetWasmPath(), old: "/assets/scramjet/scramjet.wasm.wasm", ext: ".wasm", binary: true, sharedNames: "wasm" },
     {
       id: "sj.config",
       src: path.join(SRC_DIR, "assets", "scramjet", "scramjet.config.js"),
@@ -1198,6 +1299,7 @@ function vendorSpecs() {
       rewriteScopes: true,
       patchCodec: true,
       renameIdentifiers: true,
+      sharedNames: "config",
       globals: ["__scramjet$config"],
     },
     {
@@ -1664,6 +1766,7 @@ async function build() {
   const uvPropertyName = `_${randomBytes(5).toString("hex")}`;
   const uvPrefixName = `_${randomBytes(4).toString("hex")}`;
   const scramjetStrings = createScramjetStrings();
+  const scramjetSharedNames = createScramjetSharedNames();
   const catalogueKey = createCatalogueKey();
   const pageRoutes = createPageRoutes(registry);
   console.log(
@@ -1817,7 +1920,8 @@ async function build() {
     await mkdir(path.dirname(destination), { recursive: true });
 
     if (spec.binary) {
-      const buffer = await readFile(spec.src);
+      let buffer = await readFile(spec.src);
+      if (spec.sharedNames) buffer = patchScramjetWasm(buffer, scramjetSharedNames, spec.id);
       await writeFile(destination, buffer);
       emitted.set(spec.publicPath, destination);
       console.log(chalk.green(`  + ${spec.id} -> ${spec.publicPath} (${formatKb(buffer.length)}, copied)`));
@@ -1843,6 +1947,7 @@ async function build() {
     if (spec.rewriteBaremuxStrings) source = applyBaremuxStrings(source, spec.id, baremuxStrings);
     if (spec.rewriteProtocolKeys) source = applyScramjetProtocolKeys(source, protocolKeys);
     if (spec.renameIdentifiers) source = applyIdentifierRenames(source, identifierRenames);
+    if (spec.sharedNames) source = applyScramjetSharedNames(source, scramjetSharedNames, spec.sharedNames, spec.id);
     if (spec.stripBranding) source = stripUltravioletBranding(source);
     if (spec.renameUltraviolet) source = applyUltravioletRename(source, ultravioletName);
     if (spec.renameUvProperty) source = applyUvPropertyRename(source, uvPropertyName);
@@ -1866,6 +1971,17 @@ async function build() {
       for (const literal of SCRAMJET_LOG_STRINGS) {
         if (!source.includes(literal)) throw new CodecPatchError(`scramjet.all.js: log string ${literal} not found. Upstream changed.`);
         source = replaceAll(source, literal, '""');
+      }
+      const selfCheck = '"string"==typeof e&&e.includes("scramjet"),';
+      if (source.split(selfCheck).length - 1 !== 1) throw new CodecPatchError(`scramjet.all.js: expected exactly one ${selfCheck}. Upstream changed.`);
+      source = replaceAll(source, selfCheck, "");
+      if (source.includes('includes("scramjet")')) throw new CodecPatchError('scramjet.all.js: includes("scramjet") survived the strip.');
+      const frameWalk = 'let t=e[n.pX].descriptors.get("window.frameElement",e);if(!t)return null;if(t&&t[n.zr])return t[n.zr];e=e.parent.window';
+      if (source.split(frameWalk).length - 1 !== 1) throw new CodecPatchError("scramjet.all.js: expected exactly one frame ancestor walk. Upstream changed.");
+      source = replaceAll(source, frameWalk, frameWalk.replace("e[n.pX].descriptors", "e[n.pX]?.descriptors"));
+      if (SJ_DEBUG) {
+        source = applyScramjetDebug(source);
+        console.log(chalk.yellow("  ! Scramjet diagnostics are ON in this build ([Scramjet Debug] console lines)"));
       }
     }
     if (spec.rewriteScopes) for (const [from, to] of scopeRewrites) source = replaceAll(source, from, to);

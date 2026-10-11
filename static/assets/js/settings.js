@@ -1,5 +1,5 @@
 
-function scrambleDropdowns() {
+function tokenizeDropdowns() {
   const nativeValue = Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, "value");
   const alphabet = "abcdefghijklmnopqrstuvwxyz0123456789";
   const used = new Set();
@@ -41,7 +41,7 @@ function scrambleDropdowns() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  scrambleDropdowns();
+  tokenizeDropdowns();
   const adTypeElement = document.getElementById("adType");
   if (adTypeElement) {
     adTypeElement.addEventListener("change", function () {
