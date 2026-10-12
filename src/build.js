@@ -432,6 +432,19 @@ function applyBaremuxStrings(source, id, baremuxStrings) {
   return out;
 }
 
+
+const BROADCAST_CHANNEL_NEW = /new BroadcastChannel\(/g;
+const BROADCAST_CHANNEL_COUNTS = { "uv.bundle": 1, "uv.client": 1, "uv.handler": 0, "sj.all": 1, baremux: 1, "baremux.worker": 1 };
+
+function applyBroadcastChannelRewrite(source, id) {
+  const expected = BROADCAST_CHANNEL_COUNTS[id];
+  const found = (source.match(BROADCAST_CHANNEL_NEW) || []).length;
+  if (expected === undefined || found !== expected) throw new CodecPatchError(`${id}: expected ${expected} new BroadcastChannel( calls, found ${found}. Upstream changed.`);
+  const out = source.replace(BROADCAST_CHANNEL_NEW, 'new globalThis[["Broadcast","Channel"].join("")](');
+  if (out.includes("BroadcastChannel")) throw new CodecPatchError(`${id}: BroadcastChannel survived the rewrite.`);
+  return out;
+}
+
 const RENAMED_IDENTIFIERS = [
   "__scramjet$config",
   "isScramjet",
@@ -460,6 +473,9 @@ const RENAMED_IDENTIFIERS = [
   "WispWebSocket",
   "wisp_connections",
   "wisp_url",
+  "setTransport",
+  "libcurl_load",
+  "libcurl_abort",
   "EpoxyTransport",
   "EpoxyClient",
   "EpoxyClientFinalization",
@@ -574,7 +590,55 @@ const WISP_REWRITES = {
   },
 };
 
-function applyWispRewrites(source, id, fieldName) {
+
+const LIBCURL_NAMESPACE_KEY = /^([ \t]*)wisp: \{/gm;
+const LIBCURL_VERSION_KEY = /(?<![\w$])version_dict\.wisp(?![\w$])/g;
+const LIBCURL_TRANSPORT_TAG = /"wisp"/g;
+const LIBCURL_VERBOSE_KEY = "._libcurl_verbose";
+const LIBCURL_NOTICE_START = "const copyright_notice = `";
+const LIBCURL_MESSAGES = [
+  ["please call libcurl.load_wasm first", "please load the wasm first"],
+  ["please call libcurl.set_websocket", "please set the websocket url"],
+];
+
+function applyLibcurlRewrites(source, tagName) {
+  const counts = [
+    ["wisp: { namespace key", (source.match(LIBCURL_NAMESPACE_KEY) || []).length, 1],
+    ["version_dict.wisp", (source.match(LIBCURL_VERSION_KEY) || []).length, 1],
+    ['"wisp" transport tag', (source.match(LIBCURL_TRANSPORT_TAG) || []).length, 2],
+    ["._libcurl_verbose option key", source.split(LIBCURL_VERBOSE_KEY).length - 1, 1],
+  ];
+  for (const [label, found, expected] of counts) {
+    if (found !== expected) throw new CodecPatchError(`libcurl: expected ${expected} ${label}, found ${found}. Upstream changed.`);
+  }
+  let out = source
+    .replace(LIBCURL_NAMESPACE_KEY, `$1${tagName}: {`)
+    .replace(LIBCURL_VERSION_KEY, `version_dict.${tagName}`)
+    .replace(LIBCURL_TRANSPORT_TAG, `"${tagName}"`);
+  out = replaceAll(out, LIBCURL_VERBOSE_KEY, '[["_lib","curl_verbose"].join("")]');
+
+  for (const [from, to] of LIBCURL_MESSAGES) {
+    if (out.split(from).length - 1 !== 1) throw new CodecPatchError(`libcurl: expected exactly one ${JSON.stringify(from)}. Upstream changed.`);
+    out = replaceAll(out, from, to);
+  }
+
+  const start = out.indexOf(LIBCURL_NOTICE_START);
+  const end = start < 0 ? -1 : out.indexOf("`;", start + LIBCURL_NOTICE_START.length);
+  if (start < 0 || end < 0) throw new CodecPatchError("libcurl: the copyright notice template was not found. Upstream changed.");
+  const notice = out.slice(start, end);
+  const mentions = notice.split("libcurl").length - 1;
+  if (mentions !== 3 || notice.includes("${")) throw new CodecPatchError(`libcurl: expected 3 plain mentions in the copyright notice, found ${mentions}. Upstream changed.`);
+  if (notice.split("ading2210").length - 1 !== 1) throw new CodecPatchError("libcurl: expected one repository owner in the copyright notice. Upstream changed.");
+  const hidden = replaceAll(replaceAll(notice, "libcurl", '${["lib","curl"].join("")}'), "ading2210", '${["ading","2210"].join("")}');
+  out = out.slice(0, start) + hidden + out.slice(end);
+
+
+  const leaked = ["please call libcurl", "libcurl.js is licensed", "/ading2210/", '"libcurl_load"', '"libcurl_abort"', "wisp: {", LIBCURL_VERBOSE_KEY].filter(text => out.includes(text));
+  if (leaked.length) throw new CodecPatchError(`libcurl: ${leaked.join(", ")} survived the rewrite.`);
+  return out;
+}
+
+function applyWispRewrites(source, id, fieldName, tagName) {
   const expected = WISP_REWRITES[id];
   if (!expected) throw new CodecPatchError(`${id}: no Wisp rewrite table. Add one to WISP_REWRITES.`);
   const thisRefs = (source.match(WISP_THIS_FIELD) || []).length;
@@ -588,6 +652,7 @@ function applyWispRewrites(source, id, fieldName) {
     if (found !== count) throw new CodecPatchError(`${id}: expected ${count} occurrences of ${JSON.stringify(from)}, found ${found}. Upstream changed.`);
     out = replaceAll(out, from, to);
   }
+  if (id === "libcurl") out = applyLibcurlRewrites(out, tagName);
   if (/(?<![\w$])this\.wisp(?![\w$])/.test(out) || out.includes("wisp client")) throw new CodecPatchError(`${id}: a plain Wisp name survived the rewrite.`);
   return out;
 }
@@ -1069,7 +1134,7 @@ async function runObfuscator(source, scopeKey) {
     deadCodeInjection: false,
     debugProtection: false,
     disableConsoleOutput: false,
-    identifierNamesGenerator: "hexadecimal",
+    identifierNamesGenerator: "mangled-shuffled",
     renameGlobals: false,
     selfDefending: false,
     splitStrings: true,
@@ -1253,8 +1318,25 @@ function applyScramjetSharedNames(source, names, kind, id) {
   return out;
 }
 
+
+const SCRAMJET_WASM_LABELS = [
+  ["scramjet.codec.encode", 1],
+  ["scramjet.flagEnabled", 2],
+  ["url rewriter output", 1],
+];
+
+function blankScramjetWasmLabels(text, id) {
+  let out = text;
+  for (const [label, count] of SCRAMJET_WASM_LABELS) {
+    const found = out.split(label).length - 1;
+    if (found !== count) throw new CodecPatchError(`${id}: expected ${count} occurrences of the label ${JSON.stringify(label)}, found ${found}. Upstream changed.`);
+    out = replaceAll(out, label, " ".repeat(label.length));
+  }
+  return out;
+}
+
 function patchScramjetWasm(buffer, names, id) {
-  const patched = Buffer.from(applyScramjetSharedNames(buffer.toString("latin1"), names, "wasm", id), "latin1");
+  const patched = Buffer.from(blankScramjetWasmLabels(applyScramjetSharedNames(buffer.toString("latin1"), names, "wasm", id), id), "latin1");
   if (patched.length !== buffer.length) throw new CodecPatchError(`${id}: the wasm changed size (${buffer.length} -> ${patched.length}).`);
   return patched;
 }
@@ -1854,6 +1936,7 @@ async function build() {
   const ultravioletName = `_${randomBytes(5).toString("hex")}`;
   const uvPropertyName = `_${randomBytes(5).toString("hex")}`;
   const wispFieldName = `_${randomBytes(5).toString("hex")}`;
+  const wispTagName = `_${randomBytes(5).toString("hex")}`;
   const uvPrefixName = `_${randomBytes(4).toString("hex")}`;
   const scramjetStrings = createScramjetStrings();
   const scramjetSharedNames = createScramjetSharedNames();
@@ -2035,13 +2118,14 @@ async function build() {
     if (spec.stripDiagnostics) source = stripDiagnosticStrings(source, spec.id);
     // After the diagnostic strip, whose literals carry bare-mux occurrences of their own.
     if (spec.rewriteBaremuxStrings) source = applyBaremuxStrings(source, spec.id, baremuxStrings);
+    if (spec.rewriteBaremuxStrings) source = applyBroadcastChannelRewrite(source, spec.id);
     if (spec.rewriteProtocolKeys) source = applyScramjetProtocolKeys(source, protocolKeys);
     if (spec.renameIdentifiers) source = applyIdentifierRenames(source, identifierRenames);
     if (spec.sharedNames) source = applyScramjetSharedNames(source, scramjetSharedNames, spec.sharedNames, spec.id);
     if (spec.stripBranding) source = stripUltravioletBranding(source);
     if (spec.renameUltraviolet) source = applyUltravioletRename(source, ultravioletName);
     if (spec.renameUvProperty) source = applyUvPropertyRename(source, uvPropertyName);
-    if (spec.rewriteWisp) source = applyWispRewrites(source, spec.id, wispFieldName);
+    if (spec.rewriteWisp) source = applyWispRewrites(source, spec.id, wispFieldName, wispTagName);
     if (spec.rewriteEpoxyWasmExports) source = applyEpoxyWasmExportAccessRewrite(source);
     if (spec.renameUvPrefix) source = applyUvPrefixRename(source, uvPrefixName);
     if (spec.rewriteUvDefaults) source = applyUvDefaultPaths(source, specs);
