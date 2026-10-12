@@ -576,6 +576,25 @@ function applyUvPropertyRename(source, name) {
   return out;
 }
 
+
+const UV_REWRITER_NAMES = ["rewriteUrl", "rewriteCSS", "rewriteJS"];
+
+function createUvRewriterRenames() {
+  return new Map(UV_REWRITER_NAMES.map(name => [name, `_${randomBytes(5).toString("hex")}`]));
+}
+
+function applyUvRewriterRenames(source, id, renames, counts) {
+  let out = source;
+  for (const [from, to] of renames) {
+    const pattern = new RegExp(`(?<![\\w$])${from}(?![\\w$])`, "g");
+    const found = (out.match(pattern) || []).length;
+    if (found !== counts[from]) throw new CodecPatchError(`${id}: expected ${counts[from]} occurrences of ${from}, found ${found}. Upstream changed.`);
+    out = out.replace(pattern, to);
+    if (out.match(pattern)) throw new CodecPatchError(`${id}: ${from} survived the rename.`);
+  }
+  return out;
+}
+
 const WISP_THIS_FIELD = /(?<![\w$])this\.wisp(?![\w$])/g;
 const WISP_FIELD_DECLARATION = /^([ \t]*)wisp;[ \t]*$/gm;
 const WISP_REWRITES = {
@@ -1297,6 +1316,10 @@ const SCRAMJET_SHARED_NAMES = [
   { from: "$scramerr", js: 1, config: 0, wasm: 1 },
   { from: "scramtag", js: 5, config: 0, wasm: 3 },
   { from: "$scramdbg", js: 1, config: 0, wasm: 0 },
+  { from: "rewriter_rewrite_js", js: 2, config: 0, wasm: 2 },
+  { from: "__wbg_rewriter_free", js: 2, config: 0, wasm: 1 },
+  { from: "strictRewrites", js: 1, config: 0, wasm: 1 },
+  { from: "destructureRewrites", js: 1, config: 0, wasm: 1 },
 ];
 
 function createScramjetSharedNames() {
@@ -1323,6 +1346,7 @@ const SCRAMJET_WASM_LABELS = [
   ["scramjet.codec.encode", 1],
   ["scramjet.flagEnabled", 2],
   ["url rewriter output", 1],
+  ["url rewriter error", 1],
 ];
 
 function blankScramjetWasmLabels(text, id) {
@@ -1403,6 +1427,7 @@ function vendorSpecs() {
       stripDiagnostics: true,
       rewriteBaremuxStrings: true,
       renameUltraviolet: true,
+      renameUvRewriters: { rewriteUrl: 15, rewriteCSS: 2, rewriteJS: 1 },
       src: path.join(uvPath, "uv.bundle.js"),
       old: "/assets/ultraviolet/uv.bundle.js",
       ext: ".js",
@@ -1416,12 +1441,13 @@ function vendorSpecs() {
       stripUvError: true,
       renameIdentifiers: true,
       renameUltraviolet: true,
+      renameUvRewriters: { rewriteUrl: 19, rewriteCSS: 8, rewriteJS: 2 },
       src: path.join(uvPath, "uv.handler.js"),
       old: "/assets/ultraviolet/uv.handler.js",
       ext: ".js",
       globals: ["__uvHook", "Ultraviolet", "UVClient", "__uv$config", "__uv$cookies", "__uv"],
     },
-    { id: "uv.sw", renameUvPrefix: true, renameIdentifiers: true, renameUltraviolet: true, stripBranding: true, renameUvProperty: true, src: path.join(uvPath, "uv.sw.js"), old: "/assets/ultraviolet/uv.sw.js", ext: ".js", globals: ["UVServiceWorker", "Ultraviolet", "__uv"] },
+    { id: "uv.sw", renameUvPrefix: true, renameIdentifiers: true, renameUltraviolet: true, stripBranding: true, renameUvProperty: true, renameUvRewriters: { rewriteUrl: 1, rewriteCSS: 1, rewriteJS: 0 }, src: path.join(uvPath, "uv.sw.js"), old: "/assets/ultraviolet/uv.sw.js", ext: ".js", globals: ["UVServiceWorker", "Ultraviolet", "__uv"] },
     {
       id: "uv.config",
       renameIdentifiers: true,
@@ -1931,6 +1957,7 @@ async function build() {
   const proxyCodecs = createProxyCodecs();
   const scramjetGlobals = createScramjetGlobals();
   const identifierRenames = createIdentifierRenames();
+  const uvRewriterRenames = createUvRewriterRenames();
   const protocolKeys = createScramjetProtocolKeys();
   const baremuxStrings = createBaremuxStrings();
   const ultravioletName = `_${randomBytes(5).toString("hex")}`;
@@ -2125,6 +2152,7 @@ async function build() {
     if (spec.stripBranding) source = stripUltravioletBranding(source);
     if (spec.renameUltraviolet) source = applyUltravioletRename(source, ultravioletName);
     if (spec.renameUvProperty) source = applyUvPropertyRename(source, uvPropertyName);
+    if (spec.renameUvRewriters) source = applyUvRewriterRenames(source, spec.id, uvRewriterRenames, spec.renameUvRewriters);
     if (spec.rewriteWisp) source = applyWispRewrites(source, spec.id, wispFieldName, wispTagName);
     if (spec.rewriteEpoxyWasmExports) source = applyEpoxyWasmExportAccessRewrite(source);
     if (spec.renameUvPrefix) source = applyUvPrefixRename(source, uvPrefixName);
