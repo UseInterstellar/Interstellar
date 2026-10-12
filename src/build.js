@@ -469,6 +469,7 @@ const RENAMED_IDENTIFIERS = [
   "BareWebSocket",
   "WorkerConnection",
   "wisp_v2",
+  "wisp_ws_protocols",
   "WispConnection",
   "WispWebSocket",
   "wisp_connections",
@@ -597,11 +598,13 @@ function applyUvRewriterRenames(source, id, renames, counts) {
 
 const WISP_THIS_FIELD = /(?<![\w$])this\.wisp(?![\w$])/g;
 const WISP_FIELD_DECLARATION = /^([ \t]*)wisp;[ \t]*$/gm;
+const WISP_OPTION_READ = /(?<![\w$])(options|opts2)\.wisp(?![\w$])/g;
 const WISP_REWRITES = {
-  epoxy: { thisRefs: 2, declarations: 1, strings: [] },
+  epoxy: { thisRefs: 2, declarations: 1, optionReads: 1, strings: [] },
   libcurl: {
     thisRefs: 5,
     declarations: 1,
+    optionReads: 1,
     strings: [
       ["wisp client warning: ", "", 3],
       ["wisp endpoints must end", "endpoints must end", 1],
@@ -665,14 +668,19 @@ function applyWispRewrites(source, id, fieldName, tagName) {
   if (thisRefs !== expected.thisRefs || declarations !== expected.declarations) {
     throw new CodecPatchError(`${id}: expected ${expected.thisRefs} this.wisp references and ${expected.declarations} field declaration, found ${thisRefs} and ${declarations}. Upstream changed.`);
   }
-  let out = source.replace(WISP_THIS_FIELD, `this.${fieldName}`).replace(WISP_FIELD_DECLARATION, `$1${fieldName};`);
+  const optionReads = (source.match(WISP_OPTION_READ) || []).length;
+  if (optionReads !== expected.optionReads) throw new CodecPatchError(`${id}: expected ${expected.optionReads} option reads of .wisp, found ${optionReads}. Upstream changed.`);
+  let out = source
+    .replace(WISP_THIS_FIELD, `this.${fieldName}`)
+    .replace(WISP_FIELD_DECLARATION, `$1${fieldName};`)
+    .replace(WISP_OPTION_READ, '$1[["wi","sp"].join("")]');
   for (const [from, to, count] of expected.strings) {
     const found = out.split(from).length - 1;
     if (found !== count) throw new CodecPatchError(`${id}: expected ${count} occurrences of ${JSON.stringify(from)}, found ${found}. Upstream changed.`);
     out = replaceAll(out, from, to);
   }
   if (id === "libcurl") out = applyLibcurlRewrites(out, tagName);
-  if (/(?<![\w$])this\.wisp(?![\w$])/.test(out) || out.includes("wisp client")) throw new CodecPatchError(`${id}: a plain Wisp name survived the rewrite.`);
+  if (/(?<![\w$])this\.wisp(?![\w$])/.test(out) || out.includes("wisp client") || (out.match(WISP_OPTION_READ) || []).length) throw new CodecPatchError(`${id}: a plain Wisp name survived the rewrite.`);
   return out;
 }
 
@@ -682,7 +690,7 @@ const EPOXY_WASM_IMPORT_NEW = /(?<![\w$])imports\.wbg\.__wbg_epoxywebsocket_new(
 const EPOXY_WASM_FALLBACK_URL = '"epoxy.wasm"';
 
 function splitSensitivePropertyName(name) {
-  return JSON.stringify(name).replace(/epoxy/g, 'ep","oxy');
+  return JSON.stringify(name).replace(/epoxy/g, 'ep","oxy').replace(/wisp/g, 'wi","sp');
 }
 
 function applyEpoxyWasmExportAccessRewrite(source) {
