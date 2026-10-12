@@ -1167,7 +1167,7 @@ async function runObfuscator(source, scopeKey) {
     splitStrings: true,
     splitStringsChunkLength: 5,
     stringArray: true,
-    stringArrayEncoding: ["rc4"],
+    stringArrayEncoding: ["base64"],
     stringArrayThreshold: 1,
     transformObjectKeys: true,
     unicodeEscapeSequence: false,
