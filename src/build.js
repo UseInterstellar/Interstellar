@@ -59,12 +59,34 @@ const RESERVED_GLOBALS =
     " ",
   );
 
-function vendorTerserOptions({ module, aggressive }) {
+const INTERNAL_PROPERTY_MANGLE_NAMES = ["locationProxy", "createLocationProxy", "RawProxy", "Proxy", "proxiedCallback"];
+const INTERNAL_PROPERTY_MANGLE_REGEX = new RegExp(`^(?:${INTERNAL_PROPERTY_MANGLE_NAMES.join("|")})$`);
+const INTERNAL_PROPERTY_SURVIVAL_CHECKS = INTERNAL_PROPERTY_MANGLE_NAMES.filter(name => name !== "Proxy");
+const INTERNAL_PROPERTY_NAME_CACHE = { vars: {}, props: {} };
+const RESERVED_PROPERTY_NAMES =
+  "constructor prototype length name arguments caller encode decode encodeUrl decodeUrl files workerPath config prefix codec globals websocket wisp transport libcurl epoxy baremux baremuxWorker setTransport setManualTransport getTransport importScript importScripts postMessage addEventListener removeEventListener dispatchEvent onconnect onmessage onerror onfetch fetch install activate message serviceWorker controller register unregister ready clients matchAll waitUntil respondWith request response headers body url href origin pathname search hash host hostname protocol port method mode destination referrer credentials cache redirect integrity keepalive signal arrayBuffer blob formData json text ok status statusText type clone".split(
+    " ",
+  );
+
+function vendorTerserOptions({ module, aggressive, propertyMangle = false }) {
+  const mangle = {
+    toplevel: Boolean(aggressive),
+    reserved: RESERVED_GLOBALS,
+  };
+  if (propertyMangle) {
+    mangle.properties = {
+      regex: INTERNAL_PROPERTY_MANGLE_REGEX,
+      reserved: RESERVED_PROPERTY_NAMES,
+      builtins: true,
+      keep_quoted: "strict",
+    };
+  }
   return {
     ecma: 2020,
     module,
     compress: { passes: 2, pure_funcs: VENDOR_DROPPED_CONSOLE },
-    mangle: { toplevel: Boolean(aggressive), reserved: RESERVED_GLOBALS },
+    mangle,
+    nameCache: INTERNAL_PROPERTY_NAME_CACHE,
     format: { comments: false },
   };
 }
@@ -334,8 +356,11 @@ const DIAGNOSTIC_STRINGS = [
   '"there are no bare clients"',
   '"No BareTransport was set. Try creating a BareMuxConnection and calling `setTransport()` or `setManualTransport()` on it before using BareClient."',
   '"The BareTransport provided was invalid. Common causes of this are a default export that is not a class that implements BareTransport if you are using `setTransport()`"',
+  '"(direct eval proxy)"',
+  '"(indirect eval proxy)"',
+  '"(function proxy)"',
 ];
-const DIAGNOSTIC_COUNTS = { "sj.all": 7, "uv.bundle": 2, "uv.client": 2, baremux: 2, "baremux.worker": 3 };
+const DIAGNOSTIC_COUNTS = { "sj.all": 10, "uv.bundle": 2, "uv.client": 2, baremux: 2, "baremux.worker": 3 };
 
 function stripDiagnosticStrings(source, id) {
   let out = source;
@@ -427,6 +452,22 @@ const RENAMED_IDENTIFIERS = [
   "UVServiceWorker",
   "BareMuxConnection",
   "BareClient",
+  "bareClient",
+  "BareWebSocket",
+  "WorkerConnection",
+  "wisp_v2",
+  "WispConnection",
+  "WispWebSocket",
+  "wisp_connections",
+  "wisp_url",
+  "EpoxyTransport",
+  "EpoxyClient",
+  "EpoxyClientFinalization",
+  "EpoxyClientOptions",
+  "EpoxyClientOptionsFinalization",
+  "EpoxyHandlers",
+  "EpoxyHandlersFinalization",
+  "epoxyInfo",
   "uvHostname",
   "implementUVMiddleware",
   "ScramjetServiceWorkerRuntime",
@@ -516,6 +557,61 @@ function applyUvPropertyRename(source, name) {
   if (!found) throw new CodecPatchError("uv.sw.js: the .ultraviolet property was not found. Upstream file changed.");
   const out = source.replace(UV_PROPERTY, `.${name}`);
   if (UV_PROPERTY.test(out)) throw new CodecPatchError("uv.sw.js: .ultraviolet survived the rename.");
+  return out;
+}
+
+const WISP_THIS_FIELD = /(?<![\w$])this\.wisp(?![\w$])/g;
+const WISP_FIELD_DECLARATION = /^([ \t]*)wisp;[ \t]*$/gm;
+const WISP_REWRITES = {
+  epoxy: { thisRefs: 2, declarations: 1, strings: [] },
+  libcurl: {
+    thisRefs: 5,
+    declarations: 1,
+    strings: [
+      ["wisp client warning: ", "", 3],
+      ["wisp endpoints must end", "endpoints must end", 1],
+    ],
+  },
+};
+
+function applyWispRewrites(source, id, fieldName) {
+  const expected = WISP_REWRITES[id];
+  if (!expected) throw new CodecPatchError(`${id}: no Wisp rewrite table. Add one to WISP_REWRITES.`);
+  const thisRefs = (source.match(WISP_THIS_FIELD) || []).length;
+  const declarations = (source.match(WISP_FIELD_DECLARATION) || []).length;
+  if (thisRefs !== expected.thisRefs || declarations !== expected.declarations) {
+    throw new CodecPatchError(`${id}: expected ${expected.thisRefs} this.wisp references and ${expected.declarations} field declaration, found ${thisRefs} and ${declarations}. Upstream changed.`);
+  }
+  let out = source.replace(WISP_THIS_FIELD, `this.${fieldName}`).replace(WISP_FIELD_DECLARATION, `$1${fieldName};`);
+  for (const [from, to, count] of expected.strings) {
+    const found = out.split(from).length - 1;
+    if (found !== count) throw new CodecPatchError(`${id}: expected ${count} occurrences of ${JSON.stringify(from)}, found ${found}. Upstream changed.`);
+    out = replaceAll(out, from, to);
+  }
+  if (/(?<![\w$])this\.wisp(?![\w$])/.test(out) || out.includes("wisp client")) throw new CodecPatchError(`${id}: a plain Wisp name survived the rewrite.`);
+  return out;
+}
+
+const EPOXY_WASM_EXPORT_ACCESS = /\bwasm\.((?:(?:epoxyclient|epoxyhandlers?|epoxywebsocket)[\w$]*|[A-Za-z_$][\w$]*(?:epoxyclient|epoxyhandlers?|epoxywebsocket)[\w$]*))/g;
+const EPOXY_WASM_EXPORT_ACCESS_COUNT = 55;
+const EPOXY_WASM_IMPORT_NEW = /(?<![\w$])imports\.wbg\.__wbg_epoxywebsocket_new(?![\w$])/g;
+const EPOXY_WASM_FALLBACK_URL = '"epoxy.wasm"';
+
+function splitSensitivePropertyName(name) {
+  return JSON.stringify(name).replace(/epoxy/g, 'ep","oxy');
+}
+
+function applyEpoxyWasmExportAccessRewrite(source) {
+  const found = (source.match(EPOXY_WASM_EXPORT_ACCESS) || []).length;
+  if (found !== EPOXY_WASM_EXPORT_ACCESS_COUNT) throw new CodecPatchError(`epoxy: expected ${EPOXY_WASM_EXPORT_ACCESS_COUNT} WASM export property accesses, found ${found}. Upstream changed.`);
+  const importHooks = (source.match(EPOXY_WASM_IMPORT_NEW) || []).length;
+  const fallbackUrls = source.split(EPOXY_WASM_FALLBACK_URL).length - 1;
+  if (importHooks !== 1 || fallbackUrls !== 1) throw new CodecPatchError(`epoxy: expected one websocket import hook and one fallback WASM URL, found ${importHooks} and ${fallbackUrls}. Upstream changed.`);
+  let out = source.replace(EPOXY_WASM_EXPORT_ACCESS, (_, name) => `wasm[[${splitSensitivePropertyName(name)}].join("")]`);
+  out = out.replace(EPOXY_WASM_IMPORT_NEW, `imports.wbg[[${splitSensitivePropertyName("__wbg_epoxywebsocket_new")}].join("")]`);
+  out = replaceAll(out, EPOXY_WASM_FALLBACK_URL, '["ep","oxy.wasm"].join("")');
+  if (/wasm\.(?:(?:epoxyclient|epoxyhandlers?|epoxywebsocket)[\w$]*|[A-Za-z_$][\w$]*(?:epoxyclient|epoxyhandlers?|epoxywebsocket)[\w$]*)/.test(out)) throw new CodecPatchError("epoxy: a plain WASM export property access survived the rewrite.");
+  if (EPOXY_WASM_IMPORT_NEW.test(out) || out.includes(EPOXY_WASM_FALLBACK_URL)) throw new CodecPatchError("epoxy: a plain WASM import hook or fallback URL survived the rewrite.");
   return out;
 }
 
@@ -947,8 +1043,8 @@ function identifiersPrefixFor(scopeKey) {
   return `_${createHash("sha1").update(scopeKey).digest("hex").slice(0, 8)}_`;
 }
 
-async function minifyVendor(source, { module, aggressive }) {
-  const result = await minify(source, vendorTerserOptions({ module, aggressive }));
+async function minifyVendor(source, { module, aggressive, propertyMangle }) {
+  const result = await minify(source, vendorTerserOptions({ module, aggressive, propertyMangle }));
   if (!result.code) throw new Error("Terser returned empty output");
   return result.code;
 }
@@ -1269,8 +1365,10 @@ function vendorSpecs() {
       rewriteBaremuxStrings: true,
       rewriteProtocolKeys: true,
       renameIdentifiers: true,
+      propertyMangle: true,
       rewriteScramjetStrings: true,
       sharedNames: "js",
+      mangledAway: INTERNAL_PROPERTY_SURVIVAL_CHECKS,
       globals: ["$scramjetLoadWorker", "$scramjetLoadController", "$scramjetLoadClient", "$scramjetRequire", "$scramjetVersion", "COOKIE", "WASM"],
     },
     { id: "sj.sync", src: path.join(scramjetPath, "scramjet.sync.js"), old: "/assets/scramjet/scramjet.sync.js", ext: ".js", renameIdentifiers: true },
@@ -1308,8 +1406,11 @@ function vendorSpecs() {
       ext: ".mjs",
       module: true,
       aggressive: true,
+      renameIdentifiers: true,
+      rewriteWisp: true,
+      rewriteEpoxyWasmExports: true,
       globals: ["epoxyInfo"],
-      mangledAway: ["__wbg_get_imports", "getStringFromWasm", "EpoxyClientOptions"],
+      mangledAway: ["__wbg_get_imports", "getStringFromWasm", "EpoxyTransport", "EpoxyClient", "EpoxyClientFinalization", "EpoxyClientOptions", "EpoxyClientOptionsFinalization", "EpoxyHandlers", "EpoxyHandlersFinalization", "epoxyInfo"],
     },
     {
       id: "libcurl",
@@ -1318,6 +1419,8 @@ function vendorSpecs() {
       ext: ".mjs",
       module: true,
       aggressive: true,
+      renameIdentifiers: true,
+      rewriteWisp: true,
       mangledAway: ["moduleOverrides", "ENVIRONMENT_IS_WEB", "wasmBinaryFile"],
     },
   ];
@@ -1750,6 +1853,7 @@ async function build() {
   const baremuxStrings = createBaremuxStrings();
   const ultravioletName = `_${randomBytes(5).toString("hex")}`;
   const uvPropertyName = `_${randomBytes(5).toString("hex")}`;
+  const wispFieldName = `_${randomBytes(5).toString("hex")}`;
   const uvPrefixName = `_${randomBytes(4).toString("hex")}`;
   const scramjetStrings = createScramjetStrings();
   const scramjetSharedNames = createScramjetSharedNames();
@@ -1937,6 +2041,8 @@ async function build() {
     if (spec.stripBranding) source = stripUltravioletBranding(source);
     if (spec.renameUltraviolet) source = applyUltravioletRename(source, ultravioletName);
     if (spec.renameUvProperty) source = applyUvPropertyRename(source, uvPropertyName);
+    if (spec.rewriteWisp) source = applyWispRewrites(source, spec.id, wispFieldName);
+    if (spec.rewriteEpoxyWasmExports) source = applyEpoxyWasmExportAccessRewrite(source);
     if (spec.renameUvPrefix) source = applyUvPrefixRename(source, uvPrefixName);
     if (spec.rewriteUvDefaults) source = applyUvDefaultPaths(source, specs);
     if (spec.stripUvError) source = stripUvErrorMessage(source);
@@ -1973,7 +2079,7 @@ async function build() {
       references.push({ file: `${spec.id} (${spec.publicPath})`, source });
     }
 
-    const minified = spec.minify === false ? source : await minifyVendor(source, { module: Boolean(spec.module), aggressive: Boolean(spec.aggressive) });
+    const minified = spec.minify === false ? source : await minifyVendor(source, { module: Boolean(spec.module), aggressive: Boolean(spec.aggressive), propertyMangle: Boolean(spec.propertyMangle) });
     await writeFile(destination, minified, "utf8");
     emitted.set(spec.publicPath, destination);
 

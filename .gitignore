@@ -5,6 +5,7 @@ data/
 decoy/
 test/
 tests/
+analysis/
 
 .idea
 .DS_Store
