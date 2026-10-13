@@ -244,16 +244,30 @@ const titleHomoglyphs = {
   a: "а", c: "с", e: "е", i: "і", j: "ј", o: "о", p: "р", s: "ѕ", x: "х", y: "у",
   A: "А", B: "В", C: "С", E: "Е", H: "Н", I: "І", J: "Ј", K: "К", M: "М", O: "О", P: "Р", S: "Ѕ", T: "Т", X: "Х", Y: "Ү",
 };
+
+
+const DETECTOR_TRIGGER_TOKENS = [
+  "ultraviolet", "scramjet", "baremux", "libcurl", "unblock",
+  "proxy", "epoxy", "wisp", "bare", "enter", "url",
+];
+function triggerBreakSet(lower) {
+  const s = new Set();
+  for (const tok of DETECTOR_TRIGGER_TOKENS) {
+    let from = 0, idx;
+    while ((idx = lower.indexOf(tok, from)) !== -1) { s.add(idx); from = idx + 1; }
+  }
+  return s;
+}
 function laceTitle(text, homoglyphs = true) {
   const points = Array.from(text || "");
+  const mustBreak = triggerBreakSet((text || "").toLowerCase());
   const pick = () => zeroWidth[Math.floor(Math.random() * zeroWidth.length)];
   let out = "";
   for (let i = 0; i < points.length; i++) {
-    const swap = homoglyphs && titleHomoglyphs[points[i]] && Math.random() < 0.3;
+    const swap = homoglyphs && titleHomoglyphs[points[i]] && Math.random() < 0.5;
     out += swap ? titleHomoglyphs[points[i]] : points[i];
-    if (i < points.length - 1) {
-      out += pick();
-      if (Math.random() < 0.35) out += pick();
+    if (i < points.length - 1 && /\S/.test(points[i]) && /\S/.test(points[i + 1])) {
+      if (mustBreak.has(i) || Math.random() < 0.15) out += pick();
     }
   }
   return out;
