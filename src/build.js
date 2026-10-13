@@ -1252,6 +1252,28 @@ function obfuscateTextNodes(html) {
   });
 }
 
+const PLACEHOLDER_LOOKALIKES = {
+  a: "а", c: "с", e: "е", i: "і", o: "о", p: "р", x: "х", y: "у",
+  A: "А", B: "В", C: "С", E: "Е", H: "Н", K: "К", M: "М", O: "О",
+  P: "Р", T: "Т", X: "Х",
+};
+
+function obfuscatePlaceholder(value) {
+  if (value.includes("&")) throw new CodecPatchError(`placeholder ${JSON.stringify(value)} contains "&". Entity-aware swaps are not implemented.`);
+  const seed = fnv1a(value);
+  const chars = [...value];
+  let out = "";
+  for (let i = 0; i < chars.length; i++) {
+    let c = chars[i];
+    if ((seed + i) % 3 === 0 && PLACEHOLDER_LOOKALIKES[c]) c = PLACEHOLDER_LOOKALIKES[c];
+    out += c;
+    if (i + 1 < chars.length && (seed + i) % 4 === 1 && /\S/.test(c) && /\S/.test(chars[i + 1])) {
+      out += HARDEN_ZERO_WIDTH[(seed + i) % HARDEN_ZERO_WIDTH.length];
+    }
+  }
+  return out;
+}
+
 function obfuscateAttributeValues(html) {
   const valueAttrs = "alt|aria-label|class|content|crossorigin|href|id|method|name|onclick|onchange|onkeyup|placeholder|rel|src|style|title|type|value";
   const attrPattern = new RegExp(`\\s(${valueAttrs})=(["'])(.*?)\\2`, "gis");
@@ -1261,7 +1283,8 @@ function obfuscateAttributeValues(html) {
 
     const encodedAttrs = attrs.replace(attrPattern, (_match, attrName, quote, value) => {
       if (!value) return ` ${attrName}=${quote}${value}${quote}`;
-      return ` ${attrName}=${quote}${encodeHtmlText(value)}${quote}`;
+      const shown = attrName.toLowerCase() === "placeholder" ? obfuscatePlaceholder(value) : value;
+      return ` ${attrName}=${quote}${encodeHtmlText(shown)}${quote}`;
     });
 
     return `<${name}${encodedAttrs}>`;
