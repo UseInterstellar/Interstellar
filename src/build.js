@@ -1185,6 +1185,11 @@ function shouldProcessInlineScript(attrs) {
   return ["text/javascript", "application/javascript", "module"].includes(type);
 }
 
+
+function scopeHomeScript(source) {
+  return `(function () {\n${source}\n})();\n`;
+}
+
 async function obfuscateInlineScripts(html, htmlName) {
   const scripts = [];
   let index = 0;
@@ -2265,6 +2270,7 @@ async function build() {
         output = handlerDefs.source;
         handlerJsCount += handlerDefs.changed;
         if (basename === "tabs.js") output = applyTabAttr(output, tabAttr);
+        if (basename === "home.js") output = scopeHomeScript(output);
         if (basename === "launcher.js") output = patchOrFail(output, /const CATALOGUE_KEY = \[0\];/, `const CATALOGUE_KEY = ${JSON.stringify(catalogueKey)};`, "launcher.js catalogue key");
         references.push({ file: `${basename} (${publicPath})`, source: output });
 
