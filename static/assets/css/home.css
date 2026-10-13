@@ -37,10 +37,27 @@
 
 .search-container {
    display: flex;
+   flex-direction: column;
+   gap: 12px;
    width: 100%;
    text-align: center;
    justify-content: center;
    align-items: center;
+}
+
+#about-blank-button {
+   padding: 10px 16px;
+   border: 1px solid var(--border);
+   border-radius: var(--radius-md);
+   background: var(--surface-button);
+   color: var(--text);
+   font: inherit;
+   cursor: pointer;
+   transition: var(--transition);
+}
+
+#about-blank-button:hover {
+   background: var(--surface-button-hover);
 }
 
 .truncate {

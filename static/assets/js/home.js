@@ -110,6 +110,34 @@ function randRange(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
+function openHomeAboutBlank() {
+  if (navigator.userAgent.includes("Firefox")) {
+    return;
+  }
+
+  const popup = open("about:blank", "_blank");
+  if (!popup || popup.closed) {
+    alert("Window blocked. Please allow popups for this site.");
+    return;
+  }
+
+  const doc = popup.document;
+  const iframe = doc.createElement("iframe");
+  const link = doc.createElement("link");
+  const script = doc.createElement("script");
+  doc.title = (window.laceTitle || (s => s))(store.get("name") || "My Drive - Google Drive");
+  link.rel = "icon";
+  link.href = absoluteUrl(store.get("icon") || "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png");
+  iframe.src = cloakHost.location.href;
+  Object.assign(iframe.style, { position: "fixed", inset: "0", border: "none", outline: "none", width: "100%", height: "100%" });
+  script.textContent = "window.onbeforeunload = event => { const message = 'Leave Site?'; (event || window.event).returnValue = message; return message; };";
+  doc.head.append(link, script);
+  doc.body.appendChild(iframe);
+
+  const panicLink = reconstructNavigationUrl(store.get("pLink")) ?? getRandomUrl();
+  cloakHost.location.replace(panicLink);
+}
+
 (function buildHeading() {
   const heading = document.querySelector("h1.title");
   if (!heading) return;
