@@ -25,6 +25,35 @@ function encodeProxyUrlSync(url) {
 
 window.__mkurl = encodeProxyUrlSync;
 
+function realUrlOf(frame) {
+  try {
+    const href = frame.contentWindow.location.href;
+    if (href.includes("/uv/scramjet/")) return window.__urls?.decodeUrl ? window.__urls.decodeUrl(href) : null;
+    if (href.includes("/uv/")) {
+      const path = href.replace(window.location.origin, "").replace("/uv/", "");
+      return __uv$config.decodeUrl ? __uv$config.decodeUrl(path) : window.decode.xor(path);
+    }
+    return href;
+  } catch {
+    return null;
+  }
+}
+
+
+function realDestinationOf(url, base) {
+  const absolute = resolveAgainst(url, base);
+  if (absolute.includes("/uv/scramjet/") && window.__urls?.decodeUrl) return window.__urls.decodeUrl(absolute);
+  return absolute;
+}
+
+function resolveAgainst(url, base) {
+  try {
+    return new URL(url, base).href;
+  } catch {
+    return url;
+  }
+}
+
 const addressBar = (() => {
   const ZERO_WIDTH = ["​", "‌", "‍", "⁠", "﻿"];
   const ZERO_WIDTH_RE = /​|‌|‍|‎|‏|⁠|﻿/g;
@@ -493,9 +522,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         newIframe.contentWindow.open = url => {
           const blank = !url || url === "about:blank";
-          const proxyUrl = blank ? null : window.__mkurl ? window.__mkurl(url) : `/uv/${__uv$config.encodeUrl(url)}`;
-          createNewTab(proxyUrl);
-          return null;
+          const target = blank ? null : realDestinationOf(String(url), realUrlOf(newIframe));
+          const proxyUrl = blank ? null : window.__mkurl ? window.__mkurl(target) : `/uv/${__uv$config.encodeUrl(target)}`;
+          return createNewTab(proxyUrl).contentWindow;
         };
 
         const formProto = newIframe.contentWindow.HTMLFormElement.prototype;
