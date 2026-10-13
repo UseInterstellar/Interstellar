@@ -246,13 +246,10 @@ const titleHomoglyphs = {
 };
 
 
-const DETECTOR_TRIGGER_TOKENS = [
-  "ultraviolet", "scramjet", "baremux", "libcurl", "unblock",
-  "proxy", "epoxy", "wisp", "bare", "enter", "url",
-];
 function triggerBreakSet(lower) {
   const s = new Set();
-  for (const tok of DETECTOR_TRIGGER_TOKENS) {
+  const tokens = ["ultraviolet", "scramjet", "baremux", "libcurl", "unblock", "proxy", "epoxy", "wisp", "bare", "enter", "url"];
+  for (const tok of tokens) {
     let from = 0, idx;
     while ((idx = lower.indexOf(tok, from)) !== -1) { s.add(idx); from = idx + 1; }
   }
