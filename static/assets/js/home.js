@@ -138,6 +138,8 @@ function openHomeAboutBlank() {
   cloakHost.location.replace(panicLink);
 }
 
+document.getElementById("about-blank-button").addEventListener("click", openHomeAboutBlank);
+
 (function buildHeading() {
   const heading = document.querySelector("h1.title");
   if (!heading) return;
