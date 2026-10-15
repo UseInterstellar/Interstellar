@@ -30,9 +30,10 @@ const config = {
   masqr: {
     enabled: false,
     decoy: "default",
-    searchTrigger: "interstellar", // Default trigger for unlisted domains
+    searchTrigger: "interstellar", // Default trigger for unlisted domains.
     secureCookie: true,
     sessionDays: 30,
+    decoyOnly: false, // Only enable Masqr on hosts with configured decoys.
 
     // Domain-Specific Triggers
     // Apply custom search triggers to groups of domains sharing a name.

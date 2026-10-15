@@ -183,12 +183,13 @@ function loadSearchRedirect(folder) {
   return redirect;
 }
 
-export function mountMasqr(app, { decoyRoot, secureCookie = true, sessionMs = 30 * DAY_MS, searchTrigger = null, sites = [] }) {
+export function mountMasqr(app, { decoyRoot, secureCookie = true, sessionMs = 30 * DAY_MS, searchTrigger = null, sites = [], decoyOnly = false }) {
   if (!existsSync(path.join(decoyRoot, "index.html"))) throw new Error(`Masqr decoy set ${decoyRoot} has no index.html`);
   const decoyMap = loadDecoyMap(decoyRoot);
   const decoyFolderFor = req => decoyMap.get(normaliseHost(req.headers.host)) ?? "";
   const siteTriggers = expandSites(sites);
   const triggerFor = req => siteTriggers.get(normaliseHost(req.headers.host)) ?? searchTrigger;
+  const gated = req => !decoyOnly || decoyMap.has(normaliseHost(req.headers.host)) || siteTriggers.has(normaliseHost(req.headers.host));
 
   const searchRedirects = new Map([["", loadSearchRedirect(decoyRoot)]]);
   for (const folder of new Set(decoyMap.values())) searchRedirects.set(folder, loadSearchRedirect(path.join(decoyRoot, folder)));
@@ -208,8 +209,9 @@ export function mountMasqr(app, { decoyRoot, secureCookie = true, sessionMs = 30
     });
   };
 
-  app.post(SEARCH_PATH, express.urlencoded({ extended: false, limit: "1kb" }), (req, res) => {
+  app.post(SEARCH_PATH, express.urlencoded({ extended: false, limit: "1kb" }), (req, res, next) => {
     res.setHeader("Cache-Control", "no-store");
+    if (!gated(req)) return next();
     const query = String(req.body?.q ?? "");
     if (triggerMatches(query, triggerFor(req))) {
       consumeToken(issueToken({ days: 1 }), null);
@@ -221,8 +223,9 @@ export function mountMasqr(app, { decoyRoot, secureCookie = true, sessionMs = 30
     return res.redirect(303, `${target}${encodeURIComponent(query)}`);
   });
 
-  app.post(LOGIN_PATH, express.urlencoded({ extended: false, limit: "1kb" }), (req, res) => {
+  app.post(LOGIN_PATH, express.urlencoded({ extended: false, limit: "1kb" }), (req, res, next) => {
     res.setHeader("Cache-Control", "no-store");
+    if (!gated(req)) return next();
     const password = typeof req.body?.password === "string" ? req.body.password : "";
     if (!password || !triggerMatches(password, triggerFor(req))) {
       return res.status(401).json({ error: "Invalid login" });
@@ -232,7 +235,7 @@ export function mountMasqr(app, { decoyRoot, secureCookie = true, sessionMs = 30
   });
 
   app.use((req, res, next) => {
-    if (isAuthorized(req)) return next();
+    if (!gated(req) || isAuthorized(req)) return next();
     if (req.method === "GET" || req.method === "HEAD") {
       let file = null;
       try {
@@ -245,5 +248,5 @@ export function mountMasqr(app, { decoyRoot, secureCookie = true, sessionMs = 30
     res.status(404).type("text/plain").send("Not Found");
   });
 
-  return { isAuthorized, normaliseHost, decoyFolderFor };
+  return { isAuthorized, isGated: gated, normaliseHost, decoyFolderFor };
 }

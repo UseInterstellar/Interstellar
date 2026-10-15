@@ -83,6 +83,7 @@ if (config.masqr?.enabled) {
     decoyRoot: path.join(STATIC_DIR, "decoy", config.masqr.decoy ?? "default"),
     searchTrigger: process.env.MASQR_SEARCH_TRIGGER ?? config.masqr.searchTrigger ?? null,
     sites: config.masqr.sites ?? [],
+    decoyOnly: config.masqr.decoyOnly === true,
     secureCookie: config.masqr.secureCookie !== false,
     sessionMs: (config.masqr.sessionDays ?? 30) * 24 * 60 * 60 * 1000,
   });
@@ -180,7 +181,7 @@ server.on("request", (req, res) => {
 });
 
 server.on("upgrade", (req, socket, head) => {
-  if (masqr && !masqr.isAuthorized(req)) return socket.destroy();
+  if (masqr && masqr.isGated(req) && !masqr.isAuthorized(req)) return socket.destroy();
   wisp.routeRequest(req, socket, head);
 });
 
