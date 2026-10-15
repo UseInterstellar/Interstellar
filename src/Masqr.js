@@ -107,6 +107,24 @@ function registerHost(map, rawHost, folder, source) {
   map.set(host, folder);
 }
 
+export function expandSites(sites = []) {
+  const triggers = new Map();
+  sites.forEach((site, index) => {
+    const label = `Masqr site ${site.name ?? index}`;
+    if (typeof site.searchTrigger !== "string" || !site.searchTrigger) throw new Error(`${label}: needs a searchTrigger`);
+    const names = site.name && Array.isArray(site.tlds) ? site.tlds.map(tld => `${site.name}.${tld}`) : [];
+    const hosts = [...names, ...(site.hosts ?? [])];
+    if (!hosts.length) throw new Error(`${label}: needs name + tlds or a hosts list`);
+    for (const rawHost of hosts) {
+      const host = normaliseHost(rawHost);
+      if (!host) throw new Error(`${label}: invalid hostname ${JSON.stringify(rawHost)}`);
+      if (triggers.has(host)) throw new Error(`Masqr site ${host} is listed in more than one site`);
+      triggers.set(host, site.searchTrigger);
+    }
+  });
+  return triggers;
+}
+
 function loadDecoyMap(decoyRoot) {
   const map = new Map();
   for (const entry of readdirSync(decoyRoot, { withFileTypes: true })) {
@@ -165,10 +183,12 @@ function loadSearchRedirect(folder) {
   return redirect;
 }
 
-export function mountMasqr(app, { decoyRoot, secureCookie = true, sessionMs = 30 * DAY_MS, searchTrigger = null }) {
+export function mountMasqr(app, { decoyRoot, secureCookie = true, sessionMs = 30 * DAY_MS, searchTrigger = null, sites = [] }) {
   if (!existsSync(path.join(decoyRoot, "index.html"))) throw new Error(`Masqr decoy set ${decoyRoot} has no index.html`);
   const decoyMap = loadDecoyMap(decoyRoot);
   const decoyFolderFor = req => decoyMap.get(normaliseHost(req.headers.host)) ?? "";
+  const siteTriggers = expandSites(sites);
+  const triggerFor = req => siteTriggers.get(normaliseHost(req.headers.host)) ?? searchTrigger;
 
   const searchRedirects = new Map([["", loadSearchRedirect(decoyRoot)]]);
   for (const folder of new Set(decoyMap.values())) searchRedirects.set(folder, loadSearchRedirect(path.join(decoyRoot, folder)));
@@ -191,7 +211,7 @@ export function mountMasqr(app, { decoyRoot, secureCookie = true, sessionMs = 30
   app.post(SEARCH_PATH, express.urlencoded({ extended: false, limit: "1kb" }), (req, res) => {
     res.setHeader("Cache-Control", "no-store");
     const query = String(req.body?.q ?? "");
-    if (triggerMatches(query, searchTrigger)) {
+    if (triggerMatches(query, triggerFor(req))) {
       consumeToken(issueToken({ days: 1 }), null);
       setSession(res);
       return res.redirect(303, "/");
@@ -204,7 +224,7 @@ export function mountMasqr(app, { decoyRoot, secureCookie = true, sessionMs = 30
   app.post(LOGIN_PATH, express.urlencoded({ extended: false, limit: "1kb" }), (req, res) => {
     res.setHeader("Cache-Control", "no-store");
     const password = typeof req.body?.password === "string" ? req.body.password : "";
-    if (!password || !triggerMatches(password, searchTrigger)) {
+    if (!password || !triggerMatches(password, triggerFor(req))) {
       return res.status(401).json({ error: "Invalid login" });
     }
     setSession(res);
