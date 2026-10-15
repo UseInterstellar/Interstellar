@@ -184,8 +184,8 @@ function loadSearchRedirect(folder) {
 }
 
 export function mountMasqr(app, { decoyRoot, secureCookie = true, sessionMs = 30 * DAY_MS, searchTrigger = null, sites = [], decoyOnly = false }) {
-  if (!existsSync(path.join(decoyRoot, "index.html"))) throw new Error(`Masqr decoy set ${decoyRoot} has no index.html`);
-  const decoyMap = loadDecoyMap(decoyRoot);
+  if (!decoyOnly && !existsSync(path.join(decoyRoot, "index.html"))) throw new Error(`Masqr decoy set ${decoyRoot} has no index.html`);
+  const decoyMap = existsSync(decoyRoot) ? loadDecoyMap(decoyRoot) : new Map();
   const decoyFolderFor = req => decoyMap.get(normaliseHost(req.headers.host)) ?? "";
   const siteTriggers = expandSites(sites);
   const triggerFor = req => siteTriggers.get(normaliseHost(req.headers.host)) ?? searchTrigger;
