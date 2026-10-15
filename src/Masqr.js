@@ -125,13 +125,14 @@ export function expandSites(sites = []) {
   return triggers;
 }
 
-function loadDecoyMap(decoyRoot) {
+function loadDecoyMap(decoyBase, setName) {
   const map = new Map();
-  for (const entry of readdirSync(decoyRoot, { withFileTypes: true })) {
-    if (!entry.isDirectory() || !existsSync(path.join(decoyRoot, entry.name, "index.html"))) continue;
+  for (const entry of readdirSync(decoyBase, { withFileTypes: true })) {
+    if (!entry.isDirectory() || entry.name === setName || !entry.name.includes(".")) continue;
+    if (!existsSync(path.join(decoyBase, entry.name, "index.html"))) continue;
     registerHost(map, entry.name, entry.name, "directory name");
 
-    const aliasFile = path.join(decoyRoot, entry.name, "domains.json");
+    const aliasFile = path.join(decoyBase, entry.name, "domains.json");
     if (!existsSync(aliasFile)) continue;
     let aliases;
     try {
@@ -147,13 +148,13 @@ function loadDecoyMap(decoyRoot) {
   return map;
 }
 
-function safeDecoyFile(decoyRoot, folder, requestPath) {
+function safeDecoyFile(root, requestPath) {
   const relative = requestPath === "/" ? "index.html" : decodeURIComponent(requestPath).replace(/^\/+/, "");
   const parts = relative.split(/[\\/]+/).filter(Boolean);
   if (!parts.length || parts.some(part => part === "." || part === "..")) return null;
   if (BLOCKED_DECOY_FILES.has(parts.at(-1).toLowerCase())) return null;
 
-  const root = realpathSync(path.join(decoyRoot, folder));
+  const realRoot = realpathSync(root);
   const candidate = path.join(root, ...parts);
   let resolved;
   try {
@@ -161,7 +162,7 @@ function safeDecoyFile(decoyRoot, folder, requestPath) {
   } catch {
     return null;
   }
-  if (resolved !== root && !resolved.startsWith(`${root}${path.sep}`)) return null;
+  if (resolved !== realRoot && !resolved.startsWith(`${realRoot}${path.sep}`)) return null;
   try {
     if (!statSync(resolved).isFile()) return null;
   } catch {
@@ -183,17 +184,29 @@ function loadSearchRedirect(folder) {
   return redirect;
 }
 
-export function mountMasqr(app, { decoyRoot, secureCookie = true, sessionMs = 30 * DAY_MS, searchTrigger = null, sites = [], decoyOnly = false }) {
-  if (!decoyOnly && !existsSync(path.join(decoyRoot, "index.html"))) throw new Error(`Masqr decoy set ${decoyRoot} has no index.html`);
-  const decoyMap = existsSync(decoyRoot) ? loadDecoyMap(decoyRoot) : new Map();
-  const decoyFolderFor = req => decoyMap.get(normaliseHost(req.headers.host)) ?? "";
+export function mountMasqr(app, { decoyBase, decoySet = "default", secureCookie = true, sessionMs = 30 * DAY_MS, searchTrigger = null, sites = [], decoyOnly = false }) {
+  // /math/, math and /math all select static/decoy/math.
+  const setName = String(decoySet).trim().replace(/^\/+|\/+$/g, "");
+  if (!setName || setName.includes("/") || setName.includes("\\") || setName === "." || setName === "..") {
+    throw new Error(`Masqr decoy set name ${JSON.stringify(decoySet)} must be a single folder name`);
+  }
+  const setRoot = path.join(decoyBase, setName);
+  if (!decoyOnly && !existsSync(path.join(setRoot, "index.html"))) throw new Error(`Masqr decoy set ${setRoot} has no index.html`);
+  const decoyMap = existsSync(decoyBase) ? loadDecoyMap(decoyBase, setName) : new Map();
+  const rootFor = req => {
+    const folder = decoyMap.get(normaliseHost(req.headers.host));
+    return folder ? path.join(decoyBase, folder) : setRoot;
+  };
   const siteTriggers = expandSites(sites);
   const triggerFor = req => siteTriggers.get(normaliseHost(req.headers.host)) ?? searchTrigger;
   const gated = req => !decoyOnly || decoyMap.has(normaliseHost(req.headers.host)) || siteTriggers.has(normaliseHost(req.headers.host));
 
-  const searchRedirects = new Map([["", loadSearchRedirect(decoyRoot)]]);
-  for (const folder of new Set(decoyMap.values())) searchRedirects.set(folder, loadSearchRedirect(path.join(decoyRoot, folder)));
-  const searchRedirectFor = req => searchRedirects.get(decoyFolderFor(req)) ?? searchRedirects.get("");
+  const searchRedirects = new Map();
+  const searchRedirectFor = req => {
+    const root = rootFor(req);
+    if (!searchRedirects.has(root)) searchRedirects.set(root, loadSearchRedirect(root));
+    return searchRedirects.get(root);
+  };
 
   const { secret } = readStore();
   const isAuthorized = req => sessionIsValid(secret, parseCookies(req.headers.cookie)[COOKIE_NAME]);
@@ -239,7 +252,7 @@ export function mountMasqr(app, { decoyRoot, secureCookie = true, sessionMs = 30
     if (req.method === "GET" || req.method === "HEAD") {
       let file = null;
       try {
-        file = safeDecoyFile(decoyRoot, decoyFolderFor(req), req.path);
+        file = safeDecoyFile(rootFor(req), req.path);
       } catch {
         file = null;
       }
@@ -248,5 +261,5 @@ export function mountMasqr(app, { decoyRoot, secureCookie = true, sessionMs = 30
     res.status(404).type("text/plain").send("Not Found");
   });
 
-  return { isAuthorized, isGated: gated, normaliseHost, decoyFolderFor };
+  return { isAuthorized, isGated: gated, normaliseHost };
 }

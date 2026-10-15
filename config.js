@@ -29,7 +29,7 @@ const config = {
   // Restrict access to Interstellar using decoy sites and search triggers.
   masqr: {
     enabled: false,
-    decoy: "default",
+    decoy: "/default/", 
     searchTrigger: "interstellar", // Default trigger for unlisted domains.
     secureCookie: true,
     sessionDays: 30,

@@ -80,7 +80,8 @@ if (config.challenge !== false) {
 let masqr = null;
 if (config.masqr?.enabled) {
   masqr = mountMasqr(app, {
-    decoyRoot: path.join(STATIC_DIR, "decoy", config.masqr.decoy ?? "default"),
+    decoyBase: path.join(STATIC_DIR, "decoy"),
+    decoySet: config.masqr.decoy ?? "default",
     searchTrigger: process.env.MASQR_SEARCH_TRIGGER ?? config.masqr.searchTrigger ?? null,
     sites: config.masqr.sites ?? [],
     decoyOnly: config.masqr.decoyOnly === true,
