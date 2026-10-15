@@ -108,44 +108,48 @@ function registerHost(map, rawHost, folder, source) {
 }
 
 export function expandSites(sites = []) {
-  const triggers = new Map();
+  const entries = new Map();
   sites.forEach((site, index) => {
     const label = `Masqr site ${site.name ?? index}`;
     if (typeof site.searchTrigger !== "string" || !site.searchTrigger) throw new Error(`${label}: needs a searchTrigger`);
     const names = site.name && Array.isArray(site.tlds) ? site.tlds.map(tld => `${site.name}.${tld}`) : [];
     const hosts = [...names, ...(site.hosts ?? [])];
     if (!hosts.length) throw new Error(`${label}: needs name + tlds or a hosts list`);
+    const family = names.length ? names.map(name => normaliseHost(name)) : null;
     for (const rawHost of hosts) {
       const host = normaliseHost(rawHost);
       if (!host) throw new Error(`${label}: invalid hostname ${JSON.stringify(rawHost)}`);
-      if (triggers.has(host)) throw new Error(`Masqr site ${host} is listed in more than one site`);
-      triggers.set(host, site.searchTrigger);
+      if (entries.has(host)) throw new Error(`Masqr site ${host} is listed in more than one site`);
+      entries.set(host, { searchTrigger: site.searchTrigger, family });
     }
   });
-  return triggers;
+  return entries;
 }
 
 function loadDecoyMap(decoyBase, setName) {
-  const map = new Map();
+  const folders = new Map();
+  const aliases = new Map();
   for (const entry of readdirSync(decoyBase, { withFileTypes: true })) {
     if (!entry.isDirectory() || entry.name === setName || !entry.name.includes(".")) continue;
     if (!existsSync(path.join(decoyBase, entry.name, "index.html"))) continue;
-    registerHost(map, entry.name, entry.name, "directory name");
+    registerHost(folders, entry.name, entry.name, "directory name");
+    const folderHost = normaliseHost(entry.name);
+    if (folderHost) folders.set(folderHost, entry.name);
 
     const aliasFile = path.join(decoyBase, entry.name, "domains.json");
     if (!existsSync(aliasFile)) continue;
-    let aliases;
+    let list;
     try {
-      aliases = JSON.parse(readFileSync(aliasFile, "utf8"));
+      list = JSON.parse(readFileSync(aliasFile, "utf8"));
     } catch (error) {
       throw new Error(`Masqr decoy ${entry.name}: domains.json is invalid JSON (${error.message})`);
     }
-    if (!Array.isArray(aliases) || !aliases.every(alias => typeof alias === "string")) {
+    if (!Array.isArray(list) || !list.every(alias => typeof alias === "string")) {
       throw new Error(`Masqr decoy ${entry.name}: domains.json must be a JSON array of hostnames`);
     }
-    for (const host of aliases) registerHost(map, host, entry.name, "domains.json");
+    for (const host of list) registerHost(aliases, host, entry.name, "domains.json");
   }
-  return map;
+  return { folders, aliases };
 }
 
 function safeDecoyFile(root, requestPath) {
@@ -192,14 +196,25 @@ export function mountMasqr(app, { decoyBase, decoySet = "default", secureCookie 
   }
   const setRoot = path.join(decoyBase, setName);
   if (!decoyOnly && !existsSync(path.join(setRoot, "index.html"))) throw new Error(`Masqr decoy set ${setRoot} has no index.html`);
-  const decoyMap = existsSync(decoyBase) ? loadDecoyMap(decoyBase, setName) : new Map();
+  const { folders, aliases } = existsSync(decoyBase) ? loadDecoyMap(decoyBase, setName) : { folders: new Map(), aliases: new Map() };
+  const siteEntries = expandSites(sites);
+  const hostOf = req => normaliseHost(req.headers.host);
+
+  const folderFor = host => {
+    if (!host) return null;
+    if (folders.has(host)) return folders.get(host);
+    if (aliases.has(host)) return aliases.get(host);
+    for (const sister of siteEntries.get(host)?.family ?? []) {
+      if (folders.has(sister)) return folders.get(sister);
+    }
+    return null;
+  };
   const rootFor = req => {
-    const folder = decoyMap.get(normaliseHost(req.headers.host));
+    const folder = folderFor(hostOf(req));
     return folder ? path.join(decoyBase, folder) : setRoot;
   };
-  const siteTriggers = expandSites(sites);
-  const triggerFor = req => siteTriggers.get(normaliseHost(req.headers.host)) ?? searchTrigger;
-  const gated = req => !decoyOnly || decoyMap.has(normaliseHost(req.headers.host)) || siteTriggers.has(normaliseHost(req.headers.host));
+  const triggerFor = req => siteEntries.get(hostOf(req))?.searchTrigger ?? searchTrigger;
+  const gated = req => !decoyOnly || folders.has(hostOf(req)) || aliases.has(hostOf(req)) || siteEntries.has(hostOf(req));
 
   const searchRedirects = new Map();
   const searchRedirectFor = req => {
