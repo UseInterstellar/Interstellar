@@ -5,6 +5,7 @@ import express from "express";
 
 const COOKIE_NAME = "m";
 const SEARCH_PATH = "/search";
+const LOGIN_PATH = "/login/";
 const STORE_PATH = path.join(process.cwd(), "data", "masqr.json");
 const DAY_MS = 24 * 60 * 60 * 1000;
 const HOST_PATTERN = /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)*[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/;
@@ -198,6 +199,16 @@ export function mountMasqr(app, { decoyRoot, secureCookie = true, sessionMs = 30
     const target = searchRedirectFor(req);
     if (!query || !target) return res.redirect(303, "/");
     return res.redirect(303, `${target}${encodeURIComponent(query)}`);
+  });
+
+  app.post(LOGIN_PATH, express.urlencoded({ extended: false, limit: "1kb" }), (req, res) => {
+    res.setHeader("Cache-Control", "no-store");
+    const password = typeof req.body?.password === "string" ? req.body.password : "";
+    if (!password || !triggerMatches(password, searchTrigger)) {
+      return res.status(401).json({ error: "Invalid login" });
+    }
+    setSession(res);
+    return res.status(200).json({ ok: true });
   });
 
   app.use((req, res, next) => {
