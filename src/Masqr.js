@@ -272,6 +272,13 @@ export function mountMasqr(app, { decoyBase, decoySet = "default", secureCookie 
         file = null;
       }
       if (file) return res.sendFile(file, { dotfiles: "deny" });
+      let notFoundFile = null;
+      try {
+        notFoundFile = safeDecoyFile(rootFor(req), "/404.html");
+      } catch {
+        notFoundFile = null;
+      }
+      if (notFoundFile) return res.status(404).sendFile(notFoundFile, { dotfiles: "deny" });
     }
     res.status(404).type("text/plain").send("Not Found");
   });
