@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "buildCommand": "pnpm build",
+  "framework": null,
   "installCommand": "pnpm install",
-  "outputDirectory": "dist",
+  "buildCommand": "pnpm build",
   "functions": {
     "src/server.js": {
-      "includeFiles": "{dist/**,static/decoy/**}"
+      "includeFiles": "{dist/**,dist/.runtime/**,static/decoy/**}"
     }
   },
   "rewrites": [
