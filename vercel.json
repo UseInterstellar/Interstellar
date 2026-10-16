@@ -2,6 +2,7 @@
   "version": 2,
   "buildCommand": "pnpm build",
   "installCommand": "pnpm install",
+  "outputDirectory": "dist",
   "functions": {
     "src/server.js": {
       "includeFiles": "{dist/**,static/decoy/**}"
