@@ -6,7 +6,7 @@ Only current versions of the site are being updated, if you are using an older v
 
 | Version | Supported |
 | ------- | --------- |
-| V6.1.x  | ✔️        |
+| V6.3.x  | ✔️        |
 | V6.0.x  | :x:       |
 | < V6.0  | :x:       |
 | < V5.0  | :x:       |
