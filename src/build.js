@@ -8,9 +8,7 @@ import chalk from "chalk";
 import JavaScriptObfuscator from "javascript-obfuscator";
 import { minify } from "terser";
 import { injectVersionInfo, resolveVersionInfo, VERSION_TOKEN_COUNT } from "./version.js";
-import { parseWispArgs, resolveWispConfig, WispArgError, wispFingerprint } from "./wisp-cli.js";
-import { wispConfigStatement } from "./wisp-config.js";
-import wispConfig from "../wisp.config.js";
+import { loadWispConfig, WispArgError, wispConfigStatement, wispFingerprint } from "./wisp-config.js";
 
 const OBFUSCATOR_PROMO_PATTERN = /\[javascript-obfuscator\]|JavaScript Obfuscator Pro|obfuscator\.io/i;
 
@@ -26,16 +24,15 @@ for (const method of ["log", "info", "warn"]) {
 
 const WISP = (() => {
   try {
-    const { overrides, warnings } = parseWispArgs(process.argv.slice(2));
-    const resolved = resolveWispConfig(wispConfig, overrides);
-    return { ...resolved, overrides, warnings: [...warnings, ...resolved.warnings] };
+    const resolved = loadWispConfig();
+    wispConfigStatement(resolved.config);
+    return resolved;
   } catch (error) {
     if (!(error instanceof WispArgError)) throw error;
     console.error(chalk.red(`Invalid Wisp option: ${error.message}`));
     process.exit(1);
   }
 })();
-const effectiveWispConfig = () => WISP.config;
 
 const OBFUSCATE = true;
 const OBFUSCATE_HTML = true;
@@ -2035,8 +2032,7 @@ async function build() {
   await cp(SRC_DIR, DIST_DIR, { recursive: true, filter: source => path.relative(SRC_DIR, source) !== path.join("decoy") });
 
   console.log(OBFUSCATE ? chalk.yellow("Obfuscation: ON") : chalk.yellow("Obfuscation: OFF (rename + rewrite only)"));
-  const wispSource = field => (field in WISP.overrides ? "command line" : "wisp.config.js");
-  console.log(chalk.yellow(`Wisp endpoints: ${WISP.config.preferred.length} preferred (${wispSource("preferred")}), ${WISP.config.fallback.length} fallback (${wispSource("fallback")})${WISP.config.sameOrigin === false ? ", same-origin off" : ""}`));
+  console.log(chalk.yellow(`Wisp endpoints: ${WISP.config.preferred.length} preferred (${WISP.sources.preferred}), ${WISP.config.fallback.length} fallback (${WISP.sources.fallback})${WISP.config.sameOrigin === false ? ", same-origin off" : ""}`));
   for (const warning of WISP.warnings) console.warn(chalk.yellow(`  Wisp: ${warning}`));
 
   const selectors = await obfuscateSelectors();
@@ -2088,7 +2084,7 @@ async function build() {
     scopes: { uv: NEW_UV_SCOPE, scramjet: NEW_SCRAMJET_SCOPE },
     sw: null,
     routes: pageRoutes,
-    wisp: wispFingerprint(effectiveWispConfig()),
+    wisp: wispFingerprint(WISP.config),
     vendor: {},
   };
 
@@ -2338,7 +2334,7 @@ async function build() {
         const handlerDefs = applyHandlerDefs(output, basename, handlerRenames);
         output = handlerDefs.source;
         handlerJsCount += handlerDefs.changed;
-        if (basename === "main.js") output = patchOrFail(output, /globalThis\.__wispCfg = null;/, () => wispConfigStatement(effectiveWispConfig()), "main.js wisp config");
+        if (basename === "main.js") output = patchOrFail(output, /globalThis\.__wispCfg = null;/, () => wispConfigStatement(WISP.config), "main.js wisp config");
         if (basename === "tabs.js") output = applyTabAttr(output, tabAttr);
         if (basename === "home.js") output = scopeHomeScript(output);
         if (basename === "launcher.js") output = patchOrFail(output, /const CATALOGUE_KEY = \[0\];/, `const CATALOGUE_KEY = ${JSON.stringify(catalogueKey)};`, "launcher.js catalogue key");
@@ -2371,7 +2367,7 @@ async function build() {
     process.exit(1);
   }
   if (failed) throw new Error(`${failed} file(s) failed to process`);
-  verifyWispConfig(wispSources, effectiveWispConfig());
+  verifyWispConfig(wispSources, WISP.config);
   if (proxyChoiceJs !== PROXY_CHOICE_COUNTS.js) throw new Error(`expected ${PROXY_CHOICE_COUNTS.js} proxy selector literals in application JS, replaced ${proxyChoiceJs}. Update PROXY_CHOICE_COUNTS.`);
   if (routeRewriteJs !== ROUTE_REWRITE_COUNT) throw new Error(`expected ${ROUTE_REWRITE_COUNT} page-route literals in application JS, rewrote ${routeRewriteJs}. Upstream changed.`);
   for (const ref of references) {

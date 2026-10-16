@@ -9,9 +9,7 @@ import cookieParser from "cookie-parser";
 import express from "express";
 import basicAuth from "express-basic-auth";
 import config from "../config.js";
-import wispFileConfig from "../wisp.config.js";
-import { hasWispOverrides, injectWispConfig, parseWispArgs, resolveWispConfig, staleBuildMessage, WispArgError } from "./wisp-cli.js";
-import { wispConfigStatement } from "./wisp-config.js";
+import { loadWispConfig, WispArgError, wispConfigStatement, wispFingerprint } from "./wisp-config.js";
 // import { mountAnalytics } from "./analytics.js";
 import { mountGhGames } from "./games.js";
 import { createBlockVerdict, setupFiltering } from "./filtering/index.js";
@@ -63,20 +61,33 @@ function resolvePort() {
 const PORT = resolvePort();
 
 
+function staleBuildMessage(recorded, config, rawArgs = []) {
+  const wanted = wispFingerprint(config);
+  if (recorded?.hash === wanted.hash) return null;
+  const flags = rawArgs.length ? ` ${rawArgs.join(" ")}` : "";
+  const built = recorded ? `${recorded.preferred} preferred / ${recorded.fallback} fallback endpoint(s)` : "no recorded Wisp settings (built before this was recorded)";
+  return `dist/ was built with different Wisp settings than the ones given now (built: ${built}; now: ${wanted.preferred} preferred / ${wanted.fallback} fallback). Endpoints are compiled into the build, so rebuild with the same WISP_* environment variables and flags, then start with them:\n  pnpm build${flags}\n  pnpm start${flags}`;
+}
+
+function injectWispConfig(source, statement) {
+  const placeholder = /globalThis\.__wispCfg = null;/;
+  if (!placeholder.test(source)) throw new Error("main.js has no Wisp config placeholder to replace");
+  return source.replace(placeholder, () => statement);
+}
+
 let wispSettings;
 try {
-  const { overrides, warnings, raw } = parseWispArgs(process.argv.slice(2));
-  const resolved = resolveWispConfig(wispFileConfig, overrides);
-  for (const warning of [...warnings, ...resolved.warnings]) console.log(chalk.yellow(`Wisp: ${warning}`));
-  wispSettings = { ...resolved, overrides, raw };
-  if (vendorMap && hasWispOverrides(overrides)) {
-    const stale = staleBuildMessage(vendorMap.wisp, resolved.config, raw);
+  wispSettings = loadWispConfig();
+  for (const warning of wispSettings.warnings) console.log(chalk.yellow(`Wisp: ${warning}`));
+  if (vendorMap && wispSettings.explicit) {
+    const stale = staleBuildMessage(vendorMap.wisp, wispSettings.config, wispSettings.raw);
     if (stale) {
       console.log(chalk.red(stale));
       process.exit(1);
     }
   }
-  if (hasWispOverrides(overrides)) console.log(chalk.blue(`Wisp endpoints from command line: ${resolved.config.preferred.length} preferred, ${resolved.config.fallback.length} fallback`));
+  if (wispSettings.explicit) console.log(chalk.blue(`Wisp endpoints: ${wispSettings.config.preferred.length} preferred (${wispSettings.sources.preferred}), ${wispSettings.config.fallback.length} fallback (${wispSettings.sources.fallback})`));
+  else if (vendorMap) console.log(chalk.blue(`Wisp endpoints: as compiled into dist/ (${vendorMap.wisp?.preferred ?? "?"} preferred, ${vendorMap.wisp?.fallback ?? "?"} fallback)`));
 } catch (error) {
   if (!(error instanceof WispArgError)) throw error;
   console.log(chalk.red(`Invalid Wisp option: ${error.message}`));
