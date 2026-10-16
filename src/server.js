@@ -9,6 +9,9 @@ import cookieParser from "cookie-parser";
 import express from "express";
 import basicAuth from "express-basic-auth";
 import config from "../config.js";
+import wispFileConfig from "../wisp.config.js";
+import { hasWispOverrides, injectWispConfig, parseWispArgs, resolveWispConfig, staleBuildMessage, WispArgError } from "./wisp-cli.js";
+import { wispConfigStatement } from "./wisp-config.js";
 // import { mountAnalytics } from "./analytics.js";
 import { mountGhGames } from "./games.js";
 import { createBlockVerdict, setupFiltering } from "./filtering/index.js";
@@ -58,6 +61,27 @@ function resolvePort() {
 }
 
 const PORT = resolvePort();
+
+
+let wispSettings;
+try {
+  const { overrides, warnings, raw } = parseWispArgs(process.argv.slice(2));
+  const resolved = resolveWispConfig(wispFileConfig, overrides);
+  for (const warning of [...warnings, ...resolved.warnings]) console.log(chalk.yellow(`Wisp: ${warning}`));
+  wispSettings = { ...resolved, overrides, raw };
+  if (vendorMap && hasWispOverrides(overrides)) {
+    const stale = staleBuildMessage(vendorMap.wisp, resolved.config, raw);
+    if (stale) {
+      console.log(chalk.red(stale));
+      process.exit(1);
+    }
+  }
+  if (hasWispOverrides(overrides)) console.log(chalk.blue(`Wisp endpoints from command line: ${resolved.config.preferred.length} preferred, ${resolved.config.fallback.length} fallback`));
+} catch (error) {
+  if (!(error instanceof WispArgError)) throw error;
+  console.log(chalk.red(`Invalid Wisp option: ${error.message}`));
+  process.exit(1);
+}
 
 wisp.options.allow_loopback_ips = true;
 wisp.options.allow_private_ips = true;
@@ -130,6 +154,24 @@ if (!vendorMap) {
   } catch (err) {
     console.warn(chalk.yellow(`Settings version injection skipped, serving placeholders: ${err.message}`));
   }
+}
+
+if (!vendorMap) {
+  let statement;
+  try {
+    statement = wispConfigStatement(wispSettings.config);
+  } catch (error) {
+    console.log(chalk.red(`Invalid Wisp configuration: ${error.message}`));
+    process.exit(1);
+  }
+  const mainJs = path.join(SERVE_DIR, "assets", "js", "main.js");
+  app.get("/assets/js/main.js", (_req, res, next) => {
+    try {
+      res.type("js").set("Cache-Control", "no-store").send(injectWispConfig(readFileSync(mainJs, "utf8"), statement));
+    } catch (error) {
+      next(error);
+    }
+  });
 }
 
 app.use(express.static(SERVE_DIR, { ...jsStaticOptions, dotfiles: "ignore" }));

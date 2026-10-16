@@ -8,6 +8,7 @@ import chalk from "chalk";
 import JavaScriptObfuscator from "javascript-obfuscator";
 import { minify } from "terser";
 import { injectVersionInfo, resolveVersionInfo, VERSION_TOKEN_COUNT } from "./version.js";
+import { parseWispArgs, resolveWispConfig, WispArgError, wispFingerprint } from "./wisp-cli.js";
 import { wispConfigStatement } from "./wisp-config.js";
 import wispConfig from "../wisp.config.js";
 
@@ -22,7 +23,19 @@ for (const method of ["log", "info", "warn"]) {
 }
 
 
-const effectiveWispConfig = () => (process.env.INTERSTELLAR_STATIC ? { ...wispConfig, sameOrigin: false } : wispConfig);
+
+const WISP = (() => {
+  try {
+    const { overrides, warnings } = parseWispArgs(process.argv.slice(2));
+    const resolved = resolveWispConfig(wispConfig, overrides);
+    return { ...resolved, overrides, warnings: [...warnings, ...resolved.warnings] };
+  } catch (error) {
+    if (!(error instanceof WispArgError)) throw error;
+    console.error(chalk.red(`Invalid Wisp option: ${error.message}`));
+    process.exit(1);
+  }
+})();
+const effectiveWispConfig = () => WISP.config;
 
 const OBFUSCATE = true;
 const OBFUSCATE_HTML = true;
@@ -2022,6 +2035,9 @@ async function build() {
   await cp(SRC_DIR, DIST_DIR, { recursive: true, filter: source => path.relative(SRC_DIR, source) !== path.join("decoy") });
 
   console.log(OBFUSCATE ? chalk.yellow("Obfuscation: ON") : chalk.yellow("Obfuscation: OFF (rename + rewrite only)"));
+  const wispSource = field => (field in WISP.overrides ? "command line" : "wisp.config.js");
+  console.log(chalk.yellow(`Wisp endpoints: ${WISP.config.preferred.length} preferred (${wispSource("preferred")}), ${WISP.config.fallback.length} fallback (${wispSource("fallback")})${WISP.config.sameOrigin === false ? ", same-origin off" : ""}`));
+  for (const warning of WISP.warnings) console.warn(chalk.yellow(`  Wisp: ${warning}`));
 
   const selectors = await obfuscateSelectors();
   console.log(`\nSelectors: ${selectors.maps.class.size} classes, ${selectors.maps.id.size} ids obfuscated`);
@@ -2072,6 +2088,7 @@ async function build() {
     scopes: { uv: NEW_UV_SCOPE, scramjet: NEW_SCRAMJET_SCOPE },
     sw: null,
     routes: pageRoutes,
+    wisp: wispFingerprint(effectiveWispConfig()),
     vendor: {},
   };
 

@@ -229,6 +229,11 @@ function isValidUrl(val = "") {
       const { default: EpoxyTransport } = await import(${JSON.stringify(transportPath)});
       const transportError = ${WispSelector.TRANSPORT_ERROR.toString()};
       class BlockAwareEpoxy extends EpoxyTransport {
+        // The build renames the transport's own wisp field per build, so keep the URL from the options.
+        constructor(options) {
+          super(options);
+          this.__url = options.wisp;
+        }
         async request(...args) {
           try {
             const response = await super.request(...args);
@@ -240,7 +245,7 @@ function isValidUrl(val = "") {
             // failures never do. Two in a row, to ride out a single hiccup.
             if (!message.includes("WispCloseReason(") && transportError.test(message) && (this.__down = (this.__down || 0) + 1) === 2) {
               try {
-                new BroadcastChannel(${JSON.stringify(HEALTH)}).postMessage(this.wisp);
+                new BroadcastChannel(${JSON.stringify(HEALTH)}).postMessage(this.__url);
               } catch {}
             }
             const kind = message.includes("WispCloseReason(ServerStreamBlockedAddress") ? "blocked"
