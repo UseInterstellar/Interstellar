@@ -3,10 +3,13 @@ import { readFileSync } from "node:fs";
 import { access, cp, mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import path from "node:path";
+import vm from "node:vm";
 import chalk from "chalk";
 import JavaScriptObfuscator from "javascript-obfuscator";
 import { minify } from "terser";
 import { injectVersionInfo, resolveVersionInfo, VERSION_TOKEN_COUNT } from "./version.js";
+import { wispConfigStatement } from "./wisp-config.js";
+import wispConfig from "../wisp.config.js";
 
 const OBFUSCATOR_PROMO_PATTERN = /\[javascript-obfuscator\]|JavaScript Obfuscator Pro|obfuscator\.io/i;
 
@@ -17,6 +20,9 @@ for (const method of ["log", "info", "warn"]) {
     original(...args);
   };
 }
+
+
+const effectiveWispConfig = () => (process.env.INTERSTELLAR_STATIC ? { ...wispConfig, sameOrigin: false } : wispConfig);
 
 const OBFUSCATE = true;
 const OBFUSCATE_HTML = true;
@@ -1988,6 +1994,26 @@ async function obfuscateSelectors() {
   return { maps, kept: [...kept].sort(), leaked: [...leaked].sort() };
 }
 
+
+function verifyWispConfig(sources, config) {
+  const main = sources.get("main.js");
+  const selector = sources.get("wisp.js");
+  if (!main || !selector) throw new Error("wisp config check: main.js or wisp.js was not emitted");
+
+  const stub = () => new Proxy(function () {}, { get: (_, key) => (key === Symbol.toPrimitive ? () => "" : stub()), apply: () => stub(), construct: () => stub() });
+  const context = vm.createContext({ atob, TextDecoder, store: stub(), document: stub(), window: stub(), localStorage: stub(), location: stub(), navigator: stub(), console });
+  try {
+    vm.runInContext(main, context, { timeout: 5000 });
+  } catch {}
+  vm.runInContext(selector, context, { timeout: 5000 });
+  const decoded = vm.runInContext("WispSelector.decodeConfig(globalThis.__wispCfg)", context);
+  const same = (a, b) => JSON.stringify([...a]) === JSON.stringify([...b]);
+  if (!decoded || !same(decoded.preferred, config.preferred) || !same(decoded.fallback, config.fallback) || (config.sameOrigin === false && decoded.sameOrigin !== false)) {
+    throw new Error("wisp config check: the built main.js does not decode to the configured Wisp endpoints");
+  }
+  console.log(chalk.green(`  Wisp config verified in built output: ${config.preferred.length} preferred, ${config.fallback.length} fallback, sameOrigin ${config.sameOrigin === false ? "off" : "on"}`));
+}
+
 async function build() {
   console.log("Cleaning dist/...");
   await rm(DIST_DIR, { recursive: true, force: true });
@@ -2271,6 +2297,7 @@ async function build() {
   const swLocalRenames = createSwLocalRenames();
   const handlerRenames = createHandlerRenames();
   const tabAttr = createTabAttr();
+  const wispSources = new Map();
   let handlerJsCount = 0;
   let handlerHtmlCount = 0;
   let proxyChoiceJs = 0;
@@ -2294,6 +2321,7 @@ async function build() {
         const handlerDefs = applyHandlerDefs(output, basename, handlerRenames);
         output = handlerDefs.source;
         handlerJsCount += handlerDefs.changed;
+        if (basename === "main.js") output = patchOrFail(output, /globalThis\.__wispCfg = null;/, () => wispConfigStatement(effectiveWispConfig()), "main.js wisp config");
         if (basename === "tabs.js") output = applyTabAttr(output, tabAttr);
         if (basename === "home.js") output = scopeHomeScript(output);
         if (basename === "launcher.js") output = patchOrFail(output, /const CATALOGUE_KEY = \[0\];/, `const CATALOGUE_KEY = ${JSON.stringify(catalogueKey)};`, "launcher.js catalogue key");
@@ -2301,6 +2329,8 @@ async function build() {
 
         const terserOnly = TERSER_ONLY.has(basename);
         if (OBFUSCATE) output = terserOnly ? await minifyVendor(output, { module: false }) : await runObfuscator(output, basename);
+
+        if (basename === "main.js" || basename === "wisp.js") wispSources.set(basename, output);
 
         await mkdir(path.dirname(fullPath), { recursive: true });
         await writeFile(fullPath, output, "utf8");
@@ -2324,6 +2354,7 @@ async function build() {
     process.exit(1);
   }
   if (failed) throw new Error(`${failed} file(s) failed to process`);
+  verifyWispConfig(wispSources, effectiveWispConfig());
   if (proxyChoiceJs !== PROXY_CHOICE_COUNTS.js) throw new Error(`expected ${PROXY_CHOICE_COUNTS.js} proxy selector literals in application JS, replaced ${proxyChoiceJs}. Update PROXY_CHOICE_COUNTS.`);
   if (routeRewriteJs !== ROUTE_REWRITE_COUNT) throw new Error(`expected ${ROUTE_REWRITE_COUNT} page-route literals in application JS, rewrote ${routeRewriteJs}. Upstream changed.`);
   for (const ref of references) {

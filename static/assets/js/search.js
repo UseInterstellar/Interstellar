@@ -197,22 +197,52 @@ function isValidUrl(val = "") {
   // Full paths only, never concatenated: the build rewrites whole literals.
   const vendor = self.__deps || {};
 
-  function getWispUrl() {
-    const custom = store.get("wisp-url")?.trim();
-    if (custom && /^wss?:\/\//i.test(custom)) return custom;
-    const protocol = location.protocol === "https:" ? "wss" : "ws";
-    return `${protocol}://${location.host}/wisp/`;
-  }
+  const HEALTH = "wisp-health";
+  const STATE = "wisp-state";
+  const wispConfig = WispSelector.loadConfig();
+
+  const selector = WispSelector.createSelector({
+    config: wispConfig,
+    storage: {
+      load() {
+        try {
+          return JSON.parse(store.getRaw(STATE));
+        } catch {
+          return null;
+        }
+      },
+      save: value => store.setRaw(STATE, JSON.stringify(value)),
+    },
+  });
+
+
+  const lock = (run, signal) => (navigator.locks ? navigator.locks.request("wisp-select", signal ? { signal } : {}, run) : run());
+
+
+  let wispUpResolve;
+  window.__wispUp = new Promise(resolve => {
+    wispUpResolve = resolve;
+  });
 
   function blockAwareEpoxy(transportPath) {
     return `
       const { default: EpoxyTransport } = await import(${JSON.stringify(transportPath)});
+      const transportError = ${WispSelector.TRANSPORT_ERROR.toString()};
       class BlockAwareEpoxy extends EpoxyTransport {
         async request(...args) {
           try {
-            return await super.request(...args);
+            const response = await super.request(...args);
+            this.__down = 0;
+            return response;
           } catch (error) {
             const message = String(error?.message ?? error);
+            // Only errors about the Wisp connection itself count; per-stream closes and target
+            // failures never do. Two in a row, to ride out a single hiccup.
+            if (!message.includes("WispCloseReason(") && transportError.test(message) && (this.__down = (this.__down || 0) + 1) === 2) {
+              try {
+                new BroadcastChannel(${JSON.stringify(HEALTH)}).postMessage(this.wisp);
+              } catch {}
+            }
             const kind = message.includes("WispCloseReason(ServerStreamBlockedAddress") ? "blocked"
               : message.includes("WispCloseReason(ServerStreamUnreachable") ? "not-found" : null;
             if (!kind) throw error;
@@ -237,32 +267,66 @@ function isValidUrl(val = "") {
     store.set("transport-signature", signature);
   }
 
+  async function applyWisp(connection, wisp) {
+    if (store.get("transport") === "libcurl") {
+      await ensureTransport(connection, vendor.libcurl, [{ websocket: wisp }], `${vendor.libcurl}|${wisp}`);
+    } else {
+      await ensureTransport(connection, vendor.epoxy, [{ wisp }], `${vendor.epoxy}|${wisp}|block-aware`, blockAwareEpoxy(vendor.epoxy));
+    }
+  }
+
   async function init() {
     const [{ BareMuxConnection }, { ScramjetController }] = await Promise.all([import(vendor.baremux), window.$scramjetLoadController()]);
 
     const scramjet = new ScramjetController(self.__scramjet$config);
     await scramjet.init();
 
-    const wisp = getWispUrl();
     const connection = new BareMuxConnection(vendor.baremuxWorker);
-    if (store.get("transport") === "libcurl") {
-      await ensureTransport(connection, vendor.libcurl, [{ websocket: wisp }], `${vendor.libcurl}|${wisp}`);
-    } else {
-      await ensureTransport(connection, vendor.epoxy, [{ wisp }], `${vendor.epoxy}|${wisp}|block-aware`, blockAwareEpoxy(vendor.epoxy));
-    }
-
+    const manager = WispSelector.createManager({
+      selector,
+      lock,
+      apply: wisp => applyWisp(connection, wisp),
+      getCustom: () => {
+        const custom = store.get("wisp-url")?.trim();
+        return custom && /^wss?:\/\//i.test(custom) ? custom : null;
+      },
+    });
     window.__urls = {
       encodeUrl: url => scramjet.encodeUrl(url),
       decodeUrl: url => scramjet.decodeUrl(url),
     };
+
+    const attempt = async (run, force) => {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), wispConfig.connectDeadlineMs || 20000);
+      try {
+        await run(controller.signal, force);
+        wispUpResolve();
+      } catch (error) {
+        if (!(error instanceof WispSelector.WispUnavailableError)) throw error;
+        WispSelector.showError(error, () => attempt((signal, retry) => manager.connect({ force: retry, signal }), true).catch(() => {}));
+      } finally {
+        clearTimeout(timer);
+      }
+    };
+    await attempt((signal, force) => manager.connect({ force, signal }), false);
+
+    try {
+      new BroadcastChannel(HEALTH).onmessage = event => attempt(signal => manager.recover(event.data, { signal })).catch(() => {});
+    } catch {}
+
+    setInterval(() => {
+      if (document.visibilityState === "visible") manager.recheck().catch(() => {});
+    }, wispConfig.recheckMs || 300000);
   }
 
   async function boot() {
-    if (typeof window.$scramjetLoadController !== "function" || !self.__scramjet$config) return;
+    if (typeof window.$scramjetLoadController !== "function" || !self.__scramjet$config) return wispUpResolve();
     try {
-      await init();
+      await Promise.race([init(), new Promise((_, reject) => setTimeout(reject, (wispConfig.connectDeadlineMs || 20000) + 15000, new Error("startup timed out")))]);
     } catch (error) {
       console.error("Scramjet transport failed to start:", error);
+      wispUpResolve();
     }
   }
 
@@ -271,9 +335,10 @@ function isValidUrl(val = "") {
   window.__ready = domReady.then(boot);
 })();
 
-window.__settled = async (timeout = 8000) => {
+window.__settled = async () => {
   if (!window.__ready) return;
-  await Promise.race([window.__ready.catch(() => {}), new Promise(resolve => setTimeout(resolve, timeout))]);
+  await window.__ready.catch(() => {});
+  await window.__wispUp;
 };
 
 function owningTabsWindow() {
