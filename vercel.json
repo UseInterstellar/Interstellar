@@ -4,10 +4,7 @@
   "installCommand": "pnpm install",
   "functions": {
     "src/server.js": {
-      "includeFiles": [
-        "dist/**",
-        "static/decoy/**"
-      ]
+      "includeFiles": "{dist/**,static/decoy/**}"
     }
   },
   "rewrites": [
