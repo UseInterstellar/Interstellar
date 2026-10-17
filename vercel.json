@@ -1,17 +1,19 @@
 {
   "version": 2,
-  "framework": null,
-  "installCommand": "pnpm install",
   "buildCommand": "pnpm build",
-  "functions": {
-    "src/server.js": {
-      "includeFiles": "{dist/**,dist/.runtime/**,static/decoy/**}"
-    }
-  },
-  "rewrites": [
+  "builds": [
     {
-      "source": "/(.*)",
-      "destination": "/src/server.js"
+      "src": "src/server.js",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": ["dist/**", "dist/.runtime/**", "static/decoy/**"]
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "src/server.js"
     }
   ]
 }
