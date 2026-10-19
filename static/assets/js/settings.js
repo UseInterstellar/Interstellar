@@ -901,3 +901,201 @@ function getRandomURL() {
   ];
   return urls[Math.floor(Math.random() * urls.length)];
 }
+
+
+const STORAGE_TIMEOUT_MS = 5000;
+const ACTIVE_SCRAMJET_DB_NAME = "$scramjet";
+let storageTaskRunning = false;
+
+function plural(count, word) {
+  return `${count} ${word}${count === 1 ? "" : "s"}`;
+}
+
+function withStorageTimeout(promise, label) {
+  let timer;
+  const timeout = new Promise((_, reject) => {
+    timer = setTimeout(() => reject(new Error(`${label} timed out.`)), STORAGE_TIMEOUT_MS);
+  });
+  return Promise.race([promise, timeout]).finally(() => clearTimeout(timer));
+}
+
+async function attemptStorageStep(step) {
+  try {
+    return await step();
+  } catch (error) {
+    return { level: "error", message: error?.message || "Unexpected error." };
+  }
+}
+
+async function unregisterServiceWorkers() {
+  if (!("serviceWorker" in navigator)) {
+    return { level: "warning", message: "Service workers are not supported in this browser." };
+  }
+  const registrations = await withStorageTimeout(navigator.serviceWorker.getRegistrations(), "Listing service workers");
+  if (registrations.length === 0) return { level: "ok", message: "No service workers are registered for this site." };
+  const results = await Promise.allSettled(registrations.map(registration => registration.unregister()));
+  const removed = results.filter(result => result.status === "fulfilled" && result.value).length;
+  if (removed === registrations.length) {
+    return {
+      level: "ok",
+      message: `Unregistered ${plural(removed, "service worker")}. Reload the page to stop the old worker from controlling it.`,
+    };
+  }
+  return {
+    level: "error",
+    message: `Unregistered ${removed} of ${plural(registrations.length, "service worker")}. Close other tabs for this site, then try again.`,
+  };
+}
+
+function deleteIndexedDb(name) {
+  return new Promise(resolve => {
+    let blocked = false;
+    const request = indexedDB.deleteDatabase(name);
+    const timer = setTimeout(() => resolve(blocked ? "blocked" : "failed"), STORAGE_TIMEOUT_MS);
+    request.onsuccess = () => {
+      clearTimeout(timer);
+      resolve("deleted");
+    };
+    request.onerror = () => {
+      clearTimeout(timer);
+      resolve("failed");
+    };
+    request.onblocked = () => {
+      blocked = true;
+    };
+  });
+}
+
+async function clearIndexedDb() {
+  if (!("indexedDB" in window)) return { level: "warning", message: "IndexedDB is not supported in this browser." };
+  if (typeof indexedDB.databases !== "function") {
+    return {
+      level: "warning",
+      message: "This browser can't list IndexedDB databases, so inactive databases can't be cleared. The active database was not touched.",
+    };
+  }
+  const databases = await withStorageTimeout(indexedDB.databases(), "Listing databases");
+  const names = databases.map(database => database.name).filter(Boolean);
+  const skipped = names.filter(name => name === ACTIVE_SCRAMJET_DB_NAME);
+  const eligible = names.filter(name => name !== ACTIVE_SCRAMJET_DB_NAME);
+  const skippedNote = skipped.length ? ` Skipped ${plural(skipped.length, "active database")}.` : "";
+
+  if (eligible.length === 0) {
+    const message = skipped.length ? `No inactive IndexedDB databases are stored for this site.${skippedNote}` : "No IndexedDB databases are stored for this site.";
+    return { level: "ok", message, skipped: skipped.length };
+  }
+
+  const deleted = [];
+  const blocked = [];
+  const failed = [];
+  for (const name of eligible) {
+    const outcome = await deleteIndexedDb(name);
+    if (outcome === "deleted") deleted.push(name);
+    else if (outcome === "blocked") blocked.push(name);
+    else failed.push(name);
+  }
+  if (blocked.length === 0 && failed.length === 0) {
+    return { level: "ok", message: `Cleared ${plural(deleted.length, "database")}.${skippedNote}`, skipped: skipped.length };
+  }
+  const parts = [`Cleared ${deleted.length} of ${eligible.length}.`];
+  if (blocked.length) {
+    parts.push(`Blocked by an open connection (${blocked.join(", ")}). Close other tabs for this site and reload this page, then try again. The deletion may finish once the connection closes.`);
+  }
+  if (failed.length) parts.push(`Could not delete: ${failed.join(", ")}.`);
+  const level = failed.length ? "error" : "warning";
+  return { level, message: `${parts.join(" ")}${skippedNote}`, skipped: skipped.length };
+}
+
+async function clearCacheStorage() {
+  if (!("caches" in window)) {
+    return { level: "warning", message: "Cache Storage is not available here. It needs a secure (HTTPS) page." };
+  }
+  const keys = await withStorageTimeout(caches.keys(), "Listing caches");
+  const results = await Promise.allSettled(keys.map(key => caches.delete(key)));
+  const removed = results.filter(result => result.status === "fulfilled" && result.value).length;
+  if (removed !== keys.length) {
+    return { level: "error", message: `Removed ${removed} of ${plural(keys.length, "cache")}. Try again.` };
+  }
+  if (keys.length === 0) return { level: "ok", message: "No Cache Storage entries exist for this site." };
+  return {
+    level: "ok",
+    message: `Removed ${plural(removed, "cache")}. This clears Cache Storage, not necessarily the browser's HTTP cache.`,
+  };
+}
+
+async function resetProxyData() {
+  const steps = [
+    ["Service workers", unregisterServiceWorkers],
+    ["IndexedDB", clearIndexedDb],
+  ];
+  const problems = [];
+  let preservedActive = false;
+  for (const [label, step] of steps) {
+    const outcome = await attemptStorageStep(step);
+    if (outcome.level !== "ok") problems.push({ level: outcome.level, text: `${label}: ${outcome.message}` });
+    if (outcome.skipped > 0) preservedActive = true;
+  }
+  if (problems.length === 0) {
+    const preserved = preservedActive ? " Active IndexedDB storage was preserved." : "";
+    return {
+      level: "ok",
+      message: `Reset completed successfully.${preserved} Reload the page or reopen the site to finish applying the changes.`,
+    };
+  }
+  const level = problems.some(problem => problem.level === "error") ? "error" : "warning";
+  return {
+    level,
+    message: `Reset finished with ${level === "error" ? "problems" : "warnings"}. ${problems.map(problem => problem.text).join(" ")} Reload the page or reopen the site after fixing these.`,
+  };
+}
+
+
+function storageText(text) {
+  return typeof window.laceTitle === "function" ? window.laceTitle(text, false) : text;
+}
+
+function showStorageStatus(status, outcome) {
+  status.textContent = storageText(outcome.message);
+  const isError = outcome.level === "error";
+  const isWarning = outcome.level === "warning";
+  status.classList.toggle("is-error", isError);
+  status.classList.toggle("is-warning", isWarning);
+}
+
+function setStorageBusy(buttons, busy) {
+  storageTaskRunning = busy;
+  for (const button of buttons) button.disabled = busy;
+}
+
+async function runStorageTask(status, buttons, task) {
+  if (storageTaskRunning) {
+    showStorageStatus(status, { level: "warning", message: "Another cleanup is already running. Wait for it to finish." });
+    return;
+  }
+  setStorageBusy(buttons, true);
+  showStorageStatus(status, { level: "ok", message: "Working..." });
+  try {
+    showStorageStatus(status, await attemptStorageStep(task));
+  } finally {
+    setStorageBusy(buttons, false);
+  }
+}
+
+function initStorageTools() {
+  const resetButton = document.getElementById("storage-reset-button");
+  const swButton = document.getElementById("storage-sw-button");
+  const idbButton = document.getElementById("storage-idb-button");
+  const cacheButton = document.getElementById("storage-cache-button");
+  const allButtons = [resetButton, swButton, idbButton, cacheButton];
+  const resetStatus = document.getElementById("storage-reset-status");
+  const swStatus = document.getElementById("storage-sw-status");
+  const idbStatus = document.getElementById("storage-idb-status");
+  const cacheStatus = document.getElementById("storage-cache-status");
+
+  resetButton.addEventListener("click", () => runStorageTask(resetStatus, allButtons, resetProxyData));
+  swButton.addEventListener("click", () => runStorageTask(swStatus, allButtons, unregisterServiceWorkers));
+  idbButton.addEventListener("click", () => runStorageTask(idbStatus, allButtons, clearIndexedDb));
+  cacheButton.addEventListener("click", () => runStorageTask(cacheStatus, allButtons, clearCacheStorage));
+}
+
+document.addEventListener("DOMContentLoaded", initStorageTools);

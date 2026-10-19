@@ -478,6 +478,50 @@
                 </p>
             </div>
         </section>
+
+        <section class="settings-card settings-group">
+          <h2 class="settings-group-title">Storage &amp; Troubleshooting</h2>
+            <div class="settings-item">
+              <div class="settings-item-info">
+                <h3>Reset Proxy Data</h3>
+                <p>Unregister service workers and clear inactive IndexedDB storage to help resolve proxy issues.</p>
+                <p class="storage-status" id="storage-reset-status" role="status" aria-live="polite"></p>
+              </div>
+              <div class="settings-item-control">
+                <button class="key-button" id="storage-reset-button" type="button">Reset</button>
+              </div>
+            </div>
+            <div class="settings-item">
+              <div class="settings-item-info">
+                <h3>Unregister Service Workers</h3>
+                <p>Unregister service workers associated with this site.</p>
+                <p class="storage-status" id="storage-sw-status" role="status" aria-live="polite"></p>
+              </div>
+              <div class="settings-item-control">
+                <button class="key-button" id="storage-sw-button" type="button">Unregister</button>
+              </div>
+            </div>
+            <div class="settings-item">
+              <div class="settings-item-info">
+                <h3>Clear IndexedDB Storage</h3>
+                <p>Delete inactive IndexedDB databases while preserving the active database.</p>
+                <p class="storage-status" id="storage-idb-status" role="status" aria-live="polite"></p>
+              </div>
+              <div class="settings-item-control">
+                <button class="key-button" id="storage-idb-button" type="button">Clear</button>
+              </div>
+            </div>
+            <div class="settings-item">
+              <div class="settings-item-info">
+                <h3>Clear Cache Storage</h3>
+                <p>Remove cached resources and responses stored by this site. This clears Cache Storage, not necessarily the browser's HTTP cache.</p>
+                <p class="storage-status" id="storage-cache-status" role="status" aria-live="polite"></p>
+              </div>
+              <div class="settings-item-control">
+                <button class="key-button" id="storage-cache-button" type="button">Clear</button>
+              </div>
+            </div>
+        </section>
         </div>
     </div>
   </div>

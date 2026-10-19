@@ -1086,6 +1086,12 @@ function countHardenableSegments(html) {
 // the same length, and stay lowercase because setAttribute lowercases.
 const SCRAMJET_ATTR_PREFIX = "scramjet-attr";
 const SCRAMJET_IDB_NAME = "$scramjet";
+const ACTIVE_DB_DECLARATION = `const ACTIVE_SCRAMJET_DB_NAME = "${SCRAMJET_IDB_NAME}";`;
+function applyActiveScramjetName(source, idbName) {
+  const found = source.split(ACTIVE_DB_DECLARATION).length - 1;
+  if (found !== 1) throw new CodecPatchError(`settings.js: expected one ACTIVE_SCRAMJET_DB_NAME declaration, found ${found}. Upstream changed.`);
+  return source.replace(ACTIVE_DB_DECLARATION, () => `const ACTIVE_SCRAMJET_DB_NAME = "${idbName}";`);
+}
 
 const SCRAMJET_SYMBOL_KEYS = ["scramjet client global", "scramjet frame handle", "scramjet original onevent function", "scramjet realm pollutant"];
 const SCRAMJET_LOG_STRINGS = ['"initializing scramjet client"'];
@@ -2321,6 +2327,7 @@ async function build() {
         handlerJsCount += handlerDefs.changed;
         if (basename === "tabs.js") output = applyTabAttr(output, tabAttr);
         if (basename === "home.js") output = scopeHomeScript(output);
+        if (basename === "settings.js") output = applyActiveScramjetName(output, scramjetStrings.idb);
         if (basename === "launcher.js") output = patchOrFail(output, /const CATALOGUE_KEY = \[0\];/, `const CATALOGUE_KEY = ${JSON.stringify(catalogueKey)};`, "launcher.js catalogue key");
         references.push({ file: `${basename} (${publicPath})`, source: output });
 
