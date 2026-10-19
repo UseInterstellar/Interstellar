@@ -26,6 +26,10 @@ const STATIC_DIR = path.join(__dirname, "static");
 const VENDOR_MAP_PATH = path.join(DIST_DIR, ".runtime", "vendor-map.cjs");
 const vendorMap = existsSync(VENDOR_MAP_PATH) ? require(VENDOR_MAP_PATH) : null;
 
+if (!vendorMap && process.env.VERCEL) {
+  throw new Error("dist/.runtime/vendor-map.cjs is missing on Vercel. The build did not run before the function was packaged.");
+}
+
 const SERVE_DIR = vendorMap ? DIST_DIR : STATIC_DIR;
 console.log(chalk.blue(`Serving from ${path.relative(__dirname, SERVE_DIR)}/`));
 if (vendorMap) {
