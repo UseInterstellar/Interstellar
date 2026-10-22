@@ -6,7 +6,7 @@
       "src": "src/server.js",
       "use": "@vercel/node",
       "config": {
-        "includeFiles": ["dist/**", "static/decoy/**"]
+        "includeFiles": ["dist/**", "dist/.runtime/**", "static/decoy/**"]
       }
     }
   ],
