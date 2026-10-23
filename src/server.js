@@ -63,8 +63,8 @@ function resolvePort() {
 
 const PORT = resolvePort();
 
-wisp.options.allow_loopback_ips = true;
-wisp.options.allow_private_ips = true;
+wisp.options.allow_loopback_ips = false;
+wisp.options.allow_private_ips = false;
 
 const escapeRegExp = text => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const blockedSiteMatchers = config.blockedSites.map(host => new RegExp(`(^|\\.)${escapeRegExp(host.trim().toLowerCase())}$`, "i"));
@@ -74,10 +74,7 @@ const filteringState = await setupFiltering({ wisp, filtering: config.filtering 
 const blockVerdict = createBlockVerdict({ blocklist: blockedSiteMatchers, policy: filteringState.policy });
 
 if (config.challenge !== false) {
-  console.log(chalk.green("🔒 Password protection is enabled! Listing logins below"));
-  Object.entries(config.users).forEach(([username, password]) => {
-    console.log(chalk.blue(`Username: ${username}, Password: ${password}`));
-  });
+  console.log(chalk.green("🔒 Password protection is enabled."));
   app.use(basicAuth({ users: config.users, challenge: true }));
 }
 
