@@ -182,8 +182,11 @@ server.on("request", (req, res) => {
   app(req, res);
 });
 
+const WISP_PATH = vendorMap?.wisp ?? "/wisp/";
+
 server.on("upgrade", (req, socket, head) => {
   if (masqr && masqr.isGated(req) && !masqr.isAuthorized(req)) return socket.destroy();
+  if (new URL(req.url, "http://localhost").pathname !== WISP_PATH) return socket.destroy();
   wisp.routeRequest(req, socket, head);
 });
 

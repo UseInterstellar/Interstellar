@@ -878,6 +878,24 @@ function createPageRoutes(registry) {
   return map;
 }
 
+function createWispPath(registry) {
+  let token;
+  let name;
+  do {
+    name = `${randomItem("abcdefghijklmnopqrstuvwxyz".split(""))}${randomBytes(4).toString("hex")}`;
+    token = `/${name}/`;
+  } while (registry.paths.has(token) || registry.topDirs.has(name));
+  registry.paths.add(token);
+  return token;
+}
+
+const WISP_PATH_LITERAL = "/wisp/`";
+function applyWispPath(source, wispPath) {
+  const found = source.split(WISP_PATH_LITERAL).length - 1;
+  if (found !== 1) throw new CodecPatchError(`search.js: expected one Wisp path literal, found ${found}. Upstream changed.`);
+  return source.replace(WISP_PATH_LITERAL, () => wispPath + "`");
+}
+
 // Quoted-literal rewrites, so a route token can never match inside an asset path such as
 // "/assets/json/apps.min.json". Both the "/x" form (pathname comparisons, navigate targets) and the
 // navbar "/./x" form are covered; the bare "tabs" in launcher.js is a relative navigation target
@@ -1623,6 +1641,7 @@ async function verifyRuntimeMap(manifest) {
   const failures = [];
   if (map.build !== manifest.build || !/^[0-9a-f]{8}$/.test(map.build)) failures.push(`build id ${JSON.stringify(map.build)} does not match manifest ${manifest.build}`);
   for (const scope of ["uv", "scramjet"]) if (!map.scopes?.[scope]?.startsWith("/")) failures.push(`scope ${scope} is missing`);
+  if (!/^\/[a-z][0-9a-f]+\/$/.test(map.wisp ?? "") || map.wisp === "/wisp/") failures.push(`wisp path ${JSON.stringify(map.wisp)} is missing or not randomized`);
   if (!(await exists(path.join(DIST_DIR, map.sw)))) failures.push(`service worker ${map.sw} is missing from dist/`);
   for (const [name, publicPath] of Object.entries(map.vendor ?? {})) {
     if (!(await exists(path.join(DIST_DIR, publicPath)))) failures.push(`vendor asset ${name} is missing (${publicPath})`);
@@ -2061,6 +2080,7 @@ async function build() {
   const scramjetSharedNames = createScramjetSharedNames();
   const catalogueKey = createCatalogueKey();
   const pageRoutes = createPageRoutes(registry);
+  const wispPath = createWispPath(registry);
   console.log(
     `Page routes: ${Object.entries(pageRoutes)
       .map(([from, to]) => `${from} -> ${to}`)
@@ -2077,6 +2097,7 @@ async function build() {
     scopes: { uv: NEW_UV_SCOPE, scramjet: NEW_SCRAMJET_SCOPE },
     sw: null,
     routes: pageRoutes,
+    wisp: wispPath,
     vendor: {},
   };
 
@@ -2328,6 +2349,7 @@ async function build() {
         if (basename === "tabs.js") output = applyTabAttr(output, tabAttr);
         if (basename === "home.js") output = scopeHomeScript(output);
         if (basename === "settings.js") output = applyActiveScramjetName(output, scramjetStrings.idb);
+        if (basename === "search.js") output = applyWispPath(output, wispPath);
         if (basename === "launcher.js") output = patchOrFail(output, /const CATALOGUE_KEY = \[0\];/, `const CATALOGUE_KEY = ${JSON.stringify(catalogueKey)};`, "launcher.js catalogue key");
         references.push({ file: `${basename} (${publicPath})`, source: output });
 
