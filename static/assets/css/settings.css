@@ -451,3 +451,20 @@ select:hover {
 #warning {
    color: var(--danger);
 }
+
+.storage-status {
+   color: var(--text-muted);
+   font-size: 15px;
+}
+
+.storage-status:empty {
+   display: none;
+}
+
+.storage-status.is-warning {
+   color: var(--warning);
+}
+
+.storage-status.is-error {
+   color: var(--danger);
+}

@@ -26,6 +26,10 @@ const STATIC_DIR = path.join(__dirname, "static");
 const VENDOR_MAP_PATH = path.join(DIST_DIR, ".runtime", "vendor-map.cjs");
 const vendorMap = existsSync(VENDOR_MAP_PATH) ? require(VENDOR_MAP_PATH) : null;
 
+if (!vendorMap && process.env.VERCEL) {
+  throw new Error("dist/.runtime/vendor-map.cjs is missing on Vercel. The build did not run before the function was packaged.");
+}
+
 const SERVE_DIR = vendorMap ? DIST_DIR : STATIC_DIR;
 console.log(chalk.blue(`Serving from ${path.relative(__dirname, SERVE_DIR)}/`));
 if (vendorMap) {
@@ -59,8 +63,8 @@ function resolvePort() {
 
 const PORT = resolvePort();
 
-wisp.options.allow_loopback_ips = true;
-wisp.options.allow_private_ips = true;
+wisp.options.allow_loopback_ips = false;
+wisp.options.allow_private_ips = false;
 
 const escapeRegExp = text => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const blockedSiteMatchers = config.blockedSites.map(host => new RegExp(`(^|\\.)${escapeRegExp(host.trim().toLowerCase())}$`, "i"));
@@ -70,18 +74,18 @@ const filteringState = await setupFiltering({ wisp, filtering: config.filtering 
 const blockVerdict = createBlockVerdict({ blocklist: blockedSiteMatchers, policy: filteringState.policy });
 
 if (config.challenge !== false) {
-  console.log(chalk.green("🔒 Password protection is enabled! Listing logins below"));
-  Object.entries(config.users).forEach(([username, password]) => {
-    console.log(chalk.blue(`Username: ${username}, Password: ${password}`));
-  });
+  console.log(chalk.green("🔒 Password protection is enabled."));
   app.use(basicAuth({ users: config.users, challenge: true }));
 }
 
 let masqr = null;
 if (config.masqr?.enabled) {
   masqr = mountMasqr(app, {
-    decoyRoot: path.join(STATIC_DIR, "decoy", config.masqr.decoy ?? "default"),
+    decoyBase: path.join(STATIC_DIR, "decoy"),
+    decoySet: config.masqr.decoy ?? "default",
     searchTrigger: process.env.MASQR_SEARCH_TRIGGER ?? config.masqr.searchTrigger ?? null,
+    sites: config.masqr.sites ?? [],
+    decoyOnly: config.masqr.decoyOnly === true,
     secureCookie: config.masqr.secureCookie !== false,
     sessionMs: (config.masqr.sessionDays ?? 30) * 24 * 60 * 60 * 1000,
   });
@@ -136,7 +140,7 @@ if (!vendorMap) {
   const { baremuxPath } = require("@mercuryworkshop/bare-mux/node");
   const { libcurlPath } = require("@mercuryworkshop/libcurl-transport");
   const { uvPath } = require("@titaniumnetwork-dev/ultraviolet");
-  const { scramjetPath } = require("@mercuryworkshop/scramjet/path");
+  const { scramjetPath } = require("@useinterstellar/scramjet/path");
 
   app.use("/epoxy/", express.static(epoxyPath));
   app.use("/libcurl/", express.static(libcurlPath));
@@ -178,8 +182,11 @@ server.on("request", (req, res) => {
   app(req, res);
 });
 
+const WISP_PATH = vendorMap?.wisp ?? "/wisp/";
+
 server.on("upgrade", (req, socket, head) => {
-  if (masqr && !masqr.isAuthorized(req)) return socket.destroy();
+  if (masqr && masqr.isGated(req) && !masqr.isAuthorized(req)) return socket.destroy();
+  if (new URL(req.url, "http://localhost").pathname !== WISP_PATH) return socket.destroy();
   wisp.routeRequest(req, socket, head);
 });
 

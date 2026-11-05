@@ -1,11 +1,21 @@
+
+function shellTop() {
+  try {
+    return top.document.body?.dataset.shell === "true" ? top : null;
+  } catch {
+    return null;
+  }
+}
+const cloakHost = shellTop() ?? window;
+
 let inFrame;
 
 try {
-  inFrame = window !== top;
+  inFrame = window !== top && !shellTop();
 } catch (e) {
   inFrame = true;
 }
-if (!store.get("ab")) store.set("ab", true);
+if (store.get("ab") == null) store.set("ab", "true");
 if (!inFrame && !navigator.userAgent.includes("Firefox") && store.get("ab") === "true") {
   const popup = open("about:blank", "_blank");
   if (popup && !popup.closed) {
@@ -20,9 +30,9 @@ if (!inFrame && !navigator.userAgent.includes("Firefox") && store.get("ab") === 
 
     doc.title = (window.laceTitle || (s => s))(name);
     link.rel = "icon";
-    link.href = icon;
+    link.href = absoluteUrl(icon);
 
-    iframe.src = location.href;
+    iframe.src = cloakHost.location.href;
     style.position = "fixed";
     style.top = style.bottom = style.left = style.right = 0;
     style.border = style.outline = "none";
@@ -40,8 +50,8 @@ if (!inFrame && !navigator.userAgent.includes("Firefox") && store.get("ab") === 
     doc.head.appendChild(script);
     doc.body.appendChild(iframe);
 
-    const pLink = store.get("pLink") || getRandomUrl();
-    location.replace(pLink);
+    const pLink = reconstructNavigationUrl(store.get("pLink")) ?? getRandomUrl();
+    cloakHost.location.replace(pLink);
   }
 }
 
@@ -99,6 +109,36 @@ function getRandomUrl() {
 function randRange(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
+
+function openHomeAboutBlank() {
+  if (navigator.userAgent.includes("Firefox")) {
+    return;
+  }
+
+  const popup = open("about:blank", "_blank");
+  if (!popup || popup.closed) {
+    alert("Window blocked. Please allow popups for this site.");
+    return;
+  }
+
+  const doc = popup.document;
+  const iframe = doc.createElement("iframe");
+  const link = doc.createElement("link");
+  const script = doc.createElement("script");
+  doc.title = (window.laceTitle || (s => s))(store.get("name") || "My Drive - Google Drive");
+  link.rel = "icon";
+  link.href = absoluteUrl(store.get("icon") || "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png");
+  iframe.src = cloakHost.location.href;
+  Object.assign(iframe.style, { position: "fixed", inset: "0", border: "none", outline: "none", width: "100%", height: "100%" });
+  script.textContent = "window.onbeforeunload = event => { const message = 'Leave Site?'; (event || window.event).returnValue = message; return message; };";
+  doc.head.append(link, script);
+  doc.body.appendChild(iframe);
+
+  const panicLink = reconstructNavigationUrl(store.get("pLink")) ?? getRandomUrl();
+  cloakHost.location.replace(panicLink);
+}
+
+document.getElementById("about-blank-button").addEventListener("click", openHomeAboutBlank);
 
 (function buildHeading() {
   const heading = document.querySelector("h1.title");

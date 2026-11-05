@@ -219,21 +219,52 @@ function reconstructSafeUrl(raw) {
   }
 }
 
+function reconstructNavigationUrl(raw) {
+  const text = typeof raw === "string" ? raw.trim() : "";
+  if (!text) return null;
+  if (text.startsWith("/") && !text.startsWith("//")) return text;
+  try {
+    const parsed = new URL(/^[a-z][a-z0-9+.-]*:/i.test(text) ? text : `https://${text}`);
+    return parsed.protocol === "https:" || parsed.protocol === "http:" ? parsed.href : null;
+  } catch {
+    return null;
+  }
+}
+
+function absoluteUrl(raw) {
+  try {
+    return new URL(raw, location.href).href;
+  } catch {
+    return raw;
+  }
+}
+
 const zeroWidth = ["​", "‌", "‍", "⁠", "﻿"];
 const titleHomoglyphs = {
   a: "а", c: "с", e: "е", i: "і", j: "ј", o: "о", p: "р", s: "ѕ", x: "х", y: "у",
   A: "А", B: "В", C: "С", E: "Е", H: "Н", I: "І", J: "Ј", K: "К", M: "М", O: "О", P: "Р", S: "Ѕ", T: "Т", X: "Х", Y: "Ү",
 };
+
+
+function triggerBreakSet(lower) {
+  const s = new Set();
+  const tokens = ["ultraviolet", "scramjet", "baremux", "libcurl", "unblock", "proxy", "epoxy", "wisp", "bare", "enter", "url"];
+  for (const tok of tokens) {
+    let from = 0, idx;
+    while ((idx = lower.indexOf(tok, from)) !== -1) { s.add(idx); from = idx + 1; }
+  }
+  return s;
+}
 function laceTitle(text, homoglyphs = true) {
   const points = Array.from(text || "");
+  const mustBreak = triggerBreakSet((text || "").toLowerCase());
   const pick = () => zeroWidth[Math.floor(Math.random() * zeroWidth.length)];
   let out = "";
   for (let i = 0; i < points.length; i++) {
-    const swap = homoglyphs && titleHomoglyphs[points[i]] && Math.random() < 0.3;
+    const swap = homoglyphs && titleHomoglyphs[points[i]] && Math.random() < 0.5;
     out += swap ? titleHomoglyphs[points[i]] : points[i];
-    if (i < points.length - 1) {
-      out += pick();
-      if (Math.random() < 0.35) out += pick();
+    if (i < points.length - 1 && /\S/.test(points[i]) && /\S/.test(points[i + 1])) {
+      if (mustBreak.has(i) || Math.random() < 0.15) out += pick();
     }
   }
   return out;
@@ -352,7 +383,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function currentPanicLink() {
-    return reconstructSafeUrl(store.get("pLink") || DEFAULT_PANIC_LINK) ?? DEFAULT_PANIC_LINK;
+    return reconstructNavigationUrl(store.get("pLink")) ?? DEFAULT_PANIC_LINK;
   }
 
   const panicAnchor = document.createElement("a");

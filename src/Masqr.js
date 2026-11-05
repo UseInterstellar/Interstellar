@@ -5,6 +5,7 @@ import express from "express";
 
 const COOKIE_NAME = "m";
 const SEARCH_PATH = "/search";
+const LOGIN_PATH = "/login/";
 const STORE_PATH = path.join(process.cwd(), "data", "masqr.json");
 const DAY_MS = 24 * 60 * 60 * 1000;
 const HOST_PATTERN = /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)*[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/;
@@ -106,35 +107,58 @@ function registerHost(map, rawHost, folder, source) {
   map.set(host, folder);
 }
 
-function loadDecoyMap(decoyRoot) {
-  const map = new Map();
-  for (const entry of readdirSync(decoyRoot, { withFileTypes: true })) {
-    if (!entry.isDirectory() || !existsSync(path.join(decoyRoot, entry.name, "index.html"))) continue;
-    registerHost(map, entry.name, entry.name, "directory name");
+export function expandSites(sites = []) {
+  const entries = new Map();
+  sites.forEach((site, index) => {
+    const label = `Masqr site ${site.name ?? index}`;
+    if (typeof site.searchTrigger !== "string" || !site.searchTrigger) throw new Error(`${label}: needs a searchTrigger`);
+    const names = site.name && Array.isArray(site.tlds) ? site.tlds.map(tld => `${site.name}.${tld}`) : [];
+    const hosts = [...names, ...(site.hosts ?? [])];
+    if (!hosts.length) throw new Error(`${label}: needs name + tlds or a hosts list`);
+    const family = names.length ? names.map(name => normaliseHost(name)) : null;
+    for (const rawHost of hosts) {
+      const host = normaliseHost(rawHost);
+      if (!host) throw new Error(`${label}: invalid hostname ${JSON.stringify(rawHost)}`);
+      if (entries.has(host)) throw new Error(`Masqr site ${host} is listed in more than one site`);
+      entries.set(host, { searchTrigger: site.searchTrigger, family });
+    }
+  });
+  return entries;
+}
 
-    const aliasFile = path.join(decoyRoot, entry.name, "domains.json");
+function loadDecoyMap(decoyBase, setName) {
+  const folders = new Map();
+  const aliases = new Map();
+  for (const entry of readdirSync(decoyBase, { withFileTypes: true })) {
+    if (!entry.isDirectory() || entry.name === setName || !entry.name.includes(".")) continue;
+    if (!existsSync(path.join(decoyBase, entry.name, "index.html"))) continue;
+    registerHost(folders, entry.name, entry.name, "directory name");
+    const folderHost = normaliseHost(entry.name);
+    if (folderHost) folders.set(folderHost, entry.name);
+
+    const aliasFile = path.join(decoyBase, entry.name, "domains.json");
     if (!existsSync(aliasFile)) continue;
-    let aliases;
+    let list;
     try {
-      aliases = JSON.parse(readFileSync(aliasFile, "utf8"));
+      list = JSON.parse(readFileSync(aliasFile, "utf8"));
     } catch (error) {
       throw new Error(`Masqr decoy ${entry.name}: domains.json is invalid JSON (${error.message})`);
     }
-    if (!Array.isArray(aliases) || !aliases.every(alias => typeof alias === "string")) {
+    if (!Array.isArray(list) || !list.every(alias => typeof alias === "string")) {
       throw new Error(`Masqr decoy ${entry.name}: domains.json must be a JSON array of hostnames`);
     }
-    for (const host of aliases) registerHost(map, host, entry.name, "domains.json");
+    for (const host of list) registerHost(aliases, host, entry.name, "domains.json");
   }
-  return map;
+  return { folders, aliases };
 }
 
-function safeDecoyFile(decoyRoot, folder, requestPath) {
+function safeDecoyFile(root, requestPath) {
   const relative = requestPath === "/" ? "index.html" : decodeURIComponent(requestPath).replace(/^\/+/, "");
   const parts = relative.split(/[\\/]+/).filter(Boolean);
   if (!parts.length || parts.some(part => part === "." || part === "..")) return null;
   if (BLOCKED_DECOY_FILES.has(parts.at(-1).toLowerCase())) return null;
 
-  const root = realpathSync(path.join(decoyRoot, folder));
+  const realRoot = realpathSync(root);
   const candidate = path.join(root, ...parts);
   let resolved;
   try {
@@ -142,7 +166,7 @@ function safeDecoyFile(decoyRoot, folder, requestPath) {
   } catch {
     return null;
   }
-  if (resolved !== root && !resolved.startsWith(`${root}${path.sep}`)) return null;
+  if (resolved !== realRoot && !resolved.startsWith(`${realRoot}${path.sep}`)) return null;
   try {
     if (!statSync(resolved).isFile()) return null;
   } catch {
@@ -164,14 +188,40 @@ function loadSearchRedirect(folder) {
   return redirect;
 }
 
-export function mountMasqr(app, { decoyRoot, secureCookie = true, sessionMs = 30 * DAY_MS, searchTrigger = null }) {
-  if (!existsSync(path.join(decoyRoot, "index.html"))) throw new Error(`Masqr decoy set ${decoyRoot} has no index.html`);
-  const decoyMap = loadDecoyMap(decoyRoot);
-  const decoyFolderFor = req => decoyMap.get(normaliseHost(req.headers.host)) ?? "";
+export function mountMasqr(app, { decoyBase, decoySet = "default", secureCookie = true, sessionMs = 30 * DAY_MS, searchTrigger = null, sites = [], decoyOnly = false }) {
+  // /math/, math and /math all select static/decoy/math.
+  const setName = String(decoySet).trim().replace(/^\/+|\/+$/g, "");
+  if (!setName || setName.includes("/") || setName.includes("\\") || setName === "." || setName === "..") {
+    throw new Error(`Masqr decoy set name ${JSON.stringify(decoySet)} must be a single folder name`);
+  }
+  const setRoot = path.join(decoyBase, setName);
+  if (!decoyOnly && !existsSync(path.join(setRoot, "index.html"))) throw new Error(`Masqr decoy set ${setRoot} has no index.html`);
+  const { folders, aliases } = existsSync(decoyBase) ? loadDecoyMap(decoyBase, setName) : { folders: new Map(), aliases: new Map() };
+  const siteEntries = expandSites(sites);
+  const hostOf = req => normaliseHost(req.headers.host);
 
-  const searchRedirects = new Map([["", loadSearchRedirect(decoyRoot)]]);
-  for (const folder of new Set(decoyMap.values())) searchRedirects.set(folder, loadSearchRedirect(path.join(decoyRoot, folder)));
-  const searchRedirectFor = req => searchRedirects.get(decoyFolderFor(req)) ?? searchRedirects.get("");
+  const folderFor = host => {
+    if (!host) return null;
+    if (folders.has(host)) return folders.get(host);
+    if (aliases.has(host)) return aliases.get(host);
+    for (const sister of siteEntries.get(host)?.family ?? []) {
+      if (folders.has(sister)) return folders.get(sister);
+    }
+    return null;
+  };
+  const rootFor = req => {
+    const folder = folderFor(hostOf(req));
+    return folder ? path.join(decoyBase, folder) : setRoot;
+  };
+  const triggerFor = req => siteEntries.get(hostOf(req))?.searchTrigger ?? searchTrigger;
+  const gated = req => !decoyOnly || folders.has(hostOf(req)) || aliases.has(hostOf(req)) || siteEntries.has(hostOf(req));
+
+  const searchRedirects = new Map();
+  const searchRedirectFor = req => {
+    const root = rootFor(req);
+    if (!searchRedirects.has(root)) searchRedirects.set(root, loadSearchRedirect(root));
+    return searchRedirects.get(root);
+  };
 
   const { secret } = readStore();
   const isAuthorized = req => sessionIsValid(secret, parseCookies(req.headers.cookie)[COOKIE_NAME]);
@@ -187,10 +237,11 @@ export function mountMasqr(app, { decoyRoot, secureCookie = true, sessionMs = 30
     });
   };
 
-  app.post(SEARCH_PATH, express.urlencoded({ extended: false, limit: "1kb" }), (req, res) => {
+  app.post(SEARCH_PATH, express.urlencoded({ extended: false, limit: "1kb" }), (req, res, next) => {
     res.setHeader("Cache-Control", "no-store");
+    if (!gated(req)) return next();
     const query = String(req.body?.q ?? "");
-    if (triggerMatches(query, searchTrigger)) {
+    if (triggerMatches(query, triggerFor(req))) {
       consumeToken(issueToken({ days: 1 }), null);
       setSession(res);
       return res.redirect(303, "/");
@@ -200,19 +251,37 @@ export function mountMasqr(app, { decoyRoot, secureCookie = true, sessionMs = 30
     return res.redirect(303, `${target}${encodeURIComponent(query)}`);
   });
 
+  app.post(LOGIN_PATH, express.urlencoded({ extended: false, limit: "1kb" }), (req, res, next) => {
+    res.setHeader("Cache-Control", "no-store");
+    if (!gated(req)) return next();
+    const password = typeof req.body?.password === "string" ? req.body.password : "";
+    if (!password || !triggerMatches(password, triggerFor(req))) {
+      return res.status(401).json({ error: "Invalid login" });
+    }
+    setSession(res);
+    return res.status(200).json({ ok: true });
+  });
+
   app.use((req, res, next) => {
-    if (isAuthorized(req)) return next();
+    if (!gated(req) || isAuthorized(req)) return next();
     if (req.method === "GET" || req.method === "HEAD") {
       let file = null;
       try {
-        file = safeDecoyFile(decoyRoot, decoyFolderFor(req), req.path);
+        file = safeDecoyFile(rootFor(req), req.path);
       } catch {
         file = null;
       }
       if (file) return res.sendFile(file, { dotfiles: "deny" });
+      let notFoundFile = null;
+      try {
+        notFoundFile = safeDecoyFile(rootFor(req), "/404.html");
+      } catch {
+        notFoundFile = null;
+      }
+      if (notFoundFile) return res.status(404).sendFile(notFoundFile, { dotfiles: "deny" });
     }
     res.status(404).type("text/plain").send("Not Found");
   });
 
-  return { isAuthorized, normaliseHost, decoyFolderFor };
+  return { isAuthorized, isGated: gated, normaliseHost };
 }

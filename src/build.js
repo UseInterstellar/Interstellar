@@ -1,7 +1,9 @@
 import { createHash, randomBytes } from "node:crypto";
+import { readFileSync } from "node:fs";
 import { access, cp, mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import chalk from "chalk";
 import JavaScriptObfuscator from "javascript-obfuscator";
 import { minify } from "terser";
@@ -20,8 +22,9 @@ for (const method of ["log", "info", "warn"]) {
 const OBFUSCATE = true;
 const OBFUSCATE_HTML = true;
 
-const SRC_DIR = path.join(process.cwd(), "static");
-const DIST_DIR = path.join(process.cwd(), "dist");
+const PROJECT_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const SRC_DIR = path.join(PROJECT_DIR, "static");
+const DIST_DIR = path.join(PROJECT_DIR, "dist");
 const JS_DIR = path.join(DIST_DIR, "assets", "js");
 const RUNTIME_DIR = path.join(DIST_DIR, ".runtime");
 
@@ -30,7 +33,7 @@ const { epoxyPath } = require("@mercuryworkshop/epoxy-transport");
 const { baremuxPath } = require("@mercuryworkshop/bare-mux/node");
 const { libcurlPath } = require("@mercuryworkshop/libcurl-transport");
 const { uvPath } = require("@titaniumnetwork-dev/ultraviolet");
-const { scramjetPath } = require("@mercuryworkshop/scramjet/path");
+const { scramjetPath } = require("@useinterstellar/scramjet/path");
 
 const TERSER_ONLY = new Set();
 
@@ -58,12 +61,34 @@ const RESERVED_GLOBALS =
     " ",
   );
 
-function vendorTerserOptions({ module, aggressive }) {
+const INTERNAL_PROPERTY_MANGLE_NAMES = ["locationProxy", "createLocationProxy", "RawProxy", "Proxy", "proxiedCallback"];
+const INTERNAL_PROPERTY_MANGLE_REGEX = new RegExp(`^(?:${INTERNAL_PROPERTY_MANGLE_NAMES.join("|")})$`);
+const INTERNAL_PROPERTY_SURVIVAL_CHECKS = INTERNAL_PROPERTY_MANGLE_NAMES.filter(name => name !== "Proxy");
+const INTERNAL_PROPERTY_NAME_CACHE = { vars: {}, props: {} };
+const RESERVED_PROPERTY_NAMES =
+  "constructor prototype length name arguments caller encode decode encodeUrl decodeUrl files workerPath config prefix codec globals websocket wisp transport libcurl epoxy baremux baremuxWorker setTransport setManualTransport getTransport importScript importScripts postMessage addEventListener removeEventListener dispatchEvent onconnect onmessage onerror onfetch fetch install activate message serviceWorker controller register unregister ready clients matchAll waitUntil respondWith request response headers body url href origin pathname search hash host hostname protocol port method mode destination referrer credentials cache redirect integrity keepalive signal arrayBuffer blob formData json text ok status statusText type clone".split(
+    " ",
+  );
+
+function vendorTerserOptions({ module, aggressive, propertyMangle = false }) {
+  const mangle = {
+    toplevel: Boolean(aggressive),
+    reserved: RESERVED_GLOBALS,
+  };
+  if (propertyMangle) {
+    mangle.properties = {
+      regex: INTERNAL_PROPERTY_MANGLE_REGEX,
+      reserved: RESERVED_PROPERTY_NAMES,
+      builtins: true,
+      keep_quoted: "strict",
+    };
+  }
   return {
     ecma: 2020,
     module,
     compress: { passes: 2, pure_funcs: VENDOR_DROPPED_CONSOLE },
-    mangle: { toplevel: Boolean(aggressive), reserved: RESERVED_GLOBALS },
+    mangle,
+    nameCache: INTERNAL_PROPERTY_NAME_CACHE,
     format: { comments: false },
   };
 }
@@ -306,7 +331,7 @@ const SCRAMJET_BRANDING = [
   /[ \t]*build\.textContent = \$\{JSON\.stringify\(globalThis\.\$scramjetVersion\?\.build\|\|"unknown"\)\};\n/,
 ];
 const SCRAMJET_TITLE = "<title>Scramjet</title>";
-const SCRAMJET_VERSION_LITERAL = /\{build:"[0-9a-f]{7,40}",version:"\d+\.\d+\.\d+"\}/;
+const SCRAMJET_VERSION_LITERAL = /\{build:"[0-9a-f]{7,40}",version:"\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?"\}/;
 
 function stripScramjetBranding(source) {
   let out = source;
@@ -333,8 +358,11 @@ const DIAGNOSTIC_STRINGS = [
   '"there are no bare clients"',
   '"No BareTransport was set. Try creating a BareMuxConnection and calling `setTransport()` or `setManualTransport()` on it before using BareClient."',
   '"The BareTransport provided was invalid. Common causes of this are a default export that is not a class that implements BareTransport if you are using `setTransport()`"',
+  '"(direct eval proxy)"',
+  '"(indirect eval proxy)"',
+  '"(function proxy)"',
 ];
-const DIAGNOSTIC_COUNTS = { "sj.all": 7, "uv.bundle": 2, "uv.client": 2, baremux: 2, "baremux.worker": 3 };
+const DIAGNOSTIC_COUNTS = { "sj.all": 10, "uv.bundle": 2, "uv.client": 2, baremux: 2, "baremux.worker": 3 };
 
 function stripDiagnosticStrings(source, id) {
   let out = source;
@@ -406,6 +434,19 @@ function applyBaremuxStrings(source, id, baremuxStrings) {
   return out;
 }
 
+
+const BROADCAST_CHANNEL_NEW = /new BroadcastChannel\(/g;
+const BROADCAST_CHANNEL_COUNTS = { "uv.bundle": 1, "uv.client": 1, "uv.handler": 0, "sj.all": 1, baremux: 1, "baremux.worker": 1 };
+
+function applyBroadcastChannelRewrite(source, id) {
+  const expected = BROADCAST_CHANNEL_COUNTS[id];
+  const found = (source.match(BROADCAST_CHANNEL_NEW) || []).length;
+  if (expected === undefined || found !== expected) throw new CodecPatchError(`${id}: expected ${expected} new BroadcastChannel( calls, found ${found}. Upstream changed.`);
+  const out = source.replace(BROADCAST_CHANNEL_NEW, 'new globalThis[["Broadcast","Channel"].join("")](');
+  if (out.includes("BroadcastChannel")) throw new CodecPatchError(`${id}: BroadcastChannel survived the rewrite.`);
+  return out;
+}
+
 const RENAMED_IDENTIFIERS = [
   "__scramjet$config",
   "isScramjet",
@@ -426,6 +467,26 @@ const RENAMED_IDENTIFIERS = [
   "UVServiceWorker",
   "BareMuxConnection",
   "BareClient",
+  "bareClient",
+  "BareWebSocket",
+  "WorkerConnection",
+  "wisp_v2",
+  "wisp_ws_protocols",
+  "WispConnection",
+  "WispWebSocket",
+  "wisp_connections",
+  "wisp_url",
+  "setTransport",
+  "libcurl_load",
+  "libcurl_abort",
+  "EpoxyTransport",
+  "EpoxyClient",
+  "EpoxyClientFinalization",
+  "EpoxyClientOptions",
+  "EpoxyClientOptionsFinalization",
+  "EpoxyHandlers",
+  "EpoxyHandlersFinalization",
+  "epoxyInfo",
   "uvHostname",
   "implementUVMiddleware",
   "ScramjetServiceWorkerRuntime",
@@ -515,6 +576,136 @@ function applyUvPropertyRename(source, name) {
   if (!found) throw new CodecPatchError("uv.sw.js: the .ultraviolet property was not found. Upstream file changed.");
   const out = source.replace(UV_PROPERTY, `.${name}`);
   if (UV_PROPERTY.test(out)) throw new CodecPatchError("uv.sw.js: .ultraviolet survived the rename.");
+  return out;
+}
+
+
+const UV_REWRITER_NAMES = ["rewriteUrl", "rewriteCSS", "rewriteJS"];
+
+function createUvRewriterRenames() {
+  return new Map(UV_REWRITER_NAMES.map(name => [name, `_${randomBytes(5).toString("hex")}`]));
+}
+
+function applyUvRewriterRenames(source, id, renames, counts) {
+  let out = source;
+  for (const [from, to] of renames) {
+    const pattern = new RegExp(`(?<![\\w$])${from}(?![\\w$])`, "g");
+    const found = (out.match(pattern) || []).length;
+    if (found !== counts[from]) throw new CodecPatchError(`${id}: expected ${counts[from]} occurrences of ${from}, found ${found}. Upstream changed.`);
+    out = out.replace(pattern, to);
+    if (out.match(pattern)) throw new CodecPatchError(`${id}: ${from} survived the rename.`);
+  }
+  return out;
+}
+
+const WISP_THIS_FIELD = /(?<![\w$])this\.wisp(?![\w$])/g;
+const WISP_FIELD_DECLARATION = /^([ \t]*)wisp;[ \t]*$/gm;
+const WISP_OPTION_READ = /(?<![\w$])(options|opts2)\.wisp(?![\w$])/g;
+const WISP_REWRITES = {
+  epoxy: { thisRefs: 2, declarations: 1, optionReads: 1, strings: [] },
+  libcurl: {
+    thisRefs: 5,
+    declarations: 1,
+    optionReads: 1,
+    strings: [
+      ["wisp client warning: ", "", 3],
+      ["wisp endpoints must end", "endpoints must end", 1],
+    ],
+  },
+};
+
+
+const LIBCURL_NAMESPACE_KEY = /^([ \t]*)wisp: \{/gm;
+const LIBCURL_VERSION_KEY = /(?<![\w$])version_dict\.wisp(?![\w$])/g;
+const LIBCURL_TRANSPORT_TAG = /"wisp"/g;
+const LIBCURL_VERBOSE_KEY = "._libcurl_verbose";
+const LIBCURL_NOTICE_START = "const copyright_notice = `";
+const LIBCURL_MESSAGES = [
+  ["please call libcurl.load_wasm first", "please load the wasm first"],
+  ["please call libcurl.set_websocket", "please set the websocket url"],
+];
+
+function applyLibcurlRewrites(source, tagName) {
+  const counts = [
+    ["wisp: { namespace key", (source.match(LIBCURL_NAMESPACE_KEY) || []).length, 1],
+    ["version_dict.wisp", (source.match(LIBCURL_VERSION_KEY) || []).length, 1],
+    ['"wisp" transport tag', (source.match(LIBCURL_TRANSPORT_TAG) || []).length, 2],
+    ["._libcurl_verbose option key", source.split(LIBCURL_VERBOSE_KEY).length - 1, 1],
+  ];
+  for (const [label, found, expected] of counts) {
+    if (found !== expected) throw new CodecPatchError(`libcurl: expected ${expected} ${label}, found ${found}. Upstream changed.`);
+  }
+  let out = source
+    .replace(LIBCURL_NAMESPACE_KEY, `$1${tagName}: {`)
+    .replace(LIBCURL_VERSION_KEY, `version_dict.${tagName}`)
+    .replace(LIBCURL_TRANSPORT_TAG, `"${tagName}"`);
+  out = replaceAll(out, LIBCURL_VERBOSE_KEY, '[["_lib","curl_verbose"].join("")]');
+
+  for (const [from, to] of LIBCURL_MESSAGES) {
+    if (out.split(from).length - 1 !== 1) throw new CodecPatchError(`libcurl: expected exactly one ${JSON.stringify(from)}. Upstream changed.`);
+    out = replaceAll(out, from, to);
+  }
+
+  const start = out.indexOf(LIBCURL_NOTICE_START);
+  const end = start < 0 ? -1 : out.indexOf("`;", start + LIBCURL_NOTICE_START.length);
+  if (start < 0 || end < 0) throw new CodecPatchError("libcurl: the copyright notice template was not found. Upstream changed.");
+  const notice = out.slice(start, end);
+  const mentions = notice.split("libcurl").length - 1;
+  if (mentions !== 3 || notice.includes("${")) throw new CodecPatchError(`libcurl: expected 3 plain mentions in the copyright notice, found ${mentions}. Upstream changed.`);
+  if (notice.split("ading2210").length - 1 !== 1) throw new CodecPatchError("libcurl: expected one repository owner in the copyright notice. Upstream changed.");
+  const hidden = replaceAll(replaceAll(notice, "libcurl", '${["lib","curl"].join("")}'), "ading2210", '${["ading","2210"].join("")}');
+  out = out.slice(0, start) + hidden + out.slice(end);
+
+
+  const leaked = ["please call libcurl", "libcurl.js is licensed", "/ading2210/", '"libcurl_load"', '"libcurl_abort"', "wisp: {", LIBCURL_VERBOSE_KEY].filter(text => out.includes(text));
+  if (leaked.length) throw new CodecPatchError(`libcurl: ${leaked.join(", ")} survived the rewrite.`);
+  return out;
+}
+
+function applyWispRewrites(source, id, fieldName, tagName) {
+  const expected = WISP_REWRITES[id];
+  if (!expected) throw new CodecPatchError(`${id}: no Wisp rewrite table. Add one to WISP_REWRITES.`);
+  const thisRefs = (source.match(WISP_THIS_FIELD) || []).length;
+  const declarations = (source.match(WISP_FIELD_DECLARATION) || []).length;
+  if (thisRefs !== expected.thisRefs || declarations !== expected.declarations) {
+    throw new CodecPatchError(`${id}: expected ${expected.thisRefs} this.wisp references and ${expected.declarations} field declaration, found ${thisRefs} and ${declarations}. Upstream changed.`);
+  }
+  const optionReads = (source.match(WISP_OPTION_READ) || []).length;
+  if (optionReads !== expected.optionReads) throw new CodecPatchError(`${id}: expected ${expected.optionReads} option reads of .wisp, found ${optionReads}. Upstream changed.`);
+  let out = source
+    .replace(WISP_THIS_FIELD, `this.${fieldName}`)
+    .replace(WISP_FIELD_DECLARATION, `$1${fieldName};`)
+    .replace(WISP_OPTION_READ, '$1[["wi","sp"].join("")]');
+  for (const [from, to, count] of expected.strings) {
+    const found = out.split(from).length - 1;
+    if (found !== count) throw new CodecPatchError(`${id}: expected ${count} occurrences of ${JSON.stringify(from)}, found ${found}. Upstream changed.`);
+    out = replaceAll(out, from, to);
+  }
+  if (id === "libcurl") out = applyLibcurlRewrites(out, tagName);
+  if (/(?<![\w$])this\.wisp(?![\w$])/.test(out) || out.includes("wisp client") || (out.match(WISP_OPTION_READ) || []).length) throw new CodecPatchError(`${id}: a plain Wisp name survived the rewrite.`);
+  return out;
+}
+
+const EPOXY_WASM_EXPORT_ACCESS = /\bwasm\.((?:(?:epoxyclient|epoxyhandlers?|epoxywebsocket)[\w$]*|[A-Za-z_$][\w$]*(?:epoxyclient|epoxyhandlers?|epoxywebsocket)[\w$]*))/g;
+const EPOXY_WASM_EXPORT_ACCESS_COUNT = 55;
+const EPOXY_WASM_IMPORT_NEW = /(?<![\w$])imports\.wbg\.__wbg_epoxywebsocket_new(?![\w$])/g;
+const EPOXY_WASM_FALLBACK_URL = '"epoxy.wasm"';
+
+function splitSensitivePropertyName(name) {
+  return JSON.stringify(name).replace(/epoxy/g, 'ep","oxy').replace(/wisp/g, 'wi","sp');
+}
+
+function applyEpoxyWasmExportAccessRewrite(source) {
+  const found = (source.match(EPOXY_WASM_EXPORT_ACCESS) || []).length;
+  if (found !== EPOXY_WASM_EXPORT_ACCESS_COUNT) throw new CodecPatchError(`epoxy: expected ${EPOXY_WASM_EXPORT_ACCESS_COUNT} WASM export property accesses, found ${found}. Upstream changed.`);
+  const importHooks = (source.match(EPOXY_WASM_IMPORT_NEW) || []).length;
+  const fallbackUrls = source.split(EPOXY_WASM_FALLBACK_URL).length - 1;
+  if (importHooks !== 1 || fallbackUrls !== 1) throw new CodecPatchError(`epoxy: expected one websocket import hook and one fallback WASM URL, found ${importHooks} and ${fallbackUrls}. Upstream changed.`);
+  let out = source.replace(EPOXY_WASM_EXPORT_ACCESS, (_, name) => `wasm[[${splitSensitivePropertyName(name)}].join("")]`);
+  out = out.replace(EPOXY_WASM_IMPORT_NEW, `imports.wbg[[${splitSensitivePropertyName("__wbg_epoxywebsocket_new")}].join("")]`);
+  out = replaceAll(out, EPOXY_WASM_FALLBACK_URL, '["ep","oxy.wasm"].join("")');
+  if (/wasm\.(?:(?:epoxyclient|epoxyhandlers?|epoxywebsocket)[\w$]*|[A-Za-z_$][\w$]*(?:epoxyclient|epoxyhandlers?|epoxywebsocket)[\w$]*)/.test(out)) throw new CodecPatchError("epoxy: a plain WASM export property access survived the rewrite.");
+  if (EPOXY_WASM_IMPORT_NEW.test(out) || out.includes(EPOXY_WASM_FALLBACK_URL)) throw new CodecPatchError("epoxy: a plain WASM import hook or fallback URL survived the rewrite.");
   return out;
 }
 
@@ -685,6 +876,24 @@ function createPageRoutes(registry) {
     map[clean] = token;
   }
   return map;
+}
+
+function createWispPath(registry) {
+  let token;
+  let name;
+  do {
+    name = `${randomItem("abcdefghijklmnopqrstuvwxyz".split(""))}${randomBytes(4).toString("hex")}`;
+    token = `/${name}/`;
+  } while (registry.paths.has(token) || registry.topDirs.has(name));
+  registry.paths.add(token);
+  return token;
+}
+
+const WISP_PATH_LITERAL = "/wisp/`";
+function applyWispPath(source, wispPath) {
+  const found = source.split(WISP_PATH_LITERAL).length - 1;
+  if (found !== 1) throw new CodecPatchError(`search.js: expected one Wisp path literal, found ${found}. Upstream changed.`);
+  return source.replace(WISP_PATH_LITERAL, () => wispPath + "`");
 }
 
 // Quoted-literal rewrites, so a route token can never match inside an asset path such as
@@ -895,6 +1104,12 @@ function countHardenableSegments(html) {
 // the same length, and stay lowercase because setAttribute lowercases.
 const SCRAMJET_ATTR_PREFIX = "scramjet-attr";
 const SCRAMJET_IDB_NAME = "$scramjet";
+const ACTIVE_DB_DECLARATION = `const ACTIVE_SCRAMJET_DB_NAME = "${SCRAMJET_IDB_NAME}";`;
+function applyActiveScramjetName(source, idbName) {
+  const found = source.split(ACTIVE_DB_DECLARATION).length - 1;
+  if (found !== 1) throw new CodecPatchError(`settings.js: expected one ACTIVE_SCRAMJET_DB_NAME declaration, found ${found}. Upstream changed.`);
+  return source.replace(ACTIVE_DB_DECLARATION, () => `const ACTIVE_SCRAMJET_DB_NAME = "${idbName}";`);
+}
 
 const SCRAMJET_SYMBOL_KEYS = ["scramjet client global", "scramjet frame handle", "scramjet original onevent function", "scramjet realm pollutant"];
 const SCRAMJET_LOG_STRINGS = ['"initializing scramjet client"'];
@@ -946,8 +1161,8 @@ function identifiersPrefixFor(scopeKey) {
   return `_${createHash("sha1").update(scopeKey).digest("hex").slice(0, 8)}_`;
 }
 
-async function minifyVendor(source, { module, aggressive }) {
-  const result = await minify(source, vendorTerserOptions({ module, aggressive }));
+async function minifyVendor(source, { module, aggressive, propertyMangle }) {
+  const result = await minify(source, vendorTerserOptions({ module, aggressive, propertyMangle }));
   if (!result.code) throw new Error("Terser returned empty output");
   return result.code;
 }
@@ -972,13 +1187,13 @@ async function runObfuscator(source, scopeKey) {
     deadCodeInjection: false,
     debugProtection: false,
     disableConsoleOutput: false,
-    identifierNamesGenerator: "hexadecimal",
+    identifierNamesGenerator: "mangled-shuffled",
     renameGlobals: false,
     selfDefending: false,
     splitStrings: true,
     splitStringsChunkLength: 5,
     stringArray: true,
-    stringArrayEncoding: ["rc4"],
+    stringArrayEncoding: ["base64"],
     stringArrayThreshold: 1,
     transformObjectKeys: true,
     unicodeEscapeSequence: false,
@@ -994,6 +1209,11 @@ function shouldProcessInlineScript(attrs) {
 
   const type = typeMatch[2].toLowerCase();
   return ["text/javascript", "application/javascript", "module"].includes(type);
+}
+
+
+function scopeHomeScript(source) {
+  return `(function () {\n${source}\n})();\n`;
 }
 
 async function obfuscateInlineScripts(html, htmlName) {
@@ -1063,6 +1283,53 @@ function obfuscateTextNodes(html) {
   });
 }
 
+const PLACEHOLDER_LOOKALIKES = {
+  a: "а", c: "с", e: "е", i: "і", o: "о", p: "р", x: "х", y: "у",
+  A: "А", B: "В", C: "С", E: "Е", H: "Н", K: "К", M: "М", O: "О",
+  P: "Р", T: "Т", X: "Х",
+};
+
+const DETECTOR_TRIGGER_TOKENS = [
+  "ultraviolet", "scramjet", "baremux", "libcurl", "unblock",
+  "proxy", "epoxy", "wisp", "bare", "enter", "url",
+].sort((a, b) => b.length - a.length);
+
+
+function triggerBreakPositions(value) {
+  const lower = value.toLowerCase();
+  const breakAfter = new Set();
+  for (const tok of DETECTOR_TRIGGER_TOKENS) {
+    let from = 0, idx;
+    while ((idx = lower.indexOf(tok, from)) !== -1) {
+      breakAfter.add(idx); 
+      from = idx + 1;
+    }
+  }
+  return breakAfter;
+}
+
+function obfuscatePlaceholder(value) {
+  if (value.includes("&")) throw new CodecPatchError(`placeholder ${JSON.stringify(value)} contains "&". Entity-aware swaps are not implemented.`);
+  const seed = fnv1a(value);
+  const chars = [...value];
+  const mustBreak = triggerBreakPositions(value);
+  let out = "";
+  for (let i = 0; i < chars.length; i++) {
+    let c = chars[i];
+    if ((seed + i) % 3 === 0 && PLACEHOLDER_LOOKALIKES[c]) c = PLACEHOLDER_LOOKALIKES[c];
+    out += c;
+    const adjacentNonSpace = i + 1 < chars.length && /\S/.test(c) && /\S/.test(chars[i + 1]);
+    const forced = mustBreak.has(i) && adjacentNonSpace;
+    const light = (seed + i) % 4 === 1 && adjacentNonSpace;
+    if (forced || light) out += HARDEN_ZERO_WIDTH[(seed + i) % HARDEN_ZERO_WIDTH.length];
+  }
+  for (const tok of DETECTOR_TRIGGER_TOKENS) {
+    const re = new RegExp(tok, "i");
+    if (re.test(out)) throw new CodecPatchError(`placeholder ${JSON.stringify(value)} still exposes trigger token "${tok}" after obfuscation`);
+  }
+  return out;
+}
+
 function obfuscateAttributeValues(html) {
   const valueAttrs = "alt|aria-label|class|content|crossorigin|href|id|method|name|onclick|onchange|onkeyup|placeholder|rel|src|style|title|type|value";
   const attrPattern = new RegExp(`\\s(${valueAttrs})=(["'])(.*?)\\2`, "gis");
@@ -1072,7 +1339,8 @@ function obfuscateAttributeValues(html) {
 
     const encodedAttrs = attrs.replace(attrPattern, (_match, attrName, quote, value) => {
       if (!value) return ` ${attrName}=${quote}${value}${quote}`;
-      return ` ${attrName}=${quote}${encodeHtmlText(value)}${quote}`;
+      const shown = attrName.toLowerCase() === "placeholder" ? obfuscatePlaceholder(value) : value;
+      return ` ${attrName}=${quote}${encodeHtmlText(shown)}${quote}`;
     });
 
     return `<${name}${encodedAttrs}>`;
@@ -1129,6 +1397,113 @@ async function exists(filePath) {
   }
 }
 
+
+const SCRAMJET_SHARED_NAMES = [
+  { from: "scramitize", js: 1, config: 1, wasm: 2 },
+  { from: "$scramerr", js: 1, config: 0, wasm: 1 },
+  { from: "scramtag", js: 5, config: 0, wasm: 3 },
+  { from: "$scramdbg", js: 1, config: 0, wasm: 0 },
+  { from: "rewriter_rewrite_js", js: 2, config: 0, wasm: 2 },
+  { from: "__wbg_rewriter_free", js: 2, config: 0, wasm: 1 },
+  { from: "strictRewrites", js: 1, config: 0, wasm: 1 },
+  { from: "destructureRewrites", js: 1, config: 0, wasm: 1 },
+];
+
+function createScramjetSharedNames() {
+  if (process.env.SJ_KEEP_NAMES === "1") return [];
+  return SCRAMJET_SHARED_NAMES.map(entry => {
+    const lead = entry.from.startsWith("$") ? "$" : "_";
+    return { ...entry, to: lead + randomBytes(Math.ceil(entry.from.length / 2)).toString("hex").slice(0, entry.from.length - 1) };
+  });
+}
+
+function applyScramjetSharedNames(source, names, kind, id) {
+  let out = source;
+  for (const entry of names) {
+    const found = out.split(entry.from).length - 1;
+    if (found !== entry[kind]) throw new CodecPatchError(`${id}: expected ${entry[kind]} occurrences of ${entry.from}, found ${found}. Upstream changed.`);
+    out = replaceAll(out, entry.from, entry.to);
+    if (out.includes(entry.from)) throw new CodecPatchError(`${id}: ${entry.from} survived the rewrite.`);
+  }
+  return out;
+}
+
+
+const SCRAMJET_WASM_LABELS = [
+  ["scramjet.codec.encode", 1],
+  ["scramjet.flagEnabled", 2],
+  ["url rewriter output", 1],
+  ["url rewriter error", 1],
+];
+
+function blankScramjetWasmLabels(text, id) {
+  let out = text;
+  for (const [label, count] of SCRAMJET_WASM_LABELS) {
+    const found = out.split(label).length - 1;
+    if (found !== count) throw new CodecPatchError(`${id}: expected ${count} occurrences of the label ${JSON.stringify(label)}, found ${found}. Upstream changed.`);
+    out = replaceAll(out, label, " ".repeat(label.length));
+  }
+  return out;
+}
+
+function patchScramjetWasm(buffer, names, id) {
+  const patched = Buffer.from(blankScramjetWasmLabels(applyScramjetSharedNames(buffer.toString("latin1"), names, "wasm", id), id), "latin1");
+  if (patched.length !== buffer.length) throw new CodecPatchError(`${id}: the wasm changed size (${buffer.length} -> ${patched.length}).`);
+  return patched;
+}
+
+
+const SCRAMJET_DEBUG_PRELUDE = `;(function(){var P="[Scramjet Debug]",seen={},budget=12;
+function emit(k,l,d){if(seen[k]||budget<=0)return;seen[k]=1;budget--;try{console.error(P+" ("+(typeof document==="undefined"?"service-worker":"page")+") "+l+" "+JSON.stringify(d))}catch(e){}}
+function trim(s){return String(s||"").split(String.fromCharCode(10)).slice(0,9)}
+function real(u){try{return new URL(u).origin===location.origin}catch(e){return false}}
+function under(u,pre){return String(u).indexOf(location.origin+pre)===0}
+globalThis.__sjdbg={
+client:function(c){try{var depth=0,w=self;while(w.parent&&w.parent!==w){depth++;w=w.parent}var fe=null;try{fe=self.frameElement?{tag:self.frameElement.tagName,sandbox:!!self.frameElement.getAttribute("sandbox"),name:self.frameElement.name||""}:null}catch(e){}
+emit("client:"+location.href,"client up",{realHref:location.href.slice(0,150),decodedUrl:String(c.url).slice(0,150),frameDepth:depth,frameElement:fe})}catch(e){emit("client-err","client probe failed",String(e))}},
+rw:function(input,base,resolved,pre){try{if(resolved.origin===location.origin&&!under(resolved.href,pre)){emit("rw:"+input,"URL resolved against the REAL origin",{input:String(input).slice(0,200),base:String(base).slice(0,200),resolved:resolved.href.slice(0,200),stack:trim(new Error().stack)})}else if(real(base)&&!under(base,pre)){emit("rwb:"+base,"rewriteUrl base is the REAL origin",{input:String(input).slice(0,200),base:String(base).slice(0,200),stack:trim(new Error().stack)})}}catch(e){}},
+meta:function(m,orig){try{var r=m.url;if(real(orig)){emit("meta-bad:"+orig,"import.meta rewritten with a REAL-origin URL",{realUrl:String(r).slice(0,200),original:String(orig).slice(0,200)})}emit("meta-first","import.meta.url mapping (first module)",{realUrl:String(r).slice(0,200),original:String(orig).slice(0,200)})}catch(e){}},
+metaFail:function(m,orig){emit("meta-fail","import.meta.url could not be overridden",{wanted:String(orig).slice(0,200),got:String(m.url).slice(0,200)})},
+imp:function(base,spec,resolved){try{if(real(resolved)||real(base)){emit("imp:"+resolved,"dynamic import resolved against the REAL origin",{base:String(base).slice(0,200),specifier:String(spec).slice(0,200),resolved:String(resolved).slice(0,200),stack:trim(new Error().stack)})}}catch(e){}},
+rwok:function(url,mod,errs,out){try{var n=errs&&errs.length||0;var txt=typeof out==="string"?out:(out&&out.length<3000000?new TextDecoder().decode(out):"");var raw=txt.split("import.meta.url").length-1;if(n||raw){emit("rwok:"+url,"rewrite finished with problems",{url:String(url).slice(0,200),module:!!mod,parseErrors:n,firstErrors:(errs||[]).slice(0,2).map(String),rawImportMetaUrl:raw,outputBytes:out&&out.length})}}catch(e){}},
+rwfail:function(url,mod,err,src){try{emit("rwfail:"+url,"rewriteJs THREW; source passed through UNREWRITTEN",{url:String(url).slice(0,200),module:!!mod,message:String(err&&err.message||err).slice(0,300),sourceBytes:src&&src.length})}catch(e){}},
+sw:function(req,client,decoded,dec){try{var rd="";try{rd=req.referrer?dec(req.referrer):""}catch(e){rd="(decode failed)"}emit("sw","service worker blocked a same-origin fetch",{request:req.url.slice(0,220),destination:req.destination,mode:req.mode,referrer:String(req.referrer).slice(0,220),referrerDecoded:String(rd).slice(0,220),clientUrl:client?String(client.url).slice(0,220):null,decodedTarget:String(decoded).slice(0,220)})}catch(e){}}
+}})();
+`;
+
+const SJ_DEBUG = process.env.SJ_DEBUG === "1" || process.argv.includes("--debug");
+
+function applyScramjetDebug(source) {
+  const sites = [
+    ['if((0,n.U5)("rewriterLogs",r.base))for(let e of s.errors)console.error("oxc parse error",e);return l}catch(a){if(console.warn(', 'globalThis.__sjdbg&&__sjdbg.rwok(t,o,s.errors,l);if((0,n.U5)("rewriterLogs",r.base))for(let e of s.errors)console.error("oxc parse error",e);return l}catch(a){globalThis.__sjdbg&&__sjdbg.rwfail(t,o,a,e);if(console.warn(', "rewriteJs"],
+    ["let i=a(e,r);if(!i)return e;", "let i=a(e,r);if(!i)return e;globalThis.__sjdbg&&__sjdbg.rw(e,r,i,n.$W.prefix);", "rewriteUrl"],
+    ["{value:function(t,n){let a=new URL(n,t).href;return n.includes(\":\")", "{value:function(t,n){let a=new URL(n,t).href;globalThis.__sjdbg&&__sjdbg.imp(t,n,a);return n.includes(\":\")", "dynamic import"],
+    ["{value:function(e,t){return e.url=t,e.resolve=function(e){return new URL(e,t).href},e}", "{value:function(e,t){return globalThis.__sjdbg&&__sjdbg.meta(e,t),e.url=t,globalThis.__sjdbg&&e.url!==t&&__sjdbg.metaFail(e,t),e.resolve=function(e){return new URL(e,t).href},e}", "import.meta"],
+    ['if(h.origin===new URL(e.url).origin)throw Error("attempted to fetch from same origin - this means the site has obtained a reference to the real origin, aborting");', 'if(h.origin===new URL(e.url).origin){globalThis.__sjdbg&&__sjdbg.sw(e,t,h,s.v2);throw Error("attempted to fetch from same origin - this means the site has obtained a reference to the real origin, aborting")}', "service worker"],
+    ["this.locationProxy=(0,a.createLocationProxy)(this,e),e[n.pX]=this}get frame(){", "this.locationProxy=(0,a.createLocationProxy)(this,e),e[n.pX]=this,globalThis.__sjdbg&&__sjdbg.client(this)}get frame(){", "client"],
+  ];
+  let out = source;
+  for (const [from, to, label] of sites) {
+    if (out.split(from).length - 1 !== 1) throw new CodecPatchError(`scramjet.all.js debug: expected exactly one ${label} site. Upstream changed.`);
+    out = replaceAll(out, from, to);
+  }
+  return SCRAMJET_DEBUG_PRELUDE + out;
+}
+
+
+
+const SCRAMJET_FORK_VERSION = /^1\.1\.0-fixed(\.\d+)?$/;
+let scramjetChecked = false;
+
+function scramjetWasmPath() {
+  if (!scramjetChecked) {
+    const meta = JSON.parse(readFileSync(path.join(scramjetPath, "..", "package.json"), "utf8"));
+    if (!SCRAMJET_FORK_VERSION.test(meta.version)) throw new CodecPatchError(`@useinterstellar/scramjet is ${meta.version}; the patches in this file were written against 1.1.0-fixed. Review them before bumping.`);
+    scramjetChecked = true;
+  }
+  return path.join(scramjetPath, "scramjet.wasm.wasm");
+}
+
 function vendorSpecs() {
   return [
     {
@@ -1139,6 +1514,7 @@ function vendorSpecs() {
       stripDiagnostics: true,
       rewriteBaremuxStrings: true,
       renameUltraviolet: true,
+      renameUvRewriters: { rewriteUrl: 15, rewriteCSS: 2, rewriteJS: 1 },
       src: path.join(uvPath, "uv.bundle.js"),
       old: "/assets/ultraviolet/uv.bundle.js",
       ext: ".js",
@@ -1152,12 +1528,13 @@ function vendorSpecs() {
       stripUvError: true,
       renameIdentifiers: true,
       renameUltraviolet: true,
+      renameUvRewriters: { rewriteUrl: 19, rewriteCSS: 8, rewriteJS: 2 },
       src: path.join(uvPath, "uv.handler.js"),
       old: "/assets/ultraviolet/uv.handler.js",
       ext: ".js",
       globals: ["__uvHook", "Ultraviolet", "UVClient", "__uv$config", "__uv$cookies", "__uv"],
     },
-    { id: "uv.sw", renameUvPrefix: true, renameIdentifiers: true, renameUltraviolet: true, stripBranding: true, renameUvProperty: true, src: path.join(uvPath, "uv.sw.js"), old: "/assets/ultraviolet/uv.sw.js", ext: ".js", globals: ["UVServiceWorker", "Ultraviolet", "__uv"] },
+    { id: "uv.sw", renameUvPrefix: true, renameIdentifiers: true, renameUltraviolet: true, stripBranding: true, renameUvProperty: true, renameUvRewriters: { rewriteUrl: 1, rewriteCSS: 1, rewriteJS: 0 }, src: path.join(uvPath, "uv.sw.js"), old: "/assets/ultraviolet/uv.sw.js", ext: ".js", globals: ["UVServiceWorker", "Ultraviolet", "__uv"] },
     {
       id: "uv.config",
       renameIdentifiers: true,
@@ -1183,11 +1560,14 @@ function vendorSpecs() {
       rewriteBaremuxStrings: true,
       rewriteProtocolKeys: true,
       renameIdentifiers: true,
+      propertyMangle: true,
       rewriteScramjetStrings: true,
+      sharedNames: "js",
+      mangledAway: INTERNAL_PROPERTY_SURVIVAL_CHECKS,
       globals: ["$scramjetLoadWorker", "$scramjetLoadController", "$scramjetLoadClient", "$scramjetRequire", "$scramjetVersion", "COOKIE", "WASM"],
     },
     { id: "sj.sync", src: path.join(scramjetPath, "scramjet.sync.js"), old: "/assets/scramjet/scramjet.sync.js", ext: ".js", renameIdentifiers: true },
-    { id: "sj.wasm", src: path.join(scramjetPath, "scramjet.wasm.wasm"), old: "/assets/scramjet/scramjet.wasm.wasm", ext: ".wasm", binary: true },
+    { id: "sj.wasm", src: scramjetWasmPath(), old: "/assets/scramjet/scramjet.wasm.wasm", ext: ".wasm", binary: true, sharedNames: "wasm" },
     {
       id: "sj.config",
       src: path.join(SRC_DIR, "assets", "scramjet", "scramjet.config.js"),
@@ -1198,6 +1578,7 @@ function vendorSpecs() {
       rewriteScopes: true,
       patchCodec: true,
       renameIdentifiers: true,
+      sharedNames: "config",
       globals: ["__scramjet$config"],
     },
     {
@@ -1220,8 +1601,11 @@ function vendorSpecs() {
       ext: ".mjs",
       module: true,
       aggressive: true,
+      renameIdentifiers: true,
+      rewriteWisp: true,
+      rewriteEpoxyWasmExports: true,
       globals: ["epoxyInfo"],
-      mangledAway: ["__wbg_get_imports", "getStringFromWasm", "EpoxyClientOptions"],
+      mangledAway: ["__wbg_get_imports", "getStringFromWasm", "EpoxyTransport", "EpoxyClient", "EpoxyClientFinalization", "EpoxyClientOptions", "EpoxyClientOptionsFinalization", "EpoxyHandlers", "EpoxyHandlersFinalization", "epoxyInfo"],
     },
     {
       id: "libcurl",
@@ -1230,6 +1614,8 @@ function vendorSpecs() {
       ext: ".mjs",
       module: true,
       aggressive: true,
+      renameIdentifiers: true,
+      rewriteWisp: true,
       mangledAway: ["moduleOverrides", "ENVIRONMENT_IS_WEB", "wasmBinaryFile"],
     },
   ];
@@ -1247,6 +1633,30 @@ function browserVendorModule(manifest) {
 
 function formatKb(bytes) {
   return `${(bytes / 1024).toFixed(1)}kb`;
+}
+
+const SERVED_PAGES = { "/apps": "apps.html", "/games": "games.html", "/settings": "settings.html", "/tabs": "tabs.html", "/home": "home.html" };
+async function verifyRuntimeMap(manifest) {
+  const map = createRequire(import.meta.url)(path.join(RUNTIME_DIR, "vendor-map.cjs"));
+  const failures = [];
+  if (map.build !== manifest.build || !/^[0-9a-f]{8}$/.test(map.build)) failures.push(`build id ${JSON.stringify(map.build)} does not match manifest ${manifest.build}`);
+  for (const scope of ["uv", "scramjet"]) if (!map.scopes?.[scope]?.startsWith("/")) failures.push(`scope ${scope} is missing`);
+  if (!/^\/[a-z][0-9a-f]+\/$/.test(map.wisp ?? "") || map.wisp === "/wisp/") failures.push(`wisp path ${JSON.stringify(map.wisp)} is missing or not randomized`);
+  if (!(await exists(path.join(DIST_DIR, map.sw)))) failures.push(`service worker ${map.sw} is missing from dist/`);
+  for (const [name, publicPath] of Object.entries(map.vendor ?? {})) {
+    if (!(await exists(path.join(DIST_DIR, publicPath)))) failures.push(`vendor asset ${name} is missing (${publicPath})`);
+  }
+  const opaqueSeen = new Set();
+  for (const [route, file] of Object.entries(SERVED_PAGES)) {
+    const opaque = map.routes?.[route];
+    if (!opaque || opaque === route || !opaque.startsWith("/")) failures.push(`page ${route} is not randomized`);
+    else if (opaqueSeen.has(opaque)) failures.push(`page ${route} shares ${opaque} with another page`);
+    opaqueSeen.add(opaque);
+    if (!(await exists(path.join(DIST_DIR, file)))) failures.push(`page file ${file} is missing from dist/`);
+  }
+  if (failures.length) throw new Error(`runtime map check failed:\n  ${failures.join("\n  ")}`);
+  console.log(chalk.green(`  runtime map ok (build ${map.build}, ${Object.keys(map.vendor ?? {}).length} vendor assets, ${opaqueSeen.size} randomized pages)`));
+  return map;
 }
 
 async function verifyBuild({ manifest, specs, emitted, references, distJsFiles, serverRoutes = [], identifierRenames = new Map(), swLocalRenames = new Map() }) {
@@ -1658,14 +2068,19 @@ async function build() {
   const proxyCodecs = createProxyCodecs();
   const scramjetGlobals = createScramjetGlobals();
   const identifierRenames = createIdentifierRenames();
+  const uvRewriterRenames = createUvRewriterRenames();
   const protocolKeys = createScramjetProtocolKeys();
   const baremuxStrings = createBaremuxStrings();
   const ultravioletName = `_${randomBytes(5).toString("hex")}`;
   const uvPropertyName = `_${randomBytes(5).toString("hex")}`;
+  const wispFieldName = `_${randomBytes(5).toString("hex")}`;
+  const wispTagName = `_${randomBytes(5).toString("hex")}`;
   const uvPrefixName = `_${randomBytes(4).toString("hex")}`;
   const scramjetStrings = createScramjetStrings();
+  const scramjetSharedNames = createScramjetSharedNames();
   const catalogueKey = createCatalogueKey();
   const pageRoutes = createPageRoutes(registry);
+  const wispPath = createWispPath(registry);
   console.log(
     `Page routes: ${Object.entries(pageRoutes)
       .map(([from, to]) => `${from} -> ${to}`)
@@ -1682,6 +2097,7 @@ async function build() {
     scopes: { uv: NEW_UV_SCOPE, scramjet: NEW_SCRAMJET_SCOPE },
     sw: null,
     routes: pageRoutes,
+    wisp: wispPath,
     vendor: {},
   };
 
@@ -1817,7 +2233,8 @@ async function build() {
     await mkdir(path.dirname(destination), { recursive: true });
 
     if (spec.binary) {
-      const buffer = await readFile(spec.src);
+      let buffer = await readFile(spec.src);
+      if (spec.sharedNames) buffer = patchScramjetWasm(buffer, scramjetSharedNames, spec.id);
       await writeFile(destination, buffer);
       emitted.set(spec.publicPath, destination);
       console.log(chalk.green(`  + ${spec.id} -> ${spec.publicPath} (${formatKb(buffer.length)}, copied)`));
@@ -1841,11 +2258,16 @@ async function build() {
     if (spec.stripDiagnostics) source = stripDiagnosticStrings(source, spec.id);
     // After the diagnostic strip, whose literals carry bare-mux occurrences of their own.
     if (spec.rewriteBaremuxStrings) source = applyBaremuxStrings(source, spec.id, baremuxStrings);
+    if (spec.rewriteBaremuxStrings) source = applyBroadcastChannelRewrite(source, spec.id);
     if (spec.rewriteProtocolKeys) source = applyScramjetProtocolKeys(source, protocolKeys);
     if (spec.renameIdentifiers) source = applyIdentifierRenames(source, identifierRenames);
+    if (spec.sharedNames) source = applyScramjetSharedNames(source, scramjetSharedNames, spec.sharedNames, spec.id);
     if (spec.stripBranding) source = stripUltravioletBranding(source);
     if (spec.renameUltraviolet) source = applyUltravioletRename(source, ultravioletName);
     if (spec.renameUvProperty) source = applyUvPropertyRename(source, uvPropertyName);
+    if (spec.renameUvRewriters) source = applyUvRewriterRenames(source, spec.id, uvRewriterRenames, spec.renameUvRewriters);
+    if (spec.rewriteWisp) source = applyWispRewrites(source, spec.id, wispFieldName, wispTagName);
+    if (spec.rewriteEpoxyWasmExports) source = applyEpoxyWasmExportAccessRewrite(source);
     if (spec.renameUvPrefix) source = applyUvPrefixRename(source, uvPrefixName);
     if (spec.rewriteUvDefaults) source = applyUvDefaultPaths(source, specs);
     if (spec.stripUvError) source = stripUvErrorMessage(source);
@@ -1867,6 +2289,14 @@ async function build() {
         if (!source.includes(literal)) throw new CodecPatchError(`scramjet.all.js: log string ${literal} not found. Upstream changed.`);
         source = replaceAll(source, literal, '""');
       }
+      const selfCheck = '"string"==typeof e&&e.includes("scramjet"),';
+      if (source.split(selfCheck).length - 1 !== 1) throw new CodecPatchError(`scramjet.all.js: expected exactly one ${selfCheck}. Upstream changed.`);
+      source = replaceAll(source, selfCheck, "");
+      if (source.includes('includes("scramjet")')) throw new CodecPatchError('scramjet.all.js: includes("scramjet") survived the strip.');
+      if (SJ_DEBUG) {
+        source = applyScramjetDebug(source);
+        console.log(chalk.yellow("  ! Scramjet diagnostics are ON in this build ([Scramjet Debug] console lines)"));
+      }
     }
     if (spec.rewriteScopes) for (const [from, to] of scopeRewrites) source = replaceAll(source, from, to);
     if (spec.rewritePaths) {
@@ -1874,7 +2304,7 @@ async function build() {
       references.push({ file: `${spec.id} (${spec.publicPath})`, source });
     }
 
-    const minified = spec.minify === false ? source : await minifyVendor(source, { module: Boolean(spec.module), aggressive: Boolean(spec.aggressive) });
+    const minified = spec.minify === false ? source : await minifyVendor(source, { module: Boolean(spec.module), aggressive: Boolean(spec.aggressive), propertyMangle: Boolean(spec.propertyMangle) });
     await writeFile(destination, minified, "utf8");
     emitted.set(spec.publicPath, destination);
 
@@ -1917,6 +2347,9 @@ async function build() {
         output = handlerDefs.source;
         handlerJsCount += handlerDefs.changed;
         if (basename === "tabs.js") output = applyTabAttr(output, tabAttr);
+        if (basename === "home.js") output = scopeHomeScript(output);
+        if (basename === "settings.js") output = applyActiveScramjetName(output, scramjetStrings.idb);
+        if (basename === "search.js") output = applyWispPath(output, wispPath);
         if (basename === "launcher.js") output = patchOrFail(output, /const CATALOGUE_KEY = \[0\];/, `const CATALOGUE_KEY = ${JSON.stringify(catalogueKey)};`, "launcher.js catalogue key");
         references.push({ file: `${basename} (${publicPath})`, source: output });
 
@@ -2051,6 +2484,7 @@ async function build() {
 
   await mkdir(RUNTIME_DIR, { recursive: true });
   await writeFile(path.join(RUNTIME_DIR, "vendor-map.cjs"), `"use strict";\n// Generated by build.js on every build. Do not edit; do not serve.\nmodule.exports = ${JSON.stringify(manifest, null, 2)};\n`, "utf8");
+  await verifyRuntimeMap(manifest);
 
   console.log("\nVerifying build...");
   const distJsFiles = [];
