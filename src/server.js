@@ -9,6 +9,7 @@ import cookieParser from "cookie-parser";
 import express from "express";
 import basicAuth from "express-basic-auth";
 import config from "../config.js";
+import { loadWispConfig, WispArgError, wispConfigStatement, wispFingerprint } from "./wisp-config.js";
 // import { mountAnalytics } from "./analytics.js";
 import { mountGhGames } from "./games.js";
 import { createBlockVerdict, setupFiltering } from "./filtering/index.js";
@@ -25,10 +26,6 @@ const STATIC_DIR = path.join(__dirname, "static");
 
 const VENDOR_MAP_PATH = path.join(DIST_DIR, ".runtime", "vendor-map.cjs");
 const vendorMap = existsSync(VENDOR_MAP_PATH) ? require(VENDOR_MAP_PATH) : null;
-
-if (!vendorMap && process.env.VERCEL) {
-  throw new Error("dist/.runtime/vendor-map.cjs is missing on Vercel. The build did not run before the function was packaged.");
-}
 
 const SERVE_DIR = vendorMap ? DIST_DIR : STATIC_DIR;
 console.log(chalk.blue(`Serving from ${path.relative(__dirname, SERVE_DIR)}/`));
@@ -63,8 +60,42 @@ function resolvePort() {
 
 const PORT = resolvePort();
 
-wisp.options.allow_loopback_ips = false;
-wisp.options.allow_private_ips = false;
+
+function staleBuildMessage(recorded, config, rawArgs = []) {
+  const wanted = wispFingerprint(config);
+  if (recorded?.hash === wanted.hash) return null;
+  const flags = rawArgs.length ? ` ${rawArgs.join(" ")}` : "";
+  const built = recorded ? `${recorded.preferred} preferred / ${recorded.fallback} fallback endpoint(s)` : "no recorded Wisp settings (built before this was recorded)";
+  return `dist/ was built with different Wisp settings than the ones given now (built: ${built}; now: ${wanted.preferred} preferred / ${wanted.fallback} fallback). Endpoints are compiled into the build, so rebuild with the same WISP_* environment variables and flags, then start with them:\n  pnpm build${flags}\n  pnpm start${flags}`;
+}
+
+function injectWispConfig(source, statement) {
+  const placeholder = /globalThis\.__wispCfg = null;/;
+  if (!placeholder.test(source)) throw new Error("main.js has no Wisp config placeholder to replace");
+  return source.replace(placeholder, () => statement);
+}
+
+let wispSettings;
+try {
+  wispSettings = loadWispConfig();
+  for (const warning of wispSettings.warnings) console.log(chalk.yellow(`Wisp: ${warning}`));
+  if (vendorMap && wispSettings.explicit) {
+    const stale = staleBuildMessage(vendorMap.wisp, wispSettings.config, wispSettings.raw);
+    if (stale) {
+      console.log(chalk.red(stale));
+      process.exit(1);
+    }
+  }
+  if (wispSettings.explicit) console.log(chalk.blue(`Wisp endpoints: ${wispSettings.config.preferred.length} preferred (${wispSettings.sources.preferred}), ${wispSettings.config.fallback.length} fallback (${wispSettings.sources.fallback})`));
+  else if (vendorMap) console.log(chalk.blue(`Wisp endpoints: as compiled into dist/ (${vendorMap.wisp?.preferred ?? "?"} preferred, ${vendorMap.wisp?.fallback ?? "?"} fallback)`));
+} catch (error) {
+  if (!(error instanceof WispArgError)) throw error;
+  console.log(chalk.red(`Invalid Wisp option: ${error.message}`));
+  process.exit(1);
+}
+
+wisp.options.allow_loopback_ips = true;
+wisp.options.allow_private_ips = true;
 
 const escapeRegExp = text => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const blockedSiteMatchers = config.blockedSites.map(host => new RegExp(`(^|\\.)${escapeRegExp(host.trim().toLowerCase())}$`, "i"));
@@ -74,7 +105,10 @@ const filteringState = await setupFiltering({ wisp, filtering: config.filtering 
 const blockVerdict = createBlockVerdict({ blocklist: blockedSiteMatchers, policy: filteringState.policy });
 
 if (config.challenge !== false) {
-  console.log(chalk.green("🔒 Password protection is enabled."));
+  console.log(chalk.green("🔒 Password protection is enabled! Listing logins below"));
+  Object.entries(config.users).forEach(([username, password]) => {
+    console.log(chalk.blue(`Username: ${username}, Password: ${password}`));
+  });
   app.use(basicAuth({ users: config.users, challenge: true }));
 }
 
@@ -133,6 +167,24 @@ if (!vendorMap) {
   }
 }
 
+if (!vendorMap) {
+  let statement;
+  try {
+    statement = wispConfigStatement(wispSettings.config);
+  } catch (error) {
+    console.log(chalk.red(`Invalid Wisp configuration: ${error.message}`));
+    process.exit(1);
+  }
+  const mainJs = path.join(SERVE_DIR, "assets", "js", "main.js");
+  app.get("/assets/js/main.js", (_req, res, next) => {
+    try {
+      res.type("js").set("Cache-Control", "no-store").send(injectWispConfig(readFileSync(mainJs, "utf8"), statement));
+    } catch (error) {
+      next(error);
+    }
+  });
+}
+
 app.use(express.static(SERVE_DIR, { ...jsStaticOptions, dotfiles: "ignore" }));
 
 if (!vendorMap) {
@@ -182,11 +234,8 @@ server.on("request", (req, res) => {
   app(req, res);
 });
 
-const WISP_PATH = vendorMap?.wisp ?? "/wisp/";
-
 server.on("upgrade", (req, socket, head) => {
   if (masqr && masqr.isGated(req) && !masqr.isAuthorized(req)) return socket.destroy();
-  if (new URL(req.url, "http://localhost").pathname !== WISP_PATH) return socket.destroy();
   wisp.routeRequest(req, socket, head);
 });
 

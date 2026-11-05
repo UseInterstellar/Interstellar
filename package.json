@@ -1,15 +1,14 @@
 {
   "name": "interstellar",
-  "version": "6.3.0",
+  "version": "6.2.0",
   "type": "module",
   "engines": {
-  "node": ">=22.23.4 <23",
-  "npm": ">=10.0.0"
-},
+    "npm": ">=7.0.0",
+    "node": ">=16.0.0"
+  },
   "scripts": {
     "start": "node src/server.js",
     "build": "node src/build.js",
-    "vercel-build": "node src/build.js",
     "format": "pnpm biome format --write .",
     "precommit": "pnpm run format && pnpm biome check --write .",
     "lint": "biome lint --write ."

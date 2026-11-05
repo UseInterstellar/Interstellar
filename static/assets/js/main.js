@@ -1,3 +1,5 @@
+globalThis.__wispCfg = null;
+
 // Theme is applied immediately, to prevent flashing on page load
 (() => {
   const themes = {

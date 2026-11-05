@@ -3,11 +3,12 @@ import { readFileSync } from "node:fs";
 import { access, cp, mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
+import vm from "node:vm";
 import chalk from "chalk";
 import JavaScriptObfuscator from "javascript-obfuscator";
 import { minify } from "terser";
 import { injectVersionInfo, resolveVersionInfo, VERSION_TOKEN_COUNT } from "./version.js";
+import { loadWispConfig, WispArgError, wispConfigStatement, wispFingerprint } from "./wisp-config.js";
 
 const OBFUSCATOR_PROMO_PATTERN = /\[javascript-obfuscator\]|JavaScript Obfuscator Pro|obfuscator\.io/i;
 
@@ -19,12 +20,25 @@ for (const method of ["log", "info", "warn"]) {
   };
 }
 
+
+
+const WISP = (() => {
+  try {
+    const resolved = loadWispConfig();
+    wispConfigStatement(resolved.config);
+    return resolved;
+  } catch (error) {
+    if (!(error instanceof WispArgError)) throw error;
+    console.error(chalk.red(`Invalid Wisp option: ${error.message}`));
+    process.exit(1);
+  }
+})();
+
 const OBFUSCATE = true;
 const OBFUSCATE_HTML = true;
 
-const PROJECT_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const SRC_DIR = path.join(PROJECT_DIR, "static");
-const DIST_DIR = path.join(PROJECT_DIR, "dist");
+const SRC_DIR = path.join(process.cwd(), "static");
+const DIST_DIR = path.join(process.cwd(), "dist");
 const JS_DIR = path.join(DIST_DIR, "assets", "js");
 const RUNTIME_DIR = path.join(DIST_DIR, ".runtime");
 
@@ -878,24 +892,6 @@ function createPageRoutes(registry) {
   return map;
 }
 
-function createWispPath(registry) {
-  let token;
-  let name;
-  do {
-    name = `${randomItem("abcdefghijklmnopqrstuvwxyz".split(""))}${randomBytes(4).toString("hex")}`;
-    token = `/${name}/`;
-  } while (registry.paths.has(token) || registry.topDirs.has(name));
-  registry.paths.add(token);
-  return token;
-}
-
-const WISP_PATH_LITERAL = "/wisp/`";
-function applyWispPath(source, wispPath) {
-  const found = source.split(WISP_PATH_LITERAL).length - 1;
-  if (found !== 1) throw new CodecPatchError(`search.js: expected one Wisp path literal, found ${found}. Upstream changed.`);
-  return source.replace(WISP_PATH_LITERAL, () => wispPath + "`");
-}
-
 // Quoted-literal rewrites, so a route token can never match inside an asset path such as
 // "/assets/json/apps.min.json". Both the "/x" form (pathname comparisons, navigate targets) and the
 // navbar "/./x" form are covered; the bare "tabs" in launcher.js is a relative navigation target
@@ -1104,15 +1100,13 @@ function countHardenableSegments(html) {
 // the same length, and stay lowercase because setAttribute lowercases.
 const SCRAMJET_ATTR_PREFIX = "scramjet-attr";
 const SCRAMJET_IDB_NAME = "$scramjet";
-const ACTIVE_DB_DECLARATION = `const ACTIVE_SCRAMJET_DB_NAME = "${SCRAMJET_IDB_NAME}";`;
-function applyActiveScramjetName(source, idbName) {
-  const found = source.split(ACTIVE_DB_DECLARATION).length - 1;
-  if (found !== 1) throw new CodecPatchError(`settings.js: expected one ACTIVE_SCRAMJET_DB_NAME declaration, found ${found}. Upstream changed.`);
-  return source.replace(ACTIVE_DB_DECLARATION, () => `const ACTIVE_SCRAMJET_DB_NAME = "${idbName}";`);
-}
 
 const SCRAMJET_SYMBOL_KEYS = ["scramjet client global", "scramjet frame handle", "scramjet original onevent function", "scramjet realm pollutant"];
 const SCRAMJET_LOG_STRINGS = ['"initializing scramjet client"'];
+
+const WISP_IDENTIFIERS = ["WispSelector", "__wispCfg", "__wispUp", "createSelector", "createManager", "decodeConfig", "probe", "isWispHello", "classifyError", "TRANSPORT_ERROR", "showError", "loadConfig", "keyOf", "WispUnavailableError", "reconsiderPreferred", "reportFailure"];
+const WISP_STRINGS = ["wisp-state", "wisp-health", "wisp-select"];
+const WISP_FILES = new Set(["main.js", "wisp.js", "search.js"]);
 
 function createIdentifierRenames() {
   return new Map(RENAMED_IDENTIFIERS.map(name => [name, `_${randomBytes(5).toString("hex")}`]));
@@ -1635,30 +1629,6 @@ function formatKb(bytes) {
   return `${(bytes / 1024).toFixed(1)}kb`;
 }
 
-const SERVED_PAGES = { "/apps": "apps.html", "/games": "games.html", "/settings": "settings.html", "/tabs": "tabs.html", "/home": "home.html" };
-async function verifyRuntimeMap(manifest) {
-  const map = createRequire(import.meta.url)(path.join(RUNTIME_DIR, "vendor-map.cjs"));
-  const failures = [];
-  if (map.build !== manifest.build || !/^[0-9a-f]{8}$/.test(map.build)) failures.push(`build id ${JSON.stringify(map.build)} does not match manifest ${manifest.build}`);
-  for (const scope of ["uv", "scramjet"]) if (!map.scopes?.[scope]?.startsWith("/")) failures.push(`scope ${scope} is missing`);
-  if (!/^\/[a-z][0-9a-f]+\/$/.test(map.wisp ?? "") || map.wisp === "/wisp/") failures.push(`wisp path ${JSON.stringify(map.wisp)} is missing or not randomized`);
-  if (!(await exists(path.join(DIST_DIR, map.sw)))) failures.push(`service worker ${map.sw} is missing from dist/`);
-  for (const [name, publicPath] of Object.entries(map.vendor ?? {})) {
-    if (!(await exists(path.join(DIST_DIR, publicPath)))) failures.push(`vendor asset ${name} is missing (${publicPath})`);
-  }
-  const opaqueSeen = new Set();
-  for (const [route, file] of Object.entries(SERVED_PAGES)) {
-    const opaque = map.routes?.[route];
-    if (!opaque || opaque === route || !opaque.startsWith("/")) failures.push(`page ${route} is not randomized`);
-    else if (opaqueSeen.has(opaque)) failures.push(`page ${route} shares ${opaque} with another page`);
-    opaqueSeen.add(opaque);
-    if (!(await exists(path.join(DIST_DIR, file)))) failures.push(`page file ${file} is missing from dist/`);
-  }
-  if (failures.length) throw new Error(`runtime map check failed:\n  ${failures.join("\n  ")}`);
-  console.log(chalk.green(`  runtime map ok (build ${map.build}, ${Object.keys(map.vendor ?? {}).length} vendor assets, ${opaqueSeen.size} randomized pages)`));
-  return map;
-}
-
 async function verifyBuild({ manifest, specs, emitted, references, distJsFiles, serverRoutes = [], identifierRenames = new Map(), swLocalRenames = new Map() }) {
   const failures = [];
   const emittedPaths = new Set([...emitted.keys(), ...serverRoutes]);
@@ -2038,6 +2008,28 @@ async function obfuscateSelectors() {
   return { maps, kept: [...kept].sort(), leaked: [...leaked].sort() };
 }
 
+
+function verifyWispConfig(sources, config, renames) {
+  const main = sources.get("main.js");
+  const selector = sources.get("wisp.js");
+  if (!main || !selector) throw new Error("wisp config check: main.js or wisp.js was not emitted");
+
+  const stub = () => new Proxy(function () {}, { get: (_, key) => (key === Symbol.toPrimitive ? () => "" : stub()), apply: () => stub(), construct: () => stub() });
+  const context = vm.createContext({ atob, TextDecoder, store: stub(), document: stub(), window: stub(), localStorage: stub(), location: stub(), navigator: stub(), console });
+  try {
+    vm.runInContext(main, context, { timeout: 5000 });
+  } catch {}
+  vm.runInContext(selector, context, { timeout: 5000 });
+  const name = id => renames.get(id);
+  for (const [file, source] of sources) for (const id of [...WISP_IDENTIFIERS, ...WISP_STRINGS]) if (new RegExp(`(?<![\\w$])${id}(?![\\w$])`).test(source)) throw new Error(`wisp config check: "${id}" is still readable in the built ${file}`);
+  const decoded = vm.runInContext(`${name("WispSelector")}.${name("decodeConfig")}(globalThis.${name("__wispCfg")})`, context);
+  const same = (a, b) => JSON.stringify([...a]) === JSON.stringify([...b]);
+  if (!decoded || !same(decoded.preferred, config.preferred) || !same(decoded.fallback, config.fallback) || (config.sameOrigin === false && decoded.sameOrigin !== false)) {
+    throw new Error("wisp config check: the built main.js does not decode to the configured Wisp endpoints");
+  }
+  console.log(chalk.green(`  Wisp config verified in built output: ${config.preferred.length} preferred, ${config.fallback.length} fallback, sameOrigin ${config.sameOrigin === false ? "off" : "on"}`));
+}
+
 async function build() {
   console.log("Cleaning dist/...");
   await rm(DIST_DIR, { recursive: true, force: true });
@@ -2046,6 +2038,8 @@ async function build() {
   await cp(SRC_DIR, DIST_DIR, { recursive: true, filter: source => path.relative(SRC_DIR, source) !== path.join("decoy") });
 
   console.log(OBFUSCATE ? chalk.yellow("Obfuscation: ON") : chalk.yellow("Obfuscation: OFF (rename + rewrite only)"));
+  console.log(chalk.yellow(`Wisp endpoints: ${WISP.config.preferred.length} preferred (${WISP.sources.preferred}), ${WISP.config.fallback.length} fallback (${WISP.sources.fallback})${WISP.config.sameOrigin === false ? ", same-origin off" : ""}`));
+  for (const warning of WISP.warnings) console.warn(chalk.yellow(`  Wisp: ${warning}`));
 
   const selectors = await obfuscateSelectors();
   console.log(`\nSelectors: ${selectors.maps.class.size} classes, ${selectors.maps.id.size} ids obfuscated`);
@@ -2068,6 +2062,7 @@ async function build() {
   const proxyCodecs = createProxyCodecs();
   const scramjetGlobals = createScramjetGlobals();
   const identifierRenames = createIdentifierRenames();
+  const wispRenames = new Map([...WISP_IDENTIFIERS, ...WISP_STRINGS].map(name => [name, `_${randomBytes(5).toString("hex")}`]));
   const uvRewriterRenames = createUvRewriterRenames();
   const protocolKeys = createScramjetProtocolKeys();
   const baremuxStrings = createBaremuxStrings();
@@ -2080,7 +2075,6 @@ async function build() {
   const scramjetSharedNames = createScramjetSharedNames();
   const catalogueKey = createCatalogueKey();
   const pageRoutes = createPageRoutes(registry);
-  const wispPath = createWispPath(registry);
   console.log(
     `Page routes: ${Object.entries(pageRoutes)
       .map(([from, to]) => `${from} -> ${to}`)
@@ -2097,7 +2091,7 @@ async function build() {
     scopes: { uv: NEW_UV_SCOPE, scramjet: NEW_SCRAMJET_SCOPE },
     sw: null,
     routes: pageRoutes,
-    wisp: wispPath,
+    wisp: { ...wispFingerprint(WISP.config), names: { up: wispRenames.get("__wispUp"), state: wispRenames.get("wisp-state"), health: wispRenames.get("wisp-health") } },
     vendor: {},
   };
 
@@ -2323,6 +2317,7 @@ async function build() {
   const swLocalRenames = createSwLocalRenames();
   const handlerRenames = createHandlerRenames();
   const tabAttr = createTabAttr();
+  const wispSources = new Map();
   let handlerJsCount = 0;
   let handlerHtmlCount = 0;
   let proxyChoiceJs = 0;
@@ -2336,6 +2331,11 @@ async function build() {
         for (const [from, to] of scopeRewrites) output = replaceAll(output, from, to);
         output = applyRewrites(output, rewrites);
         output = applyIdentifierRenames(output, identifierRenames);
+        if (basename === "main.js") output = patchOrFail(output, /globalThis\.__wispCfg = null;/, () => wispConfigStatement(WISP.config), "main.js wisp config");
+        if (WISP_FILES.has(basename)) {
+          output = applyIdentifierRenames(output, new Map(WISP_IDENTIFIERS.map(name => [name, wispRenames.get(name)])));
+          for (const name of WISP_STRINGS) output = replaceAll(output, `"${name}"`, `"${wispRenames.get(name)}"`);
+        }
         if (basename === "sw.js") output = applySwLocalRenames(output, swLocalRenames);
         const proxyChoice = applyProxyChoiceValues(output);
         output = proxyChoice.source;
@@ -2348,13 +2348,13 @@ async function build() {
         handlerJsCount += handlerDefs.changed;
         if (basename === "tabs.js") output = applyTabAttr(output, tabAttr);
         if (basename === "home.js") output = scopeHomeScript(output);
-        if (basename === "settings.js") output = applyActiveScramjetName(output, scramjetStrings.idb);
-        if (basename === "search.js") output = applyWispPath(output, wispPath);
         if (basename === "launcher.js") output = patchOrFail(output, /const CATALOGUE_KEY = \[0\];/, `const CATALOGUE_KEY = ${JSON.stringify(catalogueKey)};`, "launcher.js catalogue key");
         references.push({ file: `${basename} (${publicPath})`, source: output });
 
         const terserOnly = TERSER_ONLY.has(basename);
         if (OBFUSCATE) output = terserOnly ? await minifyVendor(output, { module: false }) : await runObfuscator(output, basename);
+
+        if (basename === "main.js" || basename === "wisp.js" || basename === "search.js") wispSources.set(basename, output);
 
         await mkdir(path.dirname(fullPath), { recursive: true });
         await writeFile(fullPath, output, "utf8");
@@ -2378,6 +2378,7 @@ async function build() {
     process.exit(1);
   }
   if (failed) throw new Error(`${failed} file(s) failed to process`);
+  verifyWispConfig(wispSources, WISP.config, wispRenames);
   if (proxyChoiceJs !== PROXY_CHOICE_COUNTS.js) throw new Error(`expected ${PROXY_CHOICE_COUNTS.js} proxy selector literals in application JS, replaced ${proxyChoiceJs}. Update PROXY_CHOICE_COUNTS.`);
   if (routeRewriteJs !== ROUTE_REWRITE_COUNT) throw new Error(`expected ${ROUTE_REWRITE_COUNT} page-route literals in application JS, rewrote ${routeRewriteJs}. Upstream changed.`);
   for (const ref of references) {
@@ -2483,8 +2484,11 @@ async function build() {
   //   }
 
   await mkdir(RUNTIME_DIR, { recursive: true });
+  const pageRewrites = Object.entries(manifest.routes).map(([clean, token]) => [token, `${clean}.html`, "200"]);
+  for (const [, target] of pageRewrites) if (!(await exists(path.join(DIST_DIR, target)))) throw new Error(`_redirects: ${target} is not in dist/`);
+  const redirects = [...pageRewrites, ["/play.html", "/games.html", "200"], ["/.runtime/*", "/404.html", "404!"]];
+  await writeFile(path.join(DIST_DIR, "_redirects"), `${redirects.map(rule => rule.join(" ")).join("\n")}\n`, "utf8");
   await writeFile(path.join(RUNTIME_DIR, "vendor-map.cjs"), `"use strict";\n// Generated by build.js on every build. Do not edit; do not serve.\nmodule.exports = ${JSON.stringify(manifest, null, 2)};\n`, "utf8");
-  await verifyRuntimeMap(manifest);
 
   console.log("\nVerifying build...");
   const distJsFiles = [];
