@@ -11,4 +11,4 @@ analysis/
 .DS_Store
 .hintrc
 .gitpod.yml 
-.env
+*.env
