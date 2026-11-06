@@ -26,17 +26,48 @@
 - Geforce NOW Support
 
 # Deployment
-> Static hosts have no server, so there is no built-in Wisp. You must use an external wisp server
+
+> [!IMPORTANT]
+> Static hosting platforms do not provide a built-in Wisp server. You must configure an external Wisp server for Interstellar to function properly.
+
 - [Netlify (Static)](#netlify)
-## Netlify 
-1. Fork the repository on GitHub
-2. Go to [Netlify](https://app.netlify.com/) and login/signup 
-3. Click add new project
-4. Click Import repository from Github and then click the forked repository
-5. Name your project and Change the build command to ``pnpm build:netlify`` 
-6. Click add environment variable, Click add key/value pairs, Then make a key called `WISP_URL` and put your wisp server link(s)
-> Example config: `gointerstellar.app/wisp/,example.com,https://cdn.gointerstellar.app/fortnite/`
-7. Then click Deploy
+
+## Netlify
+
+1. **Fork the repository** to your GitHub account.
+2. Visit [Netlify](https://app.netlify.com/) and sign in or create an account.
+3. Click **Add new project**.
+4. Select **Import an existing project**, choose **GitHub**, and select your forked repository.
+5. Enter a name for your project and set the **Build command** to:
+   ```bash
+   pnpm build:netlify
+   ```
+6. Expand **Environment variables**, click **Add environment variables**, and select **Add key/value pairs**.
+7. Configure your Wisp servers using the environment variables below.
+
+   | Variable | Description |
+   | --- | --- |
+   | `WISP_URL` | Uses the specified Wisp server, overriding the preferred and fallback lists. |
+   | `WISP_PREFERRED` | A comma-separated list of preferred Wisp servers. These are attempted first. |
+   | `WISP_FALLBACK` | A comma-separated list of backup Wisp servers, used when the preferred servers are unavailable. |
+
+   **Example configuration:**
+
+   ```env
+   WISP_PREFERRED=gointerstellar.app/wisp/,example.com
+   WISP_FALLBACK=cdn.gointerstellar.app/fortnite/
+   ```
+
+> [!TIP]
+> If you have multiple Wisp servers, place the most reliable ones in `WISP_PREFERRED` and the remaining servers in `WISP_FALLBACK`.
+>
+> You can also use `WISP_URL` if you only need a single server. When set, it takes priority over both lists.
+>
+> Servers without a protocol automatically use `wss://`.
+
+8. Click **Deploy** and wait for the build to finish.
+
+Once deployment is complete, Netlify will provide a public URL for your Interstellar instance.
 
 ### Password Protection
 
