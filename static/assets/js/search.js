@@ -197,7 +197,24 @@ function isValidUrl(val = "") {
   // Full paths only, never concatenated: the build rewrites whole literals.
   const vendor = self.__deps || {};
 
-  const BUILT_WISP_URLS = [];
+  const BUILT_WISP = null;
+
+  function unpackWisp(pieces, key) {
+    const parts = [...pieces]
+      .sort((a, b) => a[0] - b[0])
+      .map(([, text]) => {
+        const binary = atob(text.replace(/-/g, "+").replace(/_/g, "/"));
+        return Uint8Array.from(binary, char => char.charCodeAt(0));
+      });
+    const bytes = new Uint8Array(parts.reduce((total, part) => total + part.length, 0));
+    let at = 0;
+    for (const part of parts) {
+      bytes.set(part, at);
+      at += part.length;
+    }
+    for (let i = 0; i < bytes.length; i++) bytes[i] ^= key[i % key.length];
+    return new TextDecoder().decode(bytes);
+  }
 
   const wispReachable = url =>
     new Promise(resolve => {
@@ -219,12 +236,23 @@ function isValidUrl(val = "") {
       }
     });
 
+  async function pickBuiltWisp() {
+    const lists = [BUILT_WISP.p, BUILT_WISP.f].map(list => list.map(pieces => unpackWisp(pieces, BUILT_WISP.k)));
+    const all = lists.flat();
+    if (all.length === 1) return all[0];
+    for (const list of lists) {
+      if (!list.length) continue;
+      const reachable = await Promise.all(list.map(wispReachable));
+      const index = reachable.indexOf(true);
+      if (index >= 0) return list[index];
+    }
+    return all[0];
+  }
+
   async function getWispUrl() {
     const custom = store.get("wisp-url")?.trim();
     if (custom && /^wss?:\/\//i.test(custom)) return custom;
-    if (BUILT_WISP_URLS.length === 1) return BUILT_WISP_URLS[0];
-    for (const url of BUILT_WISP_URLS) if (await wispReachable(url)) return url;
-    if (BUILT_WISP_URLS.length) return BUILT_WISP_URLS[0];
+    if (BUILT_WISP) return pickBuiltWisp();
     const protocol = location.protocol === "https:" ? "wss" : "ws";
     return `${protocol}://${location.host}/wisp/`;
   }
@@ -249,7 +277,13 @@ function isValidUrl(val = "") {
     `;
   }
 
-  async function ensureTransport(connection, transportPath, options, signature, manualCode) {
+  async function hashSignature(text) {
+    const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+    return Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, "0")).join("");
+  }
+
+  async function ensureTransport(connection, transportPath, options, rawSignature, manualCode) {
+    const signature = await hashSignature(rawSignature);
     let current = "";
     try {
       current = await connection.getTransport();
