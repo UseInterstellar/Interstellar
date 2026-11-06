@@ -25,11 +25,11 @@ for (const method of ["log", "info", "warn"]) {
 const NETLIFY = process.argv.includes("--netlify");
 const NETLIFY_HEADERS = "/*\n  Service-Worker-Allowed: /\n";
 
-function readWispUrl(raw) {
+function readWispUrl(raw, variable) {
   const text = String(raw ?? "").trim();
   if (!text) return null;
   const fail = reason => {
-    console.error(chalk.red(`Invalid WISP_URL "${text}": ${reason}`));
+    console.error(chalk.red(`Invalid ${variable} entry "${text}": ${reason}`));
     process.exit(1);
   };
   const hasScheme = /^wss?:\/\//i.test(text);
@@ -45,7 +45,40 @@ function readWispUrl(raw) {
   return `${url.protocol}//${url.host}${url.pathname}`;
 }
 
-const NETLIFY_WISP_URLS = NETLIFY ? [...new Set((process.env.WISP_URL ?? "").split(",").map(readWispUrl).filter(Boolean))] : [];
+const readWispList = variable => [...new Set((process.env[variable] ?? "").split(",").map(entry => readWispUrl(entry, variable)).filter(Boolean))];
+
+
+function resolveNetlifyWisp() {
+  const single = readWispList("WISP_URL");
+  if (single.length) return { preferred: single, fallback: [], source: "WISP_URL" };
+  const preferred = readWispList("WISP_PREFERRED");
+  const fallback = readWispList("WISP_FALLBACK").filter(url => !preferred.includes(url));
+  return { preferred, fallback, source: "WISP_PREFERRED / WISP_FALLBACK" };
+}
+
+
+function encodeWispLists({ preferred, fallback }) {
+  const key = [...randomBytes(12)];
+  const encode = url => {
+    const bytes = Buffer.from(url, "utf8");
+    for (let i = 0; i < bytes.length; i++) bytes[i] ^= key[i % key.length];
+    const pieces = [];
+    for (let at = 0, index = 0; at < bytes.length; index++) {
+      const size = 3 + (randomBytes(1)[0] % 5);
+      pieces.push([index, bytes.subarray(at, at + size).toString("base64url")]);
+      at += size;
+    }
+    for (let i = pieces.length - 1; i > 0; i--) {
+      const j = randomBytes(2).readUInt16BE() % (i + 1);
+      [pieces[i], pieces[j]] = [pieces[j], pieces[i]];
+    }
+    return pieces;
+  };
+  return { k: key, p: preferred.map(encode), f: fallback.map(encode) };
+}
+
+const NETLIFY_WISP = NETLIFY ? resolveNetlifyWisp() : { preferred: [], fallback: [], source: null };
+const NETLIFY_WISP_COUNT = NETLIFY_WISP.preferred.length + NETLIFY_WISP.fallback.length;
 
 function buildRedirects(pageRoutes) {
   const rules = Object.entries(ghGamesProxies()).map(([prefix, target]) => [`${prefix}*`, `${target}:splat`, "200"]);
@@ -925,10 +958,10 @@ function createWispPath(registry) {
 }
 
 const WISP_PATH_LITERAL = "/wisp/`";
-const BUILT_WISP_DECLARATION = /const BUILT_WISP_URLS = \[\];/;
-function applyBuiltWispUrls(source, urls) {
-  if (!BUILT_WISP_DECLARATION.test(source)) throw new CodecPatchError("search.js: BUILT_WISP_URLS declaration not found. Upstream changed.");
-  return source.replace(BUILT_WISP_DECLARATION, () => `const BUILT_WISP_URLS = ${JSON.stringify(urls)};`);
+const BUILT_WISP_DECLARATION = /const BUILT_WISP = null;/;
+function applyBuiltWisp(source, lists) {
+  if (!BUILT_WISP_DECLARATION.test(source)) throw new CodecPatchError("search.js: BUILT_WISP declaration not found. Upstream changed.");
+  return source.replace(BUILT_WISP_DECLARATION, () => `const BUILT_WISP = ${JSON.stringify(encodeWispLists(lists))};`);
 }
 
 function applyWispPath(source, wispPath) {
@@ -1683,7 +1716,7 @@ async function verifyRuntimeMap(manifest) {
   if (map.build !== manifest.build || !/^[0-9a-f]{8}$/.test(map.build)) failures.push(`build id ${JSON.stringify(map.build)} does not match manifest ${manifest.build}`);
   for (const scope of ["uv", "scramjet"]) if (!map.scopes?.[scope]?.startsWith("/")) failures.push(`scope ${scope} is missing`);
   if (map.netlify) {
-    for (const url of map.wisp ?? []) if (!/^wss?:\/\/[^\s]+\/$/.test(url)) failures.push(`external wisp endpoint ${JSON.stringify(url)} is not a ws:// or wss:// URL`);
+    if (!Number.isInteger(map.wisp?.preferred) || !Number.isInteger(map.wisp?.fallback)) failures.push("netlify wisp counts are missing from the runtime map");
   } else if (!/^\/[a-z][0-9a-f]+\/$/.test(map.wisp ?? "") || map.wisp === "/wisp/") failures.push(`wisp path ${JSON.stringify(map.wisp)} is missing or not randomized`);
   if (!(await exists(path.join(DIST_DIR, map.sw)))) failures.push(`service worker ${map.sw} is missing from dist/`);
   for (const [name, publicPath] of Object.entries(map.vendor ?? {})) {
@@ -2089,7 +2122,7 @@ async function build() {
   await cp(SRC_DIR, DIST_DIR, { recursive: true, filter: source => path.relative(SRC_DIR, source) !== path.join("decoy") });
 
   if (NETLIFY) {
-    console.log(chalk.yellow(NETLIFY_WISP_URLS.length ? `Netlify mode: Wisp endpoint(s) ${NETLIFY_WISP_URLS.join(", ")} (WISP_URL)` : "Netlify mode: WISP_URL is not set (.env or host environment), so users must enter a Wisp URL in Settings."));
+    console.log(chalk.yellow(NETLIFY_WISP_COUNT ? `Netlify mode: ${NETLIFY_WISP.preferred.length} preferred and ${NETLIFY_WISP.fallback.length} fallback Wisp endpoint(s) from ${NETLIFY_WISP.source}, encoded into the build` : "Netlify mode: no WISP_URL, WISP_PREFERRED or WISP_FALLBACK set (.env or host environment), so users must enter a Wisp URL in Settings."));
   }
   console.log(OBFUSCATE ? chalk.yellow("Obfuscation: ON") : chalk.yellow("Obfuscation: OFF (rename + rewrite only)"));
 
@@ -2143,7 +2176,7 @@ async function build() {
     scopes: { uv: NEW_UV_SCOPE, scramjet: NEW_SCRAMJET_SCOPE },
     sw: null,
     routes: pageRoutes,
-    wisp: NETLIFY ? NETLIFY_WISP_URLS : wispPath,
+    wisp: NETLIFY ? { preferred: NETLIFY_WISP.preferred.length, fallback: NETLIFY_WISP.fallback.length } : wispPath,
     ...(NETLIFY ? { netlify: true } : {}),
     vendor: {},
   };
@@ -2396,7 +2429,7 @@ async function build() {
         if (basename === "tabs.js") output = applyTabAttr(output, tabAttr);
         if (basename === "home.js") output = scopeHomeScript(output);
         if (basename === "settings.js") output = applyActiveScramjetName(output, scramjetStrings.idb);
-        if (basename === "search.js") output = NETLIFY ? (NETLIFY_WISP_URLS.length ? applyBuiltWispUrls(output, NETLIFY_WISP_URLS) : output) : applyWispPath(output, wispPath);
+        if (basename === "search.js") output = NETLIFY ? (NETLIFY_WISP_COUNT ? applyBuiltWisp(output, NETLIFY_WISP) : output) : applyWispPath(output, wispPath);
         if (basename === "launcher.js") output = patchOrFail(output, /const CATALOGUE_KEY = \[0\];/, `const CATALOGUE_KEY = ${JSON.stringify(catalogueKey)};`, "launcher.js catalogue key");
         references.push({ file: `${basename} (${publicPath})`, source: output });
 
@@ -2538,6 +2571,18 @@ async function build() {
     await writeFile(path.join(DIST_DIR, "_redirects"), redirects, "utf8");
     await writeFile(path.join(DIST_DIR, "_headers"), NETLIFY_HEADERS, "utf8");
     console.log(chalk.green("  netlify: wrote _redirects and _headers"));
+    const needles = new Set();
+    for (const url of [...NETLIFY_WISP.preferred, ...NETLIFY_WISP.fallback]) {
+      const parsed = new URL(url);
+      for (const needle of [url, parsed.host, parsed.hostname]) needles.add(needle.toLowerCase());
+    }
+    const leaks = [];
+    for (const file of await collectFiles(DIST_DIR, name => /\.(m?js|cjs|html|json|css|txt|map)$|^_redirects$|^_headers$/.test(name))) {
+      const text = (await readFile(file, "utf8")).toLowerCase();
+      for (const needle of needles) if (text.includes(needle)) leaks.push(`${path.relative(DIST_DIR, file)} contains an endpoint in plain text`);
+    }
+    if (leaks.length) throw new Error(`wisp endpoints leaked into the build:\n  ${[...new Set(leaks)].join("\n  ")}`);
+    if (NETLIFY_WISP_COUNT) console.log(chalk.green(`  netlify: ${NETLIFY_WISP_COUNT} Wisp endpoint(s) are not readable anywhere in dist/`));
   }
 
   console.log("\nVerifying build...");
