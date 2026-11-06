@@ -11,6 +11,8 @@ const ghGamesBases = {
 };
 const noMimeExts = new Set([".unityweb"]);
 
+export const ghGamesProxies = () => ({ ...ghGamesBases });
+
 export function mountGhGames(app) {
   app.get("/gh-games/:path(*)", async (req, res, next) => {
     try {

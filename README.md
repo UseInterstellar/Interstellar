@@ -25,10 +25,18 @@
 - Fast Speeds
 - Geforce NOW Support
 
-## Deployment
-
-> [!IMPORTANT]
-> You **cannot** deploy to static web hosts, including Netlify, Cloudflare Pages, and GitHub Pages.
+# Deployment
+> Static hosts have no server, so there is no built-in Wisp. You must use an external wisp server
+- [Netlify (Static)](#netlify)
+## Netlify 
+1. Fork the repository on GitHub
+2. Go to [Netlify](https://app.netlify.com/) and login/signup 
+3. Click add new project
+4. Click Import repository from Github and then click the forked repository
+5. Name your project and Change the build command to ``pnpm build:netlify`` 
+6. Click add environment variable, Click add key/value pairs, Then make a key called `WISP_URL` and put your wisp server link(s)
+> Example config: `gointerstellar.app/wisp/,example.com,https://cdn.gointerstellar.app/fortnite/`
+7. Then click Deploy
 
 ### Password Protection
 

@@ -5,8 +5,10 @@ import { createRequire } from "node:module";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import chalk from "chalk";
+import "dotenv/config";
 import JavaScriptObfuscator from "javascript-obfuscator";
 import { minify } from "terser";
+import { ghGamesProxies } from "./games.js";
 import { injectVersionInfo, resolveVersionInfo, VERSION_TOKEN_COUNT } from "./version.js";
 
 const OBFUSCATOR_PROMO_PATTERN = /\[javascript-obfuscator\]|JavaScript Obfuscator Pro|obfuscator\.io/i;
@@ -17,6 +19,39 @@ for (const method of ["log", "info", "warn"]) {
     if (args.some(arg => OBFUSCATOR_PROMO_PATTERN.test(String(arg)))) return;
     original(...args);
   };
+}
+
+
+const NETLIFY = process.argv.includes("--netlify");
+const NETLIFY_HEADERS = "/*\n  Service-Worker-Allowed: /\n";
+
+function readWispUrl(raw) {
+  const text = String(raw ?? "").trim();
+  if (!text) return null;
+  const fail = reason => {
+    console.error(chalk.red(`Invalid WISP_URL "${text}": ${reason}`));
+    process.exit(1);
+  };
+  const hasScheme = /^wss?:\/\//i.test(text);
+  if (/\s/.test(text) || (!hasScheme && /^[a-z][a-z0-9+.-]*:\/\//i.test(text))) fail("use a hostname or a ws:// / wss:// URL");
+  let url;
+  try {
+    url = new URL(hasScheme ? text : `wss://${text}`);
+  } catch {
+    fail("not a valid hostname or URL");
+  }
+  if (url.username || url.password || url.search || url.hash) fail("no credentials, query or fragment allowed");
+  if (!url.pathname.endsWith("/")) fail(`the path "${url.pathname}" must end with "/"`);
+  return `${url.protocol}//${url.host}${url.pathname}`;
+}
+
+const NETLIFY_WISP_URLS = NETLIFY ? [...new Set((process.env.WISP_URL ?? "").split(",").map(readWispUrl).filter(Boolean))] : [];
+
+function buildRedirects(pageRoutes) {
+  const rules = Object.entries(ghGamesProxies()).map(([prefix, target]) => [`${prefix}*`, `${target}:splat`, "200"]);
+  for (const [clean, token] of Object.entries(pageRoutes)) rules.push([token, `${clean}.html`, "200"]);
+  rules.push(["/play.html", "/games.html", "200"], ["/.runtime/*", "/404.html", "404!"]);
+  return `${rules.map(rule => rule.join(" ")).join("\n")}\n`;
 }
 
 const OBFUSCATE = true;
@@ -890,6 +925,12 @@ function createWispPath(registry) {
 }
 
 const WISP_PATH_LITERAL = "/wisp/`";
+const BUILT_WISP_DECLARATION = /const BUILT_WISP_URLS = \[\];/;
+function applyBuiltWispUrls(source, urls) {
+  if (!BUILT_WISP_DECLARATION.test(source)) throw new CodecPatchError("search.js: BUILT_WISP_URLS declaration not found. Upstream changed.");
+  return source.replace(BUILT_WISP_DECLARATION, () => `const BUILT_WISP_URLS = ${JSON.stringify(urls)};`);
+}
+
 function applyWispPath(source, wispPath) {
   const found = source.split(WISP_PATH_LITERAL).length - 1;
   if (found !== 1) throw new CodecPatchError(`search.js: expected one Wisp path literal, found ${found}. Upstream changed.`);
@@ -1641,7 +1682,9 @@ async function verifyRuntimeMap(manifest) {
   const failures = [];
   if (map.build !== manifest.build || !/^[0-9a-f]{8}$/.test(map.build)) failures.push(`build id ${JSON.stringify(map.build)} does not match manifest ${manifest.build}`);
   for (const scope of ["uv", "scramjet"]) if (!map.scopes?.[scope]?.startsWith("/")) failures.push(`scope ${scope} is missing`);
-  if (!/^\/[a-z][0-9a-f]+\/$/.test(map.wisp ?? "") || map.wisp === "/wisp/") failures.push(`wisp path ${JSON.stringify(map.wisp)} is missing or not randomized`);
+  if (map.netlify) {
+    for (const url of map.wisp ?? []) if (!/^wss?:\/\/[^\s]+\/$/.test(url)) failures.push(`external wisp endpoint ${JSON.stringify(url)} is not a ws:// or wss:// URL`);
+  } else if (!/^\/[a-z][0-9a-f]+\/$/.test(map.wisp ?? "") || map.wisp === "/wisp/") failures.push(`wisp path ${JSON.stringify(map.wisp)} is missing or not randomized`);
   if (!(await exists(path.join(DIST_DIR, map.sw)))) failures.push(`service worker ${map.sw} is missing from dist/`);
   for (const [name, publicPath] of Object.entries(map.vendor ?? {})) {
     if (!(await exists(path.join(DIST_DIR, publicPath)))) failures.push(`vendor asset ${name} is missing (${publicPath})`);
@@ -2045,6 +2088,9 @@ async function build() {
   console.log("Copying static/ -> dist/...");
   await cp(SRC_DIR, DIST_DIR, { recursive: true, filter: source => path.relative(SRC_DIR, source) !== path.join("decoy") });
 
+  if (NETLIFY) {
+    console.log(chalk.yellow(NETLIFY_WISP_URLS.length ? `Netlify mode: Wisp endpoint(s) ${NETLIFY_WISP_URLS.join(", ")} (WISP_URL)` : "Netlify mode: WISP_URL is not set (.env or host environment), so users must enter a Wisp URL in Settings."));
+  }
   console.log(OBFUSCATE ? chalk.yellow("Obfuscation: ON") : chalk.yellow("Obfuscation: OFF (rename + rewrite only)"));
 
   const selectors = await obfuscateSelectors();
@@ -2097,7 +2143,8 @@ async function build() {
     scopes: { uv: NEW_UV_SCOPE, scramjet: NEW_SCRAMJET_SCOPE },
     sw: null,
     routes: pageRoutes,
-    wisp: wispPath,
+    wisp: NETLIFY ? NETLIFY_WISP_URLS : wispPath,
+    ...(NETLIFY ? { netlify: true } : {}),
     vendor: {},
   };
 
@@ -2349,7 +2396,7 @@ async function build() {
         if (basename === "tabs.js") output = applyTabAttr(output, tabAttr);
         if (basename === "home.js") output = scopeHomeScript(output);
         if (basename === "settings.js") output = applyActiveScramjetName(output, scramjetStrings.idb);
-        if (basename === "search.js") output = applyWispPath(output, wispPath);
+        if (basename === "search.js") output = NETLIFY ? (NETLIFY_WISP_URLS.length ? applyBuiltWispUrls(output, NETLIFY_WISP_URLS) : output) : applyWispPath(output, wispPath);
         if (basename === "launcher.js") output = patchOrFail(output, /const CATALOGUE_KEY = \[0\];/, `const CATALOGUE_KEY = ${JSON.stringify(catalogueKey)};`, "launcher.js catalogue key");
         references.push({ file: `${basename} (${publicPath})`, source: output });
 
@@ -2485,6 +2532,13 @@ async function build() {
   await mkdir(RUNTIME_DIR, { recursive: true });
   await writeFile(path.join(RUNTIME_DIR, "vendor-map.cjs"), `"use strict";\n// Generated by build.js on every build. Do not edit; do not serve.\nmodule.exports = ${JSON.stringify(manifest, null, 2)};\n`, "utf8");
   await verifyRuntimeMap(manifest);
+  if (NETLIFY) {
+    const redirects = buildRedirects(manifest.routes);
+    for (const clean of Object.keys(manifest.routes)) if (!(await exists(path.join(DIST_DIR, `${clean}.html`)))) throw new Error(`_redirects: ${clean}.html is not in dist/`);
+    await writeFile(path.join(DIST_DIR, "_redirects"), redirects, "utf8");
+    await writeFile(path.join(DIST_DIR, "_headers"), NETLIFY_HEADERS, "utf8");
+    console.log(chalk.green("  netlify: wrote _redirects and _headers"));
+  }
 
   console.log("\nVerifying build...");
   const distJsFiles = [];

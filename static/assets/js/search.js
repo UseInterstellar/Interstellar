@@ -197,9 +197,34 @@ function isValidUrl(val = "") {
   // Full paths only, never concatenated: the build rewrites whole literals.
   const vendor = self.__deps || {};
 
-  function getWispUrl() {
+  const BUILT_WISP_URLS = [];
+
+  const wispReachable = url =>
+    new Promise(resolve => {
+      let socket;
+      const done = ok => {
+        clearTimeout(timer);
+        try {
+          socket?.close();
+        } catch {}
+        resolve(ok);
+      };
+      const timer = setTimeout(() => done(false), 5000);
+      try {
+        socket = new WebSocket(url);
+        socket.onopen = () => done(true);
+        socket.onerror = () => done(false);
+      } catch {
+        done(false);
+      }
+    });
+
+  async function getWispUrl() {
     const custom = store.get("wisp-url")?.trim();
     if (custom && /^wss?:\/\//i.test(custom)) return custom;
+    if (BUILT_WISP_URLS.length === 1) return BUILT_WISP_URLS[0];
+    for (const url of BUILT_WISP_URLS) if (await wispReachable(url)) return url;
+    if (BUILT_WISP_URLS.length) return BUILT_WISP_URLS[0];
     const protocol = location.protocol === "https:" ? "wss" : "ws";
     return `${protocol}://${location.host}/wisp/`;
   }
@@ -243,7 +268,7 @@ function isValidUrl(val = "") {
     const scramjet = new ScramjetController(self.__scramjet$config);
     await scramjet.init();
 
-    const wisp = getWispUrl();
+    const wisp = await getWispUrl();
     const connection = new BareMuxConnection(vendor.baremuxWorker);
     if (store.get("transport") === "libcurl") {
       await ensureTransport(connection, vendor.libcurl, [{ websocket: wisp }], `${vendor.libcurl}|${wisp}`);
