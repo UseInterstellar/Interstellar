@@ -41,12 +41,11 @@ function readWispUrl(raw) {
     fail("not a valid hostname or URL");
   }
   if (url.username || url.password || url.search || url.hash) fail("no credentials, query or fragment allowed");
-  const pathname = !hasScheme && !text.includes("/") ? "/wisp/" : url.pathname;
-  if (!pathname.endsWith("/")) fail(`the path "${pathname}" must end with "/"`);
-  return `${url.protocol}//${url.host}${pathname}`;
+  if (!url.pathname.endsWith("/")) fail(`the path "${url.pathname}" must end with "/"`);
+  return `${url.protocol}//${url.host}${url.pathname}`;
 }
 
-const NETLIFY_WISP_URL = NETLIFY ? readWispUrl(process.env.WISP_URL) : null;
+const NETLIFY_WISP_URLS = NETLIFY ? [...new Set((process.env.WISP_URL ?? "").split(",").map(readWispUrl).filter(Boolean))] : [];
 
 function buildRedirects(pageRoutes) {
   const rules = Object.entries(ghGamesProxies()).map(([prefix, target]) => [`${prefix}*`, `${target}:splat`, "200"]);
@@ -926,10 +925,10 @@ function createWispPath(registry) {
 }
 
 const WISP_PATH_LITERAL = "/wisp/`";
-const BUILT_WISP_DECLARATION = /const BUILT_WISP_URL = null;/;
-function applyBuiltWispUrl(source, url) {
-  if (!BUILT_WISP_DECLARATION.test(source)) throw new CodecPatchError("search.js: BUILT_WISP_URL declaration not found. Upstream changed.");
-  return source.replace(BUILT_WISP_DECLARATION, () => `const BUILT_WISP_URL = ${JSON.stringify(url)};`);
+const BUILT_WISP_DECLARATION = /const BUILT_WISP_URLS = \[\];/;
+function applyBuiltWispUrls(source, urls) {
+  if (!BUILT_WISP_DECLARATION.test(source)) throw new CodecPatchError("search.js: BUILT_WISP_URLS declaration not found. Upstream changed.");
+  return source.replace(BUILT_WISP_DECLARATION, () => `const BUILT_WISP_URLS = ${JSON.stringify(urls)};`);
 }
 
 function applyWispPath(source, wispPath) {
@@ -1684,7 +1683,7 @@ async function verifyRuntimeMap(manifest) {
   if (map.build !== manifest.build || !/^[0-9a-f]{8}$/.test(map.build)) failures.push(`build id ${JSON.stringify(map.build)} does not match manifest ${manifest.build}`);
   for (const scope of ["uv", "scramjet"]) if (!map.scopes?.[scope]?.startsWith("/")) failures.push(`scope ${scope} is missing`);
   if (map.netlify) {
-    if (map.wisp !== null && !/^wss?:\/\/[^\s]+\/$/.test(map.wisp)) failures.push(`external wisp endpoint ${JSON.stringify(map.wisp)} is not a ws:// or wss:// URL`);
+    for (const url of map.wisp ?? []) if (!/^wss?:\/\/[^\s]+\/$/.test(url)) failures.push(`external wisp endpoint ${JSON.stringify(url)} is not a ws:// or wss:// URL`);
   } else if (!/^\/[a-z][0-9a-f]+\/$/.test(map.wisp ?? "") || map.wisp === "/wisp/") failures.push(`wisp path ${JSON.stringify(map.wisp)} is missing or not randomized`);
   if (!(await exists(path.join(DIST_DIR, map.sw)))) failures.push(`service worker ${map.sw} is missing from dist/`);
   for (const [name, publicPath] of Object.entries(map.vendor ?? {})) {
@@ -2090,7 +2089,7 @@ async function build() {
   await cp(SRC_DIR, DIST_DIR, { recursive: true, filter: source => path.relative(SRC_DIR, source) !== path.join("decoy") });
 
   if (NETLIFY) {
-    console.log(chalk.yellow(NETLIFY_WISP_URL ? `Netlify mode: Wisp endpoint ${NETLIFY_WISP_URL} (WISP_URL)` : "Netlify mode: WISP_URL is not set (.env or host environment), so users must enter a Wisp URL in Settings."));
+    console.log(chalk.yellow(NETLIFY_WISP_URLS.length ? `Netlify mode: Wisp endpoint(s) ${NETLIFY_WISP_URLS.join(", ")} (WISP_URL)` : "Netlify mode: WISP_URL is not set (.env or host environment), so users must enter a Wisp URL in Settings."));
   }
   console.log(OBFUSCATE ? chalk.yellow("Obfuscation: ON") : chalk.yellow("Obfuscation: OFF (rename + rewrite only)"));
 
@@ -2144,7 +2143,7 @@ async function build() {
     scopes: { uv: NEW_UV_SCOPE, scramjet: NEW_SCRAMJET_SCOPE },
     sw: null,
     routes: pageRoutes,
-    wisp: NETLIFY ? NETLIFY_WISP_URL : wispPath,
+    wisp: NETLIFY ? NETLIFY_WISP_URLS : wispPath,
     ...(NETLIFY ? { netlify: true } : {}),
     vendor: {},
   };
@@ -2397,7 +2396,7 @@ async function build() {
         if (basename === "tabs.js") output = applyTabAttr(output, tabAttr);
         if (basename === "home.js") output = scopeHomeScript(output);
         if (basename === "settings.js") output = applyActiveScramjetName(output, scramjetStrings.idb);
-        if (basename === "search.js") output = NETLIFY ? (NETLIFY_WISP_URL ? applyBuiltWispUrl(output, NETLIFY_WISP_URL) : output) : applyWispPath(output, wispPath);
+        if (basename === "search.js") output = NETLIFY ? (NETLIFY_WISP_URLS.length ? applyBuiltWispUrls(output, NETLIFY_WISP_URLS) : output) : applyWispPath(output, wispPath);
         if (basename === "launcher.js") output = patchOrFail(output, /const CATALOGUE_KEY = \[0\];/, `const CATALOGUE_KEY = ${JSON.stringify(catalogueKey)};`, "launcher.js catalogue key");
         references.push({ file: `${basename} (${publicPath})`, source: output });
 
