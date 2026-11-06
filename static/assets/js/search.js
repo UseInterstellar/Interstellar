@@ -197,9 +197,12 @@ function isValidUrl(val = "") {
   // Full paths only, never concatenated: the build rewrites whole literals.
   const vendor = self.__deps || {};
 
+const BUILT_WISP_URL = null;
+
   function getWispUrl() {
     const custom = store.get("wisp-url")?.trim();
     if (custom && /^wss?:\/\//i.test(custom)) return custom;
+    if (BUILT_WISP_URL) return BUILT_WISP_URL;
     const protocol = location.protocol === "https:" ? "wss" : "ws";
     return `${protocol}://${location.host}/wisp/`;
   }

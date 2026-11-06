@@ -17,6 +17,8 @@ import { injectVersionInfo, resolveVersionInfo } from "./version.js";
 
 console.log(chalk.yellow("🚀 Starting server..."));
 
+const NETLIFY = process.argv.includes("--netlify");
+
 const require = createRequire(import.meta.url);
 const __dirname = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -28,6 +30,15 @@ const vendorMap = existsSync(VENDOR_MAP_PATH) ? require(VENDOR_MAP_PATH) : null;
 
 if (!vendorMap && process.env.VERCEL) {
   throw new Error("dist/.runtime/vendor-map.cjs is missing on Vercel. The build did not run before the function was packaged.");
+}
+
+if (NETLIFY && !vendorMap?.netlify) {
+  console.log(chalk.red("--netlify needs a Netlify build in dist/. Run `pnpm build:netlify` first."));
+  process.exit(1);
+}
+if (!NETLIFY && vendorMap?.netlify) {
+  console.log(chalk.red("dist/ is a Netlify build (no server-side Wisp). Run `pnpm start:netlify` to preview it, or `pnpm build` for the normal server build."));
+  process.exit(1);
 }
 
 const SERVE_DIR = vendorMap ? DIST_DIR : STATIC_DIR;
@@ -73,13 +84,15 @@ wisp.options.hostname_blacklist = blockedSiteMatchers.length ? blockedSiteMatche
 const filteringState = await setupFiltering({ wisp, filtering: config.filtering });
 const blockVerdict = createBlockVerdict({ blocklist: blockedSiteMatchers, policy: filteringState.policy });
 
-if (config.challenge !== false) {
+if (NETLIFY) console.log(chalk.yellow("Netlify preview: static files only (plus the /gh-games proxy, which Netlify does with _redirects). No Wisp, password protection or Masqr, as on a static host."));
+
+if (!NETLIFY && config.challenge !== false) {
   console.log(chalk.green("🔒 Password protection is enabled."));
   app.use(basicAuth({ users: config.users, challenge: true }));
 }
 
 let masqr = null;
-if (config.masqr?.enabled) {
+if (!NETLIFY && config.masqr?.enabled) {
   masqr = mountMasqr(app, {
     decoyBase: path.join(STATIC_DIR, "decoy"),
     decoySet: config.masqr.decoy ?? "default",
@@ -114,7 +127,7 @@ app.use("/.runtime", (_req, res) => {
   res.sendStatus(404);
 });
 
-app.post("/filter/verdict", async (req, res) => {
+if (!NETLIFY) app.post("/filter/verdict", async (req, res) => {
   const host = typeof req.body?.host === "string" ? req.body.host.slice(0, 254) : "";
   res.set("Cache-Control", "no-store").json(await blockVerdict(host));
 });
@@ -185,6 +198,7 @@ server.on("request", (req, res) => {
 const WISP_PATH = vendorMap?.wisp ?? "/wisp/";
 
 server.on("upgrade", (req, socket, head) => {
+  if (NETLIFY) return socket.destroy();
   if (masqr && masqr.isGated(req) && !masqr.isAuthorized(req)) return socket.destroy();
   if (new URL(req.url, "http://localhost").pathname !== WISP_PATH) return socket.destroy();
   wisp.routeRequest(req, socket, head);

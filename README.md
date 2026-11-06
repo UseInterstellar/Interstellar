@@ -28,7 +28,15 @@
 ## Deployment
 
 > [!IMPORTANT]
-> You **cannot** deploy to static web hosts, including Netlify, Cloudflare Pages, and GitHub Pages.
+> Static hosts (Netlify) have no server, so there is no built-in Wisp. Use the Netlify build, which needs an external Wisp server:
+>
+> ```
+> echo "WISP_URL=wisp.example.com" >> .env    # hostname, or a ws(s):// URL ending in /
+> pnpm build:netlify
+> pnpm start:netlify                           # local preview of the static output
+> ```
+>
+> `pnpm build --netlify` and `pnpm start --netlify` do the same. On Netlify, set `WISP_URL` as an environment variable in the site settings (`netlify.toml` already runs `pnpm build:netlify`). Without it, users must enter a Wisp URL in Settings. Cloudflare Pages and GitHub Pages are not set up.
 
 ### Password Protection
 
