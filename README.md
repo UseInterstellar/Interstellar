@@ -25,18 +25,18 @@
 - Fast Speeds
 - Geforce NOW Support
 
-## Deployment
-
-> [!IMPORTANT]
-> Static hosts (Netlify) have no server, so there is no built-in Wisp. Use the Netlify build, which needs an external Wisp server:
->
-> ```
-> echo "WISP_URL=wisp.example.com" >> .env    # hostname, or a ws(s):// URL ending in /
-> pnpm build:netlify
-> pnpm start:netlify                           # local preview of the static output
-> ```
->
-> `pnpm build --netlify` and `pnpm start --netlify` do the same. On Netlify, set `WISP_URL` as an environment variable in the site settings (`netlify.toml` already runs `pnpm build:netlify`). Without it, users must enter a Wisp URL in Settings. Cloudflare Pages and GitHub Pages are not set up.
+# Deployment
+> Static hosts have no server, so there is no built-in Wisp. You must use an external wisp server
+- [Netlify (Static)](#netlify)
+## Netlify 
+1. Fork the repository on GitHub
+2. Go to [Netlify](https://app.netlify.com/) and login/signup 
+3. Click add new project
+4. Click Import repository from Github and then click the forked repository
+5. Name your project and Change the build command to ``pnpm build:netlify`` 
+6. Click add environment variable, Click add key/value pairs, Then make a key called `WISP_URL` and put your wisp server link(s)
+> Example config: `gointerstellar.app/wisp/,example.com,https://cdn.gointerstellar.app/fortnite/`
+7. Then click Deploy
 
 ### Password Protection
 
