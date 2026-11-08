@@ -130,9 +130,8 @@ function loadDecoyMap(decoyBase, setName) {
   const folders = new Map();
   const aliases = new Map();
   for (const entry of readdirSync(decoyBase, { withFileTypes: true })) {
-    if (!entry.isDirectory() || entry.name === setName || !entry.name.includes(".")) continue;
+    if (!entry.isDirectory() || entry.name === setName) continue;
     if (!existsSync(path.join(decoyBase, entry.name, "index.html"))) continue;
-    registerHost(folders, entry.name, entry.name, "directory name");
     const folderHost = normaliseHost(entry.name);
     if (folderHost) folders.set(folderHost, entry.name);
 

@@ -35,6 +35,10 @@ const config = {
     sessionDays: 30,
     decoyOnly: false, // Only enable Masqr on hosts with configured decoys.
 
+    // Named decoy folders can serve several domains. For example,
+    // static/decoy/pinkmath/domains.json can contain
+    // ["pinkmath.com", "pinkmath.org", "pinkmath.edu"].
+
     // Domain-Specific Triggers
     // Apply custom search triggers to groups of domains sharing a name.
     // Unlisted domains use the global searchTrigger.
