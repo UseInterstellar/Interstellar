@@ -25,6 +25,12 @@ const config = {
     blockTrackers: true,
   },
 
+  // Caching
+  // When enabled, built images, scripts and styles are cached by the browser until a new build changes them
+  cache: {
+    enabled: true,
+  },
+
   // Masqr
   // Restrict access to Interstellar using decoy sites and search triggers.
   masqr: {

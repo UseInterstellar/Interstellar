@@ -111,8 +111,23 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
+const cacheEnabled = config.cache?.enabled === true;
+const useAssetCache = cacheEnabled && Boolean(vendorMap?.build);
+if (cacheEnabled) {
+  console.log(useAssetCache ? chalk.green("📦 Asset caching is enabled (assets cached until the HTML changes)") : chalk.yellow("config.cache.enabled is set but this is not a dist build, so caching is off. Run `pnpm build`."));
+}
+const REVALIDATE = "no-cache";
+const IMMUTABLE = "public, max-age=31536000, immutable";
+const buildMarker = useAssetCache ? `.${vendorMap.build}` : null;
+
+function cacheControlFor(filePath) {
+  return filePath.includes(buildMarker) ? IMMUTABLE : REVALIDATE;
+}
+
 const jsStaticOptions = {
   setHeaders: (res, filePath) => {
+    if (useAssetCache && filePath.startsWith(SERVE_DIR)) res.setHeader("Cache-Control", cacheControlFor(filePath));
     const ext = path.extname(filePath);
     if (ext === ".js" || ext === ".mjs") {
       res.type("text/javascript");
@@ -178,6 +193,7 @@ const routes = [
 routes.forEach(route => {
   const servePath = vendorMap?.routes?.[route.path] || route.path;
   app.get(servePath, (_req, res) => {
+    if (useAssetCache) res.setHeader("Cache-Control", REVALIDATE);
     res.sendFile(path.join(SERVE_DIR, route.file));
   });
 });
