@@ -107,32 +107,41 @@ function registerHost(map, rawHost, folder, source) {
   map.set(host, folder);
 }
 
-export function expandSites(sites = []) {
+export function expandSites(sites = [], decoyAliases = new Map()) {
   const entries = new Map();
   sites.forEach((site, index) => {
-    const label = `Masqr site ${site.name ?? index}`;
+    const targetDecoy = site.decoy ?? site.name;
+    const label = `Masqr site ${targetDecoy ?? index}`;
     if (typeof site.searchTrigger !== "string" || !site.searchTrigger) throw new Error(`${label}: needs a searchTrigger`);
+
     const names = site.name && Array.isArray(site.tlds) ? site.tlds.map(tld => `${site.name}.${tld}`) : [];
     const hosts = [...names, ...(site.hosts ?? [])];
-    if (!hosts.length) throw new Error(`${label}: needs name + tlds or a hosts list`);
+    if (site.decoy && !decoyAliases.has(site.decoy)) {
+      throw new Error(`${label}: decoy folder ${JSON.stringify(site.decoy)} has no usable domains.json`);
+    }
+    hosts.push(...(decoyAliases.get(targetDecoy) ?? []));
+    if (!hosts.length) throw new Error(`${label}: needs name + tlds, a hosts list, or a decoy folder with domains.json aliases`);
+
     const family = names.length ? names.map(name => normaliseHost(name)) : null;
+    const seenHosts = new Set();
     for (const rawHost of hosts) {
       const host = normaliseHost(rawHost);
       if (!host) throw new Error(`${label}: invalid hostname ${JSON.stringify(rawHost)}`);
+      if (seenHosts.has(host)) continue;
+      seenHosts.add(host);
       if (entries.has(host)) throw new Error(`Masqr site ${host} is listed in more than one site`);
       entries.set(host, { searchTrigger: site.searchTrigger, family });
     }
   });
   return entries;
 }
-
 function loadDecoyMap(decoyBase, setName) {
   const folders = new Map();
   const aliases = new Map();
+  const decoyAliases = new Map();
   for (const entry of readdirSync(decoyBase, { withFileTypes: true })) {
-    if (!entry.isDirectory() || entry.name === setName || !entry.name.includes(".")) continue;
+    if (!entry.isDirectory() || entry.name === setName) continue;
     if (!existsSync(path.join(decoyBase, entry.name, "index.html"))) continue;
-    registerHost(folders, entry.name, entry.name, "directory name");
     const folderHost = normaliseHost(entry.name);
     if (folderHost) folders.set(folderHost, entry.name);
 
@@ -147,11 +156,11 @@ function loadDecoyMap(decoyBase, setName) {
     if (!Array.isArray(list) || !list.every(alias => typeof alias === "string")) {
       throw new Error(`Masqr decoy ${entry.name}: domains.json must be a JSON array of hostnames`);
     }
+    decoyAliases.set(entry.name, list);
     for (const host of list) registerHost(aliases, host, entry.name, "domains.json");
   }
-  return { folders, aliases };
+  return { folders, aliases, decoyAliases };
 }
-
 function safeDecoyFile(root, requestPath) {
   const relative = requestPath === "/" ? "index.html" : decodeURIComponent(requestPath).replace(/^\/+/, "");
   const parts = relative.split(/[\\/]+/).filter(Boolean);
@@ -196,8 +205,8 @@ export function mountMasqr(app, { decoyBase, decoySet = "default", secureCookie 
   }
   const setRoot = path.join(decoyBase, setName);
   if (!decoyOnly && !existsSync(path.join(setRoot, "index.html"))) throw new Error(`Masqr decoy set ${setRoot} has no index.html`);
-  const { folders, aliases } = existsSync(decoyBase) ? loadDecoyMap(decoyBase, setName) : { folders: new Map(), aliases: new Map() };
-  const siteEntries = expandSites(sites);
+  const { folders, aliases, decoyAliases } = existsSync(decoyBase) ? loadDecoyMap(decoyBase, setName) : { folders: new Map(), aliases: new Map(), decoyAliases: new Map() };
+  const siteEntries = expandSites(sites, decoyAliases);
   const hostOf = req => normaliseHost(req.headers.host);
 
   const folderFor = host => {
