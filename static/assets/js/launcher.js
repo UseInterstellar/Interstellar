@@ -48,6 +48,7 @@ function handleAppClick(app) {
     if (!selectedUrl) return false;
   }
 
+  saveRecentApp(app);
   const proxy = app.proxy;
 
   // isInTabMode is declared in main.js
@@ -139,6 +140,60 @@ function savePinnedApps(pins) {
   setInStorage("pinned", pins.join(","));
 }
 
+function getAppKey(app) {
+  return stripZeroWidth(app.name).trim().toLowerCase();
+}
+
+function getFavoriteApps() {
+  try {
+    return JSON.parse(getFromStorage("favorites") || "[]");
+  } catch {
+    return [];
+  }
+}
+
+function toggleFavorite(app) {
+  const key = getAppKey(app);
+  const favorites = getFavoriteApps();
+  const next = favorites.includes(key) ? favorites.filter(favorite => favorite !== key) : [key, ...favorites];
+  setInStorage("favorites", JSON.stringify(next));
+  const card = document.querySelector(`.column[data-app-key="${CSS.escape(key)}"]`);
+  if (card) updateFavoriteButton(card, next.includes(key));
+  updateFavoritesCount();
+}
+
+function updateFavoriteButton(card, isFavorite) {
+  const button = card.querySelector(".favorite-button");
+  if (!button) return;
+  button.classList.toggle("is-favorite", isFavorite);
+  button.setAttribute("aria-pressed", String(isFavorite));
+  const action = isFavorite ? "Remove from favorites" : "Add to favorites";
+  button.title = action;
+  button.setAttribute("aria-label", `${action}: ${stripZeroWidth(card.querySelector("p").textContent)}`);
+}
+
+function getRecentApps() {
+  try {
+    return JSON.parse(getFromStorage("recent") || "[]");
+  } catch {
+    return [];
+  }
+}
+
+function saveRecentApp(app) {
+  const key = getAppKey(app);
+  const recent = getRecentApps().filter(item => item.key !== key);
+  recent.unshift({ key, name: stripZeroWidth(app.name), image: app.image || "", kind: isGamesPage ? "games" : "apps", openedAt: Date.now() });
+  setInStorage("recent", JSON.stringify(recent.slice(0, 20)));
+}
+
+let activeView = "all";
+
+function updateFavoritesCount() {
+  const count = document.getElementById("favorites-count");
+  if (count) count.textContent = getFavoriteApps().length ? `(${getFavoriteApps().length})` : "";
+}
+
 function togglePin(appIndex) {
   const pins = getPinnedApps();
 
@@ -152,6 +207,8 @@ function togglePin(appIndex) {
   }
 
   savePinnedApps(pins);
+  const pinButton = document.querySelector(`.column[data-app-index="${appIndex}"] .pin-button`);
+  if (pinButton) updatePinButton(pinButton, !isCurrentlyPinned);
 
   const card = document.querySelector(`.column[data-app-index="${appIndex}"]`);
   if (card) {
@@ -178,21 +235,19 @@ function createPinButton(appIndex) {
   pinIcon.ariaHidden = true;
 
   const button = document.createElement("button");
+  button.className = "pin-button";
   button.appendChild(pinIcon);
-  button.style.cssText = `
-    float: right;
-    cursor: pointer;
-    background-color: rgb(45,45,45);
-    border-radius: 50%;
-    border-color: transparent;
-    color: white;
-    top: -200px;
-    position: relative;
-  `;
   button.onclick = () => togglePin(appIndex);
-  button.title = "Pin";
+  updatePinButton(button, getPinnedApps().includes(appIndex));
 
   return button;
+}
+
+function updatePinButton(button, isPinned) {
+  button.classList.toggle("is-pinned", isPinned);
+  button.setAttribute("aria-pressed", String(isPinned));
+  button.title = isPinned ? "Remove from pinned" : "Pin to top";
+  button.setAttribute("aria-label", button.title);
 }
 
 function renderAppCard(app, appIndex, isCustom = false) {
@@ -202,6 +257,7 @@ function renderAppCard(app, appIndex, isCustom = false) {
   const categories = isCustom ? "all" : (app.categories || []).join(" ");
   columnDiv.setAttribute("data-category", categories);
   columnDiv.setAttribute("data-app-index", appIndex);
+  columnDiv.dataset.appKey = getAppKey(app);
 
   const link = document.createElement("a");
   link.onclick = () => handleAppClick(app);
@@ -236,6 +292,18 @@ function renderAppCard(app, appIndex, isCustom = false) {
   link.appendChild(image);
   link.appendChild(paragraph);
   columnDiv.appendChild(link);
+
+  const favorite = document.createElement("button");
+  favorite.type = "button";
+  favorite.className = "favorite-button";
+  favorite.textContent = "★";
+  favorite.setAttribute("aria-label", `Add ${stripZeroWidth(app.name)} to favorites`);
+  favorite.addEventListener("click", event => {
+    event.stopPropagation();
+    toggleFavorite(app);
+  });
+  columnDiv.appendChild(favorite);
+  updateFavoriteButton(columnDiv, getFavoriteApps().includes(getAppKey(app)));
 
   if (appIndex !== 0 && appIndex !== 1) {
     columnDiv.appendChild(createPinButton(appIndex));
@@ -327,6 +395,7 @@ function loadAppsFromJson() {
       });
 
       loadCustomAppsInline();
+      applyFilters();
     })
     .catch(error => {
       console.error("Error fetching app data:", error);
@@ -350,6 +419,8 @@ function loadCustomAppsInline() {
 function applyFilters() {
   const searchTerm = (document.getElementById("search")?.value ?? "").toLowerCase();
   const selectedCategories = Array.from(document.querySelectorAll("#category option:checked")).map(option => option.value);
+  const favorites = new Set(getFavoriteApps());
+  const recent = new Set(getRecentApps().map(app => app.key));
 
   Array.from(document.getElementsByClassName("column")).forEach(card => {
     const appName = stripZeroWidth(card.getElementsByTagName("p")[0].textContent).toLowerCase();
@@ -357,8 +428,9 @@ function applyFilters() {
 
     const matchesSearch = !searchTerm || appName.includes(searchTerm);
     const matchesCategory = selectedCategories.length === 0 || selectedCategories.some(cat => categories.includes(cat));
+    const matchesView = activeView === "all" || (activeView === "favorites" ? favorites.has(card.dataset.appKey) : recent.has(card.dataset.appKey));
 
-    card.style.display = matchesSearch && matchesCategory ? "block" : "none";
+    card.style.display = matchesSearch && matchesCategory && matchesView ? "block" : "none";
   });
 }
 
@@ -375,4 +447,30 @@ window.bar = filterBySearchTerm;
 
 document.addEventListener("DOMContentLoaded", () => {
   loadAppsFromJson();
+  updateFavoritesCount();
+  const homeSearch = store.get("homeCatalogSearch");
+  if (homeSearch) {
+    document.getElementById("search").value = homeSearch;
+    store.remove("homeCatalogSearch");
+  }
+  document.querySelectorAll(".catalogue-filter").forEach(button => {
+    button.addEventListener("click", () => {
+      activeView = button.dataset.view;
+      document.querySelectorAll(".catalogue-filter").forEach(filter => {
+        filter.classList.toggle("active", filter === button);
+      });
+      applyFilters();
+    });
+  });
+  document.addEventListener("keydown", event => {
+    if (event.key === "/" && !["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement?.tagName)) {
+      event.preventDefault();
+      document.getElementById("search")?.focus();
+    }
+    if (event.key === "Escape" && document.activeElement?.id === "search") {
+      document.activeElement.value = "";
+      applyFilters();
+      document.activeElement.blur();
+    }
+  });
 });

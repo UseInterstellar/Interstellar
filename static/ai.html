@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="referrer" content="no-referrer" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" id="tab-favicon" href="/assets/media/favicon/thesaurus.png" />
+  <title id="page-title">Self-hosted AI</title>
+  <link rel="stylesheet" href="/assets/css/global.css" />
+  <link rel="stylesheet" href="/assets/css/nav.css" />
+  <link rel="stylesheet" href="/assets/css/ai.css" />
+  <script src="/assets/js/storage.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <div class="nav-bar"></div>
+  <main class="ai-workspace">
+    <header class="ai-heading">
+      <div>
+        <p class="ai-eyebrow"><i class="fa-solid fa-sparkles" aria-hidden="true"></i> SELF-HOSTED AI</p>
+        <h1 id="ai-title">Your AI</h1>
+        <p>A real language model running on this site's server. No API key or third-party AI service.</p>
+      </div>
+      <button id="ai-clear" class="ai-clear" type="button"><i class="fa-solid fa-plus" aria-hidden="true"></i> New chat</button>
+    </header>
+    <section class="ai-brain" aria-labelledby="brain-title">
+      <label for="ai-name"><span id="brain-title"><i class="fa-solid fa-brain" aria-hidden="true"></i> Customize your AI</span><span class="ai-local-note">Preferences saved in this browser</span></label>
+      <input id="ai-name" maxlength="24" placeholder="Give your AI a name" />
+      <label class="ai-instructions-label" for="ai-instructions">Personality and instructions</label>
+      <textarea id="ai-instructions" maxlength="1000" rows="2" placeholder="Example: Be upbeat and explain coding for beginners."></textarea>
+      <form id="ai-teach-form" class="ai-teach-form">
+        <label for="ai-teach-question">Teach it a question and answer</label>
+        <input id="ai-teach-question" maxlength="180" placeholder="When someone asks..." required />
+        <textarea id="ai-teach-answer" maxlength="600" rows="2" placeholder="...it should answer..." required></textarea>
+        <button type="submit"><i class="fa-solid fa-plus" aria-hidden="true"></i> Teach this</button>
+      </form>
+      <ul id="ai-lessons" class="ai-lessons" aria-label="Learned examples"></ul>
+      <p>Examples are sent to the site's AI server as conversation context. They guide replies but do not train or change the model.</p>
+    </section>
+    <section class="ai-chat" aria-label="AI conversation">
+      <ol id="ai-messages" class="ai-messages" aria-live="polite">
+        <li class="ai-message ai-message-model">
+          <span class="ai-avatar" aria-hidden="true"><i class="fa-solid fa-sparkles"></i></span>
+          <div class="ai-bubble"><strong class="ai-speaker">Your AI</strong><p>Hi! Ask me anything once the server model is available.</p></div>
+        </li>
+      </ol>
+      <form id="ai-form" class="ai-form">
+        <label class="visually-hidden" for="ai-input">Message Sklite AI</label>
+        <textarea id="ai-input" maxlength="4000" rows="2" placeholder="Ask a question or describe what you want to build..." required></textarea>
+        <div class="ai-form-footer"><span id="ai-status" role="status" aria-live="polite">Checking the site's AI server...</span><span><kbd>Enter</kbd> to send · <kbd>Shift+Enter</kbd> for a new line</span><button id="ai-send" type="submit" aria-label="Send message"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i></button></div>
+      </form>
+    </section>
+    <p class="ai-disclaimer">Chat messages are sent to this site's self-hosted model for replies; the AI endpoint does not save them. Don't share passwords or private information.</p>
+  </main>
+  <script src="/assets/js/ai.js"></script>
+</body>
+</html>

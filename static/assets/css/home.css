@@ -5,14 +5,14 @@
 }
 
 .title {
-   font-size: 10vh;
-   color: var(--brand-text, var(--text));
+   font-size: clamp(56px, 10vh, 92px);
+   color: var(--accent);
    font-family: "Inter", sans-serif;
    text-align: center;
    text-transform: uppercase;
    border-radius: 0px 0px 5px 5px;
-   margin-top: 30vh;
-   margin-bottom: 3.5vh;
+   margin-top: clamp(160px, 23vh, 240px);
+   margin-bottom: 36px;
    line-height: 1.1;
    transition: var(--transition-slow);
    text-shadow: 2px 4px 6px rgb(0, 0, 0, 0.2);
@@ -22,12 +22,136 @@
    transform: translateY(-2px) scale(1.05);
 }
 
+.home-version {
+   position: fixed;
+   right: 18px;
+   bottom: 14px;
+   z-index: 110;
+   margin: 0;
+   padding: 8px 13px;
+   border: 1px solid var(--border);
+   border-radius: 999px;
+   background: var(--surface-nav);
+   color: var(--accent);
+   font-size: 13px;
+   letter-spacing: 0.04em;
+   -webkit-backdrop-filter: var(--backdrop-filter);
+   backdrop-filter: var(--backdrop-filter);
+}
+
+.home-dashboard {
+   width: min(690px, 88vw);
+   margin: 34px auto 90px;
+}
+
+.home-shortcuts {
+   display: grid;
+   grid-template-columns: repeat(4, minmax(0, 1fr));
+   gap: 10px;
+}
+
+.home-shortcuts a {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 9px;
+   min-height: 48px;
+   padding: 0 12px;
+   border: 1px solid var(--border);
+   border-radius: var(--radius-md);
+   background: color-mix(in srgb, var(--surface-card) 88%, transparent);
+   color: var(--text-muted);
+   text-decoration: none;
+   font-size: 12px;
+   font-weight: 700;
+   transition: var(--transition);
+}
+
+.home-shortcuts a i {
+   color: var(--accent);
+}
+
+.home-shortcuts a:hover {
+   transform: translateY(-3px);
+   border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+   color: var(--text);
+}
+
+.home-recent-heading {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   gap: 12px;
+   margin: 30px 2px 12px;
+}
+
+.home-recent-heading h2 {
+   margin: 0;
+   color: var(--text);
+   font-size: 14px;
+}
+
+.home-recent-heading a {
+   color: var(--accent);
+   text-decoration: none;
+   font-size: 11px;
+}
+
+.home-recent {
+   display: grid;
+   grid-template-columns: repeat(3, minmax(0, 1fr));
+   gap: 10px;
+}
+
+.home-recent > p {
+   grid-column: 1 / -1;
+   margin: 0;
+   padding: 14px 0;
+   color: var(--text-faint);
+   font-size: 12px;
+}
+
+.recent-app {
+   display: flex;
+   align-items: center;
+   gap: 10px;
+   min-width: 0;
+   padding: 9px;
+   border: 1px solid var(--border);
+   border-radius: var(--radius-md);
+   background: color-mix(in srgb, var(--surface-card) 75%, transparent);
+   color: var(--text-muted);
+   text-align: left;
+   font: inherit;
+   font-size: 11px;
+   cursor: pointer;
+}
+
+.recent-app:hover {
+   border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+   color: var(--accent);
+}
+
+.recent-app img {
+   width: 32px;
+   height: 32px;
+   flex: 0 0 auto;
+   border-radius: 8px;
+   object-fit: cover;
+}
+
+.recent-app span {
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+}
+
 @media (orientation: portrait) {
    .title {
       position: relative;
-      top: -10vw;
-      font-size: 10vw;
-      color: var(--brand-text, var(--text));
+      top: 0;
+      font-size: 13vw;
+      color: var(--accent);
       font-family: "Inter", sans-serif;
       text-align: center;
       text-transform: uppercase;
@@ -41,6 +165,11 @@
    text-align: center;
    justify-content: center;
    align-items: center;
+}
+
+.center .main {
+   width: 100%;
+   padding-top: 1px;
 }
 
 .truncate {
@@ -74,7 +203,7 @@ input:focus {
 }
 
 #splash {
-   color: var(--text-faint);
+   color: var(--accent-hover);
    margin-bottom: 1em;
    margin-top: -2em;
    padding: 0;
@@ -90,5 +219,24 @@ input:focus {
    to {
       opacity: 1;
       transform: translateY(0);
+   }
+}
+
+@media (max-width: 600px) {
+   .home-dashboard {
+      width: min(540px, 92vw);
+      margin-top: 26px;
+   }
+
+   .home-shortcuts {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+   }
+
+   .home-recent {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+   }
+
+   .truncate {
+      width: 82vw;
    }
 }

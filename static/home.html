@@ -26,7 +26,18 @@
         <input id="input" class="truncate" placeholder="Search or enter a URL" type="text" />
       </form>
     </div>
+    <section class="home-dashboard" aria-label="Sklite shortcuts">
+      <nav class="home-shortcuts" aria-label="Quick links">
+        <a data-home-link="Apps" href="/apps"><i class="fa-solid fa-grip" aria-hidden="true"></i><span>Explore apps</span></a>
+        <a data-home-link="Games" href="/games"><i class="fa-solid fa-gamepad" aria-hidden="true"></i><span>Play games</span></a>
+        <a data-home-link="Chat" href="/chat"><i class="fa-solid fa-comments" aria-hidden="true"></i><span>Community</span></a>
+        <a data-home-link="Settings" href="/settings"><i class="fa-solid fa-sliders" aria-hidden="true"></i><span>Personalize</span></a>
+      </nav>
+      <div class="home-recent-heading"><h2>Pick up where you left off</h2><a data-home-link="Apps" href="/apps">Browse library <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div>
+      <div id="home-recent" class="home-recent"><p>Apps and games you open will show up here.</p></div>
+    </section>
   </div>
+  <p class="home-version">Version 1.0</p>
   <script src="/assets/js/vendor.js"></script>
   <script src="assets/js/search.js"></script>
   <script src="/assets/js/home.js"></script>

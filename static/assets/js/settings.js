@@ -1,4 +1,3 @@
-
 function scrambleDropdowns() {
   const nativeValue = Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, "value");
   const alphabet = "abcdefghijklmnopqrstuvwxyz0123456789";
@@ -42,6 +41,20 @@ function scrambleDropdowns() {
 
 document.addEventListener("DOMContentLoaded", () => {
   scrambleDropdowns();
+  const settingsSearch = document.getElementById("settings-search");
+  settingsSearch.addEventListener("input", () => {
+    const query = settingsSearch.value.trim().toLowerCase();
+    for (const section of document.querySelectorAll(".settings-group")) {
+      const sectionTitle = section.querySelector(".settings-group-title")?.textContent.toLowerCase() ?? "";
+      let visibleItems = 0;
+      for (const item of section.querySelectorAll(".settings-item")) {
+        const matches = !query || sectionTitle.includes(query) || item.textContent.toLowerCase().includes(query);
+        item.hidden = !matches;
+        if (matches) visibleItems += 1;
+      }
+      section.hidden = Boolean(query) && !sectionTitle.includes(query) && visibleItems === 0;
+    }
+  });
   const adTypeElement = document.getElementById("adType");
   if (adTypeElement) {
     adTypeElement.addEventListener("change", function () {
@@ -176,7 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const themeDropdown = document.getElementById("theme-dropdown");
-  themeDropdown.value = store.get("theme") || "default";
+  themeDropdown.value = store.get("theme") || "blue";
   themeDropdown.addEventListener("change", function () {
     themeChange(this);
   });
@@ -235,7 +248,7 @@ document.addEventListener("DOMContentLoaded", () => {
       button.type = "button";
       button.className = "bg-option";
       button.dataset.key = option.key;
-      button.setAttribute("aria-label", "Use " + option.label + " background");
+      button.setAttribute("aria-label", `Use ${option["label"]} background`);
 
       const preview = document.createElement("img");
       preview.className = "bg-option-preview";
@@ -446,7 +459,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const value = rawValue !== undefined && rawValue !== null && rawValue !== "" && Number.isFinite(storedValue) ? storedValue : fallback;
       const labelElement = document.createElement("label");
       labelElement.htmlFor = id;
-      labelElement.textContent = label + " ";
+      labelElement.textContent = `${label} `;
       const output = document.createElement("output");
       output.id = `${id}-value`;
       output.textContent = value;
@@ -873,7 +886,7 @@ function importSaveData() {
           }
         }
         alert("Your save data has been imported. Please test it out.");
-        alert("If you find any issues then report it in GitHub or the Interstellar Discord.");
+        alert("If you find any issues, please report them on GitHub.");
       } catch (error) {
         console.error("Error parsing JSON file:", error);
       }

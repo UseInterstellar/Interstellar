@@ -65,7 +65,8 @@
     catppuccinLatte: "latte",
   };
 
-  let themeid = store.get("theme");
+  let themeid = store.get("theme") || "blue";
+  store.set("theme", themeid);
   if (Object.hasOwn(legacyThemes, themeid)) {
     themeid = legacyThemes[themeid];
     store.set("theme", themeid);
@@ -97,13 +98,6 @@
       } else {
         customThemeStyle?.remove();
       }
-    }
-
-    const isPastelTheme = String(themeId).startsWith("pastel");
-    const isLightTheme = ["light", "cream", "parchment", "latte"].includes(themeId);
-    const navLogo = document.getElementById("nav-logo");
-    if (navLogo) {
-      navLogo.src = isPastelTheme || !isLightTheme ? "/assets/media/favicon/main.png" : "/assets/media/favicon/main-inverted.png";
     }
   }
 
@@ -299,19 +293,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const nav = document.querySelector(".nav-bar");
 
   if (nav) {
-    const themeId = store.get("theme");
-    const lightThemes = ["light", "cream", "parchment", "latte"];
-    const isPastelTheme = String(themeId).startsWith("pastel");
-    const isLightTheme = lightThemes.includes(themeId);
-    const LogoUrl = isPastelTheme ? "/assets/media/favicon/main.png" : isLightTheme ? "/assets/media/favicon/main-inverted.png" : "/assets/media/favicon/main.png";
     const html = `
       <div id="icon-container">
-        <a class="icon" href="/home"><img alt="nav" id="nav-logo" src="${LogoUrl}"/></a>
+        <a class="icon" href="/home" aria-label="Sklite home"><span id="nav-logo">SK</span></a>
       </div>
       <div class="nav-bar-right">
-        <a class="navbar-link" href="/./games"><i class="fa-solid fa-gamepad navbar-icon"></i>${obfuscateNav("Games")}</a>
-        <a class="navbar-link" href="/./apps"><i class="fa-solid fa-phone navbar-icon"></i>${obfuscateNav("Apps")}</a>
-        <a class="navbar-link" href="/./settings"><i class="fa-solid fa-gear navbar-icon settings-icon"></i>${obfuscateNav("Settings")}</a>
+        <a class="navbar-link" data-nav="AI" href="/./ai"><i class="fa-solid fa-wand-magic-sparkles navbar-icon"></i>${obfuscateNav("AI")}</a>
+        <a class="navbar-link" data-nav="Games" href="/./games"><i class="fa-solid fa-gamepad navbar-icon"></i>${obfuscateNav("Games")}</a>
+        <a class="navbar-link" data-nav="Chat" href="/chat"><i class="fa-solid fa-comments navbar-icon"></i>${obfuscateNav("Chat")}</a>
+        <a class="navbar-link" data-nav="Apps" href="/./apps"><i class="fa-solid fa-phone navbar-icon"></i>${obfuscateNav("Apps")}</a>
+        <a class="navbar-link" data-nav="Settings" href="/./settings"><i class="fa-solid fa-gear navbar-icon settings-icon"></i>${obfuscateNav("Settings")}</a>
       </div>`;
     nav.innerHTML = html;
   }

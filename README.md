@@ -25,6 +25,40 @@
 - Fast Speeds
 - Geforce NOW Support
 
+## Community Chat
+
+The Chat link opens three rooms with live message refresh, search, replies, emoji reactions, message
+editing/deletion, online members, profiles, unread counts, and optional browser notifications.
+Visitors can create an account with a username and password; usernames are 3-20 letters, numbers,
+underscores, or hyphens, and passwords must be at least 8 characters. Passwords are stored as
+scrypt hashes. Accounts and the latest 500 messages are saved in `data/chat.json`; keep that file
+on persistent storage and include it in backups. Sessions are held in memory, so users must sign
+in again after a server restart.
+
+The apps and games catalogs support favorites, recently opened filters, and `/` to jump to search.
+The home page includes shortcuts and recently opened items; Settings has a searchable settings list.
+
+### Self-hosted AI chat
+
+The AI tab uses Ollama on the same server as the website. No API key or third-party AI provider is
+needed. Install Ollama on the server, download the default model, and start Ollama:
+
+```bash
+ollama pull qwen2.5:1.5b
+ollama serve
+```
+
+In another terminal, run `pnpm start`. The server connects to Ollama at
+`http://127.0.0.1:11434` by default. Set `OLLAMA_BASE_URL` to change the private server address
+or `OLLAMA_MODEL` to use a different model already installed in Ollama. Keep Ollama's port private;
+the website's server endpoint handles browser requests and limits concurrent model generations.
+When deploying behind a reverse proxy, set `TRUST_PROXY_HOPS` to the number of trusted proxy hops
+so per-visitor rate limits can use the real client address.
+The model download uses server disk space and inference uses server memory/CPU/GPU. Each visitor's
+custom name, instructions, and example notes are stored in that visitor's browser and included as
+context when they chat. Chat requests are sent to the website server for inference and are not saved
+by the AI endpoint.
+
 ## Deployment
 
 > [!IMPORTANT]

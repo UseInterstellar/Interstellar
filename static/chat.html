@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="referrer" content="no-referrer" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" id="tab-favicon" href="/assets/media/favicon/thesaurus.png" />
+  <title id="page-title">Synonyms and Antonyms of Words | Thesaurus.com</title>
+  <link rel="stylesheet" href="/assets/css/global.css" />
+  <link rel="stylesheet" href="/assets/css/nav.css" />
+  <link rel="stylesheet" href="/assets/css/chat.css" />
+  <script src="/assets/js/storage.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <div class="nav-bar"></div>
+  <main class="community-chat">
+    <header class="chat-heading">
+      <div>
+        <p class="chat-eyebrow">SKLITE COMMUNITY</p>
+        <h1>Good to have you here.</h1>
+        <p>Find your people, share a tip, or just say hi.</p>
+      </div>
+    </header>
+    <section id="chat-auth" class="chat-panel" aria-labelledby="auth-title">
+      <h2 id="auth-title">Sign in to chat</h2>
+      <p id="auth-description">Use your account or create one to join the conversation.</p>
+      <form id="auth-form">
+        <label for="chat-username">Username</label>
+        <input id="chat-username" name="username" autocomplete="username" minlength="3" maxlength="20" required />
+        <label for="chat-password">Password</label>
+        <input id="chat-password" name="password" type="password" autocomplete="current-password" minlength="8" maxlength="128" required />
+        <button id="auth-submit" type="submit">Sign in</button>
+      </form>
+      <button id="auth-toggle" class="chat-text-button" type="button">Create an account</button>
+      <p id="auth-status" class="chat-status" role="status" aria-live="polite"></p>
+    </section>
+    <section id="chat-room" class="chat-layout" aria-label="Community conversation" hidden>
+      <aside class="chat-sidebar">
+        <div class="chat-sidebar-title"><span>ROOMS</span><i class="fa-solid fa-hashtag" aria-hidden="true"></i></div>
+        <nav id="chat-channels" class="chat-channels" aria-label="Chat rooms"></nav>
+        <div class="chat-sidebar-title people-title"><span>HERE NOW</span><span id="online-count">0</span></div>
+        <ul id="online-members" class="online-members" aria-label="Online members"></ul>
+        <div class="chat-account">
+          <span id="account-avatar" class="chat-avatar" aria-hidden="true"></span>
+          <span class="chat-account-copy"><strong id="chat-current-user"></strong><small>Online</small></span>
+          <button id="profile-open" class="icon-button" type="button" aria-label="Edit profile" title="Edit profile"><i class="fa-solid fa-pen" aria-hidden="true"></i></button>
+          <button id="chat-logout" class="icon-button" type="button" aria-label="Sign out" title="Sign out"><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i></button>
+        </div>
+      </aside>
+      <div class="chat-main">
+        <div class="chat-room-header">
+          <div><span class="channel-hash">#</span><strong id="active-channel-title">general</strong><p id="active-channel-description"></p></div>
+          <div class="chat-header-actions"><button id="notify-toggle" class="notifications-button" type="button"><i class="fa-regular fa-bell" aria-hidden="true"></i><span>Enable alerts</span></button><label class="chat-search"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><input id="chat-search" type="search" placeholder="Search this room" aria-label="Search this room" /><kbd>ESC</kbd></label></div>
+        </div>
+        <div id="chat-search-note" class="chat-search-note" hidden></div>
+        <ol id="chat-messages" class="chat-messages" aria-live="polite"></ol>
+        <div id="reply-preview" class="reply-preview" hidden><span></span><button id="reply-cancel" class="icon-button" type="button" aria-label="Cancel reply">×</button></div>
+        <form id="chat-message-form" class="chat-message-form">
+          <label class="visually-hidden" for="chat-message">Message</label>
+          <textarea id="chat-message" name="message" maxlength="500" rows="1" placeholder="Message #general" autocomplete="off" required></textarea>
+          <div class="composer-footer"><span>Enter to send · Shift+Enter for a new line</span><span id="message-length">0 / 500</span><button type="submit" aria-label="Send message"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i><span>Send</span></button></div>
+        </form>
+        <p id="room-status" class="chat-status" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+    <section id="profile-panel" class="chat-panel profile-panel" hidden aria-label="Edit chat profile">
+      <div class="profile-panel-heading"><div><h2>Your profile</h2><p>Let the community know a little about you.</p></div><button id="profile-close" class="icon-button" type="button" aria-label="Close profile">×</button></div>
+      <form id="profile-form">
+        <label for="profile-display-name">Display name</label><input id="profile-display-name" maxlength="24" required />
+        <label for="profile-bio">About you <span class="optional-label">optional</span></label><textarea id="profile-bio" maxlength="100" rows="3"></textarea>
+        <label for="profile-color">Avatar color</label><input id="profile-color" type="color" />
+        <p id="profile-status" class="chat-status" role="status" aria-live="polite"></p>
+        <button type="submit">Save profile</button>
+      </form>
+    </section>
+  </main>
+  <script src="/assets/js/chat.js"></script>
+</body>
+</html>

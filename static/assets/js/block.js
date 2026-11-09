@@ -17,7 +17,7 @@
 
     const paragraphs = document.querySelectorAll("main p");
     if (paragraphs.length < 2) return;
-    paragraphs[0].textContent = `${host || "This site"} cannot be opened on this Interstellar instance.`;
+    paragraphs[0].textContent = `${host || "This site"} cannot be opened on this Sklite instance.`;
     paragraphs[1].textContent = REASONS[source] ?? "This site is blocked on this instance.";
   }
 

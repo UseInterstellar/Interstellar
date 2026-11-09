@@ -1,0 +1,359 @@
+.ai-workspace {
+   box-sizing: border-box;
+   width: min(980px, calc(100% - 40px));
+   min-height: calc(100vh - 100px);
+   margin: 0 auto;
+   padding: 116px 0 30px;
+   color: var(--text);
+}
+
+.ai-heading {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   gap: 16px;
+   margin-bottom: 20px;
+}
+
+.ai-heading h1 {
+   margin: 0;
+   font-size: clamp(28px, 4vw, 40px);
+   letter-spacing: -0.05em;
+}
+
+.ai-heading p:not(.ai-eyebrow) {
+   margin: 8px 0 0;
+   color: var(--text-muted);
+}
+
+.ai-eyebrow {
+   margin: 0 0 6px;
+   color: var(--accent);
+   font-size: 11px;
+   font-weight: 800;
+   letter-spacing: 0.16em;
+}
+
+.ai-clear,
+.ai-form button {
+   border: 0;
+   border-radius: var(--radius-md);
+   background: var(--accent);
+   color: var(--accent-text);
+   font: inherit;
+   font-weight: 700;
+   cursor: pointer;
+   transition: var(--transition);
+}
+
+.ai-clear {
+   flex: 0 0 auto;
+   padding: 11px 14px;
+}
+
+.ai-clear:hover,
+.ai-form button:hover {
+   filter: brightness(1.08);
+   transform: translateY(-1px);
+}
+
+.ai-brain,
+.ai-chat {
+   border: 1px solid var(--border);
+   border-radius: var(--radius-lg);
+   background: color-mix(in srgb, var(--surface-card) 94%, transparent);
+   box-shadow: 0 18px 48px rgba(0, 0, 0, 0.16);
+}
+
+.ai-brain {
+   margin-bottom: 14px;
+   padding: 16px 18px 12px;
+}
+
+.ai-brain label {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   gap: 12px;
+   color: var(--text);
+   font-size: 13px;
+   font-weight: 800;
+}
+
+.ai-brain label i {
+   margin-right: 7px;
+   color: var(--accent);
+}
+
+.ai-local-note,
+.ai-brain > p,
+.ai-disclaimer {
+   color: var(--text-faint);
+   font-size: 11px;
+}
+
+.ai-brain input,
+.ai-brain textarea,
+.ai-form textarea {
+   box-sizing: border-box;
+   width: 100%;
+   resize: vertical;
+   border: 1px solid var(--border-strong);
+   border-radius: var(--radius-md);
+   background: var(--surface-input);
+   color: var(--text);
+   font: inherit;
+}
+
+.ai-brain textarea {
+   min-height: 52px;
+   margin-top: 10px;
+   padding: 10px 12px;
+   font-size: 13px;
+}
+
+.ai-brain > input {
+   margin-top: 12px;
+}
+
+.ai-brain .ai-instructions-label {
+   display: block;
+   margin-top: 12px;
+   font-size: 12px;
+}
+
+.ai-teach-form {
+   display: grid;
+   grid-template-columns: minmax(0, 1fr) auto;
+   gap: 8px;
+   margin-top: 12px;
+   padding-top: 12px;
+   border-top: 1px solid var(--border);
+}
+
+.ai-teach-form label {
+   grid-column: 1 / -1;
+   color: var(--text);
+   font-size: 12px;
+   font-weight: 700;
+}
+
+.ai-teach-form input,
+.ai-teach-form textarea {
+   min-height: 42px;
+   padding: 9px 11px;
+   font-size: 12px;
+}
+
+.ai-teach-form textarea {
+   grid-column: 1 / -1;
+   min-height: 55px;
+}
+
+.ai-teach-form button,
+.ai-lessons button {
+   border: 0;
+   border-radius: var(--radius-md);
+   background: var(--accent);
+   color: var(--accent-text);
+   font: inherit;
+   font-size: 12px;
+   font-weight: 700;
+   cursor: pointer;
+}
+
+.ai-teach-form button {
+   justify-self: end;
+   padding: 9px 12px;
+}
+
+.ai-lessons {
+   display: grid;
+   gap: 6px;
+   margin: 10px 0 0;
+   padding: 0;
+   list-style: none;
+}
+
+.ai-lessons li {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   gap: 10px;
+   padding: 7px 9px;
+   border-radius: var(--radius-sm);
+   background: var(--surface-tile);
+   color: var(--text-muted);
+   font-size: 11px;
+}
+
+.ai-lessons li span {
+   overflow-wrap: anywhere;
+}
+
+.ai-lessons button {
+   flex: 0 0 26px;
+   width: 26px;
+   height: 26px;
+   background: transparent;
+   color: var(--text-muted);
+}
+
+.ai-lessons button:hover {
+   color: var(--danger);
+}
+
+.ai-brain textarea:focus,
+.ai-brain input:focus,
+.ai-form textarea:focus {
+   border-color: var(--accent);
+   outline: 3px solid color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+.ai-brain > p {
+   margin: 7px 0 0;
+}
+
+.ai-chat {
+   display: flex;
+   min-height: min(540px, calc(100vh - 390px));
+   flex-direction: column;
+   padding: 18px;
+}
+
+.ai-messages {
+   display: flex;
+   flex: 1;
+   flex-direction: column;
+   gap: 14px;
+   min-height: 220px;
+   max-height: min(52vh, 520px);
+   overflow-y: auto;
+   margin: 0;
+   padding: 0 4px 16px;
+   list-style: none;
+}
+
+.ai-message {
+   display: flex;
+   align-items: flex-start;
+   gap: 10px;
+}
+
+.ai-message-user {
+   flex-direction: row-reverse;
+}
+
+.ai-avatar {
+   display: grid;
+   flex: 0 0 32px;
+   width: 32px;
+   height: 32px;
+   place-items: center;
+   border-radius: 50%;
+   background: color-mix(in srgb, var(--accent) 18%, var(--surface-card));
+   color: var(--accent);
+}
+
+.ai-bubble {
+   max-width: min(78%, 700px);
+   padding: 11px 14px;
+   border: 1px solid var(--border);
+   border-radius: 4px 14px 14px;
+   background: var(--surface-tile);
+   overflow-wrap: anywhere;
+}
+
+.ai-message-user .ai-bubble {
+   border-radius: 14px 4px 14px 14px;
+   background: color-mix(in srgb, var(--accent) 16%, var(--surface-card));
+}
+
+.ai-bubble strong {
+   display: block;
+   margin-bottom: 5px;
+   color: var(--accent);
+   font-size: 11px;
+}
+
+.ai-bubble p {
+   margin: 0;
+   color: var(--text);
+   font-size: 14px;
+   line-height: 1.55;
+   white-space: pre-wrap;
+}
+
+.ai-form {
+   padding-top: 12px;
+   border-top: 1px solid var(--border);
+}
+
+.ai-form textarea {
+   display: block;
+   min-height: 52px;
+   padding: 12px 14px;
+   resize: vertical;
+}
+
+.ai-form-footer {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   gap: 12px;
+   padding-top: 10px;
+   color: var(--text-faint);
+   font-size: 11px;
+}
+
+.ai-form button {
+   display: grid;
+   flex: 0 0 36px;
+   width: 36px;
+   height: 36px;
+   place-items: center;
+}
+
+.ai-form button:disabled {
+   cursor: wait;
+   opacity: 0.6;
+}
+
+#ai-status[data-error="true"] {
+   color: var(--danger);
+}
+
+.ai-disclaimer {
+   margin: 12px 4px;
+   text-align: center;
+}
+
+@media (max-width: 640px) {
+   .ai-workspace {
+      width: min(100% - 24px, 980px);
+      padding-top: 100px;
+   }
+
+   .ai-heading {
+      align-items: flex-start;
+   }
+
+   .ai-heading p:not(.ai-eyebrow) {
+      max-width: 34ch;
+      font-size: 13px;
+   }
+
+   .ai-clear {
+      padding: 9px 10px;
+      font-size: 12px;
+   }
+
+   .ai-chat {
+      min-height: 52vh;
+      padding: 12px;
+   }
+
+   .ai-form-footer > span:nth-child(2) {
+      display: none;
+   }
+}

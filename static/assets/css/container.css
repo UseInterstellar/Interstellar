@@ -13,6 +13,55 @@
    margin: 0;
 }
 
+.column .favorite-button {
+   position: absolute;
+   top: 9px;
+   right: 9px;
+   z-index: 2;
+   display: grid;
+   width: 34px;
+   height: 34px;
+   place-items: center;
+   border: 1px solid var(--border);
+   border-radius: 50%;
+   background: rgba(12, 18, 26, 0.8);
+   color: rgba(255, 255, 255, 0.72);
+   font-size: 19px;
+   cursor: pointer;
+   transition: var(--transition);
+}
+
+.column .pin-button {
+   position: absolute;
+   top: 49px;
+   right: 9px;
+   z-index: 2;
+   display: grid;
+   width: 34px;
+   height: 34px;
+   place-items: center;
+   padding: 0;
+   border: 1px solid var(--border);
+   border-radius: 50%;
+   background: rgba(12, 18, 26, 0.8);
+   color: rgba(255, 255, 255, 0.72);
+   font-size: 14px;
+   cursor: pointer;
+   transition: var(--transition);
+}
+
+.column .pin-button:hover,
+.column .pin-button.is-pinned {
+   color: var(--accent);
+   transform: scale(1.08);
+}
+
+.column .favorite-button:hover,
+.column .favorite-button.is-favorite {
+   color: #ffd66b;
+   transform: scale(1.08);
+}
+
 .column img {
    position: absolute;
    width: 145px;
@@ -103,4 +152,42 @@ select:hover {
    flex-wrap: wrap;
    justify-content: center;
    gap: 0.5em;
+}
+
+.catalogue-tools {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   flex-wrap: wrap;
+   gap: 10px;
+   margin: 16px 12px 4px;
+   color: var(--text-faint);
+   font-size: 13px;
+}
+
+.catalogue-tools kbd {
+   margin-left: 10px;
+   padding: 3px 7px;
+   border: 1px solid var(--border-strong);
+   border-radius: 5px;
+   color: var(--text-muted);
+   font: inherit;
+}
+
+.catalogue-filter {
+   padding: 9px 14px;
+   border: 1px solid var(--border);
+   border-radius: 999px;
+   background: var(--surface-button);
+   color: var(--text-muted);
+   font: inherit;
+   cursor: pointer;
+   transition: var(--transition);
+}
+
+.catalogue-filter:hover,
+.catalogue-filter.active {
+   border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+   background: color-mix(in srgb, var(--accent) 14%, var(--surface-button));
+   color: var(--accent);
 }

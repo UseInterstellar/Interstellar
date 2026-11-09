@@ -51,7 +51,8 @@ img {
 
 .nav-bar .icon {
    position: absolute;
-   float: left;
+   display: flex;
+   align-items: center;
    text-transform: uppercase;
    font-size: 30px;
    font-family: "Inter", sans-serif;
@@ -63,8 +64,17 @@ img {
    font-style: normal;
    text-decoration: none;
    transition: var(--transition);
-   height: 5vh;
-   top: 18%;
+   height: auto;
+   top: 50%;
+   transform: translateY(-50%);
+}
+
+.nav-bar #nav-logo {
+   color: var(--accent);
+   font-size: 1.2em;
+   font-weight: 800;
+   letter-spacing: 1px;
+   line-height: 1;
 }
 
 .nav-bar-right {
@@ -73,7 +83,7 @@ img {
    transform: translateY(-50%);
    text-transform: uppercase;
    font-size: 18px;
-   color: var(--brand-text, var(--text));
+   color: var(--accent);
    font-weight: 600;
    right: 2%;
 }
@@ -86,7 +96,7 @@ img {
    margin-left: 10px;
    text-transform: uppercase;
    cursor: pointer;
-   color: var(--brand-text, var(--text));
+   color: var(--accent);
    font-weight: 800;
    right: 2%;
    font-family: "Inter", sans-serif;
@@ -102,7 +112,7 @@ img {
       text-transform: uppercase;
       font-size: 2.5vw;
       cursor: pointer;
-      color: var(--brand-text, var(--text));
+      color: var(--accent);
       font-weight: 800;
       right: 2%;
       font-family: "Inter", sans-serif;

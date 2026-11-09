@@ -21,6 +21,7 @@
   <div class="nav-bar"></div>
   <div class="main">
     <div class="settings-shell">
+      <label class="settings-searchbar"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><input id="settings-search" type="search" placeholder="Find a setting..." autocomplete="off" /><kbd>Type to filter</kbd></label>
       <div class="settings-content">
         <section class="settings-card settings-group">
           <h2 class="settings-group-title">Cloaking</h2>
@@ -464,18 +465,6 @@
               <div class="settings-item-control">
                 <button class="key-button" value="Import" onclick="importSaveData();">Import Save</button>
               </div>
-            </div>
-            <div class="settings-item settings-item-plain">
-                <h3>Version</h3>
-                <p>Version: <span id="app-version">{{VERSION}}</span></p>
-                <p>Last Updated: <span id="last-updated">{{LAST_UPDATED}}</span></p>
-                <p>
-                  Questions? Join our
-                  <a href="https://discord.gg/interstellar">Discord community</a>,
-                  email us at
-                  <a href="mailto:hello@gointerstellar.app">hello@gointerstellar.app</a>, or
-                  <a href="https://docs.gointerstellar.app/faq">check our FAQ</a>!
-                </p>
             </div>
         </section>
         </div>

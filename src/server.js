@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync } from "node:fs";
 import http from "node:http";
 import { createRequire } from "node:module";
 import path from "node:path";
@@ -9,11 +9,12 @@ import cookieParser from "cookie-parser";
 import express from "express";
 import basicAuth from "express-basic-auth";
 import config from "../config.js";
+import { mountAi } from "./ai.js";
+import { mountChat } from "./chat.js";
+import { createBlockVerdict, setupFiltering } from "./filtering/index.js";
 // import { mountAnalytics } from "./analytics.js";
 import { mountGhGames } from "./games.js";
-import { createBlockVerdict, setupFiltering } from "./filtering/index.js";
 import { mountMasqr } from "./Masqr.js";
-import { injectVersionInfo, resolveVersionInfo } from "./version.js";
 
 console.log(chalk.yellow("🚀 Starting server..."));
 
@@ -36,6 +37,14 @@ if (vendorMap) {
 
 const server = http.createServer();
 const app = express();
+
+if (process.env.TRUST_PROXY_HOPS !== undefined) {
+  const trustProxyHops = Number(process.env.TRUST_PROXY_HOPS);
+  if (!Number.isSafeInteger(trustProxyHops) || trustProxyHops < 1) {
+    throw new Error("TRUST_PROXY_HOPS must be a positive integer.");
+  }
+  app.set("trust proxy", trustProxyHops);
+}
 
 function resolvePort() {
   const args = process.argv.slice(2);
@@ -115,19 +124,10 @@ app.post("/filter/verdict", async (req, res) => {
   res.set("Cache-Control", "no-store").json(await blockVerdict(host));
 });
 
-// if (vendorMap?.analytics) mountAnalytics(app, vendorMap.analytics);
+await mountChat(app, path.join(__dirname, "data"));
+mountAi(app);
 
-if (!vendorMap) {
-  try {
-    const info = await resolveVersionInfo();
-    const settingsHtml = injectVersionInfo(readFileSync(path.join(SERVE_DIR, "settings.html"), "utf8"), info).html;
-    const sendSettings = (_req, res) => res.type("html").send(settingsHtml);
-    app.get("/settings", sendSettings);
-    app.get("/settings.html", sendSettings);
-  } catch (err) {
-    console.warn(chalk.yellow(`Settings version injection skipped, serving placeholders: ${err.message}`));
-  }
-}
+// if (vendorMap?.analytics) mountAnalytics(app, vendorMap.analytics);
 
 app.use(express.static(SERVE_DIR, { ...jsStaticOptions, dotfiles: "ignore" }));
 
@@ -147,9 +147,11 @@ if (!vendorMap) {
 
 const routes = [
   { path: "/apps", file: "apps.html" },
+  { path: "/ai", file: "ai.html" },
   { path: "/games", file: "games.html" },
   { path: "/play.html", file: "games.html" },
   { path: "/settings", file: "settings.html" },
+  { path: "/chat", file: "chat.html" },
   { path: "/tabs", file: "tabs.html" },
   { path: "/home", file: "home.html" },
   { path: "/", file: "index.html" },
@@ -171,7 +173,9 @@ app.use((_req, res) => {
 
 app.use((err, _req, res, _next) => {
   console.error(err.stack);
-  res.status(500).sendFile(path.join(SERVE_DIR, "404.html"));
+  if (_req.path.startsWith("/api/ai/")) return res.status(500).json({ error: "The server AI request could not be completed." });
+  if (_req.path.startsWith("/api/chat/")) return res.status(500).json({ error: "The chat request could not be completed." });
+  return res.status(500).sendFile(path.join(SERVE_DIR, "404.html"));
 });
 
 server.on("request", (req, res) => {
