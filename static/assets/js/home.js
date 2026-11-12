@@ -17,7 +17,7 @@ const cloakHost = shellTop() ?? window;
 
 if (store.get("ab") == null) store.set("ab", "true");
 if (!inFrame && !navigator.userAgent.includes("Firefox") && store.get("ab") === "true") {
-  const popup = cloakHost.open("about:blank", "_blank");
+  const popup = open("about:blank", "_blank");
   if (popup && !popup.closed) {
     const doc = popup.document;
     const iframe = doc.createElement("iframe");
