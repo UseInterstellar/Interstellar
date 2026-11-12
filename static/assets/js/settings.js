@@ -175,6 +175,13 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("ab-settings-switch").checked = true;
   }
 
+  const shellSwitch = document.getElementById("shell-settings-switch");
+  shellSwitch.checked = store.get("shell") === "true";
+  shellSwitch.addEventListener("change", function () {
+    if (this.checked) store.set("shell", "true");
+    else store.remove("shell");
+  });
+
   const themeDropdown = document.getElementById("theme-dropdown");
   themeDropdown.value = store.get("theme") || "default";
   themeDropdown.addEventListener("change", function () {

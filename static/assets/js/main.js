@@ -206,6 +206,20 @@ function inShell() {
   return document.body?.dataset.shell === "true";
 }
 
+function redirectWhenShellOff() {
+  if (!inShell()) return;
+  let enabled = false;
+  try {
+    enabled = store.get("shell") === "true";
+  } catch (e) {}
+  if (enabled) return;
+  const frame = document.body.getElementsByTagName("iframe")[0];
+  if (!frame) return;
+  location.replace(frame.getAttribute("src"));
+  frame.remove();
+}
+document.addEventListener("DOMContentLoaded", redirectWhenShellOff);
+
 function reconstructSafeUrl(raw) {
   if (!raw || typeof raw !== "string") return null;
   try {
