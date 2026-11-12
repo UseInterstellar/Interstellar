@@ -20,7 +20,16 @@ export function mountGhGames(app) {
       let reqTarget;
       for (const [prefix, baseUrl] of Object.entries(ghGamesBases)) {
         if (reqPath.startsWith(prefix)) {
-          reqTarget = baseUrl + reqPath.slice(prefix.length);
+          let candidate;
+          try {
+            candidate = new URL(baseUrl + reqPath.slice(prefix.length));
+          } catch {
+            return next();
+          }
+          if (!candidate.href.startsWith(baseUrl)) return next();
+          candidate.search = "";
+          candidate.hash = "";
+          reqTarget = candidate.href;
           break;
         }
       }
@@ -37,14 +46,15 @@ export function mountGhGames(app) {
       if (!asset.ok) return next();
 
       const data = Buffer.from(await asset.arrayBuffer());
-      const ext = path.extname(reqTarget);
-      const contentType = noMimeExts.has(ext) ? "application/octet-stream" : mime.getType(ext);
+      const ext = path.extname(new URL(reqTarget).pathname);
+      const contentType = noMimeExts.has(ext) ? "application/octet-stream" : mime.getType(ext) ?? "application/octet-stream";
 
       const etag = asset.headers.get("etag");
       const lastModified = asset.headers.get("last-modified");
 
       res.writeHead(200, {
         "Content-Type": contentType,
+        "X-Content-Type-Options": "nosniff",
         "Cache-Control": "public, max-age=31536000, immutable",
         ...(etag && { ETag: etag }),
         ...(lastModified && { "Last-Modified": lastModified }),
