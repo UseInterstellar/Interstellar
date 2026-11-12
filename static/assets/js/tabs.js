@@ -58,11 +58,11 @@ function resolveAgainst(url, base) {
   }
 }
 
-function isProxyUrl(url) {
+function isScramjetUrl(url) {
   try {
     const parsed = new URL(url, window.location.href);
-    if (parsed.origin !== window.location.origin) return false;
-    return [self.__scramjet$config?.prefix, self.__uv$config?.prefix].some(prefix => prefix && parsed.pathname.startsWith(prefix));
+    const prefix = self.__scramjet$config?.prefix;
+    return parsed.origin === window.location.origin && Boolean(prefix) && parsed.pathname.startsWith(prefix);
   } catch {
     return false;
   }
@@ -568,7 +568,7 @@ document.addEventListener("DOMContentLoaded", () => {
     iframeContainer.appendChild(newIframe);
 
     const loadSource = async () => {
-      if (isProxyUrl(src)) {
+      if (isScramjetUrl(src)) {
         const ready = await window.__ready;
         if (!ready || !window.__urls?.encodeUrl) {
           throw new Error("The proxy transport is not ready.");
