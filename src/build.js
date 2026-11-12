@@ -1099,9 +1099,7 @@ function hardenTextRun(text) {
     const w = SPLIT_WRAPPERS[(seed + i) % SPLIT_WRAPPERS.length];
     return `<${w}>${i === entIdx ? encodeOneChar(inner, seed) : inner}</${w}>`;
   });
-  let out = parts[0];
-  for (let i = 1; i < parts.length; i++) out += HARDEN_ZERO_WIDTH[(seed + i) % HARDEN_ZERO_WIDTH.length] + parts[i];
-  return out;
+  return parts.join("");
 }
 
 // Text that must not be wrapped: executable, presentational-verbatim, or where injected markup
