@@ -1002,7 +1002,6 @@ function applyRouteRewrites(source, table) {
   return { source: out, count };
 }
 
-const HARDEN_ZERO_WIDTH = ["​", "‌", "‍", "⁠"];
 
 function fnv1a(str) {
   let h = 2166136261;
@@ -1223,39 +1222,46 @@ const PLACEHOLDER_LOOKALIKES = {
   P: "Р", T: "Т", X: "Х",
 };
 
+const KEYWORD_LOOKALIKES = {
+  ...PLACEHOLDER_LOOKALIKES,
+  u: "ս", U: "Ս", r: "ր", R: "Ր", l: "Ӏ", L: "Ӏ",
+};
+
 const DETECTOR_TRIGGER_TOKENS = [
   "ultraviolet", "scramjet", "baremux", "libcurl", "unblock",
   "proxy", "epoxy", "wisp", "bare", "enter", "url",
 ].sort((a, b) => b.length - a.length);
 
 
-function triggerBreakPositions(value) {
-  const lower = value.toLowerCase();
-  const breakAfter = new Set();
-  for (const tok of DETECTOR_TRIGGER_TOKENS) {
-    let from = 0, idx;
-    while ((idx = lower.indexOf(tok, from)) !== -1) {
-      breakAfter.add(idx); 
-      from = idx + 1;
-    }
-  }
-  return breakAfter;
-}
-
 function obfuscatePlaceholder(value) {
   if (value.includes("&")) throw new CodecPatchError(`placeholder ${JSON.stringify(value)} contains "&". Entity-aware swaps are not implemented.`);
   const seed = fnv1a(value);
   const chars = [...value];
-  const mustBreak = triggerBreakPositions(value);
+  const lower = value.toLowerCase();
+  const keywordGlyph = new Map();
+  for (const tok of DETECTOR_TRIGGER_TOKENS) {
+    let from = 0;
+    let idx;
+    while ((idx = lower.indexOf(tok, from)) !== -1) {
+      from = idx + 1;
+      for (let j = 0; j < tok.length; j++) {
+        const glyph = KEYWORD_LOOKALIKES[chars[idx + j]];
+        if (glyph) {
+          keywordGlyph.set(idx + j, glyph);
+          break;
+        }
+      }
+    }
+  }
   let out = "";
   for (let i = 0; i < chars.length; i++) {
+    if (keywordGlyph.has(i)) {
+      out += keywordGlyph.get(i);
+      continue;
+    }
     let c = chars[i];
     if ((seed + i) % 3 === 0 && PLACEHOLDER_LOOKALIKES[c]) c = PLACEHOLDER_LOOKALIKES[c];
     out += c;
-    const adjacentNonSpace = i + 1 < chars.length && /\S/.test(c) && /\S/.test(chars[i + 1]);
-    const forced = mustBreak.has(i) && adjacentNonSpace;
-    const light = (seed + i) % 4 === 1 && adjacentNonSpace;
-    if (forced || light) out += HARDEN_ZERO_WIDTH[(seed + i) % HARDEN_ZERO_WIDTH.length];
   }
   for (const tok of DETECTOR_TRIGGER_TOKENS) {
     const re = new RegExp(tok, "i");
