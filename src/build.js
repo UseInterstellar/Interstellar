@@ -1209,6 +1209,42 @@ function encodeHtmlText(text) {
   });
 }
 
+
+const SETTINGS_KEYWORDS = ["cloaking", "cloaked", "cloak"];
+
+function swapKeyword(text, tok) {
+  const chars = [...text];
+  const lower = text.toLowerCase();
+  const out = chars.slice();
+  let from = 0;
+  let idx;
+  while ((idx = lower.indexOf(tok, from)) !== -1) {
+    from = idx + 1;
+    for (let j = 0; j < tok.length; j++) {
+      const glyph = KEYWORD_LOOKALIKES[chars[idx + j]];
+      if (glyph) {
+        out[idx + j] = glyph;
+        break;
+      }
+    }
+  }
+  return out.join("");
+}
+
+function swapSettingsKeywords(html) {
+  const blocks = [];
+  const guarded = html.replace(/<(script|style)\b[\s\S]*?<\/\1>/gi, block => {
+    blocks.push(block);
+    return `<kw-skip data-i="${blocks.length - 1}"></kw-skip>`;
+  });
+  const swapped = guarded.replace(/>([^<>]+)</g, (_match, text) => {
+    let out = text.replace(/&#(\d+);/g, (m, d) => (/[<>&]/.test(String.fromCodePoint(+d)) ? m : String.fromCodePoint(+d)));
+    for (const tok of SETTINGS_KEYWORDS) out = swapKeyword(out, tok);
+    return `>${out}<`;
+  });
+  return swapped.replace(/<kw-skip data-i="(\d+)"><\/kw-skip>/g, (_, i) => blocks[+i]);
+}
+
 function obfuscateTextNodes(html) {
   return html.replace(/>([^<>]+)</g, (_match, text) => {
     if (!text.trim()) return `>${text}<`;
@@ -2393,6 +2429,7 @@ async function build() {
 
       references.push({ file: name, source: html });
 
+      if (name === "settings.html") html = swapSettingsKeywords(html);
       if (OBFUSCATE_HTML) html = await obfuscateHtml(html, name);
       await writeFile(htmlPath, html, "utf8");
       console.log(chalk.green(`  + ${name}${OBFUSCATE_HTML ? " (html-obfuscated)" : ""}`));
