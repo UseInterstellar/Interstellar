@@ -1002,7 +1002,6 @@ function applyRouteRewrites(source, table) {
   return { source: out, count };
 }
 
-const SPLIT_WRAPPERS = ["span", "x-a", "x-b", "ab-x", "s-p"];
 const HARDEN_ZERO_WIDTH = ["​", "‌", "‍", "⁠"];
 
 function fnv1a(str) {
@@ -1014,98 +1013,6 @@ function fnv1a(str) {
   return h >>> 0;
 }
 
-// An HTML entity is one indivisible unit: chunking must never split inside &amp; or &#233;, and
-// the occasional character encoding must never re-encode an existing entity. Sticky so it can be
-// anchored at a position.
-const HTML_ENTITY = /&(?:#\d+|#x[\da-fA-F]+|[a-zA-Z][a-zA-Z0-9]*);/y;
-
-function textUnits(word) {
-  const units = [];
-  for (let i = 0; i < word.length; ) {
-    HTML_ENTITY.lastIndex = i;
-    const m = HTML_ENTITY.exec(word);
-    if (m && m.index === i) {
-      units.push(m[0]);
-      i += m[0].length;
-    } else {
-      units.push(word[i]);
-      i++;
-    }
-  }
-  return units;
-}
-
-// Split one whitespace-free word into inner strings of 2 to 4 units, guaranteeing at least two
-// chunks once a word is 3+ units so a real element boundary always sits inside it. Words of 1 or 2
-// units stay in a single wrapper: splitting them would be noise, and they are not fingerprints.
-function chunkWord(word, seed) {
-  const units = textUnits(word);
-  if (units.length < 3) return [units.join("")];
-  const chunks = [];
-  for (let i = 0; i < units.length; ) {
-    const size = 2 + ((seed + chunks.length) % 3);
-    chunks.push(units.slice(i, i + size).join(""));
-    i += size;
-  }
-  if (chunks.length < 2) {
-    const mid = Math.max(1, units.length >> 1);
-    return [units.slice(0, mid).join(""), units.slice(mid).join("")];
-  }
-  return chunks;
-}
-
-// Numeric-encode a single plain character inside an inner string, skipping characters that are
-// already part of an entity, whitespace, or a surrogate. One call per text run keeps it occasional.
-function encodeOneChar(inner, seed) {
-  const spots = [];
-  for (let i = 0; i < inner.length; ) {
-    HTML_ENTITY.lastIndex = i;
-    const m = HTML_ENTITY.exec(inner);
-    if (m && m.index === i) {
-      i += m[0].length;
-      continue;
-    }
-    if (!/\s/.test(inner[i]) && inner.charCodeAt(i) < 0xd800) spots.push(i);
-    i++;
-  }
-  if (!spots.length) return inner;
-  const p = spots[seed % spots.length];
-  return `${inner.slice(0, p)}&#${inner.charCodeAt(p)};${inner.slice(p + 1)}`;
-}
-
-// Harden one text run (the text between two tags). Whitespace-only runs are returned untouched, so
-// minifyHtml collapses page indentation exactly as before. Every word becomes one or more wrappers;
-// whitespace is folded into an adjacent wrapper so none is ever left bare between two tags, which
-// minifyHtml's >\s+< rule would delete and so join two words. Detagged and decoded, the run is byte
-// identical to the source.
-function hardenTextRun(text) {
-  if (!text.trim()) return text;
-  const seed = fnv1a(text);
-  const inners = [];
-  let lead = "";
-  for (const seg of text.match(/\s+|\S+/g)) {
-    if (!/\S/.test(seg)) {
-      if (inners.length) inners[inners.length - 1] += seg;
-      else lead += seg;
-      continue;
-    }
-    const parts = chunkWord(seg, seed);
-    parts[0] = lead + parts[0];
-    lead = "";
-    for (const part of parts) inners.push(part);
-  }
-  const entIdx = seed % inners.length;
-  const parts = inners.map((inner, i) => {
-    const w = SPLIT_WRAPPERS[(seed + i) % SPLIT_WRAPPERS.length];
-    return `<${w}>${i === entIdx ? encodeOneChar(inner, seed) : inner}</${w}>`;
-  });
-  return parts.join("");
-}
-
-// Text that must not be wrapped: executable, presentational-verbatim, or where injected markup
-// would render as literal text (title). Pulled out first so the text-node matcher can stay a flat
-// regex, the same way obfuscateTextNodes relies on obfuscateHtmlMarkup having protected them.
-const HARDEN_SKIP = /<(script|style|pre|code|textarea|template|title|noscript|svg)\b[\s\S]*?<\/\1>|<!--[\s\S]*?-->/gi;
 /*
 const TITLE_ELEMENT = /(<title\b[^>]*>)[\s\S]*?(<\/title>)/gi;
 function stripTitleText(html) {
@@ -1127,51 +1034,6 @@ function stripTitleAttributes(html) {
   return { html: out, count };
 }
 */
-function hardenTextNodes(html) {
-  const skipped = [];
-  const guarded = html.replace(HARDEN_SKIP, block => {
-    const token = `<hz-skip data-i="${skipped.length}"></hz-skip>`;
-    skipped.push(block);
-    return token;
-  });
-  let seen = 0;
-  let transformed = 0;
-  const out = guarded.replace(/>([^<>]+)</g, (match, text) => {
-    if (!text.trim()) return match;
-    seen++;
-    const wrapped = hardenTextRun(text);
-    if (wrapped !== text) transformed++;
-    return `>${wrapped}<`;
-  });
-  const restored = out.replace(/<hz-skip data-i="(\d+)"><\/hz-skip>/g, (_, i) => skipped[+i]);
-  return { html: restored, seen, transformed };
-}
-
-// Visible text as a browser would read it: skip blocks gone, tags stripped, numeric entities
-// decoded, whitespace collapsed. Named entities are left literal, identical on both sides of the
-// comparison, so equality proves the transform changed structure only, never characters.
-function visibleText(html) {
-  return html
-    .replace(HARDEN_SKIP, " ")
-    .replace(/<[^>]+>/g, "")
-    .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(+d))
-    .replace(/&#x([\da-fA-F]+);/g, (_, h) => String.fromCodePoint(parseInt(h, 16)))
-    .replace(/​|‌|‍|⁠|﻿/g, "")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-// Independent lower bound on wrappers the transform must emit: one per whitespace-free segment of
-// every non-empty text node. If a future change silently stops covering text nodes, the emitted
-// wrapper count drops below this and the build aborts.
-function countHardenableSegments(html) {
-  let n = 0;
-  for (const m of html.replace(HARDEN_SKIP, " ").matchAll(/>([^<>]+)</g)) {
-    if (m[1].trim()) n += m[1].match(/\S+/g).length;
-  }
-  return n;
-}
-
 // scramjet.all.js strips this with a hardcoded `e.slice(14)`, so the replacement must keep
 // the same length, and stay lowercase because setAttribute lowercases.
 const SCRAMJET_ATTR_PREFIX = "scramjet-attr";
@@ -2483,8 +2345,6 @@ async function build() {
   let titleStripCount = 0;
   let titleAttrStripCount = 0;
   */
-  const hardenStats = [];
-  const WRAPPER_OPEN = /<(?:span|x-a|x-b|ab-x|s-p)>/g;
   const versionInfo = await resolveVersionInfo();
   let versionInjections = 0;
   console.log(`Settings version card: ${versionInfo.version ? `v${versionInfo.version}` : "-"} / ${versionInfo.updated ?? "-"}`);
@@ -2521,17 +2381,6 @@ async function build() {
         versionInjections += injected.count;
       }
 
-      const beforeHarden = html;
-      const hardened = hardenTextNodes(html);
-      html = hardened.html;
-      const segments = countHardenableSegments(beforeHarden);
-      const wrappersBefore = (beforeHarden.match(WRAPPER_OPEN) || []).length;
-      const wrappersAfter = (html.match(WRAPPER_OPEN) || []).length;
-      const wrappersAdded = wrappersAfter - wrappersBefore;
-      if (visibleText(beforeHarden) !== visibleText(html)) throw new Error(`${name}: text hardening altered visible text. Aborting.`);
-      if (wrappersAdded < segments) throw new Error(`${name}: text hardening under-covered, ${wrappersAdded} wrappers for ${segments} text segments. Upstream changed.`);
-      hardenStats.push({ name, seen: hardened.seen, transformed: hardened.transformed, segments, wrappersAdded });
-
       //       const analytics = replaceAnalytics(html, analyticsPaths.loader);
       //       html = analytics.html;
       //       if (analytics.id) analyticsIds.add(analytics.id);
@@ -2550,8 +2399,6 @@ async function build() {
   if (proxyChoiceHtml !== PROXY_CHOICE_COUNTS.html) throw new Error(`expected ${PROXY_CHOICE_COUNTS.html} proxy selector literals in HTML, replaced ${proxyChoiceHtml}. Update PROXY_CHOICE_COUNTS.`);
   if (handlerHtmlCount !== INLINE_HANDLER_HTML_COUNT) throw new Error(`expected ${INLINE_HANDLER_HTML_COUNT} inline-handler attributes in HTML, rewrote ${handlerHtmlCount}. Upstream changed.`);
   if (versionInjections !== VERSION_TOKEN_COUNT) throw new Error(`expected ${VERSION_TOKEN_COUNT} version tokens injected into settings.html, injected ${versionInjections}. Upstream changed.`);
-  for (const s of hardenStats.sort((a, b) => a.name.localeCompare(b.name))) console.log(`  text hardening: ${s.name} -> ${s.transformed}/${s.seen} nodes, ${s.wrappersAdded} wrappers`);
-
   //   if (analyticsIds.size > 1) throw new Error(`HTML pages disagree on the analytics id: ${[...analyticsIds].join(", ")}`);
   //   if (analyticsIds.size === 1) {
   //     manifest.analytics = { id: [...analyticsIds][0], ...analyticsPaths };
