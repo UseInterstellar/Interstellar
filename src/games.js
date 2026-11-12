@@ -47,7 +47,7 @@ export function mountGhGames(app) {
 
       const data = Buffer.from(await asset.arrayBuffer());
       const ext = path.extname(new URL(reqTarget).pathname);
-      const contentType = noMimeExts.has(ext) ? "application/octet-stream" : mime.getType(ext) ?? "application/octet-stream";
+      const contentType = noMimeExts.has(ext) ? "application/octet-stream" : (mime.getType(ext) ?? "application/octet-stream");
 
       const etag = asset.headers.get("etag");
       const lastModified = asset.headers.get("last-modified");
