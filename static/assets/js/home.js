@@ -16,6 +16,44 @@ try {
 const cloakHost = shellTop() ?? window;
 
 if (store.get("ab") == null) store.set("ab", "true");
+if (!inFrame && !navigator.userAgent.includes("Firefox") && store.get("ab") === "true") {
+  const popup = cloakHost.open("about:blank", "_blank");
+  if (popup && !popup.closed) {
+    const doc = popup.document;
+    const iframe = doc.createElement("iframe");
+    const style = iframe.style;
+    const link = doc.createElement("link");
+    const script = doc.createElement("script");
+
+    const name = store.get("name") || "My Drive - Google Drive";
+    const icon = store.get("icon") || "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png";
+
+    doc.title = (window.laceTitle || (s => s))(name);
+    link.rel = "icon";
+    link.href = absoluteUrl(icon);
+
+    iframe.src = cloakHost.location.href;
+    style.position = "fixed";
+    style.top = style.bottom = style.left = style.right = 0;
+    style.border = style.outline = "none";
+    style.width = style.height = "100%";
+
+    script.textContent = `
+      window.onbeforeunload = function (event) {
+        const confirmationMessage = 'Leave Site?';
+        (event || window.event).returnValue = confirmationMessage;
+        return confirmationMessage;
+      };
+    `;
+
+    doc.head.appendChild(link);
+    doc.head.appendChild(script);
+    doc.body.appendChild(iframe);
+
+    const pLink = reconstructNavigationUrl(store.get("pLink")) ?? getRandomUrl();
+    cloakHost.location.replace(pLink);
+  }
+}
 
 const SplashT = [
   "Over 8 Million Users since 2023",
