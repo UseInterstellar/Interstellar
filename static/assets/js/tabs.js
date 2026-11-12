@@ -11,11 +11,16 @@ function isScramjetEnabled() {
 }
 
 async function encodeProxyUrl(url) {
-  if (isScramjetEnabled()) {
-    if (window.__ready) await window.__ready;
-    if (window.__urls?.encodeUrl) return window.__urls.encodeUrl(url);
+  if (!isScramjetEnabled()) {
+    return `/uv/${__uv$config.encodeUrl ? __uv$config.encodeUrl(url) : window.encode.xor(url)}`;
   }
-  return `/uv/${__uv$config.encodeUrl ? __uv$config.encodeUrl(url) : window.encode.xor(url)}`;
+
+  const ready = window.__ready ? await window.__ready : true;
+  if (!ready || !window.__urls?.encodeUrl) {
+    throw new Error("The proxy transport is not ready.");
+  }
+
+  return window.__urls.encodeUrl(url);
 }
 
 function encodeProxyUrlSync(url) {
@@ -39,7 +44,6 @@ function realUrlOf(frame) {
   }
 }
 
-
 function realDestinationOf(url, base) {
   const absolute = resolveAgainst(url, base);
   if (absolute.includes("/uv/scramjet/") && window.__urls?.decodeUrl) return window.__urls.decodeUrl(absolute);
@@ -51,6 +55,16 @@ function resolveAgainst(url, base) {
     return new URL(url, base).href;
   } catch {
     return url;
+  }
+}
+
+function isScramjetUrl(url) {
+  try {
+    const parsed = new URL(url, window.location.href);
+    const prefix = self.__scramjet$config?.prefix;
+    return parsed.origin === window.location.origin && Boolean(prefix) && parsed.pathname.startsWith(prefix);
+  } catch {
+    return false;
   }
 }
 
@@ -354,8 +368,13 @@ window.addEventListener("load", () => {
   if (form && input) {
     form.addEventListener("submit", async event => {
       event.preventDefault();
-      await navigateActiveTab(toTargetUrl(input.value));
-      input.blur();
+      try {
+        await navigateActiveTab(toTargetUrl(input.value));
+        input.blur();
+      } catch (error) {
+        console.error("Unable to navigate because the proxy transport did not initialize:", error);
+        alert("The proxy could not start. Reload the page and try again.");
+      }
     });
   }
 
@@ -396,7 +415,10 @@ window.addEventListener("load", () => {
     if (event.origin !== location.origin || !data || data.type !== "interstellar:tabs-navigate") return;
     const frame = Array.from(document.querySelectorAll("#frame-container iframe")).find(f => f.contentWindow === event.source);
     if (!frame || !addressBar.stripZeroWidth(String(data.value ?? "")).trim()) return;
-    navigateFrame(frame, toTargetUrl(data.value));
+    navigateFrame(frame, toTargetUrl(data.value)).catch(error => {
+      console.error("Unable to navigate because the proxy transport did not initialize:", error);
+      alert("The proxy could not start. Reload the page and try again.");
+    });
   });
 });
 
@@ -545,13 +567,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     iframeContainer.appendChild(newIframe);
 
-    if (window.__settled) {
-      window.__settled().then(() => {
-        newIframe.src = src;
-      });
-    } else {
+    const loadSource = async () => {
+      if (isScramjetUrl(src)) {
+        const ready = await window.__ready;
+        if (!ready || !window.__urls?.encodeUrl) {
+          throw new Error("The proxy transport is not ready.");
+        }
+      }
       newIframe.src = src;
-    }
+    };
+    loadSource().catch(error => {
+      console.error("Unable to open the tab because the proxy did not initialize:", error);
+      newIframe.srcdoc = '<!doctype html><meta charset="utf-8"><p>The proxy could not start. Check the console for details, then reload the page.</p>';
+    });
     tabCounter += 1;
     return newIframe;
   }

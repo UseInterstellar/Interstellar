@@ -171,9 +171,8 @@ document.addEventListener("DOMContentLoaded", () => {
   customCloakIcon.addEventListener("change", applyCustomCloak);
   syncCustomCloakRow();
 
-  if (store.get("ab") === "true") {
-    document.getElementById("ab-settings-switch").checked = true;
-  }
+  if (store.get("ab") == null) store.set("ab", "true");
+  document.getElementById("ab-settings-switch").checked = store.get("ab") === "true";
 
   const themeDropdown = document.getElementById("theme-dropdown");
   themeDropdown.value = store.get("theme") || "default";

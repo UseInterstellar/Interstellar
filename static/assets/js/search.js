@@ -90,7 +90,12 @@ if (form && input && !isTabsPage()) {
     try {
       if (isInTabMode) await navigate(input.value, "");
       else await navigate(input.value, "/tabs");
-    } catch {
+    } catch (error) {
+      if (error instanceof Error && error.message === "The proxy transport is not ready.") {
+        console.error("Unable to navigate because the proxy transport did not initialize:", error);
+        alert("The proxy could not start. Reload the page and try again.");
+        return;
+      }
       await navigate(input.value, "/tabs");
     }
   });
@@ -102,16 +107,16 @@ function isScramjet(proxyOverride) {
 }
 
 async function encodeUrl(url, proxyOverride) {
-  if (isScramjet(proxyOverride)) {
-    if (window.__ready) {
-      await window.__ready;
-    }
-    if (window.__urls?.encodeUrl) {
-      return window.__urls.encodeUrl(url);
-    }
+  if (!isScramjet(proxyOverride)) {
+    return `/uv/${__uv$config.encodeUrl ? __uv$config.encodeUrl(url) : window.encode.xor(url)}`;
   }
 
-  return `/uv/${__uv$config.encodeUrl ? __uv$config.encodeUrl(url) : window.encode.xor(url)}`;
+  const ready = window.__ready ? await window.__ready : true;
+  if (!ready || !window.__urls?.encodeUrl) {
+    throw new Error("The proxy transport is not ready.");
+  }
+
+  return window.__urls.encodeUrl(url);
 }
 
 async function checkBlocked(url) {
@@ -317,11 +322,16 @@ function isValidUrl(val = "") {
   }
 
   async function boot() {
-    if (typeof window.$scramjetLoadController !== "function" || !self.__scramjet$config) return;
+    if (typeof window.$scramjetLoadController !== "function" || !self.__scramjet$config) {
+      console.error("Scramjet runtime is unavailable; proxy transport was not initialized.");
+      return false;
+    }
     try {
       await init();
+      return true;
     } catch (error) {
       console.error("Scramjet transport failed to start:", error);
+      return false;
     }
   }
 

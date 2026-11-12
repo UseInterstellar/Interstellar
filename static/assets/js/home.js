@@ -1,4 +1,3 @@
-
 function shellTop() {
   try {
     return top.document.body?.dataset.shell === "true" ? top : null;
@@ -6,15 +5,16 @@ function shellTop() {
     return null;
   }
 }
-const cloakHost = shellTop() ?? window;
 
 let inFrame;
-
 try {
   inFrame = window !== top && !shellTop();
-} catch (e) {
+} catch {
   inFrame = true;
 }
+
+const cloakHost = shellTop() ?? window;
+
 if (store.get("ab") == null) store.set("ab", "true");
 if (!inFrame && !navigator.userAgent.includes("Firefox") && store.get("ab") === "true") {
   const popup = open("about:blank", "_blank");
@@ -55,37 +55,32 @@ if (!inFrame && !navigator.userAgent.includes("Firefox") && store.get("ab") === 
   }
 }
 
-const SplashT = [
-  "Over 8 Million Users since 2023",
-  "Fastest growing proxy server",
-  "Made by xBubbo",
-  "Check out discord.gg/interstellar :)",
-  "Thanks for using the site",
-  "Follow us on Tiktok (@useinterstellar)",
-  "Subscribe to us on YouTube (@unblocking)",
-  "Subscribe to my Youtube (@xbubbo)",
-  "Check out the settings page",
-  "Check out our Patreon (https://www.patreon.com/gointerstellar)",
-];
+const SplashT = ["Over 8 Million Users since 2023", "Fastest growing proxy server", "Made by xBubbo", "Thanks for using the site", "Check out the settings page"];
 
 let SplashI = Math.floor(Math.random() * SplashT.length);
 const SplashE = document.getElementById("splash");
 
-const laceSplash = window.laceTitle ? s => window.laceTitle(s, false) : s => s;
+const laceSplash = typeof window.laceTitle === "function" ? s => window.laceTitle(s, false) : s => s;
 function paintSplash() {
-  SplashE.innerText = laceSplash(SplashT[SplashI]);
+  if (!SplashE) return;
+  SplashE.textContent = laceSplash(SplashT[SplashI]);
 }
 
 function cycleSplash() {
+  if (!SplashE) return;
+
   SplashI = (SplashI + 1) % SplashT.length;
   paintSplash();
+
   SplashE.style.animation = "none";
   void SplashE.offsetWidth;
   SplashE.style.animation = "";
 }
 
-paintSplash();
-SplashE.addEventListener("click", cycleSplash);
+if (SplashE) {
+  paintSplash();
+  SplashE.addEventListener("click", cycleSplash);
+}
 
 function getRandomUrl() {
   const randomUrls = [
@@ -111,11 +106,22 @@ function randRange(min, max) {
 }
 
 function openHomeAboutBlank() {
-  if (navigator.userAgent.includes("Firefox")) {
+  if (inFrame) {
+    alert("Please open this page directly to use About:Blank.");
     return;
   }
 
-  const popup = open("about:blank", "_blank");
+  if (store.get("ab") !== "true") {
+    alert("Enable About:Blank in Settings to use this option.");
+    return;
+  }
+
+  if (navigator.userAgent.includes("Firefox")) {
+    alert("About:Blank is not supported in Firefox.");
+    return;
+  }
+
+  const popup = cloakHost.open("about:blank", "_blank");
   if (!popup || popup.closed) {
     alert("Window blocked. Please allow popups for this site.");
     return;
