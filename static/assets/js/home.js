@@ -11,7 +11,7 @@ const cloakHost = shellTop() ?? window;
 let inFrame;
 
 try {
-  inFrame = window !== top && !shellTop();
+  inFrame = window !== top || window.shellRedirecting === true;
 } catch (e) {
   inFrame = true;
 }

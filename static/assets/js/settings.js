@@ -180,6 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
   shellSwitch.addEventListener("change", function () {
     if (this.checked) store.set("shell", "true");
     else store.remove("shell");
+    window.applyShell?.();
   });
 
   const themeDropdown = document.getElementById("theme-dropdown");

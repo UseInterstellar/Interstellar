@@ -206,19 +206,54 @@ function inShell() {
   return document.body?.dataset.shell === "true";
 }
 
-function redirectWhenShellOff() {
-  if (!inShell()) return;
-  let enabled = false;
+let shellFrame = null;
+
+function isFramed() {
   try {
-    enabled = store.get("shell") === "true";
-  } catch (e) {}
-  if (enabled) return;
-  const frame = document.body.getElementsByTagName("iframe")[0];
-  if (!frame) return;
-  location.replace(frame.getAttribute("src"));
-  frame.remove();
+    return window.top !== window.self;
+  } catch {
+    return true;
+  }
 }
-document.addEventListener("DOMContentLoaded", redirectWhenShellOff);
+
+function shellEnabled() {
+  try {
+    return window.store?.get("shell") === "true";
+  } catch {
+    return false;
+  }
+}
+
+if (!isFramed() && shellEnabled() && location.pathname !== "/") {
+  window.shellRedirecting = true;
+  location.replace("/");
+}
+
+function applyShell() {
+  if (isFramed() || !document.body) return;
+  const enabled = shellEnabled();
+  if (enabled && location.pathname !== "/") {
+    window.shellRedirecting = true;
+    location.replace("/");
+    return;
+  }
+  if (enabled && !shellFrame) {
+    shellFrame = document.createElement("iframe");
+    shellFrame.src = "/";
+    shellFrame.setAttribute("style", "position:fixed;top:0;left:0;width:100vw;height:100vh;border:0;margin:0;z-index:2147483647");
+    document.body.dataset.shell = "true";
+    document.body.appendChild(shellFrame);
+  } else if (!enabled && shellFrame) {
+    shellFrame.remove();
+    shellFrame = null;
+    delete document.body.dataset.shell;
+  }
+}
+window.applyShell = applyShell;
+document.addEventListener("DOMContentLoaded", applyShell);
+window.addEventListener("storage", event => {
+  if (event.key === "cfg" || event.key === null) applyShell();
+});
 
 function reconstructSafeUrl(raw) {
   if (!raw || typeof raw !== "string") return null;
