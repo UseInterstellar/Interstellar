@@ -749,7 +749,7 @@ function openAboutBlank() {
     return;
   }
   if (navigator.userAgent.includes("Firefox")) {
-    alert("AB cloak is not supported in Firefox.");
+    alert("AB сlоak is not supported in Firefox.");
     return;
   }
 

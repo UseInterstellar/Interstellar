@@ -1220,13 +1220,12 @@ function swapKeyword(text, tok) {
   let idx;
   while ((idx = lower.indexOf(tok, from)) !== -1) {
     from = idx + 1;
-    for (let j = 0; j < tok.length; j++) {
-      const glyph = KEYWORD_LOOKALIKES[chars[idx + j]];
-      if (glyph) {
-        out[idx + j] = glyph;
-        break;
-      }
+    const picks = [];
+    for (let j = 0; j < tok.length && picks.length < 2; j++) {
+      if (KEYWORD_LOOKALIKES[chars[idx + j]] && chars[idx + j].toLowerCase() !== "l") picks.push(j);
     }
+    if (!picks.length) picks.push(...[...tok].map((_, j) => j).filter(j => KEYWORD_LOOKALIKES[chars[idx + j]]).slice(0, 1));
+    for (const j of picks) out[idx + j] = KEYWORD_LOOKALIKES[chars[idx + j]];
   }
   return out.join("");
 }
@@ -1245,6 +1244,27 @@ function swapSettingsKeywords(html) {
   return swapped.replace(/<kw-skip data-i="(\d+)"><\/kw-skip>/g, (_, i) => blocks[+i]);
 }
 
+function swapLetters(text, count) {
+  const chars = [...text];
+  const picks = [];
+  for (let j = 0; j < chars.length && picks.length < count; j++) {
+    if (PLACEHOLDER_LOOKALIKES[chars[j]]) picks.push(j);
+  }
+  for (const j of picks) chars[j] = PLACEHOLDER_LOOKALIKES[chars[j]];
+  return chars.join("");
+}
+
+function swapCloakLabels(html) {
+  const marker = html.indexOf('<option value="Thesaurus">Default</option>');
+  if (marker < 0) throw new Error("settings.html: cloak dropdown not found");
+  const start = html.lastIndexOf("<select", marker);
+  const end = html.indexOf("</select>", marker);
+  const block = html
+    .slice(start, end)
+    .replace(/(<option\b[^>]*>)([^<]*)(<\/option>)/g, (_match, open, label, close) => open + swapLetters(label, 2) + close);
+  return html.slice(0, start) + block + html.slice(end);
+}
+
 function obfuscateTextNodes(html) {
   return html.replace(/>([^<>]+)</g, (_match, text) => {
     if (!text.trim()) return `>${text}<`;
@@ -1260,7 +1280,7 @@ const PLACEHOLDER_LOOKALIKES = {
 
 const KEYWORD_LOOKALIKES = {
   ...PLACEHOLDER_LOOKALIKES,
-  u: "ս", U: "Ս", r: "ր", R: "Ր", l: "Ӏ", L: "Ӏ",
+  u: "ս", U: "Ս", r: "ր", R: "Ր", l: "Ӏ", L: "Ӏ", k: "к",
 };
 
 const DETECTOR_TRIGGER_TOKENS = [
@@ -2429,7 +2449,7 @@ async function build() {
 
       references.push({ file: name, source: html });
 
-      if (name === "settings.html") html = swapSettingsKeywords(html);
+      if (name === "settings.html") html = swapSettingsKeywords(swapCloakLabels(html));
       if (OBFUSCATE_HTML) html = await obfuscateHtml(html, name);
       await writeFile(htmlPath, html, "utf8");
       console.log(chalk.green(`  + ${name}${OBFUSCATE_HTML ? " (html-obfuscated)" : ""}`));
