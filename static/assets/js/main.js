@@ -285,40 +285,15 @@ function laceTitle(text, homoglyphs = true) {
 }
 window.laceTitle = laceTitle;
 
-const NAV_WRAPPERS = ["span", "x-a", "x-b", "ab-x", "s-p", "n-a", "r-e", "d-l", "q-x"];
-const NAV_ZERO_WIDTH = ["​", "‌", "‍", "⁠"];
 const NAV_HOMOGLYPHS = { a: "а", c: "с", e: "е", i: "і", k: "к", m: "м", o: "о", p: "р", s: "ѕ", t: "т", x: "х", y: "у" };
 
-function navEntities(text) {
-  let out = "";
-  for (const ch of text) out += `&#${ch.codePointAt(0)};`;
-  return out;
-}
-
-function navWrap(inner) {
-  const tag = NAV_WRAPPERS[Math.floor(Math.random() * NAV_WRAPPERS.length)];
-  return `<${tag}>${inner}</${tag}>`;
-}
-
 function obfuscateNav(text) {
-  const points = [...text];
-  let out = "";
-  let first = true;
-  for (let i = 0; i < points.length; ) {
-    const size = 1 + Math.floor(Math.random() * 2);
-    const chunk = points
-      .slice(i, i + size)
-      .map(ch => {
-        const glyph = NAV_HOMOGLYPHS[ch.toLowerCase()];
-        return glyph && Math.random() < 0.6 ? glyph : ch;
-      })
-      .join("");
-    i += size;
-    if (!first) out += navWrap(navEntities(NAV_ZERO_WIDTH[Math.floor(Math.random() * NAV_ZERO_WIDTH.length)]));
-    out += navWrap(navEntities(chunk));
-    first = false;
-  }
-  return out;
+  return [...text]
+    .map(ch => {
+      const glyph = NAV_HOMOGLYPHS[ch.toLowerCase()];
+      return glyph && Math.random() < 0.6 ? glyph : ch;
+    })
+    .join("");
 }
 
 document.addEventListener("DOMContentLoaded", () => {
