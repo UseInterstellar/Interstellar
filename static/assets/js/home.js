@@ -1,4 +1,3 @@
-
 function shellTop() {
   try {
     return top.document.body?.dataset.shell === "true" ? top : null;
@@ -6,6 +5,14 @@ function shellTop() {
     return null;
   }
 }
+
+let inFrame;
+try {
+  inFrame = window !== top && !shellTop();
+} catch {
+  inFrame = true;
+}
+
 const cloakHost = shellTop() ?? window;
 
 if (store.get("ab") == null) store.set("ab", "true");
@@ -66,6 +73,11 @@ function randRange(min, max) {
 }
 
 function openHomeAboutBlank() {
+  if (inFrame) {
+    alert("Please open this page directly to use About:Blank.");
+    return;
+  }
+
   if (store.get("ab") !== "true") {
     alert("Enable About:Blank in Settings to use this option.");
     return;
