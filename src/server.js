@@ -184,7 +184,7 @@ const routes = [
   { path: "/settings", file: "settings.html" },
   { path: "/tabs", file: "tabs.html" },
   { path: "/home", file: "home.html" },
-  { path: "/", file: "index.html" },
+  { path: "/", file: "home.html" },
 ];
 
 // In dist the build randomizes the page routes and records them in the vendor map, so serve each

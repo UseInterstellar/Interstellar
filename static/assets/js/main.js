@@ -206,6 +206,55 @@ function inShell() {
   return document.body?.dataset.shell === "true";
 }
 
+let shellFrame = null;
+
+function isFramed() {
+  try {
+    return window.top !== window.self;
+  } catch {
+    return true;
+  }
+}
+
+function shellEnabled() {
+  try {
+    return window.store?.get("shell") === "true";
+  } catch {
+    return false;
+  }
+}
+
+if (!isFramed() && shellEnabled() && location.pathname !== "/") {
+  window.shellRedirecting = true;
+  location.replace("/");
+}
+
+function applyShell() {
+  if (isFramed() || !document.body) return;
+  const enabled = shellEnabled();
+  if (enabled && location.pathname !== "/") {
+    window.shellRedirecting = true;
+    location.replace("/");
+    return;
+  }
+  if (enabled && !shellFrame) {
+    shellFrame = document.createElement("iframe");
+    shellFrame.src = "/";
+    shellFrame.setAttribute("style", "position:fixed;top:0;left:0;width:100vw;height:100vh;border:0;margin:0;z-index:2147483647");
+    document.body.dataset.shell = "true";
+    document.body.appendChild(shellFrame);
+  } else if (!enabled && shellFrame) {
+    shellFrame.remove();
+    shellFrame = null;
+    delete document.body.dataset.shell;
+  }
+}
+window.applyShell = applyShell;
+document.addEventListener("DOMContentLoaded", applyShell);
+window.addEventListener("storage", event => {
+  if (event.key === "cfg" || event.key === null) applyShell();
+});
+
 function reconstructSafeUrl(raw) {
   if (!raw || typeof raw !== "string") return null;
   try {
@@ -239,72 +288,61 @@ function absoluteUrl(raw) {
   }
 }
 
-const zeroWidth = ["​", "‌", "‍", "⁠", "﻿"];
 const titleHomoglyphs = {
   a: "а", c: "с", e: "е", i: "і", j: "ј", o: "о", p: "р", s: "ѕ", x: "х", y: "у",
   A: "А", B: "В", C: "С", E: "Е", H: "Н", I: "І", J: "Ј", K: "К", M: "М", O: "О", P: "Р", S: "Ѕ", T: "Т", X: "Х", Y: "Ү",
 };
 
+const keywordLookalikes = {
+  ...titleHomoglyphs,
+  u: "ս", U: "Ս", r: "ր", R: "Ր", l: "Ӏ", L: "Ӏ",
+};
 
-function triggerBreakSet(lower) {
-  const s = new Set();
-  const tokens = ["ultraviolet", "scramjet", "baremux", "libcurl", "unblock", "proxy", "epoxy", "wisp", "bare", "enter", "url"];
-  for (const tok of tokens) {
-    let from = 0, idx;
-    while ((idx = lower.indexOf(tok, from)) !== -1) { s.add(idx); from = idx + 1; }
-  }
-  return s;
-}
+const triggerTokens = ["ultraviolet", "scramjet", "baremux", "libcurl", "unblock", "proxy", "epoxy", "wisp", "bare", "enter", "url"];
+
 function laceTitle(text, homoglyphs = true) {
   const points = Array.from(text || "");
-  const mustBreak = triggerBreakSet((text || "").toLowerCase());
-  const pick = () => zeroWidth[Math.floor(Math.random() * zeroWidth.length)];
+  const lower = points.map(p => {
+    const l = p.toLowerCase();
+    return [...l].length === 1 ? l : p;
+  }).join("");
+  const keywordGlyph = new Map();
+  for (const tok of triggerTokens) {
+    let from = 0;
+    let idx;
+    while ((idx = lower.indexOf(tok, from)) !== -1) {
+      from = idx + 1;
+      for (let j = 0; j < tok.length; j++) {
+        const glyph = keywordLookalikes[points[idx + j]];
+        if (glyph) {
+          keywordGlyph.set(idx + j, glyph);
+          break;
+        }
+      }
+    }
+  }
   let out = "";
   for (let i = 0; i < points.length; i++) {
+    if (keywordGlyph.has(i)) {
+      out += keywordGlyph.get(i);
+      continue;
+    }
     const swap = homoglyphs && titleHomoglyphs[points[i]] && Math.random() < 0.5;
     out += swap ? titleHomoglyphs[points[i]] : points[i];
-    if (i < points.length - 1 && /\S/.test(points[i]) && /\S/.test(points[i + 1])) {
-      if (mustBreak.has(i) || Math.random() < 0.15) out += pick();
-    }
   }
   return out;
 }
 window.laceTitle = laceTitle;
 
-const NAV_WRAPPERS = ["span", "x-a", "x-b", "ab-x", "s-p", "n-a", "r-e", "d-l", "q-x"];
-const NAV_ZERO_WIDTH = ["​", "‌", "‍", "⁠"];
 const NAV_HOMOGLYPHS = { a: "а", c: "с", e: "е", i: "і", k: "к", m: "м", o: "о", p: "р", s: "ѕ", t: "т", x: "х", y: "у" };
 
-function navEntities(text) {
-  let out = "";
-  for (const ch of text) out += `&#${ch.codePointAt(0)};`;
-  return out;
-}
-
-function navWrap(inner) {
-  const tag = NAV_WRAPPERS[Math.floor(Math.random() * NAV_WRAPPERS.length)];
-  return `<${tag}>${inner}</${tag}>`;
-}
-
 function obfuscateNav(text) {
-  const points = [...text];
-  let out = "";
-  let first = true;
-  for (let i = 0; i < points.length; ) {
-    const size = 1 + Math.floor(Math.random() * 2);
-    const chunk = points
-      .slice(i, i + size)
-      .map(ch => {
-        const glyph = NAV_HOMOGLYPHS[ch.toLowerCase()];
-        return glyph && Math.random() < 0.6 ? glyph : ch;
-      })
-      .join("");
-    i += size;
-    if (!first) out += navWrap(navEntities(NAV_ZERO_WIDTH[Math.floor(Math.random() * NAV_ZERO_WIDTH.length)]));
-    out += navWrap(navEntities(chunk));
-    first = false;
-  }
-  return out;
+  return [...text]
+    .map(ch => {
+      const glyph = NAV_HOMOGLYPHS[ch.toLowerCase()];
+      return glyph && Math.random() < 0.6 ? glyph : ch;
+    })
+    .join("");
 }
 
 document.addEventListener("DOMContentLoaded", () => {

@@ -175,6 +175,14 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("ab-settings-switch").checked = true;
   }
 
+  const shellSwitch = document.getElementById("shell-settings-switch");
+  shellSwitch.checked = store.get("shell") === "true";
+  shellSwitch.addEventListener("change", function () {
+    if (this.checked) store.set("shell", "true");
+    else store.remove("shell");
+    window.applyShell?.();
+  });
+
   const themeDropdown = document.getElementById("theme-dropdown");
   themeDropdown.value = store.get("theme") || "default";
   themeDropdown.addEventListener("change", function () {
@@ -741,7 +749,7 @@ function openAboutBlank() {
     return;
   }
   if (navigator.userAgent.includes("Firefox")) {
-    alert("AB cloak is not supported in Firefox.");
+    alert("AB сlоak is not supported in Firefox.");
     return;
   }
 

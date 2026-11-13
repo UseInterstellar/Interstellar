@@ -55,7 +55,6 @@ function resolveAgainst(url, base) {
 }
 
 const addressBar = (() => {
-  const ZERO_WIDTH = ["​", "‌", "‍", "⁠", "﻿"];
   const ZERO_WIDTH_RE = /​|‌|‍|‎|‏|⁠|﻿/g;
   let addressValue = "";
   let addressEditing = false;
@@ -94,21 +93,15 @@ const addressBar = (() => {
     return text.replace(ZERO_WIDTH_RE, "");
   }
 
-  function laceZeroWidth(url) {
-    const points = Array.from(url);
-    let out = "";
-    for (let i = 0; i < points.length; i++) {
-      out += points[i];
-      if (i < points.length - 1) out += ZERO_WIDTH[Math.floor(Math.random() * ZERO_WIDTH.length)];
-    }
-    return out;
+  function laceKeywords(url) {
+    return window.laceTitle ? window.laceTitle(url, false) : url;
   }
 
   function renderAddress() {
     const input = addrInput();
     if (!input) return;
     if (!addressValue) input.value = "";
-    else input.value = addressEditing ? addressValue : laceZeroWidth(addressValue);
+    else input.value = addressEditing ? addressValue : laceKeywords(addressValue);
   }
 
   function setAddress(url) {
@@ -219,7 +212,7 @@ const addressBar = (() => {
     updateAddressBar,
     setupAddressBar,
     stripZeroWidth,
-    laceZeroWidth,
+    laceKeywords,
   };
 })();
 
@@ -246,7 +239,7 @@ function popoutTab() {
   const cloakName = store.get("name") || "My Drive - Google Drive";
   const cloakIcon = store.get("icon") || "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png";
 
-  newWindow.document.title = (window.laceTitle || addressBar.laceZeroWidth)(cloakName);
+  newWindow.document.title = (window.laceTitle || addressBar.laceKeywords)(cloakName);
 
   const link = newWindow.document.createElement("link");
   link.rel = "icon";
@@ -492,7 +485,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const src = (startUrl && resolveStoredUrl(startUrl)) || window.location.origin + addressBar.INTERNAL_PAGES.home.route;
     const startPage = addressBar.internalPageForUrl(src);
 
-    tabTitle.textContent = addressBar.laceZeroWidth(startPage ? startPage.title : `New Tab ${tabCounter}`);
+    tabTitle.textContent = addressBar.laceKeywords(startPage ? startPage.title : `New Tab ${tabCounter}`);
     tabTitle.className = "t";
     newTab.dataset.tabId = tabCounter;
     newTab.addEventListener("click", switchTab);
@@ -518,7 +511,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const page = addressBar.internalPageOf(newIframe);
       try {
         const title = newIframe.contentDocument?.title;
-        tabTitle.textContent = addressBar.laceZeroWidth(page ? page.title : title && title.length > 1 ? title : "New Tab");
+        tabTitle.textContent = addressBar.laceKeywords(page ? page.title : title && title.length > 1 ? title : "New Tab");
 
         newIframe.contentWindow.open = url => {
           const blank = !url || url === "about:blank";
