@@ -675,9 +675,10 @@ function handleDropdownChange(selectElement) {
 function safeCloakIcon(raw) {
   try {
     const parsed = new URL(raw);
-    return ["https:", "http:", "data:"].includes(parsed.protocol) ? parsed.href : null;
+    if (parsed.protocol === "data:") return /^data:image\/(?!svg)/i.test(raw) ? parsed.href : null;
+    return ["https:", "http:"].includes(parsed.protocol) ? parsed.href : null;
   } catch {
-    return raw.includes(":") ? null : raw;
+    return /^(?!\/\/)[\w\-./~%]+$/.test(raw) ? raw : null;
   }
 }
 
