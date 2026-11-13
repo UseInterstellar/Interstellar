@@ -1,4 +1,4 @@
-import { createHash, randomBytes } from "node:crypto";
+import { createHash, randomBytes, randomInt as secureRandomInt } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { access, cp, mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
@@ -64,12 +64,12 @@ function encodeWispLists({ preferred, fallback }) {
     for (let i = 0; i < bytes.length; i++) bytes[i] ^= key[i % key.length];
     const pieces = [];
     for (let at = 0, index = 0; at < bytes.length; index++) {
-      const size = 3 + (randomBytes(1)[0] % 5);
+      const size = 3 + secureRandomInt(5);
       pieces.push([index, bytes.subarray(at, at + size).toString("base64url")]);
       at += size;
     }
     for (let i = pieces.length - 1; i > 0; i--) {
-      const j = randomBytes(2).readUInt16BE() % (i + 1);
+      const j = secureRandomInt(i + 1);
       [pieces[i], pieces[j]] = [pieces[j], pieces[i]];
     }
     return pieces;
@@ -459,7 +459,7 @@ function createScramjetProtocolKeys() {
 function applyScramjetProtocolKeys(source, protocolKeys) {
   let out = source;
   for (const [from, to] of protocolKeys) {
-    const pattern = () => new RegExp(`(?<![\\w$])${from.replace(/\$/g, "\\$")}(?![\\w$])`, "g");
+    const pattern = () => new RegExp(`(?<![\\w$])${escapeRegExp(from)}(?![\\w$])`, "g");
     const found = (out.match(pattern()) || []).length;
     if (found !== SCRAMJET_PROTOCOL_COUNTS[from]) throw new CodecPatchError(`scramjet.all.js: expected ${SCRAMJET_PROTOCOL_COUNTS[from]} occurrences of the protocol key ${from}, found ${found}. Upstream changed.`);
     out = out.replace(pattern(), to);
@@ -1062,9 +1062,13 @@ function createScramjetStrings() {
 }
 
 // The lookarounds stop isScramjet matching inside isScramjetEnabled.
+function escapeRegExp(text) {
+  return text.replace(/[\\^$.*+?()[\]{}|]/g, "\\$&");
+}
+
 function applyIdentifierRenames(source, renames) {
   let out = source;
-  for (const [from, to] of renames) out = out.replace(new RegExp(`(?<![\\w$])${from.replace(/\$/g, "\\$")}(?![\\w$])`, "g"), to);
+  for (const [from, to] of renames) out = out.replace(new RegExp(`(?<![\\w$])${escapeRegExp(from)}(?![\\w$])`, "g"), to);
   return out;
 }
 
@@ -1153,7 +1157,7 @@ async function obfuscateInlineScripts(html, htmlName) {
   const scripts = [];
   let index = 0;
 
-  const protectedHtml = html.replace(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi, (match, attrs, source) => {
+  const protectedHtml = html.replace(/<script\b([^>]*)>([\s\S]*?)<\/script\s*>/gi, (match, attrs, source) => {
     const token = `___HTML_SCRIPT_${index++}___`;
     scripts.push({ token, match, attrs, source });
     return token;
@@ -1180,6 +1184,15 @@ async function obfuscateInlineScripts(html, htmlName) {
   return output;
 }
 
+function stripComments(text) {
+  let previous;
+  do {
+    previous = text;
+    text = text.replace(/<!--(?!\[if\b)[\s\S]*?-->/gi, "");
+  } while (text !== previous);
+  return text;
+}
+
 function minifyHtml(html) {
   const blocks = [];
   let index = 0;
@@ -1190,9 +1203,8 @@ function minifyHtml(html) {
     return token;
   };
 
-  let output = html
-    .replace(/<(script|style|pre|textarea)\b[\s\S]*?<\/\1>/gi, protectBlock)
-    .replace(/<!--(?!\[if\b)[\s\S]*?-->/gi, "")
+  let output = stripComments(html
+    .replace(/<(script|style|pre|textarea)\b[\s\S]*?<\/\1>/gi, protectBlock))
     .replace(/\s{2,}/g, " ")
     .replace(/>\s+</g, "><")
     .replace(/\s+\/>/g, "/>")
@@ -1217,8 +1229,7 @@ function swapKeyword(text, tok) {
   const lower = text.toLowerCase();
   const out = chars.slice();
   let from = 0;
-  let idx;
-  while ((idx = lower.indexOf(tok, from)) !== -1) {
+  for (let idx = lower.indexOf(tok, from); idx !== -1; idx = lower.indexOf(tok, from)) {
     from = idx + 1;
     const picks = [];
     for (let j = 0; j < tok.length && picks.length < 2; j++) {
@@ -1297,8 +1308,7 @@ function obfuscatePlaceholder(value) {
   const keywordGlyph = new Map();
   for (const tok of DETECTOR_TRIGGER_TOKENS) {
     let from = 0;
-    let idx;
-    while ((idx = lower.indexOf(tok, from)) !== -1) {
+    for (let idx = lower.indexOf(tok, from); idx !== -1; idx = lower.indexOf(tok, from)) {
       from = idx + 1;
       for (let j = 0; j < tok.length; j++) {
         const glyph = KEYWORD_LOOKALIKES[chars[idx + j]];

@@ -6,6 +6,9 @@ const CACHE_MS = 3600000;
 const MAX_PACKED_LENGTH = 8192;
 const PACKED_PATTERN = /^[A-Za-z0-9_-]*$/;
 
+const inlineJson = value => JSON.stringify(value).replace(/</g, "\\u003c").replace(/\u2028/g, "\\u2028").replace(/\u2029/g, "\\u2029");
+
+
 export function mountAnalytics(app, analytics) {
   const { id, loader, transport, sink, param, key } = analytics;
   let cached = null;
@@ -16,7 +19,7 @@ export function mountAnalytics(app, analytics) {
     return decoder.decode(raw.map((byte, index) => byte ^ key[index % key.length]));
   };
 
-  const requestHook = `(function(){var B=${JSON.stringify(`${transport}/g/collect`)},S=${JSON.stringify(sink)},P=${JSON.stringify(param)},K=${JSON.stringify(key)};
+  const requestHook = `(function(){var B=${inlineJson(`${transport}/g/collect`)},S=${inlineJson(sink)},P=${inlineJson(param)},K=${inlineJson(key)};
 function pack(s){var b=new TextEncoder().encode(s),o="";for(var i=0;i<b.length;i++)o+=String.fromCharCode(b[i]^K[i%K.length]);return btoa(o).replace(/\\+/g,"-").replace(/\\//g,"_").replace(/=+$/,"")}
 function re(u){try{var l=new URL(String(u),location.href);if(l.origin!==location.origin||l.pathname!==B)return null;return location.origin+S+"?"+P+"="+pack(l.search.slice(1))}catch(e){return null}}
 var sb=navigator.sendBeacon&&navigator.sendBeacon.bind(navigator);if(sb)navigator.sendBeacon=function(u,d){return sb(re(u)||u,d)};

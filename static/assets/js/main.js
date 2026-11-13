@@ -259,12 +259,10 @@ function reconstructSafeUrl(raw) {
   if (!raw || typeof raw !== "string") return null;
   try {
     const parsed = new URL(raw);
-    const allowed = ["https:", "http:", "data:"];
-    if (!allowed.includes(parsed.protocol)) return null;
-    return parsed.href;
+    if (parsed.protocol === "data:") return /^data:image\/(?!svg)/i.test(raw) ? parsed.href : null;
+    return ["https:", "http:"].includes(parsed.protocol) ? parsed.href : null;
   } catch {
-    if (typeof raw === "string" && !raw.includes(":")) return raw;
-    return null;
+    return /^(?!\/\/)[\w\-./~%]+$/.test(raw) ? raw : null;
   }
 }
 
@@ -309,8 +307,7 @@ function laceTitle(text, homoglyphs = true) {
   const keywordGlyph = new Map();
   for (const tok of triggerTokens) {
     let from = 0;
-    let idx;
-    while ((idx = lower.indexOf(tok, from)) !== -1) {
+    for (let idx = lower.indexOf(tok, from); idx !== -1; idx = lower.indexOf(tok, from)) {
       from = idx + 1;
       for (let j = 0; j < tok.length; j++) {
         const glyph = keywordLookalikes[points[idx + j]];
