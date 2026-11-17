@@ -19,152 +19,90 @@
 - Clean, Easy to use UI
 - Inspect Element
 - Various Themes
-- Password Protection (Optional)
 - Built-in Tab System
-- Now.gg Support
 - Fast Speeds
-- Geforce NOW Support
 
-# Deployment
+# Architecture
 
-> [!IMPORTANT]
-> Static hosting platforms do not provide a built-in Wisp server. You must configure an external Wisp server for Interstellar to function properly.
+Interstellar is a purely static, browser-only frontend. There is no application server,
+no build step, and no server-side Wisp or Bare endpoint: everything under `static/` is
+served as-is, and the browser talks to an external Wisp server directly.
 
-- [Netlify (Static)](#netlify)
+- `static/sw.js` is the service worker. It loads Ultraviolet and Scramjet from
+  `static/assets/ultraviolet/` and `static/assets/scramjet/` and is registered with the
+  `/uv/` scope.
+- Ultraviolet (`uv.bundle.js`, `uv.client.js`, `uv.handler.js`, `uv.sw.js`,
+  `uv.config.js`) and Scramjet (`scramjet.all.js`, `scramjet.sync.js`,
+  `scramjet.wasm.wasm`, `scramjet.config.js`) are served untouched from the public root.
+- `static/assets/js/vendor.js` points at the browser builds of BareMux, Epoxy and
+  Libcurl in `static/assets/{baremux,epoxy,libcurl}/`.
+- `static/assets/js/search.js` creates the `BareMuxConnection` and installs the
+  `EpoxyTransport` pointed at the Wisp server configured there.
 
-## Netlify
+## Configure the Wisp server
 
-1. **Fork the repository** to your GitHub account.
-2. Visit [Netlify](https://app.netlify.com/) and sign in or create an account.
-3. Click **Add new project**.
-4. Select **Import an existing project**, choose **GitHub**, and select your forked repository.
-5. Enter a name for your project and set the **Build command** to:
-   ```bash
-   pnpm build:netlify
-   ```
-6. Expand **Environment variables**, click **Add environment variables**, and select **Add key/value pairs**.
-7. Configure your Wisp servers using the environment variables below.
+Edit `WISP_URL` near the top of the transport setup in `static/assets/js/search.js`:
 
-   | Variable | Description |
-   | --- | --- |
-   | `WISP_URL` | Uses the specified Wisp server, overriding the preferred and fallback lists. |
-   | `WISP_PREFERRED` | A comma-separated list of preferred Wisp servers. These are attempted first. |
-   | `WISP_FALLBACK` | A comma-separated list of backup Wisp servers, used when the preferred servers are unavailable. |
-
-   **Example configuration:**
-
-   ```env
-   WISP_PREFERRED=gointerstellar.app/wisp/,example.com
-   WISP_FALLBACK=cdn.gointerstellar.app/fortnite/
-   ```
-
-> [!TIP]
-> If you have multiple Wisp servers, place the most reliable ones in `WISP_PREFERRED` and the remaining servers in `WISP_FALLBACK`.
->
-> You can also use `WISP_URL` if you only need a single server. When set, it takes priority over both lists.
->
-> Servers without a protocol automatically use `wss://`.
-
-8. Click **Deploy** and wait for the build to finish.
-
-Once deployment is complete, Netlify will provide a public URL for your Interstellar instance.
-
-### Password Protection
-
-1. Go to the `config.js` file and set `challenge` to **true**. Then, set the environment variable as follows:
-2. For PNPM: Run either `config=true pnpm start` or `$env:config=true; pnpm start`, depending on your server.
-3. For Bun: Run either `config=true bun start` or `$env:config=true; bun start` if you prefer Bun.
-4. For NPM: Run either `config=true npm start` or `$env:config=true; npm start` if you prefer NPM.
-
-
-### Server Deployment
-
-You must run these commands on your server:
-
-```bash
-git clone https://github.com/UseInterstellar/Interstellar
-cd Interstellar
+```js
+const WISP_URL = "wss://YOUR-WISP-URL/wisp/";
 ```
 
-#### Ad-Free Deployment
+Every proxy request goes to that URL. It can still be overridden per browser from
+Settings → Wisp Server; clearing that field falls back to `WISP_URL`.
+
+## Updating the bundled libraries
+
+The browser libraries are committed under `static/assets/`, copied byte-for-byte from
+their npm packages:
 
 ```bash
-git clone --branch Ad-Free https://github.com/UseInterstellar/Interstellar
-cd Interstellar
+pnpm install
+pnpm vendor
 ```
 
-Next depending on your package manager, run one of the following commands:
+## Host requirements
 
-#### Bun
+Any static file host works. Two things must be configured on the host, not in the code:
 
-If you are using Bun, run the following commands:
+- Serve `/sw.js` with `Service-Worker-Allowed: /` so it can control the `/uv/` scope, and
+  with `Cache-Control: no-cache`.
+- Serve `.mjs` as `text/javascript` and `.wasm` as `application/wasm`.
+- Map the clean routes (`/apps`, `/games`, `/settings`, `/tabs`, `/home`) to their
+  `.html` files.
 
-```bash
-bun i
-bun start
+`netlify.toml`, `static/_redirects` and `static/_headers` do this for Netlify, which can
+deploy the repository with no build command (publish directory: `static`).
+
+## Local preview
+
+Serve the `static/` directory over HTTP. nginx only needs the host requirements above:
+
+```nginx
+server {
+  listen 3000;
+  root /path/to/static;
+
+  types { text/javascript mjs; application/wasm wasm; }
+
+  location = /sw.js {
+    add_header Service-Worker-Allowed /;
+    add_header Cache-Control no-cache;
+  }
+
+  location = / { try_files /home.html =404; }
+  location = /play.html { try_files /games.html =404; }
+  location / { try_files $uri $uri.html =404; }
+  error_page 404 /404.html;
+}
 ```
 
-#### pnpm
-
-If you are using pnpm, run the following commands:
-
-```bash
-pnpm i
-pnpm start
-```
-
-#### npm
-
-If you are using npm, run the following commands:
-
-```bash
-npm i
-npm run start
-```
-
-### Updating
-
-```bash
-cd Interstellar
-git pull --force --allow-unrelated-histories # This may overwrite your local changes
-```
-
-<a target="_blank" href="https://heroku.com/deploy/?template=https://github.com/UseInterstellar/Interstellar"><img alt="Deploy to Heroku" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/heroku.svg"></a>
-<a target="_blank" href="https://app.koyeb.com/deploy?type=git&repository=github.com/UseInterstellar/Interstellar"><img alt="Deploy to Koyeb" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/koyeb.svg"></a>
-
-### Deployment Alternatives
-
-For more deployment options, join our [Discord Server](https://discord.gg/interstellar) for various ways to deploy Interstellar.
-This includes methods of deploying to Render/OnRender.
-
-#### What happened to Replit Deployment?
-
-As of January 1st, 2024, Replit is [no longer free](https://blog.replit.com/hosting-changes). Try GitHub Codespaces instead.
-
-### GitHub Codespaces
+Any static server works as long as it sends the headers listed above; without
+`Service-Worker-Allowed: /` the service worker cannot register.
 
 > [!NOTE]
-> If you're setting the port below 1023, then you must run `sudo PORT=1023`
-
-1. Create a GitHub account if you haven't already.
-2. Click "Code" (green button) and then "Create Codespace on main."
-3. In the terminal at the bottom, paste `pnpm i && pnpm start`.
-4. Respond to the application popup by clicking "Make public."
-> [!IMPORTANT]
-> Make sure you click the "Make public." button, or the proxy won't function properly.<br>
-> If you get a Range Error, go back and make sure you clicked Make public!
-5. Access the deployed website from the ports tab.
-6. For subsequent uses in the same codespace, just run `pnpm start`
-
-### Solution for if there is no popup.
-
-1. Run `pnpm i`, and before `pnpm start`, prepend `PORT=8080`, replacing 8080 with another port. For example, `PORT=6969 pnpm start`.
-2. If this does not work then you can prepend `$env:PORT=8080;`, replacing 8080 with another port. For example, `$env:PORT=6969; pnpm start`
-3. Go to the ports tab, Click Forward A Port, And type the port number.
-4. Right-click Visibility and set Port Visibility to Public.
-
-> [!NOTE]
-> We are committed to making Interstellar easy and personalized however, as of now we need your support in making it ad-free. Consider keeping ads so Interstellar can run freely or contribute by being a supporter.
+> The in-page games catalogue links to `/gh-games/...`, which was a server-side proxy in
+> earlier versions. A static host has to reproduce those paths with its own rewrites, or
+> those entries will 404.
 
 ## Report Issues
 

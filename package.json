@@ -2,16 +2,13 @@
   "name": "interstellar",
   "version": "6.3.0",
   "type": "module",
+  "private": true,
   "engines": {
     "node": ">=22.23.4 <23",
     "npm": ">=10.0.0"
   },
   "scripts": {
-    "start": "node src/server.js",
-    "build": "node src/build.js",
-    "build:netlify": "node src/build.js --netlify",
-    "start:netlify": "node src/server.js --netlify",
-    "vercel-build": "node src/build.js",
+    "vendor": "node scripts/sync-vendor.mjs",
     "format": "pnpm biome format --write .",
     "precommit": "pnpm run format && pnpm biome check --write .",
     "lint": "biome lint --write ."
@@ -22,38 +19,16 @@
     "@mercuryworkshop/bare-mux": "^2.1.9",
     "@mercuryworkshop/epoxy-transport": "file:vendor/mercuryworkshop-epoxy-transport-2.1.28-epx.e5f13bb.tgz",
     "@mercuryworkshop/libcurl-transport": "^1.5.2",
-    "@useinterstellar/scramjet": "^1.1.0-fixed",
-    "@mercuryworkshop/wisp-js": "^0.4.1",
     "@titaniumnetwork-dev/ultraviolet": "^3.2.10",
-    "chalk": "^5.4.1",
-    "cookie-parser": "^1.4.7",
-    "cors": "^2.8.5",
-    "dotenv": "^17.2.0",
-    "express": "^4.21.2",
-    "express-basic-auth": "^1.2.1",
-    "mime": "^4.1.0",
-    "node-fetch": "^3.3.2"
+    "@useinterstellar/scramjet": "^1.1.0-fixed"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.2.2",
-    "javascript-obfuscator": "^4.1.1",
-    "sharp": "^0.35.5",
-    "terser": "^5.36.0"
+    "@biomejs/biome": "2.2.2"
   },
   "packageManager": "pnpm@10.33.0+sha512.10568bb4a6afb58c9eb3630da90cc9516417abebd3fabbe6739f0ae795728da1491e9db5a544c76ad8eb7570f5c4bb3d6c637b2cb41bfdcdb47fa823c8649319",
   "pnpm": {
     "overrides": {
-      "qs@>=6.7.0 <=6.14.1": ">=6.14.2",
-      "qs@<6.14.1": ">=6.14.1",
-      "uuid@<14.0.0": ">=14.0.0",
-      "@mercuryworkshop/epoxy-tls": "file:vendor/mercuryworkshop-epoxy-tls-2.1.19-1-e5f13bb.tgz",
-      "ws@<8.21.0": "8.23.0",
-      "path-to-regexp@<0.1.13": "0.1.13",
-      "body-parser@<1.20.9": "1.20.9",
-      "qs@<6.17.1": "6.17.1",
-      "fast-uri@<3.1.9": "3.1.9",
-      "brace-expansion@<1.1.22": "1.1.22",
-      "proxy-addr@<2.0.8": "2.0.8"
+      "@mercuryworkshop/epoxy-tls": "file:vendor/mercuryworkshop-epoxy-tls-2.1.19-1-e5f13bb.tgz"
     },
     "patchedDependencies": {
       "@mercuryworkshop/bare-mux@2.1.9": "patches/@mercuryworkshop__bare-mux@2.1.9.patch"

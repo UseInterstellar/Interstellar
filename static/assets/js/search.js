@@ -114,34 +114,13 @@ async function encodeUrl(url, proxyOverride) {
   return `/uv/${__uv$config.encodeUrl ? __uv$config.encodeUrl(url) : window.encode.xor(url)}`;
 }
 
-async function checkBlocked(url) {
-  let host;
-  try {
-    const parsed = new URL(url, window.location.origin);
-    if (parsed.protocol !== "http:" && parsed.protocol !== "https:") return null;
-    host = parsed.hostname;
-  } catch {
-    return null;
-  }
-  try {
-    const response = await fetch("/filter/verdict", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ host }),
-    });
-    if (!response.ok) return null;
-    const verdict = await response.json();
-    return verdict.blocked ? verdict : null;
-  } catch {
-    return null;
-  }
-}
-
 function blockPageUrl(url, verdict) {
   return `/block.html#${encodeURIComponent(`${verdict.source}|${url}`)}`;
 }
 
-window.blockPages = { check: checkBlocked, pageUrl: blockPageUrl };
+// Static frontend: there is no server-side DNS filter to ask, so only the Wisp server's
+// own block responses (turned into block pages by the service worker) apply.
+window.blockPages = { check: async () => null, pageUrl: blockPageUrl };
 
 async function navigate(value, path, proxyOverride) {
   await waitForServiceWorker();
@@ -155,18 +134,6 @@ async function navigate(value, path, proxyOverride) {
     url = searchUrl + url;
   } else if (!(url.startsWith("https://") || url.startsWith("http://"))) {
     url = `https://${url}`;
-  }
-
-  const verdict = await checkBlocked(url);
-  if (verdict) {
-    const blockedPage = blockPageUrl(url, verdict);
-    if (path) {
-      sessionStorage.setItem("GoUrl", blockedPage);
-      location.href = path;
-    } else {
-      location.href = blockedPage;
-    }
-    return;
   }
 
   const proxyChoice = proxyOverride ?? store.get("proxy");
@@ -194,67 +161,16 @@ function isValidUrl(val = "") {
 }
 
 (() => {
-  // Full paths only, never concatenated: the build rewrites whole literals.
   const vendor = self.__deps || {};
 
-  const BUILT_WISP = null;
+  // This frontend is static, so there is no local Wisp server: every Bare transport
+  // (BareMuxConnection + EpoxyTransport) connects straight to this external one.
+  const WISP_URL = "wss://YOUR-WISP-URL/wisp/";
 
-  function unpackWisp(pieces, key) {
-    const parts = [...pieces]
-      .sort((a, b) => a[0] - b[0])
-      .map(([, text]) => {
-        const binary = atob(text.replace(/-/g, "+").replace(/_/g, "/"));
-        return Uint8Array.from(binary, char => char.charCodeAt(0));
-      });
-    const bytes = new Uint8Array(parts.reduce((total, part) => total + part.length, 0));
-    let at = 0;
-    for (const part of parts) {
-      bytes.set(part, at);
-      at += part.length;
-    }
-    for (let i = 0; i < bytes.length; i++) bytes[i] ^= key[i % key.length];
-    return new TextDecoder().decode(bytes);
-  }
-
-  const wispReachable = url =>
-    new Promise(resolve => {
-      let socket;
-      const done = ok => {
-        clearTimeout(timer);
-        try {
-          socket?.close();
-        } catch {}
-        resolve(ok);
-      };
-      const timer = setTimeout(() => done(false), 5000);
-      try {
-        socket = new WebSocket(url);
-        socket.onopen = () => done(true);
-        socket.onerror = () => done(false);
-      } catch {
-        done(false);
-      }
-    });
-
-  async function pickBuiltWisp() {
-    const lists = [BUILT_WISP.p, BUILT_WISP.f].map(list => list.map(pieces => unpackWisp(pieces, BUILT_WISP.k)));
-    const all = lists.flat();
-    if (all.length === 1) return all[0];
-    for (const list of lists) {
-      if (!list.length) continue;
-      const reachable = await Promise.all(list.map(wispReachable));
-      const index = reachable.indexOf(true);
-      if (index >= 0) return list[index];
-    }
-    return all[0];
-  }
-
-  async function getWispUrl() {
+  function getWispUrl() {
     const custom = store.get("wisp-url")?.trim();
     if (custom && /^wss?:\/\//i.test(custom)) return custom;
-    if (BUILT_WISP) return pickBuiltWisp();
-    const protocol = location.protocol === "https:" ? "wss" : "ws";
-    return `${protocol}://${location.host}/wisp/`;
+    return WISP_URL;
   }
 
   function blockAwareEpoxy(transportPath) {
