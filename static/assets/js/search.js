@@ -165,7 +165,7 @@ function isValidUrl(val = "") {
 
   // This frontend is static, so there is no local Wisp server: every Bare transport
   // (BareMuxConnection + EpoxyTransport) connects straight to this external one.
-  const WISP_URL = "wss://YOUR-WISP-URL/wisp/";
+  const WISP_URL = "wss://anura.pro/wisp/";
 
   function getWispUrl() {
     const custom = store.get("wisp-url")?.trim();
