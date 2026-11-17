@@ -30,6 +30,14 @@ const blockedSiteMatchers = config.blockedSites.map(host => new RegExp(`(^|\\.)$
 
 const vendorMap = IS_WORKERS ? (await import("../dist/.runtime/vendor-map.cjs")).default : loadNodeVendorMap();
 
+const WISP_PATH = vendorMap?.wisp ?? "/wisp/";
+const BUILD_MARKER = vendorMap?.build ? `.${vendorMap.build}` : null;
+const IMMUTABLE_CACHE = "public, max-age=31536000, immutable";
+const REVALIDATE_CACHE = "no-cache";
+const cacheEnabled = config.cache?.enabled === true;
+
+const pageFiles = new Map(routes.map(route => [vendorMap?.routes?.[route.path] || route.path, route.file]));
+
 function projectRoot() {
   return path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 }
@@ -48,205 +56,193 @@ async function startNodeServer() {
   const { default: basicAuth } = await import("express-basic-auth");
   const { mountMasqr } = await import("./Masqr.js");
   console.log(chalk.yellow("🚀 Starting server..."));
+  const NETLIFY = process.argv.includes("--netlify");
 
-const NETLIFY = process.argv.includes("--netlify");
+  const require = createRequire(import.meta.url);
+  const root = projectRoot();
 
-const require = createRequire(import.meta.url);
-const __dirname = projectRoot();
+  const DIST_DIR = path.join(root, "dist");
+  const STATIC_DIR = path.join(root, "static");
 
-const DIST_DIR = path.join(__dirname, "dist");
-const STATIC_DIR = path.join(__dirname, "static");
-
-if (!vendorMap && process.env.VERCEL) {
-  throw new Error("dist/.runtime/vendor-map.cjs is missing on Vercel. The build did not run before the function was packaged.");
-}
-
-if (NETLIFY && !vendorMap?.netlify) {
-  console.log(chalk.red("--netlify needs a Netlify build in dist/. Run `pnpm build:netlify` first."));
-  process.exit(1);
-}
-if (!NETLIFY && vendorMap?.netlify) {
-  console.log(chalk.red("dist/ is a Netlify build (no server-side Wisp). Run `pnpm start:netlify` to preview it, or `pnpm build` for the normal server build."));
-  process.exit(1);
-}
-
-const SERVE_DIR = vendorMap ? DIST_DIR : STATIC_DIR;
-console.log(chalk.blue(`Serving from ${path.relative(__dirname, SERVE_DIR)}/`));
-if (vendorMap) {
-  console.log(chalk.blue(`Build ${vendorMap.build}, proxy scope ${vendorMap.scopes.uv}, scramjet ${vendorMap.scopes.scramjet}`));
-} else if (existsSync(DIST_DIR)) {
-  console.log(chalk.yellow("dist/ exists but has no .runtime/vendor-map.cjs, run `pnpm build`. Falling back to static/."));
-}
-
-const server = http.createServer();
-const app = express();
-
-function resolvePort() {
-  const args = process.argv.slice(2);
-  let flag = null;
-
-  for (let i = 0; i < args.length; i++) {
-    const arg = args[i];
-    if (arg === "--port" || arg === "-p") flag = args[i + 1];
-    else if (arg.startsWith("--port=")) flag = arg.slice("--port=".length);
-    else continue;
-
-    if (!/^\d+$/.test(flag ?? "") || Number(flag) < 1 || Number(flag) > 65535) {
-      console.log(chalk.red(`Invalid port ${JSON.stringify(flag ?? null)}, expected 1-65535.`));
-      process.exit(1);
-    }
-    break;
+  if (!vendorMap && process.env.VERCEL) {
+    throw new Error("dist/.runtime/vendor-map.cjs is missing on Vercel. The build did not run before the function was packaged.");
   }
 
-  return flag ? Number(flag) : process.env.PORT || 8080;
-}
-
-const PORT = resolvePort();
-
-wisp.options.allow_loopback_ips = false;
-wisp.options.allow_private_ips = false;
-
-wisp.options.hostname_blacklist = blockedSiteMatchers.length ? blockedSiteMatchers : null;
-
-const filteringState = await setupFiltering({ wisp, filtering: config.filtering });
-const blockVerdict = createBlockVerdict({ blocklist: blockedSiteMatchers, policy: filteringState.policy });
-
-if (NETLIFY) console.log(chalk.yellow("Netlify preview: static files only (plus the /gh-games proxy, which Netlify does with _redirects). No Wisp, password protection or Masqr, as on a static host."));
-
-if (!NETLIFY && config.challenge !== false) {
-  console.log(chalk.green("🔒 Password protection is enabled."));
-  app.use(basicAuth({ users: config.users, challenge: true }));
-}
-
-let masqr = null;
-if (!NETLIFY && config.masqr?.enabled) {
-  masqr = mountMasqr(app, {
-    decoyBase: path.join(STATIC_DIR, "decoy"),
-    decoySet: config.masqr.decoy ?? "default",
-    searchTrigger: process.env.MASQR_SEARCH_TRIGGER ?? config.masqr.searchTrigger ?? null,
-    sites: config.masqr.sites ?? [],
-    decoyOnly: config.masqr.decoyOnly === true,
-    secureCookie: config.masqr.secureCookie !== false,
-    sessionMs: (config.masqr.sessionDays ?? 30) * 24 * 60 * 60 * 1000,
-  });
-  console.log(chalk.green("🔑 Masqr gate is enabled"));
-}
-
-mountGhGames(app);
-
-app.use(cookieParser());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-const cacheEnabled = config.cache?.enabled === true;
-const useAssetCache = cacheEnabled && Boolean(vendorMap?.build);
-if (cacheEnabled) {
-  console.log(useAssetCache ? chalk.green("📦 Asset caching is enabled (assets cached until the HTML changes)") : chalk.yellow("config.cache.enabled is set but this is not a dist build, so caching is off. Run `pnpm build`."));
-}
-const REVALIDATE = "no-cache";
-const IMMUTABLE = "public, max-age=31536000, immutable";
-const buildMarker = useAssetCache ? `.${vendorMap.build}` : null;
-
-function cacheControlFor(filePath) {
-  return filePath.includes(buildMarker) ? IMMUTABLE : REVALIDATE;
-}
-
-const jsStaticOptions = {
-  setHeaders: (res, filePath) => {
-    if (useAssetCache && filePath.startsWith(SERVE_DIR)) res.setHeader("Cache-Control", cacheControlFor(filePath));
-    const ext = path.extname(filePath);
-    if (ext === ".js" || ext === ".mjs") {
-      res.type("text/javascript");
-      res.setHeader("Service-Worker-Allowed", "/");
-    } else if (ext === ".wasm") {
-      res.type("application/wasm");
-    }
-  },
-};
-
-app.use("/.runtime", (_req, res) => {
-  res.sendStatus(404);
-});
-
-if (!NETLIFY) app.post("/filter/verdict", async (req, res) => {
-  const host = typeof req.body?.host === "string" ? req.body.host.slice(0, 254) : "";
-  res.set("Cache-Control", "no-store").json(await blockVerdict(host));
-});
-
-// if (vendorMap?.analytics) mountAnalytics(app, vendorMap.analytics);
-
-if (!vendorMap) {
-  try {
-    const info = await resolveVersionInfo();
-    const settingsHtml = injectVersionInfo(readFileSync(path.join(SERVE_DIR, "settings.html"), "utf8"), info).html;
-    const sendSettings = (_req, res) => res.type("html").send(settingsHtml);
-    app.get("/settings", sendSettings);
-    app.get("/settings.html", sendSettings);
-  } catch (err) {
-    console.warn(chalk.yellow(`Settings version injection skipped, serving placeholders: ${err.message}`));
+  if (NETLIFY && !vendorMap?.netlify) {
+    console.log(chalk.red("--netlify needs a Netlify build in dist/. Run `pnpm build:netlify` first."));
+    process.exit(1);
   }
-}
+  if (!NETLIFY && vendorMap?.netlify) {
+    console.log(chalk.red("dist/ is a Netlify build (no server-side Wisp). Run `pnpm start:netlify` to preview it, or `pnpm build` for the normal server build."));
+    process.exit(1);
+  }
 
-app.use(express.static(SERVE_DIR, { ...jsStaticOptions, dotfiles: "ignore" }));
+  const SERVE_DIR = vendorMap ? DIST_DIR : STATIC_DIR;
+  console.log(chalk.blue(`Serving from ${path.relative(root, SERVE_DIR)}/`));
+  if (vendorMap) {
+    console.log(chalk.blue(`Build ${vendorMap.build}, proxy scope ${vendorMap.scopes.uv}, scramjet ${vendorMap.scopes.scramjet}`));
+  } else if (existsSync(DIST_DIR)) {
+    console.log(chalk.yellow("dist/ exists but has no .runtime/vendor-map.cjs, run `pnpm build`. Falling back to static/."));
+  }
 
-if (!vendorMap) {
-  const { epoxyPath } = require("@mercuryworkshop/epoxy-transport");
-  const { baremuxPath } = require("@mercuryworkshop/bare-mux/node");
-  const { libcurlPath } = require("@mercuryworkshop/libcurl-transport");
-  const { uvPath } = require("@titaniumnetwork-dev/ultraviolet");
-  const { scramjetPath } = require("@useinterstellar/scramjet/path");
+  const server = http.createServer();
+  const app = express();
 
-  app.use("/epoxy/", express.static(epoxyPath));
-  app.use("/libcurl/", express.static(libcurlPath));
-  app.use("/baremux/", express.static(baremuxPath));
-  app.use("/assets/ultraviolet/", express.static(uvPath, jsStaticOptions));
-  app.use("/assets/scramjet/", express.static(scramjetPath, jsStaticOptions));
-}
+  function resolvePort() {
+    const args = process.argv.slice(2);
+    let flag = null;
 
-routes.forEach(route => {
-  const servePath = vendorMap?.routes?.[route.path] || route.path;
-  app.get(servePath, (_req, res) => {
-    if (useAssetCache) res.setHeader("Cache-Control", REVALIDATE);
-    res.sendFile(path.join(SERVE_DIR, route.file));
+    for (let i = 0; i < args.length; i++) {
+      const arg = args[i];
+      if (arg === "--port" || arg === "-p") flag = args[i + 1];
+      else if (arg.startsWith("--port=")) flag = arg.slice("--port=".length);
+      else continue;
+
+      if (!/^\d+$/.test(flag ?? "") || Number(flag) < 1 || Number(flag) > 65535) {
+        console.log(chalk.red(`Invalid port ${JSON.stringify(flag ?? null)}, expected 1-65535.`));
+        process.exit(1);
+      }
+      break;
+    }
+
+    return flag ? Number(flag) : process.env.PORT || 8080;
+  }
+
+  const PORT = resolvePort();
+
+  wisp.options.allow_loopback_ips = false;
+  wisp.options.allow_private_ips = false;
+
+  wisp.options.hostname_blacklist = blockedSiteMatchers.length ? blockedSiteMatchers : null;
+
+  const filteringState = await setupFiltering({ wisp, filtering: config.filtering });
+  const blockVerdict = createBlockVerdict({ blocklist: blockedSiteMatchers, policy: filteringState.policy });
+
+  if (NETLIFY) console.log(chalk.yellow("Netlify preview: static files only (plus the /gh-games proxy, which Netlify does with _redirects). No Wisp, password protection or Masqr, as on a static host."));
+
+  if (!NETLIFY && config.challenge !== false) {
+    console.log(chalk.green("🔒 Password protection is enabled."));
+    app.use(basicAuth({ users: config.users, challenge: true }));
+  }
+
+  let masqr = null;
+  if (!NETLIFY && config.masqr?.enabled) {
+    masqr = mountMasqr(app, {
+      decoyBase: path.join(STATIC_DIR, "decoy"),
+      decoySet: config.masqr.decoy ?? "default",
+      searchTrigger: process.env.MASQR_SEARCH_TRIGGER ?? config.masqr.searchTrigger ?? null,
+      sites: config.masqr.sites ?? [],
+      decoyOnly: config.masqr.decoyOnly === true,
+      secureCookie: config.masqr.secureCookie !== false,
+      sessionMs: (config.masqr.sessionDays ?? 30) * 24 * 60 * 60 * 1000,
+    });
+    console.log(chalk.green("🔑 Masqr gate is enabled"));
+  }
+
+  mountGhGames(app);
+
+  app.use(cookieParser());
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
+
+  const useAssetCache = cacheEnabled && Boolean(vendorMap?.build);
+  if (cacheEnabled) {
+    console.log(useAssetCache ? chalk.green("📦 Asset caching is enabled (assets cached until the HTML changes)") : chalk.yellow("config.cache.enabled is set but this is not a dist build, so caching is off. Run `pnpm build`."));
+  }
+  const buildMarker = useAssetCache ? BUILD_MARKER : null;
+
+  function cacheControlFor(filePath) {
+    return filePath.includes(buildMarker) ? IMMUTABLE_CACHE : REVALIDATE_CACHE;
+  }
+
+  const jsStaticOptions = {
+    setHeaders: (res, filePath) => {
+      if (useAssetCache && filePath.startsWith(SERVE_DIR)) res.setHeader("Cache-Control", cacheControlFor(filePath));
+      const ext = path.extname(filePath);
+      if (ext === ".js" || ext === ".mjs") {
+        res.type("text/javascript");
+        res.setHeader("Service-Worker-Allowed", "/");
+      } else if (ext === ".wasm") {
+        res.type("application/wasm");
+      }
+    },
+  };
+
+  app.use("/.runtime", (_req, res) => {
+    res.sendStatus(404);
   });
-});
 
-app.use((_req, res) => {
-  res.status(404).sendFile(path.join(SERVE_DIR, "404.html"));
-});
+  if (!NETLIFY)
+    app.post("/filter/verdict", async (req, res) => {
+      const host = typeof req.body?.host === "string" ? req.body.host.slice(0, 254) : "";
+      res.set("Cache-Control", "no-store").json(await blockVerdict(host));
+    });
 
-app.use((err, _req, res, _next) => {
-  console.error(err.stack);
-  res.status(500).sendFile(path.join(SERVE_DIR, "404.html"));
-});
+  // if (vendorMap?.analytics) mountAnalytics(app, vendorMap.analytics);
 
-server.on("request", (req, res) => {
-  app(req, res);
-});
+  if (!vendorMap) {
+    try {
+      const info = await resolveVersionInfo();
+      const settingsHtml = injectVersionInfo(readFileSync(path.join(SERVE_DIR, "settings.html"), "utf8"), info).html;
+      const sendSettings = (_req, res) => res.type("html").send(settingsHtml);
+      app.get("/settings", sendSettings);
+      app.get("/settings.html", sendSettings);
+    } catch (err) {
+      console.warn(chalk.yellow(`Settings version injection skipped, serving placeholders: ${err.message}`));
+    }
+  }
 
-const WISP_PATH = vendorMap?.wisp ?? "/wisp/";
+  app.use(express.static(SERVE_DIR, { ...jsStaticOptions, dotfiles: "ignore" }));
 
-server.on("upgrade", (req, socket, head) => {
-  if (NETLIFY) return socket.destroy();
-  if (masqr && masqr.isGated(req) && !masqr.isAuthorized(req)) return socket.destroy();
-  if (new URL(req.url, "http://localhost").pathname !== WISP_PATH) return socket.destroy();
-  wisp.routeRequest(req, socket, head);
-});
+  if (!vendorMap) {
+    const { epoxyPath } = require("@mercuryworkshop/epoxy-transport");
+    const { baremuxPath } = require("@mercuryworkshop/bare-mux/node");
+    const { libcurlPath } = require("@mercuryworkshop/libcurl-transport");
+    const { uvPath } = require("@titaniumnetwork-dev/ultraviolet");
+    const { scramjetPath } = require("@useinterstellar/scramjet/path");
 
-server.on("listening", () => {
-  console.log(chalk.green(`🌍 Server is running on http://localhost:${PORT}`));
-});
+    app.use("/epoxy/", express.static(epoxyPath));
+    app.use("/libcurl/", express.static(libcurlPath));
+    app.use("/baremux/", express.static(baremuxPath));
+    app.use("/assets/ultraviolet/", express.static(uvPath, jsStaticOptions));
+    app.use("/assets/scramjet/", express.static(scramjetPath, jsStaticOptions));
+  }
 
-server.listen({ port: PORT });
+  for (const [servePath, file] of pageFiles) {
+    app.get(servePath, (_req, res) => {
+      if (useAssetCache) res.setHeader("Cache-Control", REVALIDATE_CACHE);
+      res.sendFile(path.join(SERVE_DIR, file));
+    });
+  }
+
+  app.use((_req, res) => {
+    res.status(404).sendFile(path.join(SERVE_DIR, "404.html"));
+  });
+
+  app.use((err, _req, res, _next) => {
+    console.error(err.stack);
+    res.status(500).sendFile(path.join(SERVE_DIR, "404.html"));
+  });
+
+  server.on("request", (req, res) => {
+    app(req, res);
+  });
+
+  server.on("upgrade", (req, socket, head) => {
+    if (NETLIFY) return socket.destroy();
+    if (masqr && masqr.isGated(req) && !masqr.isAuthorized(req)) return socket.destroy();
+    if (new URL(req.url, "http://localhost").pathname !== WISP_PATH) return socket.destroy();
+    wisp.routeRequest(req, socket, head);
+  });
+
+  server.on("listening", () => {
+    console.log(chalk.green(`🌍 Server is running on http://localhost:${PORT}`));
+  });
+
+  server.listen({ port: PORT });
 }
 
-const WORKER_WISP_PATH = vendorMap?.wisp ?? "/wisp/";
-const WORKER_BUILD_MARKER = vendorMap?.build ? `.${vendorMap.build}` : null;
-const WORKER_IMMUTABLE = "public, max-age=31536000, immutable";
-const WORKER_REVALIDATE = "no-cache";
 const WORKER_NO_MIME_EXTS = new Set([".unityweb"]);
-
-const workerPageFiles = new Map(routes.map(route => [vendorMap?.routes?.[route.path] || route.path, route.file]));
 
 const isBlockedHost = host => blockedSiteMatchers.some(matcher => matcher.test(host));
 
@@ -271,10 +267,10 @@ function workerBasicAuthFailure(request) {
 }
 
 function withWorkerCacheHeaders(response, pathname, { page = false } = {}) {
-  if (!config.cache?.enabled && !page) return response;
+  if (!cacheEnabled && !page) return response;
   const headers = new Headers(response.headers);
-  const immutable = !page && WORKER_BUILD_MARKER && pathname.includes(WORKER_BUILD_MARKER);
-  headers.set("Cache-Control", immutable ? WORKER_IMMUTABLE : WORKER_REVALIDATE);
+  const immutable = !page && BUILD_MARKER && pathname.includes(BUILD_MARKER);
+  headers.set("Cache-Control", immutable ? IMMUTABLE_CACHE : REVALIDATE_CACHE);
   if (pathname.endsWith(".js") || pathname.endsWith(".mjs")) {
     headers.set("Content-Type", "text/javascript");
     headers.set("Service-Worker-Allowed", "/");
@@ -316,7 +312,7 @@ async function workerGameAsset(pathname, request, env, url) {
   const ext = new URL(target).pathname.match(/\.[^./]*$/)?.[0] ?? "";
   const headers = {
     "Content-Type": WORKER_NO_MIME_EXTS.has(ext) ? "application/octet-stream" : (mime.getType(ext) ?? "application/octet-stream"),
-    "Cache-Control": WORKER_IMMUTABLE,
+    "Cache-Control": IMMUTABLE_CACHE,
   };
   const etag = upstream.headers.get("etag");
   const lastModified = upstream.headers.get("last-modified");
@@ -331,7 +327,7 @@ async function workersFetch(request, env) {
 
   if (pathname === "/.runtime" || pathname.startsWith("/.runtime/")) return plainText("Not found", 404);
 
-  if (pathname === WORKER_WISP_PATH) {
+  if (pathname === WISP_PATH) {
     if (request.headers.get("Upgrade")?.toLowerCase() !== "websocket") {
       return new Response("Expected WebSocket", { status: 426, headers: { Upgrade: "websocket" } });
     }
@@ -346,7 +342,7 @@ async function workersFetch(request, env) {
 
   if (request.method !== "GET" && request.method !== "HEAD") return workerNotFound(env, url);
 
-  const page = workerPageFiles.get(pathname);
+  const page = pageFiles.get(pathname);
   if (page) {
     const response = await env.ASSETS.fetch(new Request(new URL(`/${page}`, url), request));
     if (!response.ok) return workerNotFound(env, url);
