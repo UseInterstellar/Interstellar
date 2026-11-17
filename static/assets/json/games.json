@@ -685,7 +685,7 @@
   },
   {
     "name": "Web Retro",
-    "link": "/gh-games/index.html",
+    "link": "/gh-games/3/index.html",
     "image": "/assets/media/icons/webretro.webp",
     "categories": ["all,", "emu", "local"]
   },
@@ -895,7 +895,7 @@
   },
   {
     "name": "Doge Miner",
-    "link": "/gh-games/1/DogeMiner/index.html",
+    "link": "/gh-games/4/DogeMiner/index.html",
     "image": "/assets/media/icons/doge-miner-1.webp",
     "categories": ["all", "local"]
   },
@@ -1039,7 +1039,7 @@
   },
   {
     "name": "Idle Breakout",
-    "link": "/gh-games/1/idle-breakout/index.html",
+    "link": "/gh-games/4/idle-breakout/index.html",
     "image": "/assets/media/icons/idlebreakout.webp",
     "categories": ["all", "local"]
   },
@@ -1771,31 +1771,31 @@
   },
   {
     "name": "Vex 7",
-    "link": "/gh-games/1/vex7/index.html",
+    "link": "/gh-games/4/vex7/index.html",
     "image": "/assets/media/icons/vex7.webp",
     "categories": ["all", "local"]
   },
   {
     "name": "Vex 6",
-    "link": "/gh-games/1/vex6/index.html",
+    "link": "/gh-games/4/vex6/index.html",
     "image": "/assets/media/icons/vex6.webp",
     "categories": ["all", "local"]
   },
   {
     "name": "Vex 5",
-    "link": "/gh-games/1/vex5/index.html",
+    "link": "/gh-games/4/vex5/index.html",
     "image": "/assets/media/icons/vex5.webp",
     "categories": ["all", "local"]
   },
   {
     "name": "Vex 3",
-    "link": "/gh-games/1/vex3/index.html",
+    "link": "/gh-games/4/vex3/index.html",
     "image": "/assets/media/icons/vex3.webp",
     "categories": ["all", "local"]
   },
   {
     "name": "Vex 4",
-    "link": "/gh-games/1/vex4/index.html",
+    "link": "/gh-games/4/vex4/index.html",
     "image": "/assets/media/icons/vex4.webp",
     "categories": ["all", "local"]
   },
@@ -1855,7 +1855,7 @@
   },
   {
     "name": "Space Company",
-    "link": "/gh-games/1/space-company/index.html",
+    "link": "/gh-games/4/space-company/index.html",
     "image": "/assets/media/icons/sc.png",
     "categories": ["all", "local"]
   },
@@ -1909,7 +1909,7 @@
   },
   {
     "name": "Particle Clicker",
-    "link": "/gh-games/1/particle-clicker/index.html",
+    "link": "/gh-games/4/particle-clicker/index.html",
     "image": "/assets/media/icons/pc.png",
     "categories": ["all,", "local"]
   },

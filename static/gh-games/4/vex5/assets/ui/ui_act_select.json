@@ -1,0 +1,693 @@
+{
+    "hierarchy": {
+        "name": "Canvas",
+        "children": [
+            {
+                "name": "container",
+                "children": [
+                    {
+                        "name": "title"
+                    },
+                    {
+                        "name": "close"
+                    },
+                    {
+                        "name": "act1",
+                        "children": [
+                            {
+                                "name": "empty_container",
+                                "children": [
+                                    {
+                                        "name": "trophy_unlock"
+                                    },
+                                    {
+                                        "name": "star_unlock"
+                                    },
+                                    {
+                                        "name": "hardcore_unlock"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "act2",
+                        "children": [
+                            {
+                                "name": "empty_container",
+                                "children": [
+                                    {
+                                        "name": "trophy_unlock"
+                                    },
+                                    {
+                                        "name": "star_unlock"
+                                    },
+                                    {
+                                        "name": "hardcore_unlock"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "act3",
+                        "children": [
+                            {
+                                "name": "empty_container",
+                                "children": [
+                                    {
+                                        "name": "trophy_unlock"
+                                    },
+                                    {
+                                        "name": "star_unlock"
+                                    },
+                                    {
+                                        "name": "hardcore_unlock"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "act4",
+                        "children": [
+                            {
+                                "name": "empty_container",
+                                "children": [
+                                    {
+                                        "name": "trophy_unlock"
+                                    },
+                                    {
+                                        "name": "star_unlock"
+                                    },
+                                    {
+                                        "name": "hardcore_unlock"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "act5",
+                        "children": [
+                            {
+                                "name": "empty_container",
+                                "children": [
+                                    {
+                                        "name": "trophy_unlock"
+                                    },
+                                    {
+                                        "name": "star_unlock"
+                                    },
+                                    {
+                                        "name": "hardcore_unlock"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "act6",
+                        "children": [
+                            {
+                                "name": "empty_container",
+                                "children": [
+                                    {
+                                        "name": "trophy_unlock"
+                                    },
+                                    {
+                                        "name": "star_unlock"
+                                    },
+                                    {
+                                        "name": "hardcore_unlock"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "act7",
+                        "children": [
+                            {
+                                "name": "empty_container",
+                                "children": [
+                                    {
+                                        "name": "trophy_unlock"
+                                    },
+                                    {
+                                        "name": "star_unlock"
+                                    },
+                                    {
+                                        "name": "hardcore_unlock"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "act8",
+                        "children": [
+                            {
+                                "name": "empty_container",
+                                "children": [
+                                    {
+                                        "name": "trophy_unlock"
+                                    },
+                                    {
+                                        "name": "star_unlock"
+                                    },
+                                    {
+                                        "name": "hardcore_unlock"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "act9",
+                        "children": [
+                            {
+                                "name": "empty_container",
+                                "children": [
+                                    {
+                                        "name": "trophy_unlock"
+                                    },
+                                    {
+                                        "name": "star_unlock"
+                                    },
+                                    {
+                                        "name": "hardcore_unlock"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "act10",
+                        "children": [
+                            {
+                                "name": "empty_container",
+                                "children": [
+                                    {
+                                        "name": "trophy_unlock"
+                                    },
+                                    {
+                                        "name": "star_unlock"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "properties": {
+        "Canvas": {
+            "design": {
+                "width": 960,
+                "height": 640
+            },
+            "type": "canvas"
+        },
+        "container": {
+            "file": "as_container.png",
+            "image": "SIMPLE",
+            "type": "sprite",
+            "alignment": {
+                "type": "CENTER",
+                "offset": {
+                    "x": 2.7,
+                    "y": 4
+                }
+            }
+        },
+        "container/title": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 44
+            },
+            "text": "Act Select",
+            "align": "center",
+            "position": {
+                "x": -261.9,
+                "y": -131.9
+            },
+            "anchor": {
+                "x": 0,
+                "y": 0.5
+            },
+            "type": "text"
+        },
+        "container/close": {
+            "file": "as_close_button.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 265.8,
+                "y": -141.3
+            },
+            "type": "button"
+        },
+        "container/act1": {
+            "file": "as_act1_base.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -226.4,
+                "y": -20.6
+            },
+            "type": "sprite"
+        },
+        "container/act1/empty_container": {
+            "file": "act_lock_container.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -1.5,
+                "y": 10.3
+            },
+            "type": "sprite"
+        },
+        "container/act1/empty_container/trophy_unlock": {
+            "file": "act_trophy_unlock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -11.2,
+                "y": 7.7
+            },
+            "type": "sprite"
+        },
+        "container/act1/empty_container/star_unlock": {
+            "file": "act_star_unlock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 11.9,
+                "y": 6.8
+            },
+            "type": "sprite"
+        },
+        "container/act1/empty_container/hardcore_unlock": {
+            "file": "act_hardcore_unlock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 0.4,
+                "y": -11.5
+            },
+            "type": "sprite"
+        },
+        "container/act2": {
+            "file": "as_act2_base.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -115.5,
+                "y": -22.6
+            },
+            "type": "sprite"
+        },
+        "container/act2/empty_container": {
+            "file": "act_lock_container.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -1.5,
+                "y": 12.8
+            },
+            "type": "sprite"
+        },
+        "container/act2/empty_container/trophy_unlock": {
+            "file": "act_trophy_unlock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -11.2,
+                "y": 7.7
+            },
+            "type": "sprite"
+        },
+        "container/act2/empty_container/star_unlock": {
+            "file": "act_star_unlock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 11.5,
+                "y": 6.8
+            },
+            "type": "sprite"
+        },
+        "container/act2/empty_container/hardcore_unlock": {
+            "file": "act_hardcore_unlock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 0.4,
+                "y": -11.5
+            },
+            "type": "sprite"
+        },
+        "container/act3": {
+            "file": "as_act3_base.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -4.7,
+                "y": -22.6
+            },
+            "type": "sprite"
+        },
+        "container/act3/empty_container": {
+            "file": "act_lock_container.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -1.9,
+                "y": 12.4
+            },
+            "type": "sprite"
+        },
+        "container/act3/empty_container/trophy_unlock": {
+            "file": "act_trophy_unlock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -11.2,
+                "y": 7.7
+            },
+            "type": "sprite"
+        },
+        "container/act3/empty_container/star_unlock": {
+            "file": "act_star_unlock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 11.5,
+                "y": 6.8
+            },
+            "type": "sprite"
+        },
+        "container/act3/empty_container/hardcore_unlock": {
+            "file": "act_hardcore_unlock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 0.4,
+                "y": -11.5
+            },
+            "type": "sprite"
+        },
+        "container/act4": {
+            "file": "as_act4_base.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 106.2,
+                "y": -22.6
+            },
+            "type": "sprite"
+        },
+        "container/act4/empty_container": {
+            "file": "act_lock_container.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -2.2,
+                "y": 12.8
+            },
+            "type": "sprite"
+        },
+        "container/act4/empty_container/trophy_unlock": {
+            "file": "act_trophy_unlock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -11.2,
+                "y": 7.7
+            },
+            "type": "sprite"
+        },
+        "container/act4/empty_container/star_unlock": {
+            "file": "act_star_unlock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 11.5,
+                "y": 6.8
+            },
+            "type": "sprite"
+        },
+        "container/act4/empty_container/hardcore_unlock": {
+            "file": "act_hardcore_unlock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 0.4,
+                "y": -11.5
+            },
+            "type": "sprite"
+        },
+        "container/act5": {
+            "file": "as_act5_base.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 217.1,
+                "y": -21.3
+            },
+            "type": "sprite"
+        },
+        "container/act5/empty_container": {
+            "file": "act_lock_container.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -2.1,
+                "y": 10.9
+            },
+            "type": "sprite"
+        },
+        "container/act5/empty_container/trophy_unlock": {
+            "file": "act_trophy_unlock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -11.2,
+                "y": 7.7
+            },
+            "type": "sprite"
+        },
+        "container/act5/empty_container/star_unlock": {
+            "file": "act_star_unlock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 11.5,
+                "y": 6.8
+            },
+            "type": "sprite"
+        },
+        "container/act5/empty_container/hardcore_unlock": {
+            "file": "act_hardcore_unlock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 0.4,
+                "y": -11.5
+            },
+            "type": "sprite"
+        },
+        "container/act6": {
+            "file": "as_act6_base.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -226.7,
+                "y": 75.9
+            },
+            "type": "sprite"
+        },
+        "container/act6/empty_container": {
+            "file": "act_lock_container.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -1.5,
+                "y": 10.9
+            },
+            "type": "sprite"
+        },
+        "container/act6/empty_container/trophy_unlock": {
+            "file": "act_trophy_unlock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -11.2,
+                "y": 7.7
+            },
+            "type": "sprite"
+        },
+        "container/act6/empty_container/star_unlock": {
+            "file": "act_star_unlock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 11.5,
+                "y": 6.8
+            },
+            "type": "sprite"
+        },
+        "container/act6/empty_container/hardcore_unlock": {
+            "file": "act_hardcore_unlock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 0.4,
+                "y": -11.5
+            },
+            "type": "sprite"
+        },
+        "container/act7": {
+            "file": "as_act7_base.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -115.9,
+                "y": 75.9
+            },
+            "type": "sprite"
+        },
+        "container/act7/empty_container": {
+            "file": "act_lock_container.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -1.8,
+                "y": 11
+            },
+            "type": "sprite"
+        },
+        "container/act7/empty_container/trophy_unlock": {
+            "file": "act_trophy_unlock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -11.2,
+                "y": 7.7
+            },
+            "type": "sprite"
+        },
+        "container/act7/empty_container/star_unlock": {
+            "file": "act_star_unlock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 11.5,
+                "y": 6.8
+            },
+            "type": "sprite"
+        },
+        "container/act7/empty_container/hardcore_unlock": {
+            "file": "act_hardcore_unlock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 0.4,
+                "y": -11.5
+            },
+            "type": "sprite"
+        },
+        "container/act8": {
+            "file": "as_act8_base.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -5,
+                "y": 75.9
+            },
+            "type": "sprite"
+        },
+        "container/act8/empty_container": {
+            "file": "act_lock_container.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -1.5,
+                "y": 11.3
+            },
+            "type": "sprite"
+        },
+        "container/act8/empty_container/trophy_unlock": {
+            "file": "act_trophy_unlock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -11.2,
+                "y": 7.7
+            },
+            "type": "sprite"
+        },
+        "container/act8/empty_container/star_unlock": {
+            "file": "act_star_unlock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 11.5,
+                "y": 6.8
+            },
+            "type": "sprite"
+        },
+        "container/act8/empty_container/hardcore_unlock": {
+            "file": "act_hardcore_unlock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 0.4,
+                "y": -11.5
+            },
+            "type": "sprite"
+        },
+        "container/act9": {
+            "file": "as_act9_base.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 105.8,
+                "y": 75.9
+            },
+            "type": "sprite"
+        },
+        "container/act9/empty_container": {
+            "file": "act_lock_container.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -2.3,
+                "y": 11.2
+            },
+            "type": "sprite"
+        },
+        "container/act9/empty_container/trophy_unlock": {
+            "file": "act_trophy_unlock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -11.2,
+                "y": 7.7
+            },
+            "type": "sprite"
+        },
+        "container/act9/empty_container/star_unlock": {
+            "file": "act_star_unlock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 11.5,
+                "y": 6.8
+            },
+            "type": "sprite"
+        },
+        "container/act9/empty_container/hardcore_unlock": {
+            "file": "act_hardcore_unlock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 0.4,
+                "y": -11.5
+            },
+            "type": "sprite"
+        },
+        "container/act10": {
+            "file": "as_act10_base.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 216.6,
+                "y": 75.9
+            },
+            "type": "sprite"
+        },
+        "container/act10/empty_container": {
+            "file": "act_lock_container_10.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -2.1,
+                "y": 11.2
+            },
+            "type": "sprite"
+        },
+        "container/act10/empty_container/trophy_unlock": {
+            "file": "act_trophy_unlock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -11.2,
+                "y": 1
+            },
+            "type": "sprite"
+        },
+        "container/act10/empty_container/star_unlock": {
+            "file": "act_star_unlock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 11.5,
+                "y": -0.6
+            },
+            "type": "sprite"
+        }
+    }
+}

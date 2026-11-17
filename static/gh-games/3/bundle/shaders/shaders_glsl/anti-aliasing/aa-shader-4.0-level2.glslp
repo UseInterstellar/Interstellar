@@ -1,0 +1,14 @@
+shaders = 3
+
+shader0 = shaders/aa-shader-4.0-level2/aa-shader-4.0-level2-pass1.glsl
+filter_linear0 = false
+scale_type0 = source
+scale0 = 2.0
+
+shader1 = shaders/aa-shader-4.0-level2/aa-shader-4.0-level2-pass2.glsl
+filter_linear1 = false
+scale_type1 = source
+scale1 = 2.0
+
+shader2 = ../sharpen/shaders/adaptive-sharpen.glsl
+filter_linear2 = false

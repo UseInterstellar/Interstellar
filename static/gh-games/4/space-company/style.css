@@ -1,0 +1,31 @@
+.pointer:hover{
+	cursor: pointer;
+}
+.default, .disabled{
+	cursor: default !important;
+}
+.no-select{
+	-webkit-user-select: none; /* Chrome/Safari */        
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+ */
+}
+
+.red{
+	color: red !important;
+}
+.bold{
+	font-weight:bold;
+	text-decoration: underline;
+}
+.green{
+	color: #00b200 !important;
+}
+
+.theader{
+	font-size:20px;
+}
+
+.achievementTD{
+	padding: 0px;
+	background-color: white !important;
+}

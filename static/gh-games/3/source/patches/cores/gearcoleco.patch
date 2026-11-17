@@ -1,0 +1,16 @@
+diff --git a/platforms/libretro/Makefile b/platforms/libretro/Makefile
+index f69ede6..9ff325d 100644
+--- a/platforms/libretro/Makefile
++++ b/platforms/libretro/Makefile
+@@ -210,9 +210,8 @@ else ifneq (,$(findstring qnx,$(platform)))
+    SHARED := -shared -Wl,--version-script=$(CORE_DIR)/link.T -Wl,--no-undefined
+ # emscripten
+ else ifeq ($(platform), emscripten)
+-   TARGET := $(TARGET_NAME)_libretro_emscripten.bc
+-   fpic := -fPIC
+-   SHARED := -shared -Wl,--version-script=$(CORE_DIR)/link.T -Wl
++   TARGET := $(TARGET_NAME)_libretro_$(platform).bc
++   STATIC_LINKING = 1
+ # RS90
+ else ifeq ($(platform), rs90)
+    TARGET := $(TARGET_NAME)_libretro.so

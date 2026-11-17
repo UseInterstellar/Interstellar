@@ -1,0 +1,241 @@
+{
+    "hierarchy": {
+        "name": "Canvas",
+        "children": [
+            {
+                "name": "container",
+                "children": [
+                    {
+                        "name": "title"
+                    },
+                    {
+                        "name": "close"
+                    },
+                    {
+                        "name": "play"
+                    },
+                    {
+                        "name": "home"
+                    },
+                    {
+                        "name": "trophies"
+                    },
+                    {
+                        "name": "reload"
+                    },
+                    {
+                        "name": "sfx_title"
+                    },
+                    {
+                        "name": "sfx_button",
+                        "children": [
+                            {
+                                "name": "sfx_text"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "music_title"
+                    },
+                    {
+                        "name": "music_button",
+                        "children": [
+                            {
+                                "name": "music_text"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "check_box"
+                    },
+                    {
+                        "name": "check"
+                    },
+                    {
+                        "name": "auto_save_text"
+                    }
+                ]
+            }
+        ]
+    },
+    "properties": {
+        "Canvas": {
+            "design": {
+                "width": 960,
+                "height": 640
+            },
+            "type": "canvas"
+        },
+        "container": {
+            "file": "pa_container.png",
+            "image": "SIMPLE",
+            "type": "sprite",
+            "alignment": {
+                "type": "CENTER",
+                "offset": {
+                    "x": 0,
+                    "y": -7.4
+                }
+            }
+        },
+        "container/title": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 43
+            },
+            "text": "Pause",
+            "align": "center",
+            "position": {
+                "x": 0.2,
+                "y": -211.8
+            },
+            "type": "text"
+        },
+        "container/close": {
+            "file": "pa_close_button.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 193.7,
+                "y": -216.5
+            },
+            "type": "button"
+        },
+        "container/play": {
+            "file": "pa_play_button.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 0.9,
+                "y": -116.3
+            },
+            "type": "button"
+        },
+        "container/home": {
+            "file": "pa_home_button.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -120.8,
+                "y": 8.8
+            },
+            "type": "button"
+        },
+        "container/trophies": {
+            "file": "pa_trophies_button.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 0.8,
+                "y": 8.6
+            },
+            "type": "button"
+        },
+        "container/reload": {
+            "file": "pa_reload_button.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 122.3,
+                "y": 9.1
+            },
+            "type": "button"
+        },
+        "container/sfx_title": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 27
+            },
+            "text": "SFX",
+            "align": "center",
+            "position": {
+                "x": -94.6,
+                "y": 73.1
+            },
+            "type": "text"
+        },
+        "container/sfx_button": {
+            "file": "pa_on_button.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -94.6,
+                "y": 119.1
+            },
+            "type": "button"
+        },
+        "container/sfx_button/sfx_text": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 28
+            },
+            "text": "ON",
+            "align": "center",
+            "position": {
+                "x": 0,
+                "y": 3.5
+            },
+            "type": "text"
+        },
+        "container/music_title": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 27
+            },
+            "text": "SFX",
+            "align": "center",
+            "position": {
+                "x": 103,
+                "y": 73
+            },
+            "type": "text"
+        },
+        "container/music_button": {
+            "file": "pa_off_button.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 103,
+                "y": 119
+            },
+            "type": "button"
+        },
+        "container/music_button/music_text": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 28
+            },
+            "text": "OFF",
+            "align": "center",
+            "position": {
+                "x": 0,
+                "y": 3.5
+            },
+            "type": "text"
+        },
+        "container/check_box": {
+            "file": "pa_check_box.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 90,
+                "y": 192.5
+            },
+            "type": "sprite"
+        },
+        "container/check": {
+            "file": "pa_check.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 90,
+                "y": 192.5
+            },
+            "type": "sprite"
+        },
+        "container/auto_save_text": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 22
+            },
+            "text": "Auto reset when\nbest time passed",
+            "align": "center",
+            "position": {
+                "x": -24,
+                "y": 197.3
+            },
+            "type": "text"
+        }
+    }
+}

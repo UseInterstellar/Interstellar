@@ -1,0 +1,19 @@
+diff --git a/Makefile b/Makefile
+index 6871684..83b4634 100644
+--- a/Makefile
++++ b/Makefile
+@@ -631,9 +631,14 @@ ifneq (,$(findstring msvc,$(platform)))
+    CFLAGS   += -MT
+    CXXFLAGS += -MT
+ endif
++ifeq ($(platform), emscripten)
++   CFLAGS   += -O3 -DNDEBUG
++   CXXFLAGS += -O3 -DNDEBUG
++else
+    CFLAGS   += -O2 -DNDEBUG
+    CXXFLAGS += -O2 -DNDEBUG
+ endif
++endif
+ 
+ ifeq (,$(findstring msvc,$(platform)))
+ FLAGS += -ffast-math

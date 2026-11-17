@@ -1,0 +1,27 @@
+diff --git a/Makefile b/Makefile
+index a1d62a9..c531601 100644
+--- a/Makefile
++++ b/Makefile
+@@ -275,8 +275,6 @@ else ifeq ($(platform), ctr)
+ else ifeq ($(platform), emscripten)
+ 	TARGET := $(TARGET_NAME)_libretro_$(platform).bc
+ 	AR = emar
+-	fpic := -fPIC
+-	SHARED := -shared -Wl,--version-script=$(CORE_DIR)/link.T -Wl,--no-undefined
+ 	STATIC_LINKING=1
+ 
+ # Playstation PS2
+@@ -594,9 +592,13 @@ endif
+ 
+ ifeq ($(DEBUG), 1)
+ 	CFLAGS += -O0 -g
++else
++ifeq ($(platform), emscripten)
++	CFLAGS += -O3 -DNDEBUG
+ else
+ 	CFLAGS += -O2 -DNDEBUG
+ endif
++endif
+ 
+ ifneq (,$(findstring msvc,$(platform)))
+ ifeq ($(DEBUG), 1)

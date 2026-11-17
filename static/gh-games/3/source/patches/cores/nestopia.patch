@@ -1,0 +1,20 @@
+diff --git a/libretro/Makefile b/libretro/Makefile
+index f4c086b..af28a62 100644
+--- a/libretro/Makefile
++++ b/libretro/Makefile
+@@ -732,8 +732,13 @@ ifneq (,$(findstring msvc,$(platform)))
+ CFLAGS   += -MT
+ CXXFLAGS += -MT
+ endif
+-CFLAGS   += -O2 -DNDEBUG
+-CXXFLAGS += -O2 -DNDEBUG
++ifeq ($(platform), emscripten)
++   CFLAGS   += -O3 -DNDEBUG
++   CXXFLAGS += -O3 -DNDEBUG
++else
++   CFLAGS   += -O2 -DNDEBUG
++   CXXFLAGS += -O2 -DNDEBUG
++endif
+ endif
+ 
+ CORE_DIR = ..

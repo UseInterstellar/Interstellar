@@ -1,0 +1,120 @@
+{
+  "hub": {
+    "file": "levelhub",
+    "name": "Level Hub"
+  },
+  "11": {
+    "roomsFiles": ["room01", "room02", "room03", "room04", "room05", "room06", "room07", "room08", "room09", "room10", "room11", "room12", "room13", "room14", "room15", "room16", "room17", "room18", "room19", "room20", "room21", "room22", "room24", "room25", "room26", "room26", "room27", "room28", "room29", "room30"],
+    "name": "Challenge Room"
+  },
+  "1": {
+    "file": "level01",
+    "name": "Act 1",
+    "nameHard": "Act 1 Hard",
+    "goldTime": 45,
+    "silverTime": 55,
+    "bronzeTime": 65,
+    "hue":130,
+    "fileChallengeName": "level01hard"
+  },
+  "2": {
+    "file": "level02",
+    "name": "Act 2",
+    "nameHard": "Act 2 Hard",
+    "goldTime": 70,
+    "silverTime": 90,
+    "bronzeTime": 120,
+    "hue":170,
+    "fileChallengeName": "level02hard"
+  },
+  "3": {
+    "file": "level03",
+    "name": "Act 3",
+    "nameHard": "Act 3 Hard",
+    "goldTime": 80,
+    "silverTime": 100,
+    "bronzeTime": 120,
+    "hue":190,
+    "fileChallengeName": "level03hard"
+  },
+  "4": {
+    "file": "level04",
+    "name": "Act 4",
+    "nameHard": "Act 4 Hard",
+    "goldTime": 110,
+    "silverTime": 130,
+    "bronzeTime": 150,
+    "hue":-150,
+    "fileChallengeName": "level04hard"
+  },
+  "5": {
+    "file": "level05",
+    "name": "Act 5",
+    "nameHard": "Act 5 Hard",
+    "goldTime": 140,
+    "silverTime": 180,
+    "bronzeTime": 210,
+    "hue":-90,
+    "fileChallengeName": "level05hard"
+  },
+  "6": {
+    "file": "level06",
+    "name": "Act 6",
+    "nameHard": "Act 6 Hard",
+    "goldTime": 130,
+    "silverTime": 150,
+    "bronzeTime": 180,
+    "hue":-40,
+    "fileChallengeName": "level06hard"
+  },
+  "7": {
+    "file": "level07",
+    "name": "Act 7",
+    "nameHard": "Act 7 Hard",
+    "goldTime": 140,
+    "silverTime": 180,
+    "bronzeTime": 200,
+    "hue":1,
+    "fileChallengeName": "level07hard"
+  },
+  "8": {
+    "file": "level08",
+    "name": "Act 8",
+    "nameHard": "Act 8 Hard",
+    "goldTime": 140,
+    "silverTime": 180,
+    "bronzeTime": 200,
+    "hue":30,
+    "fileChallengeName": "level08hard"
+  },
+  "9": {
+    "file": "level09",
+    "name": "Act 9",
+    "nameHard": "Act 9 Hard",
+    "goldTime": 120,
+    "silverTime": 140,
+    "bronzeTime": 180,
+    "hue":70,
+    "fileChallengeName": "level09hard"
+  },
+  "10": {
+    "file": "level10",
+    "name": "Vexation",
+    "nameHard": "Act 10 Hard",
+    "goldTime": 240,
+    "silverTime": 300,
+    "bronzeTime": 360,
+    "hue":100,
+    "fileChallengeName": "level10"
+  },
+  "edit": {
+    "file": "levelEdit",
+    "name": "Edit",
+    "nameHard": "Act 10 Hard",
+    "goldTime": 120,
+    "silverTime": 180,
+    "bronzeTime": 240,
+    "hue":100,
+    "fileChallengeName": "level10"
+  }
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Choose a File</title>
+		<style>
+		body {
+			background-color: #101010;
+			color: white;
+		}
+		</style>
+	</head>
+	<body>
+		<input type="button" onclick="uploadWebFile('drive')" value="Google Drive">
+		<input type="button" onclick="uploadWebFile('dropbox')" value="Dropbox">
+		<input type="button" onclick="uploadWebFile('onedrive')" value="OneDrive">
+		<pre id="output"></pre>
+		<script src="uauth.js"></script>
+		<script>
+		/* How to use:
+		 * 
+		 * uauth.open(type, fileTypes, callback)
+		 * type: either "drive", "dropbox", or "onedrive"
+		 * fileTypes: array of file extensions (including dot before) (leave empty to allow all) [ignored on dropbox :(]
+		 * callback: function to call when either the file is ready, or the user cancelled it
+		 * 
+		 * this object is passed to the callback function:
+		 * message: either "success", "cancelled", or "error"
+		 * if success, name: name of the file
+		 * if success, data: file contents (arrayBuffer)
+		 */
+		
+		var fileTypes = [".docx", ".pdf", ".zip"];
+		
+		var output = document.getElementById("output");
+		
+		function getTruncatedData(buffer, length) {
+			return JSON.stringify(Array.from(new Uint8Array(buffer))).slice(0, length) + "...";
+		}
+		
+		function handleWebFile(data) {
+			if (data.message == "success") {
+				output.textContent = "name: " + data.name + "\ndata (Uint8Array): " + getTruncatedData(data.data, 200);
+			} else if (data.message == "error") {
+				alert("There was an error.");
+			} else if (data.message == "cancelled") {
+				console.log("Cancelled.");
+			}
+		}
+		
+		function uploadWebFile(type) {
+			uauth.open(type, fileTypes, handleWebFile);
+		}
+		
+		</script>
+	</body>
+</html>

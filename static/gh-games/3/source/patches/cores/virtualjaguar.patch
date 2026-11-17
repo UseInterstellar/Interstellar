@@ -1,0 +1,23 @@
+diff --git a/Makefile b/Makefile
+index 2b65a44..3b1cbc9 100644
+--- a/Makefile
++++ b/Makefile
+@@ -237,6 +237,7 @@ else ifeq ($(platform), switch)
+ # emscripten
+ else ifeq ($(platform), emscripten)
+ 	TARGET := $(TARGET_NAME)_libretro_$(platform).bc
++	STATIC_LINKING=1
+ 
+ # Windows MSVC 2017 all architectures
+ else ifneq (,$(findstring windows_msvc2017,$(platform)))
+@@ -527,7 +528,9 @@ ifeq ($(DEBUG),1)
+       FLAGS += -O0 -g
+    endif
+ else
+-   ifneq (,$(findstring msvc,$(platform)))
++   ifeq ($(platform), emscripten)
++      FLAGS    += -O3 -DNDEBUG
++   else ifneq (,$(findstring msvc,$(platform)))
+       CFLAGS   += -MT
+       CXXFLAGS += -MT
+       CFLAGS   += -O2 -DNDEBUG

@@ -1,0 +1,39 @@
+diff --git a/Makefile b/Makefile
+index ccb95db..e77bac0 100644
+--- a/Makefile
++++ b/Makefile
+@@ -264,8 +264,7 @@ else ifeq ($(platform), retrofw)
+ # Emscripten
+ else ifeq ($(platform), emscripten)
+ 	TARGET := $(TARGET_NAME)_libretro_$(platform).bc
+-	fpic := -fPIC
+-	SHARED := -shared -r
++	AR = emar
+ 	STATIC_LINKING=1
+ 
+ # PS2
+@@ -533,9 +532,13 @@ endif
+ 
+ ifeq ($(DEBUG), 1)
+ 	CFLAGS += -O0 -Wall -Wno-unused -g
++else
++ifeq ($(platform), emscripten)
++	CFLAGS += -O3 -DNDEBUG
+ else
+ 	CFLAGS += -O2 -DNDEBUG
+ endif
++endif
+ 
+ ifeq (,$(findstring msvc,$(platform)))
+ 	CFLAGS += -fomit-frame-pointer -fstrict-aliasing
+@@ -573,9 +576,7 @@ endif
+ all: $(TARGET)
+ 
+ $(TARGET): $(OBJECTS)
+-ifeq ($(platform), emscripten)
+-	$(LD) $(fpic) $(SHARED) $(LDFLAGS) $(LINKOUT)$@ $(OBJECTS) $(LIBS)
+-else ifeq ($(STATIC_LINKING),1)
++ifeq ($(STATIC_LINKING),1)
+ 	$(AR) rcs $@ $(OBJECTS)
+ else
+ 	$(LD) $(fpic) $(SHARED) $(LDFLAGS) $(LINKOUT)$@ $(OBJECTS) $(LIBS)

@@ -1,0 +1,84 @@
+{"frames": [
+
+{
+	"filename": "jump0000.png",
+	"frame": {"x":2,"y":273,"w":18,"h":34},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":6,"w":18,"h":34},
+	"sourceSize": {"w":26,"h":42}
+},
+{
+	"filename": "jump0001.png",
+	"frame": {"x":2,"y":309,"w":18,"h":32},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":8,"w":18,"h":32},
+	"sourceSize": {"w":26,"h":42}
+},
+{
+	"filename": "jump0002.png",
+	"frame": {"x":2,"y":164,"w":20,"h":34},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":5,"w":20,"h":34},
+	"sourceSize": {"w":26,"h":42}
+},
+{
+	"filename": "jump0003.png",
+	"frame": {"x":2,"y":236,"w":19,"h":35},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":4,"w":19,"h":35},
+	"sourceSize": {"w":26,"h":42}
+},
+{
+	"filename": "jump0004.png",
+	"frame": {"x":2,"y":200,"w":20,"h":34},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":5,"w":20,"h":34},
+	"sourceSize": {"w":26,"h":42}
+},
+{
+	"filename": "jump0005.png",
+	"frame": {"x":2,"y":127,"w":21,"h":35},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":4,"w":21,"h":35},
+	"sourceSize": {"w":26,"h":42}
+},
+{
+	"filename": "jump0006.png",
+	"frame": {"x":2,"y":2,"w":23,"h":39},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":2,"w":23,"h":39},
+	"sourceSize": {"w":26,"h":42}
+},
+{
+	"filename": "jump0007.png",
+	"frame": {"x":2,"y":43,"w":22,"h":40},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":2,"w":22,"h":40},
+	"sourceSize": {"w":26,"h":42}
+},
+{
+	"filename": "jump0008.png",
+	"frame": {"x":2,"y":85,"w":21,"h":40},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":2,"w":21,"h":40},
+	"sourceSize": {"w":26,"h":42}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "player-jump.png",
+	"format": "RGBA8888",
+	"size": {"w":27,"h":343},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:0054e37d1a693b1aed5320c929e110e5:9a06e01e2e1f6a4614391a36d92f267e:b0467466f8249d69521c5f032940b598$"
+}
+}

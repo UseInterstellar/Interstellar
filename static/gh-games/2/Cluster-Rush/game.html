@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | Cluster Rush</title>
+    <link href="TemplateData/style.css" rel="stylesheet">
+	<script src="TemplateData/UnityProgress.js" type="text/javascript"></script>
+  </head>
+  <body class="template">
+    <div class="template-wrap clear">
+      <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" style="width: 100vw; height: 100.1vh" ></canvas>
+    </div>
+    <script type="text/javascript">
+  var Module = {
+    TOTAL_MEMORY: 268435456,
+    errorhandler: null,			// arguments: err, url, line. This function must return 'true' if the error is handled, otherwise 'false'
+    compatibilitycheck: null,
+    backgroundColor: "#222C36",
+    splashStyle: "Dark",
+    dataUrl: "Release/NG.data",
+    codeUrl: "Release/NG.js",
+    asmUrl: "Release/NG.asm.js",
+    memUrl: "Release/NG.mem",
+  };
+    </script>
+    <script src="Release/UnityLoader.js"></script>
+  </body>
+</html>

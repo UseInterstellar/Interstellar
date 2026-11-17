@@ -1,0 +1,106 @@
+{
+    "hierarchy": {
+        "name": "Canvas",
+        "children": [
+            {
+                "name": "decor"
+            },
+            {
+                "name": "logo"
+            },
+            {
+                "name": "play"
+            },
+            {
+                "name": "trophies"
+            },
+            {
+                "name": "settings"
+            },
+            {
+                "name": "challenge"
+            }
+        ]
+    },
+    "properties": {
+        "Canvas": {
+            "design": {
+                "width": 960,
+                "height": 640
+            },
+            "type": "canvas"
+        },
+        "decor": {
+            "file": "mm_decor.png",
+            "image": "SIMPLE",
+            "type": "sprite",
+            "alignment": {
+                "type": "BOTTOM_CENTER",
+                "offset": {
+                    "x": 0,
+                    "y": 0.7
+                }
+            }
+        },
+        "logo": {
+            "file": "mm_logo.png",
+            "image": "SIMPLE",
+            "type": "sprite",
+            "alignment": {
+                "type": "TOP_CENTER",
+                "offset": {
+                    "x": 0,
+                    "y": -104
+                }
+            }
+        },
+        "play": {
+            "file": "mm_play_buttton.png",
+            "image": "SIMPLE",
+            "type": "button",
+            "alignment": {
+                "type": "BOTTOM_CENTER",
+                "offset": {
+                    "x": 0,
+                    "y": -69
+                }
+            }
+        },
+        "trophies": {
+            "file": "mm_trophy_button.png",
+            "image": "SIMPLE",
+            "type": "button",
+            "alignment": {
+                "type": "BOTTOM_CENTER",
+                "offset": {
+                    "x": -193,
+                    "y": -93.5
+                }
+            }
+        },
+        "settings": {
+            "file": "mm_settings_button.png",
+            "image": "SIMPLE",
+            "type": "button",
+            "alignment": {
+                "type": "TOP_RIGHT",
+                "offset": {
+                    "x": "-2%",
+                    "y": -13
+                }
+            }
+        },
+        "challenge": {
+            "file": "mm_challenge_room_button.png",
+            "image": "SIMPLE",
+            "type": "button",
+            "alignment": {
+                "type": "BOTTOM_CENTER",
+                "offset": {
+                    "x": 190,
+                    "y": -94.5
+                }
+            }
+        }
+    }
+}

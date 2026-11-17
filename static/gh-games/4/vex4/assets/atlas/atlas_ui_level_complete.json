@@ -1,0 +1,100 @@
+{"frames": [
+
+{
+	"filename": "lc_act_select_button.png",
+	"frame": {"x":312,"y":492,"w":67,"h":69},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":67,"h":69},
+	"sourceSize": {"w":67,"h":69}
+},
+{
+	"filename": "lc_bronze_text.png",
+	"frame": {"x":182,"y":601,"w":83,"h":21},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":7,"y":3,"w":83,"h":21},
+	"sourceSize": {"w":96,"h":26}
+},
+{
+	"filename": "lc_clear_text.png",
+	"frame": {"x":1,"y":601,"w":93,"h":21},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":3,"w":93,"h":21},
+	"sourceSize": {"w":96,"h":26}
+},
+{
+	"filename": "lc_close_button.png",
+	"frame": {"x":339,"y":587,"w":29,"h":28},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":29,"h":28},
+	"sourceSize": {"w":29,"h":28}
+},
+{
+	"filename": "lc_container.png",
+	"frame": {"x":1,"y":1,"w":451,"h":489},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":1,"w":451,"h":489},
+	"sourceSize": {"w":454,"h":492}
+},
+{
+	"filename": "lc_gold_text.png",
+	"frame": {"x":312,"y":563,"w":59,"h":22},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":19,"y":3,"w":59,"h":22},
+	"sourceSize": {"w":96,"h":26}
+},
+{
+	"filename": "lc_perfect_text.png",
+	"frame": {"x":96,"y":601,"w":84,"h":21},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":6,"y":3,"w":84,"h":21},
+	"sourceSize": {"w":96,"h":26}
+},
+{
+	"filename": "lc_play_button.png",
+	"frame": {"x":1,"y":492,"w":309,"h":107},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":309,"h":107},
+	"sourceSize": {"w":309,"h":107}
+},
+{
+	"filename": "lc_reload_button.png",
+	"frame": {"x":373,"y":563,"w":67,"h":69},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":67,"h":69},
+	"sourceSize": {"w":67,"h":69}
+},
+{
+	"filename": "lc_silver_text.png",
+	"frame": {"x":267,"y":601,"w":70,"h":21},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":13,"y":3,"w":70,"h":21},
+	"sourceSize": {"w":96,"h":26}
+},
+{
+	"filename": "lc_trophies_button.png",
+	"frame": {"x":381,"y":492,"w":67,"h":69},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":67,"h":69},
+	"sourceSize": {"w":67,"h":69}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "atlas_ui_level_complete.png",
+	"format": "RGBA8888",
+	"size": {"w":453,"h":633},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:624186b72d2f47a87ac6cf9a7c29fba2:07527e611ec166a4bd5704e71349c014:23bbd4955e3eae5a9c69724084a1c586$"
+}
+}

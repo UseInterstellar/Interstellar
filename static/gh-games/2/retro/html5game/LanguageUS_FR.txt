@@ -1,0 +1,2 @@
+ui_Version_Mode	Franchise
+ui_SimGame	Sim Game

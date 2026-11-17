@@ -1,0 +1,18 @@
+{
+  "TimeNewElevator": 60,
+  "SpeedElevator": 2,
+  "ChallegeSteps": 30,
+  "minSizeView": 640,
+  "wireSparkSpeed": 0.15,
+  "TimeCooldown": 120,
+  "LevelsResetCheckPoints": [7],
+  "ropeUpVelY": 5,
+  "ropeDownVelY": 5,
+  "alertApper": 0.3,
+  "alertDisapper": 0.3,
+  "spikeBlockVelocity": 1,
+  "spikeBlockUp": -10,
+  "spikeBlockDown": -96,
+  "widthRoom": 1000,
+  "heightRoom": 500
+}

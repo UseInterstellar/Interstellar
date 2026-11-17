@@ -1,0 +1,583 @@
+{
+    "name": "transition_out",
+    "speed": 1,
+    "mode": "normal",
+    "data": {
+        "base1": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 625,
+                    "value": 1
+                },
+                {
+                    "frame": 750,
+                    "value": 0
+                }
+            ]
+        },
+        "base2": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 500,
+                    "value": 1
+                },
+                {
+                    "frame": 625,
+                    "value": 0
+                }
+            ]
+        },
+        "base3": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 375,
+                    "value": 1
+                },
+                {
+                    "frame": 500,
+                    "value": 0
+                }
+            ]
+        },
+        "base4": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 250,
+                    "value": 1
+                },
+                {
+                    "frame": 375,
+                    "value": 0
+                }
+            ]
+        },
+        "base5": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 125,
+                    "value": 1
+                },
+                {
+                    "frame": 250,
+                    "value": 0
+                }
+            ]
+        },
+        "base6": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 125,
+                    "value": 0
+                }
+            ]
+        },
+        "base7": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 125,
+                    "value": 1
+                },
+                {
+                    "frame": 250,
+                    "value": 0
+                }
+            ]
+        },
+        "base8": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 500,
+                    "value": 1
+                },
+                {
+                    "frame": 625,
+                    "value": 0
+                }
+            ]
+        },
+        "base9": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 375,
+                    "value": 1
+                },
+                {
+                    "frame": 500,
+                    "value": 0
+                }
+            ]
+        },
+        "base10": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 250,
+                    "value": 1
+                },
+                {
+                    "frame": 375,
+                    "value": 0
+                }
+            ]
+        },
+        "base11": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 125,
+                    "value": 1
+                },
+                {
+                    "frame": 250,
+                    "value": 0
+                }
+            ]
+        },
+        "base12": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 125,
+                    "value": 0
+                }
+            ]
+        },
+        "base13": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 125,
+                    "value": 1
+                },
+                {
+                    "frame": 250,
+                    "value": 0
+                }
+            ]
+        },
+        "base14": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 250,
+                    "value": 1
+                },
+                {
+                    "frame": 375,
+                    "value": 0
+                }
+            ]
+        },
+        "base15": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 375,
+                    "value": 1
+                },
+                {
+                    "frame": 500,
+                    "value": 0
+                }
+            ]
+        },
+        "base16": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 250,
+                    "value": 1
+                },
+                {
+                    "frame": 375,
+                    "value": 0
+                }
+            ]
+        },
+        "base17": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 125,
+                    "value": 1
+                },
+                {
+                    "frame": 250,
+                    "value": 0
+                }
+            ]
+        },
+        "base18": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 125,
+                    "value": 0
+                }
+            ]
+        },
+        "base19": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 125,
+                    "value": 1
+                },
+                {
+                    "frame": 250,
+                    "value": 0
+                }
+            ]
+        },
+        "base20": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 250,
+                    "value": 1
+                },
+                {
+                    "frame": 375,
+                    "value": 0
+                }
+            ]
+        },
+        "base21": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 375,
+                    "value": 1
+                },
+                {
+                    "frame": 500,
+                    "value": 0
+                }
+            ]
+        },
+        "base22": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 250,
+                    "value": 1
+                },
+                {
+                    "frame": 375,
+                    "value": 0
+                }
+            ]
+        },
+        "base23": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 125,
+                    "value": 1
+                },
+                {
+                    "frame": 250,
+                    "value": 0
+                }
+            ]
+        },
+        "base24": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 125,
+                    "value": 0
+                }
+            ]
+        },
+        "base25": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 125,
+                    "value": 1
+                },
+                {
+                    "frame": 250,
+                    "value": 0
+                }
+            ]
+        },
+        "base26": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 250,
+                    "value": 1
+                },
+                {
+                    "frame": 375,
+                    "value": 0
+                }
+            ]
+        },
+        "base27": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 375,
+                    "value": 1
+                },
+                {
+                    "frame": 500,
+                    "value": 0
+                }
+            ]
+        },
+        "base28": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 500,
+                    "value": 1
+                },
+                {
+                    "frame": 625,
+                    "value": 0
+                }
+            ]
+        },
+        "base30": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 125,
+                    "value": 1
+                },
+                {
+                    "frame": 250,
+                    "value": 0
+                }
+            ]
+        },
+        "base31": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 125,
+                    "value": 0
+                }
+            ]
+        },
+        "base32": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 125,
+                    "value": 1
+                },
+                {
+                    "frame": 250,
+                    "value": 0
+                }
+            ]
+        },
+        "base33": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 250,
+                    "value": 1
+                },
+                {
+                    "frame": 375,
+                    "value": 0
+                }
+            ]
+        },
+        "base34": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 375,
+                    "value": 1
+                },
+                {
+                    "frame": 500,
+                    "value": 0
+                }
+            ]
+        },
+        "base35": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 500,
+                    "value": 1
+                },
+                {
+                    "frame": 625,
+                    "value": 0
+                }
+            ]
+        },
+        "base36": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 625,
+                    "value": 1
+                },
+                {
+                    "frame": 750,
+                    "value": 0
+                }
+            ]
+        },
+        "logo": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 50,
+                    "value": 1.2
+                },
+                {
+                    "frame": 175,
+                    "value": 0
+                }
+            ],
+            "scaleY": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 50,
+                    "value": 1.2
+                },
+                {
+                    "frame": 175,
+                    "value": 0
+                }
+            ],
+            "angle": [
+                {
+                    "frame": 0,
+                    "value": 0
+                }
+            ]
+        }
+    }
+}

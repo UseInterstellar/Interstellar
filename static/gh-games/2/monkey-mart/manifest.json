@@ -1,0 +1,46 @@
+{
+ 
+  "manifest_version": 3,
+  "name": "Monkey Mart for Chrome™",
+  "version": "1.0.7",
+  "description": "Are you a fan of the fun and entertaining Monkey Mart game? If so, then you shouldn’t miss this Monkey Mart game.",
+  "homepage_url": "https://monkeymart.org/",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Monkey Mart Unblocked",
+    "default_icon": {
+      "512": "icons/icon-512.png",
+         "256": "icons/icon-256.png",
+         "128": "icons/icon-128.png",
+         "64": "icons/icon-64.png",
+         "48": "icons/icon-48.png",
+         "32": "icons/icon-32.png",
+         "16": "icons/icon-16.png" 
+    }, "default_popup":"slope.html"
+  },
+"content_security_policy": {
+        "extension_pages": "script-src 'self' ; object-src 'self'; child-src 'self'; worker-src 'self'",
+        "sandbox": "sandbox allow-scripts; script-src 'self' 'unsafe-eval' blob: 'unsafe-inline'; object-src 'self' 'unsafe-eval' blob: 'unsafe-inline';child-src 'self' 'unsafe-eval' blob: 'unsafe-inline' ; worker-src 'self' 'unsafe-eval' blob: 'unsafe-inline'; script-src-elem 'self' 'unsafe-eval' blob: 'unsafe-inline'"
+    },
+    "sandbox": {
+        "pages": [
+            "index.html",
+            "Rolling_Ball_3D/index.html"
+           
+          
+            
+        ]
+    },
+ 
+  "icons": {
+    "512": "icons/icon-512.png",
+         "256": "icons/icon-256.png",
+         "128": "icons/icon-128.png",
+         "64": "icons/icon-64.png",
+         "48": "icons/icon-48.png",
+         "32": "icons/icon-32.png",
+         "16": "icons/icon-16.png" 
+  }
+}

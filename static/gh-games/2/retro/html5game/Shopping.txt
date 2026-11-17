@@ -1,0 +1,39 @@
+tag	name	type	price	owned	life
+1	Tattoo	0	10	0	100
+2	Clothing	0	20	0	100
+3	Phone	0	30	0	100
+4	Tablet	0	40	0	100
+5	Games Console	0	50	0	100
+6	Laptop	0	60	0	100
+7	TV	0	70	0	100
+8	Jewelry	0	80	0	100
+9	Watch	0	90	0	100
+10	Antiques	0	100	0	100
+11	Bicycle	1	25	0	100
+12	Scooter	1	50	0	100
+13	Hanglider	1	75	0	100
+14	Jet bike	1	100	0	100
+15	Car	1	125	0	100
+16	Hot Air Balloon	1	150	0	100
+17	Motorbike	1	175	0	100
+18	Hovercraft	1	200	0	100
+19	SUV	1	225	0	100
+20	Limo	1	250	0	100
+21	Sailing Boat	1	275	0	100
+22	Sports car	1	300	0	100
+23	Helicopter	1	325	0	100
+24	Yacht	1	350	0	100
+25	Tank	1	375	0	100
+26	Private Jet	1	400	0	100
+27	Apartment	2	200	0	100
+28	House	2	250	0	100
+29	Log Cabin	2	300	0	100
+30	Cafe	2	350	0	100
+31	Country House	2	400	0	100
+32	Holiday Home	2	450	0	100
+33	Ski Chalet	2	500	0	100
+34	Mansion	2	550	0	100
+35	Castle	2	600	0	100
+36	Shopping Mall	2	650	0	100
+37	Skyscraper	2	700	0	100
+38	Private Island	2	750	0	100

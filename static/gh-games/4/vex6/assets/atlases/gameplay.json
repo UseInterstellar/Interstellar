@@ -1,0 +1,2379 @@
+{"frames": [
+
+    {
+        "filename": "act-check instance 10000",
+        "frame": {"x":290,"y":1930,"w":42,"h":37},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":42,"h":37},
+        "sourceSize": {"w":42,"h":37}
+    }
+    ,{
+        "filename": "act-down-arrow instance 10000",
+        "frame": {"x":285,"y":305,"w":16,"h":55},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":16,"h":55},
+        "sourceSize": {"w":16,"h":55}
+    }
+    ,{
+        "filename": "act-lock instance 10000",
+        "frame": {"x":985,"y":768,"w":30,"h":42},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":30,"h":42},
+        "sourceSize": {"w":30,"h":42}
+    }
+    ,{
+        "filename": "actBlock instance 10000",
+        "frame": {"x":807,"y":1,"w":140,"h":140},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":140,"h":140},
+        "sourceSize": {"w":140,"h":140}
+    }
+    ,{
+        "filename": "actBlock instance 10001",
+        "frame": {"x":807,"y":143,"w":140,"h":140},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":140,"h":140},
+        "sourceSize": {"w":140,"h":140}
+    }
+    ,{
+        "filename": "actBlock instance 10002",
+        "frame": {"x":558,"y":182,"w":140,"h":140},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":140,"h":140},
+        "sourceSize": {"w":140,"h":140}
+    }
+    ,{
+        "filename": "actBlock instance 10003",
+        "frame": {"x":305,"y":253,"w":140,"h":140},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":140,"h":140},
+        "sourceSize": {"w":140,"h":140}
+    }
+    ,{
+        "filename": "actBlock instance 10004",
+        "frame": {"x":807,"y":285,"w":140,"h":140},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":140,"h":140},
+        "sourceSize": {"w":140,"h":140}
+    }
+    ,{
+        "filename": "actBlock instance 10005",
+        "frame": {"x":1,"y":305,"w":140,"h":140},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":140,"h":140},
+        "sourceSize": {"w":140,"h":140}
+    }
+    ,{
+        "filename": "actBlock instance 10006",
+        "frame": {"x":143,"y":305,"w":140,"h":140},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":140,"h":140},
+        "sourceSize": {"w":140,"h":140}
+    }
+    ,{
+        "filename": "actBlock instance 10007",
+        "frame": {"x":447,"y":324,"w":140,"h":140},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":140,"h":140},
+        "sourceSize": {"w":140,"h":140}
+    }
+    ,{
+        "filename": "actBlock instance 10008",
+        "frame": {"x":589,"y":324,"w":140,"h":140},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":140,"h":140},
+        "sourceSize": {"w":140,"h":140}
+    }
+    ,{
+        "filename": "actBlock instance 10009",
+        "frame": {"x":285,"y":395,"w":140,"h":140},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":140,"h":140},
+        "sourceSize": {"w":140,"h":140}
+    }
+    ,{
+        "filename": "actBlockHard instance 10000",
+        "frame": {"x":807,"y":427,"w":140,"h":140},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":140,"h":140},
+        "sourceSize": {"w":140,"h":140}
+    }
+    ,{
+        "filename": "actBlockHard instance 10001",
+        "frame": {"x":1,"y":447,"w":140,"h":140},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":140,"h":140},
+        "sourceSize": {"w":140,"h":140}
+    }
+    ,{
+        "filename": "actBlockHard instance 10002",
+        "frame": {"x":143,"y":447,"w":140,"h":140},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":140,"h":140},
+        "sourceSize": {"w":140,"h":140}
+    }
+    ,{
+        "filename": "actBlockHard instance 10003",
+        "frame": {"x":427,"y":466,"w":140,"h":140},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":140,"h":140},
+        "sourceSize": {"w":140,"h":140}
+    }
+    ,{
+        "filename": "actBlockHard instance 10004",
+        "frame": {"x":569,"y":466,"w":140,"h":140},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":140,"h":140},
+        "sourceSize": {"w":140,"h":140}
+    }
+    ,{
+        "filename": "actBlockHard instance 10005",
+        "frame": {"x":285,"y":537,"w":140,"h":140},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":140,"h":140},
+        "sourceSize": {"w":140,"h":140}
+    }
+    ,{
+        "filename": "actBlockHard instance 10006",
+        "frame": {"x":711,"y":569,"w":140,"h":140},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":140,"h":140},
+        "sourceSize": {"w":140,"h":140}
+    }
+    ,{
+        "filename": "actBlockHard instance 10007",
+        "frame": {"x":853,"y":569,"w":140,"h":140},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":140,"h":140},
+        "sourceSize": {"w":140,"h":140}
+    }
+    ,{
+        "filename": "actBlockHard instance 10008",
+        "frame": {"x":1,"y":589,"w":140,"h":140},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":140,"h":140},
+        "sourceSize": {"w":140,"h":140}
+    }
+    ,{
+        "filename": "appearingBlock instance 10000",
+        "frame": {"x":657,"y":813,"w":101,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":101,"h":100},
+        "sourceSize": {"w":101,"h":100}
+    }
+    ,{
+        "filename": "basicBlock instance 10000",
+        "frame": {"x":1,"y":731,"w":100,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":100,"h":101},
+        "sourceSize": {"w":100,"h":101}
+    }
+    ,{
+        "filename": "bigTNT instance 10000",
+        "frame": {"x":307,"y":915,"w":100,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":100,"h":100},
+        "sourceSize": {"w":100,"h":100}
+    }
+    ,{
+        "filename": "blockedWall instance 10000",
+        "frame": {"x":739,"y":1,"w":66,"h":444},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":66,"h":444},
+        "sourceSize": {"w":66,"h":444}
+    }
+    ,{
+        "filename": "bounceBlock instance 10000",
+        "frame": {"x":554,"y":813,"w":101,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":101,"h":100},
+        "sourceSize": {"w":101,"h":100}
+    }
+    ,{
+        "filename": "bounceBlockArrow instance 10000",
+        "frame": {"x":1,"y":1747,"w":80,"h":66},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":17,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "bounceBlockArrow instance 10001",
+        "frame": {"x":675,"y":1756,"w":80,"h":66},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":13,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "bounceBlockArrow instance 10002",
+        "frame": {"x":511,"y":1671,"w":80,"h":67},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":8,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "bounceBlockArrow instance 10003",
+        "frame": {"x":757,"y":1756,"w":80,"h":66},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":4,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "bounceBlockArrow instance 10004",
+        "frame": {"x":839,"y":1756,"w":80,"h":66},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "bounceBlockArrow instance 10005",
+        "frame": {"x":821,"y":1824,"w":80,"h":61},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "bounceBlockArrow instance 10006",
+        "frame": {"x":165,"y":1192,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "bounceBlockArrow instance 10007",
+        "frame": {"x":657,"y":1214,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "bounceBlockArrow instance 10008",
+        "frame": {"x":83,"y":1222,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "bounceBlockArrow instance 10009",
+        "frame": {"x":247,"y":1223,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "bounceBlockArrow instance 10010",
+        "frame": {"x":329,"y":1223,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "bounceBlockArrow instance 10011",
+        "frame": {"x":411,"y":1223,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "bounceBlockArrow instance 10012",
+        "frame": {"x":493,"y":1223,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "bounceBlockArrow instance 10013",
+        "frame": {"x":575,"y":1223,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "bounceBlockArrow instance 10014",
+        "frame": {"x":739,"y":1224,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "bounceBlockArrow instance 10015",
+        "frame": {"x":821,"y":1224,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "bounceBlockArrow instance 10016",
+        "frame": {"x":903,"y":1224,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "bounceBlockArrow instance 10017",
+        "frame": {"x":1,"y":1245,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "bounceBlockArrow instance 10018",
+        "frame": {"x":165,"y":1295,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "bounceBlockArrow instance 10019",
+        "frame": {"x":182,"y":1811,"w":80,"h":62},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":39,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "bounceBlockArrow instance 10020",
+        "frame": {"x":921,"y":1756,"w":80,"h":66},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":35,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "bounceBlockArrow instance 10021",
+        "frame": {"x":757,"y":1756,"w":80,"h":66},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":30,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "bounceBlockArrow instance 10022",
+        "frame": {"x":511,"y":1671,"w":80,"h":67},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":26,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "bounceBlockArrow instance 10023",
+        "frame": {"x":675,"y":1756,"w":80,"h":66},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":22,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "bounceBlockArrow instance 10024",
+        "frame": {"x":1,"y":1747,"w":80,"h":66},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":17,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "breatheBlaster instance 10000",
+        "frame": {"x":976,"y":813,"w":45,"h":104},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":45,"h":104},
+        "sourceSize": {"w":45,"h":104}
+    }
+    ,{
+        "filename": "breatheBlock instance 10000",
+        "frame": {"x":793,"y":513,"w":9,"h":10},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":9,"h":10},
+        "sourceSize": {"w":9,"h":10}
+    }
+    ,{
+        "filename": "buzzsaw instance 10000",
+        "frame": {"x":205,"y":884,"w":100,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":100,"h":100},
+        "sourceSize": {"w":100,"h":100}
+    }
+    ,{
+        "filename": "buzzsawOnStick instance 10000",
+        "frame": {"x":347,"y":1590,"w":167,"h":38},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":167,"h":38},
+        "sourceSize": {"w":167,"h":38}
+    }
+    ,{
+        "filename": "cable instance 10000",
+        "frame": {"x":727,"y":182,"w":7,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":7,"h":100},
+        "sourceSize": {"w":7,"h":100}
+    }
+    ,{
+        "filename": "cannonBase instance 10000",
+        "frame": {"x":1,"y":1450,"w":78,"h":77},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":78,"h":77},
+        "sourceSize": {"w":78,"h":77}
+    }
+    ,{
+        "filename": "cannonTube instance 10000",
+        "frame": {"x":632,"y":1987,"w":74,"h":27},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":74,"h":27},
+        "sourceSize": {"w":74,"h":27}
+    }
+    ,{
+        "filename": "charactersBlock instance 10000",
+        "frame": {"x":143,"y":589,"w":119,"h":118},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":119,"h":118},
+        "sourceSize": {"w":119,"h":118}
+    }
+    ,{
+        "filename": "checkpoint instance 10000",
+        "frame": {"x":205,"y":811,"w":23,"h":55},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":1,"y":0,"w":24,"h":55},
+        "sourceSize": {"w":24,"h":55}
+    }
+    ,{
+        "filename": "checkpoint instance 10001",
+        "frame": {"x":103,"y":731,"w":24,"h":55},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":0,"w":24,"h":55},
+        "sourceSize": {"w":24,"h":55}
+    }
+    ,{
+        "filename": "checkpoint instance 10002",
+        "frame": {"x":165,"y":1016,"w":23,"h":55},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":1,"y":0,"w":24,"h":55},
+        "sourceSize": {"w":24,"h":55}
+    }
+    ,{
+        "filename": "checkpointSwimming instance 10000",
+        "frame": {"x":531,"y":1893,"w":52,"h":62},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":52,"h":62},
+        "sourceSize": {"w":52,"h":62}
+    }
+    ,{
+        "filename": "checkpointSwimming instance 10001",
+        "frame": {"x":585,"y":1893,"w":52,"h":62},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":52,"h":62},
+        "sourceSize": {"w":52,"h":62}
+    }
+    ,{
+        "filename": "checkpointSwimming instance 10002",
+        "frame": {"x":77,"y":1913,"w":52,"h":62},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":52,"h":62},
+        "sourceSize": {"w":52,"h":62}
+    }
+    ,{
+        "filename": "classicLaser instance 10000",
+        "frame": {"x":952,"y":1981,"w":62,"h":34},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":62,"h":34},
+        "sourceSize": {"w":62,"h":34}
+    }
+    ,{
+        "filename": "classicLaserBullet instance 10000",
+        "frame": {"x":731,"y":447,"w":35,"h":13},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":35,"h":13},
+        "sourceSize": {"w":35,"h":13}
+    }
+    ,{
+        "filename": "coin instance 10000",
+        "frame": {"x":700,"y":284,"w":35,"h":38},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":35,"h":38},
+        "sourceSize": {"w":35,"h":38}
+    }
+    ,{
+        "filename": "door instance 10000",
+        "frame": {"x":638,"y":1591,"w":78,"h":78},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":78,"h":78},
+        "sourceSize": {"w":78,"h":78}
+    }
+    ,{
+        "filename": "elevatorDown instance 10000",
+        "frame": {"x":104,"y":1602,"w":105,"h":52},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":105,"h":52},
+        "sourceSize": {"w":105,"h":52}
+    }
+    ,{
+        "filename": "elevatorUp instance 10000",
+        "frame": {"x":888,"y":1591,"w":105,"h":52},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":105,"h":52},
+        "sourceSize": {"w":105,"h":52}
+    }
+    ,{
+        "filename": "explosiveBlock instance 10000",
+        "frame": {"x":409,"y":915,"w":100,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":100,"h":100},
+        "sourceSize": {"w":100,"h":100}
+    }
+    ,{
+        "filename": "fallingBlock instance 10000",
+        "frame": {"x":530,"y":608,"w":101,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":101,"h":101},
+        "sourceSize": {"w":101,"h":101}
+    }
+    ,{
+        "filename": "fallingBlockArrow instance 10000",
+        "frame": {"x":516,"y":1602,"w":80,"h":67},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":17,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "fallingBlockArrow instance 10001",
+        "frame": {"x":593,"y":1671,"w":80,"h":66},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":22,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "fallingBlockArrow instance 10002",
+        "frame": {"x":1,"y":1610,"w":80,"h":67},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":26,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "fallingBlockArrow instance 10003",
+        "frame": {"x":247,"y":1675,"w":80,"h":66},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":31,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "fallingBlockArrow instance 10004",
+        "frame": {"x":1,"y":1679,"w":80,"h":66},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":35,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "fallingBlockArrow instance 10005",
+        "frame": {"x":711,"y":466,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "fallingBlockArrow instance 10006",
+        "frame": {"x":812,"y":915,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "fallingBlockArrow instance 10007",
+        "frame": {"x":894,"y":915,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "fallingBlockArrow instance 10008",
+        "frame": {"x":1,"y":936,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "fallingBlockArrow instance 10009",
+        "frame": {"x":205,"y":986,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "fallingBlockArrow instance 10010",
+        "frame": {"x":715,"y":1008,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "fallingBlockArrow instance 10011",
+        "frame": {"x":83,"y":1016,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "fallingBlockArrow instance 10012",
+        "frame": {"x":287,"y":1017,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "fallingBlockArrow instance 10013",
+        "frame": {"x":369,"y":1017,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "fallingBlockArrow instance 10014",
+        "frame": {"x":451,"y":1017,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "fallingBlockArrow instance 10015",
+        "frame": {"x":533,"y":1017,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "fallingBlockArrow instance 10016",
+        "frame": {"x":615,"y":1017,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "fallingBlockArrow instance 10017",
+        "frame": {"x":797,"y":1018,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "fallingBlockArrow instance 10018",
+        "frame": {"x":879,"y":1018,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "fallingBlockArrow instance 10019",
+        "frame": {"x":575,"y":1807,"w":80,"h":63},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "fallingBlockArrow instance 10020",
+        "frame": {"x":347,"y":1630,"w":80,"h":67},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "fallingBlockArrow instance 10021",
+        "frame": {"x":675,"y":1688,"w":80,"h":66},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":5,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "fallingBlockArrow instance 10022",
+        "frame": {"x":757,"y":1688,"w":80,"h":66},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":9,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "fallingBlockArrow instance 10023",
+        "frame": {"x":593,"y":1671,"w":80,"h":66},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":13,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "fallingBlockArrow instance 10024",
+        "frame": {"x":516,"y":1602,"w":80,"h":67},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":17,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "fallingSpike instance 10000",
+        "frame": {"x":285,"y":362,"w":18,"h":13},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":18,"h":13},
+        "sourceSize": {"w":18,"h":13}
+    }
+    ,{
+        "filename": "gamearrow1 instance 10000",
+        "frame": {"x":418,"y":1767,"w":61,"h":82},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":61,"h":82},
+        "sourceSize": {"w":61,"h":82}
+    }
+    ,{
+        "filename": "gamearrow2 instance 10000",
+        "frame": {"x":83,"y":1875,"w":124,"h":36},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":124,"h":36},
+        "sourceSize": {"w":124,"h":36}
+    }
+    ,{
+        "filename": "gamearrow3 instance 10000",
+        "frame": {"x":779,"y":1887,"w":124,"h":36},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":124,"h":36},
+        "sourceSize": {"w":124,"h":36}
+    }
+    ,{
+        "filename": "gamearrow4 instance 10000",
+        "frame": {"x":209,"y":1892,"w":124,"h":36},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":124,"h":36},
+        "sourceSize": {"w":124,"h":36}
+    }
+    ,{
+        "filename": "gamearrow5 instance 10000",
+        "frame": {"x":653,"y":1887,"w":124,"h":36},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":124,"h":36},
+        "sourceSize": {"w":124,"h":36}
+    }
+    ,{
+        "filename": "glassBlock instance 10000",
+        "frame": {"x":246,"y":781,"w":100,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":100,"h":101},
+        "sourceSize": {"w":100,"h":101}
+    }
+    ,{
+        "filename": "hazardStrips instance 10000",
+        "frame": {"x":995,"y":568,"w":14,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":14,"h":100},
+        "sourceSize": {"w":14,"h":100}
+    }
+    ,{
+        "filename": "horizontalBlock instance 10000",
+        "frame": {"x":760,"y":813,"w":100,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":100,"h":100},
+        "sourceSize": {"w":100,"h":100}
+    }
+    ,{
+        "filename": "iceBlock instance 10000",
+        "frame": {"x":427,"y":608,"w":101,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":101,"h":101},
+        "sourceSize": {"w":101,"h":101}
+    }
+    ,{
+        "filename": "invisBlock instance 10000",
+        "frame": {"x":103,"y":914,"w":100,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":100,"h":100},
+        "sourceSize": {"w":100,"h":100}
+    }
+    ,{
+        "filename": "invisBlockDownArrow instance 10000",
+        "frame": {"x":593,"y":1739,"w":80,"h":66},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":17,"w":80,"h":100},
+        "sourceSize": {"w":80,"h":100}
+    }
+    ,{
+        "filename": "invisBlockDownArrow instance 10001",
+        "frame": {"x":429,"y":1630,"w":80,"h":67},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":21,"w":80,"h":100},
+        "sourceSize": {"w":80,"h":100}
+    }
+    ,{
+        "filename": "invisBlockDownArrow instance 10002",
+        "frame": {"x":83,"y":1656,"w":80,"h":67},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":25,"w":80,"h":100},
+        "sourceSize": {"w":80,"h":100}
+    }
+    ,{
+        "filename": "invisBlockDownArrow instance 10003",
+        "frame": {"x":165,"y":1656,"w":80,"h":67},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":30,"w":80,"h":100},
+        "sourceSize": {"w":80,"h":100}
+    }
+    ,{
+        "filename": "invisBlockDownArrow instance 10004",
+        "frame": {"x":493,"y":1740,"w":80,"h":66},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":34,"w":80,"h":100},
+        "sourceSize": {"w":80,"h":100}
+    }
+    ,{
+        "filename": "invisBlockDownArrow instance 10005",
+        "frame": {"x":657,"y":1824,"w":80,"h":61},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":39,"w":80,"h":100},
+        "sourceSize": {"w":80,"h":100}
+    }
+    ,{
+        "filename": "invisBlockDownArrow instance 10006",
+        "frame": {"x":657,"y":1317,"w":80,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":100},
+        "sourceSize": {"w":80,"h":100}
+    }
+    ,{
+        "filename": "invisBlockDownArrow instance 10007",
+        "frame": {"x":83,"y":1325,"w":80,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":100},
+        "sourceSize": {"w":80,"h":100}
+    }
+    ,{
+        "filename": "invisBlockDownArrow instance 10008",
+        "frame": {"x":337,"y":1326,"w":80,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":100},
+        "sourceSize": {"w":80,"h":100}
+    }
+    ,{
+        "filename": "invisBlockDownArrow instance 10009",
+        "frame": {"x":419,"y":1326,"w":80,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":100},
+        "sourceSize": {"w":80,"h":100}
+    }
+    ,{
+        "filename": "invisBlockDownArrow instance 10010",
+        "frame": {"x":501,"y":1326,"w":80,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":100},
+        "sourceSize": {"w":80,"h":100}
+    }
+    ,{
+        "filename": "invisBlockDownArrow instance 10011",
+        "frame": {"x":739,"y":1327,"w":80,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":100},
+        "sourceSize": {"w":80,"h":100}
+    }
+    ,{
+        "filename": "invisBlockDownArrow instance 10012",
+        "frame": {"x":821,"y":1327,"w":80,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":100},
+        "sourceSize": {"w":80,"h":100}
+    }
+    ,{
+        "filename": "invisBlockDownArrow instance 10013",
+        "frame": {"x":903,"y":1327,"w":80,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":100},
+        "sourceSize": {"w":80,"h":100}
+    }
+    ,{
+        "filename": "invisBlockDownArrow instance 10014",
+        "frame": {"x":1,"y":1348,"w":80,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":100},
+        "sourceSize": {"w":80,"h":100}
+    }
+    ,{
+        "filename": "invisBlockDownArrow instance 10015",
+        "frame": {"x":165,"y":1398,"w":80,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":100},
+        "sourceSize": {"w":80,"h":100}
+    }
+    ,{
+        "filename": "invisBlockDownArrow instance 10016",
+        "frame": {"x":247,"y":1419,"w":80,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":100},
+        "sourceSize": {"w":80,"h":100}
+    }
+    ,{
+        "filename": "invisBlockDownArrow instance 10017",
+        "frame": {"x":583,"y":1419,"w":80,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":100},
+        "sourceSize": {"w":80,"h":100}
+    }
+    ,{
+        "filename": "invisBlockDownArrow instance 10018",
+        "frame": {"x":83,"y":1427,"w":80,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":100},
+        "sourceSize": {"w":80,"h":100}
+    }
+    ,{
+        "filename": "invisBlockDownArrow instance 10019",
+        "frame": {"x":739,"y":1824,"w":80,"h":61},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":100},
+        "sourceSize": {"w":80,"h":100}
+    }
+    ,{
+        "filename": "invisBlockDownArrow instance 10020",
+        "frame": {"x":247,"y":1743,"w":80,"h":66},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":100},
+        "sourceSize": {"w":80,"h":100}
+    }
+    ,{
+        "filename": "invisBlockDownArrow instance 10021",
+        "frame": {"x":165,"y":1656,"w":80,"h":67},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":3,"w":80,"h":100},
+        "sourceSize": {"w":80,"h":100}
+    }
+    ,{
+        "filename": "invisBlockDownArrow instance 10022",
+        "frame": {"x":83,"y":1656,"w":80,"h":67},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":8,"w":80,"h":100},
+        "sourceSize": {"w":80,"h":100}
+    }
+    ,{
+        "filename": "invisBlockDownArrow instance 10023",
+        "frame": {"x":429,"y":1630,"w":80,"h":67},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":12,"w":80,"h":100},
+        "sourceSize": {"w":80,"h":100}
+    }
+    ,{
+        "filename": "invisBlockDownArrow instance 10024",
+        "frame": {"x":593,"y":1739,"w":80,"h":66},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":17,"w":80,"h":100},
+        "sourceSize": {"w":80,"h":100}
+    }
+    ,{
+        "filename": "invisBlockUpArrow instance 10000",
+        "frame": {"x":839,"y":1688,"w":80,"h":66},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":17,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "invisBlockUpArrow instance 10001",
+        "frame": {"x":921,"y":1688,"w":80,"h":66},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":13,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "invisBlockUpArrow instance 10002",
+        "frame": {"x":329,"y":1699,"w":80,"h":66},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":8,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "invisBlockUpArrow instance 10003",
+        "frame": {"x":411,"y":1699,"w":80,"h":66},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":4,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "invisBlockUpArrow instance 10004",
+        "frame": {"x":83,"y":1725,"w":80,"h":66},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "invisBlockUpArrow instance 10005",
+        "frame": {"x":1,"y":1815,"w":80,"h":61},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "invisBlockUpArrow instance 10006",
+        "frame": {"x":1,"y":1039,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "invisBlockUpArrow instance 10007",
+        "frame": {"x":165,"y":1089,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "invisBlockUpArrow instance 10008",
+        "frame": {"x":697,"y":1111,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "invisBlockUpArrow instance 10009",
+        "frame": {"x":83,"y":1119,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "invisBlockUpArrow instance 10010",
+        "frame": {"x":247,"y":1120,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "invisBlockUpArrow instance 10011",
+        "frame": {"x":329,"y":1120,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "invisBlockUpArrow instance 10012",
+        "frame": {"x":411,"y":1120,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "invisBlockUpArrow instance 10013",
+        "frame": {"x":493,"y":1120,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "invisBlockUpArrow instance 10014",
+        "frame": {"x":575,"y":1120,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "invisBlockUpArrow instance 10015",
+        "frame": {"x":779,"y":1121,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "invisBlockUpArrow instance 10016",
+        "frame": {"x":861,"y":1121,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "invisBlockUpArrow instance 10017",
+        "frame": {"x":943,"y":1121,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "invisBlockUpArrow instance 10018",
+        "frame": {"x":1,"y":1142,"w":80,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "invisBlockUpArrow instance 10019",
+        "frame": {"x":481,"y":1808,"w":80,"h":62},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":39,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "invisBlockUpArrow instance 10020",
+        "frame": {"x":165,"y":1725,"w":80,"h":66},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":35,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "invisBlockUpArrow instance 10021",
+        "frame": {"x":411,"y":1699,"w":80,"h":66},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":30,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "invisBlockUpArrow instance 10022",
+        "frame": {"x":329,"y":1699,"w":80,"h":66},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":26,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "invisBlockUpArrow instance 10023",
+        "frame": {"x":921,"y":1688,"w":80,"h":66},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":21,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "invisBlockUpArrow instance 10024",
+        "frame": {"x":839,"y":1688,"w":80,"h":66},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":17,"w":80,"h":101},
+        "sourceSize": {"w":80,"h":101}
+    }
+    ,{
+        "filename": "key instance 10000",
+        "frame": {"x":657,"y":1120,"w":23,"h":47},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":23,"h":47},
+        "sourceSize": {"w":23,"h":47}
+    }
+    ,{
+        "filename": "kite instance 10000",
+        "frame": {"x":905,"y":1886,"w":76,"h":45},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":76,"h":45},
+        "sourceSize": {"w":76,"h":45}
+    }
+    ,{
+        "filename": "leftSlopeColors instance 10000",
+        "frame": {"x":264,"y":679,"w":101,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":101,"h":100},
+        "sourceSize": {"w":101,"h":100}
+    }
+    ,{
+        "filename": "leftSlopeColors instance 10001",
+        "frame": {"x":143,"y":709,"w":101,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":101,"h":100},
+        "sourceSize": {"w":101,"h":100}
+    }
+    ,{
+        "filename": "leftSlopeColors instance 10002",
+        "frame": {"x":367,"y":711,"w":101,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":101,"h":100},
+        "sourceSize": {"w":101,"h":100}
+    }
+    ,{
+        "filename": "leftSlopeColors instance 10003",
+        "frame": {"x":470,"y":711,"w":101,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":101,"h":100},
+        "sourceSize": {"w":101,"h":100}
+    }
+    ,{
+        "filename": "leftSlopeColors instance 10004",
+        "frame": {"x":573,"y":711,"w":101,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":101,"h":100},
+        "sourceSize": {"w":101,"h":100}
+    }
+    ,{
+        "filename": "leftSlopeColors instance 10005",
+        "frame": {"x":676,"y":711,"w":101,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":101,"h":100},
+        "sourceSize": {"w":101,"h":100}
+    }
+    ,{
+        "filename": "leftSlopeColors instance 10006",
+        "frame": {"x":779,"y":711,"w":101,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":101,"h":100},
+        "sourceSize": {"w":101,"h":100}
+    }
+    ,{
+        "filename": "leftSlopeColors instance 10007",
+        "frame": {"x":882,"y":711,"w":101,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":101,"h":100},
+        "sourceSize": {"w":101,"h":100}
+    }
+    ,{
+        "filename": "lightSwitch instance 10000",
+        "frame": {"x":985,"y":1279,"w":23,"h":22},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":23,"h":22},
+        "sourceSize": {"w":23,"h":22}
+    }
+    ,{
+        "filename": "lockBlock instance 10000",
+        "frame": {"x":451,"y":813,"w":101,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":101,"h":100},
+        "sourceSize": {"w":101,"h":100}
+    }
+    ,{
+        "filename": "player-arm instance 10000",
+        "frame": {"x":768,"y":447,"w":10,"h":12},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":10,"h":12},
+        "sourceSize": {"w":10,"h":12}
+    }
+    ,{
+        "filename": "player-body instance 10000",
+        "frame": {"x":550,"y":253,"w":6,"h":10},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":6,"h":10},
+        "sourceSize": {"w":6,"h":10}
+    }
+    ,{
+        "filename": "player-head instance 10000",
+        "frame": {"x":793,"y":525,"w":9,"h":9},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":9,"h":9},
+        "sourceSize": {"w":9,"h":9}
+    }
+    ,{
+        "filename": "player-leg instance 10000",
+        "frame": {"x":285,"y":377,"w":11,"h":15},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":11,"h":15},
+        "sourceSize": {"w":11,"h":15}
+    }
+    ,{
+        "filename": "pole instance 10000",
+        "frame": {"x":780,"y":447,"w":10,"h":10},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":10,"h":10},
+        "sourceSize": {"w":10,"h":10}
+    }
+    ,{
+        "filename": "poleRedSection instance 10000",
+        "frame": {"x":985,"y":711,"w":30,"h":55},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":30,"h":55},
+        "sourceSize": {"w":30,"h":55}
+    }
+    ,{
+        "filename": "portal_blueAnim instance 10000",
+        "frame": {"x":949,"y":1,"w":72,"h":79},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":16,"y":2,"w":109,"h":92},
+        "sourceSize": {"w":109,"h":92}
+    }
+    ,{
+        "filename": "portal_blueAnim instance 10001",
+        "frame": {"x":268,"y":1521,"w":57,"h":66},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":23,"y":7,"w":109,"h":92},
+        "sourceSize": {"w":109,"h":92}
+    }
+    ,{
+        "filename": "portal_blueAnim instance 10002",
+        "frame": {"x":718,"y":1591,"w":77,"h":74},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":9,"w":109,"h":92},
+        "sourceSize": {"w":109,"h":92}
+    }
+    ,{
+        "filename": "portal_blueAnim instance 10003",
+        "frame": {"x":447,"y":253,"w":101,"h":66},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":6,"y":13,"w":109,"h":92},
+        "sourceSize": {"w":109,"h":92}
+    }
+    ,{
+        "filename": "portal_blueAnim instance 10004",
+        "frame": {"x":797,"y":1591,"w":89,"h":62},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":12,"y":13,"w":109,"h":92},
+        "sourceSize": {"w":109,"h":92}
+    }
+    ,{
+        "filename": "portal_blueAnim instance 10005",
+        "frame": {"x":328,"y":1829,"w":78,"h":60},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":17,"y":13,"w":109,"h":92},
+        "sourceSize": {"w":109,"h":92}
+    }
+    ,{
+        "filename": "portal_blueAnim instance 10006",
+        "frame": {"x":329,"y":1767,"w":87,"h":60},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":22,"y":13,"w":109,"h":92},
+        "sourceSize": {"w":109,"h":92}
+    }
+    ,{
+        "filename": "portal_blueAnim instance 10007",
+        "frame": {"x":903,"y":1824,"w":80,"h":60},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":27,"y":13,"w":109,"h":92},
+        "sourceSize": {"w":109,"h":92}
+    }
+    ,{
+        "filename": "portal_blueAnim instance 10008",
+        "frame": {"x":1,"y":1878,"w":74,"h":60},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":27,"y":13,"w":109,"h":92},
+        "sourceSize": {"w":109,"h":92}
+    }
+    ,{
+        "filename": "portal_blueAnim instance 10009",
+        "frame": {"x":715,"y":915,"w":95,"h":91},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":1,"y":1,"w":109,"h":92},
+        "sourceSize": {"w":109,"h":92}
+    }
+    ,{
+        "filename": "portal_blueAnim instance 10010",
+        "frame": {"x":247,"y":1326,"w":88,"h":91},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":9,"y":1,"w":109,"h":92},
+        "sourceSize": {"w":109,"h":92}
+    }
+    ,{
+        "filename": "portal_blueAnim instance 10011",
+        "frame": {"x":633,"y":608,"w":76,"h":82},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":17,"y":6,"w":109,"h":92},
+        "sourceSize": {"w":109,"h":92}
+    }
+    ,{
+        "filename": "portal_blueAnim instance 10012",
+        "frame": {"x":268,"y":1590,"w":77,"h":83},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":13,"y":0,"w":109,"h":92},
+        "sourceSize": {"w":109,"h":92}
+    }
+    ,{
+        "filename": "portal_blueAnim instance 10013",
+        "frame": {"x":949,"y":82,"w":72,"h":79},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":16,"y":2,"w":109,"h":92},
+        "sourceSize": {"w":109,"h":92}
+    }
+    ,{
+        "filename": "portal_blue_disabledAnim instance 10000",
+        "frame": {"x":388,"y":1914,"w":51,"h":60},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":4,"w":51,"h":65},
+        "sourceSize": {"w":51,"h":65}
+    }
+    ,{
+        "filename": "portal_blue_disabledAnim instance 10001",
+        "frame": {"x":131,"y":1913,"w":51,"h":62},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":2,"w":51,"h":65},
+        "sourceSize": {"w":51,"h":65}
+    }
+    ,{
+        "filename": "portal_blue_disabledAnim instance 10002",
+        "frame": {"x":104,"y":1529,"w":51,"h":64},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":0,"w":51,"h":65},
+        "sourceSize": {"w":51,"h":65}
+    }
+    ,{
+        "filename": "portal_blue_disabledAnim instance 10003",
+        "frame": {"x":441,"y":1914,"w":51,"h":60},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":4,"w":51,"h":65},
+        "sourceSize": {"w":51,"h":65}
+    }
+    ,{
+        "filename": "portal_blue_disabledAnim instance 10004",
+        "frame": {"x":639,"y":1925,"w":51,"h":60},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":4,"w":51,"h":65},
+        "sourceSize": {"w":51,"h":65}
+    }
+    ,{
+        "filename": "portal_blue_disabledAnim instance 10005",
+        "frame": {"x":974,"y":1429,"w":49,"h":60},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":1,"y":4,"w":51,"h":65},
+        "sourceSize": {"w":51,"h":65}
+    }
+    ,{
+        "filename": "portal_blue_disabledAnim instance 10006",
+        "frame": {"x":974,"y":1491,"w":49,"h":60},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":1,"y":4,"w":51,"h":65},
+        "sourceSize": {"w":51,"h":65}
+    }
+    ,{
+        "filename": "portal_blue_disabledAnim instance 10007",
+        "frame": {"x":692,"y":1925,"w":51,"h":60},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":4,"w":51,"h":65},
+        "sourceSize": {"w":51,"h":65}
+    }
+    ,{
+        "filename": "portal_blue_disabledAnim instance 10008",
+        "frame": {"x":745,"y":1925,"w":51,"h":60},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":4,"w":51,"h":65},
+        "sourceSize": {"w":51,"h":65}
+    }
+    ,{
+        "filename": "portal_blue_disabledAnim instance 10009",
+        "frame": {"x":798,"y":1925,"w":51,"h":60},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":4,"w":51,"h":65},
+        "sourceSize": {"w":51,"h":65}
+    }
+    ,{
+        "filename": "portal_blue_disabledAnim instance 10010",
+        "frame": {"x":851,"y":1925,"w":51,"h":60},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":4,"w":51,"h":65},
+        "sourceSize": {"w":51,"h":65}
+    }
+    ,{
+        "filename": "portal_blue_disabledAnim instance 10011",
+        "frame": {"x":335,"y":1914,"w":51,"h":61},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":4,"w":51,"h":65},
+        "sourceSize": {"w":51,"h":65}
+    }
+    ,{
+        "filename": "portal_blue_disabledAnim instance 10012",
+        "frame": {"x":184,"y":1930,"w":51,"h":60},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":4,"w":51,"h":65},
+        "sourceSize": {"w":51,"h":65}
+    }
+    ,{
+        "filename": "portal_blue_disabledAnim instance 10013",
+        "frame": {"x":237,"y":1930,"w":51,"h":60},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":4,"w":51,"h":65},
+        "sourceSize": {"w":51,"h":65}
+    }
+    ,{
+        "filename": "pushBlock instance 10000",
+        "frame": {"x":348,"y":813,"w":101,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":101,"h":100},
+        "sourceSize": {"w":101,"h":100}
+    }
+    ,{
+        "filename": "quadrant instance 10000",
+        "frame": {"x":558,"y":1,"w":179,"h":179},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":179,"h":179},
+        "sourceSize": {"w":179,"h":179}
+    }
+    ,{
+        "filename": "reaper instance 10000",
+        "frame": {"x":1,"y":1,"w":302,"h":302},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":302,"h":302},
+        "sourceSize": {"w":302,"h":302}
+    }
+    ,{
+        "filename": "shurikanDispenser instance 10000",
+        "frame": {"x":535,"y":1428,"w":46,"h":46},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":46,"h":46},
+        "sourceSize": {"w":46,"h":46}
+    }
+    ,{
+        "filename": "shurikanDispenser instance 10001",
+        "frame": {"x":535,"y":1428,"w":46,"h":46},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":46,"h":46},
+        "sourceSize": {"w":46,"h":46}
+    }
+    ,{
+        "filename": "shurikanDispenser instance 10002",
+        "frame": {"x":535,"y":1428,"w":46,"h":46},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":46,"h":46},
+        "sourceSize": {"w":46,"h":46}
+    }
+    ,{
+        "filename": "shurikanDispenser instance 10003",
+        "frame": {"x":535,"y":1428,"w":46,"h":46},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":46,"h":46},
+        "sourceSize": {"w":46,"h":46}
+    }
+    ,{
+        "filename": "shurikanDispenser instance 10004",
+        "frame": {"x":535,"y":1428,"w":46,"h":46},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":46,"h":46},
+        "sourceSize": {"w":46,"h":46}
+    }
+    ,{
+        "filename": "shurikanDispenser instance 10005",
+        "frame": {"x":535,"y":1428,"w":46,"h":46},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":46,"h":46},
+        "sourceSize": {"w":46,"h":46}
+    }
+    ,{
+        "filename": "shurikanDispenser instance 10006",
+        "frame": {"x":535,"y":1428,"w":46,"h":46},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":46,"h":46},
+        "sourceSize": {"w":46,"h":46}
+    }
+    ,{
+        "filename": "shurikanDispenser instance 10007",
+        "frame": {"x":535,"y":1428,"w":46,"h":46},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":46,"h":46},
+        "sourceSize": {"w":46,"h":46}
+    }
+    ,{
+        "filename": "shurikanDispenser instance 10008",
+        "frame": {"x":535,"y":1428,"w":46,"h":46},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":46,"h":46},
+        "sourceSize": {"w":46,"h":46}
+    }
+    ,{
+        "filename": "shurikanDispenser instance 10009",
+        "frame": {"x":535,"y":1428,"w":46,"h":46},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":46,"h":46},
+        "sourceSize": {"w":46,"h":46}
+    }
+    ,{
+        "filename": "shurikanDispenser instance 10010",
+        "frame": {"x":535,"y":1428,"w":46,"h":46},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":46,"h":46},
+        "sourceSize": {"w":46,"h":46}
+    }
+    ,{
+        "filename": "shurikanDispenser instance 10011",
+        "frame": {"x":535,"y":1428,"w":46,"h":46},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":46,"h":46},
+        "sourceSize": {"w":46,"h":46}
+    }
+    ,{
+        "filename": "shurikanDispenser instance 10012",
+        "frame": {"x":535,"y":1428,"w":46,"h":46},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":46,"h":46},
+        "sourceSize": {"w":46,"h":46}
+    }
+    ,{
+        "filename": "shurikanDispenser instance 10013",
+        "frame": {"x":535,"y":1428,"w":46,"h":46},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":46,"h":46},
+        "sourceSize": {"w":46,"h":46}
+    }
+    ,{
+        "filename": "shurikanDispenser instance 10014",
+        "frame": {"x":211,"y":1602,"w":46,"h":46},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":46,"h":46},
+        "sourceSize": {"w":46,"h":46}
+    }
+    ,{
+        "filename": "shurikanDispenser instance 10015",
+        "frame": {"x":904,"y":1933,"w":46,"h":46},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":46,"h":46},
+        "sourceSize": {"w":46,"h":46}
+    }
+    ,{
+        "filename": "shurikanDispenser instance 10016",
+        "frame": {"x":952,"y":1933,"w":46,"h":46},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":46,"h":46},
+        "sourceSize": {"w":46,"h":46}
+    }
+    ,{
+        "filename": "shurikanDispenser instance 10017",
+        "frame": {"x":1,"y":1940,"w":46,"h":46},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":46,"h":46},
+        "sourceSize": {"w":46,"h":46}
+    }
+    ,{
+        "filename": "shurikanDispenser instance 10018",
+        "frame": {"x":536,"y":1957,"w":46,"h":46},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":46,"h":46},
+        "sourceSize": {"w":46,"h":46}
+    }
+    ,{
+        "filename": "shurikanDispenser instance 10019",
+        "frame": {"x":584,"y":1957,"w":46,"h":46},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":46,"h":46},
+        "sourceSize": {"w":46,"h":46}
+    }
+    ,{
+        "filename": "shurikanDispenser instance 10020",
+        "frame": {"x":49,"y":1977,"w":46,"h":46},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":46,"h":46},
+        "sourceSize": {"w":46,"h":46}
+    }
+    ,{
+        "filename": "shurikanDispenser instance 10021",
+        "frame": {"x":97,"y":1977,"w":46,"h":46},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":46,"h":46},
+        "sourceSize": {"w":46,"h":46}
+    }
+    ,{
+        "filename": "shurikanDispenser instance 10022",
+        "frame": {"x":290,"y":1977,"w":46,"h":46},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":46,"h":46},
+        "sourceSize": {"w":46,"h":46}
+    }
+    ,{
+        "filename": "shurikanDispenser instance 10023",
+        "frame": {"x":338,"y":1977,"w":46,"h":46},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":46,"h":46},
+        "sourceSize": {"w":46,"h":46}
+    }
+    ,{
+        "filename": "shurikanDispenser instance 10024",
+        "frame": {"x":904,"y":1981,"w":46,"h":46},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":46,"h":46},
+        "sourceSize": {"w":46,"h":46}
+    }
+    ,{
+        "filename": "shurikanHorizontal instance 10000",
+        "frame": {"x":995,"y":670,"w":22,"h":23},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":22,"h":23},
+        "sourceSize": {"w":22,"h":23}
+    }
+    ,{
+        "filename": "shurikanHorizontal instance 10001",
+        "frame": {"x":247,"y":1089,"w":22,"h":23},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":22,"h":23},
+        "sourceSize": {"w":22,"h":23}
+    }
+    ,{
+        "filename": "shurikanHorizontal instance 10002",
+        "frame": {"x":657,"y":1169,"w":22,"h":23},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":22,"h":23},
+        "sourceSize": {"w":22,"h":23}
+    }
+    ,{
+        "filename": "shurikanSpawner instance 10000",
+        "frame": {"x":307,"y":884,"w":27,"h":28},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":27,"h":28},
+        "sourceSize": {"w":27,"h":28}
+    }
+    ,{
+        "filename": "skinSpin instance 10000",
+        "frame": {"x":976,"y":919,"w":44,"h":43},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":44,"h":43},
+        "sourceSize": {"w":44,"h":43}
+    }
+    ,{
+        "filename": "skinSpin instance 10001",
+        "frame": {"x":976,"y":964,"w":44,"h":43},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":44,"h":43},
+        "sourceSize": {"w":44,"h":43}
+    }
+    ,{
+        "filename": "skinSpin instance 10002",
+        "frame": {"x":535,"y":1476,"w":44,"h":43},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":44,"h":43},
+        "sourceSize": {"w":44,"h":43}
+    }
+    ,{
+        "filename": "skinSpin instance 10003",
+        "frame": {"x":708,"y":1987,"w":44,"h":43},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":44,"h":43},
+        "sourceSize": {"w":44,"h":43}
+    }
+    ,{
+        "filename": "skinSpin instance 10004",
+        "frame": {"x":754,"y":1987,"w":44,"h":43},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":44,"h":43},
+        "sourceSize": {"w":44,"h":43}
+    }
+    ,{
+        "filename": "solarBlock instance 10000",
+        "frame": {"x":511,"y":915,"w":100,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":100,"h":100},
+        "sourceSize": {"w":100,"h":100}
+    }
+    ,{
+        "filename": "spark instance 10000",
+        "frame": {"x":103,"y":788,"w":20,"h":21},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":20,"h":21},
+        "sourceSize": {"w":20,"h":21}
+    }
+    ,{
+        "filename": "sparkBlock instance 10000",
+        "frame": {"x":613,"y":915,"w":100,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":100,"h":100},
+        "sourceSize": {"w":100,"h":100}
+    }
+    ,{
+        "filename": "speedBlock instance 10000",
+        "frame": {"x":103,"y":811,"w":100,"h":101},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":100,"h":101},
+        "sourceSize": {"w":100,"h":101}
+    }
+    ,{
+        "filename": "speedBlockArrow instance 10000",
+        "frame": {"x":949,"y":163,"w":67,"h":79},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":17,"y":0,"w":101,"h":79},
+        "sourceSize": {"w":101,"h":79}
+    }
+    ,{
+        "filename": "speedBlockArrow instance 10001",
+        "frame": {"x":949,"y":244,"w":67,"h":79},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":21,"y":0,"w":101,"h":79},
+        "sourceSize": {"w":101,"h":79}
+    }
+    ,{
+        "filename": "speedBlockArrow instance 10002",
+        "frame": {"x":949,"y":325,"w":67,"h":79},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":26,"y":0,"w":101,"h":79},
+        "sourceSize": {"w":101,"h":79}
+    }
+    ,{
+        "filename": "speedBlockArrow instance 10003",
+        "frame": {"x":949,"y":406,"w":67,"h":79},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":30,"y":0,"w":101,"h":79},
+        "sourceSize": {"w":101,"h":79}
+    }
+    ,{
+        "filename": "speedBlockArrow instance 10004",
+        "frame": {"x":949,"y":487,"w":66,"h":79},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":35,"y":0,"w":101,"h":79},
+        "sourceSize": {"w":101,"h":79}
+    }
+    ,{
+        "filename": "speedBlockArrow instance 10005",
+        "frame": {"x":961,"y":1018,"w":62,"h":79},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":39,"y":0,"w":101,"h":79},
+        "sourceSize": {"w":101,"h":79}
+    }
+    ,{
+        "filename": "speedBlockArrow instance 10006",
+        "frame": {"x":329,"y":1428,"w":101,"h":79},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":101,"h":79},
+        "sourceSize": {"w":101,"h":79}
+    }
+    ,{
+        "filename": "speedBlockArrow instance 10007",
+        "frame": {"x":432,"y":1428,"w":101,"h":79},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":101,"h":79},
+        "sourceSize": {"w":101,"h":79}
+    }
+    ,{
+        "filename": "speedBlockArrow instance 10008",
+        "frame": {"x":665,"y":1429,"w":101,"h":79},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":101,"h":79},
+        "sourceSize": {"w":101,"h":79}
+    }
+    ,{
+        "filename": "speedBlockArrow instance 10009",
+        "frame": {"x":768,"y":1429,"w":101,"h":79},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":101,"h":79},
+        "sourceSize": {"w":101,"h":79}
+    }
+    ,{
+        "filename": "speedBlockArrow instance 10010",
+        "frame": {"x":871,"y":1429,"w":101,"h":79},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":101,"h":79},
+        "sourceSize": {"w":101,"h":79}
+    }
+    ,{
+        "filename": "speedBlockArrow instance 10011",
+        "frame": {"x":329,"y":1509,"w":101,"h":79},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":101,"h":79},
+        "sourceSize": {"w":101,"h":79}
+    }
+    ,{
+        "filename": "speedBlockArrow instance 10012",
+        "frame": {"x":432,"y":1509,"w":101,"h":79},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":101,"h":79},
+        "sourceSize": {"w":101,"h":79}
+    }
+    ,{
+        "filename": "speedBlockArrow instance 10013",
+        "frame": {"x":665,"y":1510,"w":101,"h":79},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":101,"h":79},
+        "sourceSize": {"w":101,"h":79}
+    }
+    ,{
+        "filename": "speedBlockArrow instance 10014",
+        "frame": {"x":768,"y":1510,"w":101,"h":79},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":101,"h":79},
+        "sourceSize": {"w":101,"h":79}
+    }
+    ,{
+        "filename": "speedBlockArrow instance 10015",
+        "frame": {"x":871,"y":1510,"w":101,"h":79},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":101,"h":79},
+        "sourceSize": {"w":101,"h":79}
+    }
+    ,{
+        "filename": "speedBlockArrow instance 10016",
+        "frame": {"x":165,"y":1521,"w":101,"h":79},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":101,"h":79},
+        "sourceSize": {"w":101,"h":79}
+    }
+    ,{
+        "filename": "speedBlockArrow instance 10017",
+        "frame": {"x":535,"y":1521,"w":101,"h":79},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":101,"h":79},
+        "sourceSize": {"w":101,"h":79}
+    }
+    ,{
+        "filename": "speedBlockArrow instance 10018",
+        "frame": {"x":1,"y":1529,"w":101,"h":79},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":101,"h":79},
+        "sourceSize": {"w":101,"h":79}
+    }
+    ,{
+        "filename": "speedBlockArrow instance 10019",
+        "frame": {"x":264,"y":1811,"w":62,"h":79},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":0,"w":101,"h":79},
+        "sourceSize": {"w":101,"h":79}
+    }
+    ,{
+        "filename": "speedBlockArrow instance 10020",
+        "frame": {"x":583,"y":1326,"w":66,"h":79},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":0,"w":101,"h":79},
+        "sourceSize": {"w":101,"h":79}
+    }
+    ,{
+        "filename": "speedBlockArrow instance 10021",
+        "frame": {"x":949,"y":406,"w":67,"h":79},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":4,"y":0,"w":101,"h":79},
+        "sourceSize": {"w":101,"h":79}
+    }
+    ,{
+        "filename": "speedBlockArrow instance 10022",
+        "frame": {"x":949,"y":325,"w":67,"h":79},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":8,"y":0,"w":101,"h":79},
+        "sourceSize": {"w":101,"h":79}
+    }
+    ,{
+        "filename": "speedBlockArrow instance 10023",
+        "frame": {"x":949,"y":244,"w":67,"h":79},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":13,"y":0,"w":101,"h":79},
+        "sourceSize": {"w":101,"h":79}
+    }
+    ,{
+        "filename": "speedBlockArrow instance 10024",
+        "frame": {"x":949,"y":163,"w":67,"h":79},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":17,"y":0,"w":101,"h":79},
+        "sourceSize": {"w":101,"h":79}
+    }
+    ,{
+        "filename": "spike instance 10000",
+        "frame": {"x":427,"y":440,"w":9,"h":19},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":9,"h":19},
+        "sourceSize": {"w":9,"h":19}
+    }
+    ,{
+        "filename": "spike10x instance 10000",
+        "frame": {"x":83,"y":1847,"w":97,"h":19},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":97,"h":19},
+        "sourceSize": {"w":97,"h":19}
+    }
+    ,{
+        "filename": "spike10xHigh instance 10000",
+        "frame": {"x":83,"y":1793,"w":97,"h":52},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":97,"h":52},
+        "sourceSize": {"w":97,"h":52}
+    }
+    ,{
+        "filename": "spike15x instance 10000",
+        "frame": {"x":388,"y":1976,"w":146,"h":18},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":146,"h":18},
+        "sourceSize": {"w":146,"h":18}
+    }
+    ,{
+        "filename": "spike20x instance 10000",
+        "frame": {"x":335,"y":1893,"w":194,"h":19},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":194,"h":19},
+        "sourceSize": {"w":194,"h":19}
+    }
+    ,{
+        "filename": "spike25x instance 10000",
+        "frame": {"x":408,"y":1872,"w":243,"h":19},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":243,"h":19},
+        "sourceSize": {"w":243,"h":19}
+    }
+    ,{
+        "filename": "spike30x instance 10000",
+        "frame": {"x":718,"y":1667,"w":292,"h":19},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":292,"h":19},
+        "sourceSize": {"w":292,"h":19}
+    }
+    ,{
+        "filename": "spike5x instance 10000",
+        "frame": {"x":367,"y":679,"w":49,"h":19},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":49,"h":19},
+        "sourceSize": {"w":49,"h":19}
+    }
+    ,{
+        "filename": "spikeActBlockHard instance 10000",
+        "frame": {"x":888,"y":1645,"w":126,"h":18},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":126,"h":18},
+        "sourceSize": {"w":126,"h":18}
+    }
+    ,{
+        "filename": "swimmingPool instance 10000",
+        "frame": {"x":305,"y":1,"w":251,"h":250},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":251,"h":250},
+        "sourceSize": {"w":251,"h":250}
+    }
+    ,{
+        "filename": "timedKey instance 10000",
+        "frame": {"x":985,"y":1224,"w":22,"h":47},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":22,"h":47},
+        "sourceSize": {"w":22,"h":47}
+    }
+    ,{
+        "filename": "torch instance 10000",
+        "frame": {"x":427,"y":395,"w":18,"h":43},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":18,"h":43},
+        "sourceSize": {"w":18,"h":43}
+    }
+    ,{
+        "filename": "verticalDownBlock instance 10000",
+        "frame": {"x":862,"y":813,"w":100,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":100,"h":100},
+        "sourceSize": {"w":100,"h":100}
+    }
+    ,{
+        "filename": "verticalUpBlock instance 10000",
+        "frame": {"x":1,"y":834,"w":100,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":100,"h":100},
+        "sourceSize": {"w":100,"h":100}
+    }
+    ,{
+        "filename": "wind-fan instance 10000",
+        "frame": {"x":264,"y":589,"w":14,"h":53},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":14,"h":53},
+        "sourceSize": {"w":14,"h":53}
+    }
+    ,{
+        "filename": "wind-fan instance 10001",
+        "frame": {"x":246,"y":709,"w":14,"h":53},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":14,"h":53},
+        "sourceSize": {"w":14,"h":53}
+    }
+    ,{
+        "filename": "wind-fan instance 10002",
+        "frame": {"x":230,"y":811,"w":14,"h":53},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":14,"h":53},
+        "sourceSize": {"w":14,"h":53}
+    }
+    ,{
+        "filename": "wind-fan instance 10003",
+        "frame": {"x":83,"y":936,"w":14,"h":53},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":14,"h":53},
+        "sourceSize": {"w":14,"h":53}
+    }
+    ,{
+        "filename": "wind-fan instance 10004",
+        "frame": {"x":697,"y":1017,"w":14,"h":53},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":14,"h":53},
+        "sourceSize": {"w":14,"h":53}
+    }
+    ,{
+        "filename": "wind-fan instance 10005",
+        "frame": {"x":1009,"y":1224,"w":14,"h":53},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":14,"h":53},
+        "sourceSize": {"w":14,"h":53}
+    }
+    ,{
+        "filename": "windBlaster instance 10000",
+        "frame": {"x":700,"y":182,"w":25,"h":100},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":25,"h":100},
+        "sourceSize": {"w":25,"h":100}
+    }
+    ,{
+        "filename": "wire instance 10000",
+        "frame": {"x":633,"y":692,"w":50,"h":8},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":50,"h":8},
+        "sourceSize": {"w":50,"h":8}
+    }
+    ,{
+        "filename": "wire instance 20000",
+        "frame": {"x":633,"y":692,"w":50,"h":8},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":50,"h":8},
+        "sourceSize": {"w":50,"h":8}
+    }
+    ,{
+        "filename": "ziplinePole instance 10000",
+        "frame": {"x":793,"y":447,"w":11,"h":64},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":11,"h":64},
+        "sourceSize": {"w":11,"h":64}
+    }],
+    "meta": {
+        "app": "Adobe Animate",
+        "version": "16.5.0.100",
+        "image": "gameplay.png",
+        "format": "RGBA8888",
+        "size": {"w":1024,"h":2048},
+        "scale": "1"
+    }
+    }

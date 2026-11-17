@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Changelog | webretro</title>
+		<style>
+			body {
+				color: white;
+				background-color: #101010;
+				font-family: sans-serif;
+				text-align: center;
+			}
+			
+			p.breaker {
+				margin-top: 100px;
+			}
+			
+			#changelog {
+				white-space: pre;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Changelog | webretro</h1>
+		<p class="breaker"></p>
+		<div id="changelog">Loading changelog...</div>
+		<p class="breaker"></p>
+		<script type="text/javascript">
+		
+		var webretroVersion = 6.5;
+		var latestVersion;
+		var infoJsonUrl = "https://cdn.jsdelivr.net/gh/BinBashBanana/webretro/assets/info.json";
+		var changelogDiv = document.getElementById("changelog");
+		
+		function grab(url, type, success, fail) {
+			var req = new XMLHttpRequest();
+			req.open("GET", url, true);
+			req.overrideMimeType("text/plain; charset=x-user-defined");
+			req.responseType = type;
+			req.timeout = 8000;
+			req.onload = function() {
+				if (req.status >= 400) {
+					if (fail) fail(req.status);
+				} else {
+					if (success) success(this.response);
+				}
+			}
+			req.onerror = function() {
+				if (fail) fail(0);
+			}
+			req.ontimeout = function() {
+				if (fail) fail(0);
+			}
+			req.send();
+		}
+		
+		function failure(error) {
+			changelogDiv.textContent = "Failed to load changelog. Try reloading the page.";
+			throw error;
+		}
+		
+		grab(infoJsonUrl, "text", function(text) {
+			try {
+				var updateObj = JSON.parse(text);
+				if (updateObj.webretro) {
+					changelogDiv.textContent = "";
+					latestVersion = updateObj.webretro;
+					var versions = Object.keys(updateObj.versions).reverse();
+					
+					for (var i = 0; i < versions.length; i++) {
+						var ver = parseFloat(versions[i]);
+						
+						var elVer = document.createElement("h3");
+						elVer.textContent = "v" + ver.toFixed(1);
+						if (ver == latestVersion) elVer.textContent += " (Latest Version)";
+						if (ver == webretroVersion) elVer.textContent += " (Installed Version)";
+						changelogDiv.appendChild(elVer);
+						
+						var elList = document.createElement("div");
+						elList.textContent = "- " + updateObj.versions[versions[i]].changeList.join("\n- ");
+						changelogDiv.appendChild(elList);
+					}
+				} else {
+					failure();
+				}
+			} catch (e) {
+				failure(e);
+			}
+		}, function(e) {
+			failure(e);
+		});
+		
+		</script>
+	</body>
+</html>

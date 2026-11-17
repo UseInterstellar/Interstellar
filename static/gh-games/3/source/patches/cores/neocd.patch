@@ -1,0 +1,52 @@
+diff --git a/Makefile b/Makefile
+index 3a551dd..7a49452 100644
+--- a/Makefile
++++ b/Makefile
+@@ -134,9 +134,8 @@ else ifneq (,$(findstring qnx,$(platform)))
+    fpic := -fPIC
+    SHARED := -shared -Wl,--version-script=$(CORE_DIR)/link.T -Wl,--no-undefined
+ else ifeq ($(platform), emscripten)
+-   TARGET := $(TARGET_NAME)_libretro_emscripten.bc
+-   fpic := -fPIC
+-   SHARED :=
++   TARGET := $(TARGET_NAME)_libretro_$(platform).bc
++   AR = emar
+    CFLAGS += -DSYNC_CDROM=1
+    CXXFLAGS += -DSYNC_CDROM=1
+    STATIC_LINKING = 1
+@@ -214,8 +213,8 @@ ifeq ($(DEBUG), 1)
+    CFLAGS += -O0 -g -DDEBUG
+    CXXFLAGS += -O0 -g -DDEBUG
+ else ifeq ($(platform), emscripten)
+-   CFLAGS += -O2
+-   CXXFLAGS += -O2
++   CFLAGS += -O3
++   CXXFLAGS += -O3
+ else
+    CFLAGS += -Ofast -DNDEBUG
+    CXXFLAGS += -Ofast -DNDEBUG
+@@ -239,10 +238,7 @@ CXXFLAGS += -Wall -D__LIBRETRO__ $(fpic) $(INCFLAGS)
+ all: $(TARGET)
+ 
+ $(TARGET): $(OBJECTS)
+-ifeq ($(platform), emscripten)
+-	@$(if $(Q), $(shell echo echo LD $@),)
+-	$(CXX) $(fpic) -r $(SHARED) -o $@ $(OBJECTS) $(LIBS) $(LDFLAGS)
+-else ifeq ($(STATIC_LINKING), 1)
++ifeq ($(STATIC_LINKING), 1)
+ 	$(AR) rcs $@ $(OBJECTS)
+ else
+ 	@$(if $(Q), $(shell echo echo LD $@),)
+diff --git a/Makefile.common b/Makefile.common
+index 09d2356..41ffe29 100644
+--- a/Makefile.common
++++ b/Makefile.common
+@@ -100,7 +100,7 @@ SRC_LIBRETRO_COMMON = \
+ 	$(LIBRETRO_COMM_DIR)/string/stdstring.c \
+ 	$(LIBRETRO_COMM_DIR)/vfs/vfs_implementation.c
+ 
+-SRC_LIBRETRO_COMMON += \
++SOURCES_C += \
+ 	$(LZMA_DIR)/src/Alloc.c \
+ 	$(LZMA_DIR)/src/Bra86.c \
+ 	$(LZMA_DIR)/src/BraIA64.c \

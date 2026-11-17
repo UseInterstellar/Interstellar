@@ -1,0 +1,911 @@
+{
+    "hierarchy": {
+        "name": "Canvas",
+        "children": [
+            {
+                "name": "container",
+                "children": [
+                    {
+                        "name": "close"
+                    },
+                    {
+                        "name": "title"
+                    },
+                    {
+                        "name": "container1",
+                        "children": [
+                            {
+                                "name": "standar_acts_text"
+                            },
+                            {
+                                "name": "standar_acts_bar_bg",
+                                "children": [
+                                    {
+                                        "name": "standar_acts_bar"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "standar_acts_percentage"
+                            },
+                            {
+                                "name": "act1"
+                            },
+                            {
+                                "name": "act2"
+                            },
+                            {
+                                "name": "act3"
+                            },
+                            {
+                                "name": "act4"
+                            },
+                            {
+                                "name": "act5"
+                            },
+                            {
+                                "name": "act6"
+                            },
+                            {
+                                "name": "act7"
+                            },
+                            {
+                                "name": "act8"
+                            },
+                            {
+                                "name": "act9"
+                            },
+                            {
+                                "name": "act10"
+                            },
+                            {
+                                "name": "hardcore_text"
+                            },
+                            {
+                                "name": "hardcore_bar_bg",
+                                "children": [
+                                    {
+                                        "name": "hardcore_bar"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "hardcore_percentage"
+                            },
+                            {
+                                "name": "star1"
+                            },
+                            {
+                                "name": "star2"
+                            },
+                            {
+                                "name": "star3"
+                            },
+                            {
+                                "name": "star4"
+                            },
+                            {
+                                "name": "star5"
+                            },
+                            {
+                                "name": "star6"
+                            },
+                            {
+                                "name": "star7"
+                            },
+                            {
+                                "name": "star8"
+                            },
+                            {
+                                "name": "star9"
+                            },
+                            {
+                                "name": "star10"
+                            },
+                            {
+                                "name": "hardcore1"
+                            },
+                            {
+                                "name": "hardcore2"
+                            },
+                            {
+                                "name": "hardcore3"
+                            },
+                            {
+                                "name": "hardcore4"
+                            },
+                            {
+                                "name": "hardcore5"
+                            },
+                            {
+                                "name": "hardcore6"
+                            },
+                            {
+                                "name": "hardcore7"
+                            },
+                            {
+                                "name": "hardcore8"
+                            },
+                            {
+                                "name": "hardcore9"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "container2",
+                        "children": [
+                            {
+                                "name": "standar_acts_text"
+                            },
+                            {
+                                "name": "standar_acts_bar_bg",
+                                "children": [
+                                    {
+                                        "name": "standar_acts_bar"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "standar_acts_percentage"
+                            },
+                            {
+                                "name": "stuff1"
+                            },
+                            {
+                                "name": "stuff2"
+                            },
+                            {
+                                "name": "stuff3"
+                            },
+                            {
+                                "name": "stuff4"
+                            },
+                            {
+                                "name": "stuff5"
+                            },
+                            {
+                                "name": "hardcore_text"
+                            },
+                            {
+                                "name": "hardcore_bar_bg",
+                                "children": [
+                                    {
+                                        "name": "hardcore_bar"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "hardcore_percentage"
+                            },
+                            {
+                                "name": "completion1"
+                            },
+                            {
+                                "name": "completion2"
+                            },
+                            {
+                                "name": "completion3"
+                            },
+                            {
+                                "name": "completion4"
+                            },
+                            {
+                                "name": "completion5"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "1_2"
+                    },
+                    {
+                        "name": "2_2"
+                    },
+                    {
+                        "name": "description"
+                    },
+                    {
+                        "name": "back_arrow"
+                    },
+                    {
+                        "name": "next_arrow"
+                    }
+                ]
+            }
+        ]
+    },
+    "properties": {
+        "Canvas": {
+            "design": {
+                "width": 960,
+                "height": 640
+            },
+            "type": "canvas"
+        },
+        "container": {
+            "file": "trop_container.png",
+            "image": "SIMPLE",
+            "type": "sprite",
+            "alignment": {
+                "type": "CENTER",
+                "offset": {
+                    "x": 5.7,
+                    "y": 0.9
+                }
+            }
+        },
+        "container/close": {
+            "file": "trop_close.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 250.1,
+                "y": -281.8
+            },
+            "type": "button"
+        },
+        "container/title": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 44
+            },
+            "text": "Trophies",
+            "align": "center",
+            "position": {
+                "x": -231.2,
+                "y": -275.5
+            },
+            "anchor": {
+                "x": 0,
+                "y": 0.5
+            },
+            "type": "text"
+        },
+        "container/container1": {
+            "position": {
+                "x": 0,
+                "y": 0
+            },
+            "type": "container"
+        },
+        "container/container1/standar_acts_text": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 28
+            },
+            "text": "Standar Acts",
+            "align": "center",
+            "position": {
+                "x": -251.5,
+                "y": -219.4
+            },
+            "anchor": {
+                "x": 0,
+                "y": 0.5
+            },
+            "type": "text"
+        },
+        "container/container1/standar_acts_bar_bg": {
+            "file": "trop_bar_bg.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 141.2,
+                "y": -222.8
+            },
+            "type": "sprite"
+        },
+        "container/container1/standar_acts_bar_bg/standar_acts_bar": {
+            "file": "trop_bar.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -89,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0,
+                "y": 0.5
+            },
+            "type": "sprite"
+        },
+        "container/container1/standar_acts_percentage": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 25
+            },
+            "text": "5/10",
+            "align": "center",
+            "position": {
+                "x": -5.4,
+                "y": -222.1
+            },
+            "anchor": {
+                "x": 0,
+                "y": 0.5
+            },
+            "type": "text"
+        },
+        "container/container1/act1": {
+            "file": "trop_act1_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -193,
+                "y": -155.9
+            },
+            "type": "sprite"
+        },
+        "container/container1/act2": {
+            "file": "trop_act2_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -99.5,
+                "y": -155.9
+            },
+            "type": "sprite"
+        },
+        "container/container1/act3": {
+            "file": "trop_act3_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -5.9,
+                "y": -155.9
+            },
+            "type": "sprite"
+        },
+        "container/container1/act4": {
+            "file": "trop_act4_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 87.6,
+                "y": -155.9
+            },
+            "type": "sprite"
+        },
+        "container/container1/act5": {
+            "file": "trop_act5_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 181.1,
+                "y": -155.9
+            },
+            "type": "sprite"
+        },
+        "container/container1/act6": {
+            "file": "trop_act6_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -195.9,
+                "y": -85.9
+            },
+            "type": "sprite"
+        },
+        "container/container1/act7": {
+            "file": "trop_act7_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -101.8,
+                "y": -85.9
+            },
+            "type": "sprite"
+        },
+        "container/container1/act8": {
+            "file": "trop_act8_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -7.5,
+                "y": -85.9
+            },
+            "type": "sprite"
+        },
+        "container/container1/act9": {
+            "file": "trop_act9_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 86.5,
+                "y": -85.9
+            },
+            "type": "sprite"
+        },
+        "container/container1/act10": {
+            "file": "trop_act10_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 180.1,
+                "y": -86
+            },
+            "type": "sprite"
+        },
+        "container/container1/hardcore_text": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 27
+            },
+            "text": "Hardcore",
+            "align": "center",
+            "position": {
+                "x": -252.6,
+                "y": -14.6
+            },
+            "anchor": {
+                "x": 0,
+                "y": 0.5
+            },
+            "type": "text"
+        },
+        "container/container1/hardcore_bar_bg": {
+            "file": "trop_bar_bg.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 140.9,
+                "y": -17
+            },
+            "type": "sprite"
+        },
+        "container/container1/hardcore_bar_bg/hardcore_bar": {
+            "file": "trop_bar.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -89,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0,
+                "y": 0.5
+            },
+            "type": "sprite"
+        },
+        "container/container1/hardcore_percentage": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 25
+            },
+            "text": "2/19",
+            "align": "center",
+            "position": {
+                "x": -1.2,
+                "y": -16.1
+            },
+            "anchor": {
+                "x": 0,
+                "y": 0.5
+            },
+            "type": "text"
+        },
+        "container/container1/star1": {
+            "file": "trop_star1_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -228.5,
+                "y": 52.5
+            },
+            "type": "sprite"
+        },
+        "container/container1/star2": {
+            "file": "trop_star1_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -179.7,
+                "y": 52.5
+            },
+            "type": "sprite"
+        },
+        "container/container1/star3": {
+            "file": "trop_star1_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -131,
+                "y": 52.5
+            },
+            "type": "sprite"
+        },
+        "container/container1/star4": {
+            "file": "trop_star1_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -82.2,
+                "y": 52.5
+            },
+            "type": "sprite"
+        },
+        "container/container1/star5": {
+            "file": "trop_star1_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -33.4,
+                "y": 52.5
+            },
+            "type": "sprite"
+        },
+        "container/container1/star6": {
+            "file": "trop_star1_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 15.3,
+                "y": 52.5
+            },
+            "type": "sprite"
+        },
+        "container/container1/star7": {
+            "file": "trop_star1_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 64.1,
+                "y": 52.5
+            },
+            "type": "sprite"
+        },
+        "container/container1/star8": {
+            "file": "trop_star1_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 112.9,
+                "y": 52.5
+            },
+            "type": "sprite"
+        },
+        "container/container1/star9": {
+            "file": "trop_star1_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 161.6,
+                "y": 52.5
+            },
+            "type": "sprite"
+        },
+        "container/container1/star10": {
+            "file": "trop_star1_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 210.4,
+                "y": 52.5
+            },
+            "type": "sprite"
+        },
+        "container/container1/hardcore1": {
+            "file": "trop_hard_mode1_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -226.8,
+                "y": 118.3
+            },
+            "type": "sprite"
+        },
+        "container/container1/hardcore2": {
+            "file": "trop_hard_mode1_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -171.6,
+                "y": 118.3
+            },
+            "type": "sprite"
+        },
+        "container/container1/hardcore3": {
+            "file": "trop_hard_mode1_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -116.4,
+                "y": 118.3
+            },
+            "type": "sprite"
+        },
+        "container/container1/hardcore4": {
+            "file": "trop_hard_mode1_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -61.2,
+                "y": 118.3
+            },
+            "type": "sprite"
+        },
+        "container/container1/hardcore5": {
+            "file": "trop_hard_mode1_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -6,
+                "y": 118.3
+            },
+            "type": "sprite"
+        },
+        "container/container1/hardcore6": {
+            "file": "trop_hard_mode1_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 49.2,
+                "y": 118.3
+            },
+            "type": "sprite"
+        },
+        "container/container1/hardcore7": {
+            "file": "trop_hard_mode1_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 104.4,
+                "y": 118.3
+            },
+            "type": "sprite"
+        },
+        "container/container1/hardcore8": {
+            "file": "trop_hard_mode1_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 159.6,
+                "y": 118.3
+            },
+            "type": "sprite"
+        },
+        "container/container1/hardcore9": {
+            "file": "trop_hard_mode1_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 214.8,
+                "y": 118.3
+            },
+            "type": "sprite"
+        },
+        "container/container2": {
+            "position": {
+                "x": 0,
+                "y": 0
+            },
+            "type": "container"
+        },
+        "container/container2/standar_acts_text": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 28
+            },
+            "text": "Awsome Stuff",
+            "align": "center",
+            "position": {
+                "x": -253.7,
+                "y": -218.3
+            },
+            "anchor": {
+                "x": 0,
+                "y": 0.5
+            },
+            "type": "text"
+        },
+        "container/container2/standar_acts_bar_bg": {
+            "file": "trop_bar_bg.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 141,
+                "y": -223
+            },
+            "type": "sprite"
+        },
+        "container/container2/standar_acts_bar_bg/standar_acts_bar": {
+            "file": "trop_bar.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -89,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0,
+                "y": 0.5
+            },
+            "type": "sprite"
+        },
+        "container/container2/standar_acts_percentage": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 25
+            },
+            "text": "1/7",
+            "align": "center",
+            "position": {
+                "x": -4,
+                "y": -222
+            },
+            "anchor": {
+                "x": 0,
+                "y": 0.5
+            },
+            "type": "text"
+        },
+        "container/container2/stuff1": {
+            "file": "trop_stuff1_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -146.9,
+                "y": -154.1
+            },
+            "type": "sprite"
+        },
+        "container/container2/stuff2": {
+            "file": "trop_stuff3_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -8.1,
+                "y": -151.9
+            },
+            "type": "sprite"
+        },
+        "container/container2/stuff3": {
+            "file": "trop_stuff4_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 117.9,
+                "y": -154
+            },
+            "type": "sprite"
+        },
+        "container/container2/stuff4": {
+            "file": "trop_stuff5_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -78.3,
+                "y": -84.9
+            },
+            "type": "sprite"
+        },
+        "container/container2/stuff5": {
+            "file": "trop_stuff6_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 63.2,
+                "y": -85.3
+            },
+            "type": "sprite"
+        },
+        "container/container2/hardcore_text": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 27
+            },
+            "text": "Completion",
+            "align": "center",
+            "position": {
+                "x": -253.4,
+                "y": -14.9
+            },
+            "anchor": {
+                "x": 0,
+                "y": 0.5
+            },
+            "type": "text"
+        },
+        "container/container2/hardcore_bar_bg": {
+            "file": "trop_bar_bg.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 141.7,
+                "y": -17.6
+            },
+            "type": "sprite"
+        },
+        "container/container2/hardcore_bar_bg/hardcore_bar": {
+            "file": "trop_bar.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -89,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0,
+                "y": 0.5
+            },
+            "type": "sprite"
+        },
+        "container/container2/hardcore_percentage": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 21
+            },
+            "text": "5%",
+            "align": "center",
+            "position": {
+                "x": -2.1,
+                "y": -17.8
+            },
+            "anchor": {
+                "x": 0,
+                "y": 0.5
+            },
+            "type": "text"
+        },
+        "container/container2/completion1": {
+            "file": "trop_completion1_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -110.5,
+                "y": 46.8
+            },
+            "type": "sprite"
+        },
+        "container/container2/completion2": {
+            "file": "trop_completion2_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 0,
+                "y": 46.8
+            },
+            "type": "sprite"
+        },
+        "container/container2/completion3": {
+            "file": "trop_completion3_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 110.5,
+                "y": 46.8
+            },
+            "type": "sprite"
+        },
+        "container/container2/completion4": {
+            "file": "trop_completion4_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 56,
+                "y": 123.2
+            },
+            "type": "sprite"
+        },
+        "container/container2/completion5": {
+            "file": "trop_completion2_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -56,
+                "y": 123.2
+            },
+            "type": "sprite"
+        },
+        "container/1_2": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 30
+            },
+            "text": "1",
+            "align": "center",
+            "position": {
+                "x": -30,
+                "y": 193.4
+            },
+            "color": "#ffe327",
+            "type": "text"
+        },
+        "container/2_2": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 30
+            },
+            "text": "2",
+            "align": "center",
+            "position": {
+                "x": 22,
+                "y": 193.4
+            },
+            "color": "#ffe327",
+            "type": "text"
+        },
+        "container/description": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 20
+            },
+            "text": "Act1 - Complete Act to any ranking",
+            "align": "center",
+            "position": {
+                "x": -4.2,
+                "y": 260.4
+            },
+            "type": "text"
+        },
+        "container/back_arrow": {
+            "file": "trop_arrow_left.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -257.5,
+                "y": 205.9
+            },
+            "type": "button"
+        },
+        "container/next_arrow": {
+            "file": "trop_arrow_right.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 240.6,
+                "y": 205.9
+            },
+            "type": "button"
+        }
+    }
+}

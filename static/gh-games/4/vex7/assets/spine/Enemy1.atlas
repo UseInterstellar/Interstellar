@@ -1,0 +1,97 @@
+
+Enemy1.png
+size: 128,32
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+L_arm
+  rotate: false
+  xy: 101, 19
+  size: 8, 11
+  orig: 8, 11
+  offset: 0, 0
+  index: -1
+L_foot
+  rotate: true
+  xy: 68, 3
+  size: 8, 13
+  orig: 8, 13
+  offset: 0, 0
+  index: -1
+L_hand
+  rotate: false
+  xy: 54, 2
+  size: 12, 9
+  orig: 12, 10
+  offset: 0, 0
+  index: -1
+L_leg
+  rotate: false
+  xy: 67, 13
+  size: 10, 17
+  orig: 12, 19
+  offset: 1, 2
+  index: -1
+R_arm
+  rotate: false
+  xy: 109, 6
+  size: 6, 11
+  orig: 6, 11
+  offset: 0, 0
+  index: -1
+R_foot
+  rotate: false
+  xy: 79, 17
+  size: 8, 13
+  orig: 8, 13
+  offset: 0, 0
+  index: -1
+R_hand
+  rotate: false
+  xy: 83, 3
+  size: 12, 12
+  orig: 12, 12
+  offset: 0, 0
+  index: -1
+R_leg
+  rotate: false
+  xy: 54, 13
+  size: 11, 17
+  orig: 13, 19
+  offset: 1, 2
+  index: -1
+Sword
+  rotate: false
+  xy: 2, 2
+  size: 16, 28
+  orig: 16, 28
+  offset: 0, 0
+  index: -1
+Sword_red
+  rotate: false
+  xy: 20, 2
+  size: 16, 28
+  orig: 16, 28
+  offset: 0, 0
+  index: -1
+body
+  rotate: false
+  xy: 38, 7
+  size: 14, 23
+  orig: 14, 23
+  offset: 0, 0
+  index: -1
+head
+  rotate: false
+  xy: 97, 4
+  size: 10, 12
+  orig: 10, 12
+  offset: 0, 0
+  index: -1
+head_red
+  rotate: false
+  xy: 89, 18
+  size: 10, 12
+  orig: 10, 12
+  offset: 0, 0
+  index: -1

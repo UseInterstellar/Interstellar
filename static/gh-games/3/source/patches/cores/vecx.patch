@@ -1,0 +1,33 @@
+diff --git a/Makefile.libretro b/Makefile.libretro
+index cb72273..6753154 100644
+--- a/Makefile.libretro
++++ b/Makefile.libretro
+@@ -359,10 +359,13 @@ else ifneq (,$(findstring armv,$(platform)))
+       ASFLAGS += -mfloat-abi=hard
+    endif
+    CFLAGS += -DARM
++
++# Emscripten
+ else ifeq ($(platform), emscripten)
+    TARGET := $(TARGET_NAME)_libretro_$(platform).bc
+    STATIC_LINKING = 1
+-   HAS_GPU=0
++   HAS_GPU = 1
++   GLES = 1
+ 
+ # GCW0
+ else ifeq ($(platform), gcw0)
+@@ -689,8 +692,13 @@ else
+       CFLAGS   += -MT
+       CXXFLAGS += -MT
+    endif
++   ifeq ($(platform), emscripten)
++      CFLAGS   += -O3 -DNDEBUG
++      CXXFLAGS += -O3 -DNDEBUG
++   else
+       CFLAGS   += -O2 -DNDEBUG
+       CXXFLAGS += -O2 -DNDEBUG
++   endif
+ endif
+ 
+ LDFLAGS += $(LIBM)

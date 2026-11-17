@@ -1,0 +1,174 @@
+{
+    "hierarchy": {
+        "name": "Canvas",
+        "children": [
+            {
+                "name": "logo"
+            },
+            {
+                "name": "play",
+                "children": [
+                    {
+                        "name": "play_text"
+                    }
+                ]
+            },
+            {
+                "name": "trophies"
+            },
+            {
+                "name": "highscores"
+            },
+            {
+                "name": "challenge_room"
+            },
+            {
+                "name": "settings"
+            }
+        ]
+    },
+    "properties": {
+        "Canvas": {
+            "design": {
+                "width": 960,
+                "height": 640
+            },
+            "type": "canvas"
+        },
+        "logo": {
+            "file": "mm_logo.png",
+            "image": "SIMPLE",
+            "type": "sprite",
+            "alignment": {
+                "type": "TOP_CENTER",
+                "offset": {
+                    "x": 0,
+                    "y": -40.8
+                }
+            }
+        },
+        "play": {
+            "file": "mm_play_buttton.png",
+            "image": "SLICED",
+            "slice": {
+                "top": 0,
+                "bottom": 0,
+                "left": 0,
+                "right": 0
+            },
+            "size": {
+                "width": 298,
+                "height": 118
+            },
+            "type": "button",
+            "alignment": {
+                "type": "CENTER",
+                "offset": {
+                    "x": 0,
+                    "y": 15.3
+                }
+            }
+        },
+        "play/play_text": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 59
+            },
+            "text": "Play Game",
+            "align": "center",
+            "position": {
+                "x": 0.6,
+                "y": 5.8
+            },
+            "type": "text"
+        },
+        "trophies": {
+            "file": "mm_trophy_button.png",
+            "image": "SLICED",
+            "slice": {
+                "top": 0,
+                "bottom": 0,
+                "left": 0,
+                "right": 0
+            },
+            "size": {
+                "width": 85,
+                "height": 87
+            },
+            "type": "button",
+            "alignment": {
+                "type": "BOTTOM_CENTER",
+                "offset": {
+                    "x": -150,
+                    "y": "-15%"
+                }
+            }
+        },
+        "highscores": {
+            "file": "mm_highscore_button.png",
+            "image": "SLICED",
+            "slice": {
+                "top": 0,
+                "bottom": 0,
+                "left": 0,
+                "right": 0
+            },
+            "size": {
+                "width": 85,
+                "height": 87
+            },
+            "type": "button",
+            "alignment": {
+                "type": "BOTTOM_CENTER",
+                "offset": {
+                    "x": -50,
+                    "y": "-15%"
+                }
+            }
+        },
+        "challenge_room": {
+            "file": "mm_challenge_room_button.png",
+            "image": "SLICED",
+            "slice": {
+                "top": 0,
+                "bottom": 0,
+                "left": 0,
+                "right": 0
+            },
+            "size": {
+                "width": 85,
+                "height": 87
+            },
+            "type": "button",
+            "alignment": {
+                "type": "BOTTOM_CENTER",
+                "offset": {
+                    "x": 50,
+                    "y": "-15%"
+                }
+            }
+        },
+        "settings": {
+            "file": "mm_settings_button.png",
+            "image": "SLICED",
+            "slice": {
+                "top": 0,
+                "bottom": 0,
+                "left": 0,
+                "right": 0
+            },
+            "size": {
+                "width": 85,
+                "height": 87
+            },
+            "type": "button",
+            "alignment": {
+                "type": "BOTTOM_CENTER",
+                "offset": {
+                    "x": 150,
+                    "y": "-15%"
+                }
+            }
+        }
+    }
+}

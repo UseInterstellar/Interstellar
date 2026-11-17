@@ -1,0 +1,217 @@
+diff --git a/Makefile b/Makefile
+index ed40a47e..69e1dfd5 100644
+--- a/Makefile
++++ b/Makefile
+@@ -469,11 +469,17 @@ else ifeq ($(platform), qnx)
+ # emscripten
+ else ifeq ($(platform), emscripten)
+    TARGET := $(TARGET_NAME)_libretro_$(platform).bc
+-   GLES := 1
+-   WITH_DYNAREC :=
++   HAVE_OPENGL = 1
++   GLES = 1
+ 
++   HAVE_GLIDE64 = 1
++   HAVE_GLN64 = 1
++   HAVE_RICE = 0
+    HAVE_PARALLEL = 0
+-   CPUFLAGS += -DNOSSE -DEMSCRIPTEN -DNO_ASM -DNO_LIBCO -s USE_ZLIB=1 -s PRECISE_F32=1
++   HAVE_THR_AL = 0
++
++   CPUFLAGS += -DNOSSE -DEMSCRIPTEN -DNO_ASM -s USE_ZLIB=1
++   CPUFLAGS += -msimd128 -ftree-vectorize
+ 
+    WITH_DYNAREC =
+    CC = emcc
+@@ -898,7 +904,9 @@ ifeq ($(DEBUG), 1)
+       CPUOPTS += -O0 -g
+    endif
+ else
+-ifneq (,$(findstring msvc,$(platform)))
++ifeq ($(platform), emscripten)
++   CPUOPTS += -O3
++else ifneq (,$(findstring msvc,$(platform)))
+    CPUOPTS += -O2
+ else
+ 	CPUOPTS += -Ofast
+@@ -995,9 +1003,11 @@ CXXFLAGS += -DINLINE="inline"
+ endif
+ 
+ # Fix for GCC 10, make sure its added to all stages of the compiler
++ifneq ($(platform), emscripten)
+ ifeq "$(shell expr `gcc -dumpversion` \>= 10)" "1"
+   CPUFLAGS += -fcommon
+ endif
++endif
+ 
+ # LTO
+ ifeq ($(HAVE_LTCG),1)
+diff --git a/Makefile.common b/Makefile.common
+index 117d232c..28fca2c9 100644
+--- a/Makefile.common
++++ b/Makefile.common
+@@ -24,10 +24,10 @@ ifeq ($(GLIDEN64),1)
+ 	HAVE_GLIDEN64 =1
+ 	HAVE_GLN64    =0
+ else
+-	HAVE_GLN64    =1
++	HAVE_GLN64    ?=1
+ 	HAVE_GLIDEN64 =0
+ endif
+-	HAVE_RICE     = 1
++	HAVE_RICE     ?= 1
+ else
+ 	HAVE_GLIDE64 = 0
+ 	HAVE_GLN64    = 0
+@@ -47,9 +47,7 @@ INCFLAGS += \
+ 	-I$(LIBRETRO_DIR)
+ 
+ # libco
+-ifneq ($(platform), emscripten)
+ SOURCES_C += $(LIBRETRO_COMM_DIR)/libco/libco.c
+-endif
+ 
+ SOURCES_C += $(RSPDIR)/src/alist.c \
+     $(RSPDIR)/src/alist_audio.c \
+diff --git a/libretro-common/glsm/glsm.c b/libretro-common/glsm/glsm.c
+index dba77f16..354fe635 100644
+--- a/libretro-common/glsm/glsm.c
++++ b/libretro-common/glsm/glsm.c
+@@ -638,18 +638,18 @@ void rglBlendFunc(GLenum sfactor, GLenum dfactor)
+  * Core in:
+  * OpenGL    : 1.4
+  */
+-void rglBlendFuncSeparate(GLenum sfactor, GLenum dfactor)
++void rglBlendFuncSeparate(GLenum srcRGB, GLenum dstRGB, GLenum srcAlpha, GLenum dstAlpha)
+ {
+ #ifdef GLSM_DEBUG
+    log_cb(RETRO_LOG_INFO, "glBlendFuncSeparate.\n");
+ #endif
+    glsm_ctl(GLSM_CTL_IMM_VBO_DRAW, NULL);
+    gl_state.blendfunc_separate.used     = true;
+-   gl_state.blendfunc_separate.srcRGB   = sfactor;
+-   gl_state.blendfunc_separate.dstRGB   = dfactor;
+-   gl_state.blendfunc_separate.srcAlpha = sfactor;
+-   gl_state.blendfunc_separate.dstAlpha = dfactor;
+-   glBlendFunc(sfactor, dfactor);
++   gl_state.blendfunc_separate.srcRGB   = srcRGB;
++   gl_state.blendfunc_separate.dstRGB   = dstRGB;
++   gl_state.blendfunc_separate.srcAlpha = srcAlpha;
++   gl_state.blendfunc_separate.dstAlpha = dstAlpha;
++   glBlendFuncSeparate(srcRGB, dstRGB, srcAlpha, dstAlpha);
+ }
+ 
+ /*
+diff --git a/libretro-common/libco/emscripten_fiber.c b/libretro-common/libco/emscripten_fiber.c
+new file mode 100644
+index 00000000..9cf98228
+--- /dev/null
++++ b/libretro-common/libco/emscripten_fiber.c
+@@ -0,0 +1,64 @@
++/*
++  libco.emscripten (2020-02-27)
++  authors: Toad King
++  license: public domain
++*/
++
++#define LIBCO_C
++#include <libco.h>
++#include <stdlib.h>
++#include <stddef.h>
++#include <malloc.h>
++#include <emscripten/fiber.h>
++
++#define ASYNCIFY_STACK_SIZE (131072)
++
++static thread_local emscripten_fiber_t *co_active_;
++
++static void co_thunk(void *coentry)
++{
++   ((void (*)(void))coentry)();
++}
++
++static void co_init(void)
++{
++   if (!co_active_)
++   {
++      emscripten_fiber_t *co_primary = calloc(1, sizeof(emscripten_fiber_t));
++      void *asyncify_stack = malloc(ASYNCIFY_STACK_SIZE);
++
++      emscripten_fiber_init_from_current_context(co_primary, asyncify_stack, ASYNCIFY_STACK_SIZE);
++      co_active_ = co_primary;
++   }
++}
++
++cothread_t co_active(void)
++{
++   co_init();
++   return co_active_;
++}
++
++cothread_t co_create(unsigned int stacksize, void (*coentry)(void))
++{
++   co_init();
++
++   emscripten_fiber_t *fiber = calloc(1, sizeof(emscripten_fiber_t));
++   void *asyncify_stack = malloc(ASYNCIFY_STACK_SIZE);
++   void *c_stack = memalign(16, stacksize);
++   emscripten_fiber_init(fiber, co_thunk, coentry, c_stack, stacksize, asyncify_stack, ASYNCIFY_STACK_SIZE);
++
++   return (cothread_t)fiber;
++}
++
++void co_delete(cothread_t cothread)
++{
++   free(cothread);
++}
++
++void co_switch(cothread_t cothread)
++{
++   emscripten_fiber_t *old_fiber = co_active_;
++   co_active_ = (emscripten_fiber_t *)cothread;
++
++   emscripten_fiber_swap(old_fiber, co_active_);
++}
+diff --git a/libretro-common/libco/libco.c b/libretro-common/libco/libco.c
+index 44a65d52..9cc996f7 100644
+--- a/libretro-common/libco/libco.c
++++ b/libretro-common/libco/libco.c
+@@ -9,7 +9,9 @@ void *genode_alloc_secondary_stack(unsigned long stack_size);
+ void genode_free_secondary_stack(void *stack);
+ #endif
+ 
+-#if defined _MSC_VER
++#ifdef EMSCRIPTEN
++  #include "emscripten_fiber.c"
++#elif defined _MSC_VER
+   #include <Windows.h>
+   #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
+     #include "fiber.c"
+diff --git a/mupen64plus-core/src/plugin/plugin.c b/mupen64plus-core/src/plugin/plugin.c
+index 02d4b68d..6defa298 100644
+--- a/mupen64plus-core/src/plugin/plugin.c
++++ b/mupen64plus-core/src/plugin/plugin.c
+@@ -283,17 +283,23 @@ void plugin_connect_all(enum gfx_plugin_type gfx_plugin, enum rsp_plugin_type rs
+          break;
+       case GFX_RICE:
+ #if defined(HAVE_OPENGL) || defined(HAVE_OPENGLES)
++#ifdef HAVE_RICE
+          gfx = gfx_rice;
+          break;
++#endif
+ #endif
+       case GFX_GLN64:
+ #if defined(HAVE_OPENGL) || defined(HAVE_OPENGLES)
++#ifdef HAVE_GLN64
+          gfx = gfx_gln64;
+          break;
++#endif
+ #endif
+       default:
+ #if defined(HAVE_OPENGL) || defined(HAVE_OPENGLES)
++#ifdef HAVE_GLIDE64
+          gfx = gfx_glide64;
++#endif
+ #elif defined(HAVE_THR_AL)
+          gfx = gfx_angrylion;
+ #endif

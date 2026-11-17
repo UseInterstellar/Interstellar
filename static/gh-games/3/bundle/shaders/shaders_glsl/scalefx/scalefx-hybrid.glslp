@@ -1,0 +1,31 @@
+shaders = 5
+
+shader0 = shaders/scalefx-pass0.glsl
+filter_linear0 = false
+scale_type0 = source
+scale0 = 1.0
+float_framebuffer0 = true
+
+shader1 = shaders/scalefx-pass1.glsl
+filter_linear1 = false
+scale_type1 = source
+scale1 = 1.0
+float_framebuffer1 = true
+
+shader2 = shaders/scalefx-pass2.glsl
+filter_linear2 = false
+scale_type2 = source
+scale2 = 1.0
+
+shader3 = shaders/scalefx-pass3.glsl
+filter_linear3 = false
+scale_type3 = source
+scale3 = 1.0
+
+shader4 = shaders/scalefx-pass4-hybrid.glsl
+filter_linear4 = false
+scale_type4 = source
+scale4 = 3.0
+
+parameters = "SFX_SAA"
+SFX_SAA = "0.0"

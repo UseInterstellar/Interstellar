@@ -1,0 +1,44 @@
+.controls {
+    margin-top: 1em;
+    padding: 0.5em 0;
+    overflow: auto;
+  }
+  
+  .controls button {
+    /*display: inline-block;*/
+    background: #8f7a66;
+    border: 0;
+    border-radius: 3px;
+    padding: 0 20px;
+    color: #f9f6f2;
+    height: 40px;
+    line-height: 42px;
+    font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .controls button:hover {
+      background: #ad957f;
+  } 
+  
+  .ai-button, #feedback-container {
+    line-height: 40px;
+    font-size: 36px;
+  }
+  
+  #run-button-container {
+    float: right;
+  }
+  
+  #hint-button-container, #feedback-container {
+    float: left;
+  }
+  
+  #feedback-container {
+    background: #8f7a66;
+    color: #f9f6f2;
+    margin-left: 1em;
+    font-weight: bold;
+  }  

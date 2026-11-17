@@ -99,10 +99,25 @@ server {
 Any static server works as long as it sends the headers listed above; without
 `Service-Worker-Allowed: /` the service worker cannot register.
 
-> [!NOTE]
-> The in-page games catalogue links to `/gh-games/...`, which was a server-side proxy in
-> earlier versions. A static host has to reproduce those paths with its own rewrites, or
-> those entries will 404.
+## Bundled games
+
+The catalogue's non-proxied entries (`/gh-games/...`) are real files committed under
+`static/gh-games/`, copied from their upstream repositories:
+
+| Path               | Source repository                                          |
+| ------------------ | ---------------------------------------------------------- |
+| `/gh-games/2/...`  | `3v1/V5-Assets` (main)                                     |
+| `/gh-games/3/...`  | `3v1/V5-Retro` (master, webretro)                          |
+| `/gh-games/4/...`  | `xbubbo/V6-Assets` (main)                                  |
+
+The ungrouped entries (`stickman-hook`, `jetpack-joyride`, `ducklife4`) come from the same
+repositories. They are plain static files, so the host serves them with the right content
+types and no proxy is involved. To refresh one, copy its folder from the upstream repo
+over the matching directory here and keep the catalogue link in
+`static/assets/json/games.json` and `games.min.json` pointing at it.
+
+Everything else in the catalogue is a remote site opened through Scramjet/Ultraviolet, so
+it needs the Wisp server configured above.
 
 ## Report Issues
 

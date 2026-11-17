@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+	<!-- This file is necessary for the contents of the google drive upload window, as it fully contains google's modal window. -->
+	<head>
+		<title>Choose a File</title>
+		<style>
+		body {
+			background-color: #101010;
+			color: white;
+			overflow: hidden;
+		}
+		
+		.picker-dialog {
+			left: 0px !important;
+			top: 0px !important;
+			outline: none !important;
+			border: none !important;
+			box-shadow: none !important;
+		}
+		
+		.picker-dialog, .picker-dialog-content {
+			width: 100% !important;
+			height: 100% !important;
+		}
+		
+		.center {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			margin: 0px;
+		}
+		
+		#authorizebutton {
+			font-size: 36px;
+		}
+		</style>
+	</head>
+	<body>
+		<input type="button" id="authorizebutton" class="center" value="Authorize">
+		<script src="https://apis.google.com/js/api.js"></script>
+		<script src="https://accounts.google.com/gsi/client"></script>
+		<script src="tokens.js"></script>
+		<script>
+		var queries = Object.fromEntries(window.location.search.substring(1).split("&").map(i => i.split("=")).map(i => i.map(i => i && decodeURIComponent(i))));
+		
+		var fileTypes = queries.exts ? queries.exts.split(",") : [];
+		
+		var scope = ["https://www.googleapis.com/auth/drive.readonly"];
+		
+		var pickerApiLoaded = false;
+		var oauthToken;
+		
+		var authorizeButton = document.getElementById("authorizebutton");
+		authorizeButton.onclick = loadPicker;
+		
+		function onPickerApiLoad() {
+			pickerApiLoaded = true;
+			tryCreatePicker();
+		}
+		
+		function handleTokenResponse(tokenResponse) {
+			if (tokenResponse && tokenResponse.access_token) {
+				authorizeButton.style.display = "none";
+				oauthToken = tokenResponse.access_token;
+				tryCreatePicker();
+			}
+		}
+		
+		function getAuth() {
+			google.accounts.oauth2.initTokenClient({"client_id": googleOauthClientId, "scope": scope.join(" "), callback: handleTokenResponse}).requestAccessToken();
+		}
+		
+		function loadPicker() {
+			gapi.load("picker", {"callback": onPickerApiLoad});
+			getAuth();
+		}
+		
+		function tryCreatePicker(config) {
+			if (pickerApiLoaded && oauthToken) {
+				var picker = new google.picker.PickerBuilder()
+					.setAppId(googleProjectId)
+					.setOAuthToken(oauthToken)
+					.setDeveloperKey(googleApiKey)
+					.addView(new google.picker.DocsView()
+						.setIncludeFolders(true)
+						.setQuery(fileTypes.join(" || "))
+					)
+					.enableFeature(google.picker.Feature.NAV_HIDDEN)
+					.hideTitleBar()
+					.setCallback(pickerCallback)
+					.build();
+				picker.setVisible(true);
+			}
+		}
+		
+		var isDone;
+		
+		function finish(message, name, data) {
+			window.opener.postMessage({webretro: {message: message, name: name, data: data}}, "*");
+			isDone = true;
+			window.close();
+		}
+		
+		window.addEventListener("unload", function() {
+			if (!isDone) finish("cancelled");
+		}, false);
+		
+		function pickerCallback(data) {
+			if (data.action == google.picker.Action.PICKED) {
+				document.body.innerHTML += "<h1 class='center'>Loading... Do not close this window.</h1>";
+				var file = data.docs[0];
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET", "https://www.googleapis.com/drive/v3/files/" + file.id + "?alt=media&source=downloadUrl", true);
+				xhr.setRequestHeader("Authorization", "Bearer " + oauthToken);
+				xhr.responseType = "arraybuffer";
+				xhr.onload = function() {
+					finish("success", file.name, this.response);
+				}
+				xhr.onerror = function() {
+					finish("error");
+				}
+				xhr.send();
+			} else if (data.action == google.picker.Action.CANCEL) {
+				finish("cancelled");
+			}
+		}
+		
+		</script>
+	</body>
+</html>

@@ -1,0 +1,55 @@
+{
+	"name": "webretro",
+	"description": "RetroArch in your browser!",
+	"icons": [
+		{
+			"src": "assets/icons/icont256.png",
+			"sizes": "256x256",
+			"type": "image/png"
+		},
+		{
+			"src": "assets/icons/iconm128.png",
+			"sizes": "128x128",
+			"type": "image/png",
+			"purpose": "maskable"
+		},
+		{
+			"src": "assets/icons/iconm256.png",
+			"sizes": "256x256",
+			"type": "image/png",
+			"purpose": "maskable"
+		},
+		{
+			"src": "assets/icons/iconm512upscaledm256.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "maskable"
+		}
+	],
+	"start_url": ".",
+	"display": "standalone",
+	"theme_color": "#333333",
+	"background_color": "#000000",
+	"related_applications": [
+		{
+			"platform": "play",
+			"url": "https://play.google.com/store/apps/details?id=com.retroarch",
+			"id": "com.retroarch"
+		},
+		{
+			"platform": "play",
+			"url": "https://play.google.com/store/apps/details?id=com.retroarch.aarch64",
+			"id": "com.retroarch.aarch64"
+		}
+	],
+	"file_handlers": [
+		{
+			"action": "/?core=autodetect",
+			"accept": {
+				"application/octet-stream": [".bin", ".iso", ".img", ".ciso", ".cso", ".chd", ".adf", ".adz", ".dms", ".ipf", ".hdf", ".hdz", ".dsk", ".sna", ".cdt", ".voc", ".cpr", ".a26", ".a52", ".a78", ".j64", ".jag", ".abs", ".cof", ".prg", ".lnx", ".st", ".stx", ".msa", ".col", ".cv", ".d64", ".d6z", ".d71", ".d7z", ".d80", ".d81", ".d82", ".d8z", ".g64", ".g6z", ".g41", ".g4z", ".x64", ".x6z", ".nib", ".nbz", ".d2m", ".d4m", ".t64", ".p00", ".chf", ".gb", ".gbc", ".gba", ".mgw", ".int", ".exe", ".mx1", ".mx2", ".cas", ".nes", ".fds", ".unf", ".unif", ".ngp", ".ngc", ".3ds", ".3dsx", ".cci", ".cxi", ".n64", ".v64", ".z64", ".u1", ".ndd", ".nds", ".srl", ".gcm", ".dol", ".tgc", ".wbfs", ".gcz", ".wad", ".sgx", ".pce", ".d88", ".88d", ".u88", ".88u", ".d98", ".98d", ".fdi", ".fdd", ".tfd", ".hdm", ".hdi", ".pbp", ".smc", ".sfc", ".swc", ".fig", ".bs", ".cdi", ".gdi", ".lst", ".mdx", ".md", ".smd", ".gen", ".sms", ".68k", ".sgd", ".gg", ".sg", ".dim", ".dup", ".2hd", ".xdf", ".tzx", ".tap", ".z80", ".rzx", ".scl", ".p", ".t81", ".fd", ".sap", ".k7", ".m7", ".m5", ".vec", ".vb", ".vboy", ".ws", ".wsc", ".pc2"],
+				"application/zip": [".zip"]
+			},
+			"launch_type": "single-client"
+		}
+	]
+}

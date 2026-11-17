@@ -1,0 +1,13 @@
+diff --git a/Makefile b/Makefile
+index 78ab9b65..2c2e1a96 100644
+--- a/Makefile
++++ b/Makefile
+@@ -56,7 +56,7 @@ NEED_TREMOR = 1
+ NEED_BPP = 32
+ NEED_DEINTERLACER = 1
+ NEED_THREADING = 1
+-SET_HAVE_HW = 0
++SET_HAVE_HW = 1
+ CORE_DEFINE := -DWANT_PSX_EMU
+ TARGET_NAME := mednafen_psx
+ 

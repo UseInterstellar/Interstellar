@@ -1,0 +1,132 @@
+@font-face {
+  font-family: jetpackia;
+  src: url('font/Jetpackia.ttf');
+}
+
+* {
+touch-action: manipulation;
+}
+
+html{
+  height: 100%
+}
+
+body{
+  background-color: #000000;
+  margin: 0;
+}
+
+.fontLoader{
+  position: absolute;
+  left: -1000px;
+  visibility: hidden;
+}
+
+.bannerAds{
+  height: 100px !important;
+  /*background-color: yellow;*/
+  display: block;
+  text-align: center;
+  margin: 0 auto;
+}
+
+#phaser-canvas{
+  margin: 0 auto;
+
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  padding:0;
+  margin:0;
+  /* if you want the content to scroll normally: */
+  overflow: auto;
+}
+
+body,#content{
+  height: 100%;
+  max-height: 100vh !important;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  height: 100vh;
+  width: 100vw;
+  margin:0;
+  padding:0;
+  /* required to prevent rogue scrollbars */
+  overflow: hidden;
+}
+
+#divAds, #tempads{
+  display: none;
+  /*background-color: green;*/
+}
+
+/*canvas{
+  width: 100%;
+  height: 100%;
+  display: block !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  max-width: 100% !important;
+  max-height: 100vh !important;
+}*/
+
+/*ROTATE SCREEN */
+.center {
+  display: none;
+  width: 100%;
+  object-fit: scale-down;
+  left: 50%; 
+  top: 50%;
+  transform: translate(-50%, -50%); 
+  position: absolute;
+}
+/*ROTATE SCREEN */
+/*================ START ADS ===================*/
+.softkey{
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+}
+.softkey>div{
+  padding: 5px;
+  font-size: 17px;
+  font-weight: 600;
+  display: inline-block;
+  color:#000000;
+}
+#softkey-left{
+  text-align: left;
+  float:left;
+}
+#softkey-right{
+  text-align: right;
+  float:right;   
+}
+.ads{
+  position: absolute !important;
+}
+#bannerAds_container{
+  top: 0;
+  height: 40px;
+  background-color:black;
+  display: list-item;
+}
+#ad-container{
+  height: 40px;
+  background-color: black !important;
+}
+.bannerAds{
+  height: 100px !important;
+  display: block;
+  text-align: center;
+  margin: 0 auto;
+}
+#divAds, #tempads{
+  display: none;
+}
+/*================ END ADS ===================*/

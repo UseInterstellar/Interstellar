@@ -1,0 +1,19 @@
+diff --git a/Makefile b/Makefile
+index 51920b6..78d4da6 100644
+--- a/Makefile
++++ b/Makefile
+@@ -662,9 +662,14 @@ ifneq (,$(findstring msvc,$(platform)))
+    CFLAGS   += -MT
+    CXXFLAGS += -MT
+ endif
++ifeq ($(platform), emscripten)
++   CFLAGS   += -O3 -DNDEBUG
++   CXXFLAGS += -O3 -DNDEBUG
++else
+    CFLAGS   += -O2 -DNDEBUG
+    CXXFLAGS += -O2 -DNDEBUG
+ endif
++endif
+ 
+ LDFLAGS += $(fpic) $(SHARED)
+ FLAGS += $(fpic) 

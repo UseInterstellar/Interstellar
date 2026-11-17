@@ -1,0 +1,481 @@
+{
+    "hierarchy": {
+        "name": "transition",
+        "children": [
+            {
+                "name": "base1"
+            },
+            {
+                "name": "base2"
+            },
+            {
+                "name": "base3"
+            },
+            {
+                "name": "base4"
+            },
+            {
+                "name": "base5"
+            },
+            {
+                "name": "base6"
+            },
+            {
+                "name": "base7"
+            },
+            {
+                "name": "base8"
+            },
+            {
+                "name": "base9"
+            },
+            {
+                "name": "base10"
+            },
+            {
+                "name": "base11"
+            },
+            {
+                "name": "base12"
+            },
+            {
+                "name": "base13"
+            },
+            {
+                "name": "base14"
+            },
+            {
+                "name": "base15"
+            },
+            {
+                "name": "base16"
+            },
+            {
+                "name": "base17"
+            },
+            {
+                "name": "base18"
+            },
+            {
+                "name": "base19"
+            },
+            {
+                "name": "base20"
+            },
+            {
+                "name": "base21"
+            },
+            {
+                "name": "base22"
+            },
+            {
+                "name": "base23"
+            },
+            {
+                "name": "base24"
+            },
+            {
+                "name": "base25"
+            },
+            {
+                "name": "base26"
+            },
+            {
+                "name": "base27"
+            },
+            {
+                "name": "base28"
+            },
+            {
+                "name": "base30"
+            },
+            {
+                "name": "base31"
+            },
+            {
+                "name": "base32"
+            },
+            {
+                "name": "base33"
+            },
+            {
+                "name": "base34"
+            },
+            {
+                "name": "base35"
+            },
+            {
+                "name": "base36"
+            },
+            {
+                "name": "logo"
+            }
+        ],
+        "animations": [
+            "transition_out",
+            "transition_in",
+            "transition_stand"
+        ]
+    },
+    "properties": {
+        "base1": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -445,
+                "y": -287
+            },
+            "angle": 45,
+            "type": "sprite"
+        },
+        "base2": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -297,
+                "y": -289
+            },
+            "angle": 45,
+            "type": "sprite"
+        },
+        "base3": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -149,
+                "y": -288
+            },
+            "angle": 45,
+            "type": "sprite"
+        },
+        "base4": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 0,
+                "y": -288
+            },
+            "angle": 45,
+            "type": "sprite"
+        },
+        "base5": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 148,
+                "y": -289
+            },
+            "angle": 45,
+            "type": "sprite"
+        },
+        "base6": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 296,
+                "y": -288
+            },
+            "angle": 45,
+            "type": "sprite"
+        },
+        "base7": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 444,
+                "y": -288
+            },
+            "angle": 45,
+            "type": "sprite"
+        },
+        "base8": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -445,
+                "y": -139
+            },
+            "angle": 45,
+            "type": "sprite"
+        },
+        "base9": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -297,
+                "y": -140
+            },
+            "angle": 45,
+            "type": "sprite"
+        },
+        "base10": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -149,
+                "y": -139
+            },
+            "angle": 45,
+            "type": "sprite"
+        },
+        "base11": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 0,
+                "y": -139
+            },
+            "angle": 45,
+            "type": "sprite"
+        },
+        "base12": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 148,
+                "y": -140
+            },
+            "angle": 45,
+            "type": "sprite"
+        },
+        "base13": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 296,
+                "y": -139
+            },
+            "angle": 45,
+            "type": "sprite"
+        },
+        "base14": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 444,
+                "y": -140
+            },
+            "angle": 45,
+            "type": "sprite"
+        },
+        "base15": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -445,
+                "y": 8
+            },
+            "angle": 45,
+            "type": "sprite"
+        },
+        "base16": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -297,
+                "y": 8
+            },
+            "angle": 45,
+            "type": "sprite"
+        },
+        "base17": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -149,
+                "y": 9
+            },
+            "angle": 45,
+            "type": "sprite"
+        },
+        "base18": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -1,
+                "y": 9
+            },
+            "angle": 45,
+            "type": "sprite"
+        },
+        "base19": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 146,
+                "y": 8
+            },
+            "angle": 45,
+            "type": "sprite"
+        },
+        "base20": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 294,
+                "y": 9
+            },
+            "angle": 45,
+            "type": "sprite"
+        },
+        "base21": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 442,
+                "y": 9
+            },
+            "angle": 45,
+            "type": "sprite"
+        },
+        "base22": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -446,
+                "y": 156
+            },
+            "angle": 45,
+            "type": "sprite"
+        },
+        "base23": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -298,
+                "y": 156
+            },
+            "angle": 45,
+            "type": "sprite"
+        },
+        "base24": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -150,
+                "y": 157
+            },
+            "angle": 45,
+            "type": "sprite"
+        },
+        "base25": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -1,
+                "y": 157
+            },
+            "angle": 45,
+            "type": "sprite"
+        },
+        "base26": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 147,
+                "y": 156
+            },
+            "angle": 45,
+            "type": "sprite"
+        },
+        "base27": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 295,
+                "y": 157
+            },
+            "angle": 45,
+            "type": "sprite"
+        },
+        "base28": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 443,
+                "y": 155
+            },
+            "angle": 45,
+            "type": "sprite"
+        },
+        "base30": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -446,
+                "y": 306
+            },
+            "angle": 45,
+            "type": "sprite"
+        },
+        "base31": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -297,
+                "y": 305
+            },
+            "angle": 45,
+            "type": "sprite"
+        },
+        "base32": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -149,
+                "y": 306
+            },
+            "angle": 45,
+            "type": "sprite"
+        },
+        "base33": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 0,
+                "y": 306
+            },
+            "angle": 45,
+            "type": "sprite"
+        },
+        "base34": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 148,
+                "y": 305
+            },
+            "angle": 45,
+            "type": "sprite"
+        },
+        "base35": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 297,
+                "y": 306
+            },
+            "angle": 45,
+            "type": "sprite"
+        },
+        "base36": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 445,
+                "y": 304
+            },
+            "angle": 45,
+            "type": "sprite"
+        },
+        "logo": {
+            "file": "mm_logo.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 0,
+                "y": 0
+            },
+            "type": "sprite"
+        }
+    }
+}

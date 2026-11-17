@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
+    <script type="application/javascript" src="/js/main.js"></script>
+    <title>Vex 3</title>
+    <link rel="stylesheet" href="assets/css/app.css" type="text/css" />
+    <link rel="icon" href="vex3.png">
+  </head>
+  <body>
+    <div id="content"></div>
+    <div id="loader">Loading...</div>
+
+    <script type="text/javascript">
+      var gameName = "vex-3.min.js";
+
+      //This all here is for cache busting;
+      function addScript(src, buster, callback) {
+        var s = document.createElement("script");
+        s.setAttribute("src", src + "?v=" + buster);
+        if (typeof callback === "function") {
+          s.onload = callback;
+        }
+        document.body.appendChild(s);
+      }
+
+      addScript("version.js", 1, function () {
+        addScript(gameName, version, function () {
+          /**
+           * Here we create the game
+           */
+          new Vex3.Game();
+        });
+      });
+    </script>
+  </body>
+</html>

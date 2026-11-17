@@ -1,0 +1,153 @@
+{
+    "name": "transition_out",
+    "speed": 1,
+    "mode": "normal",
+    "data": {
+        "base1": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 33,
+                    "value": 1
+                },
+                {
+                    "frame": 367,
+                    "value": 0
+                }
+            ]
+        },
+        "base2": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 100,
+                    "value": 1
+                },
+                {
+                    "frame": 433,
+                    "value": 0
+                }
+            ]
+        },
+        "base3": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 233,
+                    "value": 1
+                },
+                {
+                    "frame": 567,
+                    "value": 0
+                }
+            ]
+        },
+        "base4": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 300,
+                    "value": 1
+                },
+                {
+                    "frame": 633,
+                    "value": 0
+                }
+            ]
+        },
+        "base5": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 433,
+                    "value": 1
+                },
+                {
+                    "frame": 767,
+                    "value": 0
+                }
+            ]
+        },
+        "base6": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 533,
+                    "value": 1
+                },
+                {
+                    "frame": 867,
+                    "value": 0
+                }
+            ]
+        },
+        "base7": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 333,
+                    "value": 0
+                }
+            ]
+        },
+        "logo": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 67,
+                    "value": 1
+                },
+                {
+                    "frame": 133,
+                    "value": 1.2
+                },
+                {
+                    "frame": 300,
+                    "value": 0
+                }
+            ],
+            "scaleY": [
+                {
+                    "frame": 0,
+                    "value": 1
+                },
+                {
+                    "frame": 67,
+                    "value": 1
+                },
+                {
+                    "frame": 133,
+                    "value": 1.2
+                },
+                {
+                    "frame": 300,
+                    "value": 0
+                }
+            ]
+        }
+    }
+}

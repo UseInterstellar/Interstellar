@@ -1,0 +1,132 @@
+{"frames": [
+
+{
+	"filename": "player_crouch0000.png",
+	"frame": {"x":2,"y":283,"w":17,"h":33},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":9,"y":3,"w":17,"h":33},
+	"sourceSize": {"w":35,"h":36}
+},
+{
+	"filename": "player_crouch0001.png",
+	"frame": {"x":2,"y":215,"w":18,"h":32},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":8,"y":4,"w":18,"h":32},
+	"sourceSize": {"w":35,"h":36}
+},
+{
+	"filename": "player_crouch0002.png",
+	"frame": {"x":2,"y":153,"w":20,"h":29},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":8,"y":7,"w":20,"h":29},
+	"sourceSize": {"w":35,"h":36}
+},
+{
+	"filename": "player_crouch0003.png",
+	"frame": {"x":2,"y":97,"w":22,"h":26},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":7,"y":10,"w":22,"h":26},
+	"sourceSize": {"w":35,"h":36}
+},
+{
+	"filename": "player_crouch0004.png",
+	"frame": {"x":2,"y":46,"w":25,"h":24},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":7,"y":12,"w":25,"h":24},
+	"sourceSize": {"w":35,"h":36}
+},
+{
+	"filename": "player_crouch0005.png",
+	"frame": {"x":2,"y":72,"w":25,"h":23},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":7,"y":13,"w":25,"h":23},
+	"sourceSize": {"w":35,"h":36}
+},
+{
+	"filename": "player_crouch0006.png",
+	"frame": {"x":2,"y":2,"w":27,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":7,"y":16,"w":27,"h":20},
+	"sourceSize": {"w":35,"h":36}
+},
+{
+	"filename": "player_crouch0007.png",
+	"frame": {"x":2,"y":24,"w":27,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":7,"y":16,"w":27,"h":20},
+	"sourceSize": {"w":35,"h":36}
+},
+{
+	"filename": "player_crouch0008.png",
+	"frame": {"x":2,"y":2,"w":27,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":7,"y":16,"w":27,"h":20},
+	"sourceSize": {"w":35,"h":36}
+},
+{
+	"filename": "player_crouch0009.png",
+	"frame": {"x":2,"y":72,"w":25,"h":23},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":7,"y":13,"w":25,"h":23},
+	"sourceSize": {"w":35,"h":36}
+},
+{
+	"filename": "player_crouch0010.png",
+	"frame": {"x":2,"y":46,"w":25,"h":24},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":7,"y":12,"w":25,"h":24},
+	"sourceSize": {"w":35,"h":36}
+},
+{
+	"filename": "player_crouch0011.png",
+	"frame": {"x":2,"y":125,"w":22,"h":26},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":7,"y":10,"w":22,"h":26},
+	"sourceSize": {"w":35,"h":36}
+},
+{
+	"filename": "player_crouch0012.png",
+	"frame": {"x":2,"y":184,"w":20,"h":29},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":8,"y":7,"w":20,"h":29},
+	"sourceSize": {"w":35,"h":36}
+},
+{
+	"filename": "player_crouch0013.png",
+	"frame": {"x":2,"y":249,"w":18,"h":32},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":8,"y":4,"w":18,"h":32},
+	"sourceSize": {"w":35,"h":36}
+},
+{
+	"filename": "player_crouch0014.png",
+	"frame": {"x":2,"y":318,"w":17,"h":33},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":9,"y":3,"w":17,"h":33},
+	"sourceSize": {"w":35,"h":36}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "player-crouch.png",
+	"format": "RGBA8888",
+	"size": {"w":31,"h":353},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:2b948a00d27331e1b5df783e6f9277f7:2c04d2a0b7407eefc15bcc649baa5b99:abd29e2b9ef0d9339fe083b5f01961d2$"
+}
+}

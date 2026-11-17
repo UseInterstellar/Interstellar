@@ -1,0 +1,71 @@
+diff --git a/Makefile b/Makefile
+index 16b0095..2f6890a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -171,8 +171,18 @@ else ifneq (,$(findstring qnx,$(platform)))
+ 	#LIBS +=-lpthread
+ else ifeq ($(platform), emscripten)
+    TARGET := $(TARGET_NAME)_libretro_emscripten.bc
+-   fpic := -fPIC
+-   SHARED := -shared -Wl,--version-script=$(CORE_DIR)/link.T -Wl
++   HAVE_OPENGL = 0
++   HAVE_OPENGLES3 = 0
++   HAVE_THREADS = 0
++   HAVE_WIFI = 0
++   STATIC_LINKING = 1
++
++   CFLAGS += -msimd128 -ftree-vectorize
++   CXXFLAGS += -msimd128 -ftree-vectorize
++
++   CC = emcc
++   CXX = em++
++   AR = emar
+ else ifeq ($(platform), vita)
+    TARGET := $(TARGET_NAME)_vita.a
+    CC = arm-vita-eabi-gcc
+@@ -472,9 +482,15 @@ CXXFLAGS += -D_CRT_SECURE_NO_WARNINGS
+ endif
+ 
+ ifeq ($(DEBUG), 1)
++   CFLAGS += -O0 -g
+    CXXFLAGS += -O0 -g
+ else
+-   CXXFLAGS += -O3 -fno-tree-vectorize # -DNDEBUG
++   CFLAGS += -O3 # -DNDEBUG
++   CXXFLAGS += -O3 # -DNDEBUG
++   ifneq ($(platform), emscripten)
++      CFLAGS += -fno-tree-vectorize
++      CXXFLAGS += -fno-tree-vectorize
++   endif
+ endif
+ 
+ include Makefile.common
+diff --git a/src/libretro/libretro-common/glsm/glsm.c b/src/libretro/libretro-common/glsm/glsm.c
+index a70aaf4..310e858 100644
+--- a/src/libretro/libretro-common/glsm/glsm.c
++++ b/src/libretro/libretro-common/glsm/glsm.c
+@@ -662,18 +662,18 @@ void rglBlendFunc(GLenum sfactor, GLenum dfactor)
+  * Core in:
+  * OpenGL    : 1.4
+  */
+-void rglBlendFuncSeparate(GLenum sfactor, GLenum dfactor)
++void rglBlendFuncSeparate(GLenum srcRGB, GLenum dstRGB, GLenum srcAlpha, GLenum dstAlpha)
+ {
+ #ifdef GLSM_DEBUG
+    log_cb(RETRO_LOG_INFO, "glBlendFuncSeparate.\n");
+ #endif
+    glsm_ctl(GLSM_CTL_IMM_VBO_DRAW, NULL);
+    gl_state.blendfunc_separate.used     = true;
+-   gl_state.blendfunc_separate.srcRGB   = sfactor;
+-   gl_state.blendfunc_separate.dstRGB   = dfactor;
+-   gl_state.blendfunc_separate.srcAlpha = sfactor;
+-   gl_state.blendfunc_separate.dstAlpha = dfactor;
+-   glBlendFunc(sfactor, dfactor);
++   gl_state.blendfunc_separate.srcRGB   = srcRGB;
++   gl_state.blendfunc_separate.dstRGB   = dstRGB;
++   gl_state.blendfunc_separate.srcAlpha = srcAlpha;
++   gl_state.blendfunc_separate.dstAlpha = dstAlpha;
++   glBlendFuncSeparate(srcRGB, dstRGB, srcAlpha, dstAlpha);
+ }
+ 
+ /*

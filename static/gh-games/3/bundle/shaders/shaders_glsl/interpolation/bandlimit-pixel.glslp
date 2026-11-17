@@ -1,0 +1,10 @@
+shaders = 2
+shader0 = ../linear/linearize.glsl
+shader1 = shaders/bandlimit-pixel.glsl
+
+filter_linear0 = false 
+scale_type0 = source
+scale0 = 1.0
+srgb_framebuffer0 = true
+
+filter_linear1 = true

@@ -1,0 +1,241 @@
+{
+    "hierarchy": {
+        "name": "Canvas",
+        "children": [
+            {
+                "name": "container",
+                "children": [
+                    {
+                        "name": "title"
+                    },
+                    {
+                        "name": "close"
+                    },
+                    {
+                        "name": "play"
+                    },
+                    {
+                        "name": "home"
+                    },
+                    {
+                        "name": "trophies"
+                    },
+                    {
+                        "name": "reload"
+                    },
+                    {
+                        "name": "sfx_title"
+                    },
+                    {
+                        "name": "sfx_button",
+                        "children": [
+                            {
+                                "name": "sfx_text"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "check_box"
+                    },
+                    {
+                        "name": "check"
+                    },
+                    {
+                        "name": "auto_save_text"
+                    },
+                    {
+                        "name": "music_title"
+                    },
+                    {
+                        "name": "music_button",
+                        "children": [
+                            {
+                                "name": "music_text"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "properties": {
+        "Canvas": {
+            "design": {
+                "width": 960,
+                "height": 640
+            },
+            "type": "canvas"
+        },
+        "container": {
+            "file": "pa_container.png",
+            "image": "SIMPLE",
+            "type": "sprite",
+            "alignment": {
+                "type": "CENTER",
+                "offset": {
+                    "x": -2.8,
+                    "y": 23.1
+                }
+            }
+        },
+        "container/title": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 64
+            },
+            "text": "PAUSE",
+            "align": "center",
+            "position": {
+                "x": 4.6,
+                "y": -220.7
+            },
+            "type": "text"
+        },
+        "container/close": {
+            "file": "op_close_button.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 193.7,
+                "y": -229.4
+            },
+            "type": "button"
+        },
+        "container/play": {
+            "file": "pa_play_button.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 2.4,
+                "y": -125.9
+            },
+            "type": "button"
+        },
+        "container/home": {
+            "file": "pa_home_button.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -119.6,
+                "y": -13.3
+            },
+            "type": "button"
+        },
+        "container/trophies": {
+            "file": "pa_trophies_button.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 3.5,
+                "y": -12.4
+            },
+            "type": "button"
+        },
+        "container/reload": {
+            "file": "pa_reload_button.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 124.6,
+                "y": -13.8
+            },
+            "type": "button"
+        },
+        "container/sfx_title": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 27
+            },
+            "text": "SFX",
+            "align": "center",
+            "position": {
+                "x": -89.1,
+                "y": 61.7
+            },
+            "type": "text"
+        },
+        "container/sfx_button": {
+            "file": "pa_on_button.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -89.1,
+                "y": 102.9
+            },
+            "type": "button"
+        },
+        "container/sfx_button/sfx_text": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 28
+            },
+            "text": "ON",
+            "align": "center",
+            "position": {
+                "x": 0,
+                "y": -0.5
+            },
+            "type": "text"
+        },
+        "container/check_box": {
+            "file": "pa_check_box.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 105.4,
+                "y": 186.3
+            },
+            "type": "sprite"
+        },
+        "container/check": {
+            "file": "pa_check.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 105.4,
+                "y": 186.3
+            },
+            "type": "sprite"
+        },
+        "container/auto_save_text": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 22
+            },
+            "text": "Auto reset when\nbest time passed",
+            "align": "center",
+            "position": {
+                "x": -10.4,
+                "y": 187.8
+            },
+            "type": "text"
+        },
+        "container/music_title": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 27
+            },
+            "text": "SFX",
+            "align": "center",
+            "position": {
+                "x": 99.9,
+                "y": 61.7
+            },
+            "type": "text"
+        },
+        "container/music_button": {
+            "file": "pa_on_button.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 99.9,
+                "y": 102.9
+            },
+            "type": "button"
+        },
+        "container/music_button/music_text": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 28
+            },
+            "text": "ON",
+            "align": "center",
+            "position": {
+                "x": 0,
+                "y": -0.5
+            },
+            "type": "text"
+        }
+    }
+}

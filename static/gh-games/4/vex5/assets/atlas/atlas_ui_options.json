@@ -1,0 +1,68 @@
+{"frames": [
+
+{
+	"filename": "op_close_button.png",
+	"frame": {"x":270,"y":403,"w":34,"h":33},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":2,"w":34,"h":33},
+	"sourceSize": {"w":38,"h":37}
+},
+{
+	"filename": "op_container.png",
+	"frame": {"x":2,"y":2,"w":515,"h":399},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":5,"w":515,"h":399},
+	"sourceSize": {"w":523,"h":410}
+},
+{
+	"filename": "pa_check.png",
+	"frame": {"x":372,"y":403,"w":32,"h":25},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":4,"y":5,"w":32,"h":25},
+	"sourceSize": {"w":39,"h":35}
+},
+{
+	"filename": "pa_check_box.png",
+	"frame": {"x":306,"y":403,"w":33,"h":33},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":1,"w":33,"h":33},
+	"sourceSize": {"w":39,"h":35}
+},
+{
+	"filename": "pa_close_button.png",
+	"frame": {"x":341,"y":403,"w":29,"h":28},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":29,"h":28},
+	"sourceSize": {"w":29,"h":28}
+},
+{
+	"filename": "pa_off_button.png",
+	"frame": {"x":2,"y":403,"w":132,"h":50},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":1,"w":132,"h":50},
+	"sourceSize": {"w":135,"h":52}
+},
+{
+	"filename": "pa_on_button.png",
+	"frame": {"x":136,"y":403,"w":132,"h":50},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":1,"w":132,"h":50},
+	"sourceSize": {"w":135,"h":52}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "atlas_ui_options.png",
+	"format": "RGBA8888",
+	"size": {"w":519,"h":455},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:f77c8bf86f47d876b6232e7f47af44b2:5663ae7eb9820f6be129cfca24958c27:6e6d6bb3705814e69fb26e5402e2b04c$"
+}
+}

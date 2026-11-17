@@ -1,0 +1,30 @@
+diff --git a/Makefile b/Makefile
+index a423a92..e4e1e3b 100644
+--- a/Makefile
++++ b/Makefile
+@@ -611,9 +611,14 @@ ifneq (,$(findstring msvc,$(platform)))
+    CFLAGS   += -MT
+    CXXFLAGS += -MT
+ endif
++ifeq ($(platform), emscripten)
++   CFLAGS   += -O3 -DNDEBUG
++   CXXFLAGS += -O3 -DNDEBUG
++else
+    CFLAGS   += -O2 -DNDEBUG
+    CXXFLAGS += -O2 -DNDEBUG
+ endif
++endif
+ 
+ 
+ OBJECTS := $(SOURCES_CXX:.cpp=.o) $(SOURCES_C:.c=.o)
+@@ -653,9 +658,7 @@ endif
+ 
+ $(TARGET): $(OBJECTS)
+ 
+-ifeq ($(platform), emscripten)
+-	$(CXX) $(CXXFLAGS) $(OBJOUT)$@ $^
+-else ifeq ($(STATIC_LINKING), 1)
++ifeq ($(STATIC_LINKING), 1)
+ 	$(AR) rcs $@ $(OBJECTS)
+ else
+ 	$(LD) $(LINKOUT)$@ $^ $(LDFLAGS) $(LIBS)

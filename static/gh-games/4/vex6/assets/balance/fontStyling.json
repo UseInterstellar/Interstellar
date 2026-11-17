@@ -1,0 +1,524 @@
+{
+    "btn_settings": {
+        "en": {
+            "fontSize": 30
+        },
+        "pt": {
+            "fontSize": 30
+        },
+        "fr": {
+            "fontSize": 24
+        },
+        "de": {
+            "fontSize": 22
+        },
+        "it": {
+            "fontSize": 22
+        },
+        "es": {
+            "fontSize": 30
+        },
+        "nl": {
+            "fontSize": 24
+        },
+        "no": {
+            "fontSize": 22
+        },
+        "ru": {
+            "fontSize": 30
+        }
+    },
+    "btn_mainmenu": {
+        "en": {
+            "fontSize": 30
+        },
+        "pt": {
+            "fontSize": 30
+        },
+        "fr": {
+            "fontSize": 30
+        },
+        "de": {
+            "fontSize": 30
+        },
+        "it": {
+            "fontSize": 26
+        },
+        "es": {
+            "fontSize": 30
+        },
+        "nl": {
+            "fontSize": 30
+        },
+        "no": {
+            "fontSize": 30
+        },
+        "ru": {
+            "fontSize": 30
+        }
+    },
+    "btn_settings_music": {
+        "en": {
+            "fontSize": 30
+        },
+        "pt": {
+            "fontSize": 30
+        },
+        "fr": {
+            "fontSize": 24
+        },
+        "de": {
+            "fontSize": 30
+        },
+        "it": {
+            "fontSize": 30
+        },
+        "es": {
+            "fontSize": 26
+        },
+        "nl": {
+            "fontSize": 30
+        },
+        "no": {
+            "fontSize": 30
+        },
+        "ru": {
+            "fontSize": 24
+        }
+    },
+    "btn_settings_sfx": {
+        "en": {
+            "fontSize": 30
+        },
+        "pt": {
+            "fontSize": 30
+        },
+        "fr": {
+            "fontSize": 30
+        },
+        "de": {
+            "fontSize": 30
+        },
+        "it": {
+            "fontSize": 30
+        },
+        "es": {
+            "fontSize": 26
+        },
+        "nl": {
+            "fontSize": 30
+        },
+        "no": {
+            "fontSize": 30
+        },
+        "ru": {
+            "fontSize": 30
+        }
+    },
+    "btn_settings_autoreset": {
+        "en": {
+            "fontSize": 32
+        },
+        "pt": {
+            "fontSize": 32
+        },
+        "fr": {
+            "fontSize": 24
+        },
+        "de": {
+            "fontSize": 32
+        },
+        "it": {
+            "fontSize": 32
+        },
+        "es": {
+            "fontSize": 32
+        },
+        "nl": {
+            "fontSize": 32
+        },
+        "no": {
+            "fontSize": 32
+        },
+        "ru": {
+            "fontSize": 32
+        }
+    },
+    "btn_settings_actselect": {
+        "en": {
+            "fontSize": 30
+        },
+        "pt": {
+            "fontSize": 28
+        },
+        "fr": {
+            "fontSize": 22
+        },
+        "de": {
+            "fontSize": 30
+        },
+        "it": {
+            "fontSize": 26
+        },
+        "es": {
+            "fontSize": 26
+        },
+        "nl": {
+            "fontSize": 30
+        },
+        "no": {
+            "fontSize": 30
+        },
+        "ru": {
+            "fontSize": 30
+        }
+    },
+    "btn_trophies_title1": {
+        "en": {
+            "fontSize": 36
+        },
+        "pt": {
+            "fontSize": 36
+        },
+        "fr": {
+            "fontSize": 30
+        },
+        "de": {
+            "fontSize": 36
+        },
+        "it": {
+            "fontSize": 36
+        },
+        "es": {
+            "fontSize": 36
+        },
+        "nl": {
+            "fontSize": 36
+        },
+        "no": {
+            "fontSize": 36
+        },
+        "ru": {
+            "fontSize": 36
+        }
+    },
+    "btn_skin_chooseskin": {
+        "en": {
+            "fontSize": 30
+        },
+        "pt": {
+            "fontSize": 30
+        },
+        "fr": {
+            "fontSize": 28
+        },
+        "de": {
+            "fontSize": 30
+        },
+        "it": {
+            "fontSize": 30
+        },
+        "es": {
+            "fontSize": 30
+        },
+        "nl": {
+            "fontSize": 30
+        },
+        "no": {
+            "fontSize": 30
+        },
+        "ru": {
+            "fontSize": 28
+        }
+    },
+    "btn_gameplay_retry": {
+        "en": {
+            "fontSize": 30
+        },
+        "pt": {
+            "fontSize": 18
+        },
+        "fr": {
+            "fontSize": 28
+        },
+        "de": {
+            "fontSize": 18
+        },
+        "it": {
+            "fontSize": 30
+        },
+        "es": {
+            "fontSize": 30
+        },
+        "nl": {
+            "fontSize": 22
+        },
+        "no": {
+            "fontSize": 30
+        },
+        "ru": {
+            "fontSize": 30
+        }
+    },
+    "btn_watch_add": {
+        "en": {
+            "fontSize": 30
+        },
+        "pt": {
+            "fontSize": 28
+        },
+        "fr": {
+            "fontSize": 30
+        },
+        "de": {
+            "fontSize": 30
+        },
+        "it": {
+            "fontSize": 30
+        },
+        "es": {
+            "fontSize": 30
+        },
+        "nl": {
+            "fontSize": 24
+        },
+        "no": {
+            "fontSize": 26
+        },
+        "ru": {
+            "fontSize": 26
+        }
+    },
+    "btn_daily_tasks": {
+        "en": {
+            "fontSize": 30
+        },
+        "pt": {
+            "fontSize": 22
+        },
+        "fr": {
+            "fontSize": 30
+        },
+        "de": {
+            "fontSize": 30
+        },
+        "it": {
+            "fontSize": 30
+        },
+        "es": {
+            "fontSize": 30
+        },
+        "nl": {
+            "fontSize": 30
+        },
+        "no": {
+            "fontSize": 30
+        },
+        "ru": {
+            "fontSize": 30
+        }
+    },
+    "btn_continue": {
+        "en": {
+            "fontSize": 30
+        },
+        "pt": {
+            "fontSize": 30
+        },
+        "fr": {
+            "fontSize": 30
+        },
+        "de": {
+            "fontSize": 26
+        },
+        "it": {
+            "fontSize": 30
+        },
+        "es": {
+            "fontSize": 30
+        },
+        "nl": {
+            "fontSize": 30
+        },
+        "no": {
+            "fontSize": 30
+        },
+        "ru": {
+            "fontSize": 30
+        }
+    },
+    "achievement": {
+        "en": {
+            "fontSize": 24
+        },
+        "pt": {
+            "fontSize": 24
+        },
+        "fr": {
+            "fontSize": 16
+        },
+        "de": {
+            "fontSize": 24
+        },
+        "it": {
+            "fontSize": 16
+        },
+        "es": {
+            "fontSize": 24
+        },
+        "nl": {
+            "fontSize": 24
+        },
+        "no": {
+            "fontSize": 20
+        },
+        "ru": {
+            "fontSize": 24
+        }
+    },
+    "resets_in": {
+        "en": {
+            "fontSize": 40
+        },
+        "pt": {
+            "fontSize": 40
+        },
+        "fr": {
+            "fontSize": 40
+        },
+        "de": {
+            "fontSize": 36
+        },
+        "it": {
+            "fontSize": 40
+        },
+        "es": {
+            "fontSize": 40
+        },
+        "nl": {
+            "fontSize": 40
+        },
+        "no": {
+            "fontSize": 40
+        },
+        "ru": {
+            "fontSize": 40
+        }
+    },
+    "resets_in2": {
+        "en": {
+            "fontSize": 26
+        },
+        "pt": {
+            "fontSize": 26
+        },
+        "fr": {
+            "fontSize": 26
+        },
+        "de": {
+            "fontSize": 22
+        },
+        "it": {
+            "fontSize": 26
+        },
+        "es": {
+            "fontSize": 26
+        },
+        "nl": {
+            "fontSize": 26
+        },
+        "no": {
+            "fontSize": 26
+        },
+        "ru": {
+            "fontSize": 26
+        }
+    },
+    "resets_in3": {
+        "en": {
+            "fontSize": 30
+        },
+        "pt": {
+            "fontSize": 30
+        },
+        "fr": {
+            "fontSize": 30
+        },
+        "de": {
+            "fontSize": 26
+        },
+        "it": {
+            "fontSize": 30
+        },
+        "es": {
+            "fontSize": 30
+        },
+        "nl": {
+            "fontSize": 30
+        },
+        "no": {
+            "fontSize": 30
+        },
+        "ru": {
+            "fontSize": 30
+        }
+    },
+    "tf1": {
+        "en": {
+            "fontSize": 20
+        },
+        "pt": {
+            "fontSize": 20
+        },
+        "fr": {
+            "fontSize": 20
+        },
+        "de": {
+            "fontSize": 16
+        },
+        "it": {
+            "fontSize": 20
+        },
+        "es": {
+            "fontSize": 16
+        },
+        "nl": {
+            "fontSize": 20
+        },
+        "no": {
+            "fontSize": 18
+        },
+        "ru": {
+            "fontSize": 18
+        }
+    },
+    "actname": {
+        "en": {
+            "fontSize": 40
+        },
+        "pt": {
+            "fontSize": 40
+        },
+        "fr": {
+            "fontSize": 40
+        },
+        "de": {
+            "fontSize": 40
+        },
+        "it": {
+            "fontSize": 40
+        },
+        "es": {
+            "fontSize": 30
+        },
+        "nl": {
+            "fontSize": 40
+        },
+        "no": {
+            "fontSize": 40
+        },
+        "ru": {
+            "fontSize": 40
+        }
+    }
+}

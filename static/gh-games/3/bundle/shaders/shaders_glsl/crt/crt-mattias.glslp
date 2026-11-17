@@ -1,0 +1,4 @@
+shaders = 1
+
+shader0 = shaders/crt-mattias.glsl
+filter_linear0 = false
