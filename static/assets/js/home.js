@@ -1,4 +1,3 @@
-
 function shellTop() {
   try {
     return top.document.body?.dataset.shell === "true" ? top : null;

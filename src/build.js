@@ -21,7 +21,6 @@ for (const method of ["log", "info", "warn"]) {
   };
 }
 
-
 const NETLIFY = process.argv.includes("--netlify");
 const NETLIFY_HEADERS = "/*\n  Service-Worker-Allowed: /\n";
 
@@ -45,8 +44,14 @@ function readWispUrl(raw, variable) {
   return `${url.protocol}//${url.host}${url.pathname}`;
 }
 
-const readWispList = variable => [...new Set((process.env[variable] ?? "").split(",").map(entry => readWispUrl(entry, variable)).filter(Boolean))];
-
+const readWispList = variable => [
+  ...new Set(
+    (process.env[variable] ?? "")
+      .split(",")
+      .map(entry => readWispUrl(entry, variable))
+      .filter(Boolean),
+  ),
+];
 
 function resolveNetlifyWisp() {
   const single = readWispList("WISP_URL");
@@ -55,7 +60,6 @@ function resolveNetlifyWisp() {
   const fallback = readWispList("WISP_FALLBACK").filter(url => !preferred.includes(url));
   return { preferred, fallback, source: "WISP_PREFERRED / WISP_FALLBACK" };
 }
-
 
 function encodeWispLists({ preferred, fallback }) {
   const key = [...randomBytes(12)];
@@ -502,7 +506,6 @@ function applyBaremuxStrings(source, id, baremuxStrings) {
   return out;
 }
 
-
 const BROADCAST_CHANNEL_NEW = /new BroadcastChannel\(/g;
 const BROADCAST_CHANNEL_COUNTS = { "uv.bundle": 1, "uv.client": 1, "uv.handler": 0, "sj.all": 1, baremux: 1, "baremux.worker": 1 };
 
@@ -647,7 +650,6 @@ function applyUvPropertyRename(source, name) {
   return out;
 }
 
-
 const UV_REWRITER_NAMES = ["rewriteUrl", "rewriteCSS", "rewriteJS"];
 
 function createUvRewriterRenames() {
@@ -682,7 +684,6 @@ const WISP_REWRITES = {
   },
 };
 
-
 const LIBCURL_NAMESPACE_KEY = /^([ \t]*)wisp: \{/gm;
 const LIBCURL_VERSION_KEY = /(?<![\w$])version_dict\.wisp(?![\w$])/g;
 const LIBCURL_TRANSPORT_TAG = /"wisp"/g;
@@ -703,10 +704,7 @@ function applyLibcurlRewrites(source, tagName) {
   for (const [label, found, expected] of counts) {
     if (found !== expected) throw new CodecPatchError(`libcurl: expected ${expected} ${label}, found ${found}. Upstream changed.`);
   }
-  let out = source
-    .replace(LIBCURL_NAMESPACE_KEY, `$1${tagName}: {`)
-    .replace(LIBCURL_VERSION_KEY, `version_dict.${tagName}`)
-    .replace(LIBCURL_TRANSPORT_TAG, `"${tagName}"`);
+  let out = source.replace(LIBCURL_NAMESPACE_KEY, `$1${tagName}: {`).replace(LIBCURL_VERSION_KEY, `version_dict.${tagName}`).replace(LIBCURL_TRANSPORT_TAG, `"${tagName}"`);
   out = replaceAll(out, LIBCURL_VERBOSE_KEY, '[["_lib","curl_verbose"].join("")]');
 
   for (const [from, to] of LIBCURL_MESSAGES) {
@@ -724,7 +722,6 @@ function applyLibcurlRewrites(source, tagName) {
   const hidden = replaceAll(replaceAll(notice, "libcurl", '${["lib","curl"].join("")}'), "ading2210", '${["ading","2210"].join("")}');
   out = out.slice(0, start) + hidden + out.slice(end);
 
-
   const leaked = ["please call libcurl", "libcurl.js is licensed", "/ading2210/", '"libcurl_load"', '"libcurl_abort"', "wisp: {", LIBCURL_VERBOSE_KEY].filter(text => out.includes(text));
   if (leaked.length) throw new CodecPatchError(`libcurl: ${leaked.join(", ")} survived the rewrite.`);
   return out;
@@ -740,10 +737,7 @@ function applyWispRewrites(source, id, fieldName, tagName) {
   }
   const optionReads = (source.match(WISP_OPTION_READ) || []).length;
   if (optionReads !== expected.optionReads) throw new CodecPatchError(`${id}: expected ${expected.optionReads} option reads of .wisp, found ${optionReads}. Upstream changed.`);
-  let out = source
-    .replace(WISP_THIS_FIELD, `this.${fieldName}`)
-    .replace(WISP_FIELD_DECLARATION, `$1${fieldName};`)
-    .replace(WISP_OPTION_READ, '$1[["wi","sp"].join("")]');
+  let out = source.replace(WISP_THIS_FIELD, `this.${fieldName}`).replace(WISP_FIELD_DECLARATION, `$1${fieldName};`).replace(WISP_OPTION_READ, '$1[["wi","sp"].join("")]');
   for (const [from, to, count] of expected.strings) {
     const found = out.split(from).length - 1;
     if (found !== count) throw new CodecPatchError(`${id}: expected ${count} occurrences of ${JSON.stringify(from)}, found ${found}. Upstream changed.`);
@@ -1002,7 +996,6 @@ function applyRouteRewrites(source, table) {
   return { source: out, count };
 }
 
-
 function fnv1a(str) {
   let h = 2166136261;
   for (let i = 0; i < str.length; i++) {
@@ -1148,7 +1141,6 @@ function shouldProcessInlineScript(attrs) {
   return ["text/javascript", "application/javascript", "module"].includes(type);
 }
 
-
 function scopeHomeScript(source) {
   return `(function () {\n${source}\n})();\n`;
 }
@@ -1203,8 +1195,7 @@ function minifyHtml(html) {
     return token;
   };
 
-  let output = stripComments(html
-    .replace(/<(script|style|pre|textarea)\b[\s\S]*?<\/\1>/gi, protectBlock))
+  let output = stripComments(html.replace(/<(script|style|pre|textarea)\b[\s\S]*?<\/\1>/gi, protectBlock))
     .replace(/\s{2,}/g, " ")
     .replace(/>\s+</g, "><")
     .replace(/\s+\/>/g, "/>")
@@ -1221,7 +1212,6 @@ function encodeHtmlText(text) {
   });
 }
 
-
 const SETTINGS_KEYWORDS = ["cloaking", "cloaked", "cloak"];
 
 function swapKeyword(text, tok) {
@@ -1235,7 +1225,13 @@ function swapKeyword(text, tok) {
     for (let j = 0; j < tok.length && picks.length < 2; j++) {
       if (KEYWORD_LOOKALIKES[chars[idx + j]] && chars[idx + j].toLowerCase() !== "l") picks.push(j);
     }
-    if (!picks.length) picks.push(...[...tok].map((_, j) => j).filter(j => KEYWORD_LOOKALIKES[chars[idx + j]]).slice(0, 1));
+    if (!picks.length)
+      picks.push(
+        ...[...tok]
+          .map((_, j) => j)
+          .filter(j => KEYWORD_LOOKALIKES[chars[idx + j]])
+          .slice(0, 1),
+      );
     for (const j of picks) out[idx + j] = KEYWORD_LOOKALIKES[chars[idx + j]];
   }
   return out.join("");
@@ -1270,9 +1266,7 @@ function swapCloakLabels(html) {
   if (marker < 0) throw new Error("settings.html: cloak dropdown not found");
   const start = html.lastIndexOf("<select", marker);
   const end = html.indexOf("</select>", marker);
-  const block = html
-    .slice(start, end)
-    .replace(/(<option\b[^>]*>)([^<]*)(<\/option>)/g, (_match, open, label, close) => open + swapLetters(label, 2) + close);
+  const block = html.slice(start, end).replace(/(<option\b[^>]*>)([^<]*)(<\/option>)/g, (_match, open, label, close) => open + swapLetters(label, 2) + close);
   return html.slice(0, start) + block + html.slice(end);
 }
 
@@ -1284,21 +1278,39 @@ function obfuscateTextNodes(html) {
 }
 
 const PLACEHOLDER_LOOKALIKES = {
-  a: "а", c: "с", e: "е", i: "і", o: "о", p: "р", x: "х", y: "у",
-  A: "А", B: "В", C: "С", E: "Е", H: "Н", K: "К", M: "М", O: "О",
-  P: "Р", T: "Т", X: "Х",
+  a: "а",
+  c: "с",
+  e: "е",
+  i: "і",
+  o: "о",
+  p: "р",
+  x: "х",
+  y: "у",
+  A: "А",
+  B: "В",
+  C: "С",
+  E: "Е",
+  H: "Н",
+  K: "К",
+  M: "М",
+  O: "О",
+  P: "Р",
+  T: "Т",
+  X: "Х",
 };
 
 const KEYWORD_LOOKALIKES = {
   ...PLACEHOLDER_LOOKALIKES,
-  u: "ս", U: "Ս", r: "ր", R: "Ր", l: "Ӏ", L: "Ӏ", k: "к",
+  u: "ս",
+  U: "Ս",
+  r: "ր",
+  R: "Ր",
+  l: "Ӏ",
+  L: "Ӏ",
+  k: "к",
 };
 
-const DETECTOR_TRIGGER_TOKENS = [
-  "ultraviolet", "scramjet", "baremux", "libcurl", "unblock",
-  "proxy", "epoxy", "wisp", "bare", "enter", "url",
-].sort((a, b) => b.length - a.length);
-
+const DETECTOR_TRIGGER_TOKENS = ["ultraviolet", "scramjet", "baremux", "libcurl", "unblock", "proxy", "epoxy", "wisp", "bare", "enter", "url"].sort((a, b) => b.length - a.length);
 
 function obfuscatePlaceholder(value) {
   if (value.includes("&")) throw new CodecPatchError(`placeholder ${JSON.stringify(value)} contains "&". Entity-aware swaps are not implemented.`);
@@ -1403,7 +1415,6 @@ async function exists(filePath) {
   }
 }
 
-
 const SCRAMJET_SHARED_NAMES = [
   { from: "scramitize", js: 1, config: 1, wasm: 2 },
   { from: "$scramerr", js: 1, config: 0, wasm: 1 },
@@ -1419,7 +1430,14 @@ function createScramjetSharedNames() {
   if (process.env.SJ_KEEP_NAMES === "1") return [];
   return SCRAMJET_SHARED_NAMES.map(entry => {
     const lead = entry.from.startsWith("$") ? "$" : "_";
-    return { ...entry, to: lead + randomBytes(Math.ceil(entry.from.length / 2)).toString("hex").slice(0, entry.from.length - 1) };
+    return {
+      ...entry,
+      to:
+        lead +
+        randomBytes(Math.ceil(entry.from.length / 2))
+          .toString("hex")
+          .slice(0, entry.from.length - 1),
+    };
   });
 }
 
@@ -1433,7 +1451,6 @@ function applyScramjetSharedNames(source, names, kind, id) {
   }
   return out;
 }
-
 
 const SCRAMJET_WASM_LABELS = [
   ["scramjet.codec.encode", 1],
@@ -1458,7 +1475,6 @@ function patchScramjetWasm(buffer, names, id) {
   return patched;
 }
 
-
 const SCRAMJET_DEBUG_PRELUDE = `;(function(){var P="[Scramjet Debug]",seen={},budget=12;
 function emit(k,l,d){if(seen[k]||budget<=0)return;seen[k]=1;budget--;try{console.error(P+" ("+(typeof document==="undefined"?"service-worker":"page")+") "+l+" "+JSON.stringify(d))}catch(e){}}
 function trim(s){return String(s||"").split(String.fromCharCode(10)).slice(0,9)}
@@ -1481,11 +1497,19 @@ const SJ_DEBUG = process.env.SJ_DEBUG === "1" || process.argv.includes("--debug"
 
 function applyScramjetDebug(source) {
   const sites = [
-    ['if((0,n.U5)("rewriterLogs",r.base))for(let e of s.errors)console.error("oxc parse error",e);return l}catch(a){if(console.warn(', 'globalThis.__sjdbg&&__sjdbg.rwok(t,o,s.errors,l);if((0,n.U5)("rewriterLogs",r.base))for(let e of s.errors)console.error("oxc parse error",e);return l}catch(a){globalThis.__sjdbg&&__sjdbg.rwfail(t,o,a,e);if(console.warn(', "rewriteJs"],
+    [
+      'if((0,n.U5)("rewriterLogs",r.base))for(let e of s.errors)console.error("oxc parse error",e);return l}catch(a){if(console.warn(',
+      'globalThis.__sjdbg&&__sjdbg.rwok(t,o,s.errors,l);if((0,n.U5)("rewriterLogs",r.base))for(let e of s.errors)console.error("oxc parse error",e);return l}catch(a){globalThis.__sjdbg&&__sjdbg.rwfail(t,o,a,e);if(console.warn(',
+      "rewriteJs",
+    ],
     ["let i=a(e,r);if(!i)return e;", "let i=a(e,r);if(!i)return e;globalThis.__sjdbg&&__sjdbg.rw(e,r,i,n.$W.prefix);", "rewriteUrl"],
-    ["{value:function(t,n){let a=new URL(n,t).href;return n.includes(\":\")", "{value:function(t,n){let a=new URL(n,t).href;globalThis.__sjdbg&&__sjdbg.imp(t,n,a);return n.includes(\":\")", "dynamic import"],
+    ['{value:function(t,n){let a=new URL(n,t).href;return n.includes(":")', '{value:function(t,n){let a=new URL(n,t).href;globalThis.__sjdbg&&__sjdbg.imp(t,n,a);return n.includes(":")', "dynamic import"],
     ["{value:function(e,t){return e.url=t,e.resolve=function(e){return new URL(e,t).href},e}", "{value:function(e,t){return globalThis.__sjdbg&&__sjdbg.meta(e,t),e.url=t,globalThis.__sjdbg&&e.url!==t&&__sjdbg.metaFail(e,t),e.resolve=function(e){return new URL(e,t).href},e}", "import.meta"],
-    ['if(h.origin===new URL(e.url).origin)throw Error("attempted to fetch from same origin - this means the site has obtained a reference to the real origin, aborting");', 'if(h.origin===new URL(e.url).origin){globalThis.__sjdbg&&__sjdbg.sw(e,t,h,s.v2);throw Error("attempted to fetch from same origin - this means the site has obtained a reference to the real origin, aborting")}', "service worker"],
+    [
+      'if(h.origin===new URL(e.url).origin)throw Error("attempted to fetch from same origin - this means the site has obtained a reference to the real origin, aborting");',
+      'if(h.origin===new URL(e.url).origin){globalThis.__sjdbg&&__sjdbg.sw(e,t,h,s.v2);throw Error("attempted to fetch from same origin - this means the site has obtained a reference to the real origin, aborting")}',
+      "service worker",
+    ],
     ["this.locationProxy=(0,a.createLocationProxy)(this,e),e[n.pX]=this}get frame(){", "this.locationProxy=(0,a.createLocationProxy)(this,e),e[n.pX]=this,globalThis.__sjdbg&&__sjdbg.client(this)}get frame(){", "client"],
   ];
   let out = source;
@@ -1495,8 +1519,6 @@ function applyScramjetDebug(source) {
   }
   return SCRAMJET_DEBUG_PRELUDE + out;
 }
-
-
 
 const SCRAMJET_FORK_VERSION = /^1\.1\.0-fixed(\.\d+)?$/;
 let scramjetChecked = false;
@@ -1540,7 +1562,19 @@ function vendorSpecs() {
       ext: ".js",
       globals: ["__uvHook", "Ultraviolet", "UVClient", "__uv$config", "__uv$cookies", "__uv"],
     },
-    { id: "uv.sw", renameUvPrefix: true, renameIdentifiers: true, renameUltraviolet: true, stripBranding: true, renameUvProperty: true, renameUvRewriters: { rewriteUrl: 1, rewriteCSS: 1, rewriteJS: 0 }, src: path.join(uvPath, "uv.sw.js"), old: "/assets/ultraviolet/uv.sw.js", ext: ".js", globals: ["UVServiceWorker", "Ultraviolet", "__uv"] },
+    {
+      id: "uv.sw",
+      renameUvPrefix: true,
+      renameIdentifiers: true,
+      renameUltraviolet: true,
+      stripBranding: true,
+      renameUvProperty: true,
+      renameUvRewriters: { rewriteUrl: 1, rewriteCSS: 1, rewriteJS: 0 },
+      src: path.join(uvPath, "uv.sw.js"),
+      old: "/assets/ultraviolet/uv.sw.js",
+      ext: ".js",
+      globals: ["UVServiceWorker", "Ultraviolet", "__uv"],
+    },
     {
       id: "uv.config",
       renameIdentifiers: true,
@@ -2054,7 +2088,13 @@ async function build() {
   await cp(SRC_DIR, DIST_DIR, { recursive: true, filter: source => path.relative(SRC_DIR, source) !== path.join("decoy") });
 
   if (NETLIFY) {
-    console.log(chalk.yellow(NETLIFY_WISP_COUNT ? `Netlify mode: ${NETLIFY_WISP.preferred.length} preferred and ${NETLIFY_WISP.fallback.length} fallback Wisp endpoint(s) from ${NETLIFY_WISP.source}, encoded into the build` : "Netlify mode: no WISP_URL, WISP_PREFERRED or WISP_FALLBACK set (.env or host environment), so users must enter a Wisp URL in Settings."));
+    console.log(
+      chalk.yellow(
+        NETLIFY_WISP_COUNT
+          ? `Netlify mode: ${NETLIFY_WISP.preferred.length} preferred and ${NETLIFY_WISP.fallback.length} fallback Wisp endpoint(s) from ${NETLIFY_WISP.source}, encoded into the build`
+          : "Netlify mode: no WISP_URL, WISP_PREFERRED or WISP_FALLBACK set (.env or host environment), so users must enter a Wisp URL in Settings.",
+      ),
+    );
   }
   console.log(OBFUSCATE ? chalk.yellow("Obfuscation: ON") : chalk.yellow("Obfuscation: OFF (rename + rewrite only)"));
 

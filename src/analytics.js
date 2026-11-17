@@ -6,8 +6,11 @@ const CACHE_MS = 3600000;
 const MAX_PACKED_LENGTH = 8192;
 const PACKED_PATTERN = /^[A-Za-z0-9_-]*$/;
 
-const inlineJson = value => JSON.stringify(value).replace(/</g, "\\u003c").replace(/\u2028/g, "\\u2028").replace(/\u2029/g, "\\u2029");
-
+const inlineJson = value =>
+  JSON.stringify(value)
+    .replace(/</g, "\\u003c")
+    .replace(/\u2028/g, "\\u2028")
+    .replace(/\u2029/g, "\\u2029");
 
 export function mountAnalytics(app, analytics) {
   const { id, loader, transport, sink, param, key } = analytics;

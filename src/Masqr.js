@@ -199,7 +199,9 @@ function loadSearchRedirect(folder) {
 
 export function mountMasqr(app, { decoyBase, decoySet = "default", secureCookie = true, sessionMs = 30 * DAY_MS, searchTrigger = null, sites = [], decoyOnly = false }) {
   // /math/, math and /math all select static/decoy/math.
-  const setName = String(decoySet).trim().replace(/^\/+|\/+$/g, "");
+  const setName = String(decoySet)
+    .trim()
+    .replace(/^\/+|\/+$/g, "");
   if (!setName || setName.includes("/") || setName.includes("\\") || setName === "." || setName === "..") {
     throw new Error(`Masqr decoy set name ${JSON.stringify(decoySet)} must be a single folder name`);
   }

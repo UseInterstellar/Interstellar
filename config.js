@@ -9,12 +9,7 @@ const config = {
   // Blocked Domains
   // Block access to specified domains and their subdomains.
   // Use hostnames only, without protocols or paths.
-  blockedSites: [
-    "googletagmanager.com",
-    "amazon-adsystem.com",
-    "doubleclick.net",
-    "analytics.google.com",
-  ],
+  blockedSites: ["googletagmanager.com", "amazon-adsystem.com", "doubleclick.net", "analytics.google.com"],
 
   // DNS Filtering
   // Configure DNS-based content filtering and privacy protection.
@@ -35,7 +30,7 @@ const config = {
   // Restrict access to Interstellar using decoy sites and search triggers.
   masqr: {
     enabled: false,
-    decoy: "/default/", 
+    decoy: "/default/",
     searchTrigger: "interstellar", // Default trigger for unlisted domains.
     secureCookie: true,
     sessionDays: 30,
