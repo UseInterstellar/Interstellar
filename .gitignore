@@ -12,3 +12,5 @@ analysis/
 .hintrc
 .gitpod.yml 
 *.env
+.workers-out/
+.wrangler/

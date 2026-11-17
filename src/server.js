@@ -3,30 +3,59 @@ import http from "node:http";
 import { createRequire } from "node:module";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { server as wisp } from "@mercuryworkshop/wisp-js/server";
 import chalk from "chalk";
-import cookieParser from "cookie-parser";
-import express from "express";
-import basicAuth from "express-basic-auth";
+import mime from "mime";
 import config from "../config.js";
 // import { mountAnalytics } from "./analytics.js";
-import { mountGhGames } from "./games.js";
-import { createBlockVerdict, setupFiltering } from "./filtering/index.js";
-import { mountMasqr } from "./Masqr.js";
+import { ghGamesProxies, mountGhGames } from "./games.js";
 import { injectVersionInfo, resolveVersionInfo } from "./version.js";
+import { makeWispServer } from "./workers/wisp.js";
 
-console.log(chalk.yellow("🚀 Starting server..."));
+const IS_WORKERS = typeof WebSocketPair !== "undefined";
+const { DurableObject } = IS_WORKERS ? await import("cloudflare:workers") : { DurableObject: class {} };
+const { connect } = IS_WORKERS ? await import("cloudflare:sockets") : { connect: undefined };
+
+const routes = [
+  { path: "/apps", file: "apps.html" },
+  { path: "/games", file: "games.html" },
+  { path: "/play.html", file: "games.html" },
+  { path: "/settings", file: "settings.html" },
+  { path: "/tabs", file: "tabs.html" },
+  { path: "/home", file: "home.html" },
+  { path: "/", file: "home.html" },
+];
+
+const escapeRegExp = text => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+const blockedSiteMatchers = config.blockedSites.map(host => new RegExp(`(^|\\.)${escapeRegExp(host.trim().toLowerCase())}$`, "i"));
+
+const vendorMap = IS_WORKERS ? (await import("../dist/.runtime/vendor-map.cjs")).default : loadNodeVendorMap();
+
+function projectRoot() {
+  return path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+}
+
+function loadNodeVendorMap() {
+  const require = createRequire(import.meta.url);
+  const file = path.join(projectRoot(), "dist", ".runtime", "vendor-map.cjs");
+  return existsSync(file) ? require(file) : null;
+}
+
+async function startNodeServer() {
+  const { server: wisp } = await import("@mercuryworkshop/wisp-js/server");
+  const { createBlockVerdict, setupFiltering } = await import("./filtering/index.js");
+  const { default: express } = await import("express");
+  const { default: cookieParser } = await import("cookie-parser");
+  const { default: basicAuth } = await import("express-basic-auth");
+  const { mountMasqr } = await import("./Masqr.js");
+  console.log(chalk.yellow("🚀 Starting server..."));
 
 const NETLIFY = process.argv.includes("--netlify");
 
 const require = createRequire(import.meta.url);
-const __dirname = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const __dirname = projectRoot();
 
 const DIST_DIR = path.join(__dirname, "dist");
 const STATIC_DIR = path.join(__dirname, "static");
-
-const VENDOR_MAP_PATH = path.join(DIST_DIR, ".runtime", "vendor-map.cjs");
-const vendorMap = existsSync(VENDOR_MAP_PATH) ? require(VENDOR_MAP_PATH) : null;
 
 if (!vendorMap && process.env.VERCEL) {
   throw new Error("dist/.runtime/vendor-map.cjs is missing on Vercel. The build did not run before the function was packaged.");
@@ -77,8 +106,6 @@ const PORT = resolvePort();
 wisp.options.allow_loopback_ips = false;
 wisp.options.allow_private_ips = false;
 
-const escapeRegExp = text => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-const blockedSiteMatchers = config.blockedSites.map(host => new RegExp(`(^|\\.)${escapeRegExp(host.trim().toLowerCase())}$`, "i"));
 wisp.options.hostname_blacklist = blockedSiteMatchers.length ? blockedSiteMatchers : null;
 
 const filteringState = await setupFiltering({ wisp, filtering: config.filtering });
@@ -110,7 +137,6 @@ mountGhGames(app);
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 
 const cacheEnabled = config.cache?.enabled === true;
 const useAssetCache = cacheEnabled && Boolean(vendorMap?.build);
@@ -177,19 +203,6 @@ if (!vendorMap) {
   app.use("/assets/scramjet/", express.static(scramjetPath, jsStaticOptions));
 }
 
-const routes = [
-  { path: "/apps", file: "apps.html" },
-  { path: "/games", file: "games.html" },
-  { path: "/play.html", file: "games.html" },
-  { path: "/settings", file: "settings.html" },
-  { path: "/tabs", file: "tabs.html" },
-  { path: "/home", file: "home.html" },
-  { path: "/", file: "home.html" },
-];
-
-// In dist the build randomizes the page routes and records them in the vendor map, so serve each
-// page at its opaque path (build id vendorMap.routes). "/" and "/play.html" have no entry and stay
-// clean. In static/dev vendorMap is null, so the clean routes are used as-is.
 routes.forEach(route => {
   const servePath = vendorMap?.routes?.[route.path] || route.path;
   app.get(servePath, (_req, res) => {
@@ -225,3 +238,130 @@ server.on("listening", () => {
 });
 
 server.listen({ port: PORT });
+}
+
+const WORKER_WISP_PATH = vendorMap?.wisp ?? "/wisp/";
+const WORKER_BUILD_MARKER = vendorMap?.build ? `.${vendorMap.build}` : null;
+const WORKER_IMMUTABLE = "public, max-age=31536000, immutable";
+const WORKER_REVALIDATE = "no-cache";
+const WORKER_NO_MIME_EXTS = new Set([".unityweb"]);
+
+const workerPageFiles = new Map(routes.map(route => [vendorMap?.routes?.[route.path] || route.path, route.file]));
+
+const isBlockedHost = host => blockedSiteMatchers.some(matcher => matcher.test(host));
+
+function plainText(body, status) {
+  return new Response(body, { status, headers: { "Content-Type": "text/plain; charset=UTF-8" } });
+}
+
+function workerBasicAuthFailure(request) {
+  if (!config.challenge) return null;
+  const [scheme, value] = (request.headers.get("Authorization") ?? "").split(" ");
+  if (scheme === "Basic" && value) {
+    const decoded = atob(value);
+    const separator = decoded.indexOf(":");
+    const user = decoded.slice(0, separator);
+    const password = decoded.slice(separator + 1);
+    if (separator >= 0 && Object.hasOwn(config.users, user) && config.users[user] === password) return null;
+  }
+  return new Response("Unauthorized", {
+    status: 401,
+    headers: { "WWW-Authenticate": 'Basic realm="Interstellar", charset="UTF-8"' },
+  });
+}
+
+function withWorkerCacheHeaders(response, pathname, { page = false } = {}) {
+  if (!config.cache?.enabled && !page) return response;
+  const headers = new Headers(response.headers);
+  const immutable = !page && WORKER_BUILD_MARKER && pathname.includes(WORKER_BUILD_MARKER);
+  headers.set("Cache-Control", immutable ? WORKER_IMMUTABLE : WORKER_REVALIDATE);
+  if (pathname.endsWith(".js") || pathname.endsWith(".mjs")) {
+    headers.set("Content-Type", "text/javascript");
+    headers.set("Service-Worker-Allowed", "/");
+  }
+  return new Response(response.body, { status: response.status, headers });
+}
+
+async function workerNotFound(env, url) {
+  const page = await env.ASSETS.fetch(new Request(new URL("/404.html", url)));
+  return new Response(page.body, { status: 404, headers: { "Content-Type": "text/html; charset=UTF-8" } });
+}
+
+async function workerFilterVerdict(request) {
+  let host = "";
+  try {
+    const body = await request.json();
+    host = typeof body?.host === "string" ? body.host.slice(0, 254) : "";
+  } catch {}
+  const normalized = host.trim().toLowerCase().replace(/\.$/, "");
+  const result = normalized && isBlockedHost(normalized) ? { blocked: true, source: "blocklist" } : { blocked: false };
+  return new Response(JSON.stringify(result), {
+    headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
+  });
+}
+
+async function workerGameAsset(pathname, request, env, url) {
+  const sources = ghGamesProxies();
+  const prefix = Object.keys(sources).find(base => pathname.startsWith(base));
+  if (!prefix) return workerNotFound(env, url);
+  const target = sources[prefix] + pathname.slice(prefix.length);
+  const upstreamHeaders = {};
+  const ifNoneMatch = request.headers.get("if-none-match");
+  if (ifNoneMatch) upstreamHeaders["If-None-Match"] = ifNoneMatch;
+
+  const upstream = await fetch(target, { headers: upstreamHeaders });
+  if (upstream.status === 304) return new Response(null, { status: 304 });
+  if (!upstream.ok) return workerNotFound(env, url);
+
+  const ext = new URL(target).pathname.match(/\.[^./]*$/)?.[0] ?? "";
+  const headers = {
+    "Content-Type": WORKER_NO_MIME_EXTS.has(ext) ? "application/octet-stream" : (mime.getType(ext) ?? "application/octet-stream"),
+    "Cache-Control": WORKER_IMMUTABLE,
+  };
+  const etag = upstream.headers.get("etag");
+  const lastModified = upstream.headers.get("last-modified");
+  if (etag) headers.ETag = etag;
+  if (lastModified) headers["Last-Modified"] = lastModified;
+  return new Response(upstream.body, { status: 200, headers });
+}
+
+async function workersFetch(request, env) {
+  const url = new URL(request.url);
+  const { pathname } = url;
+
+  if (pathname === "/.runtime" || pathname.startsWith("/.runtime/")) return plainText("Not found", 404);
+
+  if (pathname === WORKER_WISP_PATH) {
+    if (request.headers.get("Upgrade")?.toLowerCase() !== "websocket") {
+      return new Response("Expected WebSocket", { status: 426, headers: { Upgrade: "websocket" } });
+    }
+    return env.WISP.get(env.WISP.newUniqueId()).fetch(request);
+  }
+
+  const denied = workerBasicAuthFailure(request);
+  if (denied) return denied;
+
+  if (request.method === "POST" && pathname === "/filter/verdict") return workerFilterVerdict(request);
+  if (pathname.startsWith("/gh-games/")) return workerGameAsset(pathname, request, env, url);
+
+  if (request.method !== "GET" && request.method !== "HEAD") return workerNotFound(env, url);
+
+  const page = workerPageFiles.get(pathname);
+  if (page) {
+    const response = await env.ASSETS.fetch(new Request(new URL(`/${page}`, url), request));
+    if (!response.ok) return workerNotFound(env, url);
+    return withWorkerCacheHeaders(response, pathname, { page: true });
+  }
+
+  const response = await env.ASSETS.fetch(request);
+  if (response.status === 404) return workerNotFound(env, url);
+  return withWorkerCacheHeaders(response, pathname);
+}
+
+export default {
+  fetch: (request, env) => workersFetch(request, env),
+};
+
+export const WispServer = makeWispServer({ DurableObject, connect, isBlockedHost });
+
+if (!IS_WORKERS) await startNodeServer();
