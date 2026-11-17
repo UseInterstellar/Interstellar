@@ -1,0 +1,125 @@
+
+kizi_skeleton.png
+size: 634,634
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+kizi_arm_01
+  rotate: true
+  xy: 544, 26
+  size: 98, 80
+  orig: 98, 80
+  offset: 0, 0
+  index: -1
+kizi_arm_02
+  rotate: false
+  xy: 554, 428
+  size: 60, 74
+  orig: 60, 74
+  offset: 0, 0
+  index: -1
+kizi_arm_side
+  rotate: false
+  xy: 190, 154
+  size: 72, 130
+  orig: 72, 130
+  offset: 0, 0
+  index: -1
+kizi_body
+  rotate: false
+  xy: 2, 24
+  size: 186, 260
+  orig: 186, 260
+  offset: 0, 0
+  index: -1
+kizi_eyeball
+  rotate: true
+  xy: 556, 570
+  size: 62, 76
+  orig: 62, 76
+  offset: 0, 0
+  index: -1
+kizi_eyeclose_01
+  rotate: false
+  xy: 426, 274
+  size: 142, 146
+  orig: 142, 146
+  offset: 0, 0
+  index: -1
+kizi_eyeclose_02
+  rotate: false
+  xy: 426, 126
+  size: 142, 146
+  orig: 142, 146
+  offset: 0, 0
+  index: -1
+kizi_eyeclose_03
+  rotate: true
+  xy: 276, 278
+  size: 142, 148
+  orig: 142, 148
+  offset: 0, 0
+  index: -1
+kizi_eyeclose_04
+  rotate: false
+  xy: 190, 10
+  size: 142, 142
+  orig: 142, 142
+  offset: 0, 0
+  index: -1
+kizi_eyewhite
+  rotate: false
+  xy: 276, 422
+  size: 152, 154
+  orig: 152, 154
+  offset: 0, 0
+  index: -1
+kizi_face
+  rotate: false
+  xy: 2, 286
+  size: 272, 346
+  orig: 272, 346
+  offset: 0, 0
+  index: -1
+kizi_hand
+  rotate: false
+  xy: 554, 504
+  size: 72, 64
+  orig: 72, 64
+  offset: 0, 0
+  index: -1
+kizi_mouth
+  rotate: true
+  xy: 334, 18
+  size: 138, 86
+  orig: 138, 86
+  offset: 0, 0
+  index: -1
+kizi_shadow
+  rotate: false
+  xy: 276, 578
+  size: 278, 54
+  orig: 278, 54
+  offset: 0, 0
+  index: -1
+kizi_spike_01
+  rotate: true
+  xy: 422, 6
+  size: 118, 120
+  orig: 118, 120
+  offset: 0, 0
+  index: -1
+kizi_spike_02
+  rotate: false
+  xy: 430, 422
+  size: 122, 154
+  orig: 122, 154
+  offset: 0, 0
+  index: -1
+kizi_tail
+  rotate: false
+  xy: 264, 158
+  size: 160, 118
+  orig: 160, 118
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,30 @@
+{
+  "name": "webretro",
+  "version": "6.5.0",
+  "description": "RetroArch in your browser!",
+  "main": "node-server.js",
+  "scripts": {
+    "test": "node node-server.js",
+    "start": "node node-server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BinBashBanana/webretro.git"
+  },
+  "keywords": [
+    "emulator",
+    "retroarch",
+    "libretro"
+  ],
+  "author": "OlyB",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BinBashBanana/webretro/issues"
+  },
+  "homepage": "https://binbashbanana.github.io/webretro/",
+  "dependencies": {
+    "express": "^4.17.2",
+    "fs": "^0.0.1-security",
+    "http": "^0.0.1-security"
+  }
+}

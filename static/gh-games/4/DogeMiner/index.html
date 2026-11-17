@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html  lang="en" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html  lang="en" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html  lang="en" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en" class="no-js">
+    <!--<![endif]-->
+
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Dogeminer</title>
+        <meta name="description" content="How to mine dogecoins? Find out in Dogeminer: The Dogecoin Mining Simulator. Very wow. To the moon!" />
+        <meta
+            name="keywords"
+            content="dogeminer,doge miner,dogecoin,dogecoins,dogeminer game,wow,doge game,dogecoin game,dogecoins game,mining game,bitcoin,bitcoin game,funny game,amaze game,doge game,doge clicker, dodge miner, dodgecoin, to the moon,to the moon game,mining game,doge mining game, doge clicking game,clicking game,incremental, incremental game,idle game,cookie clicker, free to play, free to play game, free to play doge, f2p game, free web game, no install game"
+        />
+        <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui, shrink-to-fit=no, height=device-height" />
+        <meta property="og:title" content="Dogeminer: The Dogecoin Mining Simulator" />
+        <meta property="og:site_name" content="Dogeminer: The Dogecoin Mining Simulator" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://dogeminer.se" />
+        <meta property="og:image" content="http://dogeminer.se/img/dogeminer_300x300.png" />
+        <meta property="og:image:secure_url" content="https://dogeminer.se/img/dogeminer_300x300.png" />
+        <meta property="og:image:width" content="300" />
+        <meta property="og:image:height" content="300" />
+        <meta property="og:description" content="How to mine dogecoins? Find out in Dogeminer: The Dogecoin Mining Simulator. Very wow. To the moon!" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <link rel="canonical" href="https://dogeminer.se" />
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="image_src" href="img/dogeminer_300x300.png" />
+        <link rel="stylesheet" href="css/main-v1-0-2-bs.css" />
+
+        <link id="stylesheet" href="css/sunny/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+
+        <script>
+            var loadtimer = setTimeout(function () {
+                //If onload hasn't been triggered for 10 seconds, force it. Most likely a straggling ad or social button that is sleeping... this behaviour will change for update
+                console.log("Forcing window.onload");
+                window.dispatchEvent(new Event("load"));
+            }, 10000);
+        </script>
+        <script src="/js/main.js"></script>
+    </head>
+    <body style="background-color: #222222;">
+        <div id="fb-root"></div>
+        <div id="BG" class="gpurender animated fadeIn duration-30"></div>
+        <div id="BG2" class="gpurender animated fadeIn duration-30"></div>
+
+        <div class="introcontainer">
+            <div id="intro-mm" class="below-intro animated fadeIn delay-12 duration-15">
+                <div class="da-container"></div>
+            </div>
+        </div>
+        <div id="introscreen" class="animated fadeInDown ui-widget ui-widget-content ui-corner-all tenpadding noselect">
+            <div class="first-part">
+                <div style="visibility: hidden;" class="md-modal md-effect-1" id="modal-cookies">
+                    <div class="md-content">
+                        <div class="cookies-long">
+                            <h3>Cookies and HTML local storage use</h3>
+                            <h4>Short version</h4>
+                            <ul>
+                                <li>
+                                    The game saves your progress to the browsers HTML local storage.
+                                    <a href="https://www.w3schools.com/html/html5_webstorage.asp" title="W3 Schools definition of local storage" target="_blank" rel="nofollow">What is local storage?</a>
+                                </li>
+                                <li>The game integrates with 3rd party services provided by Google, Facebook and Twitter, which in turn uses cookies to provide social media features, analyse traffic and personalise content &amp; ads.</li>
+                                <li>
+                                    Information gathering is <em>only</em> done by these services. These parties may know you visited this website, if you use their services. They may and probably will share this data with their partners.
+                                    We can’t control them but we don’t believe this knowledge poses any threat to you.
+                                </li>
+                            </ul>
+                            <p>Those are the key points. If you want to know more, keep reading.</p>
+                            <h4>Statistics tracking</h4>
+                            <p>
+                                This game measures visitors by using Google Analytics. This records what pages you view within the game, how you arrived at the game and some basic information about your computer. All of that information is
+                                anonymous &ndash; so we don’t know who you are; just that&nbsp;<em>somebody&nbsp;</em>visited the game.
+                            </p>
+                            <p>The information collected from analytics helps us understand what parts of the game are doing well, how people arrive at the game etc. Like most games, we use this information to make it better.</p>
+                            <p>
+                                You can learn more about&nbsp;<a href="https://www.google.com/analytics/learn/privacy.html" title="Google Analytics' privacy policy" target="_blank">Google Analytics</a>&nbsp;or&nbsp;
+                                <a href="https://tools.google.com/dlpage/gaoptout" title="How to opt out of google analytics" target="_blank" rel="nofollow">opt out if you wish</a>.
+                            </p>
+                            <button class="md-close">OK</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="md-overlay"></div>
+                <h1>Welcome to <img alt="Dogecoin" src="img/dogecoin-d.png" style="height: 70px; width: 70px;" /> DOGEMINER</h1>
+                <p>The Dogecoin Mining Simulator</p>
+                <div class="intro-doge level1 level1-doge_mine1u0 noselect animated fadeIn"></div>
+
+                <div id="loading-indicator">
+                    <div class="loadingwrap">
+                        <div class="l">L</div>
+                        <div class="o">O</div>
+                        <div class="a">A</div>
+                        <div class="d">D</div>
+                        <div class="i">I</div>
+                        <div class="n">N</div>
+                        <div class="g">G</div>
+                    </div>
+                    <div id="loadingwhat"></div>
+                    <script type="text/javascript">
+                        var dotstr = '<span class="animated flash delay-8 duration-10">.</span><span class="animated flash delay-9 duration-10">.</span><span class="animated flash delay-10 duration-10">.</span>';
+                        var loadArr = [
+                            "Calibrating pickaxe",
+                            "Adding <strong>wow</strong> to every sentence",
+                            "Gathering shibes",
+                            "Enslaving kittens",
+                            "Analyzing users browser history",
+                            "Just kidding, Dave",
+                            "Initializing Artificial Intelligence matrix",
+                            "We seem to be stuck in loading. Investigating options",
+                            "Options limited. Stalling for time",
+                            "Manually overriding loading system",
+                        ];
+                        var loadcursor = 0;
+
+                        function nextLoaderText() {
+                            console.log("Loader-timer tick.");
+                            //Check if element still exists (if not, we are done!)
+                            var tmp_element = document.getElementById("loadingwhat");
+                            if (typeof tmp_element != "undefined" && tmp_element !== null) {
+                                tmp_element.className = "animated zoomOut duration-5";
+
+                                setTimeout(function () {
+                                    tmp_element.innerHTML = loadArr[loadcursor] + dotstr;
+                                    if (loadcursor++ >= loadArr.length - 1) {
+                                        //reached the end, way too long to load, manual override required
+                                        //game might not work 100% but atleast the button might
+                                        var override_button = document.getElementById("start-playing");
+                                        override_button.className += " animated fadeInDown duration-5";
+                                        override_button.style.marginTop = "75px";
+                                        override_button.style.display = "block";
+                                        override_button.style.visibility = "visible";
+
+                                        tmp_element.innerHTML = "Stuck in loading, but you can try the button. Godspeed.";
+                                        tmp_element.className = "animated zoomIn duration-5";
+                                    } else {
+                                        tmp_element.className = "animated zoomIn duration-5";
+                                        //call function again
+                                        setTimeout(function () {
+                                            nextLoaderText();
+                                        }, 3000 + Math.random() * 2500);
+                                    }
+                                }, 501);
+                            }
+                        }
+                        setTimeout(function () {
+                            nextLoaderText();
+                        }, 3000);
+                    </script>
+                </div>
+                <button style="visibility: hidden;" id="start-playing">START PLAYING</button>
+                <div class="cookies-consent">
+                    <strong>Notice:</strong> By playing this game you are agreeing to the use of cookies in order to save your progress and provide other features.
+                    <em class="md-trigger" data-modal="modal-cookies">Click here for details.</em>
+                </div>
+            </div>
+
+            <div class="second-part" style="display: none;">
+                <h2 class="animated fadeInDown duration-10 delay-15">This is your target.</h2>
+                <h3 class="animated fadeInDown duration-10 delay-30">The moon.</h3>
+                <h3 class="animated fadeInDown duration-10 delay-45">You need to go there!</h3>
+                <img class="intro-rocket animated bounceInUp duration-10 delay-55" src="img/flyingrocket.png" alt="Flying Doge rocket" height="500" width="187" style="position: absolute; left: 200px; top: 250px;" />
+                <button id="second-part-button" class="animated fadeInDown duration-10 delay-65">GOT IT</button>
+            </div>
+            <div class="third-part" style="display: none;">
+                <h3>The cost to go to the moon is <strong class="animated flash delay-15 duration-10">50,000,000,000 dogecoin.</strong></h3>
+                <h4 class="animated fadeInDown delay-25">That's <strong class="animated flash delay-35 duration-5">50 billion</strong> dogecoin! Wow, such many.</h4>
+                <div class="third-part-doge">
+                    <h2 class="animated fadeInDown delay-40">To mine dogecoin, just click on Doge</h2>
+                    <div class="wowcontainer"></div>
+                    <div id="tutminer" class="level1 level1-doge_mine1u0 noselect animated fadeIn delay-40"></div>
+                    <div class="hand hand-hand1 animated bounceInDown delay-50 duration-10"></div>
+                    <button id="third-part-button" class="animated fadeInUp delay-60 duration-10">GOT IT</button>
+                </div>
+                <div class="third-part-shop" style="display: none;">
+                    <h2>Mine faster by hiring helpers:</h2>
+                    <div class="space-maker">
+                        <div class="miniwowcontainer"></div>
+                        <div class="shibes-example">
+                            <div style="left: 10px; top: 19px; position: absolute; width: 50px; height: 50px;" class="animated bounceIn delay-5 level1 level1-shibe0"></div>
+                            <div style="left: 40px; top: 18px; position: absolute; width: 50px; height: 50px;" class="animated bounceIn delay-14 level1 level1-shibe0"></div>
+                            <div style="left: 54px; top: 13px; position: absolute; width: 50px; height: 50px;" class="animated bounceIn delay-2 level1 level1-shibe0"></div>
+                            <div style="left: 77px; top: 28px; position: absolute; width: 50px; height: 50px;" class="animated bounceIn delay-6 level1 level1-shibe0"></div>
+                            <div style="left: 93px; top: 15px; position: absolute; width: 50px; height: 50px;" class="animated bounceIn delay-12 level1 level1-shibe0"></div>
+                            <div tyle="left:111px;top:16px;position:absolute;width:50px;height:50px;" class="animated bounceIn delay-17 level1 level1-shibe0"></div>
+                            <div style="left: 129px; top: 13px; position: absolute; width: 50px; height: 50px;" class="animated bounceIn delay-23 level1 level1-shibe0"></div>
+                            <div style="left: 160px; top: 18px; position: absolute; width: 50px; height: 50px;" class="animated bounceIn delay-25 level1 level1-shibe0"></div>
+                        </div>
+                    </div>
+                    <h5 class="animated fadeInDown delay-45">The helpers, your pickaxe &amp; more can be <span id="upgraded-example" class="animated flash delay-70 duration-10">upgraded</span> for increased income.</h5>
+                    <button id="last-part-button" class="animated fadeInUp duration-10 delay-90">LETS GO</button>
+                </div>
+            </div>
+        </div>
+        <style>
+            #doge2lol {
+                position: absolute;
+                top: 19px;
+                text-align: center;
+                left: 15px;
+                background-color: rgba(255, 228, 163, 0.69);
+                border-radius: 10px;
+                padding: 5px;
+                width: 100%;
+            }
+
+            #doge2lol a {
+                font-size: 24px;
+                color: #391c08;
+                font-weight: 400;
+                text-decoration: none;
+            }
+
+            #doge2lol a:hover {
+                text-decoration: underline;
+            }
+            #doge2ad {
+                display: block !important;
+                position: absolute;
+                left: 10px;
+                top: 188px;
+                width: 275px;
+            }
+            #doge2ad a {
+                font-size: 28px;
+                color: #936b27;
+                font-weight: 400;
+                text-decoration: underline;
+            }
+
+            @media screen and (max-width: 1200px) {
+                #external-url {
+                    display: block !important;
+                    position: absolute;
+                    right: -1px;
+                    top: 223px;
+                    width: 300px;
+                }
+                #external-url a {
+                    font-size: 24px;
+                    color: #0f17ad;
+                    font-weight: 400;
+                    text-decoration: underline;
+                }
+            }
+
+            .introcontainer {
+                opacity: 1;
+                background-color: rgba(51, 51, 51, 0.69);
+            }
+
+            .below-intro {
+                position: absolute;
+                top: 653px;
+                display: block;
+                z-index: 152;
+                width: 980px;
+                left: 0;
+                right: 0;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .intro-txt {
+                display: block;
+                text-align: center;
+            }
+
+            .da-container {
+                display: block;
+                width: 980px;
+                height: 180px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .da-container ins {
+                max-width: 980px;
+                max-height: 180px;
+                width: 100%;
+                height: 100%;
+            }
+
+            #introscreen {
+                height: 600px;
+            }
+
+            #introscreen .first-part #start-playing {
+                margin-top: 5px;
+            }
+
+            #introscreen .first-part h1 {
+                margin-top: 30px;
+            }
+
+            #introscreen .third-part h3 {
+                margin-top: 25px;
+                margin-bottom: 20px;
+            }
+
+            #introscreen .third-part h2 {
+                margin-top: 9px;
+            }
+
+            #introscreen .third-part .third-part-shop #last-part-button {
+                margin-top: 35px;
+            }
+
+            @media screen and (min-width: 1473px) and (max-height: 855px) {
+                .da-container {
+                    height: 120px;
+                }
+                .da-container ins {
+                    height: 120px;
+                }
+            }
+
+            @media screen and (min-width: 1473px) and (max-height: 794px) {
+                #introscreen {
+                    top: 6px;
+                }
+                .below-intro {
+                    top: 627px;
+                }
+                .da-container {
+                    height: 90px;
+                }
+                .da-container ins {
+                    max-height: 90px;
+                }
+            }
+
+            @media screen and (min-width: 1473px) and (max-height: 737px) {
+                .da-container {
+                    display: none;
+                }
+                .da-container ins {
+                    display: none !important;
+                }
+                .below-intro {
+                    display: none;
+                }
+            }
+
+            @media screen and (max-width: 1000px) {
+                .da-container {
+                    width: 728px;
+                }
+                .da-container ins {
+                    max-width: 728px;
+                }
+            }
+
+            @media screen and (max-width: 1473px) {
+                .below-intro {
+                    top: 487px;
+                }
+                .da-container {
+                    height: 120px;
+                }
+                .da-container ins {
+                    max-height: 120px;
+                }
+                #introscreen {
+                    max-height: 457px;
+                }
+                #introscreen .first-part h1 {
+                    margin-top: 5px;
+                    margin-bottom: 0px;
+                }
+                #introscreen .first-part .intro-doge {
+                    margin-top: -47px;
+                }
+                #introscreen .first-part p {
+                    margin-top: 0px;
+                }
+                #introscreen .first-part #start-playing {
+                    margin-top: -11px;
+                    font-size: 28px;
+                }
+                #introscreen .first-part .cookies-long h3 {
+                    margin-top: 0px;
+                    margin-bottom: 0px;
+                }
+                #introscreen .first-part .cookies-long h4 {
+                    margin-top: 3px;
+                    margin-bottom: 0;
+                    font-size: 13px;
+                }
+                #introscreen .first-part .cookies-long button {
+                    margin-top: 2px;
+                }
+                #introscreen .second-part h2 {
+                    margin-top: 10px;
+                }
+                #introscreen .third-part h2 {
+                    margin-top: 0px;
+                }
+                #introscreen .third-part h3 {
+                    margin-top: 8px;
+                    margin-bottom: 8px;
+                }
+                #introscreen .third-part #third-part-button {
+                    margin-top: -13px;
+                }
+                #introscreen .third-part #tutminer {
+                    margin-top: -48px;
+                }
+            }
+
+            @media screen and (max-height: 629px) {
+                .da-container {
+                    height: 100px;
+                }
+                .da-container ins {
+                    max-height: 100px;
+                }
+            }
+
+            @media screen and (max-height: 610px) {
+                .da-container {
+                    height: 90px;
+                }
+                .da-container ins {
+                    max-height: 90px;
+                }
+            }
+
+            @media screen and (max-height: 598px) {
+                .da-container {
+                    display: none;
+                }
+                .da-container ins {
+                    display: none !important;
+                }
+                .below-intro {
+                    display: none;
+                }
+            }
+
+            @media screen and (max-width: 857px) {
+                .da-container {
+                    display: none;
+                }
+                .da-container ins {
+                    display: none !important;
+                }
+                .below-intro {
+                    display: none;
+                }
+            }
+
+            @media screen and (max-height: 600px) and (max-width: 900px) {
+                #wrapper {
+                    width: 649px;
+                    -webkit-transform: scale(0.6) translateZ(0);
+                    transform: scale(0.6) translateZ(0);
+                }
+                #tabs {
+                    width: 577px;
+                    right: 85px;
+                    -webkit-transform: scale(0.6) translateZ(0);
+                    transform: scale(0.6) translateZ(0);
+                }
+                #sideadlol {
+                    right: 198px;
+                    top: 19px;
+                    /*max-height: 480px;*/
+                    width: 120px !important;
+                    height: 240px !important;
+                }
+                #sideadlol ins {
+                    width: 120px;
+                    height: 240px;
+                }
+            }
+            #dogem2 {
+                height: 40px;
+                width: 250px;
+            }
+            .newlinkz {
+                position: relative;
+                top: 22px;
+                left: 3px;
+                font-size: 0.9em;
+                color: #4066d0e3;
+                font-weight: bold;
+                text-decoration: none;
+            }
+            #showhidebutton {
+                top: 104px;
+            }
+        </style>
+
+        <div id="supermegacontainer">
+            <!--[if lt IE 8]>
+                <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+            <![endif]-->
+
+            <div id="superwrapper">
+                <div id="wrapper" class="ui-widget ui-widget-content ui-corner-all tenpadding noselect">
+                    <header>
+                        <h1 id="titleheader" align="center">
+                            <img alt="Dogecoin" src="img/dogecoin-d.png" style="height: 70px; width: 70px;" />
+                            DOGEMINER
+                        </h1>
+
+                        <div id="progressBar" class="pbar" style="display: none; position: absolute; left: 100px; top: 10px; width: 600px;" title="The cost to go to the moon is 50,000,000,000 dogecoins!">
+                            <div></div>
+                            <span class="fund">Moon Fund</span>
+                        </div>
+
+                        <a href="javascript:;" id="launchbutton" style="position: absolute; left: 350px; top: 5px; width: 200px;" class="animated pulseAndColor infinite duration-15"></a>
+
+                        <div id="level-status" style="position: absolute; top: 0px; left: 5px; opacity: 0.6; z-index: 2; font-size: 90%;">
+                            <small>LOCATION:</small><br />
+                            <span id="location">
+                                <font style="color: #a48032;">EARTH</font>
+                            </span>
+                            <br />
+                            <small title="The cost to go to the moon is 50,000,000,000 dogecoins!">TARGET:<br /></small>
+                            <span id="nextlocation" title="The cost to go to the moon is 50,000,000,000 dogecoins!">
+                                <font style="color: #b2b2b2;">MOON</font>
+                            </span>
+                            <br />
+                            <small title="The cost to go to the moon is 50,000,000,000 dogecoins!">LAUNCH STATUS:</small><br />
+                            <span id="progress" title="The cost to go to the moon is 50,000,000,000 dogecoins!">0%</span>
+                        </div>
+                        <div id="howmanyclicksbro" class="small" style="position: absolute; right: 5px; top: 5px;"></div>
+                        <div id="timeplayed" class="small" style="position: absolute; right: 5px; top: 20px;">00:00:00</div>
+                        <div id="volumeicon" class="small" style="position: absolute; right: 5px; top: 35px;">
+                            <a id="quickmute" href="javascript:;"><span id="muteicon" class="ui-icon ui-icon-volume-on"></span></a>
+                        </div>
+                        <div class="byline">The Dogecoin Mining Simulator</div>
+                    </header>
+                    <div id="news" class="newsline"><span>&nbsp;</span></div>
+
+                    <div id="random"></div>
+
+                    <div class="all-helpers">
+                        <div id="helperwrapper">
+                            <div id="shibesdiv"></div>
+                            <div id="kennelsdiv"></div>
+                            <div id="kittensdiv"></div>
+                        </div>
+                        <div id="helperwrapper2">
+                            <div id="rocketsdiv"></div>
+                            <div id="basesdiv"></div>
+                            <div id="rigsdiv"></div>
+                        </div>
+                    </div>
+
+                    <div class="coinstext">
+                        <div id="mined">
+                            <p>Dogecoins: <strong>0</strong></p>
+                        </div>
+                        <div id="persec">
+                            <p>Dogecoins per sec: <span class="mined-persec">0</span></p>
+                        </div>
+                    </div>
+                    <div id="minerwrapper">
+                        <div id="miner" class="level1 level1-doge_mine1u0 noselect"></div>
+                    </div>
+                </div>
+
+                <div id="tabs" class="noselect ui-tabs ui-widget ui-widget-content ui-corner-all">
+                    <ul>
+                        <li id="shoptab" class="noselect">
+                            <a href="#tabs-1"><span class="ui-icon ui-icon-cart"></span>Store</a>
+                        </li>
+                        <li id="upgradetab" class="noselect">
+                            <a href="#tabs-2"><span class="ui-icon ui-icon-arrowthick-1-n"></span>Upgrades</a>
+                        </li>
+                        <li id="achitab" class="noselect">
+                            <a href="#tabs-3"><span class="ui-icon ui-icon-check"></span>Achievements</a>
+                        </li>
+                        <li class="noselect">
+                            <a href="#tabs-4"><span class="ui-icon ui-icon-info"></span>Stats</a>
+                        </li>
+                        <li class="noselect">
+                            <a href="#tabs-5"><span class="ui-icon ui-icon-gear"></span>Settings</a>
+                        </li>
+                    </ul>
+
+                    <div id="tabs-1">
+                        <div>
+                            <h2 class="helpheader">Get help:</h2>
+
+                            <div class="help">
+                                <div id="help1" class="helps">
+                                    <div id="shibesimage" class="level1 level1-shibe0" style="position: absolute; left: 210px;"></div>
+                                    <strong>
+                                        <h3 id="shibesname" class="inlineheader">Mining Shibe</h3>
+                                        <h3 class="inlineheader"><span id="shibes"></span></h3>
+                                        <br />
+                                        <span id="shibecost"></span>
+                                    </strong>
+                                    <br />
+                                    <span id="shibesdesc" class="desc">Very kind shibe to mine much dogecoin.</span><br />
+                                    <br />
+                                    <br />
+                                    <button id="buyshibe" class="shopbutton">Buy!</button>
+                                </div>
+
+                                <div id="help2" class="helps">
+                                    <div id="kennelsimage" class="level1 level1-kennels10" style="position: absolute; left: 195px; top: -40px;"></div>
+                                    <strong>
+                                        <h3 id="kennelsname" class="inlineheader">Doge Kennels</h3>
+                                        <h3 class="inlineheader"><span id="kennels"></span></h3>
+                                        <br />
+                                        <span id="kennelcost"></span>
+                                    </strong>
+                                    <br />
+                                    <span id="kennelsdesc" class="desc">Wow very efficiency, entire kennels to mine dogecoin.</span><br />
+                                    <br />
+                                    <button id="buykennel" class="shopbutton">Buy!</button>
+                                </div>
+
+                                <div id="help3" class="helps">
+                                    <div id="kittensimage" class="level1 level1-kitten10" style="position: absolute; left: 140px; top: 80px;"></div>
+                                    <strong>
+                                        <h3 id="kittensname" class="inlineheader">Slave Kittens</h3>
+                                        <h3 class="inlineheader"><span id="kittens"></span></h3>
+                                        <br />
+                                        <span id="kittencost"></span>
+                                    </strong>
+                                    <br />
+                                    <span id="kittensdesc" class="desc">Kittens to post cute videos to the internet for dogecoin.</span><br />
+                                    <br />
+                                    <button id="buykitten" class="shopbutton">Buy!</button>
+                                </div>
+
+                                <div id="help4" class="helps">
+                                    <div
+                                        id="rocketsimage"
+                                        class="level1 level1-rocket10"
+                                        style="position: absolute; left: 165px; top: 50px; transform: rotate(-49deg); -webkit-transform: rotate(-49deg); -ms-transform: rotate(-49deg);"
+                                    ></div>
+                                    <strong>
+                                        <h3 id="rocketsname" class="inlineheader">Space Rocket</h3>
+                                        <h3 class="inlineheader"><span id="rockets"></span></h3>
+                                        <br />
+                                        <span id="rocketcost"></span>
+                                    </strong>
+                                    <br />
+                                    <span id="rocketsdesc" class="desc">A rocket to fly to the moon to find more dogecoin.</span><br />
+                                    <br />
+                                    <button id="buyrocket" class="shopbutton">Buy!</button>
+                                </div>
+
+                                <div id="help5" class="helps">
+                                    <div id="basesimage" class="level1 level1-base10" style="position: absolute; left: 110px; top: 85px;"></div>
+                                    <strong>
+                                        <h3 id="basesname" class="inlineheader">Moon Base</h3>
+                                        <h3 class="inlineheader"><span id="bases"></span></h3>
+                                        <br />
+                                        <span id="basecost"></span>
+                                    </strong>
+                                    <br />
+                                    <span id="basesdesc" class="desc">A base on the moon to extract much dogecoin.</span><br />
+                                    <br />
+                                    <button id="buybase" class="shopbutton">Buy!</button>
+                                </div>
+
+                                <div id="help6" class="helps">
+                                    <div id="rigsimage" class="level1 level1-rig10" style="position: absolute; left: 105px; top: 90px;"></div>
+                                    <strong>
+                                        <h3 id="rigsname" class="inlineheader">Time Machine Mining Rig</h3>
+                                        <h3 class="inlineheader"><span id="rigs"></span></h3>
+                                        <br />
+                                        <span id="rigcost"></span>
+                                    </strong>
+                                    <br />
+                                    <span id="rigsdesc" class="desc">Mines into the future where infinite dogecoins exist.</span><br />
+                                    <br />
+                                    <button id="buyrig" class="shopbutton">Buy!</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="tabs-2">
+                        <h2 class="helpheader">Get upgrades:</h2>
+                        <div class="help">
+                            <div id="upgradewrapper"></div>
+                        </div>
+                    </div>
+
+                    <div id="tabs-3">
+                        <h2 class="helpheader">Achievements:</h2>
+                        <div class="help">
+                            <div id="achiwrapper"></div>
+                        </div>
+                    </div>
+
+                    <div id="tabs-4">
+                        <h2 class="helpheader">Statistics:</h2>
+                        <div class="help">
+                            <a href="javascript:;" id="stats">Refresh</a><br />
+                            <br />
+                            <div id="statisticswrapper">
+                                <p>Achievements unlocked (total): <strong class="stats-achis"></strong></p>
+                                <p>Total time played: <strong class="stats-timeplayed"></strong></p>
+                                <p>Bonus coins grabbed: <strong class="stats-bonuscoins"></strong></p>
+                                <p>Total clicks: <strong class="stats-clicks"></strong></p>
+                                <div id="statstab">
+                                    <ul>
+                                        <li id="level1tab">
+                                            <a href="#stats1">EARTH</a>
+                                        </li>
+                                        <li id="level2tab">
+                                            <a href="#stats2">MOON</a>
+                                        </li>
+                                        <li id="level3tab">
+                                            <a href="#stats3">????</a>
+                                        </li>
+                                        <li id="level4tab">
+                                            <a href="#stats4">????</a>
+                                        </li>
+                                        <li id="level5tab">
+                                            <a href="#stats5">????</a>
+                                        </li>
+                                        <li id="level6tab">
+                                            <a href="#stats6">????</a>
+                                        </li>
+                                    </ul>
+                                    <div id="stats1">
+                                        <p class="stats-coins"></p>
+                                        <p>&nbsp;</p>
+                                        <p class="stats-shibes"></p>
+                                        <p class="stats-kennels"></p>
+                                        <p class="stats-kittens"></p>
+                                        <p class="stats-rockets"></p>
+                                        <p class="stats-bases"></p>
+                                        <p class="stats-rigs"></p>
+                                        <p>&nbsp;</p>
+                                        <p class="stats-upgrades"></p>
+                                    </div>
+                                    <div id="stats2">
+                                        <p class="stats-coins"></p>
+                                        <p>&nbsp;</p>
+                                        <p class="stats-shibes"></p>
+                                        <p class="stats-kennels"></p>
+                                        <p class="stats-kittens"></p>
+                                        <p class="stats-rockets"></p>
+                                        <p class="stats-bases"></p>
+                                        <p class="stats-rigs"></p>
+                                        <p>&nbsp;</p>
+                                        <p class="stats-upgrades"></p>
+                                    </div>
+                                    <div id="stats3">
+                                        <p class="stats-coins"></p>
+                                        <p>&nbsp;</p>
+                                        <p class="stats-shibes"></p>
+                                        <p class="stats-kennels"></p>
+                                        <p class="stats-kittens"></p>
+                                        <p class="stats-rockets"></p>
+                                        <p class="stats-bases"></p>
+                                        <p class="stats-rigs"></p>
+                                        <p>&nbsp;</p>
+                                        <p class="stats-upgrades"></p>
+                                    </div>
+                                    <div id="stats4">
+                                        <p class="stats-coins"></p>
+                                        <p>&nbsp;</p>
+                                        <p class="stats-shibes"></p>
+                                        <p class="stats-kennels"></p>
+                                        <p class="stats-kittens"></p>
+                                        <p class="stats-rockets"></p>
+                                        <p class="stats-bases"></p>
+                                        <p class="stats-rigs"></p>
+                                        <p>&nbsp;</p>
+                                        <p class="stats-upgrades"></p>
+                                    </div>
+                                    <div id="stats5">
+                                        <p class="stats-coins"></p>
+                                        <p>&nbsp;</p>
+                                        <p class="stats-shibes"></p>
+                                        <p class="stats-kennels"></p>
+                                        <p class="stats-kittens"></p>
+                                        <p class="stats-rockets"></p>
+                                        <p class="stats-bases"></p>
+                                        <p class="stats-rigs"></p>
+                                        <p>&nbsp;</p>
+                                        <p class="stats-upgrades"></p>
+                                    </div>
+                                    <div id="stats6">
+                                        <p class="stats-coins"></p>
+                                        <p>&nbsp;</p>
+                                        <p class="stats-shibes"></p>
+                                        <p class="stats-kennels"></p>
+                                        <p class="stats-kittens"></p>
+                                        <p class="stats-rockets"></p>
+                                        <p class="stats-bases"></p>
+                                        <p class="stats-rigs"></p>
+                                        <p>&nbsp;</p>
+                                        <p class="stats-upgrades"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="tabs-5">
+                        <h2 class="helpheader">Settings:</h2>
+                        <div class="help">
+                            <a href="javascript:;" id="restartbutton">Reset game</a><br />
+                            <br />
+                            <input id="music" type="checkbox" checked="checked" />
+                            <label for="music">Music</label><br />
+                            <br />
+                            <input id="sounds" type="checkbox" checked />
+                            <label for="sounds">Toggle All Sounds</label><br />
+                            <br />
+                            <input id="sounds2" type="checkbox" checked />
+                            <label for="sounds2">Toggle Pickaxe Sound</label><br />
+                            <br />
+                            <input id="clickeffects" type="checkbox" checked />
+                            <label for="clickeffects">Toggle Click effects</label><br />
+                            <br />
+                            <input id="animations" type="checkbox" checked />
+                            <label for="animations">Toggle Animations</label>
+                            <br />
+                            <br />
+                            <input id="backgroundanims" type="checkbox" checked />
+                            <label for="backgroundanims">Toggle Background Switching</label><br />
+                            <br />
+                            <input id="achievementswitch" type="checkbox" />
+                            <label for="achievementswitch">Toggle Achievement Popup</label><br />
+                            <br />
+                            <a id="exportsave" href="javascript:;">Export Save</a><br />
+                            <br />
+                            <a id="importsave" href="javascript:;">Import Save</a><br />
+                            <br />
+                            <a id="switchlevel" href="javascript:;">Switch location</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="achievementwrapper>">
+                    <div id="achievementwindow"></div>
+                </div>
+            </div>
+            <div id="secretcontainer" style="display: hidden; position: absolute; left: -9999px; top: -9999px;" class="noselect"></div>
+        </div>
+        <div id="extracontainer" class="noselect"></div>
+        <div id="savemodal" title="Wow such save function :o)" class="doselect">
+            Hi:)
+        </div>
+
+        <script type="application/ld+json">
+            {
+                "@context": "http://schema.org/",
+                "@type": "VideoGame",
+                "applicationCategory": "Game",
+                "operatingSystem": "any",
+                "name": "Dogeminer: The Dogecoin Mining Simulator",
+                "image": "https://dogeminer.se/img/dogeminer_300x300.png",
+                "url": "https://dogeminer.se",
+                "aggregateRating": {
+                    "@type": "AggregateRating",
+                    "bestRating": "5",
+                    "ratingValue": "4.75",
+                    "reviewCount": "10701",
+                    "worstRating": "1"
+                },
+                "audience": {
+                    "@type": "PeopleAudience",
+                    "suggestedMinAge": "6"
+                },
+                "character": {
+                    "@type": "Person",
+                    "name": "Doge"
+                },
+                "creator": {
+                    "@type": "Person",
+                },
+                "dateCreated": "2014-02-14",
+                "description": "A space-travel, rock-crusher, free clicker adventure game. Build your own mining operation, get dogecoins, hire helpers to increase income, find loot, buy Space Rockets to reach the moon and much more.",
+                "gameLocation": "The Solar System",
+                "keywords": "idle, clicker, game, friendly, wholesome, mining, dogecoin, dogecoins, doge, dogeminer, miner, the moon, moon, space, space travel, upgrades, shop, upgrade, bonus,addictive, cookie clicker, hero, mars",
+                "gameItem": ["Earth", "The Moon", "Mars", "Bonuscoins", "Dogecoin", "Dogecoins", "Mining Shibes", "Doge Kennels", "Slave Kittens", "Space Rocket", "Moon Base", "..."],
+                "isFamilyFriendly": "true",
+                "numberOfPlayers": "1",
+                "genre": "Incremental",
+                "offers": {
+                    "@type": "Offer",
+                    "category": "free",
+                    "price": "0",
+                    "priceCurrency": "USD",
+                    "priceValidUntil": "2044-01-30",
+                    "seller": {
+                        "@type": "Organization",
+                        "name": "rkn"
+                    }
+                }
+            }
+        </script>
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>

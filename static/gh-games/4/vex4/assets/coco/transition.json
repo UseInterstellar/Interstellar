@@ -1,0 +1,142 @@
+{
+    "hierarchy": {
+        "name": "transition",
+        "children": [
+            {
+                "name": "base1"
+            },
+            {
+                "name": "base2"
+            },
+            {
+                "name": "base3"
+            },
+            {
+                "name": "base4"
+            },
+            {
+                "name": "base5"
+            },
+            {
+                "name": "base6"
+            },
+            {
+                "name": "base7"
+            },
+            {
+                "name": "logo"
+            }
+        ],
+        "animations": [
+            "transition_in",
+            "transition_out",
+            "transition_stand"
+        ]
+    },
+    "properties": {
+        "base1": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 0,
+                "y": 256
+            },
+            "scale": {
+                "x": 0,
+                "y": 1
+            },
+            "type": "sprite"
+        },
+        "base2": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 0,
+                "y": 128
+            },
+            "scale": {
+                "x": 0,
+                "y": 1
+            },
+            "type": "sprite"
+        },
+        "base3": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 0,
+                "y": 0
+            },
+            "scale": {
+                "x": 0,
+                "y": 1
+            },
+            "type": "sprite"
+        },
+        "base4": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 0,
+                "y": -128
+            },
+            "scale": {
+                "x": 0,
+                "y": 1
+            },
+            "type": "sprite"
+        },
+        "base5": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 0,
+                "y": -256
+            },
+            "scale": {
+                "x": 0,
+                "y": 1
+            },
+            "type": "sprite"
+        },
+        "base6": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 0,
+                "y": -383.6
+            },
+            "scale": {
+                "x": 0,
+                "y": 1
+            },
+            "type": "sprite"
+        },
+        "base7": {
+            "file": "transition_asset.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 0,
+                "y": 383
+            },
+            "scale": {
+                "x": 0,
+                "y": 1
+            },
+            "type": "sprite"
+        },
+        "logo": {
+            "file": "mm_logo.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 0,
+                "y": 15
+            },
+            "scale": {
+                "x": 0,
+                "y": 0
+            },
+            "type": "sprite"
+        }
+    }
+}

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<!-- Source Code: https://github.com/BinBashBanana/webretro -->
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+		<meta name="color-scheme" content="dark light">
+		<meta name="theme-color" content="#333333">
+		<title>webretro (STANDALONE)</title>
+		<meta name="description" content="RetroArch in your browser! Libretro cores compiled to WASM using emscripten, plus a custom UI.">
+		<meta name="robots" content="nofollow">
+		<meta name="og:title" content="webretro">
+		<meta name="og:type" content="website">
+		<meta name="og:image" content="https://cdn.jsdelivr.net/gh/BinBashBanana/webretro@6.5/assets/icons/icon204.png">
+		<meta name="og:url" content="https://binbashbanana.github.io/webretro/">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/BinBashBanana/webretro@6.5/assets/base.css?v=6.5">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/BinBashBanana/webretro@6.5/assets/jswindow.css">
+		<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/BinBashBanana/webretro@6.5/assets/icons/icon204.png">
+		<link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/BinBashBanana/webretro@6.5/assets/icons/iconm256.png">
+		<link rel="manifest" href="https://cdn.jsdelivr.net/gh/BinBashBanana/webretro@6.5/manifest.json">
+		<link rel="canonical" href="https://binbashbanana.github.io/webretro/">
+		<link rel="dns-prefetch" href="https://cdn.jsdelivr.net/">
+	</head>
+	<body>
+		<div class="main" id="mainarea">
+			<div id="menubar">
+				<input type="checkbox" id="menuhider">
+				<label for="menuhider" class="menuhiderlabel"></label>
+				<ul id="menu">
+					<li class="menuback"><a href="." title="Back to core selection"></a></li>
+					<li>Controls
+						<ul>
+							<li><a id="keybindsbutton" href="">Keybinds</a></li>
+							<li class="menu-long menu-nohover">Please note that these are just the bindings that are set, but in-game controls may vary.</li>
+							<li><a href="" title="Opens in new tab" onclick="window.open(window.URL.createObjectURL(new Blob([decodeURIComponent(atob('JTNDIURPQ1RZUEUlMjBodG1sJTNFJTNDaHRtbCUzRSUzQ2hlYWQlM0UlM0NtZXRhJTIwaHR0cC1lcXVpdiUzRCUyMnJlZnJlc2glMjIlMjBjb250ZW50JTNEJTIyMSUzQlVSTCUzRGh0dHBzJTNBJTJGJTJGcmV0cm9waWUub3JnLnVrJTJGZG9jcyUyRlJldHJvQXJjaC1Db25maWd1cmF0aW9uJTJGJTIzZGVmYXVsdC1jb3JlLWNvbnRyb2xzLWZvci1hbGwtZW11bGF0b3JzJTIyJTNFJTNDdGl0bGUlM0VSZWRpcmVjdGluZyUzQyUyRnRpdGxlJTNFJTNDJTJGaGVhZCUzRSUzQ2JvZHklM0UlM0NoMiUzRVJlZGlyZWN0aW5nLi4uJTNDJTJGaDIlM0UlM0MlMkZib2R5JTNFJTNDJTJGaHRtbCUzRQ=='))], {type: 'text/html'})));return false;">System Specifics</a></li>
+						</ul>
+					</li>
+					<li>Saves
+						<ul>
+							<li class="pointer disabled" id="savegame">Save Game</li>
+							<li class="pointer disabled" id="resetbutton">Reset</li>
+							<li class="pointer disabled" id="exportsave">Export SRAM</li>
+							<li class="pointer disabled" id="importsave">Import SRAM</li>
+							<li class="disabled"><label><input type="checkbox" id="autosave" checked disabled>Autosave (5m)</label></li>
+							<li><a id="savesbutton" href="">Recover Saves</a></li>
+							<li class="menu-long menu-nohover" style="width: 200px;">Please note that in order for the game to be saved, you must use the save feature in-game (unless of course the game itself autosaves), then press the save button here (Or autosave must happen). <b>These saves are only for in-game save files. If you want to be able to save at any time, use save states.</b> Saves and states are saved in your browser's indexedDB and are automatically readied every time you visit the page. You only need to use export and import for backups.</li>
+						</ul>
+					</li>
+					<li>States
+						<ul>
+							<li class="pointer disabled" id="savestate">Save State</li>
+							<li class="pointer disabled" id="loadstate">Load State</li>
+							<li class="pointer disabled" id="undosavestate">Undo Save State</li>
+							<li class="pointer disabled" id="undoloadstate">Undo Load State</li>
+							<li class="pointer disabled" id="exportstate">Export State</li>
+							<li class="pointer disabled" id="importstate">Import State</li>
+							<li><a id="statesbutton" href="">Recover States</a></li>
+							<li class="menu-long menu-nohover" style="width: 200px;">You must save state before you export state; exported states are not states from the time of exporting.</li>
+						</ul>
+					</li>
+					<li>Screenshots
+						<ul>
+							<li class="pointer disabled" id="takescreenshot">Take Screenshot</li>
+							<li><a id="screenshotsbutton" href="">Screenshots</a></li>
+						</ul>
+					</li>
+					<li>More
+						<ul>
+							<li class="disabled" title="May resolve minor scaling issues"><label><input type="checkbox" id="smooth" disabled>Smooth Scaling</label></li>
+							<li class="pointer" id="fullscreenbutton">Fullscreen</li>
+							<li class="pointer" id="consolebutton">Console</li>
+							<li>Theme
+								<ul>
+									<li class="menu-nohover">
+										<form id="themeselector" class="menuform">
+											<label><input type="radio" name="theme" value="iodinelight">Iodine (Light)</label>
+											<label><input type="radio" name="theme" value="iodinedark">Iodine (Dark)</label>
+											<label><input type="radio" name="theme" value="webplayer">Web Player</label>
+											<label><input type="radio" name="theme" value="webplayernavy">Web Player (Navy)</label>
+											<label class="disabled"><input type="radio" name="theme" value="emulatorjs" disabled>EmulatorJS</label>
+										</form>
+									</li>
+								</ul>
+							</li>
+							<li class="pointer disabled" id="resetbutton2">Reset</li>
+							<li class="pointer disabled" id="mousegrabbutton">Mouse Grab</li>
+							<li class="pointer disabled" id="gamefocusbutton">Game Focus</li>
+							<li>Cheats
+								<ul class="xlmenu">
+									<li>How to apply a cheat code</li>
+									<li>1. Open the Menu</li>
+									<li>2. Scroll down</li>
+									<li>3. Click "Cheats"</li>
+									<li>4. Click "Add new cheat to bottom/top"</li>
+									<li>5. Click the new cheat that you just created</li>
+									<li>6. Click "Code"</li>
+									<li>7. Enter/paste the cheat code</li>
+									<li>8. When you are done, press enter</li>
+									<li>9. Click "Enabled" (Set to ON)</li>
+									<li>10. Go back to Cheats by clicking the bar on the top</li>
+									<li>11. Click "Apply Changes"</li>
+									<li>12. Exit the menu</li>
+									<li class="disabled">(More coming soon)</li>
+								</ul>
+							</li>
+							<li>Shaders
+								<ul>
+									<li class="disabled">(Coming soon)</li>
+								</ul>
+							</li>
+							<li id="pso">Pre-start Options
+								<ul>
+									<li class="menu-nohover">
+										<form class="menuform" data-core="a5200">
+											<label><input type="checkbox" data-opt="lowpass">Low-pass Filter</label>
+										</form>
+										<form class="menuform" data-core="mednafen_psx">
+											<label><input type="checkbox" data-opt="highres">High Resolution</label>
+											<label><input type="checkbox" data-opt="ditherscaling">Dither Scaling</label>
+											<label><input type="checkbox" data-opt="widescreen">Widescreen Hack</label>
+											<label><input type="checkbox" data-opt="antijitter">PGXP Anti-jitter</label>
+										</form>
+										<form class="menuform" data-core="mednafen_psx_hw">
+											<label><input type="checkbox" data-opt="softwarerenderer">Use Software Renderer</label>
+											<label><input type="checkbox" data-opt="highres">High Resolution</label>
+											<label><input type="checkbox" data-opt="ditherscaling">Dither Scaling</label>
+											<label><input type="checkbox" data-opt="widescreen">Widescreen Hack</label>
+											<label><input type="checkbox" data-opt="antijitter">PGXP Anti-jitter</label>
+										</form>
+										<form class="menuform" data-core="mednafen_vb">
+											<label><input type="checkbox" data-opt="anaglyph">Red/Blue Anaglyph</label>
+										</form>
+										<form class="menuform" data-core="mednafen_wswan">
+											<label><input type="checkbox" data-opt="75hz">75hz Mode</label>
+											<label><input type="checkbox" data-opt="portrait">Portrait Orientation</label>
+											<label><input type="checkbox" data-opt="lowpass">Low-pass Filter</label>
+										</form>
+										<form class="menuform" data-core="melonds">
+											<label><input type="checkbox" data-opt="leftright">Left/Right</label>
+										</form>
+										<form class="menuform" data-core="mgba">
+											<label><input type="checkbox" data-opt="lowpass">Low-pass Filter</label>
+										</form>
+										<form class="menuform" data-core="mupen64plus_next">
+											<label><input type="checkbox" data-opt="highres">High Resolution</label>
+											<label><input type="checkbox" data-opt="widescreen">Widescreen Hack</label>
+										</form>
+										<form class="menuform" data-core="o2em">
+											<label><input type="checkbox" data-opt="lowpass">Low-pass Filter</label>
+										</form>
+										<form class="menuform" data-core="parallel_n64">
+											<label><input type="checkbox" data-opt="highres">High Resolution</label>
+											<label title="Use gles2n64 instead of Glide64"><input type="checkbox" data-opt="renderer2">Use glN64</label>
+										</form>
+										<form class="menuform" data-core="prosystem">
+											<label><input type="checkbox" data-opt="lowpass">Low-pass Filter</label>
+										</form>
+										<form class="menuform" data-core="snes9x">
+											<label><input type="checkbox" data-opt="mouse">SNES Mouse</label>
+										</form>
+										<form class="menuform" data-core="stella2014">
+											<label><input type="checkbox" data-opt="lowpass">Low-pass Filter</label>
+										</form>
+										<form class="menuform" data-core="vecx">
+											<label><input type="checkbox" data-opt="softwarerenderer">Use Software Renderer</label>
+										</form>
+										<form class="menuform" data-core="virtualjaguar">
+											<label><input type="checkbox" data-opt="fastblitter">Fast Blitter</label>
+										</form>
+										<form class="menuform" data-core="yabause">
+											<label><input type="checkbox" data-opt="frameskip">Enable Frameskip</label>
+										</form>
+									</li>
+								</ul>
+							</li>
+							<li class="pointer" id="downloadstandalonebutton">Download Standalone</li>
+							<li><a href="https://github.com/BinBashBanana/webretro" target="_blank">GitHub</a></li>
+						</ul>
+					</li>
+					<li id="menubutton" class="disabled">
+						Menu
+					</li>
+					<li id="pause" class="disabled">
+						Pause
+					</li>
+				</ul>
+			</div>
+			<h1 id="webretrotitle">webretro</h1>
+			<div id="ffd">
+				<div id="ffdcontent">
+					<div id="coreselectarea">
+						<h3>Select a Core</h3>
+						<div class="coreorderrow">
+							<label for="coreorder">Sort by:</label>
+							<select id="coreorder">
+								<option value="system" selected>System</option>
+								<option value="corename">Core name</option>
+								<option value="libraryname">Library name</option>
+							</select>
+						</div>
+						<ul class="corelistul">
+							<li><a href="?core=autodetect" class="greyer">AutoDetect (Slower to load)</a></li>
+							<span id="corelist"></span>
+						</ul>
+					</div>
+					<div id="uploadarea">
+						<h2><span id="systemname"></span> Emulator</h2>
+						<input type="button" id="upload" value="Choose ROM File" class="uploadbutton">
+						<br>
+						<img id="googledriveupload" class="uploadbutton uploadimage" title="Google Drive Upload" src="https://cdn.jsdelivr.net/gh/BinBashBanana/webretro@6.5/assets/icons/googledrive.png">
+						<img id="dropboxupload" class="uploadbutton uploadimage" title="Dropbox Upload" src="https://cdn.jsdelivr.net/gh/BinBashBanana/webretro@6.5/assets/icons/dropbox.png">
+						<img id="onedriveupload" class="uploadbutton uploadimage" title="OneDrive Upload" src="https://cdn.jsdelivr.net/gh/BinBashBanana/webretro@6.5/assets/icons/onedrive.png">
+					</div>
+				</div>
+				<div class="source">
+					<a href="https://github.com/BinBashBanana/webretro" target="_blank">GitHub</a>
+					<a href="https://github.com/libretro" target="_blank">Libretro</a>
+					<a href="" target="_blank" id="coregithub">Core Github</a>
+					<a href="https://emscripten.org" target="_blank">Emscripten</a>
+					<a href="info/" target="_blank">Info</a>
+					<span id="versionindicator"></span>
+				</div>
+			</div>
+			<p id="updatenotice"></p>
+			<input type="button" id="startbutton" value="Start">
+			<div id="loadingdiv">
+				<p class="loadingloading">Loading</p>
+				<p id="loadingtext"></p>
+				<progress id="loadingbar" max="1"></progress>
+			</div>
+			<canvas id="canvas" class="texturePixelated"></canvas>
+			<div id="canvasmask">
+				<div id="resume">
+					<div>
+						<h1>Paused</h1>
+						<h3>Click to resume</h3>
+					</div>
+				</div>
+				<div id="sidealertholder"></div>
+			</div>
+			<div id="modals">
+				<div id="managers">
+					<div class="modaltop">
+						<h2 id="managertitle"></h2>
+						<span id="managerclose">&#x2716;</span>
+					</div>
+					<div id="keybindmanager">
+						<h4>Click on the right column to change a key. Press save when you are finished!</h4>
+						<table class="managertableparent managertableparentshort">
+							<tbody class="managertable" id="keybindtable"></tbody>
+						</table>
+						<input type="button" id="savekeybinds" class="specialblue" value="Save">
+						<input type="button" id="resetkeybinds" value="Reset to Default">
+					</div>
+					<div id="screenshotmanager">
+						<div id="screenshotsdiv"></div>
+						<div class="screenshotsbottom">
+							<h4>Screenshots do not persist through page reloads! Download your screenshots now!</h4>
+							<input type="button" id="downloadallscreenshots" value="Download All (zip)">
+						</div>
+					</div>
+					<div id="savemanager">
+						<table class="managertableparent">
+							<tbody class="managertable" id="savetable"></tbody>
+						</table>
+						<h4>Here, you can download all of the webretro saves and states made on <i>this domain</i>.</h4>
+						<div class="savesbottom">
+							<span id="quotatext"></span>
+						</div>
+					</div>
+					<div id="romselector">
+						<table class="managertableparent">
+							<tbody class="managertable" id="romselectortable"></tbody>
+						</table>
+						<h4 id="recommendedextensions"></h4>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			var relativeBase = "https://cdn.jsdelivr.net/gh/BinBashBanana/webretro@6.5/";
+		</script>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/BinBashBanana/webretro@6.5/assets/zip-2.4.7.min.js"></script>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/BinBashBanana/webretro@6.5/assets/md5.min.js"></script>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/BinBashBanana/webretro@6.5/uauth/uauth.js"></script>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/BinBashBanana/webretro@6.5/assets/jswindow.js"></script>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/BinBashBanana/webretro@6.5/pwa.js"></script>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/BinBashBanana/webretro@6.5/assets/charToCodeMap.js?v=6.5"></script>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/BinBashBanana/webretro@6.5/assets/base.js?v=6.5"></script>
+	</body>
+</html>

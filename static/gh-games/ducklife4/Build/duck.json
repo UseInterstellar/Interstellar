@@ -1,0 +1,15 @@
+{
+"companyName": "Mofunzone",
+"productName": "Duck Life 4",
+"dataUrl": "WebGL4.data.unityweb",
+"asmCodeUrl": "WebGL4.asm.code.unityweb",
+"asmMemoryUrl": "WebGL4.asm.memory.unityweb",
+"asmFrameworkUrl": "WebGL4.asm.framework.unityweb",
+"TOTAL_MEMORY": 268435456,
+"graphicsAPI": ["WebGL 2.0", "WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"backgroundUrl": "background.jpg",
+"splashScreenStyle": "Dark",
+"backgroundColor": "#FFFFFF",
+"cacheControl": {"dataUrl": "must-revalidate"}
+}

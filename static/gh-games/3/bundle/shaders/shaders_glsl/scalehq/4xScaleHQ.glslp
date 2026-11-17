@@ -1,0 +1,6 @@
+shaders = 1
+
+shader0 = "shaders/4xScaleHQ.glsl"
+filter_linear0 = false
+scale_type0 = source
+scale0 = 4.0

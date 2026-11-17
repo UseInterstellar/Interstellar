@@ -1,0 +1,19 @@
+diff --git a/Makefile.libretro b/Makefile.libretro
+index ed92c27..58db740 100644
+--- a/Makefile.libretro
++++ b/Makefile.libretro
+@@ -772,9 +772,14 @@ ifneq (,$(findstring msvc,$(platform)))
+    CFLAGS   += -MT
+    CXXFLAGS += -MT
+ endif
++ifeq ($(platform), emscripten)
++   CFLAGS   += -O3 -DNDEBUG
++   CXXFLAGS += -O3 -DNDEBUG
++else
+    CFLAGS   += -O2 -DNDEBUG
+    CXXFLAGS += -O2 -DNDEBUG
+ endif
++endif
+ 
+ ifeq ($(SHARED_LIBVORBIS),)
+    TREMOR_SRC_DIR := $(CORE_DIR)/core/tremor

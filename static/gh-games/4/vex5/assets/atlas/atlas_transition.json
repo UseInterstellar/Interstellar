@@ -1,0 +1,28 @@
+{"frames": [
+
+{
+	"filename": "mm_logo.png",
+	"frame": {"x":216,"y":2,"w":377,"h":137},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":1,"w":377,"h":137},
+	"sourceSize": {"w":377,"h":138}
+},
+{
+	"filename": "transition_asset.png",
+	"frame": {"x":2,"y":2,"w":212,"h":212},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":212,"h":212},
+	"sourceSize": {"w":212,"h":212}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "atlas_transition.png",
+	"format": "RGBA8888",
+	"size": {"w":595,"h":216},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:ffaf3a7a1aed2a7d08f6e94c7bc30232:65c1d6650e893b83be4bd2b1fa9cef79:5e0bb93b670eaaaac5159ab3ac532c7e$"
+}
+}

@@ -1,0 +1,12 @@
+/*
+  X-Content-Type-Options: nosniff
+
+/sw.js
+  Service-Worker-Allowed: /
+  Cache-Control: no-cache
+
+/*.mjs
+  Content-Type: text/javascript
+
+/*.wasm
+  Content-Type: application/wasm

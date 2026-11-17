@@ -1,0 +1,60 @@
+{"frames": [
+
+{
+	"filename": "fall0000.png",
+	"frame": {"x":2,"y":2,"w":24,"h":43},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":24,"h":43},
+	"sourceSize": {"w":24,"h":43}
+},
+{
+	"filename": "fall0001.png",
+	"frame": {"x":2,"y":47,"w":24,"h":43},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":24,"h":43},
+	"sourceSize": {"w":24,"h":43}
+},
+{
+	"filename": "fall0002.png",
+	"frame": {"x":2,"y":92,"w":24,"h":43},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":24,"h":43},
+	"sourceSize": {"w":24,"h":43}
+},
+{
+	"filename": "fall0003.png",
+	"frame": {"x":2,"y":137,"w":24,"h":43},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":24,"h":43},
+	"sourceSize": {"w":24,"h":43}
+},
+{
+	"filename": "fall0004.png",
+	"frame": {"x":2,"y":182,"w":24,"h":43},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":24,"h":43},
+	"sourceSize": {"w":24,"h":43}
+},
+{
+	"filename": "fall0005.png",
+	"frame": {"x":2,"y":227,"w":24,"h":43},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":24,"h":43},
+	"sourceSize": {"w":24,"h":43}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "player-fall.png",
+	"format": "RGBA8888",
+	"size": {"w":28,"h":272},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:0e366e3c6ccf78262ccc157c226b51b9:c58d1aa41ad9882017416ec055138754:77b4a1c83213b6a2f215ec8453890268$"
+}
+}

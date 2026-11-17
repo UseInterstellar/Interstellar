@@ -1,0 +1,92 @@
+{"frames": [
+
+{
+	"filename": "falldown0000.png",
+	"frame": {"x":2,"y":125,"w":21,"h":40},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":1,"w":21,"h":40},
+	"sourceSize": {"w":24,"h":41}
+},
+{
+	"filename": "falldown0001.png",
+	"frame": {"x":2,"y":167,"w":21,"h":40},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":1,"w":21,"h":40},
+	"sourceSize": {"w":24,"h":41}
+},
+{
+	"filename": "falldown0002.png",
+	"frame": {"x":2,"y":2,"w":22,"h":39},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":2,"w":22,"h":39},
+	"sourceSize": {"w":24,"h":41}
+},
+{
+	"filename": "falldown0003.png",
+	"frame": {"x":2,"y":43,"w":22,"h":39},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":2,"w":22,"h":39},
+	"sourceSize": {"w":24,"h":41}
+},
+{
+	"filename": "falldown0004.png",
+	"frame": {"x":2,"y":84,"w":22,"h":39},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":2,"w":22,"h":39},
+	"sourceSize": {"w":24,"h":41}
+},
+{
+	"filename": "falldown0005.png",
+	"frame": {"x":2,"y":293,"w":21,"h":39},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":2,"w":21,"h":39},
+	"sourceSize": {"w":24,"h":41}
+},
+{
+	"filename": "falldown0006.png",
+	"frame": {"x":2,"y":334,"w":21,"h":39},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":2,"w":21,"h":39},
+	"sourceSize": {"w":24,"h":41}
+},
+{
+	"filename": "falldown0007.png",
+	"frame": {"x":2,"y":375,"w":21,"h":39},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":2,"w":21,"h":39},
+	"sourceSize": {"w":24,"h":41}
+},
+{
+	"filename": "falldown0008.png",
+	"frame": {"x":2,"y":209,"w":21,"h":40},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":1,"w":21,"h":40},
+	"sourceSize": {"w":24,"h":41}
+},
+{
+	"filename": "falldown0009.png",
+	"frame": {"x":2,"y":251,"w":21,"h":40},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":1,"w":21,"h":40},
+	"sourceSize": {"w":24,"h":41}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "player-jump-down.png",
+	"format": "RGBA8888",
+	"size": {"w":26,"h":416},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:fe9e3d6ce9cc2355448029fc1fd9560d:1f6c0244d187c6a50af64db1f3f4fb3a:26267732f0525c4e76579595c83673e9$"
+}
+}

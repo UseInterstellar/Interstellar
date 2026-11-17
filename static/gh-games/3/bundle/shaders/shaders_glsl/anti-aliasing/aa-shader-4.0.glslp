@@ -1,0 +1,9 @@
+shaders = 2
+
+shader0 = shaders/aa-shader-4.0.glsl
+filter_linear0 = false
+scale_type0 = viewport
+scale0 = 1.0
+
+shader1 = ../sharpen/shaders/adaptive-sharpen.glsl
+filter_linear1 = false

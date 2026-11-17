@@ -1,0 +1,888 @@
+diff --git a/Makefile.common b/Makefile.common
+index a18e5838b8..9610e32517 100644
+--- a/Makefile.common
++++ b/Makefile.common
+@@ -1500,10 +1500,11 @@ ifeq ($(HAVE_GL_CONTEXT), 1)
+       DEF_FLAGS += $(OPENGLES_CFLAGS)
+       ifeq ($(HAVE_OPENGLES3), 1)
+          DEFINES += -DHAVE_OPENGLES3
++         OBJ += $(LIBRETRO_COMM_DIR)/glsym/glsym_es3.o
+       else
+          DEFINES += -DHAVE_OPENGLES2
++         OBJ += $(LIBRETRO_COMM_DIR)/glsym/glsym_es2.o
+       endif
+-      OBJ += $(LIBRETRO_COMM_DIR)/glsym/glsym_es2.o
+    else
+       DEFINES += -DHAVE_GL_SYNC
+       OBJ += $(LIBRETRO_COMM_DIR)/glsym/glsym_gl.o
+diff --git a/Makefile.emscripten b/Makefile.emscripten
+index d6de1b9805..2e1ccca52e 100644
+--- a/Makefile.emscripten
++++ b/Makefile.emscripten
+@@ -9,11 +9,8 @@ endif
+ EOPT = USE_ZLIB=1 # Emscripten specific options
+ EOPTS = $(addprefix -s $(EMPTY), $(EOPT)) # Add '-s ' to each option
+ 
+-PTHREAD = 0
+ OS = Emscripten
+ OBJ :=
+-DEFINES := -DRARCH_INTERNAL -DHAVE_MAIN -s USE_PTHREADS=$(PTHREAD)
+-DEFINES += -DHAVE_FILTERS_BUILTIN
+ 
+ HAVE_DSP_FILTER = 1
+ HAVE_VIDEO_FILTER = 1
+@@ -25,7 +22,6 @@ HAVE_AUDIOMIXER = 1
+ HAVE_VIDEO_LAYOUT = 0
+ HAVE_CC_RESAMPLER = 1
+ HAVE_EGL    = 1
+-HAVE_OPENGLES = 1
+ HAVE_RJPEG  = 0
+ HAVE_RPNG   = 1
+ HAVE_EMSCRIPTEN = 1
+@@ -42,42 +38,101 @@ HAVE_STB_FONT = 1
+ HAVE_CONFIGFILE = 1
+ HAVE_CHEATS = 1
+ HAVE_IBXM = 1
++HAVE_PATCH = 1
+ 
+ ASYNC ?= 0
+-ifeq ($(LIBRETRO), mupen64plus)
+-   ASYNC = 1
+-endif
+-
++PTHREAD ?= 0
+ LTO ?= 0
+-ifeq ($(LIBRETRO), tyrquake)
+-   LTO = 0
+-endif
+ 
+-MEMORY ?= 134217728
++DEFINES := -DRARCH_INTERNAL -DHAVE_MAIN
++DEFINES += -DHAVE_FILTERS_BUILTIN -DNO_MISSING_ASSET_WARNING -DNO_AUTO_CANVAS_RESIZE -DWEB_SCALING -DNO_CANVAS_FULLSCREEN -DNO_INITIAL_CANVAS_RESIZE
++
++HAVE_OPENGL = 0 # not supported
++EM_OPENGL ?= 0
++HAVE_REGAL ?= 0
++
++HAVE_OPENGLES ?= 1
++HAVE_OPENGLES3 ?= 0
++
++GL_DEBUG ?= 0 # help diagnose GLSL problems (can cause errors in normal operation)
++GENERATE_SOURCEMAP ?= 0
++FS_DEBUG = 0
++
++# default value: 5242880  (5 MiB)
++STACK_MEMORY ?= 8388608
++# default value: 16777216 (16 MiB)
++HEAP_MEMORY ?= 536870912
++
++# 8388608 ----- 8 MiB (Stack: recommended)
++# 16777216 ---- 16 MiB
++# 33554432 ---- 32 MiB
++# 67108864 ---- 64 MiB
++# 134217728 --- 128 MiB
++# 268435456 --- 256 MiB (Heap: recommended) (Stack: recommended for some cores [mupen64plus_next])
++# 536870912 --- 512 MiB (Heap: needed for some cores [mednafen_psx(_hw), mupen64plus_next])
++# 1073741824 -- 1 GiB
++# 1610612736 -- 1.5 GiB
++# 2147483648 -- 2 GiB
+ 
+ PRECISE_F32 = 1
+ 
+ OBJDIR := obj-emscripten
+ 
+-#if you compile with SDL2 flag add this Emscripten flag "-s USE_SDL=2" to LDFLAGS:
++EXPORTED_FUNCTIONS = "['_main', '_malloc', '_cmd_savefiles', '_cmd_save_state', '_cmd_load_state', '_cmd_undo_save_state', '_cmd_undo_load_state', '_cmd_take_screenshot', '_cmd_toggle_menu', '_cmd_reload_config', '_cmd_toggle_grab_mouse', '_cmd_toggle_game_focus', '_cmd_reset', '_cmd_toggle_pause', '_cmd_pause', '_cmd_unpause', '_cmd_set_volume', '_cmd_set_shader', '_cmd_cheat_set_code', '_cmd_cheat_get_code', '_cmd_cheat_toggle_index', '_cmd_cheat_get_code_state', '_cmd_cheat_realloc', '_cmd_cheat_get_size', '_cmd_cheat_apply_cheats']"
+ 
+ LIBS    := -s USE_ZLIB=1
+-LDFLAGS := -L. --no-heap-copy -s $(LIBS) -s TOTAL_MEMORY=$(MEMORY) -s NO_EXIT_RUNTIME=0 -s FULL_ES2=1 -s "EXTRA_EXPORTED_RUNTIME_METHODS=['callMain']" \
+-           -s ALLOW_MEMORY_GROWTH=1 -s EXPORTED_FUNCTIONS="['_main', '_malloc', '_cmd_savefiles', '_cmd_save_state', '_cmd_load_state', '_cmd_take_screenshot']" \
++
++ifeq ($(HAVE_SDL2), 1)
++   LIBS += -s USE_SDL=2
++   DEFINES += -DHAVE_SDL2
++endif
++
++LDFLAGS := -L. --no-heap-copy $(LIBS) -s TOTAL_STACK=$(STACK_MEMORY) -s TOTAL_MEMORY=$(HEAP_MEMORY) -s NO_EXIT_RUNTIME=0 -s EXPORTED_RUNTIME_METHODS="['callMain', 'FS']" -s EXPORTED_FUNCTIONS=$(EXPORTED_FUNCTIONS) \
+            --js-library emscripten/library_rwebaudio.js \
+            --js-library emscripten/library_rwebcam.js \
+            --js-library emscripten/library_errno_codes.js
++
++ifeq ($(HAVE_OPENGLES), 1)
++   ifeq ($(HAVE_OPENGLES3), 1)
++      LDFLAGS += -s FULL_ES3=1 -s MIN_WEBGL_VERSION=2 -s MAX_WEBGL_VERSION=2
++   else
++      LDFLAGS += -s FULL_ES2=1
++   endif
++endif
++ifeq ($(EM_OPENGL), 1)
++   DEFINES += -DEM_OPENGL
++   ifeq ($(HAVE_REGAL), 1)
++      LDFLAGS += -s USE_REGAL=1
++      DEFINES += -DHAVE_REGAL
++   else
++      LDFLAGS += -s LEGACY_GL_EMULATION=1 -s GL_UNSAFE_OPTS=0
++   endif
++endif
++
++ifeq ($(GL_DEBUG), 1)
++   LDFLAGS += -s GL_ASSERTIONS=1 -s GL_DEBUG=1
++endif
++
++ifeq ($(FS_DEBUG), 1)
++   LDFLAGS += -s FS_DEBUG=1
++endif
++
+ ifneq ($(PTHREAD), 0)
+-   LDFLAGS += -s USE_PTHREADS=$(PTHREAD) -s PTHREAD_POOL_SIZE=2
++   CFLAGS += -pthread
++   CXXFLAGS += -pthread
++   LDFLAGS += -pthread -s PTHREAD_POOL_SIZE=4
++else
++   LDFLAGS += -s ALLOW_MEMORY_GROWTH=1
+ endif
+ 
+ ifeq ($(ASYNC), 1)
+-   LDFLAGS += -s ASYNCIFY=$(ASYNC)
++   LDFLAGS += -s ASYNCIFY=1 -s ASYNCIFY_STACK_SIZE=131072
+ endif
+ 
+-ifeq ($(HAVE_SDL2), 1)
+-   LIBS += -s USE_SDL=2
+-   DEFINES += -DHAVE_SDL2
++ifeq ($(GENERATE_SOURCEMAP), 1)
++   CFLAGS += -g4
++   CXXFLAGS += -g4
++   LDFLAGS += -g4 --source-map-base http://localhost:8000/cores/ # -gsource-map
+ endif
+ 
+ include Makefile.common
+@@ -102,8 +157,7 @@ else
+    CFLAGS += -O3
+ endif
+ 
+-CFLAGS += -Wall -I. -Ilibretro-common/include -std=gnu99 $(LIBS) \
+-          -s EXPORTED_FUNCTIONS="['_main', '_malloc', '_cmd_savefiles', '_cmd_save_state', '_cmd_take_screenshot']"
++CFLAGS += -Wall -Wno-unused-command-line-argument -I. -Ilibretro-common/include -std=gnu99 $(LIBS) -s EXPORTED_FUNCTIONS=$(EXPORTED_FUNCTIONS)
+ 
+ RARCH_OBJ := $(addprefix $(OBJDIR)/,$(OBJ))
+ 
+diff --git a/cheat_manager.c b/cheat_manager.c
+index 5df70be982..2f11a8f25a 100644
+--- a/cheat_manager.c
++++ b/cheat_manager.c
+@@ -120,7 +120,7 @@ void cheat_manager_set_code(unsigned i, const char *str)
+       return;
+ 
+    if (!string_is_empty(str))
+-      strcpy(cheat_st->cheats[i].code, str);
++      cheat_st->cheats[i].code = strdup(str);
+ 
+    cheat_st->cheats[i].state = true;
+ }
+diff --git a/command.h b/command.h
+index a007c175c7..5d1255dfc5 100644
+--- a/command.h
++++ b/command.h
+@@ -205,7 +205,8 @@ enum event_command
+    CMD_EVENT_CHEAT_INDEX_MINUS,
+    CMD_EVENT_CHEAT_TOGGLE,
+    CMD_EVENT_AI_SERVICE_CALL,
+-   CMD_EVENT_SAVE_FILES
++   CMD_EVENT_SAVE_FILES,
++   CMD_EVENT_RELOAD_CONFIG
+ };
+ 
+ typedef struct command command_t;
+diff --git a/config.def.h b/config.def.h
+index a87fa6f94a..7c0ddac8f7 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -1151,6 +1151,9 @@ static const int default_content_favorites_size = 200;
+ /* Show Menu start-up screen on boot. */
+ #define DEFAULT_MENU_SHOW_START_SCREEN true
+ 
++/* Working with a limited set of assets */
++#define DEFAULT_MENU_MINIMAL_ASSETS false
++
+ /* Default scale factor for non-frambuffer-based display
+  * drivers and display widgets */
+ #if defined(VITA)
+diff --git a/configuration.c b/configuration.c
+index fb8e97c196..2afa8f147a 100644
+--- a/configuration.c
++++ b/configuration.c
+@@ -1654,6 +1654,7 @@ static struct config_bool_setting *populate_settings_bool(
+    SETTING_BOOL("menu_show_legacy_thumbnail_updater", &settings->bools.menu_show_legacy_thumbnail_updater, true, menu_show_legacy_thumbnail_updater, false);
+    SETTING_BOOL("filter_by_current_core",        &settings->bools.filter_by_current_core, true, DEFAULT_FILTER_BY_CURRENT_CORE, false);
+    SETTING_BOOL("rgui_show_start_screen",        &settings->bools.menu_show_start_screen, false, false /* TODO */, false);
++   SETTING_BOOL("menu_minimal_assets",        &settings->bools.menu_minimal_assets, false, false, false);
+    SETTING_BOOL("menu_navigation_wraparound_enable", &settings->bools.menu_navigation_wraparound_enable, true, true, false);
+    SETTING_BOOL("menu_navigation_browser_filter_supported_extensions_enable",
+          &settings->bools.menu_navigation_browser_filter_supported_extensions_enable, true, true, false);
+diff --git a/configuration.h b/configuration.h
+index d758fe630e..4c20fdb983 100644
+--- a/configuration.h
++++ b/configuration.h
+@@ -556,6 +556,7 @@ typedef struct settings
+       bool notification_show_refresh_rate;
+       bool menu_widget_scale_auto;
+       bool menu_show_start_screen;
++      bool menu_minimal_assets;
+       bool menu_pause_libretro;
+       bool menu_savestate_resume;
+       bool menu_insert_disk_resume;
+diff --git a/dist-scripts/dist-cores.sh b/dist-scripts/dist-cores.sh
+index 7beedba2e6..970d648f25 100644
+--- a/dist-scripts/dist-cores.sh
++++ b/dist-scripts/dist-cores.sh
+@@ -164,6 +164,10 @@ for f in `ls -v *_${platform}.${EXT}`; do
+    whole_archive=
+    big_stack=
+ 
++   gles3=0
++   stack_mem=8388608
++   heap_mem=268435456
++
+    if [ $name = "nxengine" ] ; then
+       echo "Applying whole archive linking..."
+       whole_archive="WHOLE_ARCHIVE_LINK=1"
+@@ -171,10 +175,31 @@ for f in `ls -v *_${platform}.${EXT}`; do
+       echo "Applying big stack..."
+       lto=0
+       big_stack="BIG_STACK=1"
+-   elif [ $name = "mupen64plus" ] ; then
++   elif [ $name = "mupen64plus_next" ] ; then
++      gles3=1
++      async=1
++      pthread=0
++      stack_mem=268435456
++      heap_mem=536870912
++   elif [ $name = "parallel_n64" ] ; then
++      gles3=1
+       async=1
++   elif [ $name = "mednafen_psx" ] ; then
++      heap_mem=536870912
++   elif [ $name = "mednafen_psx_hw" ] ; then
++      gles3=1
++      heap_mem=536870912
+    elif [ $name = "dosbox" ] ; then
+-      async=0
++      async=1
++   elif [ $name = "scummvm" ] ; then
++      async=1
++      pthread=0
++   elif [ $name = "melonds" ] ; then
++      pthread=0
++   elif [ $name = "yabause" ] ; then
++      pthread=0
++   elif [ $name = "yabasanshiro" ] ; then
++      pthread=0
+    fi
+    echo "-- Building core: $name --"
+    if [ $PLATFORM = "unix" ]; then
+@@ -184,7 +209,11 @@ for f in `ls -v *_${platform}.${EXT}`; do
+    fi
+    echo NAME: $name
+    echo ASYNC: $async
++   echo PTHREAD: $pthread
+    echo LTO: $lto
++   echo GLES3: $gles3
++   echo STACK_MEMORY: $stack_mem
++   echo HEAP_MEMORY: $heap_mem
+ 
+    # Do cleanup if this is a big stack core
+    if [ "$big_stack" = "BIG_STACK=1" ] ; then
+@@ -203,8 +232,8 @@ for f in `ls -v *_${platform}.${EXT}`; do
+    if [ $MAKEFILE_GRIFFIN = "yes" ]; then
+       make -C ../ -f Makefile.griffin $OPTS platform=${platform} $whole_archive $big_stack -j3 || exit 1
+    elif [ $PLATFORM = "emscripten" ]; then
+-       echo "BUILD COMMAND: make -C ../ -f Makefile.emscripten PTHREAD=$pthread ASYNC=$async LTO=$lto -j7 TARGET=${name}_libretro.js"
+-       make -C ../ -f Makefile.emscripten $OPTS PTHREAD=$pthread ASYNC=$async LTO=$lto -j7 TARGET=${name}_libretro.js || exit 1
++       echo "BUILD COMMAND: make -C ../ -f Makefile.emscripten $OPTS PTHREAD=$pthread ASYNC=$async LTO=$lto HAVE_OPENGLES3=$gles3 STACK_MEMORY=$stack_mem HEAP_MEMORY=$heap_mem -j7 TARGET=${name}_libretro.js"
++       make -C ../ -f Makefile.emscripten $OPTS PTHREAD=$pthread ASYNC=$async LTO=$lto HAVE_OPENGLES3=$gles3 STACK_MEMORY=$stack_mem HEAP_MEMORY=$heap_mem -j7 TARGET=${name}_libretro.js || exit 1
+    elif [ $PLATFORM = "unix" ]; then
+       make -C ../ -f Makefile LINK=g++ $whole_archive $big_stack -j3 || exit 1
+    elif [ $PLATFORM = "ctr" ]; then
+@@ -258,7 +287,7 @@ for f in `ls -v *_${platform}.${EXT}`; do
+       mv -f ../${name}_libretro.js ../pkg/emscripten/${name}_libretro.js
+       mv -f ../${name}_libretro.wasm ../pkg/emscripten/${name}_libretro.wasm
+       if [ $pthread != 0 ] ; then
+-         mv -f ../pthread-main.js ../pkg/emscripten/pthread-main.js
++         mv -f ../${name}_libretro.worker.js ../pkg/emscripten/${name}_libretro.worker.js
+       fi
+    fi
+ 
+diff --git a/emscripten/library_rwebcam.js b/emscripten/library_rwebcam.js
+index 5c0bec5dc3..9b9114d33b 100644
+--- a/emscripten/library_rwebcam.js
++++ b/emscripten/library_rwebcam.js
+@@ -17,18 +17,13 @@ var LibraryRWebCam = {
+    RWebCamInit__deps: ['malloc'],
+    RWebCamInit: function(caps1, caps2, width, height) {
+       if (!navigator) return 0;
+-
+-      navigator.getMedia = navigator.getUserMedia ||
+-                           navigator.webkitGetUserMedia ||
+-                           navigator.mozGetUserMedia ||
+-                           navigator.msGetUserMedia;
+-
+-      if (!navigator.getMedia) return 0;
++      if (!navigator.mediaDevices.getUserMedia) return 0;
+ 
+       var c = ++RWC.counter;
+ 
+       RWC.contexts[c] = [];
+       RWC.contexts[c].videoElement = document.createElement("video");
++      RWC.contexts[c].videoElement.classList.add("retroarchWebcamVideo");
+       if (width !== 0 && height !== 0) {
+          RWC.contexts[c].videoElement.width = width;
+          RWC.contexts[c].videoElement.height = height;
+@@ -37,14 +32,19 @@ var LibraryRWebCam = {
+       RWC.contexts[c].glTex = caps1 & (1 << RWC.RETRO_CAMERA_BUFFER_OPENGL_TEXTURE);
+       RWC.contexts[c].rawFb = caps1 & (1 << RWC.RETRO_CAMERA_BUFFER_RAW_FRAMEBUFFER);
+ 
+-      navigator.getMedia({video: true, audio: false}, function(stream) {
+-         RWC.contexts[c].videoElement.autoplay = true;
+-         RWC.contexts[c].videoElement.src = URL.createObjectURL(stream);
+-         RWC.contexts[c].runMode = 2;
+-      }, function (err) {
+-         console.log("webcam request failed", err);
++      if (!window.disableWebCam) {
++         navigator.mediaDevices.getUserMedia({video: true, audio: false}).then(function(stream) {
++            RWC.contexts[c].videoElement.autoplay = true;
++            RWC.contexts[c].videoElement.srcObject = stream;
++            RWC.contexts[c].runMode = 2;
++         }).catch(function (err) {
++            console.log("Webcam request failed", err);
++            RWC.runMode = 0;
++         });
++      } else {
++         console.log("Webcam disabled.");
+          RWC.runMode = 0;
+-      });
++      }
+ 
+       // for getting/storing texture id in GL mode
+       if (!RWC.tmp) RWC.tmp = _malloc(4);
+@@ -53,7 +53,6 @@ var LibraryRWebCam = {
+ 
+    RWebCamFree: function(data) {
+       RWC.contexts[data].videoElement.pause();
+-      URL.revokeObjectURL(RWC.contexts[data].videoElement.src);
+       RWC.contexts[data].videoElement = null;
+       RWC.contexts[data] = null;
+    },
+@@ -81,6 +80,7 @@ var LibraryRWebCam = {
+       }
+       if (RWC.contexts[data].rawFb) {
+          RWC.contexts[data].rawFbCanvas = document.createElement("canvas");
++         RWC.contexts[data].rawFbCanvas.classList.add("retroarchWebcamCanvas");
+          ret = 1;
+       }
+ 
+diff --git a/frontend/drivers/platform_emscripten.c b/frontend/drivers/platform_emscripten.c
+index a33cc6bf29..ccd8fe9d80 100644
+--- a/frontend/drivers/platform_emscripten.c
++++ b/frontend/drivers/platform_emscripten.c
+@@ -46,10 +46,15 @@
+ #include "../../tasks/tasks_internal.h"
+ #include "../../file_path_special.h"
+ #include "../../paths.h"
++#include "../../cheat_manager.h"
+ 
+ void dummyErrnoCodes(void);
+ void emscripten_mainloop(void);
+ 
++//// begin exported functions
++
++// saves and states
++
+ void cmd_savefiles(void)
+ {
+    command_event(CMD_EVENT_SAVE_FILES, NULL);
+@@ -65,11 +70,111 @@ void cmd_load_state(void)
+    command_event(CMD_EVENT_LOAD_STATE, NULL);
+ }
+ 
++void cmd_undo_save_state(void)
++{
++   command_event(CMD_EVENT_UNDO_SAVE_STATE, NULL);
++}
++
++void cmd_undo_load_state(void)
++{
++   command_event(CMD_EVENT_UNDO_LOAD_STATE, NULL);
++}
++
++// misc
++
+ void cmd_take_screenshot(void)
+ {
+    command_event(CMD_EVENT_TAKE_SCREENSHOT, NULL);
+ }
+ 
++void cmd_toggle_menu(void)
++{
++   command_event(CMD_EVENT_MENU_TOGGLE, NULL);
++}
++
++void cmd_reload_config(void)
++{
++   command_event(CMD_EVENT_RELOAD_CONFIG, NULL);
++}
++
++void cmd_toggle_grab_mouse(void)
++{
++   command_event(CMD_EVENT_GRAB_MOUSE_TOGGLE, NULL);
++}
++
++void cmd_toggle_game_focus(void)
++{
++   command_event(CMD_EVENT_GAME_FOCUS_TOGGLE, NULL);
++}
++
++void cmd_reset(void)
++{
++   command_event(CMD_EVENT_RESET, NULL);
++}
++
++void cmd_toggle_pause(void)
++{
++   command_event(CMD_EVENT_PAUSE_TOGGLE, NULL);
++}
++
++void cmd_pause(void)
++{
++   command_event(CMD_EVENT_PAUSE, NULL);
++}
++
++void cmd_unpause(void)
++{
++   command_event(CMD_EVENT_UNPAUSE, NULL);
++}
++
++void cmd_set_volume(float volume) {
++	// TODO: update retroarch
++}
++
++bool cmd_set_shader(const char *path)
++{
++   return retroarch_set_shader(path);
++}
++
++// cheats
++
++void cmd_cheat_set_code(unsigned index, const char *str)
++{
++	cheat_manager_set_code(index, str);
++}
++
++const char *cmd_cheat_get_code(unsigned index)
++{
++	return cheat_manager_get_code(index);
++}
++
++void cmd_cheat_toggle_index(bool apply_cheats_after_toggle, unsigned index)
++{
++	cheat_manager_toggle_index(apply_cheats_after_toggle, index);
++}
++
++bool cmd_cheat_get_code_state(unsigned index)
++{
++	return cheat_manager_get_code_state(index);
++}
++
++bool cmd_cheat_realloc(unsigned new_size)
++{
++	return cheat_manager_realloc(new_size, CHEAT_HANDLER_TYPE_EMU);
++}
++
++unsigned cmd_cheat_get_size(void)
++{
++	return cheat_manager_get_size();
++}
++
++void cmd_cheat_apply_cheats(void)
++{
++	cheat_manager_apply_cheats();
++}
++
++//// end exported functions
++
+ static void frontend_emscripten_get_env(int *argc, char *argv[],
+       void *args, void *params_data)
+ {
+@@ -164,9 +269,10 @@ static void frontend_emscripten_get_env(int *argc, char *argv[],
+ int main(int argc, char *argv[])
+ {
+    dummyErrnoCodes();
+-
++#ifndef NO_INITIAL_CANVAS_RESIZE
+    emscripten_set_canvas_element_size("#canvas", 800, 600);
+    emscripten_set_element_css_size("#canvas", 800.0, 600.0);
++#endif
+    emscripten_set_main_loop(emscripten_mainloop, 0, 0);
+    rarch_main(argc, argv, NULL);
+ 
+diff --git a/gfx/drivers_context/emscriptenegl_ctx.c b/gfx/drivers_context/emscriptenegl_ctx.c
+index b78d5e296d..8ee63f458e 100644
+--- a/gfx/drivers_context/emscriptenegl_ctx.c
++++ b/gfx/drivers_context/emscriptenegl_ctx.c
+@@ -51,7 +51,7 @@ typedef struct
+ static void gfx_ctx_emscripten_swap_interval(void *data, int interval)
+ {
+    if (interval == 0)
+-      emscripten_set_main_loop_timing(EM_TIMING_SETIMMEDIATE, 0);
++      emscripten_set_main_loop_timing(EM_TIMING_RAF, 1);
+    else
+       emscripten_set_main_loop_timing(EM_TIMING_RAF, interval);
+ }
+@@ -62,6 +62,7 @@ static void gfx_ctx_emscripten_get_canvas_size(int *width, int *height)
+    bool  is_fullscreen = false;
+    EMSCRIPTEN_RESULT r = emscripten_get_fullscreen_status(&fullscreen_status);
+ 
++#ifndef NO_CANVAS_FULLSCREEN
+    if (r == EMSCRIPTEN_RESULT_SUCCESS)
+    {
+       if (fullscreen_status.isFullscreen)
+@@ -71,6 +72,7 @@ static void gfx_ctx_emscripten_get_canvas_size(int *width, int *height)
+          *height = fullscreen_status.screenHeight;
+       }
+    }
++#endif
+ 
+    if (!is_fullscreen)
+    {
+@@ -89,7 +91,6 @@ static void gfx_ctx_emscripten_get_canvas_size(int *width, int *height)
+ static void gfx_ctx_emscripten_check_window(void *data, bool *quit,
+       bool *resize, unsigned *width, unsigned *height)
+ {
+-   EMSCRIPTEN_RESULT r;
+    int input_width;
+    int input_height;
+    emscripten_ctx_data_t *emscripten = (emscripten_ctx_data_t*)data;
+@@ -106,10 +107,12 @@ static void gfx_ctx_emscripten_check_window(void *data, bool *quit,
+    *width      = (unsigned)input_width;
+    *height     = (unsigned)input_height;
+    *resize     = false;
+-
++#ifndef NO_AUTO_CANVAS_RESIZE
+    if (input_width != emscripten->fb_width ||
+       input_height != emscripten->fb_height)
+    {
++      EMSCRIPTEN_RESULT r;
++
+       r = emscripten_set_canvas_element_size("#canvas",
+          input_width, input_height);
+ 
+@@ -125,9 +128,16 @@ static void gfx_ctx_emscripten_check_window(void *data, bool *quit,
+ 
+       *resize  = true;
+    }
++#endif
+ 
++#ifdef WEB_SCALING
++   double dpr = emscripten_get_device_pixel_ratio();
++   emscripten->fb_width  = (unsigned)(input_width * dpr);
++   emscripten->fb_height = (unsigned)(input_height * dpr);
++#else
+    emscripten->fb_width  = (unsigned)input_width;
+    emscripten->fb_height = (unsigned)input_height;
++#endif
+    *quit       = false;
+ }
+ 
+diff --git a/input/drivers/rwebinput_input.c b/input/drivers/rwebinput_input.c
+index be4b631bde..94b2e1c67b 100644
+--- a/input/drivers/rwebinput_input.c
++++ b/input/drivers/rwebinput_input.c
+@@ -24,6 +24,9 @@
+ #include <encodings/crc32.h>
+ #include <encodings/utf.h>
+ 
++#ifdef WEB_SCALING
++#include <emscripten/emscripten.h>
++#endif
+ #include <emscripten/html5.h>
+ 
+ #include "../input_keymaps.h"
+@@ -265,10 +268,18 @@ static EM_BOOL rwebinput_mouse_cb(int event_type,
+ 
+    uint8_t mask                      = 1 << mouse_event->button;
+ 
++#ifdef WEB_SCALING
++   double dpr = emscripten_get_device_pixel_ratio();
++   rwebinput->mouse.x                = (long)(mouse_event->targetX * dpr);
++   rwebinput->mouse.y                = (long)(mouse_event->targetY * dpr);
++   rwebinput->mouse.pending_delta_x += (long)(mouse_event->movementX * dpr);
++   rwebinput->mouse.pending_delta_y += (long)(mouse_event->movementY * dpr);
++#else
+    rwebinput->mouse.x                = mouse_event->targetX;
+    rwebinput->mouse.y                = mouse_event->targetY;
+    rwebinput->mouse.pending_delta_x += mouse_event->movementX;
+    rwebinput->mouse.pending_delta_y += mouse_event->movementY;
++#endif
+ 
+    if (event_type ==  EMSCRIPTEN_EVENT_MOUSEDOWN)
+       rwebinput->mouse.buttons |= mask;
+@@ -283,8 +294,26 @@ static EM_BOOL rwebinput_wheel_cb(int event_type,
+ {
+    rwebinput_input_t       *rwebinput = (rwebinput_input_t*)user_data;
+ 
++#ifdef WEB_SCALING
++   double dpr = emscripten_get_device_pixel_ratio();
++   rwebinput->mouse.pending_scroll_x += wheel_event->deltaX * dpr;
++   rwebinput->mouse.pending_scroll_y += wheel_event->deltaY * dpr;
++#else
+    rwebinput->mouse.pending_scroll_x += wheel_event->deltaX;
+    rwebinput->mouse.pending_scroll_y += wheel_event->deltaY;
++#endif
++
++   return EM_TRUE;
++}
++
++static EM_BOOL rwebinput_pointerlockchange_cb(int event_type,
++   const EmscriptenPointerlockChangeEvent *pointerlock_change_event, void *user_data)
++{
++   if (!pointerlock_change_event->isActive)
++   {
++      retroarch_game_focus_off();
++      retroarch_grab_mouse_off();
++   }
+ 
+    return EM_TRUE;
+ }
+@@ -360,6 +389,15 @@ static void *rwebinput_input_init(const char *joypad_driver)
+          "[EMSCRIPTEN/INPUT] failed to create wheel callback: %d\n", r);
+    }
+ 
++   r = emscripten_set_pointerlockchange_callback(
++         EMSCRIPTEN_EVENT_TARGET_DOCUMENT, rwebinput, false,
++         rwebinput_pointerlockchange_cb);
++   if (r != EMSCRIPTEN_RESULT_SUCCESS)
++   {
++      RARCH_ERR(
++         "[EMSCRIPTEN/INPUT] failed to create pointerlockchange callback: %d\n", r);
++   }
++
+    input_keymaps_init_keyboard_lut(rarch_key_map_rwebinput);
+ 
+    return rwebinput;
+@@ -537,7 +575,7 @@ static int16_t rwebinput_input_state(
+             vp.full_height              = 0;
+ 
+             if (!(video_driver_translate_coord_viewport_wrap(
+-                        &vp, mouse->x, mouse->x,
++                        &vp, mouse->x, mouse->y,
+                         &res_x, &res_y, &res_screen_x, &res_screen_y)))
+                return 0;
+ 
+@@ -628,8 +666,10 @@ static void rwebinput_process_keyboard_events(
+       character = '\t';
+ 
+    if (translated_keycode != RETROK_UNKNOWN)
++   {
+       input_keyboard_event(keydown, translated_keycode, character, mod,
+          RETRO_DEVICE_KEYBOARD);
++   }
+    
+    if (     translated_keycode  < RETROK_LAST 
+          && translated_keycode != RETROK_UNKNOWN)
+diff --git a/menu/drivers/materialui.c b/menu/drivers/materialui.c
+index e591cebd0e..d71581fab9 100644
+--- a/menu/drivers/materialui.c
++++ b/menu/drivers/materialui.c
+@@ -2294,10 +2294,12 @@ static void materialui_context_reset_textures(materialui_handle_t *mui)
+    }
+ 
+    /* Warn user if assets are missing */
++#ifndef NO_MISSING_ASSET_WARNING
+    if (!has_all_assets)
+       runloop_msg_queue_push(
+             msg_hash_to_str(MSG_MISSING_ASSETS), 1, 256, false, NULL,
+             MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
++#endif
+ }
+ 
+ static void materialui_draw_icon(
+diff --git a/menu/drivers/ozone/ozone.c b/menu/drivers/ozone/ozone.c
+index 90b814ed3d..9bd20f4f0b 100644
+--- a/menu/drivers/ozone/ozone.c
++++ b/menu/drivers/ozone/ozone.c
+@@ -743,6 +743,8 @@ static void *ozone_init(void **userdata, bool video_is_threaded)
+    ozone->animations.left_thumbnail_alpha       = 1.0f;
+    ozone->force_metadata_display                = false;
+ 
++   ozone->minimal_assets = settings->bools.menu_minimal_assets;
++
+    gfx_thumbnail_set_stream_delay(-1.0f);
+    gfx_thumbnail_set_fade_duration(-1.0f);
+    gfx_thumbnail_set_fade_missing(false);
+@@ -1244,7 +1246,7 @@ static void ozone_context_reset(void *data, bool is_threaded)
+          else
+          {
+ #endif
+-            if (!gfx_display_reset_textures_list(filename, ozone->png_path, &ozone->textures[i], TEXTURE_FILTER_MIPMAP_LINEAR, NULL, NULL))
++            if (!gfx_display_reset_textures_list(filename, ozone->png_path, &ozone->textures[i], TEXTURE_FILTER_MIPMAP_LINEAR, NULL, NULL) && !ozone->minimal_assets)
+                ozone->has_all_assets = false;
+ #if 0
+          }
+@@ -1263,14 +1265,15 @@ static void ozone_context_reset(void *data, bool is_threaded)
+ 
+          if (!gfx_display_reset_textures_list(filename, ozone->tab_path, &ozone->tab_textures[i], TEXTURE_FILTER_MIPMAP_LINEAR, NULL, NULL))
+          {
+-            ozone->has_all_assets = false;
++            if (!ozone->minimal_assets)
++               ozone->has_all_assets = false;
+             RARCH_WARN("[OZONE] Asset missing: %s%s%s\n", ozone->tab_path,
+                   PATH_DEFAULT_SLASH(), filename);
+          }
+       }
+ 
+       /* Theme textures */
+-      if (!ozone_reset_theme_textures(ozone))
++      if (!ozone_reset_theme_textures(ozone) && !ozone->minimal_assets)
+          ozone->has_all_assets = false;
+ 
+       /* Icons textures init */
+@@ -1278,7 +1281,8 @@ static void ozone_context_reset(void *data, bool is_threaded)
+       {
+          if (!gfx_display_reset_textures_list(ozone_entries_icon_texture_path(i), ozone->icons_path, &ozone->icons_textures[i], TEXTURE_FILTER_MIPMAP_LINEAR, NULL, NULL))
+          {
+-            ozone->has_all_assets = false;
++            if (!ozone->minimal_assets)
++               ozone->has_all_assets = false;
+             RARCH_WARN("[OZONE] Asset missing: %s%s%s\n", ozone->icons_path,
+                   PATH_DEFAULT_SLASH(), ozone_entries_icon_texture_path(i));
+          }
+@@ -1307,8 +1311,10 @@ static void ozone_context_reset(void *data, bool is_threaded)
+       ozone->animations.list_alpha     = 1.0f;
+ 
+       /* Missing assets message */
++#ifndef NO_MISSING_ASSET_WARNING
+       if (!ozone->has_all_assets)
+          runloop_msg_queue_push(msg_hash_to_str(MSG_MISSING_ASSETS), 1, 256, false, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
++#endif
+ 
+       /* Thumbnails */
+       ozone_update_thumbnail_image(ozone);
+diff --git a/menu/drivers/ozone/ozone.h b/menu/drivers/ozone/ozone.h
+index 578c26ce1a..2bfd33bf73 100644
+--- a/menu/drivers/ozone/ozone.h
++++ b/menu/drivers/ozone/ozone.h
+@@ -292,6 +292,8 @@ struct ozone_handle
+ 
+    bool force_metadata_display;
+ 
++   bool minimal_assets;
++
+    bool is_db_manager_list;
+    bool is_file_list;
+    bool is_quick_menu;
+diff --git a/menu/drivers/xmb.c b/menu/drivers/xmb.c
+index a5da529592..4e020e6a7c 100644
+--- a/menu/drivers/xmb.c
++++ b/menu/drivers/xmb.c
+@@ -6050,7 +6050,9 @@ static void xmb_context_reset_textures(
+                   && !(settings->uints.menu_xmb_theme == XMB_ICON_THEME_CUSTOM)
+                )
+             {
++#ifndef NO_MISSING_ASSET_WARNING
+                runloop_msg_queue_push(msg_hash_to_str(MSG_MISSING_ASSETS), 1, 256, false, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
++#endif
+                /* Do not draw icons if subsetting is missing */
+                goto error;
+             }
+diff --git a/retroarch.c b/retroarch.c
+index 9d3add82cd..4c0a3b494a 100644
+--- a/retroarch.c
++++ b/retroarch.c
+@@ -11077,6 +11077,10 @@ static bool command_set_shader(const char *arg)
+ 
+    return retroarch_apply_shader(type, arg, true);
+ }
++
++bool retroarch_set_shader(const char *path) {
++	return command_set_shader(path);
++}
+ #endif
+ 
+ /* TRANSLATION */
+@@ -13395,6 +13399,14 @@ static bool input_driver_ungrab_mouse(struct rarch_state *p_rarch)
+    return true;
+ }
+ 
++void retroarch_grab_mouse_off(void)
++{
++   struct rarch_state *p_rarch = &rarch_st;
++
++   if (p_rarch->input_driver_grab_mouse_state)
++      command_event(CMD_EVENT_GRAB_MOUSE_TOGGLE, NULL);
++}
++
+ static void command_event_reinit(struct rarch_state *p_rarch,
+       const int flags)
+ {
+@@ -13507,6 +13519,17 @@ static void retroarch_game_focus_free(struct rarch_state *p_rarch)
+    p_rarch->game_focus_state.core_requested = false;
+ }
+ 
++void retroarch_game_focus_off(void)
++{
++   struct rarch_state *p_rarch = &rarch_st;
++
++   if (p_rarch->game_focus_state.enabled)
++   {
++      enum input_game_focus_cmd_type game_focus_cmd = GAME_FOCUS_CMD_OFF;
++      command_event(CMD_EVENT_GAME_FOCUS_TOGGLE, &game_focus_cmd);
++   }
++}
++
+ static void retroarch_system_info_free(struct rarch_state *p_rarch)
+ {
+    rarch_system_info_t        *sys_info   = &p_rarch->runloop_system;
+@@ -13576,6 +13599,9 @@ bool command_event(enum event_command cmd, void *data)
+ 
+    switch (cmd)
+    {
++      case CMD_EVENT_RELOAD_CONFIG:
++         config_load(&p_rarch->g_extern);
++         break;
+       case CMD_EVENT_SAVE_FILES:
+          event_save_files(p_rarch->rarch_use_sram);
+          break;
+@@ -16639,9 +16665,14 @@ static bool dynamic_request_hw_context(enum retro_hw_context_type type,
+ #endif
+       case RETRO_HW_CONTEXT_OPENGL:
+       case RETRO_HW_CONTEXT_OPENGL_CORE:
++#ifdef HAVE_REGAL
++         RARCH_LOG("Requesting OpenGL context (Regal).\n");
++         break;
++#else
+          RARCH_ERR("Requesting OpenGL context, but RetroArch "
+                "is compiled against OpenGLES. Cannot use HW context.\n");
+          return false;
++#endif
+ 
+ #elif defined(HAVE_OPENGL) || defined(HAVE_OPENGL_CORE)
+       case RETRO_HW_CONTEXT_OPENGLES2:
+diff --git a/retroarch.h b/retroarch.h
+index 5e8e7a513f..ff0a1dc3db 100644
+--- a/retroarch.h
++++ b/retroarch.h
+@@ -396,6 +396,14 @@ void rarch_favorites_init(void);
+ 
+ void rarch_favorites_deinit(void);
+ 
++void retroarch_grab_mouse_off(void);
++
++void retroarch_game_focus_off(void);
++
++#if defined(HAVE_CG) || defined(HAVE_GLSL) || defined(HAVE_SLANG) || defined(HAVE_HLSL)
++bool retroarch_set_shader(const char *path);
++#endif
++
+ /* Audio */
+ 
+ #ifdef HAVE_AUDIOMIXER

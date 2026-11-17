@@ -1,0 +1,18 @@
+diff --git a/yabause/src/libretro/Makefile b/yabause/src/libretro/Makefile
+index 2dd8ab29a..bcb4c6de7 100644
+--- a/yabause/src/libretro/Makefile
++++ b/yabause/src/libretro/Makefile
+@@ -376,6 +376,13 @@ else ifeq ($(platform), libnx)
+ # Emscripten
+ else ifeq ($(platform), emscripten)
+ 	TARGET := $(TARGET_NAME)_libretro_$(platform).bc
++	HAVE_THREADS = 0
++	ARCH_IS_LINUX = 0
++
++	FLAGS += -DEMSCRIPTEN
++	FLAGS += -msimd128 -ftree-vectorize
++
++	HAVE_SSE = 0
+ 	STATIC_LINKING = 1
+ 
+ # GCW0

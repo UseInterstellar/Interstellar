@@ -1,0 +1,57 @@
+year	winner	score	loser	human
+1967	Green Bay	35-10	K.C	0
+1968	Green Bay	33-14	OAK	0
+1969	New York J	16-7	BAL	0
+1970	Kansas City	23-7	MIN	0
+1971	Baltimore	16-13	DAL	0
+1972	Dallas	24-3	MIA	0
+1973	Miami	14-7	WAS	0
+1974	Miami	24-7	MIN	0
+1975	Pittsburgh	16-6	MIN	0
+1976	Pittsburgh	21-17	DAL	0
+1977	Oakland	32-14	MIN	0
+1978	Dallas	27-10	DEN	0
+1979	Pittsburgh	35-31	DAL	0
+1980	Pittsburgh	31-19	LAR	0
+1981	Oakland	27-10	PHI	0
+1982	San Francisco	26-21	CIN	0
+1983	Washington	27-17	MIA	0
+1984	Los Angeles	38-9	WAS	0
+1985	San Francisco	38-16	MIA	0
+1986	Chicago	46-10	N.E	0
+1987	New York G	39-20	DEN	0
+1988	Washington	42-10	DEN	0
+1989	San Francisco	20-16	CIN	0
+1990	San Francisco	55-10	DEN	0
+1991	New York G	20-19	BUF	0
+1992	Washington	37-24	BUF	0
+1993	Dallas	52-17	BUF	0
+1994	Dallas	30-13	BUF	0
+1995	San Francisco	49-26	S.D	0
+1996	Dallas	27-17	PIT	0
+1997	Green Bay	35-21	N.E	0
+1998	Denver	31-24	G.B	0
+1999	Denver	34-19	ATL	0
+2000	St. Louis	23-16	TEN	0
+2001	Baltimore	34-7	NYG	0
+2002	New England	20-17	S.L	0
+2003	Tampa Bay	48-21	OAK	0
+2004	New England	32-29	CAR	0
+2005	New England	24-21	PHI	0
+2006	Pittsburgh	21-10	SEA	0
+2007	Indianapolis	29-17	CHI	0
+2008	New York G	17-14	N.E	0
+2009	Pittsburgh	27-23	ARI	0
+2010	New Orleans	31-17	IND	0
+2011	Green Bay	31-25	PIT	0
+2012	New York G	21-17	N.E	0
+2013	Baltimore	34-31	S.F	0
+2014	Seattle	43-8	DEN	0
+2015	New England	28-24	SEA	0
+2016	Denver	24-10	CAR	0
+2017	New England	34-28	ATL	0
+2018	Philadelphia	41-33	N.E	0
+2019	New England	13-3	LAR	0
+2020	Kansas City	31-20	S.F	0
+2021	Tampa Bay	31-9	K.C	0
+2022	Los Angeles R	23-20	CIN	0

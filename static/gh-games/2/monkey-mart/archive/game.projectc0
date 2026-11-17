@@ -1,0 +1,213 @@
+[project]
+title = MonkeyMart
+version = 2.1
+write_log = 0
+compress_archive = 1
+publisher = unnamed
+developer = unnamed
+bundle_resources = bundle
+title_as_file_name = MonkeyMart
+
+[display]
+width = 960
+height = 640
+high_dpi = 1
+samples = 0
+fullscreen = 0
+update_frequency = 60
+swap_interval = 1
+vsync = 1
+display_profiles = /builtins/render/default.display_profilesc
+dynamic_orientation = 0
+display_device_info = 0
+
+[render]
+clear_color_red = 0
+clear_color_green = 0
+clear_color_blue = 0
+clear_color_alpha = 0
+
+[physics]
+type = 2D
+use_fixed_timestep = 0
+gravity_y = -10
+debug = 0
+debug_alpha = 0.9
+world_count = 4
+gravity_x = 0
+gravity_z = 0
+scale = 1
+allow_dynamic_transforms = 1
+debug_scale = 30
+max_collisions = 64
+max_contacts = 128
+contact_impulse_limit = 0
+ray_cast_limit_2d = 64
+ray_cast_limit_3d = 128
+trigger_overlap_capacity = 16
+velocity_threshold = 1
+max_fixed_timesteps = 2
+
+[bootstrap]
+main_collection = /main/controller.collectionc
+render = /orthographic/render/orthographic.renderc
+
+[graphics]
+default_texture_min_filter = linear
+default_texture_mag_filter = linear
+max_draw_calls = 1024
+max_characters = 8192
+max_debug_vertices = 10000
+texture_profiles = /updated.texture_profiles
+verify_graphics_calls = 1
+memory_size = 512
+
+[shader]
+output_spirv = 0
+
+[sound]
+gain = 1
+max_sound_data = 128
+max_sound_buffers = 32
+max_sound_sources = 16
+max_sound_instances = 256
+max_component_count = 32
+use_thread = 1
+
+[resource]
+http_cache = 0
+max_resources = 1024
+
+[input]
+repeat_delay = 0.5
+repeat_interval = 0.2
+gamepads = /builtins/input/default.gamepadsc
+game_binding = /input/game.input_bindingc
+use_accelerometer = 1
+
+[sprite]
+max_count = 1024
+subpixels = 1
+
+[model]
+max_count = 128
+split_meshes = 0
+
+[mesh]
+max_count = 128
+
+[gui]
+max_count = 64
+max_particlefx_count = 64
+max_particle_count = 1024
+
+[collection]
+max_instances = 2048
+max_input_stack_entries = 16
+
+[collection_proxy]
+max_count = 8
+
+[collectionfactory]
+max_count = 128
+
+[factory]
+max_count = 128
+
+[ios]
+launch_screen = /builtins/manifests/ios/LaunchScreen.storyboardc
+pre_renderered_icons = 0
+bundle_identifier = example.unnamed
+bundle_name = 
+infoplist = /builtins/manifests/ios/Info.plist
+default_language = en
+localizations = en
+
+[android]
+version_code = 1
+minimum_sdk_version = 16
+target_sdk_version = 31
+package = com.example.todo
+gcm_sender_id = 
+manifest = /builtins/manifests/android/AndroidManifest.xml
+iap_provider = GooglePlay
+input_method = HiddenInputField
+immersive_mode = 0
+display_cutout = 1
+debuggable = 0
+proguard = 
+
+[osx]
+app_icon = 
+infoplist = /builtins/manifests/osx/Info.plist
+bundle_identifier = example.unnamed
+bundle_name = 
+bundle_version = 1
+default_language = en
+localizations = en
+
+[windows]
+app_icon = 
+
+[html5]
+custom_heap_size = 0
+heap_size = 64
+htmlfile = /engine_template.html
+cssfile = /css_theme.css
+splash_image = /images/bg_loading.png
+archive_location_prefix = archive
+archive_location_suffix = 
+engine_arguments = --verify-graphics-calls=false
+wasm_streaming = 0
+show_fullscreen_button = 0
+show_made_with_defold = 0
+show_console_banner = 1
+scale_mode = stretch
+
+[particle_fx]
+max_count = 0
+max_emitter_count = 0
+max_particle_count = 0
+
+[iap]
+auto_finish_transactions = 1
+
+[network]
+http_timeout = 0
+ssl_certificates = 
+http_thread_count = 4
+http_cache_enabled = 1
+
+[library]
+include_dirs = 
+
+[script]
+shared_state = 1
+
+[label]
+max_count = 64
+subpixels = 1
+
+[profiler]
+track_cpu = 0
+sleep_between_server_updates = 0
+
+[liveupdate]
+settings = /liveupdate.settings
+enabled = 1
+
+[tilemap]
+max_count = 0
+max_tile_count = 0
+
+[engine]
+run_while_iconified = 0
+fixed_update_frequency = 60
+
+[native_extension]
+app_manifest = /manifest.appmanifest
+
+[gameanalytics]
+game_key_html5 = 8460790931685c9f59f3e669a97521bd
+secret_key_html5 = 6d3a08c1c25fca8bb1587ed50c42a81ddff80aa0
+

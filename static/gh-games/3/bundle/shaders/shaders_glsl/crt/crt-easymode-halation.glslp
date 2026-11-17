@@ -1,0 +1,37 @@
+shaders = "5"
+
+shader0 = "shaders/crt-easymode-halation/linearize.glsl"
+filter_linear0 = "false"
+srgb_framebuffer0 = "true"
+scale_type_x0 = "source"
+scale_x0 = "1.000000"
+scale_type_y0 = "source"
+scale_y0 = "1.000000"
+
+shader1 = "shaders/crt-easymode-halation/blur_horiz.glsl"
+filter_linear1 = "false"
+srgb_framebuffer1 = "true"
+scale_type_x1 = "source"
+scale_x1 = "1.000000"
+scale_type_y1 = "source"
+scale_y1 = "1.000000"
+
+shader2 = "shaders/crt-easymode-halation/blur_vert.glsl"
+filter_linear2 = "false"
+srgb_framebuffer2 = "true"
+scale_type_x2 = "source"
+scale_x2 = "1.000000"
+scale_type_y2 = "source"
+scale_y2 = "1.000000"
+
+shader3 = "shaders/crt-easymode-halation/threshold.glsl"
+filter_linear3 = "false"
+srgb_framebuffer3 = "true"
+scale_type_x3 = "source"
+scale_x3 = "1.000000"
+scale_type_y3 = "source"
+scale_y3 = "1.000000"
+
+shader4 = "shaders/crt-easymode-halation/crt-easymode-halation.glsl"
+filter_linear4 = "true"
+

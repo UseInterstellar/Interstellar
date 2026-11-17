@@ -1,0 +1,51 @@
+order	tag	stat	stat_text	qbname	playername	year	week	team	opponent	coachstat
+10	ui_LongPassingPlay	0	y	0	0	0	0	0	0	0
+20	ui_LongRushingPlay	0	y	0	0	0	0	0	0	0
+30	ui_LongPassTD	0	y	0	0	0	0	0	0	0
+40	ui_LongRushTD	0	y	0	0	0	0	0	0	0
+50	ui_LongPassAir	0	y	0	0	0	0	0	0	0
+60	ui_LongFG	0	y	0	0	0	0	0	0	0
+70	ui_BestPassGame	0	y	0	0	0	0	0	0	0
+80	ui_BestPassSeason	0	y	0	0	0	0	0	0	0
+90	ui_BestPassCareer	0	y	0	0	0	0	0	0	0
+100	ui_BestRecGame	0	y	0	0	0	0	0	0	0
+110	ui_BestRecSeason	0	y	0	0	0	0	0	0	0
+120	ui_BestRecCareer	0	y	0	0	0	0	0	0	0
+130	ui_BestRushGame	0	y	0	0	0	0	0	0	0
+140	ui_BestRushSeason	0	y	0	0	0	0	0	0	0
+150	ui_BestRushCareer	0	y	0	0	0	0	0	0	0
+160	ui_MostTDPassesGame	0		0	0	0	0	0	0	0
+170	ui_MostTDPassesSeason	0		0	0	0	0	0	0	0
+180	ui_MostTDPassesCareer	0		0	0	0	0	0	0	0
+190	ui_MostTDRecGame	0		0	0	0	0	0	0	0
+200	ui_MostTDRecSeason	0		0	0	0	0	0	0	0
+210	ui_MostTDRecCareer	0		0	0	0	0	0	0	0
+220	ui_MostTDRushGame	0		0	0	0	0	0	0	0
+230	ui_MostTDRushSeason	0		0	0	0	0	0	0	0
+240	ui_MostTDRushCareer	0		0	0	0	0	0	0	0
+250	ui_BestFGDistGame	0	y	0	0	0	0	0	0	0
+260	ui_BestFGDistSeason	0	y	0	0	0	0	0	0	0
+270	ui_BestFGDistCareer	0	y	0	0	0	0	0	0	0
+280	ui_MostFGGame	0		0	0	0	0	0	0	0
+290	ui_MostFGSeason	0		0	0	0	0	0	0	0
+300	ui_MostFGCareer	0		0	0	0	0	0	0	0
+310	ui_MostTacklesGame	0		0	0	0	0	0	0	0
+320	ui_MostTacklesSeason	0		0	0	0	0	0	0	0
+330	ui_MostTacklesCareer	0		0	0	0	0	0	0	0
+340	ui_MostSacksGame	0		0	0	0	0	0	0	0
+350	ui_MostSacksSeason	0		0	0	0	0	0	0	0
+360	ui_MostSacksCareer	0		0	0	0	0	0	0	0
+370	ui_MostIntGame	0		0	0	0	0	0	0	0
+380	ui_MostIntSeason	0		0	0	0	0	0	0	0
+390	ui_MostIntCareer	0		0	0	0	0	0	0	0
+391	ui_MostFFGame	0		0	0	0	0	0	0	0
+392	ui_MostFFSeason	0		0	0	0	0	0	0	0
+393	ui_MostFFCareer	0		0	0	0	0	0	0	0
+400	ui_MostPointsGame	0		0	0	0	0	0	0	1
+410	ui_BiggestWin	0		0	0	0	0	0	0	1
+420	ui_BiggestLoss	0		0	0	0	0	0	0	1
+430	ui_MostTDsGame	0		0	0	0	0	0	0	1
+440	ui_LongKickReturn	0	y	0	0	0	0	0	0	0
+450	ui_MostReturnYardsGame	0	y	0	0	0	0	0	0	0
+460	ui_MostReturnYardsSeason	0	y	0	0	0	0	0	0	0
+470	ui_MostReturnYardsCareer	0	y	0	0	0	0	0	0	0

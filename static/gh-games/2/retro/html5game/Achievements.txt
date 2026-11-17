@@ -1,0 +1,86 @@
+tag	description	achieved
+ACH_PASS	Make a pass	0
+ACH_TOUCHDOWN1	Score a touchdown	0
+ACH_TOUCHDOWN3	Score 3 touchdowns in a game	0
+ACH_TOUCHDOWN5	Score 5 touchdowns in a game	0
+ACH_FIELDGOAL	Score a field goal	0
+ACH_FIELDGOAL25	Score a 25 yard field goal	0
+ACH_FIELDGOAL50	Score a 50 yard field goal	0
+ACH_FIELDGOAL60	Score a 60 yard field goal	0
+ACH_POINTAFTER1	Score a 1 point conversion	0
+ACH_POINTAFTER2	Score a 2 point conversion	0
+ACH_WIN1	Win a game	0
+ACH_WIN5	Win 5 games	0
+ACH_WIN10	Win 10 games	0
+ACH_WIN25	Win 25 games	0
+ACH_WIN50	Win 50 games	0
+ACH_WIN100	Win 100 games	0
+ACH_SEASON1	Complete a full season	0
+ACH_SEASON5	Complete 5 full seasons	0
+ACH_SEASON10	Complete 10 full seasons	0
+ACH_SEASON20	Complete 20 full seasons	0
+ACH_DRAFT	Draft a player	0
+ACH_FREEAGENT	Sign a free agent	0
+ACH_TRADEIN	Trade a player in	0
+ACH_TRADEOUT	Trade a player out	0
+ACH_CUT	Cut a player	0
+ACH_WIN_DIVISION	Win a division	0
+ACH_WIN_PLAYOFF	Win a play-off game	0
+ACH_WIN_AFC	Win the AFC title	0
+ACH_WIN_NFC	Win the NFC title	0
+ACH_WIN_RETROBOWL1	Win the Retro Bowl	0
+ACH_WIN_RETROBOWL3	Win 3 Retro Bowl titles	0
+ACH_WIN_RETROBOWL5	Win 5 Retro Bowl titles	0
+ACH_WIN_RETROBOWL10	Win 10 Retro Bowl titles	0
+ACH_CAREER_TD50	Score 50 career touchdowns	0
+ACH_CAREER_TD100	Score 100 career touchdowns	0
+ACH_CAREER_TD250	Score 250 career touchdowns	0
+ACH_CAREER_TD500	Score 500 career touchdowns	0
+ACH_UPGRADE_STADIUM	Upgrade your stadium facilities	0
+ACH_UPGRADE_TRAINING	Upgrade your training facilities	0
+ACH_UPGRADE_REHAB	Upgrade your rehab facilities	0
+ACH_MAX_STADIUM	Max out your stadium facilities	0
+ACH_MAX_TRAINING	Max out your training facilities	0
+ACH_MAX_REHAB	Max out your rehab facilities	0
+ACH_WINNING_SEASON	Have a winning season	0
+ACH_UNBEATEN_SEASON	Perfect regular season	0
+ACH_OFFENSE5	Build 5 star offense	0
+ACH_DEFENSE5	Build 5 star defense	0
+ACH_MORALE100	Achieve 100% team morale	0
+ACH_FANS100	Get 100% fan rating	0
+ACH_HIRE_OF	Hire an offensive coordinator	0
+ACH_HIRE_DF	Hire a defensive coordinator	0
+ACH_HIRE_OF5	Hire a 5 star OF coordinator	0
+ACH_HIRE_DF5	Hire a 5 star DF coordinator	0
+ACH_PASS10	Make a 10 yard passing play	0
+ACH_PASS25	Make a 25 yard passing play	0
+ACH_PASS50	Make a 50 yard passing play	0
+ACH_RUN5	Make a 5 yard running play	0
+ACH_RUN10	Make a 10 yard running play	0
+ACH_RUN15	Make a 15 yard running play	0
+ACH_GAME_PASS_200	Pass for 200 yards in a game	0
+ACH_GAME_PASS_300	Pass for 300 yards in a game	0
+ACH_GAME_PASS_400	Pass for 400 yards in a game	0
+ACH_GAME_PASS_500	Pass for 500 yards in a game	0
+ACH_GAME_COMPLETE_100	100% pass completion in a game	0
+ACH_GAME_RUSH_50	Rush for 50 yards in a game	0
+ACH_GAME_RUSH_100	Rush for 100 yards in a game	0
+ACH_GAME_RUSH_150	Rush for 150 yards in a game	0
+ACH_TEAMS2	Take charge of a new team	0
+ACH_SHUTOUT	Stop opponent from scoring	0
+ACH_SCORE50	Score 50 points in a game	0
+ACH_COACHEXTEND	Extend a coach contract	0
+ACH_FREEAGENT5	Sign a 5 star free agent	0
+ACH_BACKTOBACK	Win 2 Retro Bowls in 2 seasons	0
+ACH_THREEPEAT	Win 3 Retro Bowls in 3 seasons	0
+ACH_RETROBOWL_NOSTARQB	Retro Bowl without star QB	0
+ACH_RETROBOWL_NOSTAR	Retro Bowl without star player	0
+ACH_WIN_NOSTARQB	Win a game without a star QB	0
+ACH_WIN_NOSTAR	Win a game without a star player	0
+ACH_TD_QB	Score a touchdown with the QB	0
+ACH_TD_PASS50	Throw 50 touchdowns in a season	0
+ACH_DOINK	Doink a field goal	0
+ACH_RETURN_25	Make a 25 yard kickoff return	0
+ACH_RETURN_50	Make a 50 yard kickoff return	0
+ACH_RETURN_75	Make a 75 yard kickoff return	0
+ACH_RETURN_TD	Score a touchdown return	0

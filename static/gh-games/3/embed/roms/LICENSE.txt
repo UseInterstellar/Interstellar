@@ -1,0 +1,3 @@
+Copyright 2014, tsone
+
+Copying and distribution of this file (2048.nes), with or without modification, are permitted in any medium without royalty, provided the copyright notice and this notice are preserved. This file is offered as-is, without any warranty.

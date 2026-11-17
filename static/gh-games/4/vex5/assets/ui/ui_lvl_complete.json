@@ -1,0 +1,131 @@
+{
+    "hierarchy": {
+        "name": "Canvas",
+        "children": [
+            {
+                "name": "container",
+                "children": [
+                    {
+                        "name": "title"
+                    },
+                    {
+                        "name": "close"
+                    },
+                    {
+                        "name": "play"
+                    },
+                    {
+                        "name": "trophies"
+                    },
+                    {
+                        "name": "reload"
+                    },
+                    {
+                        "name": "image"
+                    },
+                    {
+                        "name": "time"
+                    }
+                ]
+            }
+        ]
+    },
+    "properties": {
+        "Canvas": {
+            "design": {
+                "width": 960,
+                "height": 640
+            },
+            "type": "canvas"
+        },
+        "container": {
+            "file": "gp_difficulty_container.png",
+            "image": "SIMPLE",
+            "type": "sprite",
+            "alignment": {
+                "type": "CENTER",
+                "offset": {
+                    "x": -2.8,
+                    "y": 23.1
+                }
+            }
+        },
+        "container/title": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 45,
+                "lineHeight": 45
+            },
+            "text": "Level Complete",
+            "align": "center",
+            "position": {
+                "x": -14,
+                "y": -144
+            },
+            "type": "text"
+        },
+        "container/close": {
+            "file": "op_close_button.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 167.1,
+                "y": -147.7
+            },
+            "type": "button"
+        },
+        "container/play": {
+            "file": "pa_play_button.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 2,
+                "y": 3
+            },
+            "type": "button"
+        },
+        "container/trophies": {
+            "file": "pa_trophies_button.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -56,
+                "y": 105.6
+            },
+            "type": "button"
+        },
+        "container/reload": {
+            "file": "pa_reload_button.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 65,
+                "y": 103.6
+            },
+            "type": "button"
+        },
+        "container/image": {
+            "file": "perfect.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -120.3,
+                "y": -72.9
+            },
+            "scale": {
+                "x": 1.2,
+                "y": 1.2
+            },
+            "type": "sprite"
+        },
+        "container/time": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 44,
+                "lineHeight": 44
+            },
+            "text": "00:00:00",
+            "align": "center",
+            "position": {
+                "x": 2,
+                "y": -71
+            },
+            "type": "text"
+        }
+    }
+}

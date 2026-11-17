@@ -1,0 +1,100 @@
+{"frames": [
+
+{
+	"filename": "op_close_button.png",
+	"frame": {"x":270,"y":602,"w":34,"h":33},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":2,"w":34,"h":33},
+	"sourceSize": {"w":38,"h":37}
+},
+{
+	"filename": "pa_act_select_button.png",
+	"frame": {"x":285,"y":523,"w":73,"h":76},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":1,"w":73,"h":76},
+	"sourceSize": {"w":73,"h":77}
+},
+{
+	"filename": "pa_check.png",
+	"frame": {"x":435,"y":523,"w":32,"h":25},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":4,"y":5,"w":32,"h":25},
+	"sourceSize": {"w":39,"h":35}
+},
+{
+	"filename": "pa_check_box.png",
+	"frame": {"x":270,"y":637,"w":33,"h":33},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":1,"w":33,"h":33},
+	"sourceSize": {"w":39,"h":35}
+},
+{
+	"filename": "pa_container.png",
+	"frame": {"x":2,"y":2,"w":469,"h":519},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":12,"y":6,"w":469,"h":519},
+	"sourceSize": {"w":481,"h":530}
+},
+{
+	"filename": "pa_home_button.png",
+	"frame": {"x":306,"y":601,"w":73,"h":76},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":1,"w":73,"h":76},
+	"sourceSize": {"w":73,"h":77}
+},
+{
+	"filename": "pa_off_button.png",
+	"frame": {"x":2,"y":612,"w":132,"h":50},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":1,"w":132,"h":50},
+	"sourceSize": {"w":135,"h":52}
+},
+{
+	"filename": "pa_on_button.png",
+	"frame": {"x":136,"y":612,"w":132,"h":50},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":1,"w":132,"h":50},
+	"sourceSize": {"w":135,"h":52}
+},
+{
+	"filename": "pa_play_button.png",
+	"frame": {"x":2,"y":523,"w":206,"h":87},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":1,"w":206,"h":87},
+	"sourceSize": {"w":209,"h":89}
+},
+{
+	"filename": "pa_reload_button.png",
+	"frame": {"x":360,"y":523,"w":73,"h":76},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":1,"w":73,"h":76},
+	"sourceSize": {"w":73,"h":77}
+},
+{
+	"filename": "pa_trophies_button.png",
+	"frame": {"x":210,"y":523,"w":73,"h":77},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":73,"h":77},
+	"sourceSize": {"w":73,"h":77}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "atlas_ui_pause.png",
+	"format": "RGBA8888",
+	"size": {"w":473,"h":679},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:1d89fd79333e67398315e3d8593d1e8c:b21c69aab9ad203307ef6514bad9fd56:731ada20cd474d7c4cd8bf9083299d90$"
+}
+}

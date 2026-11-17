@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, minimal-ui, shrink-to-fit=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <title>Monkey Mart </title>
+        <meta name="description" content="Monkey Mart is a fun game that you can play at school from chromebook. In our catalog you can find many cool online games that you may enjoy.">
+ 
+        <style type="text/css">
+            /* Disable user selection to avoid strange bug in Chrome on Windows:
+	* Selecting a text outside the canvas, then clicking+draging would
+	* drag the selected text but block mouse down/up events to the engine.
+	*/
+            body {
+                position: fixed;
+                /* Prevent overscroll */
+                margin: 0;
+                padding: 0;
+            }
+
+            .canvas-app-container {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                align-items: center;
+                justify-content: center;
+                overflow: hidden;
+            }
+
+            .canvas-app-container:-webkit-full-screen {
+                /* Auto width and height in Safari/Chrome fullscreen. */
+                width: auto;
+                height: auto;
+            }
+
+            #canvas {
+                outline: none;
+                border: 0;
+                width: 100%;
+                vertical-align: bottom;
+            }
+
+            #canvas-container {
+                position: relative;
+            }
+
+            canvas:focus, canvas:active {
+                outline: none;
+                border: 0;
+                ie-dummy: expression(this.hideFocus=true);
+                -moz-outline-style: none;
+            }
+
+            div {
+                -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+
+            .banner-styleBottom {
+                margin: 0 auto;
+                position: fixed;
+                bottom: 0;
+                display: block;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .banner-styleTop {
+                margin: 0 auto;
+                position: fixed;
+                top: 0;
+                display: block;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .canvas-app-progress {
+                position: absolute;
+                background-color: #0A8A40;
+                height: 30px;
+                margin-top: -30px;
+                width: 100%;
+            }
+
+            .canvas-app-progress-bar {
+                font-size: 12px;
+                height: 30px;
+                color: rgb(255, 255, 255);
+                background-color: #FFE333;
+                text-align: center;
+                line-height: 20px;
+            }
+
+            .link, .button {
+                font-family: sans-serif;
+                font-size: 14px;
+                font-weight: normal;
+                font-style: normal;
+                font-stretch: normal;
+                line-height: normal;
+                letter-spacing: 0px;
+                padding-top: 12px;
+            }
+
+            .buttons-background {
+                background-color: #ffffff;
+                width: 100%;
+                height: 42px;
+            }
+
+            body {
+                background-color: #ffffff;
+            }
+
+            .canvas-app-container {
+                background: #00BB61;
+                /* background: -moz-linear-gradient(-45deg, rgba(250,252,255,1) 0%, rgba(250,252,255,1) 50%, rgba(245,249,255,1) 50%, rgba(245,249,255,1) 100%);
+		background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(250,252,255,1)), color-stop(50%, rgba(250,252,255,1)), color-stop(50%, rgba(245,249,255,1)), color-stop(100%, rgba(245,249,255,1)));
+		background: -webkit-linear-gradient(-45deg, rgba(250,252,255,1) 0%, rgba(250,252,255,1) 50%, rgba(245,249,255,1) 50%, rgba(245,249,255,1) 100%);
+		background: -o-linear-gradient(-45deg, rgba(250,252,255,1) 0%, rgba(250,252,255,1) 50%, rgba(245,249,255,1) 50%, rgba(245,249,255,1) 100%);
+		background: -ms-linear-gradient(-45deg, rgba(250,252,255,1) 0%, rgba(250,252,255,1) 50%, rgba(245,249,255,1) 50%, rgba(245,249,255,1) 100%);
+		background: linear-gradient(135deg, rgba(250,252,255,1) 0%, rgba(250,252,255,1) 50%, rgba(245,249,255,1) 50%, rgba(245,249,255,1) 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fafcff', endColorstr='#f5f9ff', GradientType=1 ); */
+            }
+
+            .canvas-app-canvas {
+                background-repeat: no-repeat;
+                background-position: center;
+                background-position: top;
+                background-size: cover;
+                background-image: url("bg_loading.png");
+            }
+        </style>
+       
+    </head>
+    <body>
+        <div id="app-container" class="canvas-app-container">
+            <div id="canvas-container" class="canvas-app-canvas-container">
+                <canvas id="canvas" class="canvas-app-canvas" tabindex="1" width="960" height="640"></canvas>
+            </div>
+            <div class="buttons-background"></div>
+            <!-- center and anchor to bottom of page -->
+            <div id="progress-bar-root" style="position: absolute; bottom: 16%; left: 50%; visibility: hidden; z-index: 4;">
+                <!-- <div id="progress-bar-text"> -->
+                <img id="progress-bar-bg" src="load_bar_bg.png">
+                <img id="progress-bar-fg" src="load_bar_fg.png" style="position:absolute; clip: rect(0px,0px,0px,0px);">
+            </div>
+        </div>
+        <!-- -->
+        <!-- <div id="bannerTop" class="banner-styleTop"></div> -->
+        <!-- <div id="bannerBottom" class="banner-styleBottom"></div> -->
+        <!-- -->
+        <script id="engine-loader" type="text/javascript" src="dmloader.js"></script>
+        <!-- -->
+        <script id="engine-setup" type="text/javascript">
+            var extra_params = {
+                archive_location_filter: function(path) {
+                    return ("archive" + path + "");
+                },
+                engine_arguments: ["--verify-graphics-calls=false", ],
+                custom_heap_size: 67108864,
+                full_screen_container: "#canvas-container",
+                disable_context_menu: true
+            }
+
+            Module['INITIAL_MEMORY'] = extra_params.custom_heap_size;
+
+            Module['onRuntimeInitialized'] = function() {
+                Module.runApp("canvas", extra_params);
+            }
+            ;
+
+            Module["locateFile"] = function(path, scriptDirectory) {
+                // dmengine*.wasm is hardcoded in the built JS loader for WASM,
+                // we need to replace it here with the correct project name.
+                if (path == "dmengine.wasm" || path == "dmengine_release.wasm" || path == "dmengine_headless.wasm") {
+                    path = "MonkeyMart.wasm";
+                }
+                return scriptDirectory + path;
+            }
+            ;
+
+            var is_iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            var buttonHeight = 0;
+            var prevInnerWidth = -1;
+            var prevInnerHeight = -1;
+
+            function resize_game_canvas() {
+                // Hack for iOS when exit from Fullscreen mode
+                if (is_iOS) {
+                    window.scrollTo(0, 0);
+                }
+
+                var app_container = document.getElementById('app-container');
+                var game_canvas = document.getElementById('canvas');
+                var progress_bar_root = document.getElementById('progress-bar-root');
+                var progress_bar_fg = document.getElementById('progress-bar-fg');
+                var progress_bar_bg = document.getElementById('progress-bar-bg');
+                var innerWidth = window.innerWidth;
+                var innerHeight = window.innerHeight - buttonHeight;
+                if (prevInnerWidth == innerWidth && prevInnerHeight == innerHeight) {
+                    return;
+                }
+                prevInnerWidth = innerWidth;
+                prevInnerHeight = innerHeight;
+                var width = 960;
+                var height = 640;
+                var targetRatio = width / height;
+                var actualRatio = innerWidth / innerHeight;
+
+                //Stretch
+                width = innerWidth;
+                height = innerHeight;
+
+                app_container.style.width = width + "px";
+                app_container.style.height = height + buttonHeight + "px";
+                game_canvas.width = width;
+                game_canvas.height = height;
+
+                // progress bar
+                var bar_h = width < height ? width : height;
+                progress_bar_bg.width = Math.min(Math.ceil(bar_h * 0.06 * 300 / 24), width * 0.8);
+
+                progress_bar_bg.style.marginLeft = -progress_bar_bg.width / 2 + "px";
+                progress_bar_fg.width = Math.ceil(progress_bar_bg.width * 1);
+
+                progress_bar_fg.style.marginTop = (progress_bar_bg.width * 0) * (0) / 2 + "px";
+                progress_bar_fg.style.marginLeft = -progress_bar_bg.width / 2 - progress_bar_fg.width / 2 + "px";
+
+                // progress_bar_text.style.fontSize = Math.ceil(bar_h * 0.10) + "px";
+                progress_bar_root.style.bottom = Math.ceil(height * 0.08 + buttonHeight) + "px";
+            }
+            resize_game_canvas();
+            window.addEventListener('resize', resize_game_canvas, false);
+            window.addEventListener('orientationchange', resize_game_canvas, false);
+            // window.addEventListener('wheel', e => e.preventDefault(), { passive: false });
+            window.addEventListener("keydown", function(e) {
+                if ([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+                    e.preventDefault();
+                }
+            }, false);
+            window.addEventListener('focus', resize_game_canvas, false);
+
+            // HashSHA1 implementation
+            !function() {
+                var r = function(r) {
+                    for (var n = "", t = 7; t >= 0; t--)
+                        n += "0123456789abcdef".charAt(r >> 4 * t & 15);
+                    return n
+                }
+                  , n = function(r, n) {
+                    var t = (65535 & r) + (65535 & n);
+                    return (r >> 16) + (n >> 16) + (t >> 16) << 16 | 65535 & t
+                }
+                  , e = function(r, n) {
+                    return r << n | r >>> 32 - n
+                }
+                  , o = function(r, n, t, e) {
+                    return r < 20 ? n & t | ~n & e : r < 40 ? n ^ t ^ e : r < 60 ? n & t | n & e | t & e : n ^ t ^ e
+                }
+                  , u = function(r) {
+                    return r < 20 ? 1518500249 : r < 40 ? 1859775393 : r < 60 ? -1894007588 : -899497514
+                };
+                window._HashSHA1 = function(f) {
+                    for (var a = function(r) {
+                        for (var n = 1 + (r.length + 8 >> 6), t = new Array(16 * n), e = 0; e < 16 * n; e++)
+                            t[e] = 0;
+                        for (e = 0; e < r.length; e++)
+                            t[e >> 2] |= r.charCodeAt(e) << 24 - e % 4 * 8;
+                        return t[e >> 2] |= 128 << 24 - e % 4 * 8,
+                        t[16 * n - 1] = 8 * r.length,
+                        t
+                    }(f), c = new Array(80), i = 1732584193, h = -271733879, v = -1732584194, A = 271733878, g = -1009589776, l = 0; l < a.length; l += 16) {
+                        for (var w = i, d = h, y = v, H = A, b = g, s = 0; s < 80; s++)
+                            c[s] = s < 16 ? a[l + s] : e(c[s - 3] ^ c[s - 8] ^ c[s - 14] ^ c[s - 16], 1),
+                            t = n(n(e(i, 5), o(s, h, v, A)), n(n(g, c[s]), u(s))),
+                            g = A,
+                            A = v,
+                            v = e(h, 30),
+                            h = i,
+                            i = t;
+                        i = n(i, w),
+                        h = n(h, d),
+                        v = n(v, y),
+                        A = n(A, H),
+                        g = n(g, b)
+                    }
+                    return r(i) + r(h) + r(v) + r(A) + r(g)
+                }
+            }();
+
+            // Delete all LiveUpdate files stored in IDBFS
+            var old_preloadAndCallMain = Module._preloadAndCallMain;
+            Module._preloadAndCallMain = function() {
+                var dir = DMSYS.GetUserPersistentDataRoot();
+                var resDir = _HashSHA1("MonkeyMart");
+                try {
+                    FS.unlink(dir + "/." + resDir + "/liveupdate.arcd");
+                } catch (e) {}
+                try {
+                    FS.unlink(dir + "/." + resDir + "/liveupdate.arci");
+                } catch (e) {}
+                try {
+                    FS.unlink(dir + "/." + resDir + "/liveupdate.arci.tmp");
+                } catch (e) {}
+                old_preloadAndCallMain();
+
+                if (Module._archiveLoaded) {// 
+                }
+            }
+            ;
+        </script>
+        <script id="engine-start" type="text/javascript">
+            var currentPercentage = 0
+
+            Progress.updateProgress = function(percentage) {
+                Progress.notifyListeners(percentage);
+                if (currentPercentage > percentage) {
+                    percentage = currentPercentage
+                }
+                currentPercentage = percentage
+                // var progress_bar_text = document.getElementById('progress-bar-text');
+                // progress_bar_text.innerHTML  = "<b>" +  Math.ceil(percentage) + "%</b>";
+
+                var fg = document.getElementById('progress-bar-fg');
+                fg.style.clip = "rect(0px," + fg.width * percentage / 100 + "px," + fg.height + "px," + "0px)"
+
+                if (isNaN(percentage)) {
+                    var progress_bar_root = document.getElementById('progress-bar-root');
+                    progress_bar_root.style.visibility = "hidden";
+                }
+            }
+            ;
+            Progress.addProgress = function() {
+                var progress_bar_root = document.getElementById('progress-bar-root');
+                progress_bar_root.style.visibility = "visible"
+            }
+            Progress.removeProgress = function() {
+                var progress_bar_root = document.getElementById('progress-bar-root');
+                progress_bar_root.style.visibility = "hidden";
+                // Remove any background/splash image that was set in runApp().
+                // Workaround for Safari bug DEF-3061.
+                Module.canvas.style.background = "";
+            }
+
+            EngineLoader.stream_wasm = "false" === "true";
+            EngineLoader.load("canvas", "MonkeyMart");
+        </script>
+        <script type="text/javascript">
+            function poki_showBanner(vBanner) {}
+
+            function poki_showBigBanner(vBanner) {}
+
+            function poki_hideBanner(vBanner) {}
+
+            function poki_check() {
+            }
+        </script>
+        <script id="poki-sdk-setup" type="text/javascript">
+
+            var data = {};
+            var isLoadFinished = false;
+            Progress.addListener(function(percentage) {
+                data.percentageDone = percentage / 100;
+                if (!isLoadFinished)
+                    if (percentage == 100 && !isLoadFinished) {
+                        isLoadFinished = true;
+                    }
+            });
+            Module['onRuntimeInitialized'] = function() {
+                Module.runApp("canvas", extra_params);
+            }
+            ;
+        </script>
+        <script type="text/javascript" src="GameAnalytics.js"></script>
+    </body>
+</html>

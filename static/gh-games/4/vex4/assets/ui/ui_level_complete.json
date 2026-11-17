@@ -1,0 +1,130 @@
+{
+    "hierarchy": {
+        "name": "Canvas",
+        "children": [
+            {
+                "name": "container",
+                "children": [
+                    {
+                        "name": "title"
+                    },
+                    {
+                        "name": "close"
+                    },
+                    {
+                        "name": "rank"
+                    },
+                    {
+                        "name": "time"
+                    },
+                    {
+                        "name": "play"
+                    },
+                    {
+                        "name": "trophies"
+                    },
+                    {
+                        "name": "reload"
+                    }
+                ]
+            }
+        ]
+    },
+    "properties": {
+        "Canvas": {
+            "design": {
+                "width": 960,
+                "height": 440
+            },
+            "type": "canvas"
+        },
+        "container": {
+            "file": "lc_container.png",
+            "image": "SIMPLE",
+            "type": "sprite",
+            "alignment": {
+                "type": "CENTER",
+                "offset": {
+                    "x": 0,
+                    "y": -7.4
+                },
+                "scale": {
+                    "x": 1,
+                    "y": 0.75
+                }
+            }
+        },
+        "container/title": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 43
+            },
+            "text": "Pause",
+            "align": "center",
+            "position": {
+                "x": 0.2,
+                "y": -211.8
+            },
+            "type": "text"
+        },
+        "container/close": {
+            "file": "lc_close_button.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 193.7,
+                "y": -216.5
+            },
+            "type": "button"
+        },
+        "container/rank": {
+            "file": "lc_bronze_text.png",
+            "image": "SIMPLE",
+            "align": "center",
+            "position": {
+                "x": 0,
+                "y": -140
+            },
+            "type": "sprite"
+        },
+        "container/time": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 35
+            },
+            "text": "00:00:00",
+            "align": "center",
+            "position": {
+                "x": 0,
+                "y": -92
+            },
+            "type": "text"
+        },
+        "container/play": {
+            "file": "lc_play_button.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 0.9,
+                "y": 16.3
+            },
+            "type": "button"
+        },
+        "container/trophies": {
+            "file": "lc_trophies_button.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -80,
+                "y": 128.5
+            },
+            "type": "button"
+        },
+        "container/reload": {
+            "file": "lc_reload_button.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 80,
+                "y": 129
+            },
+            "type": "button"
+        }
+    }
+}

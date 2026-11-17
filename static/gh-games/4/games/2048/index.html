@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <link href="style/main.css" rel="stylesheet" type="text/css" />
+        <link href="style/ai.css" rel="stylesheet" type="text/css" />
+        <link rel="shortcut icon" href="favicon.ico" />
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
+    </head>
+    <body>
+        <div class="container">
+            <div class="heading">
+                <h1 class="title">2048</h1>
+                <div class="score-container">0</div>
+            </div>
+            <p class="game-intro">Join the numbers and get to the <strong>2048 tile!</strong></p>
+            <div class="controls">
+                <div id="hint-button-container">
+                    <button id="hint-button" class="ai-button">Get Hint</button>
+                </div>
+                <div id="feedback-container"></div>
+                <div id="run-button-container">
+                    <button id="run-button" class="ai-button">Auto-run</button>
+                </div>
+            </div>
+            <div class="game-container">
+                <div class="game-message">
+                    <p></p>
+                    <div class="lower">
+                        <a class="retry-button">Try again</a>
+                        <div class="score-sharing"></div>
+                    </div>
+                </div>
+                <div class="grid-container">
+                    <div class="grid-row">
+                        <div class="grid-cell"></div>
+                        <div class="grid-cell"></div>
+                        <div class="grid-cell"></div>
+                        <div class="grid-cell"></div>
+                    </div>
+                    <div class="grid-row">
+                        <div class="grid-cell"></div>
+                        <div class="grid-cell"></div>
+                        <div class="grid-cell"></div>
+                        <div class="grid-cell"></div>
+                    </div>
+                    <div class="grid-row">
+                        <div class="grid-cell"></div>
+                        <div class="grid-cell"></div>
+                        <div class="grid-cell"></div>
+                        <div class="grid-cell"></div>
+                    </div>
+                    <div class="grid-row">
+                        <div class="grid-cell"></div>
+                        <div class="grid-cell"></div>
+                        <div class="grid-cell"></div>
+                        <div class="grid-cell"></div>
+                    </div>
+                </div>
+                <div class="tile-container"></div>
+            </div>
+            <p class="game-explanation"><strong class="important">How to play:</strong> Use your <strong>arrow keys</strong> to move the tiles. When two tiles with the same number touch, they <strong>merge into one!</strong></p>
+        </div>
+
+        <script src="js/animframe_polyfill.js"></script>
+        <script src="js/hammer.min.js"></script>
+        <script src="js/keyboard_input_manager.js"></script>
+        <script src="js/html_actuator.js"></script>
+        <script src="js/grid.js"></script>
+        <script src="js/tile.js"></script>
+        <script src="js/ai.js"></script>
+        <script src="js/game_manager.js"></script>
+        <script src="js/application.js"></script>
+        <script type="application/javascript" src="/js/main.js"></script>
+    </body>
+</html>

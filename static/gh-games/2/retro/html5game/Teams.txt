@@ -1,0 +1,33 @@
+uid	name	conference	division	colhelmet	colshirt	colpants	coltertiary	tla	defense	offense	wins	losses	ties	roof	rainfall	snowfall	helmet
+0	Buffalo	0	0	$ffffff	$0202d9	$ffffff	$ba0000	BUF	10	10	0	0	0	0	40	89	0
+1	Miami	0	0	$ffffff	$008E97	$ffffff	$008E97	MIA	7	5	0	0	0	0	59	0	0
+2	New England	0	0	$B0B7BC	$002244	$002244	$FFFFFF	N.E	6	4	0	0	0	0	49	52	1
+3	New York J	0	0	$125740	$125740	$ffffff	$125740	NYJ	3	3	0	0	0	0	47	25	1
+4	Denver	0	1	$1b1f62	$e66e00	$ffffff	$e66e00	DEN	8	7	0	0	0	0	17	62	0
+5	Kansas City	0	1	$c30214	$dc0015	$ffffff	$dc0015	K.C	6	9	0	0	0	0	40	15	1
+6	Los Angeles C	0	1	$ffffff	$3289f7	$ffffff	$F1D209	LAC	8	9	0	0	0	2	17	0	1
+7	Las Vegas	0	1	$aaaaaa	$000000	$aaaaaa	$000000	L.V	5	8	0	0	0	1	5	0	0
+8	Baltimore	0	2	$161616	$361d7d	$ffffff	$361d7d	BAL	9	7	0	0	0	0	45	19	0
+9	Cincinnati	0	2	$fb4f14	$1a1a1a	$ffffff	$fb4f14	CIN	6	9	0	0	0	0	42	14	0
+10	Cleveland	0	2	$d44200	$4f3531	$FFFFFF	$d44200	CLE	7	4	0	0	0	0	40	61	0
+11	Pittsburgh	0	2	$000000	$222121	$f8e400	$000000	PIT	6	4	0	0	0	0	38	27	0
+12	Houston	0	3	$101843	$17205b	$ffffff	$17205B	HOU	2	4	0	0	0	2	51	0	1
+13	Indianapolis	0	3	$ffffff	$202e82	$ffffff	$202e82	IND	8	8	0	0	0	1	42	21	0
+14	Jacksonville	0	3	$1b1b1b	$292929	$1b1b1b	$1b1b1b	JAX	3	4	0	0	0	0	50	0	1
+15	Tennessee	0	3	$23255d	$181a40	$181A40	$181A40	TEN	6	5	0	0	0	0	45	2	0
+16	Dallas	1	0	$a6b8c3	$ffffff	$87c6eb	$0021ec	DAL	7	8	0	0	0	1	39	1	0
+17	New York G	1	0	$1933d1	$001cc8	$FFFFFF	$001CC8	NYG	4	3	0	0	0	0	47	25	0
+18	Philadelphia	1	0	$153020	$264933	$ffffff	$1b1b1b	PHI	8	8	0	0	0	0	47	15	1
+19	Washington	1	0	$4f0f0f	$641313	$FFFFFF	$641313	WAS	6	5	0	0	0	0	43	13	0
+20	Arizona	1	1	$ffffff	$a20000	$ffffff	$a20000	ARI	4	8	0	0	0	1	9	0	1
+21	Los Angeles R	1	1	$FA	$FA	$FFD100	$FA	LAR	9	10	0	0	0	2	17	0	0
+22	San Francisco	1	1	$ada94b	$a60303	$ada94b	$a60303	S.F	10	7	0	0	0	0	24	0	0
+23	Seattle	1	1	$1b2145	$283166	$1b2145	$5fe800	SEA	4	3	0	0	0	0	37	5	1
+24	Chicago	1	2	$0B162A	$0B162A	$ffffff	$C83803	CHI	3	3	0	0	0	0	38	35	1
+25	Detroit	1	2	$B0B7BC	$3147CD	$B0B7BC	$3147CD	DET	2	6	0	0	0	2	39	32	0
+26	Green Bay	1	2	$f3d202	$385022	$f3d202	$30441d	G.B	9	8	0	0	0	0	30	48	0
+27	Minnesota	1	2	$4f1068	$731995	$ffffff	$4f1068	MIN	7	8	0	0	0	2	32	53	1
+28	Atlanta	1	3	$000000	$000000	$000000	$C80000	ATL	2	2	0	0	0	1	51	1	1
+29	Carolina	1	3	$bab9b9	$101820	$101820	$0085CA	CAR	6	5	0	0	0	0	44	2	0
+30	New Orleans	1	3	$aba537	$000000	$000000	$000000	N.O	9	6	0	0	0	2	63	0	0
+31	Tampa Bay	1	3	$434044	$bd0101	$434044	$bd0101	T.B	10	10	0	0	0	0	50	0	1

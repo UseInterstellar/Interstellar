@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Information | webretro</title>
+		<style>
+			body {
+				color: white;
+				background-color: #101010;
+				font-family: sans-serif;
+				text-align: center;
+			}
+			
+			a {
+				color: #3ec3f0;
+			}
+			
+			a.biglink {
+				font-size: 22px;
+				display: block;
+				margin: 10px;
+				width: max-content;
+				position: relative;
+				margin-left: 50%;
+				transform: translateX(-50%);
+			}
+			
+			p.breaker {
+				margin-top: 100px;
+			}
+			
+			ul {
+				list-style: none;
+				padding: 0px;
+			}
+			
+			ul li {
+				margin-bottom: 8px;
+			}
+			
+			.void {
+				text-decoration: line-through;
+				pointer-events: none;
+				user-select: none;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Information | webretro</h1>
+		<br>
+		<h2><a target="_blank" href="https://binbashbanana.github.io/webretro/">Official Instance</a> <span id="detector"></span></h2>
+		<h2><a href="changelog.html">Changelog</a></h2>
+		<p class="breaker"></p>
+		<div id="legal">
+			<h2>Policies and Terms (Applies to the official instance only)</h2>
+			<a class="biglink" href="privacy.html">Privacy Policy</a>
+			<a class="biglink" href="tos.html">Terms and Conditions</a>
+			<a class="biglink" href="cookiepolicy.html">Cookie Policy</a>
+		</div>
+		<p class="breaker"></p>
+		<h2>Contact Me</h2>
+		<p>Report bugs/issues or make feature requests <a target="_blank" href="https://github.com/BinBashBanana/webretro/issues">here</a>!</p>
+		<p>Discord: <a target="_blank" href="https://discord.com/users/476169716998733834">OlyB#9420</a> (preferred method)</p>
+		<p>Join the <a target="_blank" href="https://discord.gg/C4amCeV">libretro</a> or <a target="_blank" href="https://discord.gg/7MX3wEhzrH">TitaniumNetwork</a> discord server if you need a mutual server to DM me. I do not usually accept friend requests.</p>
+		<p>E-mail: <a target="_blank" href="mailto:olyb@titaniumnetwork.org">olyb@titaniumnetwork.org</a></p>
+		<p class="breaker"></p>
+		<h2>More Information</h2>
+		<h4>Go to the <a target="_blank" href="https://github.com/BinBashBanana/webretro">GitHub</a> for more information!<h4>
+		<p class="breaker"></p>
+		<script>
+		var detector = document.getElementById("detector");
+		if (["binbashbanana.github.io"].includes(window.location.hostname)) {
+			detector.textContent = "(current instance is official)";
+			detector.style.color = "#80ff80";
+		} else {
+			detector.textContent = "(current instance is NOT official)";
+			detector.style.color = "#ff8080";
+			document.getElementById("legal").classList.add("void");
+		}
+		</script>
+	</body>
+</html>

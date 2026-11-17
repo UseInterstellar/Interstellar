@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="ruffle.js"></script>
+  </head>
+  <body style="margin: 0px">
+    <div id="container" style="width: 100vw; height: 100vh"></div>
+    <script type="text/javascript">
+      function play() {
+        const params = new URLSearchParams(window.location.search);
+        const swfPath = params.get('swf');
+
+        if (!swfPath) {
+          document.body.innerHTML = '<p style="color:red;font-family:sans-serif;padding:20px">Error: No ?swf= parameter provided.</p>';
+          return;
+        }
+
+        const swfUrl = new URL(swfPath, window.location.href).href;
+
+        const ruffle = window.RufflePlayer.newest();
+        const player = ruffle.createPlayer();
+        player.config = {
+          splashScreen: false,
+          contextMenu: 'off',
+          autoplay: true,
+          warnOnUnsupportedContent: false,
+          allowScriptAccess: true,
+          maxExecutionDuration: 30
+        };
+
+        const container = document.getElementById('container');
+        container.appendChild(player);
+        player.style.cssText = 'width:100%; height:100%;';
+        player.style.display = 'block';
+
+        player.load(swfUrl).then(() => {
+          window.parent.postMessage({ type: 'ruffleready' }, '*');
+        });
+      }
+
+      play();
+    </script>
+  </body>
+</html>

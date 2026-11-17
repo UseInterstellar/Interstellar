@@ -1,0 +1,17 @@
+diff --git a/Makefile b/Makefile
+index 1294d2f..1c86c08 100644
+--- a/Makefile
++++ b/Makefile
+@@ -588,7 +588,11 @@ OBJECTS := $(SOURCES_CXX:.cpp=.o) $(SOURCES_C:.c=.o)
+ ifeq ($(DEBUG),1)
+ FLAGS += -O0 -g
+ else
+-FLAGS += -O2 -DNDEBUG
++ifeq ($(platform), emscripten)
++   FLAGS += -O3 -DNDEBUG
++else
++   FLAGS += -O2 -DNDEBUG
++endif
+ endif
+ 
+ ifeq (,$(findstring msvc,$(platform)))

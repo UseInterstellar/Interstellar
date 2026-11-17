@@ -1,0 +1,77 @@
+body {
+	overflow: hidden;
+}
+
+.window {
+	resize: both;
+	overflow: hidden;
+	position: absolute;
+	border: 2px solid darkgrey;
+	margin: 0px;
+	background-color: #DDD;
+	cursor: default;
+	min-width: 20px;
+	min-height: 20px;
+	padding: 0px;
+	z-index: 1000;
+}
+
+.windowbar {
+	font-family: sans-serif;
+	user-select: none;
+	width: calc(100% - 4px);
+	padding: 2px;
+	height: 16px;
+	line-height: 16px;
+	color: black;
+	background-color: lightblue;
+	background-image: url("bar.png");
+	font-size: 12px;
+	border-bottom: 2px solid darkgrey;
+	overflow: hidden;
+}
+
+.windowicon, .windowtitle, .windowclose {
+	display: inline-block;
+}
+
+.windowicon {
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+	width: 16px;
+	height: 16px;
+	position: absolute;
+	top: 2px;
+	left: 2px;
+}
+
+.windowtitle {
+	position: relative;
+}
+
+.windowicon+.windowtitle {
+	left: 18px;
+}
+
+.windowclose {
+	position: absolute;
+	top: 2px;
+	right: 2px;
+	width: 14px;
+	height: 14px;
+	line-height: 14px;
+	text-align: center;
+	background-color: tomato;
+	border: 1px outset lightgray;
+}
+
+.windowclose:active {
+	border-style: inset;
+}
+
+.windowcontent {
+	width: 100%;
+	height: calc(100% - 22px);
+	overflow: auto;
+}

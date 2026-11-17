@@ -1,0 +1,841 @@
+{
+    "hierarchy": {
+        "name": "Canvas",
+        "children": [
+            {
+                "name": "level_container",
+                "children": [
+                    {
+                        "name": "level"
+                    },
+                    {
+                        "name": "total_deaths"
+                    }
+                ]
+            },
+            {
+                "name": "time_container",
+                "children": [
+                    {
+                        "name": "time"
+                    },
+                    {
+                        "name": "progress_container",
+                        "children": [
+                            {
+                                "name": "time_coin"
+                            },
+                            {
+                                "name": "coin"
+                            },
+                            {
+                                "name": "progress_percentage"
+                            },
+                            {
+                                "name": "progress_bar_bg",
+                                "children": [
+                                    {
+                                        "name": "progress_bar"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "pause"
+                    }
+                ]
+            },
+            {
+                "name": "tnt_container",
+                "children": [
+                    {
+                        "name": "title"
+                    },
+                    {
+                        "name": "tnt_text"
+                    },
+                    {
+                        "name": "bg_bar"
+                    },
+                    {
+                        "name": "bar"
+                    }
+                ]
+            },
+            {
+                "name": "floor_container",
+                "children": [
+                    {
+                        "name": "title"
+                    },
+                    {
+                        "name": "floor_text"
+                    }
+                ]
+            },
+            {
+                "name": "challenge_container",
+                "children": [
+                    {
+                        "name": "level"
+                    },
+                    {
+                        "name": "total_deaths"
+                    }
+                ]
+            },
+            {
+                "name": "level_hub_container",
+                "children": [
+                    {
+                        "name": "trophy_lock"
+                    },
+                    {
+                        "name": "trophy_unlock"
+                    },
+                    {
+                        "name": "star_lock"
+                    },
+                    {
+                        "name": "star_unlock"
+                    },
+                    {
+                        "name": "hardcore_lock"
+                    },
+                    {
+                        "name": "hardcore_unlock"
+                    },
+                    {
+                        "name": "act"
+                    },
+                    {
+                        "name": "your_time_text"
+                    },
+                    {
+                        "name": "your_time"
+                    },
+                    {
+                        "name": "gold_time_text"
+                    },
+                    {
+                        "name": "gold_time"
+                    },
+                    {
+                        "name": "silver_time"
+                    },
+                    {
+                        "name": "bronze_time"
+                    },
+                    {
+                        "name": "silver_time_text"
+                    },
+                    {
+                        "name": "bronze_time_text"
+                    }
+                ]
+            },
+            {
+                "name": "challenge_room_container",
+                "children": [
+                    {
+                        "name": "trophy_lock"
+                    },
+                    {
+                        "name": "trophy_unlock"
+                    },
+                    {
+                        "name": "title"
+                    },
+                    {
+                        "name": "floors_text"
+                    },
+                    {
+                        "name": "floors"
+                    },
+                    {
+                        "name": "your_time"
+                    },
+                    {
+                        "name": "your_time_text"
+                    }
+                ]
+            },
+            {
+                "name": "achievement_container",
+                "children": [
+                    {
+                        "name": "title"
+                    },
+                    {
+                        "name": "description"
+                    },
+                    {
+                        "name": "image"
+                    }
+                ]
+            }
+        ]
+    },
+    "properties": {
+        "Canvas": {
+            "design": {
+                "width": 960,
+                "height": 640
+            },
+            "type": "canvas"
+        },
+        "level_container": {
+            "file": "gp_level_container.png",
+            "image": "SIMPLE",
+            "type": "sprite",
+            "alignment": {
+                "type": "TOP_LEFT",
+                "offset": {
+                    "x": 2.8,
+                    "y": 1.2
+                }
+            }
+        },
+        "level_container/level": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 27
+            },
+            "text": "Act 1",
+            "align": "center",
+            "position": {
+                "x": -60.8,
+                "y": -24.3
+            },
+            "anchor": {
+                "x": 0,
+                "y": 0.5
+            },
+            "type": "text"
+        },
+        "level_container/total_deaths": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 18
+            },
+            "text": "x199",
+            "align": "center",
+            "position": {
+                "x": -29.2,
+                "y": 12.9
+            },
+            "anchor": {
+                "x": 0,
+                "y": 0.5
+            },
+            "type": "text"
+        },
+        "time_container": {
+            "file": "gp_time_container.png",
+            "image": "SIMPLE",
+            "type": "sprite",
+            "alignment": {
+                "type": "TOP_RIGHT",
+                "offset": {
+                    "x": 0.6,
+                    "y": 0.6
+                }
+            }
+        },
+        "time_container/time": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 26
+            },
+            "text": "00:00:00",
+            "align": "center",
+            "position": {
+                "x": 7.3,
+                "y": -9.1
+            },
+            "type": "text"
+        },
+        "time_container/progress_container": {
+            "file": "gp_time_container1.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 8.3,
+                "y": 30.1
+            },
+            "type": "sprite"
+        },
+        "time_container/progress_container/time_coin": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 20
+            },
+            "text": "00:00:00",
+            "align": "center",
+            "position": {
+                "x": 10.9,
+                "y": -3.5
+            },
+            "type": "text"
+        },
+        "time_container/progress_container/coin": {
+            "file": "gold.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -47,
+                "y": -4.8
+            },
+            "type": "sprite"
+        },
+        "time_container/progress_container/progress_percentage": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 22
+            },
+            "text": "100%",
+            "align": "center",
+            "position": {
+                "x": 33.7,
+                "y": -4.4
+            },
+            "type": "text"
+        },
+        "time_container/progress_container/progress_bar_bg": {
+            "file": "gp_bar_bg.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -24.9,
+                "y": -6.7
+            },
+            "scale": {
+                "x": 0.8,
+                "y": 1
+            },
+            "type": "sprite"
+        },
+        "time_container/progress_container/progress_bar_bg/progress_bar": {
+            "file": "gp_bar.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -40.5,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0,
+                "y": 0.5
+            },
+            "type": "sprite"
+        },
+        "time_container/pause": {
+            "file": "gp_pause_button.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 34.9,
+                "y": 77.5
+            },
+            "type": "button"
+        },
+        "tnt_container": {
+            "file": "gp_tnt.png",
+            "image": "SIMPLE",
+            "type": "sprite",
+            "alignment": {
+                "type": "TOP_CENTER",
+                "offset": {
+                    "x": 0,
+                    "y": 0.8
+                }
+            }
+        },
+        "tnt_container/title": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 27
+            },
+            "text": "TNT",
+            "align": "center",
+            "position": {
+                "x": 0,
+                "y": -19.3
+            },
+            "type": "text"
+        },
+        "tnt_container/tnt_text": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 20
+            },
+            "text": "10%",
+            "align": "center",
+            "position": {
+                "x": 39.7,
+                "y": 11.9
+            },
+            "type": "text"
+        },
+        "tnt_container/bg_bar": {
+            "file": "gp_tnt_bar0.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -19.5,
+                "y": 10.3
+            },
+            "type": "sprite"
+        },
+        "tnt_container/bar": {
+            "file": "gp_tnt_bar1.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 21,
+                "y": 10.3
+            },
+            "anchor": {
+                "x": 1,
+                "y": 0.5
+            },
+            "type": "sprite"
+        },
+        "floor_container": {
+            "file": "cr_floor_container.png",
+            "image": "SIMPLE",
+            "type": "sprite",
+            "alignment": {
+                "type": "TOP_CENTER",
+                "offset": {
+                    "x": 0,
+                    "y": 0.9
+                }
+            }
+        },
+        "floor_container/title": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 27
+            },
+            "text": "FLOOR",
+            "align": "center",
+            "position": {
+                "x": -3.7,
+                "y": -20.8
+            },
+            "type": "text"
+        },
+        "floor_container/floor_text": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 20
+            },
+            "text": "01/30",
+            "align": "center",
+            "position": {
+                "x": -3.7,
+                "y": 11.1
+            },
+            "type": "text"
+        },
+        "challenge_container": {
+            "file": "cr_level_container.png",
+            "image": "SIMPLE",
+            "type": "sprite",
+            "alignment": {
+                "type": "TOP_LEFT",
+                "offset": {
+                    "x": 2.6,
+                    "y": 1.8
+                }
+            }
+        },
+        "challenge_container/level": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 27
+            },
+            "text": "Challenge Room",
+            "align": "center",
+            "position": {
+                "x": -101.9,
+                "y": -22.5
+            },
+            "anchor": {
+                "x": 0,
+                "y": 0.5
+            },
+            "type": "text"
+        },
+        "challenge_container/total_deaths": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 18
+            },
+            "text": "x199",
+            "align": "center",
+            "position": {
+                "x": -56.5,
+                "y": 14.8
+            },
+            "anchor": {
+                "x": 0,
+                "y": 0.5
+            },
+            "type": "text"
+        },
+        "level_hub_container": {
+            "file": "lvl_hub_container.png",
+            "image": "SIMPLE",
+            "type": "sprite",
+            "alignment": {
+                "type": "BOTTOM_LEFT",
+                "offset": {
+                    "x": 1.1,
+                    "y": 6.7
+                }
+            }
+        },
+        "level_hub_container/trophy_lock": {
+            "file": "lvl_hub_trophy_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -198.4,
+                "y": 19.5
+            },
+            "type": "sprite"
+        },
+        "level_hub_container/trophy_unlock": {
+            "file": "lvl_hub_trophy_unlock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -198.4,
+                "y": 19.5
+            },
+            "type": "sprite"
+        },
+        "level_hub_container/star_lock": {
+            "file": "lvl_hub_star_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -139.1,
+                "y": 19.3
+            },
+            "type": "sprite"
+        },
+        "level_hub_container/star_unlock": {
+            "file": "lvl_hub_star_unlock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -139.1,
+                "y": 19.3
+            },
+            "type": "sprite"
+        },
+        "level_hub_container/hardcore_lock": {
+            "file": "lvl_hub_hardcore_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -79.6,
+                "y": 17
+            },
+            "type": "sprite"
+        },
+        "level_hub_container/hardcore_unlock": {
+            "file": "lvl_hub_hardcore_unlock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -79.6,
+                "y": 17
+            },
+            "type": "sprite"
+        },
+        "level_hub_container/act": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 31
+            },
+            "text": "Act  1",
+            "align": "center",
+            "position": {
+                "x": -222.6,
+                "y": -31.1
+            },
+            "anchor": {
+                "x": 0,
+                "y": 0.5
+            },
+            "color": "#f8d53a",
+            "type": "text"
+        },
+        "level_hub_container/your_time_text": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 33
+            },
+            "text": "Your Time:",
+            "align": "center",
+            "position": {
+                "x": -29.2,
+                "y": -32.7
+            },
+            "anchor": {
+                "x": 0,
+                "y": 0.5
+            },
+            "type": "text"
+        },
+        "level_hub_container/your_time": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 33
+            },
+            "text": "01:20",
+            "align": "center",
+            "position": {
+                "x": 133.4,
+                "y": -31.7
+            },
+            "anchor": {
+                "x": 0,
+                "y": 0.5
+            },
+            "type": "text"
+        },
+        "level_hub_container/gold_time_text": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 19
+            },
+            "text": "Gold",
+            "align": "center",
+            "stroke": "#613f00",
+            "strokeThickness": 4,
+            "position": {
+                "x": 45.4,
+                "y": 8.7
+            },
+            "color": "#ffe000",
+            "type": "text"
+        },
+        "level_hub_container/gold_time": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 21
+            },
+            "text": "00:25",
+            "align": "center",
+            "position": {
+                "x": 45.4,
+                "y": 29.8
+            },
+            "type": "text"
+        },
+        "level_hub_container/silver_time": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 21
+            },
+            "text": "00:25",
+            "align": "center",
+            "position": {
+                "x": 109.9,
+                "y": 29.8
+            },
+            "type": "text"
+        },
+        "level_hub_container/bronze_time": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 21
+            },
+            "text": "00:25",
+            "align": "center",
+            "position": {
+                "x": 175.6,
+                "y": 29.8
+            },
+            "type": "text"
+        },
+        "level_hub_container/silver_time_text": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 19
+            },
+            "text": "Silver",
+            "align": "center",
+            "stroke": "#07323a",
+            "strokeThickness": 4,
+            "position": {
+                "x": 109.9,
+                "y": 8.7
+            },
+            "color": "#a6d4d9",
+            "type": "text"
+        },
+        "level_hub_container/bronze_time_text": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 19
+            },
+            "text": "Bronze",
+            "align": "center",
+            "stroke": "#4a1f00",
+            "strokeThickness": 4,
+            "position": {
+                "x": 175.6,
+                "y": 8.7
+            },
+            "color": "#ff8800",
+            "type": "text"
+        },
+        "challenge_room_container": {
+            "file": "cr_container.png",
+            "image": "SIMPLE",
+            "type": "sprite",
+            "alignment": {
+                "type": "BOTTOM_LEFT",
+                "offset": {
+                    "x": 1.5,
+                    "y": 1.6
+                }
+            }
+        },
+        "challenge_room_container/trophy_lock": {
+            "file": "cr_tophy_lock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -190.3,
+                "y": 18.6
+            },
+            "type": "sprite"
+        },
+        "challenge_room_container/trophy_unlock": {
+            "file": "cr_tophy_unlock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -190.3,
+                "y": 22.5
+            },
+            "type": "sprite"
+        },
+        "challenge_room_container/title": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 31
+            },
+            "text": "CHALLENGE ROOM",
+            "align": "center",
+            "position": {
+                "x": -220.9,
+                "y": -26
+            },
+            "anchor": {
+                "x": 0,
+                "y": 0.5
+            },
+            "color": "#f8d53a",
+            "type": "text"
+        },
+        "challenge_room_container/floors_text": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 19
+            },
+            "text": "Floors:",
+            "align": "center",
+            "position": {
+                "x": 50,
+                "y": 9.4
+            },
+            "color": "#f8d53a",
+            "type": "text"
+        },
+        "challenge_room_container/floors": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 21
+            },
+            "text": "05/30",
+            "align": "center",
+            "position": {
+                "x": 50,
+                "y": 30.5
+            },
+            "type": "text"
+        },
+        "challenge_room_container/your_time": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 21
+            },
+            "text": "00:25",
+            "align": "center",
+            "position": {
+                "x": 164.7,
+                "y": 30.5
+            },
+            "type": "text"
+        },
+        "challenge_room_container/your_time_text": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 19
+            },
+            "text": "Your Time:",
+            "align": "center",
+            "position": {
+                "x": 164.7,
+                "y": 9.4
+            },
+            "color": "#f8d53a",
+            "type": "text"
+        },
+        "achievement_container": {
+            "file": "gp_achievement_container.png",
+            "image": "SIMPLE",
+            "type": "sprite",
+            "alignment": {
+                "type": "BOTTOM_RIGHT",
+                "offset": {
+                    "x": 3.4,
+                    "y": -390.6
+                }
+            }
+        },
+        "achievement_container/title": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 14
+            },
+            "text": "Achievements unlocked!",
+            "align": "center",
+            "position": {
+                "x": 0.1,
+                "y": -28.3
+            },
+            "type": "text"
+        },
+        "achievement_container/description": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 14
+            },
+            "text": "Thanks\nBox !",
+            "align": "left",
+            "position": {
+                "x": 0.9,
+                "y": 5.2
+            },
+            "anchor": {
+                "x": 0,
+                "y": 0.5
+            },
+            "type": "text"
+        },
+        "achievement_container/image": {
+            "file": "trop_star2_unlock.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -38.3,
+                "y": 5
+            },
+            "type": "sprite"
+        }
+    }
+}

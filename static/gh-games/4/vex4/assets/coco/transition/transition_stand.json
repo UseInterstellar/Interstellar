@@ -1,0 +1,77 @@
+{
+    "name": "transition_stand",
+    "speed": 1,
+    "mode": "normal",
+    "data": {
+        "base1": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                }
+            ]
+        },
+        "base2": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                }
+            ]
+        },
+        "base3": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                }
+            ]
+        },
+        "base4": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                }
+            ]
+        },
+        "base5": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                }
+            ]
+        },
+        "base6": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                }
+            ]
+        },
+        "base7": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                }
+            ]
+        },
+        "logo": {
+            "scaleX": [
+                {
+                    "frame": 0,
+                    "value": 1
+                }
+            ],
+            "scaleY": [
+                {
+                    "frame": 0,
+                    "value": 1
+                }
+            ]
+        }
+    }
+}

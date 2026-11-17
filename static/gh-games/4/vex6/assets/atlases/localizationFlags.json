@@ -1,0 +1,51 @@
+﻿{"frames": [
+
+{
+	"filename": "flag_en instance 10000",
+	"frame": {"x":109,"y":165,"w":106,"h":80},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":106,"h":80},
+	"sourceSize": {"w":106,"h":80}
+}
+,{
+	"filename": "flag_fr instance 10000",
+	"frame": {"x":1,"y":165,"w":106,"h":80},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":106,"h":80},
+	"sourceSize": {"w":106,"h":80}
+}
+,{
+	"filename": "flag_nl instance 10000",
+	"frame": {"x":110,"y":1,"w":106,"h":80},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":106,"h":80},
+	"sourceSize": {"w":106,"h":80}
+}
+,{
+	"filename": "flag_no instance 10000",
+	"frame": {"x":1,"y":1,"w":107,"h":80},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":107,"h":80},
+	"sourceSize": {"w":107,"h":80}
+}
+,{
+	"filename": "flag_ru instance 10000",
+	"frame": {"x":1,"y":83,"w":107,"h":80},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":107,"h":80},
+	"sourceSize": {"w":107,"h":80}
+}],
+"meta": {
+	"app": "Adobe Animate",
+	"version": "16.5.0.100",
+	"image": "localizationFlags.png",
+	"format": "RGBA8888",
+	"size": {"w":256,"h":256},
+	"scale": "1"
+}
+}

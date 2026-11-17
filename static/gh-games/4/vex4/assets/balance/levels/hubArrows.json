@@ -1,0 +1,22 @@
+[
+  [
+    {"type":"textFade","x":392,"y":1894,"rotation":0,"textNum":13},
+    {"type":"textFade","x":735,"y":1538,"rotation":0,"textNum":2},
+    {"type":"textFade","x":920,"y":1892,"rotation":0,"textNum":7},
+    {"type":"textFade","x":421,"y":1759,"rotation":0,"textNum":1}
+  ],
+  null,
+  null,
+  null,
+  null,
+  [
+    {"type":"textFade","x":1070,"y":1265,"rotation":0,"textNum":30}
+  ],
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  [{"type":"textFade","x":376,"y":1537,"rotation":0,"textNum":45}]
+]

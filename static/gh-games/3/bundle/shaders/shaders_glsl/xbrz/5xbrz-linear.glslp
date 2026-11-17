@@ -1,0 +1,9 @@
+shaders = 2
+
+shader0 = shaders/5xbrz.glsl
+filter_linear0 = false
+scale_type0 = source
+scale0 = 5.0
+
+shader1 = ../stock.glsl
+filter_linear1 = true

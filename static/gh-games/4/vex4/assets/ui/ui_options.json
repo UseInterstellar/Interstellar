@@ -1,0 +1,193 @@
+{
+    "hierarchy": {
+        "name": "Canvas",
+        "children": [
+            {
+                "name": "container",
+                "children": [
+                    {
+                        "name": "title"
+                    },
+                    {
+                        "name": "close"
+                    },
+                    {
+                        "name": "sfx_title"
+                    },
+                    {
+                        "name": "sfx_button",
+                        "children": [
+                            {
+                                "name": "sfx_text"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "music_title"
+                    },
+                    {
+                        "name": "music_button",
+                        "children": [
+                            {
+                                "name": "music_text"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "check_box"
+                    },
+                    {
+                        "name": "check"
+                    },
+                    {
+                        "name": "auto_save_text"
+                    }
+                ]
+            }
+        ]
+    },
+    "properties": {
+        "Canvas": {
+            "design": {
+                "width": 960,
+                "height": 640
+            },
+            "type": "canvas"
+        },
+        "container": {
+            "file": "op_container.png",
+            "image": "SIMPLE",
+            "type": "sprite",
+            "alignment": {
+                "type": "CENTER",
+                "offset": {
+                    "x": 0,
+                    "y": 1.9
+                }
+            }
+        },
+        "container/title": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 43
+            },
+            "text": "Options",
+            "align": "center",
+            "position": {
+                "x": 22.9,
+                "y": -133.4
+            },
+            "type": "text"
+        },
+        "container/close": {
+            "file": "pa_close_button.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 191.7,
+                "y": -157.2
+            },
+            "type": "button"
+        },
+        "container/sfx_title": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 27
+            },
+            "text": "SFX",
+            "align": "center",
+            "position": {
+                "x": -103.9,
+                "y": -44.2
+            },
+            "type": "text"
+        },
+        "container/sfx_button": {
+            "file": "pa_on_button.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": -102.3,
+                "y": 1.8
+            },
+            "type": "button"
+        },
+        "container/sfx_button/sfx_text": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 28
+            },
+            "text": "ON",
+            "align": "center",
+            "position": {
+                "x": 0,
+                "y": 3.5
+            },
+            "type": "text"
+        },
+        "container/music_title": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 27
+            },
+            "text": "Music",
+            "align": "center",
+            "position": {
+                "x": 103.9,
+                "y": -44.2
+            },
+            "type": "text"
+        },
+        "container/music_button": {
+            "file": "pa_off_button.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 106.3,
+                "y": 1.8
+            },
+            "type": "button"
+        },
+        "container/music_button/music_text": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 28
+            },
+            "text": "OFF",
+            "align": "center",
+            "position": {
+                "x": 0,
+                "y": 3.5
+            },
+            "type": "text"
+        },
+        "container/check_box": {
+            "file": "pa_check_box.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 90,
+                "y": 97.2
+            },
+            "type": "sprite"
+        },
+        "container/check": {
+            "file": "pa_check.png",
+            "image": "SIMPLE",
+            "position": {
+                "x": 90,
+                "y": 97.2
+            },
+            "type": "sprite"
+        },
+        "container/auto_save_text": {
+            "font": {
+                "name": "milocha",
+                "fontSize": 22
+            },
+            "text": "Auto reset when\nbest time passed",
+            "align": "center",
+            "position": {
+                "x": -24,
+                "y": 105.4
+            },
+            "type": "text"
+        }
+    }
+}

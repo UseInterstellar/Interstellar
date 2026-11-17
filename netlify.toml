@@ -1,3 +1,2 @@
 [build]
-  command = "pnpm build:netlify"
-  publish = "dist"
+  publish = "static"

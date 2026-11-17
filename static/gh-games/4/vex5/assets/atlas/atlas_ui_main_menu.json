@@ -1,0 +1,60 @@
+{"frames": [
+
+{
+	"filename": "mm_challenge_room_button.png",
+	"frame": {"x":562,"y":194,"w":89,"h":99},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":89,"h":99},
+	"sourceSize": {"w":89,"h":99}
+},
+{
+	"filename": "mm_decor.png",
+	"frame": {"x":2,"y":2,"w":790,"h":190},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":8,"w":790,"h":190},
+	"sourceSize": {"w":960,"h":198}
+},
+{
+	"filename": "mm_logo.png",
+	"frame": {"x":183,"y":194,"w":377,"h":137},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":1,"w":377,"h":137},
+	"sourceSize": {"w":377,"h":138}
+},
+{
+	"filename": "mm_play_buttton.png",
+	"frame": {"x":2,"y":194,"w":179,"h":190},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":179,"h":190},
+	"sourceSize": {"w":179,"h":190}
+},
+{
+	"filename": "mm_settings_button.png",
+	"frame": {"x":562,"y":295,"w":62,"h":62},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":62,"h":62},
+	"sourceSize": {"w":62,"h":62}
+},
+{
+	"filename": "mm_trophy_button.png",
+	"frame": {"x":653,"y":194,"w":89,"h":99},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":89,"h":99},
+	"sourceSize": {"w":89,"h":99}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "atlas_ui_main_menu.png",
+	"format": "RGBA8888",
+	"size": {"w":794,"h":386},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:f8616c477c92364c0a837e5f47e75832:4f4d5df7a1392365ba2e22500f67c9c5:e74b37f985d7d560acd994665e2885a8$"
+}
+}

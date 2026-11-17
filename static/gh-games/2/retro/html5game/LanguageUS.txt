@@ -1,0 +1,1392 @@
+msg_Update	Thank you for updating Retro Bowl!##Among other changes, you are now able to edit player images and even select a face for yourself in the game! Head over to the Front Office to choose your image.##Thank you for your continued support.##- Simon
+ui_NewStarGames	New Star Games
+ui_Back	Back
+ui_Home	Home
+ui_Dilemma	Dilemma
+ui_Continue	Continue
+ui_Play	Play
+ui_Message	Message
+ui_Select	Select
+ui_Profile	Profile
+ui_Practice	Practice
+ui_Exercise	Exercise
+ui_Fixtures	Fixtures
+ui_Results	Results
+ui_Exit	Exit
+ui_Earn	Earn
+ui_Week	Week
+ui_Weeks	Weeks
+ui_Cash	Cash
+ui_Shop	Shop
+ui_Study	Study
+ui_Purchase	Purchase
+ui_Cancel	Cancel
+ui_NextMatch	Next Game
+ui_PlayMatch	Play Game
+ui_Standings	Standings
+ui_Relationships	Relationships
+ui_Opportunity	Opportunity
+ui_YourHappiness	Your Happiness
+ui_DraftPicks	Draft Picks
+person_He	He
+person_She	She
+tla_years	yrs
+sex_0	Female
+sex_1	Male
+ui_Defense	Defense
+ui_Offense	Offense
+quarter_1	1st Qtr
+quarter_2	2nd Qtr
+quarter_3	3rd Qtr
+quarter_4	4th Qtr
+quarter_5	OT
+match_Touchdown	Touchdown
+match_Interception	Interception
+match_Incomplete	Incomplete
+match_OutOfBounds	Out of bounds
+match_Sacked	Sacked
+match_Fumble	Fumble
+comm_stage_KickOff	$teamname kicks off
+comm_stage_Possession_OwnHalf1	$teamname on their own $num
+comm_stage_Possession_OwnHalf2	$teamname in their own half
+comm_stage_Possession_OwnHalf3	$teamname has possession
+comm_stage_Possession_OppHalf1	$teamname has it on the $num
+comm_stage_Possession_OppHalf2	$teamname on the $num
+comm_stage_Possession_OppHalf3	$teamname has possession
+comm_stage_Possession_RedZone	$teamname in the red zone
+comm_stage_Possession_BackedUp	$teamname deep in their own half
+comm_stage_Possession_Halfway	$teamname has it in midfield
+comm_stage_PuntReturnGood	That's a good return
+comm_stage_PuntReturnShort	It's a short return
+comm_stage_DriveRun0	They run the ball
+comm_stage_DriveRun1	They keep it on the ground
+comm_stage_DriveRun2	The quarterback hands it off
+comm_stage_DriveRun3	The running back takes it
+comm_stage_DriveRun4	It's a running play
+comm_stage_DrivePass0	They go for the pass
+comm_stage_DrivePass1	They throw the ball
+comm_stage_DrivePass2	It's a throw over the middle
+comm_stage_DrivePass3	It's a passing play
+comm_stage_DrivePass4	The quarterback throws it
+comm_stage_DriveHailMary0	It's a hail mary throw
+comm_stage_DriveHailMary1	It's a huge throw
+comm_stage_DriveHailMary2	The quarterback airs it out
+comm_stage_Turnover_Fumble	It's a fumble!
+comm_stage_Turnover_Interception	Interception!
+comm_stage_Turnover_Sack	The quarterback is sacked!
+comm_stage_TurnoverHuman	$teamname turn it over
+comm_stage_TurnoverHuman4th	$teamname turn it over on 4th down
+comm_stage_Touchdown	$teamname score!
+comm_stage_Punt	$teamname punt
+comm_stage_PAT1	Point after touchdown...
+comm_stage_PAT2_Missed	Missed!
+comm_stage_PAT2_Scored	Scored!
+comm_stage_FieldGoal1	$teamname with a $num yard field goal...
+comm_stage_FieldGoal2_Missed	Missed!
+comm_stage_FieldGoal2_Scored	Scored!
+comm_stage_end_quarter1	End of 1st quarter
+comm_stage_end_quarter2	End of 1st half
+comm_stage_end_quarter3	End of 3rd quarter
+comm_stage_end_quarter4	Game over
+comm_stage_overtime	Overtime!
+comm_stage_overtime_over	End of overtime
+comm_stage_2pt_attempt	They go for 2 points...
+comm_stage_2pt_attemptQB	$teamname go for 2 points...
+comm_stage_2pt_missed	But get stopped!
+comm_stage_2pt_scored	And score!
+comm_stage_Turnover_Tackle1	[$pos] $playername makes a great tackle!
+comm_stage_Turnover_Tackle2	[$pos] $playername makes the tackle!
+comm_stage_Turnover_Fumble1	[$pos] $playername forces a fumble!
+comm_stage_Turnover_Fumble2	[$pos] $playername punches it out for a fumble!
+comm_stage_Turnover_Sack1	[$pos] $playername sacks the quarterback!
+comm_stage_Turnover_Sack2	[$pos] $playername with a huge sack!
+comm_stage_Turnover_Interception1	[$pos] $playername makes an interception!
+comm_stage_Turnover_Interception2	[$pos] It's an interception by $playername!
+comm_stage_failed_skill	[$pos] $playername missed the tackle
+comm_stage_failed_speed	[$pos] $playername was too slow
+comm_stage_failed_strength	[$pos] $playername wasn't strong enough
+comm_stage_incomplete_Run	It's short of the 1st down
+comm_stage_incomplete_Pass	Incomplete
+comm_stage_GoForIt	$teamname is going for it on 4th down
+down_1	1st down
+down_2	2nd down
+down_3	3rd down
+down_4	4th down
+down_1and	1st &
+down_2and	2nd &
+down_3and	3rd &
+down_4and	4th &
+Goal	Goal
+Inches	Inches
+match_GetReady	Get Ready!
+game_Title	Retro Bowl
+qualification_NO	Not Possible
+qualification_MAYBE	Possible
+qualification_PO	Playoffs
+qualification_WC	Wild Card
+endseason_failure	You didn't make the playoffs this year.
+matchmsg_SwitchDirection	Switch direction?
+ui_MyTeam	My Team
+ui_QBStats	QB Stats
+ui_Team	Team
+ui_Wins	Wins
+ui_Losses	Losses
+ui_Ties	Ties
+ui_PlayOffs	Playoffs
+tla_Attempts	Att
+tla_Completed	Comp
+tla_Percent	Pct
+tla_Yards	Yds
+tla_yards	yds
+sla_Yards	Y
+sla_yards	y
+tla_TouchDowns	TD
+tla_Interceptions	Int
+tla_Sacks	Sck
+tla_Average	Avg
+tla_CompletedPercent	Comp %
+ui_League	League
+ui_Stats	Stats
+ui_Schedule	Schedule
+ui_Options	Options
+ui_XPLevel	XP Level
+ui_StatsMatch	Game Stats
+ui_StatsSeason	Season Stats
+ui_StatsCareer	Career Stats
+ui_NextGame	Next Game
+ui_Result	Result
+ui_NewGame	New Game
+ui_QuitGame	Quit Game
+ui_Leaderboard	Leaderboard
+ui_Leaderboard_QB	QB Leaderboard
+ui_Name	Name
+ui_News	News
+ui_Traits	Traits
+conf_AFC	AFC
+conf_NFC	NFC
+division_East	East
+division_West	West
+division_North	North
+division_South	South
+sla_East	E
+sla_West	W
+sla_North	N
+sla_South	S
+sla_Wins	W
+sla_Losses	L
+sla_Ties	T
+sla_Win	W
+sla_Loss	L
+sla_Tie	T
+ui_Yes	Yes
+ui_No	No
+Punt	Punt
+Field Goal	Field Goal
+msg_NewGame	Do you want to start a new career?##WARNING!#Your save data and any existing#Coaching Credits will be lost.
+msg_NewGameCredits	Do you want to start a new career?##You have $num of your purchased Coaching Credits remaining that will be transferred to your new save file.
+matchmsg_PlayPunt	Play 4th down or punt?
+matchmsg_PlayFG	Play $down or go for field goal?
+ui_NewTrait	New Trait!
+msg_NewTrait	You have earned a new trait!###$traitname##$traitdesc.
+match_StiffArm	Stiff Arm!
+ui_DivisionLeaders	Division Leaders
+ui_WildCard	Wild Card
+ui_InTheHunt	In the hunt
+ui_SuperBowl	Retro Bowl
+ui_Super#Bowl	Retro#Bowl
+ui_Champion	Champion
+ui_PlayOffPicture	Playoff Picture
+msg_PlayOffResult	$teamname1 beat $teamname2 $score1-$score2!
+msg_SuperBowlWinner	$teamname1 win the Retro Bowl!
+match_FG_Good	It's good
+match_FG_Bad	No good
+match_Kicking	Kicking
+match_FieldGoal	Field Goal
+match_PAT	Point After Touchdown
+match_Wind	Wind
+ui_Training	Training
+ui_FieldGoal	Field Goal
+ui_Running	Running
+match_TouchToStart	Touch To Start
+match_TouchToContinue	Touch to continue
+match_Success	Success
+match_Fail	Fail
+ui_Passing	Passing
+training_Running1	Tap the blue circle
+training_Running2	Swipe to dodge
+training_Running1b	Click the blue circle
+training_Running2b	W or S to dodge
+training_Running3A	A to dive
+training_Running3D	D to dive
+training_Running3	Swipe forwards to dive
+training_Throw1	Drag and hold to aim
+training_Throw2	Release to throw
+training_Throw3	Throw the ball backwards
+training_Kick1	Tap to set power
+training_Kick2	Tap to set direction
+training_Kick1b	Click to set power
+training_Kick2b	Click to set direction
+training_Pass	Passing Practice
+training_Running	Running Practice
+training_FieldGoal	Field Goal Practice
+match_Caught	Caught
+match_Tipped	Tipped
+match_Dropped	Dropped
+msg_NewSeason	A new season begins!
+match_Recovered	Recovered
+match_Turnover	Turnover
+match_Safety	Safety
+matchmsg_PATor2	1 or 2 point conversion?
+match_1pt	1 pt
+match_2pt	2 pt
+match_Scored	Scored
+ui_ChooseTeam	Choose Team
+ui_DriveDirection	Drive Direction
+ui_driveLeft	Left
+ui_driveRight	Right
+ui_driveBoth	Both
+pos_QB	QB
+pos_OL	OL
+pos_TE	TE
+pos_RB	RB
+pos_WR	WR
+pos_DL	DL
+pos_LB	LB
+pos_SF	SF
+pos_CB	CB
+pos_KP	KP
+pos_KK	K
+pos_KR	KR
+pos_DB	DB
+position_QB	Quarterback
+position_OL	Offensive Lineman
+position_TE	Tight End
+position_RB	Running Back
+position_WR	Wide Receiver
+position_DL	Defensive Lineman
+position_LB	Linebacker
+position_SF	Safety
+position_CB	Corner Back
+position_KP	Kick Placer
+position_KK	Kicker
+position_KR	Kick Returner
+position_DB	Defensive Back
+pos_STAFF_HC	HC
+pos_STAFF_DF	DF
+pos_STAFF_OF	OF
+position_STAFF_HC	Head Coach
+position_STAFF_DF	Defensive Coordinator
+position_STAFF_OF	Offensive Coordinator
+ui_Roster	Roster
+sla_Rookie	R
+ui_SalaryCap	Salary Cap
+ui_PlayerProfile	Player Profile
+ui_Contract	Contract
+sla_Year	Y
+sla_Years	Y
+ui_Position	Position
+attribute_Speed	Speed
+attribute_Strength	Strength
+attribute_Catching	Catching
+attribute_Kicking	Kicking
+attribute_Throwing	Throwing
+attribute_Stamina	Stamina
+attribute_Tackling	Tackling
+attribute_Blocking	Blocking
+attitude_0	Toxic
+attitude_1	Bad
+attitude_2	Poor
+attitude_3	Ok
+attitude_4	Good
+attitude_5	Great
+attitude_6	Exceptional
+ui_Attitude	Morale
+ui_Rating	Rating
+ui_Age	Age
+ui_Trade	Trade
+ui_TradePlayer	Trade Player
+ui_TradeOffer	Trade Offer
+ui_Cut	Cut
+ui_CutPlayer	Cut Player
+msg_CutPlayer	Do you want to cut $position $playername from your roster?##Cutting a non-toxic player will harm team morale.
+msg_CannotTradeWeek	You cannot trade players after week 8.##Do you want to cut $playername from your roster instead?
+msg_CannotTradeInjured	No teams are interested in taking $playername while he is injured.##Do you want to cut this player from your roster instead?
+msg_CannotTradeToxic	No teams are interested in taking $playername while his attitude is toxic.##Do you want to cut this player from your roster instead?
+msg_CannotSignMoraleLow	$playername is not interested in signing a new contract. His morale is low.
+msg_CannotTradeRookie	$playername does not want to be traded.##Do you want to cut this player from your roster instead?
+msg_TradePlayerThis	$teamname is offering a round $num pick in this season's draft for $position $playername.
+msg_TradePlayerNext	$teamname is offering a round $num pick in next season's draft for $position $playername.
+ui_Draft	Draft
+ui_RookieDraft	Rookie Draft
+ui_DraftRound	Draft Round $num
+ui_PicksLeft	Picks Left
+ui_Picks	Picks
+ui_SignPlayer	Sign Player
+msg_SignPlayer	Do you want to sign $position $playername?
+msg_SignPlayerStore	Do you want to sign $position $playername? It will cost $num coaching credits.
+msg_SignPlayerStoreNoCredit	You need $num coaching credits to sign this player.
+msg_SignRookie	Do you want to sign rookie $position $playername?
+msg_CannotSign1	You already have a $position.##You will need to cut or trade the $position from your roster if you want to sign $playername.
+msg_CannotSign2	You already have $num players for the $position position.##You will need to cut or trade someone from your roster if you want to sign $playername.
+ui_Sign	Sign
+msg_SkipDraft	You still have $num picks left.##Do you want to sell your picks in this round for $value coach credits?
+msg_SkipDraft1	You still have a pick left in this round.##Do you want to sell it for $value coach credits?
+ui_NoMorePicks	You don't have any picks left.
+ui_NoMorePicksToTrade	You don't have a $num round pick for next season's draft to trade.
+ui_Rookie	Rookie
+ui_StarPlayers	Star Players
+ui_Details	Details
+ui_Attributes	Attributes
+info_QB	Quarterbacks receive the ball from the snap and either hand it off to a running back or throw it to a receiver.
+info_OL	Offensive linemen protect the quarterback. The stronger your offensive line the more time your quarterback has to make a throw.
+info_TE	A tight end lines up near the end of your offensive line. They will either contribute to blocking or make a run.
+info_RB	A running back can receive the ball from the quarterback and attempt to run through or around the defensive line.
+info_WR	Wide receivers line up near the sidelines and will normally make deep runs in order to receive a long pass from the quarterback.
+info_DL	A defensive linemen will attempt to tackle the quarterback and block runs from the running back.
+info_LB	Linebackers line up behind the defensive linemen. They will either attempt to cover receivers or press forward to stop running backs.
+info_SF	Safeties sit deep in the backfield covering receivers.
+info_CB	Corner backs line up opposite wide receivers and attemp to stop them catching the ball.
+info_KP	The kick placer receives the ball from the snap and places it for the kicker.
+info_K	Kickers will take field goal kicks and point after touchdown conversions.
+info_KR	The kick returner receives the ball from a kick off or punt and attempts to run it up the field.
+info_DB	Defensive backs are your corner backs and safeties. They will mainly cover pass attempts.
+info_StarPlayers	These are your key players - the guys that make a real difference on game day. You can have up to 10 key players, so long as you don't exceed the salary cap. (You can increase the limit to 12 players with a $200m salary cap in the options if you prefer.)##The rest of your squad do not have star ratings and are hidden. Their contribution towards the overall offense and defense ratings is dependent on the coordinator ratings.
+info_StarPlayers12	These are your key players - the guys that make a real difference on game day. You can have up to 12 key players, so long as you don't exceed the salary cap.##The rest of your squad do not have star ratings and are hidden. Their contribution towards the overall offense and defense ratings is dependent on the coordinator ratings.
+info_Draft	This is the rookie draft!##There are 3 draft rounds and you will receive 1 pick per round. Choose wisely!##You will need to scout players in order to reveal more details about them.##If you need to trade out existing players you can do so via the Roster screen.
+info_Draft2	New Draft Rules!##You now need to scout players in the draft if you wish to reveal their potential. You do this via their profile page. The number of players you can scout per draft is limited.
+ui_Players	Players
+info_Skill_Throwing	Throw accuracy determines how much arc you see when aiming a throw.
+info_Skill_Kicking	Kick accuracy determines how fast the aiming arc moves when taking a kick.
+info_Skill_Tackling	Tackling determines how well a player can overthrow his opponent.
+info_Skill_Blocking	Blocking determines how well your lineman can protect the quarterback.
+info_Skill_Speed	Speed represents a player's acceleration and top speed.
+info_Skill_Strength	Strength determines how hard a player hits and how many stiffarms they can do. For quarterbacks and kickers it relates to maximum throw and kick range.
+info_Skill_Catching	Catching relates to how well a player holds on to the ball when catching it and after taking a hit.
+info_Skill_Stamina	Stamina affects how long a player can run at their top speed. For quarterbacks and kickers it determines how much their strength depletes with every throw or kick.
+ui_Potential	Potential
+ui_Page	Page
+ui_Round	Round
+tla_Round	Rnd
+ui_NextRound	Next Round
+ui_SkipRound	Skip Round
+ui_SkipDraft	Skip Draft
+ui_FreeAgents	Free Agents
+ui_FreeAgent	Free Agent
+ui_Trades	Trades
+info_FreeAgents	Free agents are players that either didn't make the draft or are out of contract.##Trades are players currently under contract with another team but looking for a move. You will need to exchange one of your future draft picks for the player you want to trade.
+ui_Value	Value
+ui_None	None
+ui_Pick	Pick
+ui_ExceedSalaryCap	Signing $playername will exceed the salary cap.##You have $$numm remaining.##You will need to cut or trade players from your roster to sign this player.
+msg_FreeAgentOffer	$position $playername is a free agent looking for a team.##He arrives at the training facility for your assessment.
+msg_FreeAgentOffer_Rookie	$position $playername was an undrafted rookie.##Coach $coachname thinks he is an interesting prospect.
+msg_TradeOffer	$teamname is offering $position $playername as a trade.##In return they want a round $num pick in next season's draft.
+msg_TradeOfferSign	Do you want to sign $position $playername from $teamname?##He will cost you a round $num pick in next season's draft.
+ui_Cost	Cost
+ui_TradeRequest	Trade Request
+msg_TradeRequest	$teamname want your $position $playername.##In return they are offering a round $num pick in next season's draft.
+ui_Offer	Offer
+ui_LevelUp	Level Up
+short_LevelUp	Lvl Up
+ui_Confirm	Confirm
+msg_ContractExpired	$position $playername's contract has expired. He wants a $year year contract with a salary of $salary.
+news_PlayerRetired	$teamname $position $playername has retired at the age of $age.
+news_PlayerRetiringNoTag	$position $playername will retire at the end of the season. He is not tagged for the player hall of fame.
+news_PlayerRetiringTag	$position $playername will retire at the end of the season. You have already tagged him for the player hall of fame.
+news_PlayerInjured	$position $playername has suffered an injury ($injurytype).##He will be out for $num games.
+news_PlayerInjured1	$position $playername has suffered an injury ($injurytype).##He will be out for 1 game.
+news_PlayerRecovered	$position $playername has recovered from his injury and is fit to play.
+msg_OutOfContractPlayer	$position $playername's contract has expired. He is on the free agent list if you wish to re-sign him.
+msg_OutOfContractPlayers	You have players with expired contracts. They are on the free agents list if you wish to re-sign them.
+msg_ClearFreeAgents	These players will now find new teams. Are you sure you want to proceed?
+msg_ClearFreeAgent	This player will now find a new team. Are you sure you want to proceed?
+msg_ClearTradeOffer	Do you want to reject this trade offer?
+msg_SalaryCapIncrease	The salary cap has been raised to $$numm.
+ui_ByeWeek	Bye Week
+ui_PlayOff	Playoff
+ui_Scanlines	Scanlines
+ui_On	On
+ui_Off	Off
+ui_TeamMorale	Team Morale
+ui_Credit	Credit
+ui_Facilities	Facilities
+ui_Fans	Fans
+ui_Fan	Fan
+ui_Stadium	Stadium
+ui_Staff	Staff
+ui_TrainingFacilities	Training Facilities
+ui_StaffFacilities	Staff Facilities
+ui_StaffOffices	Staff Offices
+ui_RehabFacilities	Rehab Facilities
+info_Facility_Stadium	Improve your stadium facilities to make fans more positive after a win and less negative after a loss.##Higher quality training facilities help players gain XP faster.##Better rehab helps players maintain good condition and recover from injury quicker.
+info_Facility_Training	Higher quality training facilities help players gain XP faster.
+info_Facility_Rehab	Better rehab helps players maintain good condition and recover from injury quicker.
+info_Staff	Your coordinators determine the base rating for defense and offense (the rating before star players are taken into account).
+msg_facility_Stadium	Do you want to improve the stadium and fan facilities for $num credits?
+msg_facility_Training	Do you want to improve the player training facilities for $num credits?
+msg_facility_Rehab	Do you want to improve the player rehab facilities for $num credits?
+msg_NoCreditFacility	You do not have enough credits to upgrade this facility.
+msg_FacilityTooSoon	You cannot upgrade this facility twice in one week.
+ui_UpgradeCost	Upgrade#Cost
+ui_FrontOffice	Front Office
+btn_FrontOffice	Front#Office
+ui_Coordinators	Coordinators
+ui_AvailableHires	Available Hires
+ui_Hired	Hired
+ui_CurrentHire	Current Hire
+ui_HireStaff	Hire Staff
+msg_HireStaff	Do you want to hire $hirename on a $year year contract for $num credits?##Your existing coach will be fired.
+msg_HireStaffNoCost	You need $num coach credits to hire this member of staff.
+msg_StaffExtend	Do you want to extend $hirename's contract by 1 year for $num credits?
+msg_StaffExtend1	Do you want to extend $hirename's contract by 1 year for $num credit?
+msg_StaffExtendNoCost	You need $num coach credits to extend this member of staff's contract by 1 year.
+msg_StaffExtendNoAge	This member of staff is retiring this year.
+msg_StaffExtendNoCost1	You need $num coach credit to extend this member of staff's contract by 1 year.
+msg_StaffExpiring	Your $position's contract expires at the end of this season.
+msg_StaffExpiringTip	Your $position's contract expires at the end of this season. You can extend their contract from their profile page.
+news_HireStaff	$teamname have signed $position $hirename on a $num year contract.
+msg_StaffExpired	$position $hirename's contract has expired. They have left the organization.
+msg_StaffRetiring	$position $hirename is retiring at the end of this season.
+msg_StaffRetired	$position $hirename has retired.
+info_DraftPicks	In the next draft you have the following number of picks:##Round 1: $num1##Round 2: $num2##Round 3: $num3##You can gain extra picks by trading players out of the team.
+ui_PressInterview	Press Interview
+uniformviolation_0	Towel
+uniformviolation_1	Socks
+uniformviolation_2	Cleats
+uniformviolation_3	Head band
+uniformviolation_4	Wrist band
+uniformviolation_5	Gloves
+uniformviolation_6	Visor
+uniformviolation_7	Chin strap
+uniformviolation_8	Logo
+uniformviolation_9	Jersey
+postmatch_toxic1	$position $playername will receive a fine for a uniform violation ($uniform).-choice_DefendPlayer-choice_CriticisePlayer
+postmatch_toxic2	$position $playername will receive a fine for unnecessary roughness.-choice_CriticisePlayer-choice_CriticiseOfficials
+postmatch_toxic3	$position $playername will receive a fine for unsportsmanlike conduct.-choice_CriticisePlayer-choice_CriticiseCoaches
+postmatch_toxic4	$position $playername was apparently overheard saying "come get me" towards the opposition sideline during the game today.-choice_DefendPlayer-choice_CriticisePlayer
+postmatch_toxic5	$position $playername will receive a fine for making a hand gesture during the game today.-choice_DefendPlayer-choice_CriticisePlayer
+postmatch_toxic6	$position $playername will receive a fine for fighting with an opponent during the game today.-choice_DefendPlayer-choice_CriticisePlayer
+postmatch_toxic7	$position $playername will receive a fine for making physical contact with an official today.-choice_DefendPlayer-choice_CriticisePlayer
+postmatch_toxic8	$position $playername will receive a fine for taunting today.-choice_DefendPlayer-choice_CriticisePlayer
+postmatch_win1	That was an impressive performance and an incredible atmosphere.-choice_PraiseTeam-choice_PraiseFans
+postmatch_win2	What pleased you most about the win today?-choice_PraiseTeam-choice_PraiseCoaches
+postmatch_win3	This organization has taken some criticism in the past. It must feel good to win.-choice_PraiseFans-choice_PraiseOwner
+postmatch_loss1	What would you put the loss down to today?-choice_CriticiseSelf-choice_CriticiseTeam
+postmatch_loss2	What would you put the loss down to today?-choice_CriticiseTeam-choice_CriticiseOfficials
+postmatch_loss3	What would you put the loss down to today?-choice_CriticiseTeam-choice_CriticiseCoaches
+postmatch_performance_good1	$position $playername was on point today. Were you pleased with his performance?-choice_PraisePlayer-choice_PraiseCoaches
+postmatch_performance_good2	$position $playername had an outstanding game don't you think?-choice_PraisePlayer-choice_PraiseTeam
+postmatch_performance_good3	$position $playername had a great game today. The fans clearly want him to do well.-choice_PraisePlayer-choice_PraiseFans
+postmatch_performance_bad1	What would you say to the fans who were disappointed in $position $playername today?-choice_DefendPlayer-choice_CriticisePlayer
+postmatch_performance_bad2	Would you agree that $position $playername was poor today?-choice_DefendPlayer-choice_CriticiseCoaches
+postmatch_performance_bad3	$position $playername didn't play well today. What are your thoughts on his performance?-choice_CriticisePlayer-choice_CriticiseSelf
+postmatch_question_player_1	A foreign reporter asks:##In which position does $playername play?-choice_qpos_correct-choice_qpos_wrong
+postmatch_question_player_2	A foreign reporter asks:##In which position does $playername play?-choice_qpos_wrong-choice_qpos_correct
+postmatch_question_staff_1	A foreign reporter asks:##Which coordinator is $playername?-choice_qpos_wrong-choice_qpos_correct
+postmatch_question_staff_2	A foreign reporter asks:##Which coordinator is $playername?-choice_qpos_correct-choice_qpos_wrong
+choice_PraiseTeam	Praise#Team
+choice_PraiseCoaches	Praise#Coaching
+choice_PraiseFans	Praise#Fans
+choice_PraiseOwner	Praise#Owner
+choice_PraisePlayer	Praise#Player
+choice_DefendPlayer	Defend#Player
+choice_CriticiseSelf	It's on#me
+choice_CriticisePlayer	Criticize#Player
+choice_CriticiseTeam	Criticize#Team
+choice_CriticiseCoaches	Criticize#Coaching
+choice_CriticiseFans	Criticize#Fans
+choice_CriticiseOfficials	Criticize#Officials
+ui_MoraleDown	Morale Down!
+ui_CreditDown	Coach Credit -$num
+ui_Effect	Effect
+dilemma_ByeWeek1	It's your bye week. Do you want to spend some extra time focusing on the team or talking with the media?-choice_FocusTeam-choice_FocusMedia
+dilemma_ByeWeek2	It's your bye week. You can spend some time discussing plans for the franchise with the owner or you can focus on getting the team ready for the next game?-choice_FocusOwner-choice_FocusTeam
+dilemma_ByeWeek3	It's your bye week. You can spend some extra time talking with the media or working with your coaching staff?-choice_FocusMedia-choice_FocusCoaches
+dilemma_ByeWeek4	It's your bye week. You can spend some time discussing plans for the franchise with the owner or you can work with your coaching staff?-choice_FocusOwner-choice_FocusCoaches
+dilemma_ByeWeek5	It's your bye week. Do you want to spend some extra time training the team or working with your coaches?-choice_FocusTeam-choice_FocusCoaches
+choice_FocusCoaches	Coaches
+choice_FocusTeam	Team
+choice_FocusOwner	Owner
+choice_FocusMedia	Media
+ui_Morale	Morale
+ui_Restart	Restart
+info_Options_DriveDirection	If you use your right hand to aim a pass you may want to set the drive direction to LEFT to avoid obscuring the view of the field.##If you aim with your left hand set the drive direction to RIGHT.
+msg_FacilityDeclineStadium	Your stadium has declined slightly.
+msg_FacilityDeclineTraining	Your training facilities have declined slightly.
+msg_FacilityDeclineRehab	Your rehab facilities have declined slightly.
+news_OaklandMove	The Oakland franchise has moved to Las Vegas.
+ui_stat_games	Games
+ui_stat_attempts	Att
+ui_stat_fgm	Fgm
+ui_stat_fga	Fga
+ui_stat_complete	Cmp
+ui_stat_yards	Yds
+ui_stat_average	Avg
+ui_stat_longest	Lng
+ui_stat_touchdowns	Tds
+ui_stat_fumbles	Fum
+ui_stat_f_fumbles	F.Fum
+ui_stat_int	Int
+ui_stat_sacks	Sck
+ui_stat_receive	Rec
+ui_stat_tackles	Tck
+ui_stat_intsacks	I/S
+ui_Rushing	Rushing
+ui_Receiving	Receiving
+ui_Kicking	Kicking
+ui_Tackling	Tackling
+ui_EndWeek	End of Week
+ui_EndWeekN	End of Week $num
+ui_XP	XP
+tla_Position	Pos
+tla_Attitude	Mor
+attribute_ArmStrength	Arm Strength
+attribute_KickRange	Kick Range
+attribute_KickAccuracy	Kick Accuracy
+attribute_ThrowAccuracy	Throw Accuracy
+attribute_Range	Range
+attribute_Accuracy	Accuracy
+tla_Rating	Rat
+tla_Errors	Err
+condition_0	Injured
+condition_1	Exhausted
+condition_2	Tired
+condition_3	Ok
+condition_4	Good
+condition_5	Great
+condition_6	Perfect
+ui_Condition	Condition
+tla_Condition	Cnd
+tla_At	At
+tla_at	at
+tla_Versus	Vs
+tla_versus	vs
+tla_Injured	Inj
+tla_Injury	Inj
+news_DraftEnded	The draft is over and the season can begin!
+tla_Skill	Skl
+tla_Speed	Spd
+tla_Strength	Str
+tla_Stamina	Stm
+short_LevelXP	XP Lvl
+tla_Age	Age
+tla_Contract	Cnt
+tla_Salary	Sal
+sla_Million	M
+news_SignCoach	$teamname has signed $position $playername.
+news_SignFreeAgent	$teamname has signed $age year old free agent $playername.
+news_ResignedPlayer	$teamname has agreed a $salary deal with $age year old $position $playername.
+news_SignTrade	$teamname has signed $age year old $position $playername from $otherteamname.
+news_SignTrade2	$teamname has signed $age year old $position $playername.
+ui_Year	Year
+ui_Change	Change
+ui_FavoriteTeam	Favorite Team
+ui_YourName	Your Name
+ui_FirstName	First Name
+ui_LastName	Last Name
+ui_NewCareer	New Career
+news_NewCareer	With just $num $weeks left in the regular season $teamname have appointed $coachname as their new head coach.##$lname has worked at the college level for several years and was excelling as the head coach of $randomcollegename before taking the reins at $teamname.
+ui_StartWithFave	Start with favorite team?
+msg_Intro_1	Welcome to $teamname!##This is your home screen. You can tap on the division table to view divisions and the schedule.##When you are ready tap the F.OFFICE button.
+msg_Intro_1_gp	Welcome to $teamname!##This is your home screen. You can use Â² or the - Button to view divisions and the schedule.##When you are ready highlight the F.OFFICE button and press Â¹.
+msg_Intro_1_gp_xb	Welcome to $teamname!##This is your home screen. You can use Â² to view divisions and the schedule.##When you are ready highlight the F.OFFICE button and press Âº.
+msg_Intro_2	From the Front Office you can upgrade facilities and staff.##Tapping an 'i' icon will bring up useful information.
+msg_Intro_2_gp	From the Front Office you can upgrade facilities and staff.##Highlighting an 'i' icon and pressing Â¹ will bring up useful information.
+msg_Intro_2_gp_xb	From the Front Office you can upgrade facilities and staff.##Highlighting an 'i' icon and pressing Âº will bring up useful information.
+msg_Intro_3	I'm sure you want to meet your players so let's check the ROSTER screen.
+msg_Intro_4	These are your key players. You don't need to manage the entire roster, just take care of these guys and everyone else will fall into line.##Tap on a player to open his profile.
+msg_Intro_4_gp	These are your key players. You don't need to manage the entire roster, just take care of these guys and everyone else will fall into line.##Highlight a player and press Â¹ to open his profile.
+msg_Intro_4_gp_xb	These are your key players. You don't need to manage the entire roster, just take care of these guys and everyone else will fall into line.##Highlight a player and press Âº to open his profile.
+msg_Intro_5	Here you can view player details and attributes. Keep an eye on morale and condition.##Poor morale can lead to game penalties and problems off the field.##Low condition can lead to injury or worse - fumbles!
+msg_Intro_6	Before we head into a game let's go over the basics for controlling your players on the field.
+msg_Intro_8	Well done! You have taken charge of $teamname near the end of a difficult season - just enough time to get the hang of things before next season starts.##The $teamname fans are desperate for you to turn things around. Good luck!
+msg_Intro_Passing	First up, passing.##Drag your finger in the opposite direction of the running receiver to aim, then release to throw.
+msg_Intro_PassingBrowser	First up, passing.##Click and drag in the opposite direction of the running receiver to aim, then release to throw.
+msg_Intro_Running	Nice! At the start of each play you can hand the ball off to your Running Back by tapping the blue circle.##Swiping up or down while running will perform a side-step or you can swipe back to slow up.
+msg_Intro_RunningBrowser	Nice! At the start of each play you can hand the ball off to your Running Back by clicking on the blue circle.##Use W or S while running to perform a side-step.
+msg_Intro_Kicking	Great! Diving can help you reach for a first down or touchdown. It also protects against a fumble!##Finally, kicking. Two well timed taps and the ball will fly through the uprights!
+msg_Intro_KickingBrowser	Finally, kicking. Two well timed clicks and the ball will fly through the uprights!
+msg_Intro_SuccessPass	Excellent! This time the quarterback will drop back with the ball slightly...
+msg_Intro_SuccessRun	Well done! You can also run with the the quarterback. You do this by attempting to throw the ball backwards.##Once he is running you can swipe forwards to dive.
+msg_Intro_SuccessRunBrowser	Well done! You can also run with the the quarterback. You do this by attempting to throw the ball backwards.##Once he is running use A or D to slow-up or dive!
+msg_Intro_SuccessKick	Nice kick! Remember, the goal posts are the same width as the hash marks on the field. You can use the faint triangle on the ground as a guide.##Let's try one a bit further out...
+ui_Ok	OK
+ui_Skip	Skip
+injurytype_0	Head
+injurytype_1	Neck
+injurytype_2	Shoulder
+injurytype_3	Arm
+injurytype_4	Wrist
+injurytype_5	Hand
+injurytype_6	Hip
+injurytype_7	Thigh
+injurytype_8	Knee
+injurytype_9	Calf
+injurytype_10	Ankle
+injurytype_11	Foot
+ui_SkipTutorial	Skip Tutorial
+ui_Credits	Design & Code by Simon Read      ***      Art by  Savage @pixelnfl      ***      Music by Heatley Bros      ***      Special thanks to John Holden, @MrSpecialK_, Will Thompson and Five Aces      ***      Also a huge thank you to all the league organizers and players!
+match_TooLow	Too Low
+match_Doink	Doink
+ui_WeatherFX	Weather FX
+ui_Rest	Rest
+ui_Resting	Resting
+msg_Rest	Do you want to rest $pos $playername for the next game?
+ui_Bench	Bench
+ui_Benched	Benched
+ui_BenchPlayer	Bench Player
+msg_Bench	Do you want to bench $pos $playername until further notice?##Benched players will rest until you reinstate them. If you have a back-up player in this position he will play while the starter is benched.
+ui_RestPlayer	Rest Player
+msg_RosterLimit	You have reached the roster limit. You will need to cut players before you can sign new ones.
+ui_Heads	Heads
+ui_Tails	Tails
+msg_CoinToss	Heads or tails?
+msg_CoinTossWin	You won the coin toss! Do you want to receive the kick off or receive?
+msg_CoinTossLoss1	$teamname won the toss and will kick off.
+msg_CoinTossLoss2	$teamname won the toss and will receive the kick off.
+match_KickOff	Kick Off
+match_Receive	Receive
+news_firstmatchWin	$yourname's first game in charge of $teamname1 ended with a win against $teamname2.##The $teamname1 fans will be looking forward to next season now with renewed hope.
+news_firstmatchLoss	$yourname's first game in charge of $teamname1 ended in defeat against $teamname2.##$yourlastname will be left in no doubt about how much work there is to do to turn this team's fortunes around.
+news_firstmatchTie	$yourname managed to avoid defeat after taking charge of $teamname1.##$yourlastname will be hoping for a good draft to boost their playoff chances next season.
+coachtrait_0	None
+coachtrait_1	Experience
+coachtrait_2	Talent Spotter
+coachtrait_3	Motivator
+coachtrait_4	Negotiator
+coachtrait_5	Fan Favorite
+coachtrait_6	Physio
+coachtrait_7	Likeable
+coachtrait_8	Positive
+coachtrait_9	Scout
+info_coachtrait_0	Coaches can have traits which offer various team boosts. This coach does not have a trait.
+info_coachtrait_1	Instant level up for $pos players.
+info_coachtrait_2	Instant potential increase for $pos players.
+info_coachtrait_3	Instant morale boost for $pos players.
+info_coachtrait_4	Toxic players ($pos) have no negative impact on teammates.
+info_coachtrait_5	Fan happiness boosted by +1% per game but takes a hit when fired.
+info_coachtrait_6	Condition boost of 5% per game for $pos players.
+info_coachtrait_7	XP boost of 5% per game for $pos players but team morale suffers when fired.
+info_coachtrait_8	Tiredness has no effect on $pos player morale.
+info_coachtrait_9	Scout 3 extra players during the draft.
+ui_Trait	Trait
+ui_ViewHires	View Hires
+ui_AvailableStaff	Available Staff
+ui_Available	Available
+ui_Current	Current
+ui_Hire	Hire
+ui_Offensive	Offensive
+ui_Defensive	Defensive
+ui_JobOffers	Job Offers
+ui_RejectAll	Reject All
+msg_JobOffers_1	Your raw talent as a head coach is making waves in the league. A few teams are interested in taking you on.
+msg_JobOffers_2	Your reputation is growing! The following teams are interested in taking you on as head coach.
+msg_JobOffers_3	Your reputation is widely acknowledged within the game and there are a number of teams interested in taking you on as head coach.
+msg_JobOffers_4	Your wealth of experience and knowledge of the game make you the most highly sought after coach in the league. Teams are queuing up to take you on as head coach.
+msg_ChooseNewTeam	Do you want to take charge of $teamname?
+news_NewJob1	$oldteamname head coach $yourname has decided it is time to move on and takes charge of $newteamname. The existing coaching staff have all been released.
+news_NewJob2	$yourname has called it a day at $oldteamname and takes on a new challenge as head coach of $newteamname. The previous co-ordinators have decided to move on.
+news_NewJob3	$oldteamname fans may be in shock today as $yourname walks out on them to become the new head coach of $newteamname. Assessing the squad and recruiting new co-ordinators will be a priority upon arrival.
+news_FavoriteTeam1	After taking on the head coach role at $newteamname, $yourlastname declared that it is a dream come true.
+news_FavoriteTeam2	$yourlastname's allegiance to $newteamname has been well documented and the move won't be a surprise to many.
+news_FavoriteTeam3	Rumours of the move have been circulating for some time, with many believing the new role to be $yourlastname's lifelong ambition.
+dilemma_Owner1	The owner has invited you to a board meeting. It clashes with a media function.-choice_MeetOwner-choice_MeetMedia
+dilemma_Owner2	The owner wants you to meet with some shareholders. You had scheduled a meeting with the team.-choice_MeetOwner-choice_MeetTeam
+dilemma_Owner3	The owner wants to discuss future plans with you. You were intending to hold a meeting with your coaching staff.-choice_MeetOwner-choice_MeetCoaches
+choice_MeetOwner	Meet Owner
+choice_MeetCoaches	Meet Coaches
+choice_MeetTeam	Meet Team
+choice_MeetMedia	Meet Media
+dilemma_Coach_BustUp	Your $coachposition has had a major argument with $playername.-choice_SideWithCoach-choice_SideWithPlayer
+choice_SideWithCoach	Side With#Coach
+choice_SideWithPlayer	Side With#Player
+dilemma_RestPlayer	Hey coach, I'm feeling totally exhausted. Can I rest for the next game?-choice_RestYes-choice_RestNo
+choice_RestYes	Yes
+choice_RestNo	No
+dilemma_toxic1	$playername was arrested and later released on bail for possession of an unidentified substance last night.-choice_DefendPlayer-choice_CriticisePlayer
+dilemma_toxic2	$playername was caught on security cameras fighting outside a nightclub in the early hours of the morning.-choice_DefendPlayer-choice_CriticisePlayer
+dilemma_toxic3	Footage has appeared on social media of $playername running up a huge tab in a bar the night before a game.-choice_DefendPlayer-choice_CriticisePlayer
+dilemma_toxic4	Video footage of $playername spending thousands of dollars in a casino has appeared on social media.-choice_DefendPlayer-choice_CriticisePlayer
+dilemma_toxic5	The latest social media scandal is footage of $playername surrounded by women and partying into the early hours of the morning the night before a game.-choice_DefendPlayer-choice_CriticisePlayer
+dilemma_toxic6	Photos of $playername and his friends surrounded by empty bottles on a house boat have appeared on the internet.-choice_DefendPlayer-choice_CriticisePlayer
+dilemma_toxic7	A reporter has accused $playername of sending her unsolicited text messages over the past few weeks.-choice_DefendPlayer-choice_CriticisePlayer
+dilemma_toxic8	$playername has been accused of betting on football games, including one in which he played.-choice_DefendPlayer-choice_CriticisePlayer
+dilemma_toxic9	Security footage has emerged showing $playername fighting with a stranger in a hotel corridor.-choice_DefendPlayer-choice_CriticisePlayer
+dilemma_toxic10	$playername was arrested in his car by an undercover police officer last night.-choice_DefendPlayer-choice_CriticisePlayer
+dilemma_toxic11	$playername made a hit on a defenseless player in training today.-choice_IgnoreFine-choice_FinePlayer
+dilemma_toxic12	$playername made a very late hit on a player in training today.-choice_IgnoreFine-choice_FinePlayer
+dilemma_toxic13	$playername was verbally abusive towards the coaching staff today.-choice_IgnoreFine-choice_FinePlayer
+dilemma_random1	$playername was stopped by the police and given a ticket for speeding last night.-choice_IgnoreFine-choice_FinePlayer
+dilemma_random2	$playername was stopped by the police last night and was found to be in possession of unidentified substances.-choice_IgnoreFine-choice_FinePlayer
+dilemma_random3	The team broke a curfew and were out partying all night! $playername was the ring leader.-choice_FinePlayer-choice_CriticiseTeam
+dilemma_random4	You caught $playername playing Retro Bowl during a team meeting.-choice_FinePlayer-choice_PraisePlayer
+dilemma_late1	$playername was late for training today.-choice_IgnoreFine-choice_FinePlayer
+dilemma_late2	$playername turned up late for a team meeting today.-choice_IgnoreFine-choice_FinePlayer
+dilemma_late3	$playername didn't turn up for a meeting with the coaching staff today.-choice_IgnoreFine-choice_FinePlayer
+dilemma_rookie1	A training ground prank by rookie $playername backfired causing a fight to break out among several players.-choice_IgnoreFine-choice_FinePlayer
+dilemma_rookie2	Rookie $position $playername has been making derogatory comments on social media regarding one of $randomteamname's players.-choice_IgnoreFine-choice_FinePlayer
+dilemma_rookie3	Rookie $position $playername fell asleep while watching game film today.-choice_IgnoreFine-choice_FinePlayer
+dilemma_rookie4	Private footage of rookie $playername and an unidentified woman dressed as a $randomteamname cheerleader has appeared on social media.-choice_IgnoreFine-choice_FinePlayer
+dilemma_rookie5	Security footage of rookie $playername fighting outside a nightclub has appeared on social media.-choice_IgnoreFine-choice_FinePlayer
+dilemma_rookie6	Rookie $playername has hit the headlines after it was revealed that he has been gambling huge sums of money playing online poker.-choice_DefendPlayer-choice_CriticisePlayer
+choice_IgnoreFine	Ignore Fine
+choice_FinePlayer	Fine Player
+news_CharityWork1	$playername has been praised for his charity work supporting $randomcharity.
+news_CharityWork2	$playername featured on national news when he visited a children's hospital today.
+news_CharityWork3	$playername received an award for his work supporting $randomcharity.
+news_CharityWork4	$playername's foundation which supports $randomcharity has received widespread praise.
+news_CharityWork5	$playername has been widely praised for helping to raise money for victims of hurricane $randomfname_female.
+news_CharityWork6	$playername was photographed shaking hands with the president today commemorating the player's foundation which supports $randomcharity.
+btn_ExtendContract	Extend#Contract
+ui_Achievement	Achievement
+ui_Achievements	Achievements
+btn_HallOfFame	Hall of#Fame
+ui_HallOfFame	Hall of Fame
+ui_RetroBowls	Retro Bowls
+ui_RetroBowl	Retro Bowl
+pos_1	1st
+pos_2	2nd
+pos_3	3rd
+pos_4	4th
+finish_Regular	No
+finish_WildCard	Wild Card
+finish_Divisional	Divisional
+finish_Championship	Champ Rnd
+finish_Champ_AFC	AFC Champs
+finish_Champ_NFC	NFC Champs
+finish_SuperBowl	Champions
+ui_History	History
+ui_Finished	Finished
+ui_Record	Record
+iap_RestoreSuccess	Purchase restore successful
+iap_RestoreFail	Purchase restore failed
+iap_PurchaseSuccess	Purchase successful!
+msg_PurchaseUnlock	To continue playing you must purchase the full version for $price.##Do you wish to unlock the full version now?
+msg_StoreConnect_Unlock	To continue playing you must unlock the full version.##Please make sure you are connected to the internet to make a purchase.
+msg_PurchaseCredits	Would you like to purchase $num coaching credits for $price?
+msg_StoreConnect	The store is unavailable. Please make sure you have an internet connection.
+msg_StoreReview	Would you like to rate and review Retro Bowl on the store for $num coach credits?
+ui_Store	Store
+btn_FreeAgents	Free#Agents
+btn_BuyCredits	Buy#Credits
+btn_StaffHires	Staff#Hires
+ui_Unlocked	Unlocked
+ui_Unlock	Unlock
+ui_Purchased	Purchased
+ui_BuyCredits	Buy Credits
+info_freeagents	Players in free agency are available to sign for any team. However, persuading them to join your team will require coaching credits and salary cap space. The quality of the available players depletes over the course of a season.
+ui_Done	Done
+ui_Close	Close
+btn_RestorePurchases	Restore#Purchases
+ui_Connecting	Connecting...
+ui_FavouriteTeam	Favorite Team
+msg_Welcome	Welcome to Retro Bowl!##You are about to start your first season as the head coach of a pro football team.##The path to success is an arduous one but if you believe in yourself and can inspire your team then glory awaits!#
+msg_LimitedVersion	*** Limited Version - $num games remaining ***
+ui_Tip	Tip
+ui_Tips	Tips
+tip_1	Tired players are more likely to fumble the ball
+tip_2	Upgrading your rehab facility will improve energy recovery
+tip_3	After year 2 it is possible to get job offers from other teams
+tip_4	Toxic players bring down the attitudes of team mates after a loss
+tip_5	Players tire more as the season goes on
+tip_6	Strong players produce more stiff arms in a game
+tip_7	Upgrading your stadium will give the fans an immediate boost
+tip_8	Your quarterback's throwing range depletes during a game according to his stamina
+tip_9	Diving to the ground or running out of bounds will protect against fumbles
+tip_10	Tired players will lose morale
+tip_11	Some coaches have traits that can give the team a boost
+tip_12	Resting a tired player will boost his morale
+tip_13	A player's game performance can affect his morale
+tip_14	Poor catching skills lead to bobbles and dropped balls
+tip_15	Improve your rehab facility to reduce the number of injuries suffered
+tip_16	If your QB is getting rushed you need stronger offensive linemen
+tip_17	Coaching Credit isn't cash, it's kudos - it represents how much respect you have from the owner, team and fans
+tip_18	Upgrading your training facility will give players an immediate morale boost
+tip_19	Kick range depletes during a game depending on stamina
+tip_20	Fast players are more likely to hurdle tackles
+tip_21	Running the ball out of bounds will stop the clock
+tip_22	Experienced players are more likely to avoid tackles
+tip_23	Don't be afraid to throw the ball out of bounds to avoid a sack
+tip_24	Tired players get an immediate boost when you improve the rehab facilities
+tip_25	Only players with good catching skills can jump and dive catch the ball
+tip_26	Upgrading your rehab facility will give tired players an immediate boost
+tip_27	Older players lose more energy during a game
+tip_28	Cutting toxic players will improve team morale
+tip_29	You cannot trade between teams after week 8
+tip_30	Sometimes another team will offer you a draft pick for one of your players
+tip_31	Happier coaches level up quicker
+tip_32	Training regimes affect a player's happiness, XP, energy and injury risk
+tip_33	Wherever you see a Â² prompt, you can also use the - Button instead of Â².
+tip_34	You can also use the R Button instead of Â³ to change your mind about punting or kicking.
+tip_35	Press Âº to toggle BULLET THROW on or off. You can also choose a BULLET THROW by holding down the L Button.
+tip_36	If you are using the touch screen then your receiver will always run automatically.
+
+btn_NotInterested	Reject
+ui_SoundFX	Sound FX
+ui_Zoom	Cam Zoom
+ui_Music	Music
+ui_Menus	Menus
+ui_Continuous	Continuous
+ui_EditDetails	Edit Details
+ui_Editor	Editor
+ui_ChooseFace	Choose Face
+msg_ChooseFace	Choose your own profile image!
+ui_Uniforms	Uniforms
+btn_Uniforms	Change#Uniforms
+msg_TickerTwitter	Follow @retro_bowl on Twitter
+msg_TickerReddit	Join us on Reddit! r/RetroBowl
+msg_NextGame	Next game: $teamname1 at $teamname2
+ui_VisitKong	Visit Kongregate.com
+ui_min1	1 Min
+ui_min2	2 Mins
+ui_min3	3 Mins
+ui_QtrLength	Quarters
+ui_RefreshHires	Refresh#Hires
+msg_FreeAgentReset	Do you wish to refresh the free agent list for $num coaching credits?
+msg_StaffReset	Do you wish to refresh the hire list for $num coaching credits?
+msg_ResetNoCredit	You need $num credits to refresh the list.
+msg_ResetTooSoon	You cannot refresh the list again until next week.
+match_Audible	Audible
+match_Audibles	Audibles
+match_AudiblesNone	No audibles
+match_TimeOut	Time Out
+match_TimeOuts	Time Outs
+match_ChangePlay	Change Play
+match_StopClock	Stop Clock
+msg_Audibles	AUDIBLES#Quarterbacks can now change the play formation by calling an audible.##As your quarterback levels up he will be able to call up to 5 audibles per game.
+msg_AudiblesHtml	AUDIBLES#Quarterbacks can now change the play formation by calling an audible.##As your quarterback levels up he will be able to call up to 5 audibles per half.
+msg_TimeOuts	TIME OUTS#When an offensive player is tackled the clock continues to tick for a few seconds.##You now get 2 or 3 time outs per half (depending on quarter length) that allow you to stop the clock ticking.
+ui_Load	Load
+ui_SaveSlot1	Save 1
+ui_SaveSlot2	Save 2
+ui_SaveSlot3	Save 3
+ui_SaveSlot4	Save 4
+ui_SaveSlot5	Save 5
+ui_Delete	Delete
+ui_ExitGame	Exit Game
+msg_DeleteGame	Are you sure you want to delete this save file?##Slot $num#$savedetails
+msg_DeleteGame2	##WARNING!#Existing coaching credits will be lost!
+ui_Remaining	Remaining
+tla_remaining	rem
+ui_TeamEditor	Team Editor
+ui_EditTeams	Edit#Teams
+ui_RestoreDefault	Restore#Default
+ui_ShortName	Short Name
+ui_DefaultName	Default Name
+ui_Helmet	Helmet
+ui_Jersey	Jersey
+ui_Pants	Pants
+ui_Tertiary	Tertiary
+ui_Colors	Colors
+ui_Extra	Extra
+ui_Color	Color
+ui_White	White
+ui_Sleeve	Sleeve
+ui_Stripe	Stripe
+ui_SocksLow	Socks#Low
+ui_SocksHigh	Socks#High
+ui_Away	Away
+ui_Alternate	Alt
+ui_UnlimitedVersion	Unlimited Version
+btn_WeatherOn	On
+btn_WeatherOff	Off
+msg_NeedUnlimited	You need to upgrade to the unlimited version to use this feature. Upgrade now?
+ui_RestoreAllTeams	Restore#All Teams
+msg_RestoreAllTeams	Restore the default names and uniform colors for all teams?
+ui_CopySlot1	Copy Teams#From Save 1
+ui_CopySlot2	Copy Teams#From Save 2
+ui_CopySlot3	Copy Teams#From Save 3
+ui_CopySlot4	Copy Teams#From Save 4
+ui_CopySlot5	Copy Teams#From Save 5
+msg_CopyUniforms	Copy the team names and uniform colors from slot $num?
+msg_UnlimitedFeatures	Upgrade to the unlimited version now!##* Get 25 coaching credits *#* Edit team names and uniforms *#* Edit player names *#* Snow and rain weather effects *#* Kickoff Returns *#* Support development! *
+ui_Upgrade	Upgrade
+ui_Difficulty	Difficulty
+ui_Difficulty0	Dynamic
+ui_Difficulty1	Easy
+ui_Difficulty2	Medium
+ui_Difficulty3	Hard
+ui_Difficulty4	Extreme
+ui_Easy	Easy
+ui_Medium	Medium
+ui_Hard	Hard
+ui_Dynamic	Dynamic
+tla_NetPoints	Net
+tla_Percentage	Pct
+info_Options_Difficulty	When set to DYNAMIC the game difficulty will adjust automatically, getting harder when you win games or easier if you lose. The EXTREME setting makes all opponents play with a 5 star rating regardless of what their actual rating is.
+ui_Save	Save
+ui_ReturnToLoad	Return To#Load Screen
+ui_PlayerHallOfFame	Player Hall of Fame
+msg_RemoveFromHallOfFame	Do you want to remove this player from the Hall of Fame? This cannot be undone.
+ui_Remove	Remove
+ui_PlayerHallOfFameEmpty	To put players in your Hall of Fame you need to tag them in the top-left corner of their profile page.
+msg_HofListTooBig	There is no room in the Hall of Fame! Please remove a player before tagging a new one.
+msg_TradeAwayRookie	Warning! Trading a recently signed player has a negative impact on team morale and your fan relationship!
+ui_RetroBowlWinners	Retro Bowl Winners
+btn_RetroBowls	Retro   #Bowls
+btn_PlayerHallOfFame	Player   #HOF
+ui_YourHistory	Your History
+ui_Records	Records
+ui_RecordReg	Regular Games
+ui_RecordPO	Playoff Games
+ui_POsReached	Playoffs Reached
+ui_WinPctReg	Regular Win Pct
+ui_WinPctPO	Playoff Win Pct
+ui_CoachRecord	Coach Record
+ui_LongPassingPlay	Longest passing play
+ui_LongRushingPlay	Longest rushing play
+ui_LongPassTD	Longest passing TD
+ui_LongRushTD	Longest rushing TD
+ui_LongPassAir	Longest pass (air)
+ui_LongFG	Longest field goal
+ui_BestPassGame	Best passing game
+ui_BestPassSeason	Best passing season
+ui_BestPassCareer	Best passing career
+ui_BestRecGame	Best receiving game
+ui_BestRecSeason	Best receiving season
+ui_BestRecCareer	Best receiving career
+ui_BestRushGame	Best rushing game
+ui_BestRushSeason	Best rushing season
+ui_BestRushCareer	Best rushing career
+ui_MostTDPassesGame	Most TD passes game
+ui_MostTDPassesSeason	Most TD passes season
+ui_MostTDPassesCareer	Most TD passes career
+ui_MostTDRecGame	Most TD receptions game
+ui_MostTDRecSeason	Most TD receptions season
+ui_MostTDRecCareer	Most TD receptions career
+ui_MostTDRushGame	Most rushing TDs game
+ui_MostTDRushSeason	Most rushing TDs season
+ui_MostTDRushCareer	Most rushing TDs career
+ui_BestFGDistGame	Most FG yards game
+ui_BestFGDistSeason	Most FG yards season
+ui_BestFGDistCareer	Most FG yards career
+ui_MostFGGame	Most field goals game
+ui_MostFGSeason	Most field goals season
+ui_MostFGCareer	Most field goals career
+ui_MostTacklesGame	Most tackles game
+ui_MostTacklesSeason	Most tackles season
+ui_MostTacklesCareer	Most tackles career
+ui_MostIntGame	Most interceptions game
+ui_MostIntSeason	Most interceptions season
+ui_MostIntCareer	Most interceptions career
+ui_MostSacksGame	Most sacks game
+ui_MostSacksSeason	Most sacks season
+ui_MostSacksCareer	Most sacks career
+ui_MostFFGame	Most forced fumbles game
+ui_MostFFSeason	Most forced fumbles season
+ui_MostFFCareer	Most forced fumbles career
+ui_MostPointsGame	Most points
+ui_BiggestWin	Biggest win
+ui_BiggestLoss	Biggest loss
+ui_MostTDsGame	Most TDs
+ui_PlayerRecords	Player Records
+btn_PlayerRecords	Player#Records
+ui_YourRecord	Your Record
+ui_Winners	Winners
+ui_NewRecord	New Record
+msg_PlayerRecords	Player records are a new addition to Retro Bowl. Records set previous to this update may not be displayed.
+btn_RestAll	Rest All
+btn_UnrestAll	Clear#Resting
+btn_SalaryCap	Salary Cap
+msg_RecordsReset	Are you sure you want to reset the player records?#This cannot be undone.
+ui_Reset	Reset
+ui_Champions	Champions
+Champions	Champions
+ui_HeadCoach	Head Coach
+ui_TrainingRegime	Training Regime
+ui_TrainingLight	Light
+ui_TrainingNormal	Normal
+ui_TrainingHard	Hard
+info_TrainingRegime	Setting the training regime to HARD will help players to gain more XP per game. However they will consume more energy, be less happy and their risk of injury is increased.##LIGHT training conserves energy, increases morale and reduces injury risk but XP will be gained at a slower rate than normal.
+news_mvp	$position $playername won the league award for Most Valuable Player!
+news_roty	$position $playername won the league award for Rookie of the Year!
+news_opoy	$position $playername won the league award for Offensive Player of the Year!
+news_dpoy	$position $playername won the league award for Defensive Player of the Year!
+ui_SeasonRatings	Season Ratings
+msg_SeasonRatings	A fan poll rated the performance of your team for the season...
+rating_Incredible	Incredible
+rating_Great	Great
+rating_Good	Good
+rating_Ok	Ok
+rating_Poor	Poor
+rating_Terrible	Terrible
+msg_Watermark	$teamname has a record of $record.
+msg_WatermarkHighlight	The highlight of the season was a win of $result against $oppname.
+msg_WatermarkRestarts	Their season has been tainted by $num false starts.
+ui_restarts	restarts
+favorite_DoingWell	With a current record of $record, the $teamname head coach position is in jeopardy. While the owner has given no hint regarding his preferred choice many fans have been quick to name $yourname as the ideal candidate.
+favorite_DoingWellReturn	Fans of $favteamname, currently $record, have been calling for the return of $bossname as head coach. The $favteamname owner has refused to comment on the situation.
+favorite_DoingPoorly	It's no secret that $favteamname owner will be looking for a new head coach at the end of the season but it seems unlikely that $yourname will be amongst the candidates.
+msg_SalaryCheckRoster	You need to reduce your roster to 10 players before you can reduce the salary cap.
+ui_Update	Update
+ui_Roster10	10 Man
+ui_Roster12	12 Man
+msg_FansGood1	The fanbase has grown this season but expectations are higher!
+msg_FansGood2	The fans are expecting great things this season!
+msg_FansGood3	The fans are demanding success this season!
+msg_FansBad1	The fans faith in you has decreased a bit this season.
+msg_FansBad2	Your relationship with the fans has decreased during the off season.
+msg_FansBad3	The fans are expecting a lot from the team this season.
+msg_MoraleDown	Team morale has declined a little during the off season.
+tla_Offense	OF
+tla_Defense	DF
+ui_More	More
+ui_RainFall	Rain Fall
+ui_SnowFall	Snow Fall
+ui_Roof	Roof
+ui_ExtraDetails	Extra Details
+btn_EndZone	End#Zone
+tla_MVP	MVP
+tla_ROTY	ROTY
+tla_DPOY	DPOY
+tla_OPOY	OPOY
+Rings	Rings
+msg_TradeDeadline	The trade deadline is this week.##From next week on, you will only be able to cut players from the team, not trade them away, until next season. You will still be able to hire players from the Free Agents list.
+news_ConferenceChamps	$teamname are the $conference champions!
+btn_Gamepad	Use Gamepad
+ui_Beta	Beta
+info_gamepad_restart	You may need to restart the app after connecting your bluetooth gamepad.##Please note that gamepad support is still in beta and may be unstable.
+ui_Blocking	Blocking
+ui_stat_blocks	Blk
+ui_Conference	Conference
+ui_Division	Division
+ui_Extreme	Extreme
+ui_Weather	Weather
+ui_Replays	Replays
+ui_EveryPlay	Every#Play
+ui_Refresh	Refresh
+btn_BoostMorale	Boost#Morale
+msg_BoostMorale	Do you want to arrange a morale boosting event for $num coach credits?
+msg_BoostMoraleAlreadyDone	You have already had a morale boosting event this week.
+msg_BoostMoraleNoCredit	You need $num coach credits to arrange a morale boosting event.
+msg_BoostMoraleEvent0	The squad had a night out at the cinema.
+msg_BoostMoraleEvent1	You took the team mountain hiking for the day.
+msg_BoostMoraleEvent2	The squad had a great night out at the casino.
+msg_BoostMoraleEvent3	You organized a paintball day.
+msg_BoostMoraleEvent4	The team brought their pets to work for a day!
+msg_BoostMoraleEvent5	You took the entire squad out for a meal.
+msg_BoostMoraleEvent6	You organized a sky diving day for the entire squad!
+msg_BoostMoraleEvent7	The team went hot air ballooning for the day!
+msg_BoostMoraleEvent8	You organized a trip to the grand canyon!
+msg_BoostMoraleEvent9	The team had a night out at the theatre.
+btn_BoostCondition	Boost#Condition
+msg_BoostCondition	Do you want to give the team a condition boost for $num coach credits?
+msg_BoostConditionNoCredit	You need $num coach credits to boost the team condition.
+msg_BoostConditionAlreadyDone	You have already had a boosted the team condition this week.
+msg_BoostConditionEvent0	You organized a spa day.
+msg_BoostConditionEvent1	The team dosed up on vitamins.
+msg_BoostConditionEvent2	You gave the team an extra rest day.
+msg_BoostConditionEvent3	You bring in a renowned health guru to talk to the squad.
+msg_BoostConditionEvent4	Ice baths and oxygen tents all round!
+msg_BoostConditionEvent5	You organized a relaxing day on the beach for the team.
+btn_BoostSalaryCap	Increase#Salary Cap
+msg_BoostSalaryCap	Do you want to persuade the league commissioner to permanently increase the salary cap to $$numm? It will cost you $cost coach credits.
+msg_BoostSalaryNoCredit	You need $cost coach credits to increase the salary cap to $$numm.
+ui_ExtendContract	Extend Contract
+ui_BoostMorale	Boost Morale
+ui_BoostCondition	Boost Condition
+ui_Meeting	Meeting
+msg_MeetingNoCredit	You don't have enough coaching credits!
+msg_MeetingDone	You have already had a meeting with#$playername this week.
+msg_MeetingMorale	Improving $playername's morale will cost $num coach credits.##Do you want to proceed?
+msg_MeetingMoraleNotNeeded	$playername's morale is at maximum.
+msg_MeetingCondition	Improving $playername's condition will cost $num coach credits.##Do you want to proceed?
+msg_MeetingConditionNotNeeded	$playername's condition is at maximum.
+msg_MeetingLevelUpNotNeeded	$playername has reached his potential.
+ui_DelayRetirement	Delay Retirement
+msg_MeetingExtendContract	It will cost $num coach credits to persuade $playername to extend his contract by 1 year.##Do you want to proceed?
+msg_MeetingDelayRetirement	It will cost $num coach credits to persuade $playername to delay his retirement by 1 year.##Do you want to proceed?
+msg_MeetingTooOld	$playername feels he is too old to continue playing.
+ui_Retiring	Retiring
+btn_ScoutPlayer	Scout#Player
+ui_Ball	Ball
+msg_boost_morale1	You give $playername a morale boosting pep-talk!
+msg_boost_morale2	You arrange for the sports psychologist to meet with $playername.
+msg_boost_morale3	$playername feels happier after a reassuring chat with you.
+msg_boost_condition1	You give $playername a day off training.
+msg_boost_condition2	The team doctor gives $playername some relaxation pills.
+msg_boost_condition3	$playername had a great session with a renowned health guru.
+msg_MeetingLevelUp1	Do you want to level up $playername by going through some extra reps on the training field with him?##It will cost you $num coach credits.
+msg_MeetingLevelUp2	Do you want to level up $playername by spending time watching game film with him?##It will cost you $num coach credits.
+msg_MeetingLevelUp3	Do you want to put $playername in touch with a hall of famer in order to pick up some pro tips?##It will cost you $num coach credits.
+ui_Correct	Correct
+ui_Wrong	Wrong
+tla_Week	Wk
+tla_WildCard	WC
+tla_PlayOff	PO
+tla_Champion	CH
+tla_SuperBowl	RB
+match_Punt	Punt
+msg_OnSideKick	Do you want to try an onside kick? You will have a $num% chance of recovering the ball.
+match_OnsideKicking	$teamname try the onside kick!
+match_OnsideKickingPlayer	$playername attempts the onside kick!
+match_OnsideKickingSuccess	And $teamname recovers the ball!
+match_OnsideKickingFail	But $teamname recovers the ball
+ui_Logo	Logo
+ui_Rush	Rush
+comm_stage_KickOffPlayer	$playername kicks off for $teamname
+ui_DataError	A data error has occurred: ($num)
+msg_BulletThrow	BULLET THROW!#You can switch between a low or high pass by tapping the screen with a second finger while aiming.
+msg_BulletThrowHtml	BULLET THROW!#You can switch between a low or high pass by clicking the right mouse button while aiming.
+msg_BulletThrowGamepad	BULLET THROW!#You can switch between a low or high pass by pressing the BULLET THROW button while aiming.
+msg_Intro_PassingGamepad	First up, passing.##Use the LEFT STICK to aim your pass, then press the THROW button.
+msg_Intro_RunningGamepad	Nice! At the start of each play you have the option to hand the ball off to your running back by pressing the HAND OFF button.##Your running back will take the ball and run automatically. You can use the LEFT STICK or JUKE controls to affect his direction.
+msg_Intro_KickingGamepad	Great! Diving can help you reach for a first down or touchdown. It also protects against a fumble!##Finally, kicking. First set the power, then the direction.
+msg_Intro_SuccessPassGamepad	Excellent! This time the quarterback will drop back with the ball slightly...
+msg_Intro_SuccessRunGamepad	You can also run with the the quarterback.##Aim a throw then press the SCRAMBLE button.##While running use the RIGHT STICK or DIVE button to dive with the ball.
+ui_BuyMerch	Retro Bowl#T-Shirts
+ui_RestoreSave	Restore Save Data
+match_TouchBack	Touchback
+btn_MusicBy	Heatley#Bros Music
+btn_MoreGames	More Games#& Links
+btn_YouTube	JefeZhai#Videos
+ui_NewStarGames	New Star Games
+btn_RecordBook	Record#Book
+btn_Leagues	Retro Bowl#Leagues
+poki_CoinBoostMsg	Would you like to double your coaching credits by watching an ad?
+info_UnlimitedVersion	#Unlocks Team Editor,#Weather and Kick Returns#Coaching Credits x 25
+ui_View	View
+ui_Sound	Sound
+ui_AimingInvert	Controller#Throwing
+ui_Normal	Normal
+ui_Inverted	Reversed
+ui_PressStart	Press any button to start
+ui_PressStart_mob	Tap to start
+ui_GamePaused	Game paused
+Map_Tab1_Name	MENUS
+Map_Tab2_Name	KICK / QB
+Map_Tab3_Name	RECEIVER
+Map_Tab1_Line1_L	NAVIGATION
+Map_Tab1_Line1_B1	Left Stick
+Map_Tab1_Line2_L	ACCEPT / CONTINUE
+Map_Tab1_Line2_B1	Â¹
+Map_Tab1_Line3_L	BACK
+Map_Tab1_Line3_B1	Âº
+Map_Tab1_Line4_L	FURTHER OPTIONS
+Map_Tab1_Line4_B1	Â²
+Map_Tab1_Line4_B2	- Button
+Map_Tab1_Line5_L	SCROLL LIST LEFT
+Map_Tab1_Line5_B1	L Button
+Map_Tab1_Line6_L	SCROLL LIST RIGHT
+Map_Tab1_Line6_B1	R Button
+Map_Tab1_Line7_L	SCROLL LIST UP
+Map_Tab1_Line7_B1	Right Stick â†‘
+Map_Tab1_Line7_B2	L Button
+Map_Tab1_Line8_L	SCROLL LIST DOWN
+Map_Tab1_Line8_B1	Right Stick â†“
+Map_Tab1_Line8_B2	R Button
+Map_Tab1_Line9_L	PAUSE GAME
+Map_Tab1_Line9_B1	+ Button
+Map_Tab2_Line1_L	CHOOSE PUNT / FIELD GOAL
+Map_Tab2_Line1_B1	Â³
+Map_Tab2_Line1_B2	R Button
+Map_Tab2_Line2_L	SET FIELD GOAL POWER
+Map_Tab2_Line2_B1	Â¹
+Map_Tab2_Line3_L	SET FIELD GOAL DIRECTION
+Map_Tab2_Line3_B1	Â¹
+Map_Tab2_Line4_L	HAND OFF
+Map_Tab2_Line4_B1	Âº
+Map_Tab2_Line5_L	AUDIBLE (CHANGE PLAY)
+Map_Tab2_Line5_B1	Â²
+Map_Tab2_Line5_B2	- Button
+Map_Tab2_Line6_L	AIM THROW
+Map_Tab2_Line6_B1	Left Stick
+Map_Tab2_Line7_L	THROW
+Map_Tab2_Line7_B1	Â¹
+Map_Tab2_Line8_L	BULLET THROW
+Map_Tab2_Line8_B1	Âº
+Map_Tab2_Line8_B2	L Button (HOLD)
+Map_Tab2_Line9_L	SCRAMBLE
+Map_Tab2_Line9_B1	Â²
+Map_Tab2_Line9_B2	- Button
+Map_Tab3_Line1_L	RUN
+Map_Tab3_Line1_B1	Left Stick
+Map_Tab3_Line2_L	JUKE UP
+Map_Tab3_Line2_B1	Left Stick â†‘ + Âº
+Map_Tab3_Line2_B2	Right Stick â†‘
+Map_Tab3_Line3_L	JUKE DOWN
+Map_Tab3_Line3_B1	Left Stick â†“ + Âº
+Map_Tab3_Line3_B2	Right Stick â†“
+Map_Tab3_Line4_L	STUTTER STEP (DRIVE LEFT)
+Map_Tab3_Line4_B1	Âº
+Map_Tab3_Line4_B2	Right Stick â†’
+Map_Tab3_Line5_L	STUTTER STEP (DRIVE RIGHT)
+Map_Tab3_Line5_B1	Âº
+Map_Tab3_Line5_B2	Right Stick â†
+Map_Tab3_Line6_L	DIVE (DRIVE LEFT)
+Map_Tab3_Line6_B1	Â¹
+Map_Tab3_Line6_B2	Right Stick â†
+Map_Tab3_Line7_L	DIVE (DRIVE RIGHT)
+Map_Tab3_Line7_B1	Â¹
+Map_Tab3_Line7_B2	Right Stick â†’
+Map_Tab3_Line8_L	TIMEOUT (STOP CLOCK)
+Map_Tab3_Line8_B1	Â²
+Map_Tab3_Line8_B2	- Button
+Map_Tab3_Line9_L	TOUCHBACK (IN ENDZONE)
+Map_Tab3_Line9_B1	Â¹
+Map_Tab3_Line9_B2	Âº
+msg_Intro_PassingFail	Drag your finger in the opposite direction of the running receiver to aim, then release to throw.
+msg_Intro_PassingFailBrowser	Click and drag in the opposite direction of the running receiver to aim, then release to throw.
+msg_Intro_PassingFailGamepad	Use the LEFT STICK to aim your pass, then press the THROW button.
+msg_Intro_RunningFail	Hand the ball off to your Running Back by tapping the blue circle.##Swipe up or down while running to side-step or swipe back to slow down.
+msg_Intro_RunningFailBrowser	Hand the ball off to your Running Back by clicking on the blue circle.##Use W or S while running to perform a side-step.
+msg_Intro_RunningFailGamepad	Hand the ball off to your Running Back by pressing the HAND OFF button.##Use the LEFT STICK or JUKE controls to affect his direction.
+msg_Intro_ScrambleFail	To run with the the quarterback throw the ball backwards.##Once he is running swipe forwards to dive.
+msg_Intro_ScrambleFailBrowser	To run with the the quarterback throw the ball backwards.##Once he is running use A or D to slow-up or dive!
+msg_Intro_ScrambleFailGamepad	Aim a throw then press the SCRAMBLE button to run with the quarterback.##While running use the RIGHT STICK or DIVE button to dive with the ball.
+msg_Intro_KickingFail	Set the power as high as you can then aim down the center of the field.
+msg_Intro_KickingFailBrowser	Set the power as high as you can then aim down the center of the field.
+msg_Intro_KickingFailGamepad	Set the power as high as you can then aim down the center of the field.
+ui_Controls	Controls
+ui_GamepadGuides	Controller Guides
+ui_AutoRun	Controller#Auto Run
+msg_Reinstate_OnRoster	This player is already on your roster.
+msg_ReinstatePlayer	Do you want to reinstate $playername until the end of the season? His salary will be $$salarym.
+ui_ccs_purchased	CCs purchased
+tla_Score	Scr
+short_Weather	Wthr
+short_QtrLength	QtrL
+short_Difficulty	Diff
+short_PointDiff	PntD
+short_GamesCareer	Gm/Cr
+short_AttemptsComplete	At/Cm
+short_YardsRush	Yd/Rs
+short_TdsRush	Td/Rs
+short_Turnovers	In/Fm
+short_Sacks	Sks
+short_Fumbles	Fmb
+short_RecepCarries	Rec/Crr
+short_Receptions	Rcp
+short_Average	Avg
+short_Touchdowns	Tds
+short_Blocks	Blocks
+short_Tackles	Tck
+short_Interceptions	Int
+short_ForcedFumbles	F.Fmb
+ui_SeasonReview	Season Review
+ui_Review	Review
+msg_TagMessageHOF	This tag allows you to select a player for your franchise Hall of Fame. His stats will be recorded even after he leaves the team or retires.
+msg_TagMessageKR	WRs, RBs and DBs can be selected as a Kick Returner. They will catch and return the ball from kick offs.##You can only assign one kick returner.
+msg_KickReturns	You can now choose a player to return kickoffs!##Simply head over to the player profile of any RB, WR or DB and select the green tag in the top-left corner of the screen.
+msg_TouchBack	TOUCHBACKS#If your kick returner receives a kickoff in the end zone you can attempt a DIVE to initiate a touchback. You will then start your drive from the 25 yard line.
+btn_KickReturns	Kickoff#Returns
+ui_LongKickReturn	Longest kick return
+ui_MostReturnYardsGame	Most return yards game
+ui_MostReturnYardsSeason	Most return yards season
+ui_MostReturnYardsCareer	Most return yards career
+ui_stat_return_yards	Ret Yds
+ui_stat_return_tds	Ret TDs
+ui_stat_return_longest	Ret Lng
+msg_WelcomeQB	Welcome to Retro Bowl!##You are about to start your first season with a pro football team but first you must choose between FRANCHISE MODE and QB MODE.##In FRANCHISE MODE you will draft players, manage the team and control the players on game day.##In QB MODE you start your career as a newly drafted quarterback. You will need to manage your finances and relationships, and will perform the quarterback role during games.
+info_StartWithFave	Retro Bowl is a game all about building a legacy. If you choose to start with your favorite team that's fine but the story of your career will be a simple one.##Why not start out at a low ranked team and prove yourself before receiving that dream offer from your favorite team?
+btn_QB_Mode	QB Mode
+btn_FranchiseMode	Franchise#Mode
+news_NewCareerQB	With overall pick number $num (round $round) $teamname have drafted quarterback $playername from $randomcollegename.##Head coach $coachname has said he expects $lname to start the season as QB1 and has very high hopes of the player.
+msg_WelcomeQBCO	Welcome to Retro Bowl!##You are about to start your first season with a pro football team but first you must choose between FRANCHISE MODE, QB or COLLEGE MODES.##In FRANCHISE MODE you will draft players, manage the team and control the players on game day.##In QB MODE you start your career as a newly drafted quarterback. You will need to manage your finances and relationships, and will perform the quarterback role during games.##In COLLEGE MODE you TBD
+btn_CO_Mode	College#Mode
+ui_Face	Face
+ui_StarRating	Star Rating
+ui_Coach	Coach
+ui_Life	Life
+ui_Happiness	Happiness
+ui_Relationships	Relationships
+ui_Energy	Energy
+ui_Lifestyle	Lifestyle
+ui_Buy	Buy
+ui_BuyNRG	Buy#NRG
+ui_Drink	Drink
+ui_DrinkNRG	Drink#NRG
+ui_NRG	NRG
+ui_Meet	Meet
+ui_Training	Training
+msg_MeetTeammate	Do you want to meet up with $teammate to increase his happiness?##Your condition will drop to $num%.
+msg_NotEnoughCondition	Your condition is too low to do this right now.
+msg_TeammateMoraleTooHigh	This teammate does not need a morale boost.
+ui_FanHappiness	Fan Happiness
+ui_TeamCondition	Team Condition
+ui_Performance	Performance
+ui_Finances	Finances
+ui_GameRating	Game Rating
+ui_Salary	Salary
+ui_TouchdownBonus	Touchdown Bonus
+ui_Shopping	Shopping
+ui_Items	Items
+ui_Vehicles	Vehicles
+ui_Property	Property
+msg_NotEnoughCash	You cannot afford this.
+msg_ConfirmPurchase	Do you want to buy this item for $price bux?##$itemname##
+msg_ItemDegraded	One of your purchased items needs renewing:##$itemname##
+ui_Casino	Casino
+msg_benched_relationship	Coach relationship $num%
+msg_benched_energy	Energy $num%
+ui_DetailsNotFave	Note: You will not start at your favorite team.
+ui_Negotiate	Negotiate
+ui_Expires	Expires
+ui_contract_expires	End of year $year
+ui_Game	Game
+ui_CurrentContract	Current Contract
+ui_NewContract	New Contract
+contract_Length	Length
+ui_Accept	Accept
+ui_Reject	Reject
+ui_Failed	Failed
+ui_Success	Success
+ui_Request	Request
+instrucs_Negotiate	Guess higher or lower!#Numbers range from 1 to 11
+news_ContractExtended	$age year old $playername has signed a contract extension with $teamname.
+news_ContractNewTeam	$age year old $playername has signed with $teamname.
+news_ContractNewTeamFavorite	$age year old $playername has signed with $teamname! It is well known that $teamname is a team very close to $playerlastname's heart.
+msg_JobOffers_QB_1	Your raw talent is making waves in the league. A few teams are interested in signing you.
+msg_JobOffers_QB_2	Your reputation is growing! The following teams are interested in signing you.
+msg_JobOffers_QB_3	Your reputation is widely acknowledged within the game and there are a number of teams interested in making you their franchise quarterback.
+msg_JobOffers_QB_4	Your wealth of experience and knowledge of the game make you the most highly sought after quarterback in the league. Teams are queuing up to sign you.
+
+msg_NegotiateNo_TooLong	The owner does not want to extend your contract this season.
+msg_NegotiateNo_TooEarly	The owner does not want to negotiate a new contract this early in the season.
+msg_AgentRequestContract	Your agent informs you that $teamname would be will to discuss a contract extension.
+ui_Freshman_Short	Fr
+ui_Sophomore_Short	So
+ui_Junior_Short	Jr
+ui_Senior_Short	Sr
+ui_Freshman	Freshman
+ui_Sophomore	Sophomore
+ui_Junior	Junior
+ui_Senior	Senior
+ui_GPA	GPA
+ui_Suspended	Suspended
+ui_PlayerSuspended	Player Suspended	
+msg_suspended	$playername is suspended##Suspended players will be unavailable until their GPA improves.
+ui_Version_Mode	Franchise
+ui_CO_Label	College
+ui_QB_Label	Quarterback
+ui_FR_Label	Franchise
+ui_Recruitment_Credits	RECRUITMENT CREDITS
+ui_increase	Increase
+ui_wallet	Wallet
+ui_next	Next
+ui_Info	Info
+btn_GenerateCharacter	Random#Character
+msg_NeedBossHead	You need to select a face for yourself.##Tap on the head coach card to choose an image.
+info_HeadCoach	This is you! Your morale is affected by team morale and fan approval. Your star rating will increase with victories!
+ui_RetroBowlRecord	Retro Bowl Record
+tla_RBMVP	RBMVP
+msg_RetroBowlMVPWinner	$playername was named the Retro Bowl MVP!
+btn_Achievements	Achieve-#ments
+ui_RetroBowlWinners	Retro Bowl Winners
+match_SkipTime	Skip Time
+info_Skill_Buff	Players receive a +1 skill buff if morale is exceptional.
+info_Strength_Buff	Players receive a +1 strength buff if their morale is angry or toxic.
+info_Speed_Buff	Players receive a +1 speed buff if they have 100% condition.
+info_Stamina_Buff	Toxic players receive a +1 stamina buff.
+match_GoForIt	Go For It
+ui_Sim	Sim
+ui_SimRecord	Sim Game Record
+ui_Seasons	Seasons
+ui_FullSeasons	Full Seasons
+ui_SeasonsNoSim	Seasons (no sim games)
+ui_TotalGames	Games Played
+ui_SimGames	Sim Games
+short_STAFF_DF	DF Coord
+short_STAFF_OF	OF Coord
+comm_stage_team_win	Overtime win!
+comm_stage_overtime_loss	Overtime loss!

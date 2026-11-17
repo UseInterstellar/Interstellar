@@ -1,7 +1,8 @@
-// Dev defaults. The build regenerates this file with the randomized paths.
+// Browser-side proxy libraries. Served untouched from the static public root;
+// `pnpm vendor` copies them here from node_modules.
 self.__deps = {
-  baremux: "/baremux/index.mjs",
-  baremuxWorker: "/baremux/worker.js",
-  epoxy: "/epoxy/index.mjs",
-  libcurl: "/libcurl/index.mjs",
+  baremux: "/assets/baremux/index.mjs",
+  baremuxWorker: "/assets/baremux/worker.js",
+  epoxy: "/assets/epoxy/index.mjs",
+  libcurl: "/assets/libcurl/index.mjs",
 };

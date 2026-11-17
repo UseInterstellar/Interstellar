@@ -7,6 +7,9 @@ test/
 tests/
 analysis/
 
+# Vendored games under static/gh-games ship their own build/ and data/ folders
+!static/gh-games/**
+
 .idea
 .DS_Store
 .hintrc

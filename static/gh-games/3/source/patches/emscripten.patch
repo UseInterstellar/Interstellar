@@ -1,0 +1,47 @@
+--- upstream/emscripten/src/library_webgl.js	2021-03-05 12:32:24.000000000 -0800
++++ upstream/emscripten/src/library_webgl.js	2022-05-02 10:19:02.461667100 -0700
+@@ -3486,6 +3486,7 @@
+   glDrawElements: function(mode, count, type, indices) {
+ #if FULL_ES2
+     var buf;
++    var vertices = 0;
+     if (!GLctx.currentElementArrayBufferBinding) {
+       var size = GL.calcBufLength(1, type, 0, count);
+       buf = GL.getTempIndexBuffer(size);
+@@ -3493,12 +3494,26 @@
+       GLctx.bufferSubData(0x8893 /*GL_ELEMENT_ARRAY_BUFFER*/,
+                                0,
+                                HEAPU8.subarray(indices, indices + size));
++      
++      // Detecting vertex count if attributes' data should be loaded
++      var array_classes = {
++        '5121' /* GL_UNSIGNED_BYTE */: Uint8Array,
++        '5123' /* GL_UNSIGNED_SHORT */: Uint16Array,
++        '5125' /* GL_UNSIGNED_INT */: Uint32Array};
++      for (var i = 0; i < GL.currentContext.maxVertexAttribs; i++) {
++        var cb = GL.currentContext.clientBuffers[i];
++        if (cb.clientside && cb.enabled && array_classes[type]) {
++          vertices = Math.max.apply(null, new array_classes[type](HEAPU8.buffer, indices, count)) + 1;
++          break;
++        }
++      }
++      
+       // the index is now 0
+       indices = 0;
+     }
+ 
+     // bind any client-side buffers
+-    GL.preDrawHandleClientVertexAttribBindings(count);
++    GL.preDrawHandleClientVertexAttribBindings(vertices);
+ #endif
+ 
+     GLctx.drawElements(mode, count, type, indices);
+@@ -3716,7 +3731,7 @@
+   glMapBufferRange__deps: ['$emscriptenWebGLGetBufferBinding', '$emscriptenWebGLValidateMapBufferTarget'],
+   glMapBufferRange: function(target, offset, length, access) {
+     if (access != 0x1A && access != 0xA) {
+-      err("glMapBufferRange is only supported when access is MAP_WRITE|INVALIDATE_BUFFER");
++      warnOnce("glMapBufferRange is only supported when access is MAP_WRITE|INVALIDATE_BUFFER");
+       return 0;
+     }
+ 

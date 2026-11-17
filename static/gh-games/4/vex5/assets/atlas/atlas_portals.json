@@ -1,0 +1,236 @@
+{"frames": [
+
+{
+	"filename": "portal_blue0.png",
+	"frame": {"x":171,"y":85,"w":72,"h":78},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":15,"y":3,"w":72,"h":78},
+	"sourceSize": {"w":109,"h":92}
+},
+{
+	"filename": "portal_blue1.png",
+	"frame": {"x":245,"y":82,"w":57,"h":65},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":22,"y":8,"w":57,"h":65},
+	"sourceSize": {"w":109,"h":92}
+},
+{
+	"filename": "portal_blue10.png",
+	"frame": {"x":2,"y":94,"w":88,"h":90},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":8,"y":2,"w":88,"h":90},
+	"sourceSize": {"w":109,"h":92}
+},
+{
+	"filename": "portal_blue11.png",
+	"frame": {"x":99,"y":2,"w":76,"h":81},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":16,"y":7,"w":76,"h":81},
+	"sourceSize": {"w":109,"h":92}
+},
+{
+	"filename": "portal_blue12.png",
+	"frame": {"x":92,"y":94,"w":77,"h":82},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":12,"y":1,"w":77,"h":82},
+	"sourceSize": {"w":109,"h":92}
+},
+{
+	"filename": "portal_blue13.png",
+	"frame": {"x":177,"y":2,"w":72,"h":78},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":15,"y":3,"w":72,"h":78},
+	"sourceSize": {"w":109,"h":92}
+},
+{
+	"filename": "portal_blue2.png",
+	"frame": {"x":196,"y":165,"w":76,"h":73},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":10,"w":76,"h":73},
+	"sourceSize": {"w":109,"h":92}
+},
+{
+	"filename": "portal_blue3.png",
+	"frame": {"x":93,"y":178,"w":101,"h":65},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":5,"y":14,"w":101,"h":65},
+	"sourceSize": {"w":109,"h":92}
+},
+{
+	"filename": "portal_blue4.png",
+	"frame": {"x":2,"y":186,"w":89,"h":61},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":11,"y":14,"w":89,"h":61},
+	"sourceSize": {"w":109,"h":92}
+},
+{
+	"filename": "portal_blue5.png",
+	"frame": {"x":437,"y":2,"w":78,"h":59},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":16,"y":14,"w":78,"h":59},
+	"sourceSize": {"w":109,"h":92}
+},
+{
+	"filename": "portal_blue6.png",
+	"frame": {"x":304,"y":65,"w":87,"h":59},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":21,"y":14,"w":87,"h":59},
+	"sourceSize": {"w":109,"h":92}
+},
+{
+	"filename": "portal_blue7.png",
+	"frame": {"x":355,"y":2,"w":80,"h":59},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":26,"y":14,"w":80,"h":59},
+	"sourceSize": {"w":109,"h":92}
+},
+{
+	"filename": "portal_blue8.png",
+	"frame": {"x":326,"y":126,"w":74,"h":59},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":26,"y":14,"w":74,"h":59},
+	"sourceSize": {"w":109,"h":92}
+},
+{
+	"filename": "portal_blue9.png",
+	"frame": {"x":2,"y":2,"w":95,"h":90},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":2,"w":95,"h":90},
+	"sourceSize": {"w":109,"h":92}
+},
+{
+	"filename": "portal_blue_disabled0.png",
+	"frame": {"x":326,"y":187,"w":50,"h":59},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":26,"y":14,"w":50,"h":59},
+	"sourceSize": {"w":109,"h":92}
+},
+{
+	"filename": "portal_blue_disabled1.png",
+	"frame": {"x":303,"y":2,"w":50,"h":61},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":26,"y":12,"w":50,"h":61},
+	"sourceSize": {"w":109,"h":92}
+},
+{
+	"filename": "portal_blue_disabled10.png",
+	"frame": {"x":378,"y":187,"w":50,"h":59},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":26,"y":14,"w":50,"h":59},
+	"sourceSize": {"w":109,"h":92}
+},
+{
+	"filename": "portal_blue_disabled11.png",
+	"frame": {"x":274,"y":149,"w":50,"h":60},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":26,"y":14,"w":50,"h":60},
+	"sourceSize": {"w":109,"h":92}
+},
+{
+	"filename": "portal_blue_disabled12.png",
+	"frame": {"x":393,"y":63,"w":50,"h":59},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":26,"y":14,"w":50,"h":59},
+	"sourceSize": {"w":109,"h":92}
+},
+{
+	"filename": "portal_blue_disabled13.png",
+	"frame": {"x":402,"y":124,"w":50,"h":59},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":26,"y":14,"w":50,"h":59},
+	"sourceSize": {"w":109,"h":92}
+},
+{
+	"filename": "portal_blue_disabled2.png",
+	"frame": {"x":251,"y":2,"w":50,"h":63},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":26,"y":10,"w":50,"h":63},
+	"sourceSize": {"w":109,"h":92}
+},
+{
+	"filename": "portal_blue_disabled3.png",
+	"frame": {"x":445,"y":63,"w":50,"h":59},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":26,"y":14,"w":50,"h":59},
+	"sourceSize": {"w":109,"h":92}
+},
+{
+	"filename": "portal_blue_disabled4.png",
+	"frame": {"x":430,"y":185,"w":50,"h":59},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":26,"y":14,"w":50,"h":59},
+	"sourceSize": {"w":109,"h":92}
+},
+{
+	"filename": "portal_blue_disabled5.png",
+	"frame": {"x":517,"y":2,"w":48,"h":59},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":14,"w":48,"h":59},
+	"sourceSize": {"w":109,"h":92}
+},
+{
+	"filename": "portal_blue_disabled6.png",
+	"frame": {"x":506,"y":124,"w":48,"h":59},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":14,"w":48,"h":59},
+	"sourceSize": {"w":109,"h":92}
+},
+{
+	"filename": "portal_blue_disabled7.png",
+	"frame": {"x":454,"y":124,"w":50,"h":59},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":26,"y":14,"w":50,"h":59},
+	"sourceSize": {"w":109,"h":92}
+},
+{
+	"filename": "portal_blue_disabled8.png",
+	"frame": {"x":497,"y":63,"w":50,"h":59},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":26,"y":14,"w":50,"h":59},
+	"sourceSize": {"w":109,"h":92}
+},
+{
+	"filename": "portal_blue_disabled9.png",
+	"frame": {"x":482,"y":185,"w":50,"h":59},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":26,"y":14,"w":50,"h":59},
+	"sourceSize": {"w":109,"h":92}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "atlas_portals.png",
+	"format": "RGBA8888",
+	"size": {"w":567,"h":249},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:254c64ca2891447e32230c3bec52836b:2f67c55ae44eb0511843b7dbde6b04eb:74ac886259227a7e1afcf942dcf44aba$"
+}
+}

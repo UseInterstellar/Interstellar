@@ -1,0 +1,64 @@
+diff --git a/Makefile b/Makefile
+index f2900d6..ba3ca07 100644
+--- a/Makefile
++++ b/Makefile
+@@ -303,8 +303,9 @@ else ifeq ($(platform), libnx)
+ # Emscripten
+ else ifeq ($(platform), emscripten)
+    TARGET := $(TARGET_NAME)_libretro_$(platform).bc
+-   STATIC_LINKING = 1
+    THREADED_DSP = 0
++   HAVE_CHD = 1
++   STATIC_LINKING = 1
+ 
+ # Windows MSVC 2003 Xbox 1
+ else ifeq ($(platform), xbox1_msvc2003)
+@@ -556,7 +557,12 @@ ifeq ($(DEBUG), 1)
+    endif
+       CFLAGS += -DDEBUG
+ else
+-   OPT        = -O2
++   ifeq ($(platform), emscripten)
++      OPT        = -O3
++   else
++      OPT        = -O2
++   endif
++
+    CFLAGS    += -DNDEBUG
+ 
+    ifneq (,$(findstring msvc,$(platform)))
+diff --git a/libretro-common/file/file_path.c b/libretro-common/file/file_path.c
+index 9b85d76..c3048a7 100644
+--- a/libretro-common/file/file_path.c
++++ b/libretro-common/file/file_path.c
+@@ -869,7 +869,7 @@ void fill_pathname_resolve_relative(char *out_path,
+  * Makes sure not to get  two consecutive slashes
+  * between directory and path.
+  **/
+-void fill_pathname_join(char *out_path,
++size_t fill_pathname_join(char *out_path,
+       const char *dir, const char *path, size_t size)
+ {
+    if (out_path != dir)
+@@ -878,7 +878,7 @@ void fill_pathname_join(char *out_path,
+    if (*out_path)
+       fill_pathname_slash(out_path, size);
+ 
+-   strlcat(out_path, path, size);
++   return strlcat(out_path, path, size);
+ }
+ 
+ void fill_pathname_join_special_ext(char *out_path,
+diff --git a/libretro-common/include/file/file_path.h b/libretro-common/include/file/file_path.h
+index 0dcb7c1..a6bebde 100644
+--- a/libretro-common/include/file/file_path.h
++++ b/libretro-common/include/file/file_path.h
+@@ -368,7 +368,7 @@ void fill_pathname_resolve_relative(char *out_path, const char *in_refpath,
+  * Makes sure not to get  two consecutive slashes
+  * between directory and path.
+  **/
+-void fill_pathname_join(char *out_path, const char *dir,
++size_t fill_pathname_join(char *out_path, const char *dir,
+       const char *path, size_t size);
+ 
+ void fill_pathname_join_special_ext(char *out_path,

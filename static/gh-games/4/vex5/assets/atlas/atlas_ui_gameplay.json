@@ -1,0 +1,740 @@
+{"frames": [
+
+{
+	"filename": "bronze.png",
+	"frame": {"x":502,"y":612,"w":23,"h":24},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":23,"h":24},
+	"sourceSize": {"w":23,"h":24}
+},
+{
+	"filename": "cr_container.png",
+	"frame": {"x":2,"y":452,"w":476,"h":103},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":476,"h":103},
+	"sourceSize": {"w":476,"h":103}
+},
+{
+	"filename": "cr_floor_container.png",
+	"frame": {"x":237,"y":557,"w":180,"h":86},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":180,"h":86},
+	"sourceSize": {"w":180,"h":86}
+},
+{
+	"filename": "cr_level_container.png",
+	"frame": {"x":2,"y":557,"w":233,"h":89},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":233,"h":89},
+	"sourceSize": {"w":233,"h":89}
+},
+{
+	"filename": "cr_time_container.png",
+	"frame": {"x":416,"y":224,"w":153,"h":45},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":153,"h":45},
+	"sourceSize": {"w":154,"h":47}
+},
+{
+	"filename": "cr_tophy_lock.png",
+	"frame": {"x":373,"y":645,"w":48,"h":51},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":4,"w":48,"h":51},
+	"sourceSize": {"w":54,"h":60}
+},
+{
+	"filename": "cr_tophy_unlock.png",
+	"frame": {"x":426,"y":692,"w":48,"h":51},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":4,"w":48,"h":51},
+	"sourceSize": {"w":54,"h":60}
+},
+{
+	"filename": "gold.png",
+	"frame": {"x":549,"y":271,"w":23,"h":24},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":23,"h":24},
+	"sourceSize": {"w":23,"h":24}
+},
+{
+	"filename": "gp_achievement_container.png",
+	"frame": {"x":2,"y":648,"w":186,"h":121},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":29,"y":13,"w":186,"h":121},
+	"sourceSize": {"w":237,"h":134}
+},
+{
+	"filename": "gp_bar.png",
+	"frame": {"x":2,"y":1005,"w":81,"h":9},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":81,"h":9},
+	"sourceSize": {"w":81,"h":9}
+},
+{
+	"filename": "gp_bar_bg.png",
+	"frame": {"x":85,"y":1005,"w":81,"h":9},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":81,"h":9},
+	"sourceSize": {"w":81,"h":9}
+},
+{
+	"filename": "gp_bronze_text.png",
+	"frame": {"x":419,"y":619,"w":81,"h":19},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":8,"y":4,"w":81,"h":19},
+	"sourceSize": {"w":96,"h":26}
+},
+{
+	"filename": "gp_clear_text.png",
+	"frame": {"x":483,"y":432,"w":91,"h":19},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":4,"w":91,"h":19},
+	"sourceSize": {"w":96,"h":26}
+},
+{
+	"filename": "gp_difficulty_container.png",
+	"frame": {"x":2,"y":2,"w":412,"h":340},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":4,"y":4,"w":412,"h":340},
+	"sourceSize": {"w":416,"h":348}
+},
+{
+	"filename": "gp_extreme_button.png",
+	"frame": {"x":2,"y":849,"w":177,"h":50},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":177,"h":50},
+	"sourceSize": {"w":177,"h":50}
+},
+{
+	"filename": "gp_gold_text.png",
+	"frame": {"x":362,"y":742,"w":57,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":20,"y":4,"w":57,"h":20},
+	"sourceSize": {"w":96,"h":26}
+},
+{
+	"filename": "gp_hard_button.png",
+	"frame": {"x":2,"y":901,"w":177,"h":50},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":177,"h":50},
+	"sourceSize": {"w":177,"h":50}
+},
+{
+	"filename": "gp_level_container.png",
+	"frame": {"x":416,"y":2,"w":157,"h":91},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":157,"h":91},
+	"sourceSize": {"w":157,"h":91}
+},
+{
+	"filename": "gp_none_text.png",
+	"frame": {"x":421,"y":745,"w":56,"h":19},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":20,"y":4,"w":56,"h":19},
+	"sourceSize": {"w":96,"h":26}
+},
+{
+	"filename": "gp_normal_button.png",
+	"frame": {"x":2,"y":953,"w":177,"h":50},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":177,"h":50},
+	"sourceSize": {"w":177,"h":50}
+},
+{
+	"filename": "gp_pause_button.png",
+	"frame": {"x":532,"y":453,"w":42,"h":44},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":1,"w":42,"h":44},
+	"sourceSize": {"w":46,"h":47}
+},
+{
+	"filename": "gp_perfect_text.png",
+	"frame": {"x":243,"y":749,"w":82,"h":19},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":7,"y":4,"w":82,"h":19},
+	"sourceSize": {"w":96,"h":26}
+},
+{
+	"filename": "gp_ranking_container.png",
+	"frame": {"x":237,"y":645,"w":134,"h":42},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":134,"h":42},
+	"sourceSize": {"w":134,"h":42}
+},
+{
+	"filename": "gp_silver_text.png",
+	"frame": {"x":448,"y":791,"w":68,"h":19},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":14,"y":4,"w":68,"h":19},
+	"sourceSize": {"w":96,"h":26}
+},
+{
+	"filename": "gp_stuck_button.png",
+	"frame": {"x":416,"y":95,"w":156,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":2,"w":156,"h":64},
+	"sourceSize": {"w":159,"h":68}
+},
+{
+	"filename": "gp_time_container.png",
+	"frame": {"x":416,"y":161,"w":155,"h":61},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":155,"h":61},
+	"sourceSize": {"w":155,"h":61}
+},
+{
+	"filename": "gp_time_container1.png",
+	"frame": {"x":416,"y":271,"w":131,"h":55},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":131,"h":55},
+	"sourceSize": {"w":131,"h":55}
+},
+{
+	"filename": "gp_tnt.png",
+	"frame": {"x":2,"y":771,"w":172,"h":76},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":172,"h":76},
+	"sourceSize": {"w":172,"h":76}
+},
+{
+	"filename": "gp_tnt_bar0.png",
+	"frame": {"x":448,"y":812,"w":81,"h":9},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":81,"h":9},
+	"sourceSize": {"w":81,"h":9}
+},
+{
+	"filename": "gp_tnt_bar1.png",
+	"frame": {"x":233,"y":814,"w":81,"h":9},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":81,"h":9},
+	"sourceSize": {"w":81,"h":9}
+},
+{
+	"filename": "lvl_hub_container.png",
+	"frame": {"x":2,"y":344,"w":479,"h":106},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":479,"h":106},
+	"sourceSize": {"w":480,"h":107}
+},
+{
+	"filename": "lvl_hub_death_lock.png",
+	"frame": {"x":533,"y":499,"w":39,"h":42},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":2,"w":39,"h":42},
+	"sourceSize": {"w":44,"h":46}
+},
+{
+	"filename": "lvl_hub_death_unlock.png",
+	"frame": {"x":302,"y":770,"w":39,"h":42},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":2,"w":39,"h":42},
+	"sourceSize": {"w":44,"h":46}
+},
+{
+	"filename": "lvl_hub_hardcore_lock.png",
+	"frame": {"x":528,"y":662,"w":46,"h":45},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":5,"y":3,"w":46,"h":45},
+	"sourceSize": {"w":56,"h":50}
+},
+{
+	"filename": "lvl_hub_hardcore_unlock.png",
+	"frame": {"x":528,"y":709,"w":46,"h":45},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":5,"y":3,"w":46,"h":45},
+	"sourceSize": {"w":56,"h":50}
+},
+{
+	"filename": "lvl_hub_star_lock.png",
+	"frame": {"x":480,"y":510,"w":51,"h":48},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":0,"w":51,"h":48},
+	"sourceSize": {"w":56,"h":50}
+},
+{
+	"filename": "lvl_hub_star_unlock.png",
+	"frame": {"x":527,"y":612,"w":47,"h":48},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":4,"y":1,"w":47,"h":48},
+	"sourceSize": {"w":56,"h":50}
+},
+{
+	"filename": "lvl_hub_trophy_lock.png",
+	"frame": {"x":343,"y":770,"w":50,"h":44},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":4,"w":50,"h":44},
+	"sourceSize": {"w":56,"h":50}
+},
+{
+	"filename": "lvl_hub_trophy_unlock.png",
+	"frame": {"x":190,"y":764,"w":51,"h":45},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":3,"w":51,"h":45},
+	"sourceSize": {"w":56,"h":50}
+},
+{
+	"filename": "op_close_button.png",
+	"frame": {"x":176,"y":811,"w":34,"h":33},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":2,"w":34,"h":33},
+	"sourceSize": {"w":38,"h":37}
+},
+{
+	"filename": "perfect.png",
+	"frame": {"x":327,"y":740,"w":33,"h":28},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":33,"h":28},
+	"sourceSize": {"w":33,"h":28}
+},
+{
+	"filename": "silver.png",
+	"frame": {"x":549,"y":297,"w":23,"h":24},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":23,"h":24},
+	"sourceSize": {"w":23,"h":24}
+},
+{
+	"filename": "trop_act10_unlock.png",
+	"frame": {"x":479,"y":560,"w":50,"h":50},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":50,"h":50},
+	"sourceSize": {"w":50,"h":50}
+},
+{
+	"filename": "trop_act1_unlock.png",
+	"frame": {"x":423,"y":640,"w":50,"h":50},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":50,"h":50},
+	"sourceSize": {"w":50,"h":50}
+},
+{
+	"filename": "trop_act2_unlock.png",
+	"frame": {"x":475,"y":640,"w":50,"h":50},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":50,"h":50},
+	"sourceSize": {"w":50,"h":50}
+},
+{
+	"filename": "trop_act3_unlock.png",
+	"frame": {"x":476,"y":692,"w":50,"h":50},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":50,"h":50},
+	"sourceSize": {"w":50,"h":50}
+},
+{
+	"filename": "trop_act4_unlock.png",
+	"frame": {"x":181,"y":846,"w":50,"h":50},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":50,"h":50},
+	"sourceSize": {"w":50,"h":50}
+},
+{
+	"filename": "trop_act5_unlock.png",
+	"frame": {"x":181,"y":898,"w":50,"h":50},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":50,"h":50},
+	"sourceSize": {"w":50,"h":50}
+},
+{
+	"filename": "trop_act6_unlock.png",
+	"frame": {"x":181,"y":950,"w":50,"h":50},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":50,"h":50},
+	"sourceSize": {"w":50,"h":50}
+},
+{
+	"filename": "trop_act7_unlock.png",
+	"frame": {"x":233,"y":825,"w":50,"h":50},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":50,"h":50},
+	"sourceSize": {"w":50,"h":50}
+},
+{
+	"filename": "trop_act8_unlock.png",
+	"frame": {"x":233,"y":877,"w":50,"h":50},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":50,"h":50},
+	"sourceSize": {"w":50,"h":50}
+},
+{
+	"filename": "trop_act9_unlock.png",
+	"frame": {"x":233,"y":929,"w":50,"h":50},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":50,"h":50},
+	"sourceSize": {"w":50,"h":50}
+},
+{
+	"filename": "trop_completion1_unlock.png",
+	"frame": {"x":367,"y":698,"w":57,"h":42},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":4,"w":57,"h":42},
+	"sourceSize": {"w":62,"h":50}
+},
+{
+	"filename": "trop_completion2_unlock.png",
+	"frame": {"x":243,"y":770,"w":57,"h":42},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":4,"w":57,"h":42},
+	"sourceSize": {"w":62,"h":50}
+},
+{
+	"filename": "trop_completion3_unlock.png",
+	"frame": {"x":483,"y":380,"w":58,"h":50},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":0,"w":58,"h":50},
+	"sourceSize": {"w":62,"h":50}
+},
+{
+	"filename": "trop_completion4_unlock.png",
+	"frame": {"x":303,"y":689,"w":62,"h":49},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":62,"h":49},
+	"sourceSize": {"w":62,"h":50}
+},
+{
+	"filename": "trop_death1_unlock.png",
+	"frame": {"x":533,"y":543,"w":39,"h":42},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":39,"h":42},
+	"sourceSize": {"w":39,"h":42}
+},
+{
+	"filename": "trop_death2_unlock.png",
+	"frame": {"x":531,"y":803,"w":39,"h":42},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":39,"h":42},
+	"sourceSize": {"w":39,"h":42}
+},
+{
+	"filename": "trop_death3_unlock.png",
+	"frame": {"x":479,"y":964,"w":39,"h":42},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":39,"h":42},
+	"sourceSize": {"w":39,"h":42}
+},
+{
+	"filename": "trop_death4_unlock.png",
+	"frame": {"x":491,"y":847,"w":39,"h":42},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":39,"h":42},
+	"sourceSize": {"w":39,"h":42}
+},
+{
+	"filename": "trop_death5_unlock.png",
+	"frame": {"x":491,"y":891,"w":39,"h":42},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":39,"h":42},
+	"sourceSize": {"w":39,"h":42}
+},
+{
+	"filename": "trop_death6_unlock.png",
+	"frame": {"x":532,"y":847,"w":39,"h":42},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":39,"h":42},
+	"sourceSize": {"w":39,"h":42}
+},
+{
+	"filename": "trop_death7_unlock.png",
+	"frame": {"x":532,"y":891,"w":39,"h":42},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":39,"h":42},
+	"sourceSize": {"w":39,"h":42}
+},
+{
+	"filename": "trop_death8_unlock.png",
+	"frame": {"x":520,"y":935,"w":39,"h":42},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":39,"h":42},
+	"sourceSize": {"w":39,"h":42}
+},
+{
+	"filename": "trop_death9_unlock.png",
+	"frame": {"x":520,"y":979,"w":39,"h":42},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":39,"h":42},
+	"sourceSize": {"w":39,"h":42}
+},
+{
+	"filename": "trop_hard_mode1_unlock.png",
+	"frame": {"x":479,"y":744,"w":45,"h":45},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":1,"w":45,"h":45},
+	"sourceSize": {"w":48,"h":48}
+},
+{
+	"filename": "trop_hard_mode2_unlock.png",
+	"frame": {"x":479,"y":744,"w":45,"h":45},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":1,"w":45,"h":45},
+	"sourceSize": {"w":48,"h":48}
+},
+{
+	"filename": "trop_hard_mode3_unlock.png",
+	"frame": {"x":526,"y":756,"w":45,"h":45},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":1,"w":45,"h":45},
+	"sourceSize": {"w":48,"h":48}
+},
+{
+	"filename": "trop_hard_mode4_unlock.png",
+	"frame": {"x":285,"y":977,"w":45,"h":45},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":1,"w":45,"h":45},
+	"sourceSize": {"w":48,"h":48}
+},
+{
+	"filename": "trop_hard_mode5_unlock.png",
+	"frame": {"x":332,"y":977,"w":45,"h":45},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":1,"w":45,"h":45},
+	"sourceSize": {"w":48,"h":48}
+},
+{
+	"filename": "trop_hard_mode6_unlock.png",
+	"frame": {"x":432,"y":966,"w":45,"h":45},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":1,"w":45,"h":45},
+	"sourceSize": {"w":48,"h":48}
+},
+{
+	"filename": "trop_hard_mode7_unlock.png",
+	"frame": {"x":444,"y":823,"w":45,"h":45},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":1,"w":45,"h":45},
+	"sourceSize": {"w":48,"h":48}
+},
+{
+	"filename": "trop_hard_mode8_unlock.png",
+	"frame": {"x":444,"y":870,"w":45,"h":45},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":1,"w":45,"h":45},
+	"sourceSize": {"w":48,"h":48}
+},
+{
+	"filename": "trop_hard_mode9_unlock.png",
+	"frame": {"x":444,"y":917,"w":45,"h":45},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":1,"w":45,"h":45},
+	"sourceSize": {"w":48,"h":48}
+},
+{
+	"filename": "trop_star10_unlock.png",
+	"frame": {"x":395,"y":766,"w":51,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":51,"h":48},
+	"sourceSize": {"w":51,"h":48}
+},
+{
+	"filename": "trop_star1_unlock.png",
+	"frame": {"x":285,"y":877,"w":51,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":51,"h":48},
+	"sourceSize": {"w":51,"h":48}
+},
+{
+	"filename": "trop_star2_unlock.png",
+	"frame": {"x":285,"y":927,"w":51,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":51,"h":48},
+	"sourceSize": {"w":51,"h":48}
+},
+{
+	"filename": "trop_star3_unlock.png",
+	"frame": {"x":337,"y":816,"w":51,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":51,"h":48},
+	"sourceSize": {"w":51,"h":48}
+},
+{
+	"filename": "trop_star4_unlock.png",
+	"frame": {"x":390,"y":816,"w":51,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":51,"h":48},
+	"sourceSize": {"w":51,"h":48}
+},
+{
+	"filename": "trop_star5_unlock.png",
+	"frame": {"x":338,"y":866,"w":51,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":51,"h":48},
+	"sourceSize": {"w":51,"h":48}
+},
+{
+	"filename": "trop_star6_unlock.png",
+	"frame": {"x":338,"y":916,"w":51,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":51,"h":48},
+	"sourceSize": {"w":51,"h":48}
+},
+{
+	"filename": "trop_star7_unlock.png",
+	"frame": {"x":391,"y":866,"w":51,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":51,"h":48},
+	"sourceSize": {"w":51,"h":48}
+},
+{
+	"filename": "trop_star8_unlock.png",
+	"frame": {"x":391,"y":916,"w":51,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":51,"h":48},
+	"sourceSize": {"w":51,"h":48}
+},
+{
+	"filename": "trop_star9_unlock.png",
+	"frame": {"x":379,"y":966,"w":51,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":51,"h":48},
+	"sourceSize": {"w":51,"h":48}
+},
+{
+	"filename": "trop_stuff1_unlock.png",
+	"frame": {"x":483,"y":328,"w":59,"h":50},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":59,"h":50},
+	"sourceSize": {"w":59,"h":50}
+},
+{
+	"filename": "trop_stuff2_unlock.png",
+	"frame": {"x":190,"y":648,"w":45,"h":50},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":18,"y":10,"w":45,"h":50},
+	"sourceSize": {"w":77,"h":71}
+},
+{
+	"filename": "trop_stuff3_unlock.png",
+	"frame": {"x":190,"y":700,"w":51,"h":62},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":51,"h":62},
+	"sourceSize": {"w":51,"h":62}
+},
+{
+	"filename": "trop_stuff4_unlock.png",
+	"frame": {"x":480,"y":453,"w":50,"h":55},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":50,"h":55},
+	"sourceSize": {"w":50,"h":55}
+},
+{
+	"filename": "trop_stuff5_unlock.png",
+	"frame": {"x":419,"y":557,"w":58,"h":60},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":58,"h":60},
+	"sourceSize": {"w":58,"h":60}
+},
+{
+	"filename": "trop_stuff6_unlock.png",
+	"frame": {"x":243,"y":689,"w":58,"h":58},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":58,"h":58},
+	"sourceSize": {"w":58,"h":58}
+},
+{
+	"filename": "trop_stuff7_unlock.png",
+	"frame": {"x":285,"y":825,"w":50,"h":50},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":13,"y":10,"w":50,"h":50},
+	"sourceSize": {"w":77,"h":71}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "atlas_ui_gameplay.png",
+	"format": "RGBA8888",
+	"size": {"w":576,"h":1024},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:36689c57b8d91017669e798710ccb09c:8d0f8075e5982ac51ef9c953afa7fb8c:59c609862feac622060e7c4dca7536e3$"
+}
+}

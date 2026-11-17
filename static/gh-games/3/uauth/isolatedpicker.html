@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Choose a File</title>
+		<style>
+		body {
+			background-color: #101010;
+			color: white;
+		}
+		
+		.center {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			margin: 0px;
+			text-align: center;
+		}
+		</style>
+	</head>
+	<body>
+		<div class="center">
+			<h1>Choose a file...</h1>
+			<h2>Make sure you have popups enabled!</h2>
+		</div>
+		<script src="https://www.dropbox.com/static/api/2/dropins.js"></script>
+		<script src="https://js.live.net/v7.2/OneDrive.js"></script>
+		<script src="tokens.js"></script>
+		<script>
+		var queries = Object.fromEntries(window.location.search.substring(1).split("&").map(i => i.split("=")).map(i => i.map(i => i && decodeURIComponent(i))));
+		
+		var fileTypes = queries.exts ? queries.exts.split(",") : [];
+		
+		var receiverFrame = document.createElement("iframe");
+		receiverFrame.style.display = "none";
+		receiverFrame.crossorigin = "anonymous"; // soon...
+		receiverFrame.src = queries.returnurl;
+		
+		var receiverLoaded = false;
+		var frameTimer = setTimeout(function() {
+			alert("The file receiver is taking an unusually long time to respond. This could be the result of Content-Security-Policy: frame-ancestors or X-Frame-Options blocking it. The frame is now shown:");
+			receiverFrame.style.display = "block";
+		}, 5000);
+		
+		receiverFrame.onload = function() {
+			receiverLoaded = true;
+			clearTimeout(frameTimer);
+		}
+		document.body.appendChild(receiverFrame);
+		
+		function finish(message, name, data) {
+			function waitForReceiverLoad() {
+				if (receiverLoaded) {
+					receiverFrame.contentWindow.postMessage({webretro: {timestamp: parseInt(queries.timestamp), message: message, name: name, data: data}}, "*");
+				} else {
+					setTimeout(waitForReceiverLoad, 250);
+				}
+			}
+			waitForReceiverLoad();
+		}
+		
+		window.addEventListener("unload", function() {
+			if (queries.type) finish("cancelled");
+		}, false);
+		
+		window.addEventListener("message", function(e) {
+			if (e.data == "acknowledged") window.close(); // with coop, this window has "ownership" over itself
+		}, false);
+		
+		function xhr(loc, success, error) {
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", loc, true);
+			xhr.responseType = "arraybuffer";
+			xhr.onload = function() {
+				success(this.response);
+			}
+			xhr.onerror = function(e) {
+				if (error) error(e);
+			}
+			xhr.send();
+		}
+		
+		// Pass on data from Google Drive picker
+		window.addEventListener("message", function(e) {
+			if (e.origin == window.location.origin && e.data.webretro) finish(e.data.webretro.message, e.data.webretro.name, e.data.webretro.data);
+		}, false);
+		
+		if (queries.type == "drive") {
+			// Google Drive
+			
+			var dwidth = window.outerWidth - 320;
+			var dheight = window.outerHeight - 240;
+			var dleft = (window.innerWidth - dwidth) / 2 + window.screenLeft;
+			var dtop = (window.innerHeight - dheight) / 2 + window.screenTop;
+			window.open("drive.html?exts=" + fileTypes.join(","), "Choose a File", "left=" + dleft + ",top=" + dtop + ",width=" + dwidth + ",height=" + dheight);
+		} else if (queries.type == "dropbox") {
+			// Dropbox
+			
+			Dropbox.appKey = dropboxAppKey;
+			Dropbox.choose({
+				success: function(files) {
+					var file = files[0];
+					xhr(file.link, function(data) {
+						finish("success", file.name, data);
+					}, function() {
+						finish("error");
+					});
+				},
+				cancel: function() {
+					finish("cancelled");
+				},
+				linkType: "direct",
+				multiselect: false,
+				folderselect: false
+			});
+		} else if (queries.type == "onedrive") {
+			// OneDrive
+			
+			OneDrive.open({
+				clientId: onedriveClientId,
+				action: "download",
+				multiSelect: false,
+				advanced: {
+					filter: fileTypes.join(",")
+				},
+				success: function(response) {
+					var name = response.value[0].name;
+					var link = response.value[0]["@microsoft.graph.downloadUrl"];
+					xhr(link, function(data) {
+						finish("success", name, data);
+					}, function() {
+						finish("error");
+					});
+				},
+				cancel: function() {
+					finish("cancelled");
+				},
+				error: function(error) {
+					finish("error");
+				}
+			});
+		}
+		</script>
+	</body>
+</html>
