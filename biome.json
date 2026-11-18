@@ -13,7 +13,7 @@
         "noUnusedFunctionParameters": "off"
       }
     },
-    "includes": ["**", "!**/pnpm-lock.yaml", "!**/dist/**", "!**/node_modules/**", "!**/assets/bundled/**", "!**/*.min.json", "!**/.astro/**"]
+    "includes": ["**", "!**/pnpm-lock.yaml", "!**/dist/**", "!**/.workers-out/**", "!**/workers/.wrangler/**", "!**/node_modules/**", "!**/assets/bundled/**", "!**/*.min.json", "!**/.astro/**"]
   },
   "formatter": {
     "indentStyle": "space",

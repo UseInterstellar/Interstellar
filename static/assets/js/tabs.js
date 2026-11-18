@@ -39,7 +39,6 @@ function realUrlOf(frame) {
   }
 }
 
-
 function realDestinationOf(url, base) {
   const absolute = resolveAgainst(url, base);
   if (absolute.includes("/uv/scramjet/") && window.__urls?.decodeUrl) return window.__urls.decodeUrl(absolute);

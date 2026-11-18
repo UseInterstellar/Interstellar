@@ -287,23 +287,53 @@ function absoluteUrl(raw) {
 }
 
 const titleHomoglyphs = {
-  a: "а", c: "с", e: "е", i: "і", j: "ј", o: "о", p: "р", s: "ѕ", x: "х", y: "у",
-  A: "А", B: "В", C: "С", E: "Е", H: "Н", I: "І", J: "Ј", K: "К", M: "М", O: "О", P: "Р", S: "Ѕ", T: "Т", X: "Х", Y: "Ү",
+  a: "а",
+  c: "с",
+  e: "е",
+  i: "і",
+  j: "ј",
+  o: "о",
+  p: "р",
+  s: "ѕ",
+  x: "х",
+  y: "у",
+  A: "А",
+  B: "В",
+  C: "С",
+  E: "Е",
+  H: "Н",
+  I: "І",
+  J: "Ј",
+  K: "К",
+  M: "М",
+  O: "О",
+  P: "Р",
+  S: "Ѕ",
+  T: "Т",
+  X: "Х",
+  Y: "Ү",
 };
 
 const keywordLookalikes = {
   ...titleHomoglyphs,
-  u: "ս", U: "Ս", r: "ր", R: "Ր", l: "Ӏ", L: "Ӏ",
+  u: "ս",
+  U: "Ս",
+  r: "ր",
+  R: "Ր",
+  l: "Ӏ",
+  L: "Ӏ",
 };
 
 const triggerTokens = ["ultraviolet", "scramjet", "baremux", "libcurl", "unblock", "proxy", "epoxy", "wisp", "bare", "enter", "url"];
 
 function laceTitle(text, homoglyphs = true) {
   const points = Array.from(text || "");
-  const lower = points.map(p => {
-    const l = p.toLowerCase();
-    return [...l].length === 1 ? l : p;
-  }).join("");
+  const lower = points
+    .map(p => {
+      const l = p.toLowerCase();
+      return [...l].length === 1 ? l : p;
+    })
+    .join("");
   const keywordGlyph = new Map();
   for (const tok of triggerTokens) {
     let from = 0;

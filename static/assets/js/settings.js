@@ -1,4 +1,3 @@
-
 function tokenizeDropdowns() {
   const nativeValue = Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, "value");
   const alphabet = "abcdefghijklmnopqrstuvwxyz0123456789";
@@ -911,7 +910,6 @@ function getRandomURL() {
   return urls[Math.floor(Math.random() * urls.length)];
 }
 
-
 const STORAGE_TIMEOUT_MS = 5000;
 const ACTIVE_SCRAMJET_DB_NAME = "$scramjet";
 let storageTaskRunning = false;
@@ -1057,7 +1055,6 @@ async function resetProxyData() {
     message: `Reset finished with ${level === "error" ? "problems" : "warnings"}. ${problems.map(problem => problem.text).join(" ")} Reload the page or reopen the site after fixing these.`,
   };
 }
-
 
 function storageText(text) {
   return typeof window.laceTitle === "function" ? window.laceTitle(text, false) : text;
