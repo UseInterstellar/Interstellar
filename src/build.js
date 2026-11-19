@@ -1,6 +1,6 @@
 import { createHash, randomBytes, randomInt as secureRandomInt } from "node:crypto";
 import { readFileSync } from "node:fs";
-import { access, cp, mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
+import { access, cp, mkdir, readdir, readFile, rename, rm, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -110,9 +110,10 @@ const NETLIFY_WISP_COUNT = NETLIFY_WISP.preferred.length + NETLIFY_WISP.fallback
 
 function buildRedirects(pageRoutes) {
   const rules = Object.entries(ghGamesProxies()).map(([prefix, target]) => [`${prefix}*`, `${target}:splat`, "200"]);
-  rules.push(["/", "/home.html", "200"]);
-  for (const [clean, token] of Object.entries(pageRoutes)) rules.push([token, `${clean}.html`, "200"]);
-  rules.push(["/play.html", "/games.html", "200"], ["/.runtime/*", "/404.html", "404!"]);
+  const tokenFile = token => `${token}.html`;
+  rules.push(["/", tokenFile(pageRoutes["/home"]), "200"]);
+  for (const token of Object.values(pageRoutes)) rules.push([token, tokenFile(token), "200"]);
+  rules.push(["/play.html", tokenFile(pageRoutes["/games"]), "200"], ["/.runtime/*", "/404.html", "404!"]);
   return `${rules.map(rule => rule.join(" ")).join("\n")}\n`;
 }
 
@@ -2583,6 +2584,13 @@ async function build() {
   for (const spec of specs) for (const name of spec.globals ?? []) if (name.startsWith(UV_PREFIX) && !gateRenames.has(name)) gateRenames.set(name, name.replace(UV_PREFIX, uvPrefixName));
   const { checkedReferences } = await verifyBuild({ manifest, specs, emitted, references, distJsFiles, /* serverRoutes: manifest.analytics ? [manifest.analytics.loader] : [], */ identifierRenames: gateRenames, swLocalRenames });
   console.log(chalk.green(`  all checks passed (${emitted.size} emitted assets, ${distJsFiles.length} scripts parsed, ${checkedReferences} asset references resolved across ${references.length} files)`));
+
+  if (STATIC_HOST) {
+    for (const [clean, token] of Object.entries(manifest.routes)) {
+      await rename(path.join(DIST_DIR, `${clean.slice(1)}.html`), path.join(DIST_DIR, `${token.slice(1)}.html`));
+    }
+    console.log(chalk.green(`  netlify: renamed ${Object.keys(manifest.routes).length} page(s) to their route tokens`));
+  }
 
   console.log(chalk.green("\nBuild complete -> dist/"));
   console.log(chalk.blue(`\nBuild id: ${manifest.build}  scope: ${NEW_UV_SCOPE}  scramjet: ${NEW_SCRAMJET_SCOPE}  sw: ${manifest.sw}`));
