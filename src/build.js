@@ -61,24 +61,45 @@ function resolveNetlifyWisp() {
   return { preferred, fallback, source: "WISP_PREFERRED / WISP_FALLBACK" };
 }
 
+function xorText(text, keyText) {
+  let out = "";
+  for (let i = 0; i < text.length; i++) out += String.fromCharCode(text.charCodeAt(i) ^ keyText.charCodeAt(i % keyText.length));
+  return out;
+}
+
+function jsStringLiteral(text) {
+  let out = '"';
+  for (const char of text) {
+    const code = char.charCodeAt(0);
+    out += code >= 0x20 && code < 0x7f && char !== '"' && char !== "\\" ? char : `\\u${code.toString(16).padStart(4, "0")}`;
+  }
+  return `${out}"`;
+}
+
+function encodeWispUrl(url, keyText) {
+  const bytes = Buffer.from(url, "utf8");
+  const pieces = [];
+  for (let at = 0, index = 0; at < bytes.length; index++) {
+    const size = 3 + secureRandomInt(5);
+    pieces.push([index, xorText(bytes.subarray(at, at + size).toString("base64"), keyText)]);
+    at += size;
+  }
+  for (let i = pieces.length - 1; i > 0; i--) {
+    const j = secureRandomInt(i + 1);
+    [pieces[i], pieces[j]] = [pieces[j], pieces[i]];
+  }
+  const decoded = Buffer.concat(
+    [...pieces].sort((a, b) => a[0] - b[0]).map(([, text]) => Buffer.from(xorText(text, keyText), "base64")),
+  ).toString("utf8");
+  if (decoded !== url) throw new Error("Wisp URL encoding round-trip failed");
+  return pieces;
+}
+
 function encodeWispLists({ preferred, fallback }) {
-  const key = [...randomBytes(12)];
-  const encode = url => {
-    const bytes = Buffer.from(url, "utf8");
-    for (let i = 0; i < bytes.length; i++) bytes[i] ^= key[i % key.length];
-    const pieces = [];
-    for (let at = 0, index = 0; at < bytes.length; index++) {
-      const size = 3 + secureRandomInt(5);
-      pieces.push([index, bytes.subarray(at, at + size).toString("base64url")]);
-      at += size;
-    }
-    for (let i = pieces.length - 1; i > 0; i--) {
-      const j = secureRandomInt(i + 1);
-      [pieces[i], pieces[j]] = [pieces[j], pieces[i]];
-    }
-    return pieces;
-  };
-  return { k: key, p: preferred.map(encode), f: fallback.map(encode) };
+  const keyCodes = Array.from({ length: 12 }, () => 1 + secureRandomInt(255));
+  const keyText = String.fromCharCode(...keyCodes);
+  const list = urls => `[${urls.map(url => encodeWispUrl(url, keyText)).map(pieces => `[${pieces.map(([index, text]) => `[${index},${jsStringLiteral(text)}]`).join(",")}]`).join(",")}]`;
+  return `{k:${jsStringLiteral(keyText)},p:${list(preferred)},f:${list(fallback)}}`;
 }
 
 const NETLIFY_WISP = NETLIFY ? resolveNetlifyWisp() : { preferred: [], fallback: [], source: null };
@@ -955,7 +976,7 @@ const WISP_PATH_LITERAL = "/wisp/`";
 const BUILT_WISP_DECLARATION = /const BUILT_WISP = null;/;
 function applyBuiltWisp(source, lists) {
   if (!BUILT_WISP_DECLARATION.test(source)) throw new CodecPatchError("search.js: BUILT_WISP declaration not found. Upstream changed.");
-  return source.replace(BUILT_WISP_DECLARATION, () => `const BUILT_WISP = ${JSON.stringify(encodeWispLists(lists))};`);
+  return source.replace(BUILT_WISP_DECLARATION, () => `const BUILT_WISP = ${encodeWispLists(lists)};`);
 }
 
 function applyWispPath(source, wispPath) {
