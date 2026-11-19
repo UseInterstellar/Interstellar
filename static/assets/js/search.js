@@ -249,11 +249,8 @@ function isValidUrl(val = "") {
     const lists = [BUILT_WISP.p, BUILT_WISP.f].map(list => list.map(pieces => unpackWisp(pieces, BUILT_WISP.k)));
     const all = lists.flat();
     if (all.length === 1) return all[0];
-    for (const list of lists) {
-      if (!list.length) continue;
-      const reachable = await Promise.all(list.map(wispReachable));
-      const index = reachable.indexOf(true);
-      if (index >= 0) return list[index];
+    for (const url of all) {
+      if (await wispReachable(url)) return url;
     }
     return all[0];
   }
