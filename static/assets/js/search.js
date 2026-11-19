@@ -149,7 +149,10 @@ async function navigate(value, path, proxyOverride) {
 
   let url = value.trim();
   const engine = store.get("engine");
-  const searchUrl = engine ? engine : "https://search.brave.com/search?q=";
+  const defaultEngine = location.hostname.endsWith(".workers.dev")
+    ? "https://www.google.com/search?q="
+    : "https://search.brave.com/search?q=";
+  const searchUrl = engine ? engine : defaultEngine;
 
   if (!isValidUrl(url)) {
     url = searchUrl + url;
