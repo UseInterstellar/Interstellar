@@ -2516,6 +2516,11 @@ async function build() {
       for (const [from, to] of scopeRewrites) html = replaceAll(html, from, to);
       html = applyRewrites(html, rewrites);
       html = replaceAll(html, 'src="/home"', `src="${pageRoutes["/home"]}"`);
+      if (PLATFORM === "cloudflare-pages" && name === "games.html") {
+        const before = html;
+        html = html.replace(/<option value="local">[\s\S]*?<\/option>\s*/, "");
+        if (html === before) throw new Error("games.html: Local category option not found. Upstream changed.");
+      }
 
       const proxyChoice = applyProxyChoiceValues(html);
       html = proxyChoice.source;
