@@ -112,7 +112,6 @@ function buildRedirects(pageRoutes) {
   const rules = Object.entries(ghGamesProxies()).map(([prefix, target]) => [`${prefix}*`, `${target}:splat`, "200"]);
   const tokenFile = token => `${token}.html`;
   rules.push(["/", tokenFile(pageRoutes["/home"]), "200"]);
-  for (const token of Object.values(pageRoutes)) rules.push([token, tokenFile(token), "200"]);
   rules.push(["/play.html", tokenFile(pageRoutes["/games"]), "200"], ["/.runtime/*", "/404.html", "404!"]);
   return `${rules.map(rule => rule.join(" ")).join("\n")}\n`;
 }
