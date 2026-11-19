@@ -21,7 +21,8 @@ for (const method of ["log", "info", "warn"]) {
   };
 }
 
-const NETLIFY = process.argv.includes("--netlify");
+const PLATFORM = process.argv.includes("--cloudflare-pages") ? "cloudflare-pages" : process.argv.includes("--netlify") ? "netlify" : null;
+const STATIC_HOST = PLATFORM !== null;
 const NETLIFY_HEADERS = "/*\n  Service-Worker-Allowed: /\n";
 
 function readWispUrl(raw, variable) {
@@ -61,31 +62,55 @@ function resolveNetlifyWisp() {
   return { preferred, fallback, source: "WISP_PREFERRED / WISP_FALLBACK" };
 }
 
-function encodeWispLists({ preferred, fallback }) {
-  const key = [...randomBytes(12)];
-  const encode = url => {
-    const bytes = Buffer.from(url, "utf8");
-    for (let i = 0; i < bytes.length; i++) bytes[i] ^= key[i % key.length];
-    const pieces = [];
-    for (let at = 0, index = 0; at < bytes.length; index++) {
-      const size = 3 + secureRandomInt(5);
-      pieces.push([index, bytes.subarray(at, at + size).toString("base64url")]);
-      at += size;
-    }
-    for (let i = pieces.length - 1; i > 0; i--) {
-      const j = secureRandomInt(i + 1);
-      [pieces[i], pieces[j]] = [pieces[j], pieces[i]];
-    }
-    return pieces;
-  };
-  return { k: key, p: preferred.map(encode), f: fallback.map(encode) };
+function xorText(text, keyText) {
+  let out = "";
+  for (let i = 0; i < text.length; i++) out += String.fromCharCode(text.charCodeAt(i) ^ keyText.charCodeAt(i % keyText.length));
+  return out;
 }
 
-const NETLIFY_WISP = NETLIFY ? resolveNetlifyWisp() : { preferred: [], fallback: [], source: null };
+function jsStringLiteral(text) {
+  let out = '"';
+  for (const char of text) {
+    const code = char.charCodeAt(0);
+    out += code >= 0x20 && code < 0x7f && char !== '"' && char !== "\\" ? char : `\\u${code.toString(16).padStart(4, "0")}`;
+  }
+  return `${out}"`;
+}
+
+function encodeWispUrl(url, keyText) {
+  const bytes = Buffer.from(url, "utf8");
+  const pieces = [];
+  for (let at = 0, index = 0; at < bytes.length; index++) {
+    const size = 3 + secureRandomInt(5);
+    pieces.push([index, xorText(bytes.subarray(at, at + size).toString("base64"), keyText)]);
+    at += size;
+  }
+  for (let i = pieces.length - 1; i > 0; i--) {
+    const j = secureRandomInt(i + 1);
+    [pieces[i], pieces[j]] = [pieces[j], pieces[i]];
+  }
+  const decoded = Buffer.concat([...pieces].sort((a, b) => a[0] - b[0]).map(([, text]) => Buffer.from(xorText(text, keyText), "base64"))).toString("utf8");
+  if (decoded !== url) throw new Error("Wisp URL encoding round-trip failed");
+  return pieces;
+}
+
+function encodeWispLists({ preferred, fallback }) {
+  const keyCodes = Array.from({ length: 12 }, () => 1 + secureRandomInt(255));
+  const keyText = String.fromCharCode(...keyCodes);
+  const list = urls =>
+    `[${urls
+      .map(url => encodeWispUrl(url, keyText))
+      .map(pieces => `[${pieces.map(([index, text]) => `[${index},${jsStringLiteral(text)}]`).join(",")}]`)
+      .join(",")}]`;
+  return `{k:${jsStringLiteral(keyText)},p:${list(preferred)},f:${list(fallback)}}`;
+}
+
+const NETLIFY_WISP = STATIC_HOST ? resolveNetlifyWisp() : { preferred: [], fallback: [], source: null };
 const NETLIFY_WISP_COUNT = NETLIFY_WISP.preferred.length + NETLIFY_WISP.fallback.length;
 
 function buildRedirects(pageRoutes) {
   const rules = Object.entries(ghGamesProxies()).map(([prefix, target]) => [`${prefix}*`, `${target}:splat`, "200"]);
+  rules.push(["/", "/home.html", "200"]);
   for (const [clean, token] of Object.entries(pageRoutes)) rules.push([token, `${clean}.html`, "200"]);
   rules.push(["/play.html", "/games.html", "200"], ["/.runtime/*", "/404.html", "404!"]);
   return `${rules.map(rule => rule.join(" ")).join("\n")}\n`;
@@ -955,7 +980,7 @@ const WISP_PATH_LITERAL = "/wisp/`";
 const BUILT_WISP_DECLARATION = /const BUILT_WISP = null;/;
 function applyBuiltWisp(source, lists) {
   if (!BUILT_WISP_DECLARATION.test(source)) throw new CodecPatchError("search.js: BUILT_WISP declaration not found. Upstream changed.");
-  return source.replace(BUILT_WISP_DECLARATION, () => `const BUILT_WISP = ${JSON.stringify(encodeWispLists(lists))};`);
+  return source.replace(BUILT_WISP_DECLARATION, () => `const BUILT_WISP = ${encodeWispLists(lists)};`);
 }
 
 function applyWispPath(source, wispPath) {
@@ -2087,7 +2112,7 @@ async function build() {
   console.log("Copying static/ -> dist/...");
   await cp(SRC_DIR, DIST_DIR, { recursive: true, filter: source => path.relative(SRC_DIR, source) !== path.join("decoy") });
 
-  if (NETLIFY) {
+  if (STATIC_HOST) {
     console.log(
       chalk.yellow(
         NETLIFY_WISP_COUNT
@@ -2148,8 +2173,8 @@ async function build() {
     scopes: { uv: NEW_UV_SCOPE, scramjet: NEW_SCRAMJET_SCOPE },
     sw: null,
     routes: pageRoutes,
-    wisp: NETLIFY ? { preferred: NETLIFY_WISP.preferred.length, fallback: NETLIFY_WISP.fallback.length } : wispPath,
-    ...(NETLIFY ? { netlify: true } : {}),
+    wisp: STATIC_HOST ? { preferred: NETLIFY_WISP.preferred.length, fallback: NETLIFY_WISP.fallback.length } : wispPath,
+    ...(STATIC_HOST ? { netlify: true, platform: PLATFORM } : {}),
     vendor: {},
   };
 
@@ -2401,7 +2426,10 @@ async function build() {
         if (basename === "tabs.js") output = applyTabAttr(output, tabAttr);
         if (basename === "home.js") output = scopeHomeScript(output);
         if (basename === "settings.js") output = applyActiveScramjetName(output, scramjetStrings.idb);
-        if (basename === "search.js") output = NETLIFY ? (NETLIFY_WISP_COUNT ? applyBuiltWisp(output, NETLIFY_WISP) : output) : applyWispPath(output, wispPath);
+        if (basename === "search.js") {
+          output = STATIC_HOST ? (NETLIFY_WISP_COUNT ? applyBuiltWisp(output, NETLIFY_WISP) : output) : applyWispPath(output, wispPath);
+          if (STATIC_HOST) output = patchOrFail(output, /const SERVER_FILTER = true;/, "const SERVER_FILTER = false;", "search.js server filter switch");
+        }
         if (basename === "launcher.js") output = patchOrFail(output, /const CATALOGUE_KEY = \[0\];/, `const CATALOGUE_KEY = ${JSON.stringify(catalogueKey)};`, "launcher.js catalogue key");
         references.push({ file: `${basename} (${publicPath})`, source: output });
 
@@ -2524,7 +2552,7 @@ async function build() {
   await writeFile(path.join(DIST_DIR, ".assetsignore"), ".runtime\n", "utf8");
   await writeFile(path.join(RUNTIME_DIR, "vendor-map.cjs"), `"use strict";\n// Generated by build.js on every build. Do not edit; do not serve.\nmodule.exports = ${JSON.stringify(manifest, null, 2)};\n`, "utf8");
   await verifyRuntimeMap(manifest);
-  if (NETLIFY) {
+  if (STATIC_HOST) {
     const redirects = buildRedirects(manifest.routes);
     for (const clean of Object.keys(manifest.routes)) if (!(await exists(path.join(DIST_DIR, `${clean}.html`)))) throw new Error(`_redirects: ${clean}.html is not in dist/`);
     await writeFile(path.join(DIST_DIR, "_redirects"), redirects, "utf8");

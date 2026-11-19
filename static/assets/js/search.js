@@ -119,8 +119,10 @@ function customWispUrl() {
   return custom && /^wss?:\/\//i.test(custom) ? custom : null;
 }
 
+const SERVER_FILTER = true;
+
 async function checkBlocked(url) {
-  if (customWispUrl()) return null;
+  if (!SERVER_FILTER || customWispUrl()) return null;
   let host;
   try {
     const parsed = new URL(url, window.location.origin);
@@ -155,9 +157,7 @@ async function navigate(value, path, proxyOverride) {
 
   let url = value.trim();
   const engine = store.get("engine");
-  const defaultEngine = location.hostname.endsWith(".workers.dev")
-    ? "https://www.google.com/search?q="
-    : "https://search.brave.com/search?q=";
+  const defaultEngine = location.hostname.endsWith(".workers.dev") ? "https://www.google.com/search?q=" : "https://search.brave.com/search?q=";
   const searchUrl = engine ? engine : defaultEngine;
 
   if (!isValidUrl(url)) {
@@ -208,12 +208,13 @@ function isValidUrl(val = "") {
 
   const BUILT_WISP = null;
 
-  function unpackWisp(pieces, key) {
+  function unpackWisp(pieces, keyText) {
     const parts = [...pieces]
       .sort((a, b) => a[0] - b[0])
       .map(([, text]) => {
-        const binary = atob(text.replace(/-/g, "+").replace(/_/g, "/"));
-        return Uint8Array.from(binary, char => char.charCodeAt(0));
+        let base64 = "";
+        for (let i = 0; i < text.length; i++) base64 += String.fromCharCode(text.charCodeAt(i) ^ keyText.charCodeAt(i % keyText.length));
+        return Uint8Array.from(atob(base64), char => char.charCodeAt(0));
       });
     const bytes = new Uint8Array(parts.reduce((total, part) => total + part.length, 0));
     let at = 0;
@@ -221,7 +222,6 @@ function isValidUrl(val = "") {
       bytes.set(part, at);
       at += part.length;
     }
-    for (let i = 0; i < bytes.length; i++) bytes[i] ^= key[i % key.length];
     return new TextDecoder().decode(bytes);
   }
 
