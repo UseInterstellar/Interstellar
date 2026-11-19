@@ -9,10 +9,9 @@ import config from "../config.js";
 // import { mountAnalytics } from "./analytics.js";
 import { ghGamesProxies, mountGhGames } from "./games.js";
 import { injectVersionInfo, resolveVersionInfo } from "./version.js";
-import { makeWispServer } from "./workers/wisp.js";
+import { handleWispUpgrade } from "./workers/wisp.js";
 
 const IS_WORKERS = typeof WebSocketPair !== "undefined";
-const { DurableObject } = IS_WORKERS ? await import("cloudflare:workers") : { DurableObject: class {} };
 const { connect } = IS_WORKERS ? await import("cloudflare:sockets") : { connect: undefined };
 
 const routes = [
@@ -322,12 +321,7 @@ async function workersFetch(request, env) {
 
   if (pathname === "/.runtime" || pathname.startsWith("/.runtime/")) return plainText("Not found", 404);
 
-  if (pathname === WISP_PATH) {
-    if (request.headers.get("Upgrade")?.toLowerCase() !== "websocket") {
-      return new Response("Expected WebSocket", { status: 426, headers: { Upgrade: "websocket" } });
-    }
-    return env.WISP.get(env.WISP.newUniqueId()).fetch(request);
-  }
+  if (pathname === WISP_PATH) return handleWispUpgrade(request, { connect, isBlockedHost });
 
   const denied = workerBasicAuthFailure(request);
   if (denied) return denied;
@@ -353,6 +347,5 @@ export default {
   fetch: (request, env) => workersFetch(request, env),
 };
 
-export const WispServer = makeWispServer({ DurableObject, connect, isBlockedHost });
 
 if (!IS_WORKERS) await startNodeServer();

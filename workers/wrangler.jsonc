@@ -13,8 +13,8 @@
     "run_worker_first": true
   },
 
-  "durable_objects": {
-    "bindings": [{ "name": "WISP", "class_name": "WispServer" }]
-  },
-  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["WispServer"] }]
+  "migrations": [
+    { "tag": "v1", "new_sqlite_classes": ["WispServer"] },
+    { "tag": "v2", "deleted_classes": ["WispServer"] }
+  ]
 }
