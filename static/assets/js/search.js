@@ -228,8 +228,13 @@ function isValidUrl(val = "") {
   const wispReachable = url =>
     new Promise(resolve => {
       let socket;
+      let settled = false;
+      let stableTimer;
       const done = ok => {
+        if (settled) return;
+        settled = true;
         clearTimeout(timer);
+        clearTimeout(stableTimer);
         try {
           socket?.close();
         } catch {}
@@ -238,21 +243,30 @@ function isValidUrl(val = "") {
       const timer = setTimeout(() => done(false), 5000);
       try {
         socket = new WebSocket(url);
-        socket.onopen = () => done(true);
+        socket.binaryType = "arraybuffer";
+        socket.onmessage = () => {
+          if (!stableTimer) stableTimer = setTimeout(() => done(true), 1000);
+        };
         socket.onerror = () => done(false);
+        socket.onclose = () => done(false);
       } catch {
         done(false);
       }
     });
 
-  async function pickBuiltWisp() {
-    const lists = [BUILT_WISP.p, BUILT_WISP.f].map(list => list.map(pieces => unpackWisp(pieces, BUILT_WISP.k)));
-    const all = lists.flat();
-    if (all.length === 1) return all[0];
-    for (const url of all) {
+  function builtWispCandidates(excluded = []) {
+    const all = [BUILT_WISP.p, BUILT_WISP.f].flatMap(list => list.map(pieces => unpackWisp(pieces, BUILT_WISP.k)));
+    return all.filter(url => !excluded.includes(url));
+  }
+
+  async function pickBuiltWisp(excluded = []) {
+    const candidates = builtWispCandidates(excluded);
+    if (candidates.length === 0) return builtWispCandidates()[0];
+    if (candidates.length === 1) return candidates[0];
+    for (const url of candidates) {
       if (await wispReachable(url)) return url;
     }
-    return all[0];
+    return candidates[0];
   }
 
   async function getWispUrl() {
@@ -302,14 +316,12 @@ function isValidUrl(val = "") {
     store.set("transport-signature", signature);
   }
 
-  async function init() {
-    const [{ BareMuxConnection }, { ScramjetController }] = await Promise.all([import(vendor.baremux), window.$scramjetLoadController()]);
+  let activeConnection = null;
+  let activeWisp = null;
+  let lastFailover = 0;
+  let failoverRunning = false;
 
-    const scramjet = new ScramjetController(self.__scramjet$config);
-    await scramjet.init();
-
-    const wisp = await getWispUrl();
-    const connection = new BareMuxConnection(vendor.baremuxWorker);
+  async function applyWispTransport(connection, wisp) {
     if (store.get("transport") === "libcurl") {
       await ensureTransport(connection, vendor.libcurl, [{ websocket: wisp }], `${vendor.libcurl}|${wisp}`);
     } else if (customWispUrl()) {
@@ -317,6 +329,39 @@ function isValidUrl(val = "") {
     } else {
       await ensureTransport(connection, vendor.epoxy, [{ wisp }], `${vendor.epoxy}|${wisp}|block-aware`, blockAwareEpoxy(vendor.epoxy));
     }
+  }
+
+  async function failOverWisp() {
+    if (!activeConnection || !BUILT_WISP || customWispUrl() || failoverRunning) return;
+    if (Date.now() - lastFailover < 5000) return;
+    failoverRunning = true;
+    try {
+      const failed = activeWisp;
+      const next = await pickBuiltWisp([failed]);
+      if (next === failed) return;
+      activeWisp = next;
+      lastFailover = Date.now();
+      await applyWispTransport(activeConnection, next);
+    } catch {
+    } finally {
+      failoverRunning = false;
+    }
+  }
+
+  async function init() {
+    const [{ BareMuxConnection }, { ScramjetController }] = await Promise.all([import(vendor.baremux), window.$scramjetLoadController()]);
+
+    const scramjet = new ScramjetController(self.__scramjet$config);
+    await scramjet.init();
+
+    const connection = new BareMuxConnection(vendor.baremuxWorker);
+    activeConnection = connection;
+    activeWisp = await getWispUrl();
+    await applyWispTransport(connection, activeWisp);
+
+    navigator.serviceWorker?.addEventListener("message", event => {
+      if (event.data?.type === "wisp-failed") failOverWisp();
+    });
 
     window.__urls = {
       encodeUrl: url => scramjet.encodeUrl(url),

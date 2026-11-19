@@ -24,6 +24,12 @@ sj.addEventListener("handleResponse", event => {
 
 const userKey = new URL(location).searchParams.get("userkey");
 
+function notifyWispFailure() {
+  self.clients.matchAll({ type: "window" }).then(clients => {
+    for (const client of clients) client.postMessage({ type: "wisp-failed" });
+  });
+}
+
 self.addEventListener("install", event => {
   event.waitUntil(self.skipWaiting());
 });
@@ -44,7 +50,13 @@ self.addEventListener("fetch", event => {
       await sj.loadConfig();
 
       if (await sj.route(event)) {
-        return await sj.fetch(event);
+        try {
+          return await sj.fetch(event);
+        } catch (error) {
+          const text = String(error?.message ?? error);
+          if (/WebSocketConnectFailed|WsImplSocketClosed|websocket/i.test(text) && !text.includes("WispCloseReason")) notifyWispFailure();
+          throw error;
+        }
       }
 
       if (event.request.url.startsWith(`${location.origin}/uv/`)) {
