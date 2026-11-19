@@ -28,7 +28,7 @@
     "@useinterstellar/scramjet": "^1.1.0-fixed",
     "chalk": "^5.4.1",
     "cors": "^2.8.5",
-    "dotenv": "^17.2.0",
+    "dotenv": "^18.0.5",
     "express": "^4.21.2",
     "express-basic-auth": "^1.2.1",
     "mime": "^4.1.0",
