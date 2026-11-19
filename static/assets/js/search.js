@@ -119,8 +119,10 @@ function customWispUrl() {
   return custom && /^wss?:\/\//i.test(custom) ? custom : null;
 }
 
+const SERVER_FILTER = true;
+
 async function checkBlocked(url) {
-  if (customWispUrl()) return null;
+  if (!SERVER_FILTER || customWispUrl()) return null;
   let host;
   try {
     const parsed = new URL(url, window.location.origin);
