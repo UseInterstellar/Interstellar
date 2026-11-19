@@ -8,6 +8,16 @@ const TRACKER_SECTION = /tracking|privacy|tracker/i;
 const SOURCE_HEADER = /^!\s*Source name:\s*(.*)$/i;
 const DOMAIN_RULE = /^(@@)?\|\|([a-z0-9-]+(?:\.[a-z0-9-]+)+)\^?(?:\$([a-z0-9_,~=-]+))?$/i;
 
+function* eachLine(text) {
+  let start = 0;
+  while (start <= text.length) {
+    let end = text.indexOf("\n", start);
+    if (end === -1) end = text.length;
+    yield text.slice(start, end);
+    start = end + 1;
+  }
+}
+
 export function parseAdguardList(text) {
   const ads = new Set();
   const trackers = new Set();
@@ -20,7 +30,7 @@ export function parseAdguardList(text) {
     skipped[reason] = (skipped[reason] ?? 0) + 1;
   };
 
-  for (const raw of text.split("\n")) {
+  for (const raw of eachLine(text)) {
     const line = raw.trim();
     if (!line || line.startsWith("[")) continue;
     if (line[0] === "!" || line[0] === "#") {
