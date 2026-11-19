@@ -9,10 +9,9 @@ import config from "../config.js";
 // import { mountAnalytics } from "./analytics.js";
 import { ghGamesProxies, mountGhGames } from "./games.js";
 import { injectVersionInfo, resolveVersionInfo } from "./version.js";
-import { makeWispServer } from "./workers/wisp.js";
+import { handleWispUpgrade } from "./workers/wisp.js";
 
 const IS_WORKERS = typeof WebSocketPair !== "undefined";
-const { DurableObject } = IS_WORKERS ? await import("cloudflare:workers") : { DurableObject: class {} };
 const { connect } = IS_WORKERS ? await import("cloudflare:sockets") : { connect: undefined };
 
 const routes = [
@@ -52,7 +51,6 @@ async function startNodeServer() {
   const { server: wisp } = await import("@mercuryworkshop/wisp-js/server");
   const { createBlockVerdict, setupFiltering } = await import("./filtering/index.js");
   const { default: express } = await import("express");
-  const { default: cookieParser } = await import("cookie-parser");
   const { default: basicAuth } = await import("express-basic-auth");
   const { mountMasqr } = await import("./Masqr.js");
   console.log(chalk.yellow("🚀 Starting server..."));
@@ -141,10 +139,6 @@ async function startNodeServer() {
 
   mountGhGames(app);
 
-  app.use(cookieParser());
-  app.use(express.json());
-  app.use(express.urlencoded({ extended: true }));
-
   const useAssetCache = cacheEnabled && Boolean(vendorMap?.build);
   if (cacheEnabled) {
     console.log(useAssetCache ? chalk.green("📦 Asset caching is enabled (assets cached until the HTML changes)") : chalk.yellow("config.cache.enabled is set but this is not a dist build, so caching is off. Run `pnpm build`."));
@@ -173,7 +167,7 @@ async function startNodeServer() {
   });
 
   if (!NETLIFY)
-    app.post("/filter/verdict", async (req, res) => {
+    app.post("/filter/verdict", express.json(), async (req, res) => {
       const host = typeof req.body?.host === "string" ? req.body.host.slice(0, 254) : "";
       res.set("Cache-Control", "no-store").json(await blockVerdict(host));
     });
@@ -327,12 +321,7 @@ async function workersFetch(request, env) {
 
   if (pathname === "/.runtime" || pathname.startsWith("/.runtime/")) return plainText("Not found", 404);
 
-  if (pathname === WISP_PATH) {
-    if (request.headers.get("Upgrade")?.toLowerCase() !== "websocket") {
-      return new Response("Expected WebSocket", { status: 426, headers: { Upgrade: "websocket" } });
-    }
-    return env.WISP.get(env.WISP.newUniqueId()).fetch(request);
-  }
+  if (pathname === WISP_PATH) return handleWispUpgrade(request, { connect, isBlockedHost });
 
   const denied = workerBasicAuthFailure(request);
   if (denied) return denied;
@@ -358,6 +347,5 @@ export default {
   fetch: (request, env) => workersFetch(request, env),
 };
 
-export const WispServer = makeWispServer({ DurableObject, connect, isBlockedHost });
 
 if (!IS_WORKERS) await startNodeServer();
