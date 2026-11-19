@@ -114,7 +114,13 @@ async function encodeUrl(url, proxyOverride) {
   return `/uv/${__uv$config.encodeUrl ? __uv$config.encodeUrl(url) : window.encode.xor(url)}`;
 }
 
+function customWispUrl() {
+  const custom = store.get("wisp-url")?.trim();
+  return custom && /^wss?:\/\//i.test(custom) ? custom : null;
+}
+
 async function checkBlocked(url) {
+  if (customWispUrl()) return null;
   let host;
   try {
     const parsed = new URL(url, window.location.origin);
@@ -253,8 +259,8 @@ function isValidUrl(val = "") {
   }
 
   async function getWispUrl() {
-    const custom = store.get("wisp-url")?.trim();
-    if (custom && /^wss?:\/\//i.test(custom)) return custom;
+    const custom = customWispUrl();
+    if (custom) return custom;
     if (BUILT_WISP) return pickBuiltWisp();
     const protocol = location.protocol === "https:" ? "wss" : "ws";
     return `${protocol}://${location.host}/wisp/`;
@@ -309,6 +315,8 @@ function isValidUrl(val = "") {
     const connection = new BareMuxConnection(vendor.baremuxWorker);
     if (store.get("transport") === "libcurl") {
       await ensureTransport(connection, vendor.libcurl, [{ websocket: wisp }], `${vendor.libcurl}|${wisp}`);
+    } else if (customWispUrl()) {
+      await ensureTransport(connection, vendor.epoxy, [{ wisp }], `${vendor.epoxy}|${wisp}`);
     } else {
       await ensureTransport(connection, vendor.epoxy, [{ wisp }], `${vendor.epoxy}|${wisp}|block-aware`, blockAwareEpoxy(vendor.epoxy));
     }
