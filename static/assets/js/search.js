@@ -263,10 +263,20 @@ function isValidUrl(val = "") {
     const candidates = builtWispCandidates(excluded);
     if (candidates.length === 0) return builtWispCandidates()[0];
     if (candidates.length === 1) return candidates[0];
-    for (const url of candidates) {
-      if (await wispReachable(url)) return url;
+    let ordered = candidates;
+    const remembered = store.get("wisp-choice");
+    if (remembered && candidates.length > 1) {
+      const hashes = await Promise.all(candidates.map(hashSignature));
+      const index = hashes.indexOf(remembered);
+      if (index > 0) ordered = [candidates[index], ...candidates.slice(0, index), ...candidates.slice(index + 1)];
     }
-    return candidates[0];
+    for (const url of ordered) {
+      if (await wispReachable(url)) {
+        store.set("wisp-choice", await hashSignature(url));
+        return url;
+      }
+    }
+    return ordered[0];
   }
 
   async function getWispUrl() {
