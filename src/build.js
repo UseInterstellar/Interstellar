@@ -108,8 +108,17 @@ function encodeWispLists({ preferred, fallback }) {
 const NETLIFY_WISP = STATIC_HOST ? resolveNetlifyWisp() : { preferred: [], fallback: [], source: null };
 const NETLIFY_WISP_COUNT = NETLIFY_WISP.preferred.length + NETLIFY_WISP.fallback.length;
 
+async function removeGhGames(gamesPath) {
+  const games = JSON.parse(await readFile(gamesPath, "utf8"));
+  if (!Array.isArray(games)) throw new Error(`${gamesPath} is not an array`);
+  const kept = games.filter(game => !JSON.stringify(game).includes("/gh-games/"));
+  await writeFile(gamesPath, JSON.stringify(kept), "utf8");
+  console.log(chalk.yellow(`  cloudflare-pages: removed ${games.length - kept.length} game(s) that need /gh-games/`));
+}
+
 function buildRedirects(pageRoutes) {
-  const rules = Object.entries(ghGamesProxies()).map(([prefix, target]) => [`${prefix}*`, `${target}:splat`, "200"]);
+  // Cloudflare Pages cannot proxy the GitHub game stores
+  const rules = PLATFORM === "cloudflare-pages" ? [] : Object.entries(ghGamesProxies()).map(([prefix, target]) => [`${prefix}*`, `${target}:splat`, "200"]);
   const tokenFile = token => `${token}.html`;
   rules.push(["/", tokenFile(pageRoutes["/home"]), "200"]);
   rules.push(["/play.html", tokenFile(pageRoutes["/games"]), "200"], ["/.runtime/*", "/404.html", "404!"]);
@@ -2200,6 +2209,7 @@ async function build() {
   // apps.json and games.json are byte-equivalent duplicates of the .min files that nothing
   // fetches, so they are dropped rather than shipped as a second plaintext copy.
   for (const name of UNUSED_JSON) await rm(path.join(DIST_DIR, "assets", "json", name), { force: true });
+  if (PLATFORM === "cloudflare-pages") await removeGhGames(path.join(DIST_DIR, "assets", "json", "games.min.json"));
 
   const jsonMoves = new Map();
   for (const name of RANDOMIZED_JSON) {
