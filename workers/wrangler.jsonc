@@ -13,8 +13,5 @@
     "run_worker_first": true
   },
 
-  "migrations": [
-    { "tag": "v1", "new_sqlite_classes": ["WispServer"] },
-    { "tag": "v2", "deleted_classes": ["WispServer"] }
-  ]
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["WispServer"] }, { "tag": "v2", "deleted_classes": ["WispServer"] }]
 }

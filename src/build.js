@@ -21,7 +21,6 @@ for (const method of ["log", "info", "warn"]) {
   };
 }
 
-
 const PLATFORM = process.argv.includes("--cloudflare-pages") ? "cloudflare-pages" : process.argv.includes("--netlify") ? "netlify" : null;
 const STATIC_HOST = PLATFORM !== null;
 const NETLIFY_HEADERS = "/*\n  Service-Worker-Allowed: /\n";
@@ -90,9 +89,7 @@ function encodeWispUrl(url, keyText) {
     const j = secureRandomInt(i + 1);
     [pieces[i], pieces[j]] = [pieces[j], pieces[i]];
   }
-  const decoded = Buffer.concat(
-    [...pieces].sort((a, b) => a[0] - b[0]).map(([, text]) => Buffer.from(xorText(text, keyText), "base64")),
-  ).toString("utf8");
+  const decoded = Buffer.concat([...pieces].sort((a, b) => a[0] - b[0]).map(([, text]) => Buffer.from(xorText(text, keyText), "base64"))).toString("utf8");
   if (decoded !== url) throw new Error("Wisp URL encoding round-trip failed");
   return pieces;
 }
@@ -100,7 +97,11 @@ function encodeWispUrl(url, keyText) {
 function encodeWispLists({ preferred, fallback }) {
   const keyCodes = Array.from({ length: 12 }, () => 1 + secureRandomInt(255));
   const keyText = String.fromCharCode(...keyCodes);
-  const list = urls => `[${urls.map(url => encodeWispUrl(url, keyText)).map(pieces => `[${pieces.map(([index, text]) => `[${index},${jsStringLiteral(text)}]`).join(",")}]`).join(",")}]`;
+  const list = urls =>
+    `[${urls
+      .map(url => encodeWispUrl(url, keyText))
+      .map(pieces => `[${pieces.map(([index, text]) => `[${index},${jsStringLiteral(text)}]`).join(",")}]`)
+      .join(",")}]`;
   return `{k:${jsStringLiteral(keyText)},p:${list(preferred)},f:${list(fallback)}}`;
 }
 

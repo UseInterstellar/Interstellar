@@ -347,5 +347,4 @@ export default {
   fetch: (request, env) => workersFetch(request, env),
 };
 
-
 if (!IS_WORKERS) await startNodeServer();
