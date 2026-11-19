@@ -52,7 +52,6 @@ async function startNodeServer() {
   const { server: wisp } = await import("@mercuryworkshop/wisp-js/server");
   const { createBlockVerdict, setupFiltering } = await import("./filtering/index.js");
   const { default: express } = await import("express");
-  const { default: cookieParser } = await import("cookie-parser");
   const { default: basicAuth } = await import("express-basic-auth");
   const { mountMasqr } = await import("./Masqr.js");
   console.log(chalk.yellow("🚀 Starting server..."));
@@ -141,10 +140,6 @@ async function startNodeServer() {
 
   mountGhGames(app);
 
-  app.use(cookieParser());
-  app.use(express.json());
-  app.use(express.urlencoded({ extended: true }));
-
   const useAssetCache = cacheEnabled && Boolean(vendorMap?.build);
   if (cacheEnabled) {
     console.log(useAssetCache ? chalk.green("📦 Asset caching is enabled (assets cached until the HTML changes)") : chalk.yellow("config.cache.enabled is set but this is not a dist build, so caching is off. Run `pnpm build`."));
@@ -173,7 +168,7 @@ async function startNodeServer() {
   });
 
   if (!NETLIFY)
-    app.post("/filter/verdict", async (req, res) => {
+    app.post("/filter/verdict", express.json(), async (req, res) => {
       const host = typeof req.body?.host === "string" ? req.body.host.slice(0, 254) : "";
       res.set("Cache-Control", "no-store").json(await blockVerdict(host));
     });
