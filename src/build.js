@@ -557,6 +557,13 @@ function applyBroadcastChannelRewrite(source, id) {
   return out;
 }
 
+function applyBareTransportName(source, id) {
+  if (!source.includes("BareTransport")) return source;
+  const out = replaceAll(source, "BareTransport", `_bt${randomBytes(3).toString("hex")}`);
+  if (out.includes("BareTransport")) throw new CodecPatchError(`${id}: BareTransport survived the rewrite.`);
+  return out;
+}
+
 const RENAMED_IDENTIFIERS = [
   "__scramjet$config",
   "isScramjet",
@@ -821,6 +828,25 @@ function applyUltravioletRename(source, name) {
 // lookbehind rejects the dot and slash forms so paths and property access cannot be hit.
 const SW_LOCAL_COUNTS = { uv: 2, sj: 5 };
 const swLocalPattern = name => new RegExp(`(?<![\\w$./"'\`-])${name}(?![\\w$])`, "g");
+
+const WISP_FUNCTION_COUNTS = { "search.js": { customWispUrl: 5 }, "sw.js": { notifyWispFailure: 2 } };
+
+function createWispFunctionRenames() {
+  const names = Object.values(WISP_FUNCTION_COUNTS).flatMap(counts => Object.keys(counts));
+  return new Map(names.map(name => [name, `_${randomBytes(5).toString("hex")}`]));
+}
+
+function applyWispFunctionRenames(source, basename, renames) {
+  let out = source;
+  for (const [name, expected] of Object.entries(WISP_FUNCTION_COUNTS[basename] ?? {})) {
+    const pattern = () => new RegExp(`(?<![\\w$])${name}(?![\\w$])`, "g");
+    const found = (out.match(pattern()) || []).length;
+    if (found !== expected) throw new CodecPatchError(`${basename}: expected ${expected} occurrences of ${name}, found ${found}. Update WISP_FUNCTION_COUNTS.`);
+    out = out.replace(pattern(), renames.get(name));
+    if (pattern().test(out)) throw new CodecPatchError(`${basename}: ${name} survived the rename.`);
+  }
+  return out;
+}
 
 function createSwLocalRenames() {
   return new Map(Object.keys(SW_LOCAL_COUNTS).map(name => [name, `_${randomBytes(5).toString("hex")}`]));
@@ -2351,6 +2377,7 @@ async function build() {
     // After the diagnostic strip, whose literals carry bare-mux occurrences of their own.
     if (spec.rewriteBaremuxStrings) source = applyBaremuxStrings(source, spec.id, baremuxStrings);
     if (spec.rewriteBaremuxStrings) source = applyBroadcastChannelRewrite(source, spec.id);
+    if (spec.rewriteBaremuxStrings) source = applyBareTransportName(source, spec.id);
     if (spec.rewriteProtocolKeys) source = applyScramjetProtocolKeys(source, protocolKeys);
     if (spec.renameIdentifiers) source = applyIdentifierRenames(source, identifierRenames);
     if (spec.sharedNames) source = applyScramjetSharedNames(source, scramjetSharedNames, spec.sharedNames, spec.id);
@@ -2413,6 +2440,7 @@ async function build() {
   let failed = 0;
   const codecFailures = [];
   const swLocalRenames = createSwLocalRenames();
+  const wispFunctionRenames = createWispFunctionRenames();
   const handlerRenames = createHandlerRenames();
   const tabAttr = createTabAttr();
   let handlerJsCount = 0;
@@ -2429,6 +2457,7 @@ async function build() {
         output = applyRewrites(output, rewrites);
         output = applyIdentifierRenames(output, identifierRenames);
         if (basename === "sw.js") output = applySwLocalRenames(output, swLocalRenames);
+        output = applyWispFunctionRenames(output, basename, wispFunctionRenames);
         const proxyChoice = applyProxyChoiceValues(output);
         output = proxyChoice.source;
         proxyChoiceJs += proxyChoice.count;
@@ -2442,6 +2471,9 @@ async function build() {
         if (basename === "home.js") output = scopeHomeScript(output);
         if (basename === "settings.js") output = applyActiveScramjetName(output, scramjetStrings.idb);
         if (basename === "search.js") {
+          const wispKeyed = output.split("[{ wisp }]").length - 1;
+          if (wispKeyed !== 2) throw new CodecPatchError(`search.js: expected 2 "[{ wisp }]" transports, found ${wispKeyed}. Upstream changed.`);
+          output = output.replaceAll("[{ wisp }]", '[Object.fromEntries([["wisp", wisp]])]');
           output = STATIC_HOST ? (NETLIFY_WISP_COUNT ? applyBuiltWisp(output, NETLIFY_WISP) : output) : applyWispPath(output, wispPath);
           if (STATIC_HOST) output = patchOrFail(output, /const SERVER_FILTER = true;/, "const SERVER_FILTER = false;", "search.js server filter switch");
         }
