@@ -1,6 +1,5 @@
 node_modules
 dist
-build
 data/ 
 decoy/
 test/
