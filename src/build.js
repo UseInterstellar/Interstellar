@@ -209,10 +209,15 @@ const WORDS =
     " ",
   );
 
-const FILENAMES =
-  "x y z a b c d e f g h 1 2 3 10 11 100 mod lib api run cli app env cfg index main core init loader worker runtime parser formatter handler manager client server config schema mapper adapter resolver encoder decoder sync fetch stream buffer queue cache router dispatcher emitter observer builder factory transform pipeline registry validator scheduler monitor tracer bridge channel storage profiler".split(
-    " ",
-  );
+const FILENAMES_FILE = path.join(PROJECT_DIR, "src", "build", "words.txt");
+const FILENAMES = readFileSync(FILENAMES_FILE, "utf8")
+  .split(/\r?\n/)
+  .map(line => line.trim())
+  .filter(line => line && !line.startsWith("#"));
+for (const word of FILENAMES) {
+  if (!/^[a-z0-9]+$/i.test(word)) throw new Error(`words.txt: invalid filename word "${word}"`);
+}
+if (!FILENAMES.length) throw new Error("words.txt: no filename words found");
 
 function randomItem(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
