@@ -829,19 +829,23 @@ function applyUltravioletRename(source, name) {
 const SW_LOCAL_COUNTS = { uv: 2, sj: 5 };
 const swLocalPattern = name => new RegExp(`(?<![\\w$./"'\`-])${name}(?![\\w$])`, "g");
 
-const WISP_FUNCTION_COUNTS = { "search.js": { customWispUrl: 5 }, "sw.js": { notifyWispFailure: 2 } };
+const TOP_LEVEL_RENAME_COUNTS = {
+  "search.js": { customWispUrl: 5 },
+  "sw.js": { notifyWispFailure: 2 },
+  "settings.js": { ACTIVE_SCRAMJET_DB_NAME: 3 },
+};
 
-function createWispFunctionRenames() {
-  const names = Object.values(WISP_FUNCTION_COUNTS).flatMap(counts => Object.keys(counts));
+function createTopLevelRenames() {
+  const names = Object.values(TOP_LEVEL_RENAME_COUNTS).flatMap(counts => Object.keys(counts));
   return new Map(names.map(name => [name, `_${randomBytes(5).toString("hex")}`]));
 }
 
-function applyWispFunctionRenames(source, basename, renames) {
+function applyTopLevelRenames(source, basename, renames) {
   let out = source;
-  for (const [name, expected] of Object.entries(WISP_FUNCTION_COUNTS[basename] ?? {})) {
+  for (const [name, expected] of Object.entries(TOP_LEVEL_RENAME_COUNTS[basename] ?? {})) {
     const pattern = () => new RegExp(`(?<![\\w$])${name}(?![\\w$])`, "g");
     const found = (out.match(pattern()) || []).length;
-    if (found !== expected) throw new CodecPatchError(`${basename}: expected ${expected} occurrences of ${name}, found ${found}. Update WISP_FUNCTION_COUNTS.`);
+    if (found !== expected) throw new CodecPatchError(`${basename}: expected ${expected} occurrences of ${name}, found ${found}. Update TOP_LEVEL_RENAME_COUNTS.`);
     out = out.replace(pattern(), renames.get(name));
     if (pattern().test(out)) throw new CodecPatchError(`${basename}: ${name} survived the rename.`);
   }
@@ -2440,7 +2444,7 @@ async function build() {
   let failed = 0;
   const codecFailures = [];
   const swLocalRenames = createSwLocalRenames();
-  const wispFunctionRenames = createWispFunctionRenames();
+  const topLevelRenames = createTopLevelRenames();
   const handlerRenames = createHandlerRenames();
   const tabAttr = createTabAttr();
   let handlerJsCount = 0;
@@ -2457,7 +2461,6 @@ async function build() {
         output = applyRewrites(output, rewrites);
         output = applyIdentifierRenames(output, identifierRenames);
         if (basename === "sw.js") output = applySwLocalRenames(output, swLocalRenames);
-        output = applyWispFunctionRenames(output, basename, wispFunctionRenames);
         const proxyChoice = applyProxyChoiceValues(output);
         output = proxyChoice.source;
         proxyChoiceJs += proxyChoice.count;
@@ -2478,6 +2481,7 @@ async function build() {
           if (STATIC_HOST) output = patchOrFail(output, /const SERVER_FILTER = true;/, "const SERVER_FILTER = false;", "search.js server filter switch");
         }
         if (basename === "launcher.js") output = patchOrFail(output, /const CATALOGUE_KEY = \[0\];/, `const CATALOGUE_KEY = ${JSON.stringify(catalogueKey)};`, "launcher.js catalogue key");
+        output = applyTopLevelRenames(output, basename, topLevelRenames);
         references.push({ file: `${basename} (${publicPath})`, source: output });
 
         const terserOnly = TERSER_ONLY.has(basename);
