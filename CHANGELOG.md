@@ -1,5 +1,46 @@
 # Changelog
 
+# Version 6.3.0 - Released November 5th, 2026
+
+## Added
+
+* Added custom 404 pages and search triggers to Masqr
+* Added an option to enable Masqr only for configured domains
+* Added support for sharing Masqr decoys across multiple domains
+* Added an About:Blank button to the home page
+* Added options to reset proxy data and clear stored information
+* Added obfuscation to placeholder text and additional site titles
+* Added obfuscation to BareMux, Wisp, Epoxy, Scramjet, and Ultraviolet
+
+## Changed
+
+* Improved Masqr's decoy selection and hostname handling
+* Enabled About:Blank cloaking by default
+* Randomized Wisp WebSocket paths
+* Switched Scramjet to `@useinterstellar/scramjet` and fixed issues with the rewriter
+* Switched parts of the obfuscation system to Base64 encoding
+* Improved obfuscation of flagged keywords and exposed function names
+* Updated Node.js and npm requirements to newer, patched versions
+* Improved Vercel deployment and build compatibility
+
+## Removed
+
+* Removed login credentials from appearing in console logs
+* Removed the requirement for a default Masqr decoy when domain-only cloaking is enabled
+
+## Cleaning / Bugfixes
+
+* Fixed Masqr incorrectly using the default decoy instead of a domain-specific decoy
+* Fixed Masqr loading the wrong decoy page for certain hostnames
+* Fixed issues with Masqr's login endpoint
+* Fixed About:Blank cloaking breaking panic key redirects
+* Fixed the About:Blank button not working properly
+* Fixed private network connections being allowed through Wisp
+* Fixed URLs failing to open correctly through `window.open()`
+* Fixed issues with cloak settings stored in localStorage
+* Fixed internal helper functions being exposed in the global scope
+* Simplified detector triggers
+
 # Version 6.2.0 - Released October 10th, 2026
 
 ## Added
