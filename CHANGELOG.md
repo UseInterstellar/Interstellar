@@ -1,5 +1,48 @@
 # Changelog
 
+# Version 6.4.0 - Released November 21st, 2026
+
+## Added
+
+* Added support for Netlify, Cloudflare Pages, and Cloudflare Workers
+* Added automatic Wisp server switching for static deployments when a server stops working
+* Added options to configure preferred and fallback Wisp servers
+* Added an option to enable caching for built assets
+* Added support for multiple domains to use the same Masqr decoy and search trigger
+* Added support for typing Masqr search triggers
+* Added 9 default Masqr cloaks
+* Added obfuscation to cloak names and text in Settings
+* Added randomization for Wisp function names and the Scramjet database name during builds
+
+## Changed
+
+* Reworked the iframe shell and disabled it by default
+* Stopped using zero-width characters for obfuscation
+* Removed unnecessary text obfuscation methods
+* Improved Wisp URL obfuscation for Netlify
+* Changed Cloudflare Workers to handle Wisp connections without Durable Objects
+* Reduced server memory usage when loading game files
+* Improved filename obfuscation for Cloudflare Pages
+* Updated vulnerable dependencies to patched versions
+* Updated Netlify deployment instructions
+
+## Removed
+
+* Removed the unused ads workflow
+* Removed GitHub-hosted games from Cloudflare Pages deployments
+
+## Cleaning / Bugfixes
+
+* Fixed Wisp fallback servers being checked when they weren't needed
+* Fixed custom Wisp servers being affected by server-side filtering
+* Fixed redirect loops on Cloudflare Pages
+* Fixed the home page not loading correctly on Netlify
+* Fixed the Local games category appearing on Cloudflare Pages
+* Fixed Cloudflare Workers not using Google as the default search engine
+* Fixed security issues found by CodeQL and improved favicon validation
+* Cleaned up server code and removed unused middleware
+* Cleaned up the build system and simplified how names are randomized
+
 # Version 6.3.0 - Released November 5th, 2026
 
 ## Added
