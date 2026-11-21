@@ -1,0 +1,72 @@
+<!doctype html>
+<html class="no-js" lang="en-US">
+<head>
+  <title>Worker threw exception | Cloudflare</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" id="cf_styles-css" href="cdn-cgi/styles/cf.errors.css">
+  <!--[if lt IE 9]><link rel="stylesheet" id="cf_styles-ie-css" href="/cdn-cgi/styles/cf.errors.ie.css"><![endif]-->
+  <style>body{margin:0;padding:0}</style>
+  <script>
+    if (!navigator.cookieEnabled) {
+      window.addEventListener('DOMContentLoaded', function () {
+        var cookieEl = document.getElementById('cookie-alert');
+        if (cookieEl) cookieEl.style.display = 'block';
+      });
+    }
+  </script>
+</head>
+<body>
+  <div id="cf-wrapper">
+    <div class="cf-alert cf-alert-error cf-cookie-error" id="cookie-alert" data-translate="enable_cookies">Please enable cookies.</div>
+    <div id="cf-error-details" class="cf-error-details-wrapper">
+      <div class="cf-wrapper cf-header cf-error-overview">
+        <h1>
+          <span class="cf-error-type" data-translate="error">Error</span>
+          <span class="cf-error-code">1101</span>
+          <small class="heading-ray-id">Ray ID: <span id="ray-id"></span> · <time id="request-time"></time></small>
+        </h1>
+        <h2 class="cf-subheadline" data-translate="error_desc">Worker threw exception</h2>
+      </div>
+      <section></section>
+      <div class="cf-section cf-wrapper">
+        <div class="cf-columns two">
+          <div class="cf-column">
+            <h2 data-translate="what_happened">What happened?</h2>
+            <p>You requested a page on <span id="site-host"></span>, which is part of the Cloudflare network. An unexpected error occurred while the page was being rendered.</p>
+          </div>
+          <div class="cf-column">
+            <h2 data-translate="what_can_i_do">What can I do?</h2>
+            <p><strong>If you manage this website:</strong><br>Read the <a href="https://developers.cloudflare.com/workers/observability/errors/" target="_blank" rel="noopener noreferrer">Workers errors and exceptions guide</a> and review Workers Logs for <span id="owner-host"></span>.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cf-error-footer cf-wrapper">
+        <p>
+          <span class="cf-footer-item">Cloudflare Ray ID: <strong id="footer-ray"></strong></span>
+          <span class="cf-footer-separator">·</span>
+          <span id="cf-footer-item-ip" class="cf-footer-item">Your IP: <button type="button" id="cf-footer-ip-reveal" class="cf-footer-ip-reveal-btn">Click to reveal</button><span id="cf-footer-ip" class="hidden"></span></span>
+          <span class="cf-footer-separator">·</span>
+          <span class="cf-footer-item"><span>Performance and security by </span><a rel="noopener noreferrer" href="https://www.cloudflare.com/5xx-error-landing" id="brand_link" target="_blank">Cloudflare</a></span>
+        </p>
+      </div>
+    </div>
+  </div>
+  <script>
+    (()=>{
+      const key=`cf-1101:${location.pathname}`;
+      const hex=n=>{const bytes=new Uint8Array(n);crypto.getRandomValues(bytes);return [...bytes].map(value=>value.toString(16).padStart(2,'0')).join('')};
+      const fresh=()=>({ray:hex(8),time:new Date().toISOString().slice(0,19).replace('T',' '),ip:`198.51.100.${10+(crypto.getRandomValues(new Uint8Array(1))[0]%240)}`});
+      let data;try{data=JSON.parse(localStorage.getItem(key)||'null');if(!data?.ray||!data?.time||!data?.ip){data=fresh();localStorage.setItem(key,JSON.stringify(data))}}catch{data=fresh()}
+      const host=location.hostname;document.title=`Worker threw exception | ${host} | Cloudflare`;
+      document.getElementById('site-host').textContent=host;document.getElementById('owner-host').textContent=host;
+      document.getElementById('ray-id').textContent=data.ray;document.getElementById('footer-ray').textContent=data.ray;document.getElementById('request-time').textContent=`${data.time} UTC`;
+      const button=document.getElementById('cf-footer-ip-reveal'),ip=document.getElementById('cf-footer-ip');
+      button.addEventListener('click',()=>{ip.textContent=data.ip;ip.classList.remove('hidden');button.classList.add('hidden')});
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#000">
+  <title>Deployment Paused</title>
+  <style>
+    :root{--background:#fff;--secondary:#666;--foreground:#000}
+    @media(prefers-color-scheme:dark){:root{--background:#000;--secondary:#a1a1a1;--foreground:#fff}}
+    *,::after,::before{box-sizing:border-box;margin:0}
+    html,body{overflow:hidden;background:var(--background);color:var(--foreground)}
+    body{font-family:"SF Pro Text","SF Pro Icons","Helvetica Neue",Helvetica,Arial,sans-serif;font-size:1.6rem;line-height:1.65;word-break:break-word;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;height:100vh;height:-webkit-fill-available;max-height:100vh;max-height:-webkit-fill-available}
+    ::selection{background:#79ffe1;color:#000}
+    .message,.id-container{position:fixed;display:grid;place-content:center;padding:32px}
+    .message{inset:0;padding:32px;font-size:20px}
+    .title{text-wrap:balance;text-align:center}
+    .id-container{left:0;bottom:0;width:100%;font-size:13px;color:var(--secondary)}
+    code{font-family:Menlo,Monaco,"Lucida Console","Liberation Mono","DejaVu Sans Mono","Bitstream Vera Sans Mono","Courier New",monospace,serif;font-size:.92em}
+  </style>
+</head>
+<body>
+  <div class="container"><main>
+    <div class="message"><p class="title">This deployment is temporarily paused</p></div>
+    <p class="id-container"><span class="vercel-id"><code id="request-id"></code></span></p>
+  </main></div>
+  <script>
+    (()=>{
+      const key=`vercel-masqr-request-id:${location.pathname}`;
+      const makeId=()=>{
+        const bytes=new Uint8Array(10);crypto.getRandomValues(bytes);
+        const hex=[...bytes].map(byte=>byte.toString(16).padStart(2,'0')).join('');
+        const slug=[...bytes.slice(0,5)].map(byte=>'abcdefghijklmnopqrstuvwxyz'[byte%26]).join('');
+        return `iad1::${slug}-${Date.now()}-${hex.slice(10)}`;
+      };
+      let id;
+      try{id=localStorage.getItem(key);if(!id){id=makeId();localStorage.setItem(key,id)}}catch{id=makeId()}
+      document.getElementById('request-id').textContent=id;
+    })();
+  </script>
+</body>
+</html>

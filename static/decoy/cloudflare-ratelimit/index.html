@@ -1,0 +1,137 @@
+<html class="no-js" lang="en-US"><!--<![endif]--><head>
+      <title>This website has been temporarily rate limited | Cloudflare</title>
+      <meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" id="cf_styles-css" href="cdn-cgi/styles/cf.errors.css">
+<!--[if lt IE 9]><link rel="stylesheet" id='cf_styles-ie-css' href="/cdn-cgi/styles/cf.errors.ie.css" /><![endif]-->
+<style>body{margin:0;padding:0}</style>
+
+
+<!--[if gte IE 10]><!-->
+<script>
+  if (!navigator.cookieEnabled) {
+    window.addEventListener('DOMContentLoaded', function () {
+      var cookieEl = document.getElementById('cookie-alert');
+      cookieEl.style.display = 'block';
+    })
+  }
+</script>
+<!--<![endif]-->
+
+      <style type="text/css">
+            body {
+               margin: 0;
+               padding: 0;
+            }
+
+            #cf-wrapper {
+               font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                  Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+                  "Segoe UI Symbol" !important;
+            }
+            .cf-error-description {
+               max-width: 600px;
+            }
+      </style>
+   </head>
+   <body>
+      <div id="cf-wrapper">
+         <div id="cookie-alert" class="cf-alert cf-alert-error cf-cookie-error" data-translate="enable_cookies">
+            Please enable cookies.
+         </div>
+         <div id="cf-error-details" class="cf-error-details-wrapper">
+            <div class="cf-wrapper cf-header cf-error-overview">
+               <h1>
+               <span class="cf-error-type" data-translate="please check back later">Please check back later</span>
+               </h1>
+               <h2 class="cf-subheadline">Error 1027</h2>
+            </div>
+
+            <div class="cf-section cf-wrapper">
+               <p>
+               <span style="width:16px; display:inline-block; vertical-align:text-top">
+                  <svg fill="#b03340" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                     <path d="M15.672,14.2,8.3,1.443a.352.352,0,0,0-.609,0L.328,14.2a.352.352,0,0,0,.3.527H15.368A.352.352,0,0,0,15.672,14.2ZM8.743,12.9a.221.221,0,0,1-.221.221H7.478a.221.221,0,0,1-.221-.221V11.86a.221.221,0,0,1,.221-.221H8.522a.221.221,0,0,1,.221.221Zm-.025-2.422H7.282L7.257,6.005H8.743Z"></path>
+                  </svg>
+               </span>
+               <strong>
+                    This website has been temporarily rate limited
+               </strong>
+               </p>
+               <p class="cf-error-description">
+                   You cannot access this site because the owner has reached their plan limits. Check back later once traffic has gone down.
+               </p>
+               
+               <p class="cf-error-description">
+                   If you are owner of this website, prevent this from happening again by upgrading your plan on the <a href="https://dash.cloudflare.com/?account=workers/plans" target="_blank">Cloudflare Workers dashboard</a>.
+               </p>
+               
+               
+               <p>
+               <a href="https://developers.cloudflare.com/workers/about/limits/#number-of-requests-limit" target="_blank" rel="noopener noreferrer">
+                  Learn more about this issue →
+               </a>
+               </p>
+               
+            </div>
+
+            <div class="cf-error-footer cf-wrapper">
+    <p>
+      <span class="cf-footer-item">Cloudflare Ray ID: <span id="cf-ray-id"></span></span>
+      <span class="cf-footer-separator">•</span>
+      <span class="cf-footer-item" id="cf-request-time"></span>
+      <span id="cf-footer-item-ip" class="cf-footer-item">
+        <span class="cf-footer-separator">•</span>
+        Your IP:
+        <button type="button" id="cf-footer-ip-reveal" class="cf-footer-ip-reveal-btn">Click to reveal</button>
+        <span class="hidden" id="cf-footer-ip"></span>
+      </span>
+      <span class="cf-footer-separator">•</span>
+      <span class="cf-footer-item"><span>Runs on </span><a rel="noopener noreferrer" href="https://workers.cloudflare.com?utm_source=error_footer" id="brand_link" target="_blank">Cloudflare Workers</a></span>
+    </p>
+    <script>(function(){function d(){var b=a.getElementById("cf-footer-item-ip"),c=a.getElementById("cf-footer-ip-reveal");b&&"classList"in b&&(b.classList.remove("hidden"),c.addEventListener("click",function(){c.classList.add("hidden");a.getElementById("cf-footer-ip").classList.remove("hidden")}))}var a=document;document.addEventListener&&a.addEventListener("DOMContentLoaded",d)})();</script>
+</div><!-- /.error-footer -->
+         </div>
+      </div>
+
+       <script>
+    window._cf_translation = {};
+    
+    
+  </script> 
+   
+<script>
+  (() => {
+    const host = location.hostname;
+    const storageKey = `cf-1027-record:${host}:${location.pathname}`;
+    const randomHex = length => {
+      const bytes = new Uint8Array(length);
+      crypto.getRandomValues(bytes);
+      return [...bytes].map(byte => byte.toString(16).padStart(2, "0")).join("");
+    };
+    const randomByte = () => crypto.getRandomValues(new Uint8Array(1))[0];
+    const makeRecord = () => ({
+      ray: randomHex(8),
+      time: new Date().toISOString().slice(0, 19).replace("T", " "),
+      ip: `198.51.100.${10 + (randomByte() % 240)}`,
+    });
+    let record;
+    try {
+      record = JSON.parse(localStorage.getItem(storageKey) || "null");
+      if (!record?.ray || !record?.time || !record?.ip) {
+        record = makeRecord();
+        localStorage.setItem(storageKey, JSON.stringify(record));
+      }
+    } catch {
+      record = makeRecord();
+    }
+    document.title = `This website has been temporarily rate limited | ${host} | Cloudflare`;
+    document.getElementById("cf-ray-id").textContent = record.ray;
+    document.getElementById("cf-request-time").textContent = `${record.time} UTC`;
+    document.getElementById("cf-footer-ip").textContent = record.ip;
+  })();
+</script>
+</body></html>

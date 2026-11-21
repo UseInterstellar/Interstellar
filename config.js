@@ -30,6 +30,7 @@ const config = {
   // Restrict access to Interstellar using decoy sites and search triggers.
   masqr: {
     enabled: false,
+    // Choose a built-in page: default, nginx, apache2-ubuntu, vercel-paused, vercel-404, firebase-hosting, cloudflare-workers, cloudflare-timeout, cloudflare-ratelimit, or netlify.
     decoy: "/default/",
     searchTrigger: "interstellar", // Default trigger for unlisted domains.
     secureCookie: true,
