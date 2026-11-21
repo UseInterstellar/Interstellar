@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#fff" media="(prefers-color-scheme: light)">
+  <title>404: NOT_FOUND</title>
+  <style>
+    :root{color-scheme:dark;--content-width:283px;--content-max-width:360px;--background:#0a0a0a;--foreground:#ededed;--copy:#fff;--secondary:#a0a0a0;--button-background:#ededed;--button-background-hover:#d8d8d8;--button-foreground:#0a0a0a;--divider:#878787;--focus:#0070f3}
+    @media(prefers-color-scheme:light){:root{color-scheme:light;--background:#fff;--foreground:#171717;--copy:#171717;--secondary:#4d4d4d;--button-background:#171717;--button-background-hover:#333;--button-foreground:#fff;--divider:#a8a8a8}}
+    *,*::before,*::after{box-sizing:border-box}html,body{min-height:100%}
+    body{margin:0;background:var(--background);color:var(--foreground);font-family:Geist,-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;font-synthesis:none;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+    main{display:grid;min-height:100vh;min-height:100svh;place-items:center;padding:32px}.error-page{width:fit-content;min-width:min(var(--content-width),100%);max-width:min(var(--content-max-width),calc(100vw - 64px));transform:translateY(-4px)}h1,p{margin:0}
+    h1{color:var(--foreground);font-size:24px;font-weight:600;letter-spacing:-.96px;line-height:32px;overflow-wrap:anywhere;text-wrap:pretty}.description{width:100%;margin-top:8px;color:var(--copy);font-size:16px;line-height:24px;overflow-wrap:anywhere;text-wrap:pretty}
+    .primary-action{appearance:none;display:inline-flex;align-items:center;justify-content:center;min-width:0;height:32px;margin-top:24px;padding:0 12px;border:0;border-radius:6px;background:var(--button-background);color:var(--button-foreground);cursor:pointer;font:inherit;font-size:14px;font-weight:500;line-height:20px;text-decoration:none;transition:background-color 150ms ease,transform 150ms ease;user-select:none}.primary-action[hidden]{display:none}.primary-action[hidden]~.metadata{margin-top:16px}.primary-action:hover{background:var(--button-background-hover)}.primary-action:active{transform:scale(.98)}
+    .primary-action:focus-visible,.secondary-action:focus-visible{border-radius:6px;outline:2px solid var(--focus);outline-offset:2px}.secondary-actions{position:fixed;bottom:calc(34px + env(safe-area-inset-bottom));left:50%;z-index:1;display:flex;align-items:center;gap:12px;width:var(--content-width);max-width:calc(100vw - 64px);transform:translateX(-50%)}
+    .secondary-action{appearance:none;position:relative;display:flex;align-items:center;justify-content:center;padding:0;border:0;background:transparent;color:var(--secondary);cursor:pointer;font-family:"Geist Mono",SFMono-Regular,Consolas,"Liberation Mono",Menlo,monospace;font-size:12px;font-weight:400;line-height:16px;text-decoration:none;text-transform:uppercase;transition:color 150ms ease;user-select:none;white-space:nowrap}.secondary-action::before{position:absolute;inset:-4px 0;content:""}.secondary-action:hover{color:var(--foreground)}.secondary-action-separator{display:block;flex:none;width:6px;height:10.392px;color:var(--divider);overflow:visible}
+    .copy-confirmation-icon{position:absolute;top:2px;left:calc(100% + 8px);display:block;width:12px;height:12px;color:var(--secondary);opacity:0;pointer-events:none}.copy-debug-prompt[data-copied] .copy-confirmation-icon{opacity:1}.copy-status{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    .metadata{display:flex;flex-direction:column;gap:4px;width:100%;margin-top:23px;color:var(--secondary);font-family:"Geist Mono",SFMono-Regular,Consolas,"Liberation Mono",Menlo,monospace;font-size:12px;line-height:16px;overflow-wrap:anywhere}.metadata-status{text-transform:uppercase}.error-page:not(:has(.primary-action)) .metadata{margin-top:8px}
+    @media(max-width:500px){main{padding:24px}.error-page{max-width:min(var(--content-max-width),calc(100vw - 48px))}.secondary-actions{bottom:calc(24px + env(safe-area-inset-bottom));max-width:calc(100vw - 48px)}.secondary-actions-with-logs{flex-direction:column;align-items:flex-start;gap:8px}.secondary-actions-with-logs .secondary-action-separator{display:none}}
+    @media(prefers-reduced-motion:reduce){.primary-action,.secondary-action{transition:none}}
+  </style>
+</head>
+<body>
+  <main><section class="error-page" aria-labelledby="error-title">
+    <h1 id="error-title">This page doesn’t exist</h1>
+    <p class="description">It may have been moved, removed, or never existed.</p>
+    <button id="go-back-button" class="primary-action" type="button" onclick="location.href='https://vercel.com/for/web-apps'">Go back</button>
+    <div class="metadata" aria-label="HTTP status, error code, and request ID">
+      <p class="metadata-status">404 NOT_FOUND</p>
+      <p id="request-id"></p>
+    </div>
+  </section></main>
+  <div class="secondary-actions" aria-label="Documentation, logs, and debugging actions">
+    <a href="https://vercel.com/docs/errors/not_found" class="secondary-action" target="_blank" rel="noopener" aria-label="View NOT_FOUND documentation"><span>View Documentation</span></a>
+    <svg class="secondary-action-separator" viewBox="0 0 6 10.3923" fill="none" aria-hidden="true" focusable="false"><path d="M0 10.3923 6 0z" stroke="currentColor"></path></svg>
+    <button class="secondary-action copy-debug-prompt" type="button" data-error-code="NOT_FOUND" data-default-label="Copy NOT_FOUND debugging instructions to clipboard" aria-label="Copy NOT_FOUND debugging instructions to clipboard"><span>Copy Debug Prompt</span><svg class="copy-confirmation-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M11.67 3 4.68 9.99a1.31 1.31 0 0 1-1.86 0L.33 7.5l.8-.8 2.49 2.5 6.99-6.99z" fill="currentColor"></path></svg></button>
+    <span class="copy-status" role="status" aria-live="polite"></span>
+  </div>
+  <script>
+    const requestKey=`vercel-masqr-request-id:${location.pathname}`;
+    const makeRequestId=()=>{
+      const bytes=new Uint8Array(10);crypto.getRandomValues(bytes);
+      const hex=[...bytes].map(byte=>byte.toString(16).padStart(2,'0')).join('');
+      const slug=[...bytes.slice(0,5)].map(byte=>'abcdefghijklmnopqrstuvwxyz'[byte%26]).join('');
+      return `iad1::${slug}-${Date.now()}-${hex.slice(10)}`;
+    };
+    let requestId;
+    try{requestId=localStorage.getItem(requestKey);if(!requestId){requestId=makeRequestId();localStorage.setItem(requestKey,requestId)}}catch{requestId=makeRequestId()}
+    document.getElementById('request-id').textContent=requestId;
+    const copyButton=document.querySelector('.copy-debug-prompt');
+    const copyStatus=document.querySelector('.copy-status');
+    let copyTimer;
+    copyButton.addEventListener('click',async()=>{
+      const prompt=`Debug this error\n\n404 NOT_FOUND\n\nRequest ID: ${requestId}\nURL: ${window.location.href}\nUser agent: ${navigator.userAgent}\nDocs for this error code: https://vercel.com/docs/errors/not_found`;
+      let copied=false;
+      try{await navigator.clipboard.writeText(prompt);copied=true}catch{}
+      copyButton.toggleAttribute('data-copied',copied);
+      const message=copied?'Copied NOT_FOUND debugging instructions to clipboard':'Unable to copy NOT_FOUND debugging instructions';
+      copyButton.setAttribute('aria-label',message);copyStatus.textContent=message;
+      clearTimeout(copyTimer);copyTimer=setTimeout(()=>{copyButton.removeAttribute('data-copied');copyButton.setAttribute('aria-label',copyButton.dataset.defaultLabel);copyStatus.textContent=''},1300);
+    });
+  </script>
+</body>
+</html>

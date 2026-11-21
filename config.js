@@ -27,11 +27,25 @@ const config = {
   },
 
   // Masqr
-  // Restrict access to Interstellar using decoy sites and search triggers.
+  // Restrict access to Interstellar using decoy pages and typed trigger phrases.
   masqr: {
     enabled: false,
+    // Choose a built-in page. Per-cloak triggers override the shared trigger below.
     decoy: "/default/",
-    searchTrigger: "interstellar", // Default trigger for unlisted domains.
+    trigger: "james123", // Shared phrase. Enter it anywhere on the decoy page to unlock.
+    searchTrigger: "interstellar", // Search-box phrase, separate from the typed trigger.
+    cloaks: {
+      default: { trigger: null }, // null inherits masqr.trigger; set a string to override it.
+      nginx: { trigger: null },
+      "apache2-ubuntu": { trigger: null },
+      "vercel-paused": { trigger: null },
+      "vercel-404": { trigger: null },
+      "firebase-hosting": { trigger: null },
+      "cloudflare-workers": { trigger: null },
+      "cloudflare-timeout": { trigger: null },
+      "cloudflare-ratelimit": { trigger: null },
+      netlify: { trigger: null },
+    },
     secureCookie: true,
     sessionDays: 30,
     decoyOnly: false, // Only enable Masqr on hosts with configured decoys.
@@ -41,8 +55,7 @@ const config = {
     // ["pinkmath.com", "pinkmath.org", "pinkmath.edu"].
 
     // Domain-Specific Triggers
-    // Apply custom search triggers to groups of domains sharing a name.
-    // Unlisted domains use the global searchTrigger.
+    // A site's trigger overrides its cloak trigger. searchTrigger keeps the search-box unlock separate.
     sites: [
       { name: "example1", tlds: ["org", "com", "net"], searchTrigger: "example1" },
       { name: "interstellar", tlds: ["com", "net", "xyz"], searchTrigger: "interstellar2" },

@@ -1,6 +1,6 @@
 import { createHash, randomBytes, randomInt as secureRandomInt } from "node:crypto";
 import { readFileSync } from "node:fs";
-import { access, cp, mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
+import { access, cp, mkdir, readdir, readFile, rename, rm, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -108,11 +108,20 @@ function encodeWispLists({ preferred, fallback }) {
 const NETLIFY_WISP = STATIC_HOST ? resolveNetlifyWisp() : { preferred: [], fallback: [], source: null };
 const NETLIFY_WISP_COUNT = NETLIFY_WISP.preferred.length + NETLIFY_WISP.fallback.length;
 
+async function removeGhGames(gamesPath) {
+  const games = JSON.parse(await readFile(gamesPath, "utf8"));
+  if (!Array.isArray(games)) throw new Error(`${gamesPath} is not an array`);
+  const kept = games.filter(game => !JSON.stringify(game).includes("/gh-games/"));
+  await writeFile(gamesPath, JSON.stringify(kept), "utf8");
+  console.log(chalk.yellow(`  cloudflare-pages: removed ${games.length - kept.length} game(s) that need /gh-games/`));
+}
+
 function buildRedirects(pageRoutes) {
-  const rules = Object.entries(ghGamesProxies()).map(([prefix, target]) => [`${prefix}*`, `${target}:splat`, "200"]);
-  rules.push(["/", "/home.html", "200"]);
-  for (const [clean, token] of Object.entries(pageRoutes)) rules.push([token, `${clean}.html`, "200"]);
-  rules.push(["/play.html", "/games.html", "200"], ["/.runtime/*", "/404.html", "404!"]);
+  // Cloudflare Pages cannot proxy the GitHub game stores
+  const rules = PLATFORM === "cloudflare-pages" ? [] : Object.entries(ghGamesProxies()).map(([prefix, target]) => [`${prefix}*`, `${target}:splat`, "200"]);
+  const tokenFile = token => `${token}.html`;
+  rules.push(["/", tokenFile(pageRoutes["/home"]), "200"]);
+  rules.push(["/play.html", tokenFile(pageRoutes["/games"]), "200"], ["/.runtime/*", "/404.html", "404!"]);
   return `${rules.map(rule => rule.join(" ")).join("\n")}\n`;
 }
 
@@ -200,10 +209,15 @@ const WORDS =
     " ",
   );
 
-const FILENAMES =
-  "x y z a b c d e f g h 1 2 3 10 11 100 mod lib api run cli app env cfg index main core init loader worker runtime parser formatter handler manager client server config schema mapper adapter resolver encoder decoder sync fetch stream buffer queue cache router dispatcher emitter observer builder factory transform pipeline registry validator scheduler monitor tracer bridge channel storage profiler".split(
-    " ",
-  );
+const FILENAMES_FILE = path.join(PROJECT_DIR, "src", "build", "words.txt");
+const FILENAMES = readFileSync(FILENAMES_FILE, "utf8")
+  .split(/\r?\n/)
+  .map(line => line.trim())
+  .filter(line => line && !line.startsWith("#"));
+for (const word of FILENAMES) {
+  if (!/^[a-z0-9]+$/i.test(word)) throw new Error(`words.txt: invalid filename word "${word}"`);
+}
+if (!FILENAMES.length) throw new Error("words.txt: no filename words found");
 
 function randomItem(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -543,6 +557,13 @@ function applyBroadcastChannelRewrite(source, id) {
   return out;
 }
 
+function applyBareTransportName(source, id) {
+  if (!source.includes("BareTransport")) return source;
+  const out = replaceAll(source, "BareTransport", `_bt${randomBytes(3).toString("hex")}`);
+  if (out.includes("BareTransport")) throw new CodecPatchError(`${id}: BareTransport survived the rewrite.`);
+  return out;
+}
+
 const RENAMED_IDENTIFIERS = [
   "__scramjet$config",
   "isScramjet",
@@ -807,6 +828,29 @@ function applyUltravioletRename(source, name) {
 // lookbehind rejects the dot and slash forms so paths and property access cannot be hit.
 const SW_LOCAL_COUNTS = { uv: 2, sj: 5 };
 const swLocalPattern = name => new RegExp(`(?<![\\w$./"'\`-])${name}(?![\\w$])`, "g");
+
+const TOP_LEVEL_RENAME_COUNTS = {
+  "search.js": { customWispUrl: 5 },
+  "sw.js": { notifyWispFailure: 2 },
+  "settings.js": { ACTIVE_SCRAMJET_DB_NAME: 3 },
+};
+
+function createTopLevelRenames() {
+  const names = Object.values(TOP_LEVEL_RENAME_COUNTS).flatMap(counts => Object.keys(counts));
+  return new Map(names.map(name => [name, `_${randomBytes(5).toString("hex")}`]));
+}
+
+function applyTopLevelRenames(source, basename, renames) {
+  let out = source;
+  for (const [name, expected] of Object.entries(TOP_LEVEL_RENAME_COUNTS[basename] ?? {})) {
+    const pattern = () => new RegExp(`(?<![\\w$])${name}(?![\\w$])`, "g");
+    const found = (out.match(pattern()) || []).length;
+    if (found !== expected) throw new CodecPatchError(`${basename}: expected ${expected} occurrences of ${name}, found ${found}. Update TOP_LEVEL_RENAME_COUNTS.`);
+    out = out.replace(pattern(), renames.get(name));
+    if (pattern().test(out)) throw new CodecPatchError(`${basename}: ${name} survived the rename.`);
+  }
+  return out;
+}
 
 function createSwLocalRenames() {
   return new Map(Object.keys(SW_LOCAL_COUNTS).map(name => [name, `_${randomBytes(5).toString("hex")}`]));
@@ -2200,6 +2244,7 @@ async function build() {
   // apps.json and games.json are byte-equivalent duplicates of the .min files that nothing
   // fetches, so they are dropped rather than shipped as a second plaintext copy.
   for (const name of UNUSED_JSON) await rm(path.join(DIST_DIR, "assets", "json", name), { force: true });
+  if (PLATFORM === "cloudflare-pages") await removeGhGames(path.join(DIST_DIR, "assets", "json", "games.min.json"));
 
   const jsonMoves = new Map();
   for (const name of RANDOMIZED_JSON) {
@@ -2336,6 +2381,7 @@ async function build() {
     // After the diagnostic strip, whose literals carry bare-mux occurrences of their own.
     if (spec.rewriteBaremuxStrings) source = applyBaremuxStrings(source, spec.id, baremuxStrings);
     if (spec.rewriteBaremuxStrings) source = applyBroadcastChannelRewrite(source, spec.id);
+    if (spec.rewriteBaremuxStrings) source = applyBareTransportName(source, spec.id);
     if (spec.rewriteProtocolKeys) source = applyScramjetProtocolKeys(source, protocolKeys);
     if (spec.renameIdentifiers) source = applyIdentifierRenames(source, identifierRenames);
     if (spec.sharedNames) source = applyScramjetSharedNames(source, scramjetSharedNames, spec.sharedNames, spec.id);
@@ -2398,6 +2444,7 @@ async function build() {
   let failed = 0;
   const codecFailures = [];
   const swLocalRenames = createSwLocalRenames();
+  const topLevelRenames = createTopLevelRenames();
   const handlerRenames = createHandlerRenames();
   const tabAttr = createTabAttr();
   let handlerJsCount = 0;
@@ -2427,10 +2474,14 @@ async function build() {
         if (basename === "home.js") output = scopeHomeScript(output);
         if (basename === "settings.js") output = applyActiveScramjetName(output, scramjetStrings.idb);
         if (basename === "search.js") {
+          const wispKeyed = output.split("[{ wisp }]").length - 1;
+          if (wispKeyed !== 2) throw new CodecPatchError(`search.js: expected 2 "[{ wisp }]" transports, found ${wispKeyed}. Upstream changed.`);
+          output = output.replaceAll("[{ wisp }]", '[Object.fromEntries([["wisp", wisp]])]');
           output = STATIC_HOST ? (NETLIFY_WISP_COUNT ? applyBuiltWisp(output, NETLIFY_WISP) : output) : applyWispPath(output, wispPath);
           if (STATIC_HOST) output = patchOrFail(output, /const SERVER_FILTER = true;/, "const SERVER_FILTER = false;", "search.js server filter switch");
         }
         if (basename === "launcher.js") output = patchOrFail(output, /const CATALOGUE_KEY = \[0\];/, `const CATALOGUE_KEY = ${JSON.stringify(catalogueKey)};`, "launcher.js catalogue key");
+        output = applyTopLevelRenames(output, basename, topLevelRenames);
         references.push({ file: `${basename} (${publicPath})`, source: output });
 
         const terserOnly = TERSER_ONLY.has(basename);
@@ -2506,6 +2557,11 @@ async function build() {
       for (const [from, to] of scopeRewrites) html = replaceAll(html, from, to);
       html = applyRewrites(html, rewrites);
       html = replaceAll(html, 'src="/home"', `src="${pageRoutes["/home"]}"`);
+      if (PLATFORM === "cloudflare-pages" && name === "games.html") {
+        const before = html;
+        html = html.replace(/<option value="local">[\s\S]*?<\/option>\s*/, "");
+        if (html === before) throw new Error("games.html: Local category option not found. Upstream changed.");
+      }
 
       const proxyChoice = applyProxyChoiceValues(html);
       html = proxyChoice.source;
@@ -2583,6 +2639,13 @@ async function build() {
   for (const spec of specs) for (const name of spec.globals ?? []) if (name.startsWith(UV_PREFIX) && !gateRenames.has(name)) gateRenames.set(name, name.replace(UV_PREFIX, uvPrefixName));
   const { checkedReferences } = await verifyBuild({ manifest, specs, emitted, references, distJsFiles, /* serverRoutes: manifest.analytics ? [manifest.analytics.loader] : [], */ identifierRenames: gateRenames, swLocalRenames });
   console.log(chalk.green(`  all checks passed (${emitted.size} emitted assets, ${distJsFiles.length} scripts parsed, ${checkedReferences} asset references resolved across ${references.length} files)`));
+
+  if (STATIC_HOST) {
+    for (const [clean, token] of Object.entries(manifest.routes)) {
+      await rename(path.join(DIST_DIR, `${clean.slice(1)}.html`), path.join(DIST_DIR, `${token.slice(1)}.html`));
+    }
+    console.log(chalk.green(`  netlify: renamed ${Object.keys(manifest.routes).length} page(s) to their route tokens`));
+  }
 
   console.log(chalk.green("\nBuild complete -> dist/"));
   console.log(chalk.blue(`\nBuild id: ${manifest.build}  scope: ${NEW_UV_SCOPE}  scramjet: ${NEW_SCRAMJET_SCOPE}  sw: ${manifest.sw}`));

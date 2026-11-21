@@ -112,7 +112,10 @@ export function expandSites(sites = [], decoyAliases = new Map()) {
   sites.forEach((site, index) => {
     const targetDecoy = site.decoy ?? site.name;
     const label = `Masqr site ${targetDecoy ?? index}`;
-    if (typeof site.searchTrigger !== "string" || !site.searchTrigger) throw new Error(`${label}: needs a searchTrigger`);
+    const siteTrigger = site.trigger ?? null;
+    const siteSearchTrigger = site.searchTrigger ?? null;
+    if (siteTrigger !== null && typeof siteTrigger !== "string") throw new Error(`${label}: trigger must be a string or null`);
+    if (siteSearchTrigger !== null && typeof siteSearchTrigger !== "string") throw new Error(`${label}: searchTrigger must be a string or null`);
 
     const names = site.name && Array.isArray(site.tlds) ? site.tlds.map(tld => `${site.name}.${tld}`) : [];
     const hosts = [...names, ...(site.hosts ?? [])];
@@ -130,7 +133,7 @@ export function expandSites(sites = [], decoyAliases = new Map()) {
       if (seenHosts.has(host)) continue;
       seenHosts.add(host);
       if (entries.has(host)) throw new Error(`Masqr site ${host} is listed in more than one site`);
-      entries.set(host, { searchTrigger: site.searchTrigger, family });
+      entries.set(host, { trigger: siteTrigger, searchTrigger: siteSearchTrigger, family });
     }
   });
   return entries;
@@ -186,7 +189,53 @@ function safeDecoyFile(root, requestPath) {
 
 function triggerMatches(value, trigger) {
   if (!trigger) return false;
-  return timingSafeEqual(Buffer.from(sha256(String(value).trim())), Buffer.from(sha256(trigger)));
+  return timingSafeEqual(Buffer.from(sha256(String(value).trim())), Buffer.from(sha256(String(trigger).trim())));
+}
+
+function triggerClientScript(length) {
+  return `(() => {
+    const expectedLength = ${length};
+    if (!Number.isInteger(expectedLength) || expectedLength < 1) return;
+    let typed = "";
+    let timer = null;
+    let sending = false;
+    const submit = async () => {
+      if (sending || typed.length !== expectedLength) return;
+      const trigger = typed;
+      typed = "";
+      sending = true;
+      try {
+        const response = await fetch("/login/", {
+          method: "POST",
+          credentials: "same-origin",
+          headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+          body: new URLSearchParams({ trigger }),
+        });
+        if (response.ok) window.location.reload();
+      } catch {
+      } finally {
+        sending = false;
+      }
+    };
+    document.addEventListener("keydown", event => {
+      if (sending || event.isComposing || event.repeat || event.ctrlKey || event.metaKey || event.altKey) return;
+      if (event.key === "Escape") {
+        typed = "";
+        clearTimeout(timer);
+        return;
+      }
+      if (event.key === "Backspace") {
+        typed = typed.slice(0, -1);
+        clearTimeout(timer);
+        return;
+      }
+      if (event.key.length !== 1) return;
+      typed += event.key;
+      if (typed.length > expectedLength) typed = typed.slice(-expectedLength);
+      clearTimeout(timer);
+      if (typed.length === expectedLength) timer = setTimeout(submit, 350);
+    }, true);
+  })();`;
 }
 
 function loadSearchRedirect(folder) {
@@ -197,7 +246,7 @@ function loadSearchRedirect(folder) {
   return redirect;
 }
 
-export function mountMasqr(app, { decoyBase, decoySet = "default", secureCookie = true, sessionMs = 30 * DAY_MS, searchTrigger = null, sites = [], decoyOnly = false }) {
+export function mountMasqr(app, { decoyBase, decoySet = "default", secureCookie = true, sessionMs = 30 * DAY_MS, trigger = null, searchTrigger = null, cloaks = {}, sites = [], decoyOnly = false }) {
   // /math/, math and /math all select static/decoy/math.
   const setName = String(decoySet)
     .trim()
@@ -209,6 +258,9 @@ export function mountMasqr(app, { decoyBase, decoySet = "default", secureCookie 
   if (!decoyOnly && !existsSync(path.join(setRoot, "index.html"))) throw new Error(`Masqr decoy set ${setRoot} has no index.html`);
   const { folders, aliases, decoyAliases } = existsSync(decoyBase) ? loadDecoyMap(decoyBase, setName) : { folders: new Map(), aliases: new Map(), decoyAliases: new Map() };
   const siteEntries = expandSites(sites, decoyAliases);
+  const cloakTriggers = cloaks && typeof cloaks === "object" ? cloaks : {};
+  const sharedTrigger = trigger;
+  const sharedSearchTrigger = searchTrigger;
   const hostOf = req => normaliseHost(req.headers.host);
 
   const folderFor = host => {
@@ -224,7 +276,15 @@ export function mountMasqr(app, { decoyBase, decoySet = "default", secureCookie 
     const folder = folderFor(hostOf(req));
     return folder ? path.join(decoyBase, folder) : setRoot;
   };
-  const triggerFor = req => siteEntries.get(hostOf(req))?.searchTrigger ?? searchTrigger;
+  const decoyNameFor = req => folderFor(hostOf(req)) ?? setName;
+  const triggerFor = req => {
+    const siteTrigger = siteEntries.get(hostOf(req))?.trigger;
+    if (siteTrigger !== null && siteTrigger !== undefined) return siteTrigger;
+    const cloak = cloakTriggers[decoyNameFor(req)];
+    const cloakTrigger = typeof cloak === "string" ? cloak : cloak?.trigger;
+    return cloakTrigger ?? sharedTrigger;
+  };
+  const searchTriggerFor = req => siteEntries.get(hostOf(req))?.searchTrigger ?? sharedSearchTrigger;
   const gated = req => !decoyOnly || folders.has(hostOf(req)) || aliases.has(hostOf(req)) || siteEntries.has(hostOf(req));
 
   const searchRedirects = new Map();
@@ -248,12 +308,20 @@ export function mountMasqr(app, { decoyBase, decoySet = "default", secureCookie 
     });
   };
 
+  app.get("/masqr.js", (req, res, next) => {
+    if (!gated(req) || isAuthorized(req)) return next();
+    const configuredTrigger = triggerFor(req);
+    const length = typeof configuredTrigger === "string" ? configuredTrigger.trim().length : 0;
+    res.setHeader("Cache-Control", "no-store");
+    res.setHeader("Content-Type", "application/javascript; charset=utf-8");
+    return res.send(triggerClientScript(length));
+  });
+
   app.post(SEARCH_PATH, express.urlencoded({ extended: false, limit: "1kb" }), (req, res, next) => {
     res.setHeader("Cache-Control", "no-store");
     if (!gated(req)) return next();
     const query = String(req.body?.q ?? "");
-    if (triggerMatches(query, triggerFor(req))) {
-      consumeToken(issueToken({ days: 1 }), null);
+    if (triggerMatches(query, searchTriggerFor(req))) {
       setSession(res);
       return res.redirect(303, "/");
     }
@@ -265,8 +333,8 @@ export function mountMasqr(app, { decoyBase, decoySet = "default", secureCookie 
   app.post(LOGIN_PATH, express.urlencoded({ extended: false, limit: "1kb" }), (req, res, next) => {
     res.setHeader("Cache-Control", "no-store");
     if (!gated(req)) return next();
-    const password = typeof req.body?.password === "string" ? req.body.password : "";
-    if (!password || !triggerMatches(password, triggerFor(req))) {
+    const typedTrigger = typeof req.body?.trigger === "string" ? req.body.trigger : typeof req.body?.password === "string" ? req.body.password : "";
+    if (!typedTrigger || !triggerMatches(typedTrigger, triggerFor(req))) {
       return res.status(401).json({ error: "Invalid login" });
     }
     setSession(res);
@@ -282,7 +350,18 @@ export function mountMasqr(app, { decoyBase, decoySet = "default", secureCookie 
       } catch {
         file = null;
       }
-      if (file) return res.sendFile(file, { dotfiles: "deny" });
+      if (file) {
+        if (path.extname(file).toLowerCase() === ".html") {
+          let html = readFileSync(file, "utf8");
+          if (!/src=["']\/masqr\.js["']/.test(html)) {
+            const script = '<script src="/masqr.js" defer></script>';
+            html = /<\/body\s*>/i.test(html) ? html.replace(/<\/body\s*>/i, `${script}</body>`) : `${html}${script}`;
+          }
+          res.setHeader("Cache-Control", "no-store");
+          return res.type("html").send(html);
+        }
+        return res.sendFile(file, { dotfiles: "deny" });
+      }
       let notFoundFile = null;
       try {
         notFoundFile = safeDecoyFile(rootFor(req), "/404.html");
