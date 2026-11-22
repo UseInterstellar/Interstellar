@@ -2263,11 +2263,17 @@ async function build() {
   }
   const palettePublic = cssByOldPublic.get("/assets/css/themes/catppuccin/palette.css");
 
+  const mediaDirs = [registry.dir()];
+  while (mediaDirs.length < 2) {
+    const candidate = registry.dir();
+    if (!mediaDirs.includes(candidate)) mediaDirs.push(candidate);
+  }
+  const mediaDir = () => mediaDirs[randomInt(0, mediaDirs.length - 1)];
   const mediaMoves = new Map();
-  for (const source of await collectFiles(path.join(DIST_DIR, "assets", "media"), () => true)) mediaMoves.set(source, registry.file(path.extname(source)));
+  for (const source of await collectFiles(path.join(DIST_DIR, "assets", "media"), () => true)) mediaMoves.set(source, registry.file(path.extname(source), mediaDir()));
   for (const name of ["favicon.ico", "favicon.png"]) {
     const source = path.join(DIST_DIR, name);
-    if (await exists(source)) mediaMoves.set(source, registry.file(path.extname(name)));
+    if (await exists(source)) mediaMoves.set(source, registry.file(path.extname(name), mediaDir()));
   }
   const mediaByOldPublic = new Map();
   for (const [source, publicPath] of mediaMoves) mediaByOldPublic.set(`/${path.relative(DIST_DIR, source).split(path.sep).join("/")}`, publicPath);
