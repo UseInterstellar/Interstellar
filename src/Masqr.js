@@ -107,6 +107,22 @@ function registerHost(map, rawHost, folder, source) {
   map.set(host, folder);
 }
 
+function isCloakEntry(site) {
+  return typeof site.name === "string" && site.name !== "" && !site.decoy && !site.hosts && !Array.isArray(site.tlds) && (site.searchTrigger ?? null) === null;
+}
+
+export function expandCloaks(sites = []) {
+  const cloaks = new Map();
+  sites.forEach(site => {
+    if (!isCloakEntry(site)) return;
+    const trigger = site.trigger ?? null;
+    if (trigger !== null && typeof trigger !== "string") throw new Error(`Masqr cloak ${site.name}: trigger must be a string or null`);
+    if (cloaks.has(site.name)) throw new Error(`Masqr cloak ${site.name} is listed more than once`);
+    cloaks.set(site.name, { trigger });
+  });
+  return cloaks;
+}
+
 export function expandSites(sites = [], decoyAliases = new Map()) {
   const entries = new Map();
   sites.forEach((site, index) => {
@@ -123,7 +139,10 @@ export function expandSites(sites = [], decoyAliases = new Map()) {
       throw new Error(`${label}: decoy folder ${JSON.stringify(site.decoy)} has no usable domains.json`);
     }
     hosts.push(...(decoyAliases.get(targetDecoy) ?? []));
-    if (!hosts.length) throw new Error(`${label}: needs name + tlds, a hosts list, or a decoy folder with domains.json aliases`);
+    if (!hosts.length) {
+      if (isCloakEntry(site)) return;
+      throw new Error(`${label}: needs name + tlds, a hosts list, or a decoy folder with domains.json aliases`);
+    }
 
     const family = names.length ? names.map(name => normaliseHost(name)) : null;
     const seenHosts = new Set();
@@ -246,7 +265,7 @@ function loadSearchRedirect(folder) {
   return redirect;
 }
 
-export function mountMasqr(app, { decoyBase, decoySet = "default", secureCookie = true, sessionMs = 30 * DAY_MS, trigger = null, searchTrigger = null, cloaks = {}, sites = [], decoyOnly = false }) {
+export function mountMasqr(app, { decoyBase, decoySet = "default", secureCookie = true, sessionMs = 30 * DAY_MS, trigger = null, searchTrigger = null, sites = [], decoyOnly = false }) {
   // /math/, math and /math all select static/decoy/math.
   const setName = String(decoySet)
     .trim()
@@ -258,7 +277,7 @@ export function mountMasqr(app, { decoyBase, decoySet = "default", secureCookie 
   if (!decoyOnly && !existsSync(path.join(setRoot, "index.html"))) throw new Error(`Masqr decoy set ${setRoot} has no index.html`);
   const { folders, aliases, decoyAliases } = existsSync(decoyBase) ? loadDecoyMap(decoyBase, setName) : { folders: new Map(), aliases: new Map(), decoyAliases: new Map() };
   const siteEntries = expandSites(sites, decoyAliases);
-  const cloakTriggers = cloaks && typeof cloaks === "object" ? cloaks : {};
+  const cloakEntries = expandCloaks(sites);
   const sharedTrigger = trigger;
   const sharedSearchTrigger = searchTrigger;
   const hostOf = req => normaliseHost(req.headers.host);
@@ -280,8 +299,7 @@ export function mountMasqr(app, { decoyBase, decoySet = "default", secureCookie 
   const triggerFor = req => {
     const siteTrigger = siteEntries.get(hostOf(req))?.trigger;
     if (siteTrigger !== null && siteTrigger !== undefined) return siteTrigger;
-    const cloak = cloakTriggers[decoyNameFor(req)];
-    const cloakTrigger = typeof cloak === "string" ? cloak : cloak?.trigger;
+    const cloakTrigger = cloakEntries.get(decoyNameFor(req))?.trigger;
     return cloakTrigger ?? sharedTrigger;
   };
   const searchTriggerFor = req => siteEntries.get(hostOf(req))?.searchTrigger ?? sharedSearchTrigger;

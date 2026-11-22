@@ -130,7 +130,6 @@ async function startNodeServer() {
       decoySet: config.masqr.decoy ?? "default",
       trigger: process.env.MASQR_TRIGGER ?? config.masqr.trigger ?? null,
       searchTrigger: process.env.MASQR_SEARCH_TRIGGER ?? config.masqr.searchTrigger ?? null,
-      cloaks: config.masqr.cloaks ?? {},
       sites: config.masqr.sites ?? [],
       decoyOnly: config.masqr.decoyOnly === true,
       secureCookie: config.masqr.secureCookie !== false,
