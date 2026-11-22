@@ -59,10 +59,10 @@ const addressBar = (() => {
   let addressEditing = false;
 
   const INTERNAL_PAGES = {
-    home: { route: "/home", title: "New Tab", displayUrl: "interstellar://newtab" },
-    apps: { route: "/apps", title: "Apps", displayUrl: "interstellar://apps" },
-    games: { route: "/games", title: "Games", displayUrl: "interstellar://games" },
-    settings: { route: "/settings", title: "Settings", displayUrl: "interstellar://settings" },
+    home: { route: "/home", title: "New Tab", displayUrl: "", typeUrl: "interstellar://newtab" },
+    apps: { route: "/apps", title: "Apps", displayUrl: "interstellar://apps", typeUrl: "interstellar://apps" },
+    games: { route: "/games", title: "Games", displayUrl: "interstellar://games", typeUrl: "interstellar://games" },
+    settings: { route: "/settings", title: "Settings", displayUrl: "interstellar://settings", typeUrl: "interstellar://settings" },
   };
 
   function internalPageForUrl(href) {
@@ -94,6 +94,10 @@ const addressBar = (() => {
 
   function laceKeywords(url) {
     return window.laceTitle ? window.laceTitle(url, false) : url;
+  }
+
+  function laceTabTitle(text) {
+    return window.laceTitle ? window.laceTitle(text, true) : text;
   }
 
   function renderAddress() {
@@ -212,6 +216,7 @@ const addressBar = (() => {
     setupAddressBar,
     stripZeroWidth,
     laceKeywords,
+    laceTabTitle,
   };
 })();
 
@@ -425,6 +430,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   addTabButton.addEventListener("click", () => createNewTab(addressBar.INTERNAL_PAGES.home.route));
 
+  document.getElementById("search-form")?.addEventListener("submit", event => {
+    const input = document.getElementById("input");
+    const typed = addressBar.stripZeroWidth(input?.value ?? "").trim().toLowerCase();
+    const page = Object.values(addressBar.INTERNAL_PAGES).find(p => p.typeUrl === typed);
+    if (!page) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    input.value = "";
+    input.blur();
+    createNewTab(page.route);
+  }, true);
+
   function resolveStoredUrl(value) {
     if (!value) return null;
     return value.startsWith("/") ? window.location.origin + value : value;
@@ -484,7 +501,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const src = (startUrl && resolveStoredUrl(startUrl)) || window.location.origin + addressBar.INTERNAL_PAGES.home.route;
     const startPage = addressBar.internalPageForUrl(src);
 
-    tabTitle.textContent = addressBar.laceKeywords(startPage ? startPage.title : `New Tab ${tabCounter}`);
+    tabTitle.textContent = addressBar.laceTabTitle(startPage ? startPage.title : `New Tab ${tabCounter}`);
     tabTitle.className = "t";
     newTab.dataset.tabId = tabCounter;
     newTab.addEventListener("click", switchTab);
@@ -510,7 +527,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const page = addressBar.internalPageOf(newIframe);
       try {
         const title = newIframe.contentDocument?.title;
-        tabTitle.textContent = addressBar.laceKeywords(page ? page.title : title && title.length > 1 ? title : "New Tab");
+        tabTitle.textContent = addressBar.laceTabTitle(page ? page.title : title && title.length > 1 ? title : "New Tab");
 
         newIframe.contentWindow.open = url => {
           const blank = !url || url === "about:blank";
