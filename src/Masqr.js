@@ -326,6 +326,12 @@ export function mountMasqr(app, { decoyBase, decoySet = "default", secureCookie 
     });
   };
 
+
+  app.use((req, res, next) => {
+    if (gated(req)) res.vary("Cookie");
+    next();
+  });
+
   app.get("/masqr.js", (req, res, next) => {
     if (!gated(req) || isAuthorized(req)) return next();
     const configuredTrigger = triggerFor(req);
