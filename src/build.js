@@ -10,6 +10,7 @@ import JavaScriptObfuscator from "javascript-obfuscator";
 import { minify } from "terser";
 import { ghGamesProxies } from "./games.js";
 import { injectVersionInfo, resolveVersionInfo, VERSION_TOKEN_COUNT } from "./version.js";
+import { createShiftedInterFont, createTextFontRuntime } from "./build/interstellar-font.js";
 
 const OBFUSCATOR_PROMO_PATTERN = /\[javascript-obfuscator\]|JavaScript Obfuscator Pro|obfuscator\.io/i;
 
@@ -24,6 +25,8 @@ for (const method of ["log", "info", "warn"]) {
 const PLATFORM = process.argv.includes("--cloudflare-pages") ? "cloudflare-pages" : process.argv.includes("--netlify") ? "netlify" : null;
 const STATIC_HOST = PLATFORM !== null;
 const NETLIFY_HEADERS = "/*\n  Service-Worker-Allowed: /\n";
+let ACTIVE_TEXT_FONT_RUNTIME = "";
+let ACTIVE_TEXT_FONT_URL = "";
 
 function readWispUrl(raw, variable) {
   const text = String(raw ?? "").trim();
@@ -1281,6 +1284,12 @@ function encodeHtmlText(text) {
   });
 }
 
+function shiftFontFamilies(css) {
+  return css
+    .replace(/@import\s+url\(\s*(["']?)https:\/\/fonts\.googleapis\.com\/[^)]*\1\s*\)\s*;?/gi, "")
+    .replace(/(["']?)(Inter|Poppins)\1(?=\s*(?:,|;))/gi, '"InterstellarShift"');
+}
+
 const SETTINGS_KEYWORDS = ["cloaking", "cloaked", "cloak"];
 
 function swapKeyword(text, tok) {
@@ -1444,7 +1453,7 @@ function obfuscateHtmlMarkup(html) {
     return token;
   };
 
-  let output = html.replace(/<(script|style|pre|textarea)\b[\s\S]*?<\/\1>/gi, protectBlock);
+  let output = html.replace(/<(script|style|pre|textarea|title)\b[\s\S]*?<\/\1>/gi, protectBlock);
   output = obfuscateAttributeValues(output);
   output = obfuscateTextNodes(output);
 
@@ -1453,6 +1462,10 @@ function obfuscateHtmlMarkup(html) {
 }
 
 async function obfuscateHtml(html, htmlName) {
+  html = html.replace(/(<style\b[^>]*>)([\s\S]*?)(<\/style>)/gi, (_match, open, css, close) => `${open}${shiftFontFamilies(css)}${close}`);
+  html = html.replace(/\sstyle=(["'])(.*?)\1/gi, (_match, quote, css) => ` style=${quote}${shiftFontFamilies(css)}${quote}`);
+  const fontRuntime = `<link rel="preload" href="${ACTIVE_TEXT_FONT_URL}" as="font" type="font/ttf" crossorigin><style>@font-face{font-family:"InterstellarShift";src:url("${ACTIVE_TEXT_FONT_URL}") format("truetype");font-style:normal;font-weight:100 900;font-display:swap}body,body *:not(i):not(svg):not(input):not(textarea):not(pre):not(code):not([class*="fa-"]){font-family:system-ui,sans-serif!important}body[data-interstellar-font-shifted],body[data-interstellar-font-shifted] *:not(i):not(svg):not(input):not(textarea):not(pre):not(code):not([class*="fa-"]){font-family:"InterstellarShift",sans-serif!important}input,textarea{font-family:system-ui,sans-serif!important}pre,code{font-family:monospace!important}</style><script>${ACTIVE_TEXT_FONT_RUNTIME}</script>`;
+  html = html.replace(/<head\b[^>]*>/i, head => `${head}${fontRuntime}`);
   return obfuscateHtmlMarkup(minifyHtml(await obfuscateInlineScripts(html, htmlName)));
 }
 
@@ -2178,6 +2191,12 @@ async function build() {
 
   const buildId = randomBytes(4).toString("hex");
   const registry = new PathRegistry(buildId);
+  const fontSource = path.join(DIST_DIR, "assets", "fonts", "InterVariable.ttf");
+  const generatedFontSource = path.join(DIST_DIR, "assets", "fonts", "interstellar-shift.ttf");
+  const shiftedInter = createShiftedInterFont(await readFile(fontSource));
+  ACTIVE_TEXT_FONT_RUNTIME = createTextFontRuntime(shiftedInter.encode, shiftedInter.decode);
+  await writeFile(generatedFontSource, shiftedInter.font);
+  await rm(fontSource);
 
   const uvBase = randomWord();
   const scramjetSub = randomWord();
@@ -2269,8 +2288,10 @@ async function build() {
     if (!mediaDirs.includes(candidate)) mediaDirs.push(candidate);
   }
   const mediaDir = () => mediaDirs[randomInt(0, mediaDirs.length - 1)];
+  ACTIVE_TEXT_FONT_URL = registry.file(".ttf", mediaDir());
   const mediaMoves = new Map();
   for (const source of await collectFiles(path.join(DIST_DIR, "assets", "media"), () => true)) mediaMoves.set(source, registry.file(path.extname(source), mediaDir()));
+  mediaMoves.set(generatedFontSource, ACTIVE_TEXT_FONT_URL);
   for (const name of ["favicon.ico", "favicon.png"]) {
     const source = path.join(DIST_DIR, name);
     if (await exists(source)) mediaMoves.set(source, registry.file(path.extname(name), mediaDir()));
@@ -2331,7 +2352,7 @@ async function build() {
   for (const [source, newPublic] of cssMoves) {
     const destination = path.join(DIST_DIR, newPublic);
     await mkdir(path.dirname(destination), { recursive: true });
-    let css = await readFile(source, "utf8");
+    let css = shiftFontFamilies(await readFile(source, "utf8"));
     cssIn += css.length;
     // The catppuccin themes @import palette.css by relative path; repoint it at the moved file.
     if (palettePublic) css = css.replace(/@import\s+url\(\s*(["']?)palette\.css\1\s*\)/g, `@import url("${palettePublic}")`);
