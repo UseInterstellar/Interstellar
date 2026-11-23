@@ -1,6 +1,14 @@
+function svgHost() {
+  try {
+    return window.parent === top && top !== window && (top.document.contentType === "image/svg+xml" || top.document.documentElement.hasAttribute("data-singlefile")) ? top : null;
+  } catch {
+    return null;
+  }
+}
+
 function shellTop() {
   try {
-    return top.document.body?.dataset.shell === "true" ? top : null;
+    return svgHost() ?? (top.document.body?.dataset.shell === "true" ? top : null);
   } catch {
     return null;
   }
@@ -10,7 +18,10 @@ const cloakHost = shellTop() ?? window;
 let inFrame;
 
 try {
-  inFrame = window !== top || window.shellRedirecting === true;
+  const svgTop = svgHost();
+  const firstSvgLoad = svgTop !== null && svgTop.cloakHandled !== true;
+  if (svgTop) svgTop.cloakHandled = true;
+  inFrame = (window !== top && !firstSvgLoad) || window.shellRedirecting === true;
 } catch (e) {
   inFrame = true;
 }

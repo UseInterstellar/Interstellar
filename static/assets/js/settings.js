@@ -703,7 +703,7 @@ function applyCustomCloak() {
 
 function isOwnShell() {
   try {
-    return top.document.body?.dataset.shell === "true";
+    return top.document.contentType === "image/svg+xml" || top.document.documentElement.hasAttribute("data-singlefile") || top.document.body?.dataset.shell === "true";
   } catch {
     return false;
   }

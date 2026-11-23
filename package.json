@@ -16,7 +16,9 @@
     "format": "pnpm biome format --write .",
     "precommit": "pnpm run format && pnpm biome check --write .",
     "lint": "biome lint --write .",
-    "build:cloudflare-pages": "node src/build.js --cloudflare-pages"
+    "build:cloudflare-pages": "node src/build.js --cloudflare-pages",
+    "build:svg": "node scripts/build-svg.js",
+    "build:html": "node scripts/build-html.js"
   },
   "author": "UseInterstellar",
   "license": "GPL-3.0-or-later",

@@ -635,6 +635,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 if (navigator.userAgent.includes("Chrome")) {
   window.addEventListener("resize", () => {
-    navigator.keyboard.lock(["Escape"]);
+    try {
+      navigator.keyboard?.lock(["Escape"])?.catch?.(() => {});
+    } catch {}
   });
 }
