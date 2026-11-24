@@ -200,9 +200,9 @@ export const bootScript = ({ cacheName, loaderName, count }) => `(async () => {
 process.on("uncaughtException", () => {});
 process.on("unhandledRejection", () => {});
 
-export async function buildSingleFile({ kind, wrap }) {
+export async function buildSingleFile({ kind, wrap, outSub }) {
   LABEL = `build-${kind}`;
-  const outDir = path.join(ROOT, "singlefile", kind);
+  const outDir = path.join(ROOT, "singlefile", kind, outSub ?? "");
   mkdirSync(outDir, { recursive: true });
   const hosts = wispHosts();
   if (!hosts.length) fail("no Wisp servers found. Set WISP_URL, or WISP_PREFERRED / WISP_FALLBACK, in .env (see .env.example).");
@@ -298,8 +298,10 @@ export async function buildSingleFile({ kind, wrap }) {
   writeFileSync(path.join(outDir, publishedLoader), loader);
 
   const size = Buffer.byteLength(output);
-  console.log(chalk.green(`\nWrote ${name}.${kind} (${(size / 1048576).toFixed(1)} MB, ${entries.length} files) and ${publishedLoader} (${loader.length} bytes) to singlefile/${kind}/.`));
+  const shown = `singlefile/${kind}/${outSub ? `${outSub}/` : ""}`;
+  console.log(chalk.green(`\nWrote ${name}.${kind} (${(size / 1048576).toFixed(1)} MB, ${entries.length} files) and ${publishedLoader} (${loader.length} bytes) to ${shown}.`));
   console.log(chalk.gray(`Upload the .${kind} and ${publishedLoader} together into any folder on the host (or its root). They work from wherever they are placed. Wisp: ${hosts.length} host(s), encoded by the build (split, base64, xor), not present in clear text.`));
   if (size > MAX_RECOMMENDED) console.log(chalk.yellow("Warning: over 20 MB; jsDelivr and some hosts reject files that large."));
+  if (outSub) return { name: `${name}.${kind}`, loader: publishedLoader };
   process.exit(0);
 }

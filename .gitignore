@@ -16,6 +16,7 @@ static/decoy/*
 test/
 tests/
 analysis/
+singlefile/
 
 .idea
 .DS_Store
