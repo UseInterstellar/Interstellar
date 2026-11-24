@@ -440,11 +440,18 @@
             <div class="settings-item" data-sj-only style="display:none;">
               <div class="settings-item-info">
                 <h3>Wisp Server</h3>
-                <p>Point Scramjet at a different Wisp server</p>
+                <p>Type a Wisp URL to use only that server (to test whether a Wisp server is the problem). Remove it to go back to the built-in servers.</p>
               </div>
               <div class="settings-item-control">
                 <label>Wisp Server</label>
-                <input class="key-form" type="text" id="wisp-input" placeholder="Wisp URL" />
+                <input class="key-form" type="text" id="wisp-input" placeholder="wss://example.com/wisp/" />
+                <button class="key-button" id="wisp-save-button" type="button">Use this server</button>
+                <button class="key-button" id="wisp-remove-button" type="button">Remove it</button>
+                <p id="wisp-status"></p>
+                <input class="key-form" type="text" id="wisp-drop-input" placeholder="Built-in server to remove, e.g. wss://example.com/wisp/" />
+                <button class="key-button" id="wisp-drop-button" type="button">Remove it permanently</button>
+                <button class="key-button" id="wisp-restore-button" type="button">Restore removed servers</button>
+                <p id="wisp-drop-status"></p>
               </div>
             </div>
             <div class="settings-item settings-item-plain" data-uv-only style="display:none;">
@@ -537,6 +544,8 @@
         </div>
     </div>
   </div>
+  <script src="/assets/js/vendor.js"></script>
+  <script src="/assets/js/search.js"></script>
   <script src="/assets/js/settings.js"></script>
 <script src="/assets/js/analytics.js"></script>
 </body>

@@ -254,10 +254,53 @@ function isValidUrl(val = "") {
       }
     });
 
-  function builtWispCandidates(excluded = []) {
-    const all = [BUILT_WISP.p, BUILT_WISP.f].flatMap(list => list.map(pieces => unpackWisp(pieces, BUILT_WISP.k)));
-    return all.filter(url => !excluded.includes(url));
+  function normalizeWisp(text) {
+    try {
+      const parsed = new URL(/^wss?:\/\//i.test(text) ? text : `wss://${text}`);
+      return `${parsed.protocol}//${parsed.host}${parsed.pathname.replace(/\/+$/, "")}`.toLowerCase();
+    } catch {
+      return "";
+    }
   }
+
+  function removedWisps() {
+    try {
+      const list = JSON.parse(store.get("wisp-removed") || "[]");
+      return Array.isArray(list) ? list : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function allBuiltWisps() {
+    return [BUILT_WISP.p, BUILT_WISP.f].flatMap(list => list.map(pieces => unpackWisp(pieces, BUILT_WISP.k)));
+  }
+
+  function builtWispCandidates(excluded = []) {
+    const removed = removedWisps();
+    return allBuiltWisps().filter(url => !excluded.includes(url) && !removed.includes(normalizeWisp(url)));
+  }
+
+  window.__wispTools = {
+    builtIn: () => Boolean(BUILT_WISP),
+    removedCount: () => removedWisps().length,
+    remove(text) {
+      if (!BUILT_WISP) return { ok: false, reason: "This build has no built-in server list." };
+      const key = normalizeWisp(String(text ?? "").trim());
+      if (!key) return { ok: false, reason: "That is not a valid Wisp URL." };
+      const remaining = builtWispCandidates();
+      const match = remaining.find(url => normalizeWisp(url) === key);
+      if (!match) return { ok: false, reason: "That server is not in the built-in list, or it was already removed." };
+      if (remaining.length <= 1) return { ok: false, reason: "That is the last built-in server, so it can't be removed." };
+      store.set("wisp-removed", JSON.stringify([...removedWisps(), key]));
+      store.remove("wisp-choice");
+      return { ok: true, left: remaining.length - 1 };
+    },
+    restore() {
+      store.remove("wisp-removed");
+      store.remove("wisp-choice");
+    },
+  };
 
   async function pickBuiltWisp(excluded = []) {
     const candidates = builtWispCandidates(excluded);

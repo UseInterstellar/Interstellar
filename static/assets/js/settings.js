@@ -79,10 +79,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const wispInput = document.getElementById("wisp-input");
   if (wispInput) {
+    const wispStatus = document.getElementById("wisp-status");
+    const showWispStatus = () => {
+      const saved = store.get("wisp-url");
+      if (wispStatus) wispStatus.textContent = saved ? `Using only: ${saved}` : "Using the built-in Wisp servers.";
+    };
     wispInput.value = store.get("wisp-url") || "";
-    wispInput.addEventListener("keydown", event => {
-      if (event.key !== "Enter") return;
-      event.preventDefault();
+    showWispStatus();
+
+    const reloadAppNow = () => {
+      try {
+        window.top.location.reload();
+      } catch {
+        window.location.reload();
+      }
+    };
+    const saveWisp = () => {
       const val = wispInput.value.trim();
       if (val === "") {
         store.remove("wisp-url");
@@ -92,7 +104,53 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("Enter a valid Wisp URL starting with ws:// or wss://");
         return;
       }
-      window.location.reload();
+      showWispStatus();
+      reloadAppNow();
+    };
+    const removeWisp = () => {
+      store.remove("wisp-url");
+      wispInput.value = "";
+      showWispStatus();
+      reloadAppNow();
+    };
+
+    wispInput.addEventListener("keydown", event => {
+      if (event.key !== "Enter") return;
+      event.preventDefault();
+      saveWisp();
+    });
+    document.getElementById("wisp-save-button")?.addEventListener("click", saveWisp);
+    document.getElementById("wisp-remove-button")?.addEventListener("click", removeWisp);
+
+    const dropInput = document.getElementById("wisp-drop-input");
+    const dropStatus = document.getElementById("wisp-drop-status");
+    const showDropStatus = message => {
+      if (!dropStatus) return;
+      const tools = window.__wispTools;
+      const count = tools ? tools.removedCount() : 0;
+      dropStatus.textContent = message || (count ? `${count} built-in server${count === 1 ? "" : "s"} removed.` : "No built-in servers removed.");
+    };
+    const reloadApp = () => {
+      try {
+        window.top.location.reload();
+      } catch {
+        window.location.reload();
+      }
+    };
+    showDropStatus();
+    document.getElementById("wisp-drop-button")?.addEventListener("click", () => {
+      const tools = window.__wispTools;
+      if (!tools) return showDropStatus("Not ready yet, try again in a second.");
+      const result = tools.remove(dropInput.value);
+      if (!result.ok) return showDropStatus(result.reason);
+      dropInput.value = "";
+      showDropStatus(`Removed. ${result.left} built-in server${result.left === 1 ? "" : "s"} left. Restarting...`);
+      setTimeout(reloadApp, 600);
+    });
+    document.getElementById("wisp-restore-button")?.addEventListener("click", () => {
+      window.__wispTools?.restore();
+      showDropStatus("Restored. Restarting...");
+      setTimeout(reloadApp, 600);
     });
   }
 

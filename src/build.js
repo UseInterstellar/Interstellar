@@ -24,6 +24,15 @@ for (const method of ["log", "info", "warn"]) {
 
 const PLATFORM = process.argv.includes("--cloudflare-pages") ? "cloudflare-pages" : process.argv.includes("--netlify") ? "netlify" : null;
 const STATIC_HOST = PLATFORM !== null;
+const DYNAMIC_BASE = process.argv.includes("--dynamic-base");
+const BASE_PLACEHOLDER = "/__IB__";
+const BASE = (() => {
+  if (DYNAMIC_BASE) return BASE_PLACEHOLDER;
+  const hit = process.argv.find(arg => arg.startsWith("--base="));
+  if (!hit) return "";
+  const cleaned = hit.slice("--base=".length).split("/").filter(Boolean).map(segment => encodeURIComponent(decodeURIComponent(segment))).join("/");
+  return cleaned ? `/${cleaned}` : "";
+})();
 const NETLIFY_HEADERS = "/*\n  Service-Worker-Allowed: /\n";
 let ACTIVE_TEXT_FONT_RUNTIME = "";
 let ACTIVE_TEXT_FONT_URL = "";
@@ -121,10 +130,10 @@ async function removeGhGames(gamesPath) {
 
 function buildRedirects(pageRoutes) {
   // Cloudflare Pages cannot proxy the GitHub game stores
-  const rules = PLATFORM === "cloudflare-pages" ? [] : Object.entries(ghGamesProxies()).map(([prefix, target]) => [`${prefix}*`, `${target}:splat`, "200"]);
+  const rules = PLATFORM === "cloudflare-pages" ? [] : Object.entries(ghGamesProxies()).map(([prefix, target]) => [`${BASE}${prefix}*`, `${target}:splat`, "200"]);
   const tokenFile = token => `${token}.html`;
-  rules.push(["/", tokenFile(pageRoutes["/home"]), "200"]);
-  rules.push(["/play.html", tokenFile(pageRoutes["/games"]), "200"], ["/.runtime/*", "/404.html", "404!"]);
+  rules.push([`${BASE}/`, tokenFile(pageRoutes["/home"]), "200"]);
+  rules.push([`${BASE}/play.html`, tokenFile(pageRoutes["/games"]), "200"], [`${BASE}/.runtime/*`, `${BASE}/404.html`, "404!"]);
   return `${rules.map(rule => rule.join(" ")).join("\n")}\n`;
 }
 
@@ -275,7 +284,7 @@ class PathRegistry {
   file(ext, baseDir) {
     for (;;) {
       const dir = baseDir ?? this.dir();
-      const publicPath = `/${dir}/${randomFilename()}${this.bustSuffix()}${ext}`;
+      const publicPath = `${BASE}/${dir}/${randomFilename()}${this.bustSuffix()}${ext}`;
       if (this.paths.has(publicPath)) continue;
       this.paths.add(publicPath);
       return publicPath;
@@ -284,7 +293,7 @@ class PathRegistry {
 
   rootFile(ext) {
     for (;;) {
-      const publicPath = `/${randomFilename()}${this.bustSuffix()}${ext}`;
+      const publicPath = `${BASE}/${randomFilename()}${this.bustSuffix()}${ext}`;
       if (this.paths.has(publicPath)) continue;
       this.paths.add(publicPath);
       return publicPath;
@@ -1003,8 +1012,8 @@ function createPageRoutes(registry) {
   for (const clean of PAGE_ROUTES) {
     let token;
     do {
-      token = `/${randomItem("abcdefghijklmnopqrstuvwxyz".split(""))}${randomBytes(3).toString("hex")}`;
-    } while (used.has(token) || registry.paths.has(token) || registry.topDirs.has(token.slice(1)));
+      token = `${BASE}/${randomItem("abcdefghijklmnopqrstuvwxyz".split(""))}${randomBytes(3).toString("hex")}`;
+    } while (used.has(token) || registry.paths.has(token) || registry.topDirs.has(token.slice(BASE.length + 1)));
     used.add(token);
     registry.paths.add(token);
     map[clean] = token;
@@ -1017,7 +1026,7 @@ function createWispPath(registry) {
   let name;
   do {
     name = `${randomItem("abcdefghijklmnopqrstuvwxyz".split(""))}${randomBytes(4).toString("hex")}`;
-    token = `/${name}/`;
+    token = `${BASE}/${name}/`;
   } while (registry.paths.has(token) || registry.topDirs.has(name));
   registry.paths.add(token);
   return token;
@@ -1054,6 +1063,29 @@ function routeRewriteTable(routes) {
   ];
 }
 const ROUTE_REWRITE_COUNT = 16;
+
+const BASE_LITERALS = {
+  "main.js": [
+    ['location.pathname !== "/"', 2],
+    ['location.replace("/")', 2],
+    ['shellFrame.src = "/"', 1],
+  ],
+  "sw.js": [
+    ['"/not-found.html"', 1],
+    ['"/block.html"', 1],
+  ],
+  "tabs.js": [['"/block.html"', 1]],
+};
+
+function applyBaseLiterals(source, basename) {
+  let out = source;
+  for (const [literal, expected] of BASE_LITERALS[basename] ?? []) {
+    const found = out.split(literal).length - 1;
+    if (found !== expected) throw new CodecPatchError(`${basename}: expected ${expected} of ${literal} for --base, found ${found}. Upstream changed.`);
+    out = replaceAll(out, literal, literal.replace(/"\/(?=[^"]*")/, `"${BASE}/`));
+  }
+  return out;
+}
 
 function applyRouteRewrites(source, table) {
   let count = 0;
@@ -1173,6 +1205,102 @@ async function assertParses(source, { module }) {
   await minify(source, { module, compress: false, mangle: false, format: { comments: true } });
 }
 
+function baseToRuntime(source) {
+  const skipRegex = prev => prev === "" || "(,=:[!&|?{};+-*%<>~^".includes(prev);
+  const quoted = (body, quote) => {
+    if (!body.includes(BASE_PLACEHOLDER)) return `${quote}${body}${quote}`;
+    const parts = body.split(BASE_PLACEHOLDER);
+    const pieces = [];
+    parts.forEach((part, index) => {
+      if (index) pieces.push("self.__B");
+      if (part) pieces.push(`${quote}${part}${quote}`);
+    });
+    return `(${pieces.join("+")})`;
+  };
+  const scan = (start, stopAtBrace) => {
+    let out = "";
+    let prev = "";
+    let depth = 0;
+    let i = start;
+    while (i < source.length) {
+      const c = source[i];
+      if (stopAtBrace && c === "}" && depth === 0) return { out, end: i };
+      if (c === "/" && source[i + 1] === "/") {
+        const end = source.indexOf(String.fromCharCode(10), i);
+        const stop = end === -1 ? source.length : end;
+        out += source.slice(i, stop);
+        i = stop;
+        continue;
+      }
+      if (c === "/" && source[i + 1] === "*") {
+        const end = source.indexOf("*/", i + 2);
+        const stop = end === -1 ? source.length : end + 2;
+        out += source.slice(i, stop);
+        i = stop;
+        continue;
+      }
+      if (c === '"' || c === "'") {
+        let j = i + 1;
+        while (j < source.length && source[j] !== c) j += source[j] === "\\" ? 2 : 1;
+        out += quoted(source.slice(i + 1, j), c);
+        i = j + 1;
+        prev = c;
+        continue;
+      }
+      if (c === "`") {
+        let j = i + 1;
+        let text = "";
+        let literal = "";
+        const flush = () => {
+          text += literal.split(BASE_PLACEHOLDER).join("${self.__B}");
+          literal = "";
+        };
+        while (j < source.length && source[j] !== "`") {
+          if (source[j] === "\\") {
+            literal += source.slice(j, j + 2);
+            j += 2;
+          } else if (source[j] === "$" && source[j + 1] === "{") {
+            flush();
+            const inner = scan(j + 2, true);
+            text += "${" + inner.out + "}";
+            j = inner.end + 1;
+          } else {
+            literal += source[j++];
+          }
+        }
+        flush();
+        out += "`" + text + "`";
+        i = j + 1;
+        prev = "`";
+        continue;
+      }
+      if (c === "/" && skipRegex(prev)) {
+        let j = i + 1;
+        let inClass = false;
+        while (j < source.length && (inClass || source[j] !== "/")) {
+          if (source[j] === "\\") j++;
+          else if (source[j] === "[") inClass = true;
+          else if (source[j] === "]") inClass = false;
+          j++;
+        }
+        j++;
+        while (/[a-z]/i.test(source[j] ?? "")) j++;
+        out += source.slice(i, j);
+        i = j;
+        prev = "x";
+        continue;
+      }
+      if (c === "{") depth++;
+      if (c === "}") depth--;
+      out += c;
+      if (!/\s/.test(c)) prev = c;
+      i++;
+    }
+    return { out, end: i };
+  };
+  return scan(0, false).out;
+}
+
 async function runObfuscator(source, scopeKey) {
   const minified = await minify(source, {
     compress: { drop_console: false, passes: 2 },
@@ -1232,7 +1360,7 @@ async function obfuscateInlineScripts(html, htmlName) {
       if (!script.source.trim() || !shouldProcessInlineScript(script.attrs)) return [script.token, script.match];
 
       try {
-        const obfuscated = await runObfuscator(script.source, `${htmlName}#${script.token}`);
+        const obfuscated = await runObfuscator(DYNAMIC_BASE ? baseToRuntime(script.source) : script.source, `${htmlName}#${script.token}`);
         return [script.token, `<script${script.attrs}>${obfuscated}</script>`];
       } catch (err) {
         console.warn(chalk.yellow(`  ! inline script skipped: ${err.message}`));
@@ -1435,6 +1563,7 @@ function obfuscateAttributeValues(html) {
 
     const encodedAttrs = attrs.replace(attrPattern, (_match, attrName, quote, value) => {
       if (!value) return ` ${attrName}=${quote}${value}${quote}`;
+      if (DYNAMIC_BASE && value.includes(BASE_PLACEHOLDER)) return ` ${attrName}=${quote}${value}${quote}`;
       const shown = attrName.toLowerCase() === "placeholder" ? obfuscatePlaceholder(value) : value;
       return ` ${attrName}=${quote}${encodeHtmlText(shown)}${quote}`;
     });
@@ -2202,8 +2331,8 @@ async function build() {
   const scramjetSub = randomWord();
   registry.reserveTopDir(uvBase);
 
-  const NEW_UV_SCOPE = `/${uvBase}/`;
-  const NEW_SCRAMJET_SCOPE = `/${uvBase}/${scramjetSub}/`;
+  const NEW_UV_SCOPE = `${BASE}/${uvBase}/`;
+  const NEW_SCRAMJET_SCOPE = `${BASE}/${uvBase}/${scramjetSub}/`;
   const proxyCodecs = createProxyCodecs();
   const scramjetGlobals = createScramjetGlobals();
   const identifierRenames = createIdentifierRenames();
@@ -2341,7 +2470,8 @@ async function build() {
   for (const [source, publicPath] of jsonMoves) {
     const destination = path.join(DIST_DIR, publicPath);
     await mkdir(path.dirname(destination), { recursive: true });
-    await writeFile(destination, encodeCatalogue(applyRewrites(await readFile(source, "utf8"), rewrites), catalogueKey), "utf8");
+    const dataset = applyRewrites(await readFile(source, "utf8"), rewrites);
+    await writeFile(destination, encodeCatalogue(BASE ? replaceAll(dataset, '"/gh-games/', `"${BASE}/gh-games/`) : dataset, catalogueKey), "utf8");
     await rm(source);
     emitted.set(publicPath, destination);
     console.log(chalk.green(`  + ${path.basename(source)} -> ${publicPath}`));
@@ -2485,6 +2615,7 @@ async function build() {
       try {
         let output = await readFile(filePath, "utf8");
         for (const [from, to] of scopeRewrites) output = replaceAll(output, from, to);
+        if (BASE) output = applyBaseLiterals(output, basename);
         output = applyRewrites(output, rewrites);
         output = applyIdentifierRenames(output, identifierRenames);
         if (basename === "sw.js") output = applySwLocalRenames(output, swLocalRenames);
@@ -2511,6 +2642,12 @@ async function build() {
         output = applyTopLevelRenames(output, basename, topLevelRenames);
         references.push({ file: `${basename} (${publicPath})`, source: output });
 
+        if (DYNAMIC_BASE) {
+          if (basename === "launcher.js") output = patchOrFail(output, /return JSON\.parse\(new TextDecoder\(\)\.decode\(bytes\)\);/, 'return JSON.parse(new TextDecoder().decode(bytes).split("/__" + "IB__").join(self.__B));', "launcher.js catalogue base");
+          output = baseToRuntime(output);
+          await assertParses(output, { module: false });
+          if (output.includes("__IB__")) throw new CodecPatchError(`${basename}: the dynamic-base placeholder survived in application code`);
+        }
         const terserOnly = TERSER_ONLY.has(basename);
         if (OBFUSCATE) output = terserOnly ? await minifyVendor(output, { module: false }) : await runObfuscator(output, basename);
 
@@ -2669,9 +2806,21 @@ async function build() {
 
   if (STATIC_HOST) {
     for (const [clean, token] of Object.entries(manifest.routes)) {
-      await rename(path.join(DIST_DIR, `${clean.slice(1)}.html`), path.join(DIST_DIR, `${token.slice(1)}.html`));
+      const target = path.join(DIST_DIR, `${token.slice(1)}.html`);
+      await mkdir(path.dirname(target), { recursive: true });
+      await rename(path.join(DIST_DIR, `${clean.slice(1)}.html`), target);
     }
     console.log(chalk.green(`  netlify: renamed ${Object.keys(manifest.routes).length} page(s) to their route tokens`));
+  }
+
+  if (BASE) {
+    for (const name of ["block.html", "not-found.html", "404.html"]) {
+      if (!(await exists(path.join(DIST_DIR, name)))) continue;
+      const target = path.join(DIST_DIR, BASE.slice(1), name);
+      await mkdir(path.dirname(target), { recursive: true });
+      await rename(path.join(DIST_DIR, name), target);
+    }
+    console.log(chalk.green(`  base: everything is under ${BASE}/`));
   }
 
   console.log(chalk.green("\nBuild complete -> dist/"));
