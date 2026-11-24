@@ -12,9 +12,7 @@ import sharp from "sharp";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const DIST = path.join(ROOT, "dist");
-const SKIP = new Set(["_headers", "_redirects", ".assetsignore"]);
-// The build is made once with a placeholder folder. The loader and the pages swap in the folder the
-// files were really uploaded to, so nothing about the host or the directory is decided here.
+const SKIP = new Set(["__IB__/block.html", "_headers", "_redirects", ".assetsignore"]);
 const PLACEHOLDER = "/__IB__";
 const MAX_RECOMMENDED = 20 * 1024 * 1024;
 

@@ -122,6 +122,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("wisp-save-button")?.addEventListener("click", saveWisp);
     document.getElementById("wisp-remove-button")?.addEventListener("click", removeWisp);
 
+    // Removing built-in Wisp servers is switched off for now; see the note in search.js and the matching block in settings.html.
+    /*
     const dropInput = document.getElementById("wisp-drop-input");
     const dropStatus = document.getElementById("wisp-drop-status");
     const showDropStatus = message => {
@@ -152,6 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
       showDropStatus("Restored. Restarting...");
       setTimeout(reloadApp, 600);
     });
+    */
   }
 
   const eventKeyInput = document.getElementById("eventKeyInput");

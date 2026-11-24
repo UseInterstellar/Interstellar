@@ -123,6 +123,7 @@ const SERVER_FILTER = true;
 
 async function checkBlocked(url) {
   if (!SERVER_FILTER || customWispUrl()) return null;
+  if (typeof self.__B === "string") return null;
   let host;
   try {
     const parsed = new URL(url, window.location.origin);
@@ -254,6 +255,18 @@ function isValidUrl(val = "") {
       }
     });
 
+  function allBuiltWisps() {
+    return [BUILT_WISP.p, BUILT_WISP.f].flatMap(list => list.map(pieces => unpackWisp(pieces, BUILT_WISP.k)));
+  }
+
+  function builtWispCandidates(excluded = []) {
+    return allBuiltWisps().filter(url => !excluded.includes(url));
+  }
+
+  // Permanent removal of built-in Wisp servers is switched off for now (the single-file builds do not need it).
+  // To bring it back, restore normalizeWisp / removedWisps, filter builtWispCandidates through removedWisps(),
+  // define window.__wispTools (remove, restore, removedCount) and re-enable the matching block in settings.js and settings.html.
+  /*
   function normalizeWisp(text) {
     try {
       const parsed = new URL(/^wss?:\/\//i.test(text) ? text : `wss://${text}`);
@@ -270,15 +283,6 @@ function isValidUrl(val = "") {
     } catch {
       return [];
     }
-  }
-
-  function allBuiltWisps() {
-    return [BUILT_WISP.p, BUILT_WISP.f].flatMap(list => list.map(pieces => unpackWisp(pieces, BUILT_WISP.k)));
-  }
-
-  function builtWispCandidates(excluded = []) {
-    const removed = removedWisps();
-    return allBuiltWisps().filter(url => !excluded.includes(url) && !removed.includes(normalizeWisp(url)));
   }
 
   window.__wispTools = {
@@ -301,6 +305,7 @@ function isValidUrl(val = "") {
       store.remove("wisp-choice");
     },
   };
+  */
 
   async function pickBuiltWisp(excluded = []) {
     const candidates = builtWispCandidates(excluded);
